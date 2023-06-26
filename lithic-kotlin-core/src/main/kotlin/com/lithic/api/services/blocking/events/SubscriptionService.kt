@@ -1,0 +1,80 @@
+@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
+
+package com.lithic.api.services.blocking.events
+
+import com.lithic.api.core.RequestOptions
+import com.lithic.api.models.EventSubscription
+import com.lithic.api.models.EventSubscriptionCreateParams
+import com.lithic.api.models.EventSubscriptionDeleteParams
+import com.lithic.api.models.EventSubscriptionListPage
+import com.lithic.api.models.EventSubscriptionListParams
+import com.lithic.api.models.EventSubscriptionRecoverParams
+import com.lithic.api.models.EventSubscriptionReplayMissingParams
+import com.lithic.api.models.EventSubscriptionRetrieveParams
+import com.lithic.api.models.EventSubscriptionRetrieveSecretParams
+import com.lithic.api.models.EventSubscriptionRotateSecretParams
+import com.lithic.api.models.EventSubscriptionUpdateParams
+import com.lithic.api.models.SubscriptionRetrieveSecretResponse
+
+interface SubscriptionService {
+
+    /** Create a new event subscription. */
+    fun create(
+        params: EventSubscriptionCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventSubscription
+
+    /** Get an event subscription. */
+    fun retrieve(
+        params: EventSubscriptionRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventSubscription
+
+    /** Update an event subscription. */
+    fun update(
+        params: EventSubscriptionUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventSubscription
+
+    /** List all the event subscriptions. */
+    fun list(
+        params: EventSubscriptionListParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventSubscriptionListPage
+
+    /** Delete an event subscription. */
+    fun delete(
+        params: EventSubscriptionDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+
+    /** Resend all failed messages since a given time. */
+    fun recover(
+        params: EventSubscriptionRecoverParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+
+    /**
+     * Replays messages to the endpoint. Only messages that were created after `begin` will be sent.
+     * Messages that were previously sent to the endpoint are not resent.
+     */
+    fun replayMissing(
+        params: EventSubscriptionReplayMissingParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+
+    /** Get the secret for an event subscription. */
+    fun retrieveSecret(
+        params: EventSubscriptionRetrieveSecretParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): SubscriptionRetrieveSecretResponse
+
+    /**
+     * Rotate the secret for an event subscription. The previous secret will be valid for the next
+     * 24 hours.
+     */
+    fun rotateSecret(
+        params: EventSubscriptionRotateSecretParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+}
