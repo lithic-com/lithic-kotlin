@@ -20,7 +20,6 @@ class AuthRule
 private constructor(
     private val token: JsonField<String>,
     private val state: JsonField<State>,
-    private val previousAuthRuleTokens: JsonField<List<String>>,
     private val allowedMcc: JsonField<List<String>>,
     private val blockedMcc: JsonField<List<String>>,
     private val allowedCountries: JsonField<List<String>>,
@@ -40,13 +39,6 @@ private constructor(
 
     /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
     fun state(): State? = state.getNullable("state")
-
-    /**
-     * Identifier for the Auth Rule(s) that a new Auth Rule replaced; will be returned only if an
-     * Auth Rule is applied to entities that previously already had one applied.
-     */
-    fun previousAuthRuleTokens(): List<String>? =
-        previousAuthRuleTokens.getNullable("previous_auth_rule_tokens")
 
     /** Merchant category codes for which the Auth Rule permits transactions. */
     fun allowedMcc(): List<String>? = allowedMcc.getNullable("allowed_mcc")
@@ -84,14 +76,6 @@ private constructor(
 
     /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
     @JsonProperty("state") @ExcludeMissing fun _state() = state
-
-    /**
-     * Identifier for the Auth Rule(s) that a new Auth Rule replaced; will be returned only if an
-     * Auth Rule is applied to entities that previously already had one applied.
-     */
-    @JsonProperty("previous_auth_rule_tokens")
-    @ExcludeMissing
-    fun _previousAuthRuleTokens() = previousAuthRuleTokens
 
     /** Merchant category codes for which the Auth Rule permits transactions. */
     @JsonProperty("allowed_mcc") @ExcludeMissing fun _allowedMcc() = allowedMcc
@@ -132,7 +116,6 @@ private constructor(
         if (!validated) {
             token()
             state()
-            previousAuthRuleTokens()
             allowedMcc()
             blockedMcc()
             allowedCountries()
@@ -154,7 +137,6 @@ private constructor(
         return other is AuthRule &&
             this.token == other.token &&
             this.state == other.state &&
-            this.previousAuthRuleTokens == other.previousAuthRuleTokens &&
             this.allowedMcc == other.allowedMcc &&
             this.blockedMcc == other.blockedMcc &&
             this.allowedCountries == other.allowedCountries &&
@@ -171,7 +153,6 @@ private constructor(
                 Objects.hash(
                     token,
                     state,
-                    previousAuthRuleTokens,
                     allowedMcc,
                     blockedMcc,
                     allowedCountries,
@@ -186,7 +167,7 @@ private constructor(
     }
 
     override fun toString() =
-        "AuthRule{token=$token, state=$state, previousAuthRuleTokens=$previousAuthRuleTokens, allowedMcc=$allowedMcc, blockedMcc=$blockedMcc, allowedCountries=$allowedCountries, blockedCountries=$blockedCountries, accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
+        "AuthRule{token=$token, state=$state, allowedMcc=$allowedMcc, blockedMcc=$blockedMcc, allowedCountries=$allowedCountries, blockedCountries=$blockedCountries, accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -197,7 +178,6 @@ private constructor(
 
         private var token: JsonField<String> = JsonMissing.of()
         private var state: JsonField<State> = JsonMissing.of()
-        private var previousAuthRuleTokens: JsonField<List<String>> = JsonMissing.of()
         private var allowedMcc: JsonField<List<String>> = JsonMissing.of()
         private var blockedMcc: JsonField<List<String>> = JsonMissing.of()
         private var allowedCountries: JsonField<List<String>> = JsonMissing.of()
@@ -210,7 +190,6 @@ private constructor(
         internal fun from(authRule: AuthRule) = apply {
             this.token = authRule.token
             this.state = authRule.state
-            this.previousAuthRuleTokens = authRule.previousAuthRuleTokens
             this.allowedMcc = authRule.allowedMcc
             this.blockedMcc = authRule.blockedMcc
             this.allowedCountries = authRule.allowedCountries
@@ -236,23 +215,6 @@ private constructor(
         @JsonProperty("state")
         @ExcludeMissing
         fun state(state: JsonField<State>) = apply { this.state = state }
-
-        /**
-         * Identifier for the Auth Rule(s) that a new Auth Rule replaced; will be returned only if
-         * an Auth Rule is applied to entities that previously already had one applied.
-         */
-        fun previousAuthRuleTokens(previousAuthRuleTokens: List<String>) =
-            previousAuthRuleTokens(JsonField.of(previousAuthRuleTokens))
-
-        /**
-         * Identifier for the Auth Rule(s) that a new Auth Rule replaced; will be returned only if
-         * an Auth Rule is applied to entities that previously already had one applied.
-         */
-        @JsonProperty("previous_auth_rule_tokens")
-        @ExcludeMissing
-        fun previousAuthRuleTokens(previousAuthRuleTokens: JsonField<List<String>>) = apply {
-            this.previousAuthRuleTokens = previousAuthRuleTokens
-        }
 
         /** Merchant category codes for which the Auth Rule permits transactions. */
         fun allowedMcc(allowedMcc: List<String>) = allowedMcc(JsonField.of(allowedMcc))
@@ -358,7 +320,6 @@ private constructor(
             AuthRule(
                 token,
                 state,
-                previousAuthRuleTokens.map { it.toUnmodifiable() },
                 allowedMcc.map { it.toUnmodifiable() },
                 blockedMcc.map { it.toUnmodifiable() },
                 allowedCountries.map { it.toUnmodifiable() },
