@@ -295,6 +295,13 @@ private constructor(
 
             val DISPUTE_UPDATED = EventType(JsonField.of("dispute.updated"))
 
+            val PAYMENT_TRANSACTION_CREATED = EventType(JsonField.of("payment_transaction.created"))
+
+            val PAYMENT_TRANSACTION_UPDATED = EventType(JsonField.of("payment_transaction.updated"))
+
+            val TRANSFER_TRANSACTION_CREATED =
+                EventType(JsonField.of("transfer_transaction.created"))
+
             fun of(value: String) = EventType(JsonField.of(value))
         }
 
@@ -306,6 +313,9 @@ private constructor(
             DIGITAL_WALLET_TOKENIZATION_RESULT,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DISPUTE_UPDATED,
+            PAYMENT_TRANSACTION_CREATED,
+            PAYMENT_TRANSACTION_UPDATED,
+            TRANSFER_TRANSACTION_CREATED,
         }
 
         enum class Value {
@@ -316,6 +326,9 @@ private constructor(
             DIGITAL_WALLET_TOKENIZATION_RESULT,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DISPUTE_UPDATED,
+            PAYMENT_TRANSACTION_CREATED,
+            PAYMENT_TRANSACTION_UPDATED,
+            TRANSFER_TRANSACTION_CREATED,
             _UNKNOWN,
         }
 
@@ -330,6 +343,9 @@ private constructor(
                 DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
                     Value.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
                 DISPUTE_UPDATED -> Value.DISPUTE_UPDATED
+                PAYMENT_TRANSACTION_CREATED -> Value.PAYMENT_TRANSACTION_CREATED
+                PAYMENT_TRANSACTION_UPDATED -> Value.PAYMENT_TRANSACTION_UPDATED
+                TRANSFER_TRANSACTION_CREATED -> Value.TRANSFER_TRANSACTION_CREATED
                 else -> Value._UNKNOWN
             }
 
@@ -344,6 +360,9 @@ private constructor(
                 DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
                     Known.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
                 DISPUTE_UPDATED -> Known.DISPUTE_UPDATED
+                PAYMENT_TRANSACTION_CREATED -> Known.PAYMENT_TRANSACTION_CREATED
+                PAYMENT_TRANSACTION_UPDATED -> Known.PAYMENT_TRANSACTION_UPDATED
+                TRANSFER_TRANSACTION_CREATED -> Known.TRANSFER_TRANSACTION_CREATED
                 else -> throw LithicInvalidDataException("Unknown EventType: $value")
             }
 
