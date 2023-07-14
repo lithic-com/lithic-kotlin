@@ -21,13 +21,13 @@ class AuthRuleTest {
                 .build()
         assertThat(authRule).isNotNull
         assertThat(authRule.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(authRule.state()).isEqualTo(AuthRule.State.ACTIVE)
-        assertThat(authRule.allowedMcc()).containsExactly("string")
-        assertThat(authRule.blockedMcc()).containsExactly("string")
-        assertThat(authRule.allowedCountries()).containsExactly("string")
-        assertThat(authRule.blockedCountries()).containsExactly("string")
         assertThat(authRule.accountTokens()).containsExactly("string")
+        assertThat(authRule.allowedCountries()).containsExactly("string")
+        assertThat(authRule.allowedMcc()).containsExactly("string")
+        assertThat(authRule.blockedCountries()).containsExactly("string")
+        assertThat(authRule.blockedMcc()).containsExactly("string")
         assertThat(authRule.cardTokens()).containsExactly("string")
         assertThat(authRule.programLevel()).isEqualTo(true)
+        assertThat(authRule.state()).isEqualTo(AuthRule.State.ACTIVE)
     }
 }

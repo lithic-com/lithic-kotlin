@@ -33,6 +33,7 @@ class FinancialTransactionTest {
                 .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(financialTransaction).isNotNull
+        assertThat(financialTransaction.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(financialTransaction.category()).isEqualTo(FinancialTransaction.Category.CARD)
         assertThat(financialTransaction.created())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -52,7 +53,6 @@ class FinancialTransactionTest {
         assertThat(financialTransaction.result()).isEqualTo(FinancialTransaction.Result.APPROVED)
         assertThat(financialTransaction.settledAmount()).isEqualTo(123L)
         assertThat(financialTransaction.status()).isEqualTo(FinancialTransaction.Status.DECLINED)
-        assertThat(financialTransaction.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(financialTransaction.updated())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
