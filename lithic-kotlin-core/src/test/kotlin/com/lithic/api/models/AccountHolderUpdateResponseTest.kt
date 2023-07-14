@@ -16,8 +16,8 @@ class AccountHolderUpdateResponseTest {
                 .build()
         assertThat(accountHolderUpdateResponse).isNotNull
         assertThat(accountHolderUpdateResponse.token()).isEqualTo("string")
+        assertThat(accountHolderUpdateResponse.businessAccountToken()).isEqualTo("string")
         assertThat(accountHolderUpdateResponse.email()).isEqualTo("string")
         assertThat(accountHolderUpdateResponse.phoneNumber()).isEqualTo("string")
-        assertThat(accountHolderUpdateResponse.businessAccountToken()).isEqualTo("string")
     }
 }

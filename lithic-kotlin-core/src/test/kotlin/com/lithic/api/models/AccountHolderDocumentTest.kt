@@ -29,6 +29,7 @@ class AccountHolderDocumentTest {
                 )
                 .build()
         assertThat(accountHolderDocument).isNotNull
+        assertThat(accountHolderDocument.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(accountHolderDocument.accountHolderToken())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(accountHolderDocument.documentType())
@@ -47,6 +48,5 @@ class AccountHolderDocumentTest {
                     .uploadUrl("string")
                     .build()
             )
-        assertThat(accountHolderDocument.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
 }

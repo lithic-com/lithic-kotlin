@@ -55,8 +55,8 @@ class KycTest {
                     .phoneNumber("+12124007676")
                     .build()
             )
-        assertThat(kyc.kycPassedTimestamp()).isEqualTo("string")
         assertThat(kyc.tosTimestamp()).isEqualTo("string")
         assertThat(kyc.workflow()).isEqualTo(Kyc.Workflow.KYC_ADVANCED)
+        assertThat(kyc.kycPassedTimestamp()).isEqualTo("string")
     }
 }
