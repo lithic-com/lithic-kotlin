@@ -65,6 +65,7 @@ class TransferTest {
                 .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(transfer).isNotNull
+        assertThat(transfer.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(transfer.category()).isEqualTo(Transfer.Category.TRANSFER)
         assertThat(transfer.created()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transfer.currency()).isEqualTo("string")
@@ -79,12 +80,6 @@ class TransferTest {
                     .type(Transfer.FinancialEvent.Type.ACH_INSUFFICIENT_FUNDS)
                     .build()
             )
-        assertThat(transfer.pendingAmount()).isEqualTo(123L)
-        assertThat(transfer.result()).isEqualTo(Transfer.Result.APPROVED)
-        assertThat(transfer.settledAmount()).isEqualTo(123L)
-        assertThat(transfer.status()).isEqualTo(Transfer.Status.DECLINED)
-        assertThat(transfer.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(transfer.updated()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transfer.fromBalance())
             .containsExactly(
                 Balance.builder()
@@ -100,6 +95,10 @@ class TransferTest {
                     .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(transfer.pendingAmount()).isEqualTo(123L)
+        assertThat(transfer.result()).isEqualTo(Transfer.Result.APPROVED)
+        assertThat(transfer.settledAmount()).isEqualTo(123L)
+        assertThat(transfer.status()).isEqualTo(Transfer.Status.DECLINED)
         assertThat(transfer.toBalance())
             .containsExactly(
                 Balance.builder()
@@ -115,5 +114,6 @@ class TransferTest {
                     .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+        assertThat(transfer.updated()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     }
 }

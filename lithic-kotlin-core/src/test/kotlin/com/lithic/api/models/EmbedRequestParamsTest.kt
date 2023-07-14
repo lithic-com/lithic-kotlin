@@ -16,10 +16,10 @@ class EmbedRequestParamsTest {
                 .targetOrigin("string")
                 .build()
         assertThat(embedRequestParams).isNotNull
+        assertThat(embedRequestParams.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(embedRequestParams.css()).isEqualTo("string")
         assertThat(embedRequestParams.expiration())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(embedRequestParams.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(embedRequestParams.targetOrigin()).isEqualTo("string")
     }
 }
