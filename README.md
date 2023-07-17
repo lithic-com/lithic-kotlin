@@ -21,7 +21,7 @@ The API documentation can be found [here](https://docs.lithic.com).
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.11.2")
+implementation("com.lithic.api:lithic-kotlin:0.11.3")
 ```
 
 #### Maven
@@ -30,7 +30,7 @@ implementation("com.lithic.api:lithic-kotlin:0.11.2")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.11.2</version>
+    <version>0.11.3</version>
 </dependency>
 ```
 
