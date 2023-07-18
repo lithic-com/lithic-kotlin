@@ -9,6 +9,8 @@ import com.lithic.api.errors.LithicError
 import com.lithic.api.models.EventSubscription
 import com.lithic.api.models.EventSubscriptionCreateParams
 import com.lithic.api.models.EventSubscriptionDeleteParams
+import com.lithic.api.models.EventSubscriptionListAttemptsPageAsync
+import com.lithic.api.models.EventSubscriptionListAttemptsParams
 import com.lithic.api.models.EventSubscriptionListPageAsync
 import com.lithic.api.models.EventSubscriptionListParams
 import com.lithic.api.models.EventSubscriptionRecoverParams
@@ -161,6 +163,35 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response.let { deleteHandler.handle(it) }
+        }
+    }
+
+    private val listAttemptsHandler: Handler<EventSubscriptionListAttemptsPageAsync.Response> =
+        jsonHandler<EventSubscriptionListAttemptsPageAsync.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /** List all the message attempts for a given event subscription. */
+    override suspend fun listAttempts(
+        params: EventSubscriptionListAttemptsParams,
+        requestOptions: RequestOptions
+    ): EventSubscriptionListAttemptsPageAsync {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .addPathSegments("event_subscriptions", params.getPathParam(0), "attempts")
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
+            response
+                .let { listAttemptsHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+                .let { EventSubscriptionListAttemptsPageAsync.of(this, params, it) }
         }
     }
 

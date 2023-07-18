@@ -6,6 +6,8 @@ import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.EventSubscription
 import com.lithic.api.models.EventSubscriptionCreateParams
 import com.lithic.api.models.EventSubscriptionDeleteParams
+import com.lithic.api.models.EventSubscriptionListAttemptsPage
+import com.lithic.api.models.EventSubscriptionListAttemptsParams
 import com.lithic.api.models.EventSubscriptionListPage
 import com.lithic.api.models.EventSubscriptionListParams
 import com.lithic.api.models.EventSubscriptionRecoverParams
@@ -47,6 +49,12 @@ interface SubscriptionService {
         params: EventSubscriptionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none()
     )
+
+    /** List all the message attempts for a given event subscription. */
+    fun listAttempts(
+        params: EventSubscriptionListAttemptsParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventSubscriptionListAttemptsPage
 
     /** Resend all failed messages since a given time. */
     fun recover(
