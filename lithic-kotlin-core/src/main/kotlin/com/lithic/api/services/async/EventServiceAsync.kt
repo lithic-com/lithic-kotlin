@@ -5,6 +5,8 @@ package com.lithic.api.services.async
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.Event
+import com.lithic.api.models.EventListAttemptsPageAsync
+import com.lithic.api.models.EventListAttemptsParams
 import com.lithic.api.models.EventListPageAsync
 import com.lithic.api.models.EventListParams
 import com.lithic.api.models.EventRetrieveParams
@@ -25,6 +27,12 @@ interface EventServiceAsync {
         params: EventListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): EventListPageAsync
+
+    /** List all the message attempts for a given event. */
+    suspend fun listAttempts(
+        params: EventListAttemptsParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): EventListAttemptsPageAsync
 
     suspend fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 }
