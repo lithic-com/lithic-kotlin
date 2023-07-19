@@ -18,6 +18,7 @@ constructor(
     private val startingAfter: String?,
     private val endingBefore: String?,
     private val eventTypes: List<EventType>?,
+    private val withContent: Boolean?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
@@ -34,6 +35,8 @@ constructor(
 
     fun eventTypes(): List<EventType>? = eventTypes
 
+    fun withContent(): Boolean? = withContent
+
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.begin?.let { params.put("begin", listOf(it.toString())) }
@@ -42,6 +45,7 @@ constructor(
         this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
         this.eventTypes?.let { params.put("event_types", listOf(it.joinToString(separator = ","))) }
+        this.withContent?.let { params.put("with_content", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -64,6 +68,7 @@ constructor(
             this.startingAfter == other.startingAfter &&
             this.endingBefore == other.endingBefore &&
             this.eventTypes == other.eventTypes &&
+            this.withContent == other.withContent &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -76,13 +81,14 @@ constructor(
             startingAfter,
             endingBefore,
             eventTypes,
+            withContent,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "EventListParams{begin=$begin, end=$end, pageSize=$pageSize, startingAfter=$startingAfter, endingBefore=$endingBefore, eventTypes=$eventTypes, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "EventListParams{begin=$begin, end=$end, pageSize=$pageSize, startingAfter=$startingAfter, endingBefore=$endingBefore, eventTypes=$eventTypes, withContent=$withContent, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -100,6 +106,7 @@ constructor(
         private var startingAfter: String? = null
         private var endingBefore: String? = null
         private var eventTypes: List<EventType>? = null
+        private var withContent: Boolean? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
@@ -110,6 +117,7 @@ constructor(
             this.startingAfter = eventListParams.startingAfter
             this.endingBefore = eventListParams.endingBefore
             this.eventTypes = eventListParams.eventTypes
+            this.withContent = eventListParams.withContent
             additionalQueryParams(eventListParams.additionalQueryParams)
             additionalHeaders(eventListParams.additionalHeaders)
         }
@@ -143,6 +151,9 @@ constructor(
 
         /** Event types to filter events by. */
         fun eventTypes(eventTypes: List<EventType>) = apply { this.eventTypes = eventTypes }
+
+        /** Whether to include the event payload content in the response. */
+        fun withContent(withContent: Boolean) = apply { this.withContent = withContent }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -192,6 +203,7 @@ constructor(
                 startingAfter,
                 endingBefore,
                 eventTypes?.toUnmodifiable(),
+                withContent,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
