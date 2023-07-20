@@ -44,7 +44,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { createHandler.handle(it) }
+                .use { createHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -70,7 +70,7 @@ constructor(
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.let { deleteHandler.handle(it) }
+            response.use { deleteHandler.handle(it) }
         }
     }
 
@@ -93,7 +93,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { checkStatusHandler.handle(it) }
+                .use { checkStatusHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
