@@ -52,7 +52,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { createHandler.handle(it) }
+                .use { createHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -79,7 +79,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { retrieveHandler.handle(it) }
+                .use { retrieveHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -107,7 +107,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { updateHandler.handle(it) }
+                .use { updateHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -135,7 +135,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { listHandler.handle(it) }
+                .use { listHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -162,7 +162,36 @@ constructor(
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.let { deleteHandler.handle(it) }
+            response.use { deleteHandler.handle(it) }
+        }
+    }
+
+    private val listAttemptsHandler: Handler<EventSubscriptionListAttemptsPageAsync.Response> =
+        jsonHandler<EventSubscriptionListAttemptsPageAsync.Response>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
+
+    /** List all the message attempts for a given event subscription. */
+    override suspend fun listAttempts(
+        params: EventSubscriptionListAttemptsParams,
+        requestOptions: RequestOptions
+    ): EventSubscriptionListAttemptsPageAsync {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.GET)
+                .addPathSegments("event_subscriptions", params.getPathParam(0), "attempts")
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
+            response
+                .use { listAttemptsHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+                .let { EventSubscriptionListAttemptsPageAsync.of(this, params, it) }
         }
     }
 
@@ -212,7 +241,7 @@ constructor(
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.let { recoverHandler.handle(it) }
+            response.use { recoverHandler.handle(it) }
         }
     }
 
@@ -236,7 +265,7 @@ constructor(
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.let { replayMissingHandler.handle(it) }
+            response.use { replayMissingHandler.handle(it) }
         }
     }
 
@@ -259,7 +288,7 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
-                .let { retrieveSecretHandler.handle(it) }
+                .use { retrieveSecretHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -288,7 +317,7 @@ constructor(
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.let { rotateSecretHandler.handle(it) }
+            response.use { rotateSecretHandler.handle(it) }
         }
     }
 }
