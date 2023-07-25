@@ -2633,8 +2633,6 @@ private constructor(
 
             val SETTLED = Status(JsonField.of("SETTLED"))
 
-            val SETTLING = Status(JsonField.of("SETTLING"))
-
             val VOIDED = Status(JsonField.of("VOIDED"))
 
             fun of(value: String) = Status(JsonField.of(value))
@@ -2646,7 +2644,6 @@ private constructor(
             EXPIRED,
             PENDING,
             SETTLED,
-            SETTLING,
             VOIDED,
         }
 
@@ -2656,7 +2653,6 @@ private constructor(
             EXPIRED,
             PENDING,
             SETTLED,
-            SETTLING,
             VOIDED,
             _UNKNOWN,
         }
@@ -2668,7 +2664,6 @@ private constructor(
                 EXPIRED -> Value.EXPIRED
                 PENDING -> Value.PENDING
                 SETTLED -> Value.SETTLED
-                SETTLING -> Value.SETTLING
                 VOIDED -> Value.VOIDED
                 else -> Value._UNKNOWN
             }
@@ -2680,7 +2675,6 @@ private constructor(
                 EXPIRED -> Known.EXPIRED
                 PENDING -> Known.PENDING
                 SETTLED -> Known.SETTLED
-                SETTLING -> Known.SETTLING
                 VOIDED -> Known.VOIDED
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
             }
