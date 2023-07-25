@@ -40,6 +40,8 @@ interface LithicClient {
 
     fun webhooks(): WebhookService
 
+    fun externalBankAccounts(): ExternalBankAccountService
+
     /** API status check */
     fun apiStatus(
         params: ClientApiStatusParams,
