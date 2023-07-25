@@ -44,41 +44,41 @@ private constructor(
      * - `ACH` - Transaction over ACH.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
-    fun category(): Category? = category.getNullable("category")
+    fun category(): Category = category.getRequired("category")
 
     /** Date and time when the financial transaction first occurred. UTC time zone. */
-    fun created(): OffsetDateTime? = created.getNullable("created")
+    fun created(): OffsetDateTime = created.getRequired("created")
 
     /** 3-digit alphabetic ISO 4217 code for the settling currency of the transaction. */
-    fun currency(): String? = currency.getNullable("currency")
+    fun currency(): String = currency.getRequired("currency")
 
     /**
      * A string that provides a description of the financial transaction; may be useful to display
      * to users.
      */
-    fun descriptor(): String? = descriptor.getNullable("descriptor")
+    fun descriptor(): String = descriptor.getRequired("descriptor")
 
     /** A list of all financial events that have modified this financial transaction. */
-    fun events(): List<FinancialEvent>? = events.getNullable("events")
+    fun events(): List<FinancialEvent> = events.getRequired("events")
 
     /**
      * Pending amount of the transaction in the currency's smallest unit (e.g., cents), including
      * any acquirer fees. The value of this field will go to zero over time once the financial
      * transaction is settled.
      */
-    fun pendingAmount(): Long? = pendingAmount.getNullable("pending_amount")
+    fun pendingAmount(): Long = pendingAmount.getRequired("pending_amount")
 
     /**
      * APPROVED transactions were successful while DECLINED transactions were declined by user,
      * Lithic, or the network.
      */
-    fun result(): Result? = result.getNullable("result")
+    fun result(): Result = result.getRequired("result")
 
     /**
      * Amount of the transaction that has been settled in the currency's smallest unit (e.g.,
      * cents), including any acquirer fees. This may change over time.
      */
-    fun settledAmount(): Long? = settledAmount.getNullable("settled_amount")
+    fun settledAmount(): Long = settledAmount.getRequired("settled_amount")
 
     /**
      * Status types:
@@ -90,13 +90,13 @@ private constructor(
      * - `SETTLED` - The financial transaction is completed.
      * - `VOIDED` - The merchant has voided the previously pending card authorization.
      */
-    fun status(): Status? = status.getNullable("status")
+    fun status(): Status = status.getRequired("status")
 
     /** Globally unique identifier. */
-    fun token(): String? = token.getNullable("token")
+    fun token(): String = token.getRequired("token")
 
     /** Date and time when the financial transaction was last updated. UTC time zone. */
-    fun updated(): OffsetDateTime? = updated.getNullable("updated")
+    fun updated(): OffsetDateTime = updated.getRequired("updated")
 
     /**
      * Status types:
@@ -169,7 +169,7 @@ private constructor(
             created()
             currency()
             descriptor()
-            events()?.forEach { it.validate() }
+            events().forEach { it.validate() }
             pendingAmount()
             result()
             settledAmount()
