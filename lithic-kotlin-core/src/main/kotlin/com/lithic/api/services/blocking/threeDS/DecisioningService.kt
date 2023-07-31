@@ -1,13 +1,13 @@
 @file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
 
-package com.lithic.api.services.async.threeDS
+package com.lithic.api.services.blocking.threeDS
 
 import com.lithic.api.core.RequestOptions
-import com.lithic.api.models.DescisioningRetrieveSecretResponse
-import com.lithic.api.models.ThreeDDescisioningRetrieveSecretParams
-import com.lithic.api.models.ThreeDDescisioningRotateSecretParams
+import com.lithic.api.models.DecisioningRetrieveSecretResponse
+import com.lithic.api.models.ThreeDDecisioningRetrieveSecretParams
+import com.lithic.api.models.ThreeDDecisioningRotateSecretParams
 
-interface DescisioningServiceAsync {
+interface DecisioningService {
 
     /**
      * Retrieve the 3DS Decisioning HMAC secret key. If one does not exist for your program yet,
@@ -17,10 +17,10 @@ interface DescisioningServiceAsync {
      * [this page](https://docs.lithic.com/docs/3ds-decisioning#3ds-decisioning-hmac-secrets) for
      * more detail about verifying 3DS Decisioning requests.
      */
-    suspend fun retrieveSecret(
-        params: ThreeDDescisioningRetrieveSecretParams,
+    fun retrieveSecret(
+        params: ThreeDDecisioningRetrieveSecretParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): DescisioningRetrieveSecretResponse
+    ): DecisioningRetrieveSecretResponse
 
     /**
      * Generate a new 3DS Decisioning HMAC secret key. The old secret key will be deactivated 24
@@ -28,8 +28,8 @@ interface DescisioningServiceAsync {
      * [`GET /three_ds_decisioning/secret`](https://docs.lithic.com/reference/getthreedsdecisioningsecret)
      * request to retrieve the new secret key.
      */
-    suspend fun rotateSecret(
-        params: ThreeDDescisioningRotateSecretParams,
+    fun rotateSecret(
+        params: ThreeDDecisioningRotateSecretParams,
         requestOptions: RequestOptions = RequestOptions.none()
     )
 }
