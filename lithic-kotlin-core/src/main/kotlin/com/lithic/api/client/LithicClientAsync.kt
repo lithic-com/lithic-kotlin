@@ -42,6 +42,8 @@ interface LithicClientAsync {
 
     fun externalBankAccounts(): ExternalBankAccountServiceAsync
 
+    fun threeDS(): ThreeDSServiceAsync
+
     /** API status check */
     suspend fun apiStatus(
         params: ClientApiStatusParams,

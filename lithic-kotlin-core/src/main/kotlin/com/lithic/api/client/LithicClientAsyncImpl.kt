@@ -69,6 +69,8 @@ constructor(
         ExternalBankAccountServiceAsyncImpl(clientOptions)
     }
 
+    private val threeDS: ThreeDSServiceAsync by lazy { ThreeDSServiceAsyncImpl(clientOptions) }
+
     override fun sync(): LithicClient = sync
 
     override fun accounts(): AccountServiceAsync = accounts
@@ -103,6 +105,8 @@ constructor(
     override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
+
+    override fun threeDS(): ThreeDSServiceAsync = threeDS
 
     private val apiStatusHandler: Handler<ApiStatus> =
         jsonHandler<ApiStatus>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
