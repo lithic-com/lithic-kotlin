@@ -5,7 +5,7 @@ import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.models.*
 import java.util.Objects
 
-class ThreeDAuthenticationRetrieveParams
+class ThreeDSAuthenticationRetrieveParams
 constructor(
     private val threeDSAuthenticationToken: String,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -34,7 +34,7 @@ constructor(
             return true
         }
 
-        return other is ThreeDAuthenticationRetrieveParams &&
+        return other is ThreeDSAuthenticationRetrieveParams &&
             this.threeDSAuthenticationToken == other.threeDSAuthenticationToken &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
@@ -49,7 +49,7 @@ constructor(
     }
 
     override fun toString() =
-        "ThreeDAuthenticationRetrieveParams{threeDSAuthenticationToken=$threeDSAuthenticationToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ThreeDSAuthenticationRetrieveParams{threeDSAuthenticationToken=$threeDSAuthenticationToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -65,13 +65,14 @@ constructor(
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
-        internal fun from(threeDAuthenticationRetrieveParams: ThreeDAuthenticationRetrieveParams) =
-            apply {
-                this.threeDSAuthenticationToken =
-                    threeDAuthenticationRetrieveParams.threeDSAuthenticationToken
-                additionalQueryParams(threeDAuthenticationRetrieveParams.additionalQueryParams)
-                additionalHeaders(threeDAuthenticationRetrieveParams.additionalHeaders)
-            }
+        internal fun from(
+            threeDSAuthenticationRetrieveParams: ThreeDSAuthenticationRetrieveParams
+        ) = apply {
+            this.threeDSAuthenticationToken =
+                threeDSAuthenticationRetrieveParams.threeDSAuthenticationToken
+            additionalQueryParams(threeDSAuthenticationRetrieveParams.additionalQueryParams)
+            additionalHeaders(threeDSAuthenticationRetrieveParams.additionalHeaders)
+        }
 
         fun threeDSAuthenticationToken(threeDSAuthenticationToken: String) = apply {
             this.threeDSAuthenticationToken = threeDSAuthenticationToken
@@ -117,8 +118,8 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun build(): ThreeDAuthenticationRetrieveParams =
-            ThreeDAuthenticationRetrieveParams(
+        fun build(): ThreeDSAuthenticationRetrieveParams =
+            ThreeDSAuthenticationRetrieveParams(
                 checkNotNull(threeDSAuthenticationToken) {
                     "`threeDSAuthenticationToken` is required but was not set"
                 },

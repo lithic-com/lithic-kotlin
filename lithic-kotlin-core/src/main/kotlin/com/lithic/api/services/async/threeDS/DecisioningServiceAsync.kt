@@ -4,8 +4,8 @@ package com.lithic.api.services.async.threeDS
 
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.DecisioningRetrieveSecretResponse
-import com.lithic.api.models.ThreeDDecisioningRetrieveSecretParams
-import com.lithic.api.models.ThreeDDecisioningRotateSecretParams
+import com.lithic.api.models.ThreeDSDecisioningRetrieveSecretParams
+import com.lithic.api.models.ThreeDSDecisioningRotateSecretParams
 
 interface DecisioningServiceAsync {
 
@@ -18,7 +18,7 @@ interface DecisioningServiceAsync {
      * more detail about verifying 3DS Decisioning requests.
      */
     suspend fun retrieveSecret(
-        params: ThreeDDecisioningRetrieveSecretParams,
+        params: ThreeDSDecisioningRetrieveSecretParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): DecisioningRetrieveSecretResponse
 
@@ -29,7 +29,7 @@ interface DecisioningServiceAsync {
      * request to retrieve the new secret key.
      */
     suspend fun rotateSecret(
-        params: ThreeDDecisioningRotateSecretParams,
+        params: ThreeDSDecisioningRotateSecretParams,
         requestOptions: RequestOptions = RequestOptions.none()
     )
 }
