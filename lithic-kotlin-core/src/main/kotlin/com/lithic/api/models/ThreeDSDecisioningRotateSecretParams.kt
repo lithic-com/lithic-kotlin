@@ -6,7 +6,7 @@ import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.models.*
 import java.util.Objects
 
-class ThreeDDecisioningRotateSecretParams
+class ThreeDSDecisioningRotateSecretParams
 constructor(
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -32,7 +32,7 @@ constructor(
             return true
         }
 
-        return other is ThreeDDecisioningRotateSecretParams &&
+        return other is ThreeDSDecisioningRotateSecretParams &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -47,7 +47,7 @@ constructor(
     }
 
     override fun toString() =
-        "ThreeDDecisioningRotateSecretParams{additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ThreeDSDecisioningRotateSecretParams{additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -64,11 +64,11 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
-            threeDDecisioningRotateSecretParams: ThreeDDecisioningRotateSecretParams
+            threeDSDecisioningRotateSecretParams: ThreeDSDecisioningRotateSecretParams
         ) = apply {
-            additionalQueryParams(threeDDecisioningRotateSecretParams.additionalQueryParams)
-            additionalHeaders(threeDDecisioningRotateSecretParams.additionalHeaders)
-            additionalBodyProperties(threeDDecisioningRotateSecretParams.additionalBodyProperties)
+            additionalQueryParams(threeDSDecisioningRotateSecretParams.additionalQueryParams)
+            additionalHeaders(threeDSDecisioningRotateSecretParams.additionalHeaders)
+            additionalBodyProperties(threeDSDecisioningRotateSecretParams.additionalBodyProperties)
         }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -125,8 +125,8 @@ constructor(
                 this.additionalBodyProperties.putAll(additionalBodyProperties)
             }
 
-        fun build(): ThreeDDecisioningRotateSecretParams =
-            ThreeDDecisioningRotateSecretParams(
+        fun build(): ThreeDSDecisioningRotateSecretParams =
+            ThreeDSDecisioningRotateSecretParams(
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

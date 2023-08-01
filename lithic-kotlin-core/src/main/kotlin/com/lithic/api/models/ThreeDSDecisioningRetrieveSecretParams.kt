@@ -5,7 +5,7 @@ import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.models.*
 import java.util.Objects
 
-class ThreeDDecisioningRetrieveSecretParams
+class ThreeDSDecisioningRetrieveSecretParams
 constructor(
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -24,7 +24,7 @@ constructor(
             return true
         }
 
-        return other is ThreeDDecisioningRetrieveSecretParams &&
+        return other is ThreeDSDecisioningRetrieveSecretParams &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -34,7 +34,7 @@ constructor(
     }
 
     override fun toString() =
-        "ThreeDDecisioningRetrieveSecretParams{additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ThreeDSDecisioningRetrieveSecretParams{additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -50,10 +50,10 @@ constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(
-            threeDDecisioningRetrieveSecretParams: ThreeDDecisioningRetrieveSecretParams
+            threeDSDecisioningRetrieveSecretParams: ThreeDSDecisioningRetrieveSecretParams
         ) = apply {
-            additionalQueryParams(threeDDecisioningRetrieveSecretParams.additionalQueryParams)
-            additionalHeaders(threeDDecisioningRetrieveSecretParams.additionalHeaders)
+            additionalQueryParams(threeDSDecisioningRetrieveSecretParams.additionalQueryParams)
+            additionalHeaders(threeDSDecisioningRetrieveSecretParams.additionalHeaders)
         }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -96,8 +96,8 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun build(): ThreeDDecisioningRetrieveSecretParams =
-            ThreeDDecisioningRetrieveSecretParams(
+        fun build(): ThreeDSDecisioningRetrieveSecretParams =
+            ThreeDSDecisioningRetrieveSecretParams(
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable()
             )
