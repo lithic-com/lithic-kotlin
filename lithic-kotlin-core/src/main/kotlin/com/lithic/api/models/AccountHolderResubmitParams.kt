@@ -324,57 +324,6 @@ constructor(
             )
     }
 
-    class Workflow
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Workflow && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            val KYC_ADVANCED = Workflow(JsonField.of("KYC_ADVANCED"))
-
-            fun of(value: String) = Workflow(JsonField.of(value))
-        }
-
-        enum class Known {
-            KYC_ADVANCED,
-        }
-
-        enum class Value {
-            KYC_ADVANCED,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                KYC_ADVANCED -> Value.KYC_ADVANCED
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                KYC_ADVANCED -> Known.KYC_ADVANCED
-                else -> throw LithicInvalidDataException("Unknown Workflow: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
     /** Information on individual for whom the account is being opened and KYC is being re-run. */
     @JsonDeserialize(builder = Individual.Builder::class)
     @NoAutoDetect
@@ -556,5 +505,56 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+    }
+
+    class Workflow
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Workflow && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val KYC_ADVANCED = Workflow(JsonField.of("KYC_ADVANCED"))
+
+            fun of(value: String) = Workflow(JsonField.of(value))
+        }
+
+        enum class Known {
+            KYC_ADVANCED,
+        }
+
+        enum class Value {
+            KYC_ADVANCED,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                KYC_ADVANCED -> Value.KYC_ADVANCED
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                KYC_ADVANCED -> Known.KYC_ADVANCED
+                else -> throw LithicInvalidDataException("Unknown Workflow: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }
