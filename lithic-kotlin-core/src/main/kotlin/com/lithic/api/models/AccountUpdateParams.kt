@@ -418,6 +418,63 @@ constructor(
             )
     }
 
+    class State
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is State && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val ACTIVE = State(JsonField.of("ACTIVE"))
+
+            val PAUSED = State(JsonField.of("PAUSED"))
+
+            fun of(value: String) = State(JsonField.of(value))
+        }
+
+        enum class Known {
+            ACTIVE,
+            PAUSED,
+        }
+
+        enum class Value {
+            ACTIVE,
+            PAUSED,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                ACTIVE -> Value.ACTIVE
+                PAUSED -> Value.PAUSED
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                ACTIVE -> Known.ACTIVE
+                PAUSED -> Known.PAUSED
+                else -> throw LithicInvalidDataException("Unknown State: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
     /**
      * Address used during Address Verification Service (AVS) checks during transactions if enabled
      * via Auth Rules.
@@ -554,62 +611,5 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
-    }
-
-    class State
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is State && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            val ACTIVE = State(JsonField.of("ACTIVE"))
-
-            val PAUSED = State(JsonField.of("PAUSED"))
-
-            fun of(value: String) = State(JsonField.of(value))
-        }
-
-        enum class Known {
-            ACTIVE,
-            PAUSED,
-        }
-
-        enum class Value {
-            ACTIVE,
-            PAUSED,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                ACTIVE -> Value.ACTIVE
-                PAUSED -> Value.PAUSED
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                ACTIVE -> Known.ACTIVE
-                PAUSED -> Known.PAUSED
-                else -> throw LithicInvalidDataException("Unknown State: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
     }
 }

@@ -535,126 +535,6 @@ private constructor(
             )
     }
 
-    class Type
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Type && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            val CHECKING = Type(JsonField.of("CHECKING"))
-
-            val SAVINGS = Type(JsonField.of("SAVINGS"))
-
-            fun of(value: String) = Type(JsonField.of(value))
-        }
-
-        enum class Known {
-            CHECKING,
-            SAVINGS,
-        }
-
-        enum class Value {
-            CHECKING,
-            SAVINGS,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                CHECKING -> Value.CHECKING
-                SAVINGS -> Value.SAVINGS
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                CHECKING -> Known.CHECKING
-                SAVINGS -> Known.SAVINGS
-                else -> throw LithicInvalidDataException("Unknown Type: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class VerificationMethod
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is VerificationMethod && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            val MANUAL = VerificationMethod(JsonField.of("MANUAL"))
-
-            val MICRO_DEPOSIT = VerificationMethod(JsonField.of("MICRO_DEPOSIT"))
-
-            val PLAID = VerificationMethod(JsonField.of("PLAID"))
-
-            fun of(value: String) = VerificationMethod(JsonField.of(value))
-        }
-
-        enum class Known {
-            MANUAL,
-            MICRO_DEPOSIT,
-            PLAID,
-        }
-
-        enum class Value {
-            MANUAL,
-            MICRO_DEPOSIT,
-            PLAID,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                MANUAL -> Value.MANUAL
-                MICRO_DEPOSIT -> Value.MICRO_DEPOSIT
-                PLAID -> Value.PLAID
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                MANUAL -> Known.MANUAL
-                MICRO_DEPOSIT -> Known.MICRO_DEPOSIT
-                PLAID -> Known.PLAID
-                else -> throw LithicInvalidDataException("Unknown VerificationMethod: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
     class OwnerType
     @JsonCreator
     private constructor(
@@ -770,6 +650,126 @@ private constructor(
                 CLOSED -> Known.CLOSED
                 PAUSED -> Known.PAUSED
                 else -> throw LithicInvalidDataException("Unknown State: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
+    class Type
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Type && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val CHECKING = Type(JsonField.of("CHECKING"))
+
+            val SAVINGS = Type(JsonField.of("SAVINGS"))
+
+            fun of(value: String) = Type(JsonField.of(value))
+        }
+
+        enum class Known {
+            CHECKING,
+            SAVINGS,
+        }
+
+        enum class Value {
+            CHECKING,
+            SAVINGS,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                CHECKING -> Value.CHECKING
+                SAVINGS -> Value.SAVINGS
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                CHECKING -> Known.CHECKING
+                SAVINGS -> Known.SAVINGS
+                else -> throw LithicInvalidDataException("Unknown Type: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+    }
+
+    class VerificationMethod
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is VerificationMethod && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val MANUAL = VerificationMethod(JsonField.of("MANUAL"))
+
+            val MICRO_DEPOSIT = VerificationMethod(JsonField.of("MICRO_DEPOSIT"))
+
+            val PLAID = VerificationMethod(JsonField.of("PLAID"))
+
+            fun of(value: String) = VerificationMethod(JsonField.of(value))
+        }
+
+        enum class Known {
+            MANUAL,
+            MICRO_DEPOSIT,
+            PLAID,
+        }
+
+        enum class Value {
+            MANUAL,
+            MICRO_DEPOSIT,
+            PLAID,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                MANUAL -> Value.MANUAL
+                MICRO_DEPOSIT -> Value.MICRO_DEPOSIT
+                PLAID -> Value.PLAID
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                MANUAL -> Known.MANUAL
+                MICRO_DEPOSIT -> Known.MICRO_DEPOSIT
+                PLAID -> Known.PLAID
+                else -> throw LithicInvalidDataException("Unknown VerificationMethod: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()

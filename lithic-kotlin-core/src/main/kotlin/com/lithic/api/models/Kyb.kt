@@ -448,7 +448,6 @@ private constructor(
             )
     }
 
-    /** Information for business for which the account is being opened and KYB is being run. */
     @JsonDeserialize(builder = BusinessEntity.Builder::class)
     @NoAutoDetect
     class BusinessEntity
