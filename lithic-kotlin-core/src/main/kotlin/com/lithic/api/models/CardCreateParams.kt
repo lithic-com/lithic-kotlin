@@ -30,6 +30,7 @@ constructor(
     private val productId: String?,
     private val shippingAddress: ShippingAddress?,
     private val shippingMethod: ShippingMethod?,
+    private val carrier: Carrier?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -63,6 +64,8 @@ constructor(
 
     fun shippingMethod(): ShippingMethod? = shippingMethod
 
+    fun carrier(): Carrier? = carrier
+
     internal fun getBody(): CardCreateBody {
         return CardCreateBody(
             accountToken,
@@ -79,6 +82,7 @@ constructor(
             productId,
             shippingAddress,
             shippingMethod,
+            carrier,
             additionalBodyProperties,
         )
     }
@@ -105,6 +109,7 @@ constructor(
         private val productId: String?,
         private val shippingAddress: ShippingAddress?,
         private val shippingMethod: ShippingMethod?,
+        private val carrier: Carrier?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -226,6 +231,8 @@ constructor(
          */
         @JsonProperty("shipping_method") fun shippingMethod(): ShippingMethod? = shippingMethod
 
+        @JsonProperty("carrier") fun carrier(): Carrier? = carrier
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -252,6 +259,7 @@ constructor(
                 this.productId == other.productId &&
                 this.shippingAddress == other.shippingAddress &&
                 this.shippingMethod == other.shippingMethod &&
+                this.carrier == other.carrier &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -273,6 +281,7 @@ constructor(
                         productId,
                         shippingAddress,
                         shippingMethod,
+                        carrier,
                         additionalProperties,
                     )
             }
@@ -280,7 +289,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardCreateBody{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
+            "CardCreateBody{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, carrier=$carrier, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -303,6 +312,7 @@ constructor(
             private var productId: String? = null
             private var shippingAddress: ShippingAddress? = null
             private var shippingMethod: ShippingMethod? = null
+            private var carrier: Carrier? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardCreateBody: CardCreateBody) = apply {
@@ -320,6 +330,7 @@ constructor(
                 this.productId = cardCreateBody.productId
                 this.shippingAddress = cardCreateBody.shippingAddress
                 this.shippingMethod = cardCreateBody.shippingMethod
+                this.carrier = cardCreateBody.carrier
                 additionalProperties(cardCreateBody.additionalProperties)
             }
 
@@ -460,6 +471,9 @@ constructor(
                 this.shippingMethod = shippingMethod
             }
 
+            @JsonProperty("carrier")
+            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -490,6 +504,7 @@ constructor(
                     productId,
                     shippingAddress,
                     shippingMethod,
+                    carrier,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -521,6 +536,7 @@ constructor(
             this.productId == other.productId &&
             this.shippingAddress == other.shippingAddress &&
             this.shippingMethod == other.shippingMethod &&
+            this.carrier == other.carrier &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -542,6 +558,7 @@ constructor(
             productId,
             shippingAddress,
             shippingMethod,
+            carrier,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -549,7 +566,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardCreateParams{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardCreateParams{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, carrier=$carrier, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -575,6 +592,7 @@ constructor(
         private var productId: String? = null
         private var shippingAddress: ShippingAddress? = null
         private var shippingMethod: ShippingMethod? = null
+        private var carrier: Carrier? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -594,6 +612,7 @@ constructor(
             this.productId = cardCreateParams.productId
             this.shippingAddress = cardCreateParams.shippingAddress
             this.shippingMethod = cardCreateParams.shippingMethod
+            this.carrier = cardCreateParams.carrier
             additionalQueryParams(cardCreateParams.additionalQueryParams)
             additionalHeaders(cardCreateParams.additionalHeaders)
             additionalBodyProperties(cardCreateParams.additionalBodyProperties)
@@ -723,6 +742,8 @@ constructor(
             this.shippingMethod = shippingMethod
         }
 
+        fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
             putAllQueryParams(additionalQueryParams)
@@ -793,6 +814,7 @@ constructor(
                 productId,
                 shippingAddress,
                 shippingMethod,
+                carrier,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
