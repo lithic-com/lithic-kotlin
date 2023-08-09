@@ -227,6 +227,9 @@ constructor(
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          * tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
         @JsonProperty("shipping_method") fun shippingMethod(): ShippingMethod? = shippingMethod
@@ -463,6 +466,9 @@ constructor(
              * - `STANDARD` - USPS regular mail or similar international option, with no tracking
              * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
              * tracking
+             * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+             * - `2_DAY` - FedEx 2-day shipping, with tracking
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              * tracking
              */
@@ -736,6 +742,9 @@ constructor(
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          * tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
         fun shippingMethod(shippingMethod: ShippingMethod) = apply {
@@ -916,6 +925,12 @@ constructor(
 
             val STANDARD_WITH_TRACKING = ShippingMethod(JsonField.of("STANDARD_WITH_TRACKING"))
 
+            val PRIORITY = ShippingMethod(JsonField.of("PRIORITY"))
+
+            val EXPRESS = ShippingMethod(JsonField.of("EXPRESS"))
+
+            val _2_DAY = ShippingMethod(JsonField.of("2_DAY"))
+
             val EXPEDITED = ShippingMethod(JsonField.of("EXPEDITED"))
 
             fun of(value: String) = ShippingMethod(JsonField.of(value))
@@ -924,12 +939,18 @@ constructor(
         enum class Known {
             STANDARD,
             STANDARD_WITH_TRACKING,
+            PRIORITY,
+            EXPRESS,
+            _2_DAY,
             EXPEDITED,
         }
 
         enum class Value {
             STANDARD,
             STANDARD_WITH_TRACKING,
+            PRIORITY,
+            EXPRESS,
+            _2_DAY,
             EXPEDITED,
             _UNKNOWN,
         }
@@ -938,6 +959,9 @@ constructor(
             when (this) {
                 STANDARD -> Value.STANDARD
                 STANDARD_WITH_TRACKING -> Value.STANDARD_WITH_TRACKING
+                PRIORITY -> Value.PRIORITY
+                EXPRESS -> Value.EXPRESS
+                _2_DAY -> Value._2_DAY
                 EXPEDITED -> Value.EXPEDITED
                 else -> Value._UNKNOWN
             }
@@ -946,6 +970,9 @@ constructor(
             when (this) {
                 STANDARD -> Known.STANDARD
                 STANDARD_WITH_TRACKING -> Known.STANDARD_WITH_TRACKING
+                PRIORITY -> Known.PRIORITY
+                EXPRESS -> Known.EXPRESS
+                _2_DAY -> Known._2_DAY
                 EXPEDITED -> Known.EXPEDITED
                 else -> throw LithicInvalidDataException("Unknown ShippingMethod: $value")
             }
