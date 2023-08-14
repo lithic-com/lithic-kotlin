@@ -102,7 +102,7 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var transactionTokens: List<String>? = null
+        private var transactionTokens: MutableList<String> = mutableListOf()
         private var status: Status? = null
         private var pageSize: Long? = null
         private var begin: OffsetDateTime? = null
@@ -113,7 +113,7 @@ constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(disputeListParams: DisputeListParams) = apply {
-            this.transactionTokens = disputeListParams.transactionTokens
+            this.transactionTokens(disputeListParams.transactionTokens ?: listOf())
             this.status = disputeListParams.status
             this.pageSize = disputeListParams.pageSize
             this.begin = disputeListParams.begin
@@ -126,7 +126,13 @@ constructor(
 
         /** Transaction tokens to filter by. */
         fun transactionTokens(transactionTokens: List<String>) = apply {
-            this.transactionTokens = transactionTokens
+            this.transactionTokens.clear()
+            this.transactionTokens.addAll(transactionTokens)
+        }
+
+        /** Transaction tokens to filter by. */
+        fun addTransactionToken(transactionToken: String) = apply {
+            this.transactionTokens.add(transactionToken)
         }
 
         /** List disputes of a specific status. */
@@ -201,7 +207,7 @@ constructor(
 
         fun build(): DisputeListParams =
             DisputeListParams(
-                transactionTokens?.toUnmodifiable(),
+                if (transactionTokens.size == 0) null else transactionTokens.toUnmodifiable(),
                 status,
                 pageSize,
                 begin,
