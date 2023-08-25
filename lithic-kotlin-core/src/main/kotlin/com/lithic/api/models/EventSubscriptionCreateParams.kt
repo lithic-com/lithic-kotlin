@@ -16,14 +16,16 @@ import java.util.Objects
 
 class EventSubscriptionCreateParams
 constructor(
+    private val url: String,
     private val description: String?,
     private val disabled: Boolean?,
     private val eventTypes: List<EventType>?,
-    private val url: String,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
+
+    fun url(): String = url
 
     fun description(): String? = description
 
@@ -31,14 +33,12 @@ constructor(
 
     fun eventTypes(): List<EventType>? = eventTypes
 
-    fun url(): String = url
-
     internal fun getBody(): EventSubscriptionCreateBody {
         return EventSubscriptionCreateBody(
+            url,
             description,
             disabled,
             eventTypes,
-            url,
             additionalBodyProperties,
         )
     }
@@ -51,14 +51,17 @@ constructor(
     @NoAutoDetect
     class EventSubscriptionCreateBody
     internal constructor(
+        private val url: String?,
         private val description: String?,
         private val disabled: Boolean?,
         private val eventTypes: List<EventType>?,
-        private val url: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
+
+        /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
+        @JsonProperty("url") fun url(): String? = url
 
         /** Event subscription description. */
         @JsonProperty("description") fun description(): String? = description
@@ -72,9 +75,6 @@ constructor(
          */
         @JsonProperty("event_types") fun eventTypes(): List<EventType>? = eventTypes
 
-        /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
-        @JsonProperty("url") fun url(): String? = url
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -87,10 +87,10 @@ constructor(
             }
 
             return other is EventSubscriptionCreateBody &&
+                this.url == other.url &&
                 this.description == other.description &&
                 this.disabled == other.disabled &&
                 this.eventTypes == other.eventTypes &&
-                this.url == other.url &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -98,10 +98,10 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        url,
                         description,
                         disabled,
                         eventTypes,
-                        url,
                         additionalProperties,
                     )
             }
@@ -109,7 +109,7 @@ constructor(
         }
 
         override fun toString() =
-            "EventSubscriptionCreateBody{description=$description, disabled=$disabled, eventTypes=$eventTypes, url=$url, additionalProperties=$additionalProperties}"
+            "EventSubscriptionCreateBody{url=$url, description=$description, disabled=$disabled, eventTypes=$eventTypes, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -118,19 +118,22 @@ constructor(
 
         class Builder {
 
+            private var url: String? = null
             private var description: String? = null
             private var disabled: Boolean? = null
             private var eventTypes: List<EventType>? = null
-            private var url: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventSubscriptionCreateBody: EventSubscriptionCreateBody) = apply {
+                this.url = eventSubscriptionCreateBody.url
                 this.description = eventSubscriptionCreateBody.description
                 this.disabled = eventSubscriptionCreateBody.disabled
                 this.eventTypes = eventSubscriptionCreateBody.eventTypes
-                this.url = eventSubscriptionCreateBody.url
                 additionalProperties(eventSubscriptionCreateBody.additionalProperties)
             }
+
+            /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
+            @JsonProperty("url") fun url(url: String) = apply { this.url = url }
 
             /** Event subscription description. */
             @JsonProperty("description")
@@ -146,9 +149,6 @@ constructor(
              */
             @JsonProperty("event_types")
             fun eventTypes(eventTypes: List<EventType>) = apply { this.eventTypes = eventTypes }
-
-            /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
-            @JsonProperty("url") fun url(url: String) = apply { this.url = url }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -166,10 +166,10 @@ constructor(
 
             fun build(): EventSubscriptionCreateBody =
                 EventSubscriptionCreateBody(
+                    checkNotNull(url) { "`url` is required but was not set" },
                     description,
                     disabled,
                     eventTypes?.toUnmodifiable(),
-                    checkNotNull(url) { "`url` is required but was not set" },
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -187,10 +187,10 @@ constructor(
         }
 
         return other is EventSubscriptionCreateParams &&
+            this.url == other.url &&
             this.description == other.description &&
             this.disabled == other.disabled &&
             this.eventTypes == other.eventTypes &&
-            this.url == other.url &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -198,10 +198,10 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            url,
             description,
             disabled,
             eventTypes,
-            url,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -209,7 +209,7 @@ constructor(
     }
 
     override fun toString() =
-        "EventSubscriptionCreateParams{description=$description, disabled=$disabled, eventTypes=$eventTypes, url=$url, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "EventSubscriptionCreateParams{url=$url, description=$description, disabled=$disabled, eventTypes=$eventTypes, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -221,23 +221,26 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var url: String? = null
         private var description: String? = null
         private var disabled: Boolean? = null
         private var eventTypes: MutableList<EventType> = mutableListOf()
-        private var url: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventSubscriptionCreateParams: EventSubscriptionCreateParams) = apply {
+            this.url = eventSubscriptionCreateParams.url
             this.description = eventSubscriptionCreateParams.description
             this.disabled = eventSubscriptionCreateParams.disabled
             this.eventTypes(eventSubscriptionCreateParams.eventTypes ?: listOf())
-            this.url = eventSubscriptionCreateParams.url
             additionalQueryParams(eventSubscriptionCreateParams.additionalQueryParams)
             additionalHeaders(eventSubscriptionCreateParams.additionalHeaders)
             additionalBodyProperties(eventSubscriptionCreateParams.additionalBodyProperties)
         }
+
+        /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
+        fun url(url: String) = apply { this.url = url }
 
         /** Event subscription description. */
         fun description(description: String) = apply { this.description = description }
@@ -259,9 +262,6 @@ constructor(
          * types will be sent.
          */
         fun addEventType(eventType: EventType) = apply { this.eventTypes.add(eventType) }
-
-        /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
-        fun url(url: String) = apply { this.url = url }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -319,10 +319,10 @@ constructor(
 
         fun build(): EventSubscriptionCreateParams =
             EventSubscriptionCreateParams(
+                checkNotNull(url) { "`url` is required but was not set" },
                 description,
                 disabled,
                 if (eventTypes.size == 0) null else eventTypes.toUnmodifiable(),
-                checkNotNull(url) { "`url` is required but was not set" },
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

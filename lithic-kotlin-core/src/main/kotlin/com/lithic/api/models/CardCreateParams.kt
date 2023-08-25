@@ -16,29 +16,35 @@ import java.util.Objects
 
 class CardCreateParams
 constructor(
+    private val type: Type,
     private val accountToken: String?,
     private val cardProgramToken: String?,
+    private val carrier: Carrier?,
+    private val digitalCardArtToken: String?,
     private val expMonth: String?,
     private val expYear: String?,
     private val memo: String?,
-    private val spendLimit: Long?,
-    private val spendLimitDuration: SpendLimitDuration?,
-    private val state: State?,
-    private val type: Type,
     private val pin: String?,
-    private val digitalCardArtToken: String?,
     private val productId: String?,
     private val shippingAddress: ShippingAddress?,
     private val shippingMethod: ShippingMethod?,
-    private val carrier: Carrier?,
+    private val spendLimit: Long?,
+    private val spendLimitDuration: SpendLimitDuration?,
+    private val state: State?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
+    fun type(): Type = type
+
     fun accountToken(): String? = accountToken
 
     fun cardProgramToken(): String? = cardProgramToken
+
+    fun carrier(): Carrier? = carrier
+
+    fun digitalCardArtToken(): String? = digitalCardArtToken
 
     fun expMonth(): String? = expMonth
 
@@ -46,17 +52,7 @@ constructor(
 
     fun memo(): String? = memo
 
-    fun spendLimit(): Long? = spendLimit
-
-    fun spendLimitDuration(): SpendLimitDuration? = spendLimitDuration
-
-    fun state(): State? = state
-
-    fun type(): Type = type
-
     fun pin(): String? = pin
-
-    fun digitalCardArtToken(): String? = digitalCardArtToken
 
     fun productId(): String? = productId
 
@@ -64,25 +60,29 @@ constructor(
 
     fun shippingMethod(): ShippingMethod? = shippingMethod
 
-    fun carrier(): Carrier? = carrier
+    fun spendLimit(): Long? = spendLimit
+
+    fun spendLimitDuration(): SpendLimitDuration? = spendLimitDuration
+
+    fun state(): State? = state
 
     internal fun getBody(): CardCreateBody {
         return CardCreateBody(
+            type,
             accountToken,
             cardProgramToken,
+            carrier,
+            digitalCardArtToken,
             expMonth,
             expYear,
             memo,
-            spendLimit,
-            spendLimitDuration,
-            state,
-            type,
             pin,
-            digitalCardArtToken,
             productId,
             shippingAddress,
             shippingMethod,
-            carrier,
+            spendLimit,
+            spendLimitDuration,
+            state,
             additionalBodyProperties,
         )
     }
@@ -95,25 +95,39 @@ constructor(
     @NoAutoDetect
     class CardCreateBody
     internal constructor(
+        private val type: Type?,
         private val accountToken: String?,
         private val cardProgramToken: String?,
+        private val carrier: Carrier?,
+        private val digitalCardArtToken: String?,
         private val expMonth: String?,
         private val expYear: String?,
         private val memo: String?,
-        private val spendLimit: Long?,
-        private val spendLimitDuration: SpendLimitDuration?,
-        private val state: State?,
-        private val type: Type?,
         private val pin: String?,
-        private val digitalCardArtToken: String?,
         private val productId: String?,
         private val shippingAddress: ShippingAddress?,
         private val shippingMethod: ShippingMethod?,
-        private val carrier: Carrier?,
+        private val spendLimit: Long?,
+        private val spendLimitDuration: SpendLimitDuration?,
+        private val state: State?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
+
+        /**
+         * Card types:
+         *
+         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
+         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
+         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+         * [lithic.com/contact](https://lithic.com/contact) for more information.
+         * - `SINGLE_USE` - Card is closed upon first successful authorization.
+         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
+         * successfully authorizes the card.
+         */
+        @JsonProperty("type") fun type(): Type? = type
 
         /**
          * Globally unique identifier for the account that the card will be associated with.
@@ -132,6 +146,18 @@ constructor(
          */
         @JsonProperty("card_program_token") fun cardProgramToken(): String? = cardProgramToken
 
+        @JsonProperty("carrier") fun carrier(): Carrier? = carrier
+
+        /**
+         * Specifies the digital card art to be displayed in the user’s digital wallet after
+         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
+         * use. See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+         * .
+         */
+        @JsonProperty("digital_card_art_token")
+        fun digitalCardArtToken(): String? = digitalCardArtToken
+
         /**
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
@@ -149,6 +175,36 @@ constructor(
          * data as it can cause unexpected behavior.
          */
         @JsonProperty("memo") fun memo(): String? = memo
+
+        /**
+         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
+         * See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
+         */
+        @JsonProperty("pin") fun pin(): String? = pin
+
+        /**
+         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
+         * use. Specifies the configuration (i.e., physical card art) that the card should be
+         * manufactured with.
+         */
+        @JsonProperty("product_id") fun productId(): String? = productId
+
+        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
+
+        /**
+         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+         * besides `STANDARD` require additional permissions.
+         *
+         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+         * tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         */
+        @JsonProperty("shipping_method") fun shippingMethod(): ShippingMethod? = shippingMethod
 
         /**
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
@@ -180,62 +236,6 @@ constructor(
          */
         @JsonProperty("state") fun state(): State? = state
 
-        /**
-         * Card types:
-         *
-         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         * [lithic.com/contact](https://lithic.com/contact) for more information.
-         * - `SINGLE_USE` - Card is closed upon first successful authorization.
-         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         * successfully authorizes the card.
-         */
-        @JsonProperty("type") fun type(): Type? = type
-
-        /**
-         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
-         */
-        @JsonProperty("pin") fun pin(): String? = pin
-
-        /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
-         */
-        @JsonProperty("digital_card_art_token")
-        fun digitalCardArtToken(): String? = digitalCardArtToken
-
-        /**
-         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
-         * use. Specifies the configuration (i.e., physical card art) that the card should be
-         * manufactured with.
-         */
-        @JsonProperty("product_id") fun productId(): String? = productId
-
-        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
-
-        /**
-         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-         * besides `STANDARD` require additional permissions.
-         *
-         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         * tracking
-         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
-         */
-        @JsonProperty("shipping_method") fun shippingMethod(): ShippingMethod? = shippingMethod
-
-        @JsonProperty("carrier") fun carrier(): Carrier? = carrier
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -248,21 +248,21 @@ constructor(
             }
 
             return other is CardCreateBody &&
+                this.type == other.type &&
                 this.accountToken == other.accountToken &&
                 this.cardProgramToken == other.cardProgramToken &&
+                this.carrier == other.carrier &&
+                this.digitalCardArtToken == other.digitalCardArtToken &&
                 this.expMonth == other.expMonth &&
                 this.expYear == other.expYear &&
                 this.memo == other.memo &&
-                this.spendLimit == other.spendLimit &&
-                this.spendLimitDuration == other.spendLimitDuration &&
-                this.state == other.state &&
-                this.type == other.type &&
                 this.pin == other.pin &&
-                this.digitalCardArtToken == other.digitalCardArtToken &&
                 this.productId == other.productId &&
                 this.shippingAddress == other.shippingAddress &&
                 this.shippingMethod == other.shippingMethod &&
-                this.carrier == other.carrier &&
+                this.spendLimit == other.spendLimit &&
+                this.spendLimitDuration == other.spendLimitDuration &&
+                this.state == other.state &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -270,21 +270,21 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        type,
                         accountToken,
                         cardProgramToken,
+                        carrier,
+                        digitalCardArtToken,
                         expMonth,
                         expYear,
                         memo,
-                        spendLimit,
-                        spendLimitDuration,
-                        state,
-                        type,
                         pin,
-                        digitalCardArtToken,
                         productId,
                         shippingAddress,
                         shippingMethod,
-                        carrier,
+                        spendLimit,
+                        spendLimitDuration,
+                        state,
                         additionalProperties,
                     )
             }
@@ -292,7 +292,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardCreateBody{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, carrier=$carrier, additionalProperties=$additionalProperties}"
+            "CardCreateBody{type=$type, accountToken=$accountToken, cardProgramToken=$cardProgramToken, carrier=$carrier, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, pin=$pin, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -301,41 +301,55 @@ constructor(
 
         class Builder {
 
+            private var type: Type? = null
             private var accountToken: String? = null
             private var cardProgramToken: String? = null
+            private var carrier: Carrier? = null
+            private var digitalCardArtToken: String? = null
             private var expMonth: String? = null
             private var expYear: String? = null
             private var memo: String? = null
-            private var spendLimit: Long? = null
-            private var spendLimitDuration: SpendLimitDuration? = null
-            private var state: State? = null
-            private var type: Type? = null
             private var pin: String? = null
-            private var digitalCardArtToken: String? = null
             private var productId: String? = null
             private var shippingAddress: ShippingAddress? = null
             private var shippingMethod: ShippingMethod? = null
-            private var carrier: Carrier? = null
+            private var spendLimit: Long? = null
+            private var spendLimitDuration: SpendLimitDuration? = null
+            private var state: State? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardCreateBody: CardCreateBody) = apply {
+                this.type = cardCreateBody.type
                 this.accountToken = cardCreateBody.accountToken
                 this.cardProgramToken = cardCreateBody.cardProgramToken
+                this.carrier = cardCreateBody.carrier
+                this.digitalCardArtToken = cardCreateBody.digitalCardArtToken
                 this.expMonth = cardCreateBody.expMonth
                 this.expYear = cardCreateBody.expYear
                 this.memo = cardCreateBody.memo
-                this.spendLimit = cardCreateBody.spendLimit
-                this.spendLimitDuration = cardCreateBody.spendLimitDuration
-                this.state = cardCreateBody.state
-                this.type = cardCreateBody.type
                 this.pin = cardCreateBody.pin
-                this.digitalCardArtToken = cardCreateBody.digitalCardArtToken
                 this.productId = cardCreateBody.productId
                 this.shippingAddress = cardCreateBody.shippingAddress
                 this.shippingMethod = cardCreateBody.shippingMethod
-                this.carrier = cardCreateBody.carrier
+                this.spendLimit = cardCreateBody.spendLimit
+                this.spendLimitDuration = cardCreateBody.spendLimitDuration
+                this.state = cardCreateBody.state
                 additionalProperties(cardCreateBody.additionalProperties)
             }
+
+            /**
+             * Card types:
+             *
+             * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
+             * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+             * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label
+             * branding, credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach
+             * out at [lithic.com/contact](https://lithic.com/contact) for more information.
+             * - `SINGLE_USE` - Card is closed upon first successful authorization.
+             * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
+             * successfully authorizes the card.
+             */
+            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
             /**
              * Globally unique identifier for the account that the card will be associated with.
@@ -358,6 +372,21 @@ constructor(
                 this.cardProgramToken = cardProgramToken
             }
 
+            @JsonProperty("carrier")
+            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+
+            /**
+             * Specifies the digital card art to be displayed in the user’s digital wallet after
+             * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
+             * use. See
+             * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+             * .
+             */
+            @JsonProperty("digital_card_art_token")
+            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+                this.digitalCardArtToken = digitalCardArtToken
+            }
+
             /**
              * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date will be generated.
@@ -377,6 +406,45 @@ constructor(
              * JSON data as it can cause unexpected behavior.
              */
             @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+
+            /**
+             * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
+             * `VIRTUAL`. See
+             * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise)
+             * .
+             */
+            @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
+
+            /**
+             * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
+             * before use. Specifies the configuration (i.e., physical card art) that the card
+             * should be manufactured with.
+             */
+            @JsonProperty("product_id")
+            fun productId(productId: String) = apply { this.productId = productId }
+
+            @JsonProperty("shipping_address")
+            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+                this.shippingAddress = shippingAddress
+            }
+
+            /**
+             * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+             * besides `STANDARD` require additional permissions.
+             *
+             * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+             * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+             * tracking
+             * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+             * - `2_DAY` - FedEx 2-day shipping, with tracking
+             * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
+             * tracking
+             */
+            @JsonProperty("shipping_method")
+            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+                this.shippingMethod = shippingMethod
+            }
 
             /**
              * Amount (in cents) to limit approved authorizations. Transaction requests above the
@@ -412,74 +480,6 @@ constructor(
              */
             @JsonProperty("state") fun state(state: State) = apply { this.state = state }
 
-            /**
-             * Card types:
-             *
-             * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
-             * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-             * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label
-             * branding, credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach
-             * out at [lithic.com/contact](https://lithic.com/contact) for more information.
-             * - `SINGLE_USE` - Card is closed upon first successful authorization.
-             * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-             * successfully authorizes the card.
-             */
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
-
-            /**
-             * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
-             * `VIRTUAL`. See
-             * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise)
-             * .
-             */
-            @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
-
-            /**
-             * Specifies the digital card art to be displayed in the user’s digital wallet after
-             * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-             * use. See
-             * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-             * .
-             */
-            @JsonProperty("digital_card_art_token")
-            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
-                this.digitalCardArtToken = digitalCardArtToken
-            }
-
-            /**
-             * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
-             * before use. Specifies the configuration (i.e., physical card art) that the card
-             * should be manufactured with.
-             */
-            @JsonProperty("product_id")
-            fun productId(productId: String) = apply { this.productId = productId }
-
-            @JsonProperty("shipping_address")
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
-                this.shippingAddress = shippingAddress
-            }
-
-            /**
-             * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-             * besides `STANDARD` require additional permissions.
-             *
-             * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-             * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-             * tracking
-             * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-             * - `2_DAY` - FedEx 2-day shipping, with tracking
-             * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
-             * tracking
-             */
-            @JsonProperty("shipping_method")
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
-                this.shippingMethod = shippingMethod
-            }
-
-            @JsonProperty("carrier")
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
-
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -496,21 +496,21 @@ constructor(
 
             fun build(): CardCreateBody =
                 CardCreateBody(
+                    checkNotNull(type) { "`type` is required but was not set" },
                     accountToken,
                     cardProgramToken,
+                    carrier,
+                    digitalCardArtToken,
                     expMonth,
                     expYear,
                     memo,
-                    spendLimit,
-                    spendLimitDuration,
-                    state,
-                    checkNotNull(type) { "`type` is required but was not set" },
                     pin,
-                    digitalCardArtToken,
                     productId,
                     shippingAddress,
                     shippingMethod,
-                    carrier,
+                    spendLimit,
+                    spendLimitDuration,
+                    state,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -528,21 +528,21 @@ constructor(
         }
 
         return other is CardCreateParams &&
+            this.type == other.type &&
             this.accountToken == other.accountToken &&
             this.cardProgramToken == other.cardProgramToken &&
+            this.carrier == other.carrier &&
+            this.digitalCardArtToken == other.digitalCardArtToken &&
             this.expMonth == other.expMonth &&
             this.expYear == other.expYear &&
             this.memo == other.memo &&
-            this.spendLimit == other.spendLimit &&
-            this.spendLimitDuration == other.spendLimitDuration &&
-            this.state == other.state &&
-            this.type == other.type &&
             this.pin == other.pin &&
-            this.digitalCardArtToken == other.digitalCardArtToken &&
             this.productId == other.productId &&
             this.shippingAddress == other.shippingAddress &&
             this.shippingMethod == other.shippingMethod &&
-            this.carrier == other.carrier &&
+            this.spendLimit == other.spendLimit &&
+            this.spendLimitDuration == other.spendLimitDuration &&
+            this.state == other.state &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -550,21 +550,21 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            type,
             accountToken,
             cardProgramToken,
+            carrier,
+            digitalCardArtToken,
             expMonth,
             expYear,
             memo,
-            spendLimit,
-            spendLimitDuration,
-            state,
-            type,
             pin,
-            digitalCardArtToken,
             productId,
             shippingAddress,
             shippingMethod,
-            carrier,
+            spendLimit,
+            spendLimitDuration,
+            state,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -572,7 +572,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardCreateParams{accountToken=$accountToken, cardProgramToken=$cardProgramToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, pin=$pin, digitalCardArtToken=$digitalCardArtToken, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, carrier=$carrier, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardCreateParams{type=$type, accountToken=$accountToken, cardProgramToken=$cardProgramToken, carrier=$carrier, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, pin=$pin, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -584,45 +584,59 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var type: Type? = null
         private var accountToken: String? = null
         private var cardProgramToken: String? = null
+        private var carrier: Carrier? = null
+        private var digitalCardArtToken: String? = null
         private var expMonth: String? = null
         private var expYear: String? = null
         private var memo: String? = null
-        private var spendLimit: Long? = null
-        private var spendLimitDuration: SpendLimitDuration? = null
-        private var state: State? = null
-        private var type: Type? = null
         private var pin: String? = null
-        private var digitalCardArtToken: String? = null
         private var productId: String? = null
         private var shippingAddress: ShippingAddress? = null
         private var shippingMethod: ShippingMethod? = null
-        private var carrier: Carrier? = null
+        private var spendLimit: Long? = null
+        private var spendLimitDuration: SpendLimitDuration? = null
+        private var state: State? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardCreateParams: CardCreateParams) = apply {
+            this.type = cardCreateParams.type
             this.accountToken = cardCreateParams.accountToken
             this.cardProgramToken = cardCreateParams.cardProgramToken
+            this.carrier = cardCreateParams.carrier
+            this.digitalCardArtToken = cardCreateParams.digitalCardArtToken
             this.expMonth = cardCreateParams.expMonth
             this.expYear = cardCreateParams.expYear
             this.memo = cardCreateParams.memo
-            this.spendLimit = cardCreateParams.spendLimit
-            this.spendLimitDuration = cardCreateParams.spendLimitDuration
-            this.state = cardCreateParams.state
-            this.type = cardCreateParams.type
             this.pin = cardCreateParams.pin
-            this.digitalCardArtToken = cardCreateParams.digitalCardArtToken
             this.productId = cardCreateParams.productId
             this.shippingAddress = cardCreateParams.shippingAddress
             this.shippingMethod = cardCreateParams.shippingMethod
-            this.carrier = cardCreateParams.carrier
+            this.spendLimit = cardCreateParams.spendLimit
+            this.spendLimitDuration = cardCreateParams.spendLimitDuration
+            this.state = cardCreateParams.state
             additionalQueryParams(cardCreateParams.additionalQueryParams)
             additionalHeaders(cardCreateParams.additionalHeaders)
             additionalBodyProperties(cardCreateParams.additionalBodyProperties)
         }
+
+        /**
+         * Card types:
+         *
+         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
+         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
+         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+         * [lithic.com/contact](https://lithic.com/contact) for more information.
+         * - `SINGLE_USE` - Card is closed upon first successful authorization.
+         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
+         * successfully authorizes the card.
+         */
+        fun type(type: Type) = apply { this.type = type }
 
         /**
          * Globally unique identifier for the account that the card will be associated with.
@@ -643,6 +657,19 @@ constructor(
             this.cardProgramToken = cardProgramToken
         }
 
+        fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+
+        /**
+         * Specifies the digital card art to be displayed in the user’s digital wallet after
+         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
+         * use. See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+         * .
+         */
+        fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+            this.digitalCardArtToken = digitalCardArtToken
+        }
+
         /**
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
@@ -660,6 +687,40 @@ constructor(
          * data as it can cause unexpected behavior.
          */
         fun memo(memo: String) = apply { this.memo = memo }
+
+        /**
+         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
+         * See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
+         */
+        fun pin(pin: String) = apply { this.pin = pin }
+
+        /**
+         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
+         * use. Specifies the configuration (i.e., physical card art) that the card should be
+         * manufactured with.
+         */
+        fun productId(productId: String) = apply { this.productId = productId }
+
+        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            this.shippingAddress = shippingAddress
+        }
+
+        /**
+         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+         * besides `STANDARD` require additional permissions.
+         *
+         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+         * tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         */
+        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            this.shippingMethod = shippingMethod
+        }
 
         /**
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
@@ -691,67 +752,6 @@ constructor(
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          */
         fun state(state: State) = apply { this.state = state }
-
-        /**
-         * Card types:
-         *
-         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         * [lithic.com/contact](https://lithic.com/contact) for more information.
-         * - `SINGLE_USE` - Card is closed upon first successful authorization.
-         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         * successfully authorizes the card.
-         */
-        fun type(type: Type) = apply { this.type = type }
-
-        /**
-         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
-         */
-        fun pin(pin: String) = apply { this.pin = pin }
-
-        /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
-         */
-        fun digitalCardArtToken(digitalCardArtToken: String) = apply {
-            this.digitalCardArtToken = digitalCardArtToken
-        }
-
-        /**
-         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
-         * use. Specifies the configuration (i.e., physical card art) that the card should be
-         * manufactured with.
-         */
-        fun productId(productId: String) = apply { this.productId = productId }
-
-        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
-            this.shippingAddress = shippingAddress
-        }
-
-        /**
-         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-         * besides `STANDARD` require additional permissions.
-         *
-         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         * tracking
-         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
-         */
-        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
-            this.shippingMethod = shippingMethod
-        }
-
-        fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -809,21 +809,21 @@ constructor(
 
         fun build(): CardCreateParams =
             CardCreateParams(
+                checkNotNull(type) { "`type` is required but was not set" },
                 accountToken,
                 cardProgramToken,
+                carrier,
+                digitalCardArtToken,
                 expMonth,
                 expYear,
                 memo,
-                spendLimit,
-                spendLimitDuration,
-                state,
-                checkNotNull(type) { "`type` is required but was not set" },
                 pin,
-                digitalCardArtToken,
                 productId,
                 shippingAddress,
                 shippingMethod,
-                carrier,
+                spendLimit,
+                spendLimitDuration,
+                state,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

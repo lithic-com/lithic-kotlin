@@ -13,21 +13,21 @@ import java.util.Objects
 
 class TransactionSimulateClearingParams
 constructor(
-    private val amount: Long?,
     private val token: String,
+    private val amount: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long? = amount
-
     fun token(): String = token
+
+    fun amount(): Long? = amount
 
     internal fun getBody(): TransactionSimulateClearingBody {
         return TransactionSimulateClearingBody(
-            amount,
             token,
+            amount,
             additionalBodyProperties,
         )
     }
@@ -40,12 +40,15 @@ constructor(
     @NoAutoDetect
     class TransactionSimulateClearingBody
     internal constructor(
-        private val amount: Long?,
         private val token: String?,
+        private val amount: Long?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
+
+        /** The transaction token returned from the /v1/simulate/authorize response. */
+        @JsonProperty("token") fun token(): String? = token
 
         /**
          * Amount (in cents) to complete. Typically this will match the original authorization, but
@@ -56,9 +59,6 @@ constructor(
          * behavior.
          */
         @JsonProperty("amount") fun amount(): Long? = amount
-
-        /** The transaction token returned from the /v1/simulate/authorize response. */
-        @JsonProperty("token") fun token(): String? = token
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -72,8 +72,8 @@ constructor(
             }
 
             return other is TransactionSimulateClearingBody &&
-                this.amount == other.amount &&
                 this.token == other.token &&
+                this.amount == other.amount &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -81,8 +81,8 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        amount,
                         token,
+                        amount,
                         additionalProperties,
                     )
             }
@@ -90,7 +90,7 @@ constructor(
         }
 
         override fun toString() =
-            "TransactionSimulateClearingBody{amount=$amount, token=$token, additionalProperties=$additionalProperties}"
+            "TransactionSimulateClearingBody{token=$token, amount=$amount, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -99,16 +99,19 @@ constructor(
 
         class Builder {
 
-            private var amount: Long? = null
             private var token: String? = null
+            private var amount: Long? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transactionSimulateClearingBody: TransactionSimulateClearingBody) =
                 apply {
-                    this.amount = transactionSimulateClearingBody.amount
                     this.token = transactionSimulateClearingBody.token
+                    this.amount = transactionSimulateClearingBody.amount
                     additionalProperties(transactionSimulateClearingBody.additionalProperties)
                 }
+
+            /** The transaction token returned from the /v1/simulate/authorize response. */
+            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
              * Amount (in cents) to complete. Typically this will match the original authorization,
@@ -119,9 +122,6 @@ constructor(
              * this behavior.
              */
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
-
-            /** The transaction token returned from the /v1/simulate/authorize response. */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -139,8 +139,8 @@ constructor(
 
             fun build(): TransactionSimulateClearingBody =
                 TransactionSimulateClearingBody(
-                    amount,
                     checkNotNull(token) { "`token` is required but was not set" },
+                    amount,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -158,8 +158,8 @@ constructor(
         }
 
         return other is TransactionSimulateClearingParams &&
-            this.amount == other.amount &&
             this.token == other.token &&
+            this.amount == other.amount &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -167,8 +167,8 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
-            amount,
             token,
+            amount,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -176,7 +176,7 @@ constructor(
     }
 
     override fun toString() =
-        "TransactionSimulateClearingParams{amount=$amount, token=$token, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "TransactionSimulateClearingParams{token=$token, amount=$amount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -188,20 +188,23 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
         private var token: String? = null
+        private var amount: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transactionSimulateClearingParams: TransactionSimulateClearingParams) =
             apply {
-                this.amount = transactionSimulateClearingParams.amount
                 this.token = transactionSimulateClearingParams.token
+                this.amount = transactionSimulateClearingParams.amount
                 additionalQueryParams(transactionSimulateClearingParams.additionalQueryParams)
                 additionalHeaders(transactionSimulateClearingParams.additionalHeaders)
                 additionalBodyProperties(transactionSimulateClearingParams.additionalBodyProperties)
             }
+
+        /** The transaction token returned from the /v1/simulate/authorize response. */
+        fun token(token: String) = apply { this.token = token }
 
         /**
          * Amount (in cents) to complete. Typically this will match the original authorization, but
@@ -212,9 +215,6 @@ constructor(
          * behavior.
          */
         fun amount(amount: Long) = apply { this.amount = amount }
-
-        /** The transaction token returned from the /v1/simulate/authorize response. */
-        fun token(token: String) = apply { this.token = token }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -272,8 +272,8 @@ constructor(
 
         fun build(): TransactionSimulateClearingParams =
             TransactionSimulateClearingParams(
-                amount,
                 checkNotNull(token) { "`token` is required but was not set" },
+                amount,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

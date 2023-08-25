@@ -15,13 +15,13 @@ import java.util.Objects
 class ExternalBankAccountUpdateParams
 constructor(
     private val externalBankAccountToken: String,
-    private val owner: String?,
-    private val ownerType: OwnerType?,
-    private val name: String?,
-    private val companyId: String?,
     private val address: ExternalBankAccountAddress?,
+    private val companyId: String?,
     private val dob: LocalDate?,
     private val doingBusinessAs: String?,
+    private val name: String?,
+    private val owner: String?,
+    private val ownerType: OwnerType?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -29,29 +29,29 @@ constructor(
 
     fun externalBankAccountToken(): String = externalBankAccountToken
 
-    fun owner(): String? = owner
-
-    fun ownerType(): OwnerType? = ownerType
-
-    fun name(): String? = name
+    fun address(): ExternalBankAccountAddress? = address
 
     fun companyId(): String? = companyId
-
-    fun address(): ExternalBankAccountAddress? = address
 
     fun dob(): LocalDate? = dob
 
     fun doingBusinessAs(): String? = doingBusinessAs
 
+    fun name(): String? = name
+
+    fun owner(): String? = owner
+
+    fun ownerType(): OwnerType? = ownerType
+
     internal fun getBody(): ExternalBankAccountUpdateBody {
         return ExternalBankAccountUpdateBody(
-            owner,
-            ownerType,
-            name,
-            companyId,
             address,
+            companyId,
             dob,
             doingBusinessAs,
+            name,
+            owner,
+            ownerType,
             additionalBodyProperties,
         )
     }
@@ -71,25 +71,17 @@ constructor(
     @NoAutoDetect
     class ExternalBankAccountUpdateBody
     internal constructor(
-        private val owner: String?,
-        private val ownerType: OwnerType?,
-        private val name: String?,
-        private val companyId: String?,
         private val address: ExternalBankAccountAddress?,
+        private val companyId: String?,
         private val dob: LocalDate?,
         private val doingBusinessAs: String?,
+        private val name: String?,
+        private val owner: String?,
+        private val ownerType: OwnerType?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
-
-        @JsonProperty("owner") fun owner(): String? = owner
-
-        @JsonProperty("owner_type") fun ownerType(): OwnerType? = ownerType
-
-        @JsonProperty("name") fun name(): String? = name
-
-        @JsonProperty("company_id") fun companyId(): String? = companyId
 
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
@@ -97,10 +89,18 @@ constructor(
          */
         @JsonProperty("address") fun address(): ExternalBankAccountAddress? = address
 
+        @JsonProperty("company_id") fun companyId(): String? = companyId
+
         /** Date of Birth of the Individual that owns the external bank account */
         @JsonProperty("dob") fun dob(): LocalDate? = dob
 
         @JsonProperty("doing_business_as") fun doingBusinessAs(): String? = doingBusinessAs
+
+        @JsonProperty("name") fun name(): String? = name
+
+        @JsonProperty("owner") fun owner(): String? = owner
+
+        @JsonProperty("owner_type") fun ownerType(): OwnerType? = ownerType
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -114,13 +114,13 @@ constructor(
             }
 
             return other is ExternalBankAccountUpdateBody &&
-                this.owner == other.owner &&
-                this.ownerType == other.ownerType &&
-                this.name == other.name &&
-                this.companyId == other.companyId &&
                 this.address == other.address &&
+                this.companyId == other.companyId &&
                 this.dob == other.dob &&
                 this.doingBusinessAs == other.doingBusinessAs &&
+                this.name == other.name &&
+                this.owner == other.owner &&
+                this.ownerType == other.ownerType &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -128,13 +128,13 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        owner,
-                        ownerType,
-                        name,
-                        companyId,
                         address,
+                        companyId,
                         dob,
                         doingBusinessAs,
+                        name,
+                        owner,
+                        ownerType,
                         additionalProperties,
                     )
             }
@@ -142,7 +142,7 @@ constructor(
         }
 
         override fun toString() =
-            "ExternalBankAccountUpdateBody{owner=$owner, ownerType=$ownerType, name=$name, companyId=$companyId, address=$address, dob=$dob, doingBusinessAs=$doingBusinessAs, additionalProperties=$additionalProperties}"
+            "ExternalBankAccountUpdateBody{address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -151,36 +151,26 @@ constructor(
 
         class Builder {
 
-            private var owner: String? = null
-            private var ownerType: OwnerType? = null
-            private var name: String? = null
-            private var companyId: String? = null
             private var address: ExternalBankAccountAddress? = null
+            private var companyId: String? = null
             private var dob: LocalDate? = null
             private var doingBusinessAs: String? = null
+            private var name: String? = null
+            private var owner: String? = null
+            private var ownerType: OwnerType? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(externalBankAccountUpdateBody: ExternalBankAccountUpdateBody) =
                 apply {
-                    this.owner = externalBankAccountUpdateBody.owner
-                    this.ownerType = externalBankAccountUpdateBody.ownerType
-                    this.name = externalBankAccountUpdateBody.name
-                    this.companyId = externalBankAccountUpdateBody.companyId
                     this.address = externalBankAccountUpdateBody.address
+                    this.companyId = externalBankAccountUpdateBody.companyId
                     this.dob = externalBankAccountUpdateBody.dob
                     this.doingBusinessAs = externalBankAccountUpdateBody.doingBusinessAs
+                    this.name = externalBankAccountUpdateBody.name
+                    this.owner = externalBankAccountUpdateBody.owner
+                    this.ownerType = externalBankAccountUpdateBody.ownerType
                     additionalProperties(externalBankAccountUpdateBody.additionalProperties)
                 }
-
-            @JsonProperty("owner") fun owner(owner: String) = apply { this.owner = owner }
-
-            @JsonProperty("owner_type")
-            fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
-
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
-
-            @JsonProperty("company_id")
-            fun companyId(companyId: String) = apply { this.companyId = companyId }
 
             /**
              * Address used during Address Verification Service (AVS) checks during transactions if
@@ -189,6 +179,9 @@ constructor(
             @JsonProperty("address")
             fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
 
+            @JsonProperty("company_id")
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
+
             /** Date of Birth of the Individual that owns the external bank account */
             @JsonProperty("dob") fun dob(dob: LocalDate) = apply { this.dob = dob }
 
@@ -196,6 +189,13 @@ constructor(
             fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
+
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+
+            @JsonProperty("owner") fun owner(owner: String) = apply { this.owner = owner }
+
+            @JsonProperty("owner_type")
+            fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -213,13 +213,13 @@ constructor(
 
             fun build(): ExternalBankAccountUpdateBody =
                 ExternalBankAccountUpdateBody(
-                    owner,
-                    ownerType,
-                    name,
-                    companyId,
                     address,
+                    companyId,
                     dob,
                     doingBusinessAs,
+                    name,
+                    owner,
+                    ownerType,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -238,13 +238,13 @@ constructor(
 
         return other is ExternalBankAccountUpdateParams &&
             this.externalBankAccountToken == other.externalBankAccountToken &&
-            this.owner == other.owner &&
-            this.ownerType == other.ownerType &&
-            this.name == other.name &&
-            this.companyId == other.companyId &&
             this.address == other.address &&
+            this.companyId == other.companyId &&
             this.dob == other.dob &&
             this.doingBusinessAs == other.doingBusinessAs &&
+            this.name == other.name &&
+            this.owner == other.owner &&
+            this.ownerType == other.ownerType &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -253,13 +253,13 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             externalBankAccountToken,
-            owner,
-            ownerType,
-            name,
-            companyId,
             address,
+            companyId,
             dob,
             doingBusinessAs,
+            name,
+            owner,
+            ownerType,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -267,7 +267,7 @@ constructor(
     }
 
     override fun toString() =
-        "ExternalBankAccountUpdateParams{externalBankAccountToken=$externalBankAccountToken, owner=$owner, ownerType=$ownerType, name=$name, companyId=$companyId, address=$address, dob=$dob, doingBusinessAs=$doingBusinessAs, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalBankAccountUpdateParams{externalBankAccountToken=$externalBankAccountToken, address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -280,13 +280,13 @@ constructor(
     class Builder {
 
         private var externalBankAccountToken: String? = null
-        private var owner: String? = null
-        private var ownerType: OwnerType? = null
-        private var name: String? = null
-        private var companyId: String? = null
         private var address: ExternalBankAccountAddress? = null
+        private var companyId: String? = null
         private var dob: LocalDate? = null
         private var doingBusinessAs: String? = null
+        private var name: String? = null
+        private var owner: String? = null
+        private var ownerType: OwnerType? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -295,13 +295,13 @@ constructor(
             apply {
                 this.externalBankAccountToken =
                     externalBankAccountUpdateParams.externalBankAccountToken
-                this.owner = externalBankAccountUpdateParams.owner
-                this.ownerType = externalBankAccountUpdateParams.ownerType
-                this.name = externalBankAccountUpdateParams.name
-                this.companyId = externalBankAccountUpdateParams.companyId
                 this.address = externalBankAccountUpdateParams.address
+                this.companyId = externalBankAccountUpdateParams.companyId
                 this.dob = externalBankAccountUpdateParams.dob
                 this.doingBusinessAs = externalBankAccountUpdateParams.doingBusinessAs
+                this.name = externalBankAccountUpdateParams.name
+                this.owner = externalBankAccountUpdateParams.owner
+                this.ownerType = externalBankAccountUpdateParams.ownerType
                 additionalQueryParams(externalBankAccountUpdateParams.additionalQueryParams)
                 additionalHeaders(externalBankAccountUpdateParams.additionalHeaders)
                 additionalBodyProperties(externalBankAccountUpdateParams.additionalBodyProperties)
@@ -311,19 +311,13 @@ constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
-        fun owner(owner: String) = apply { this.owner = owner }
-
-        fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
-
-        fun name(name: String) = apply { this.name = name }
-
-        fun companyId(companyId: String) = apply { this.companyId = companyId }
-
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
          * enabled via Auth Rules.
          */
         fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
+
+        fun companyId(companyId: String) = apply { this.companyId = companyId }
 
         /** Date of Birth of the Individual that owns the external bank account */
         fun dob(dob: LocalDate) = apply { this.dob = dob }
@@ -331,6 +325,12 @@ constructor(
         fun doingBusinessAs(doingBusinessAs: String) = apply {
             this.doingBusinessAs = doingBusinessAs
         }
+
+        fun name(name: String) = apply { this.name = name }
+
+        fun owner(owner: String) = apply { this.owner = owner }
+
+        fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -391,13 +391,13 @@ constructor(
                 checkNotNull(externalBankAccountToken) {
                     "`externalBankAccountToken` is required but was not set"
                 },
-                owner,
-                ownerType,
-                name,
-                companyId,
                 address,
+                companyId,
                 dob,
                 doingBusinessAs,
+                name,
+                owner,
+                ownerType,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

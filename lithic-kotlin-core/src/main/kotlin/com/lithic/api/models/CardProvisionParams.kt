@@ -17,10 +17,10 @@ import java.util.Objects
 class CardProvisionParams
 constructor(
     private val cardToken: String,
+    private val certificate: String?,
     private val digitalWallet: DigitalWallet?,
     private val nonce: String?,
     private val nonceSignature: String?,
-    private val certificate: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -28,20 +28,20 @@ constructor(
 
     fun cardToken(): String = cardToken
 
+    fun certificate(): String? = certificate
+
     fun digitalWallet(): DigitalWallet? = digitalWallet
 
     fun nonce(): String? = nonce
 
     fun nonceSignature(): String? = nonceSignature
 
-    fun certificate(): String? = certificate
-
     internal fun getBody(): CardProvisionBody {
         return CardProvisionBody(
+            certificate,
             digitalWallet,
             nonce,
             nonceSignature,
-            certificate,
             additionalBodyProperties,
         )
     }
@@ -61,14 +61,22 @@ constructor(
     @NoAutoDetect
     class CardProvisionBody
     internal constructor(
+        private val certificate: String?,
         private val digitalWallet: DigitalWallet?,
         private val nonce: String?,
         private val nonceSignature: String?,
-        private val certificate: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
+
+        /**
+         * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only `activationData`
+         * in the response. Apple's public leaf certificate. Base64 encoded in PEM format with
+         * headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted. Provided by the device's
+         * wallet.
+         */
+        @JsonProperty("certificate") fun certificate(): String? = certificate
 
         /** Name of digital wallet provider. */
         @JsonProperty("digital_wallet") fun digitalWallet(): DigitalWallet? = digitalWallet
@@ -85,14 +93,6 @@ constructor(
          */
         @JsonProperty("nonce_signature") fun nonceSignature(): String? = nonceSignature
 
-        /**
-         * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only `activationData`
-         * in the response. Apple's public leaf certificate. Base64 encoded in PEM format with
-         * headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted. Provided by the device's
-         * wallet.
-         */
-        @JsonProperty("certificate") fun certificate(): String? = certificate
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -105,10 +105,10 @@ constructor(
             }
 
             return other is CardProvisionBody &&
+                this.certificate == other.certificate &&
                 this.digitalWallet == other.digitalWallet &&
                 this.nonce == other.nonce &&
                 this.nonceSignature == other.nonceSignature &&
-                this.certificate == other.certificate &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -116,10 +116,10 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        certificate,
                         digitalWallet,
                         nonce,
                         nonceSignature,
-                        certificate,
                         additionalProperties,
                     )
             }
@@ -127,7 +127,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardProvisionBody{digitalWallet=$digitalWallet, nonce=$nonce, nonceSignature=$nonceSignature, certificate=$certificate, additionalProperties=$additionalProperties}"
+            "CardProvisionBody{certificate=$certificate, digitalWallet=$digitalWallet, nonce=$nonce, nonceSignature=$nonceSignature, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -136,19 +136,28 @@ constructor(
 
         class Builder {
 
+            private var certificate: String? = null
             private var digitalWallet: DigitalWallet? = null
             private var nonce: String? = null
             private var nonceSignature: String? = null
-            private var certificate: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardProvisionBody: CardProvisionBody) = apply {
+                this.certificate = cardProvisionBody.certificate
                 this.digitalWallet = cardProvisionBody.digitalWallet
                 this.nonce = cardProvisionBody.nonce
                 this.nonceSignature = cardProvisionBody.nonceSignature
-                this.certificate = cardProvisionBody.certificate
                 additionalProperties(cardProvisionBody.additionalProperties)
             }
+
+            /**
+             * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only
+             * `activationData` in the response. Apple's public leaf certificate. Base64 encoded in
+             * PEM format with headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted.
+             * Provided by the device's wallet.
+             */
+            @JsonProperty("certificate")
+            fun certificate(certificate: String) = apply { this.certificate = certificate }
 
             /** Name of digital wallet provider. */
             @JsonProperty("digital_wallet")
@@ -173,15 +182,6 @@ constructor(
                 this.nonceSignature = nonceSignature
             }
 
-            /**
-             * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only
-             * `activationData` in the response. Apple's public leaf certificate. Base64 encoded in
-             * PEM format with headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted.
-             * Provided by the device's wallet.
-             */
-            @JsonProperty("certificate")
-            fun certificate(certificate: String) = apply { this.certificate = certificate }
-
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -198,10 +198,10 @@ constructor(
 
             fun build(): CardProvisionBody =
                 CardProvisionBody(
+                    certificate,
                     digitalWallet,
                     nonce,
                     nonceSignature,
-                    certificate,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -220,10 +220,10 @@ constructor(
 
         return other is CardProvisionParams &&
             this.cardToken == other.cardToken &&
+            this.certificate == other.certificate &&
             this.digitalWallet == other.digitalWallet &&
             this.nonce == other.nonce &&
             this.nonceSignature == other.nonceSignature &&
-            this.certificate == other.certificate &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -232,10 +232,10 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             cardToken,
+            certificate,
             digitalWallet,
             nonce,
             nonceSignature,
-            certificate,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -243,7 +243,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardProvisionParams{cardToken=$cardToken, digitalWallet=$digitalWallet, nonce=$nonce, nonceSignature=$nonceSignature, certificate=$certificate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardProvisionParams{cardToken=$cardToken, certificate=$certificate, digitalWallet=$digitalWallet, nonce=$nonce, nonceSignature=$nonceSignature, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -256,26 +256,34 @@ constructor(
     class Builder {
 
         private var cardToken: String? = null
+        private var certificate: String? = null
         private var digitalWallet: DigitalWallet? = null
         private var nonce: String? = null
         private var nonceSignature: String? = null
-        private var certificate: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardProvisionParams: CardProvisionParams) = apply {
             this.cardToken = cardProvisionParams.cardToken
+            this.certificate = cardProvisionParams.certificate
             this.digitalWallet = cardProvisionParams.digitalWallet
             this.nonce = cardProvisionParams.nonce
             this.nonceSignature = cardProvisionParams.nonceSignature
-            this.certificate = cardProvisionParams.certificate
             additionalQueryParams(cardProvisionParams.additionalQueryParams)
             additionalHeaders(cardProvisionParams.additionalHeaders)
             additionalBodyProperties(cardProvisionParams.additionalBodyProperties)
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
+
+        /**
+         * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only `activationData`
+         * in the response. Apple's public leaf certificate. Base64 encoded in PEM format with
+         * headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted. Provided by the device's
+         * wallet.
+         */
+        fun certificate(certificate: String) = apply { this.certificate = certificate }
 
         /** Name of digital wallet provider. */
         fun digitalWallet(digitalWallet: DigitalWallet) = apply {
@@ -293,14 +301,6 @@ constructor(
          * in the response. Base64 cryptographic nonce provided by the device's wallet.
          */
         fun nonceSignature(nonceSignature: String) = apply { this.nonceSignature = nonceSignature }
-
-        /**
-         * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only `activationData`
-         * in the response. Apple's public leaf certificate. Base64 encoded in PEM format with
-         * headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted. Provided by the device's
-         * wallet.
-         */
-        fun certificate(certificate: String) = apply { this.certificate = certificate }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -359,10 +359,10 @@ constructor(
         fun build(): CardProvisionParams =
             CardProvisionParams(
                 checkNotNull(cardToken) { "`cardToken` is required but was not set" },
+                certificate,
                 digitalWallet,
                 nonce,
                 nonceSignature,
-                certificate,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

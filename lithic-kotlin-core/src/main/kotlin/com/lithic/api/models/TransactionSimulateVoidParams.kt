@@ -16,24 +16,24 @@ import java.util.Objects
 
 class TransactionSimulateVoidParams
 constructor(
-    private val amount: Long?,
     private val token: String,
+    private val amount: Long?,
     private val type: Type?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long? = amount
-
     fun token(): String = token
+
+    fun amount(): Long? = amount
 
     fun type(): Type? = type
 
     internal fun getBody(): TransactionSimulateVoidBody {
         return TransactionSimulateVoidBody(
-            amount,
             token,
+            amount,
             type,
             additionalBodyProperties,
         )
@@ -47,22 +47,22 @@ constructor(
     @NoAutoDetect
     class TransactionSimulateVoidBody
     internal constructor(
-        private val amount: Long?,
         private val token: String?,
+        private val amount: Long?,
         private val type: Type?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
+        /** The transaction token returned from the /v1/simulate/authorize response. */
+        @JsonProperty("token") fun token(): String? = token
+
         /**
          * Amount (in cents) to void. Typically this will match the original authorization, but may
          * be less.
          */
         @JsonProperty("amount") fun amount(): Long? = amount
-
-        /** The transaction token returned from the /v1/simulate/authorize response. */
-        @JsonProperty("token") fun token(): String? = token
 
         /**
          * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
@@ -84,8 +84,8 @@ constructor(
             }
 
             return other is TransactionSimulateVoidBody &&
-                this.amount == other.amount &&
                 this.token == other.token &&
+                this.amount == other.amount &&
                 this.type == other.type &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -94,8 +94,8 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        amount,
                         token,
+                        amount,
                         type,
                         additionalProperties,
                     )
@@ -104,7 +104,7 @@ constructor(
         }
 
         override fun toString() =
-            "TransactionSimulateVoidBody{amount=$amount, token=$token, type=$type, additionalProperties=$additionalProperties}"
+            "TransactionSimulateVoidBody{token=$token, amount=$amount, type=$type, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -113,26 +113,26 @@ constructor(
 
         class Builder {
 
-            private var amount: Long? = null
             private var token: String? = null
+            private var amount: Long? = null
             private var type: Type? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transactionSimulateVoidBody: TransactionSimulateVoidBody) = apply {
-                this.amount = transactionSimulateVoidBody.amount
                 this.token = transactionSimulateVoidBody.token
+                this.amount = transactionSimulateVoidBody.amount
                 this.type = transactionSimulateVoidBody.type
                 additionalProperties(transactionSimulateVoidBody.additionalProperties)
             }
+
+            /** The transaction token returned from the /v1/simulate/authorize response. */
+            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
              * Amount (in cents) to void. Typically this will match the original authorization, but
              * may be less.
              */
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
-
-            /** The transaction token returned from the /v1/simulate/authorize response. */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
              * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
@@ -159,8 +159,8 @@ constructor(
 
             fun build(): TransactionSimulateVoidBody =
                 TransactionSimulateVoidBody(
-                    amount,
                     checkNotNull(token) { "`token` is required but was not set" },
+                    amount,
                     type,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -179,8 +179,8 @@ constructor(
         }
 
         return other is TransactionSimulateVoidParams &&
-            this.amount == other.amount &&
             this.token == other.token &&
+            this.amount == other.amount &&
             this.type == other.type &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -189,8 +189,8 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
-            amount,
             token,
+            amount,
             type,
             additionalQueryParams,
             additionalHeaders,
@@ -199,7 +199,7 @@ constructor(
     }
 
     override fun toString() =
-        "TransactionSimulateVoidParams{amount=$amount, token=$token, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "TransactionSimulateVoidParams{token=$token, amount=$amount, type=$type, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -211,30 +211,30 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
         private var token: String? = null
+        private var amount: Long? = null
         private var type: Type? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transactionSimulateVoidParams: TransactionSimulateVoidParams) = apply {
-            this.amount = transactionSimulateVoidParams.amount
             this.token = transactionSimulateVoidParams.token
+            this.amount = transactionSimulateVoidParams.amount
             this.type = transactionSimulateVoidParams.type
             additionalQueryParams(transactionSimulateVoidParams.additionalQueryParams)
             additionalHeaders(transactionSimulateVoidParams.additionalHeaders)
             additionalBodyProperties(transactionSimulateVoidParams.additionalBodyProperties)
         }
 
+        /** The transaction token returned from the /v1/simulate/authorize response. */
+        fun token(token: String) = apply { this.token = token }
+
         /**
          * Amount (in cents) to void. Typically this will match the original authorization, but may
          * be less.
          */
         fun amount(amount: Long) = apply { this.amount = amount }
-
-        /** The transaction token returned from the /v1/simulate/authorize response. */
-        fun token(token: String) = apply { this.token = token }
 
         /**
          * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
@@ -300,8 +300,8 @@ constructor(
 
         fun build(): TransactionSimulateVoidParams =
             TransactionSimulateVoidParams(
-                amount,
                 checkNotNull(token) { "`token` is required but was not set" },
+                amount,
                 type,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
