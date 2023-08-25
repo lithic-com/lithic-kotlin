@@ -13,9 +13,9 @@ import java.util.Objects
 
 class TransferCreateParams
 constructor(
+    private val amount: Long,
     private val from: FinancialAccount,
     private val to: FinancialAccount,
-    private val amount: Long,
     private val memo: String?,
     private val transactionToken: String?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -23,11 +23,11 @@ constructor(
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
+    fun amount(): Long = amount
+
     fun from(): FinancialAccount = from
 
     fun to(): FinancialAccount = to
-
-    fun amount(): Long = amount
 
     fun memo(): String? = memo
 
@@ -35,9 +35,9 @@ constructor(
 
     internal fun getBody(): TransferCreateBody {
         return TransferCreateBody(
+            amount,
             from,
             to,
-            amount,
             memo,
             transactionToken,
             additionalBodyProperties,
@@ -52,9 +52,9 @@ constructor(
     @NoAutoDetect
     class TransferCreateBody
     internal constructor(
+        private val amount: Long?,
         private val from: FinancialAccount?,
         private val to: FinancialAccount?,
-        private val amount: Long?,
         private val memo: String?,
         private val transactionToken: String?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -62,17 +62,17 @@ constructor(
 
         private var hashCode: Int = 0
 
-        /** Financial Account */
-        @JsonProperty("from") fun from(): FinancialAccount? = from
-
-        /** Financial Account */
-        @JsonProperty("to") fun to(): FinancialAccount? = to
-
         /**
          * Amount to be transferred in the currency’s smallest unit (e.g., cents for USD). This
          * should always be a positive value.
          */
         @JsonProperty("amount") fun amount(): Long? = amount
+
+        /** Financial Account */
+        @JsonProperty("from") fun from(): FinancialAccount? = from
+
+        /** Financial Account */
+        @JsonProperty("to") fun to(): FinancialAccount? = to
 
         /** Optional descriptor for the transfer. */
         @JsonProperty("memo") fun memo(): String? = memo
@@ -92,9 +92,9 @@ constructor(
             }
 
             return other is TransferCreateBody &&
+                this.amount == other.amount &&
                 this.from == other.from &&
                 this.to == other.to &&
-                this.amount == other.amount &&
                 this.memo == other.memo &&
                 this.transactionToken == other.transactionToken &&
                 this.additionalProperties == other.additionalProperties
@@ -104,9 +104,9 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        amount,
                         from,
                         to,
-                        amount,
                         memo,
                         transactionToken,
                         additionalProperties,
@@ -116,7 +116,7 @@ constructor(
         }
 
         override fun toString() =
-            "TransferCreateBody{from=$from, to=$to, amount=$amount, memo=$memo, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
+            "TransferCreateBody{amount=$amount, from=$from, to=$to, memo=$memo, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -125,33 +125,33 @@ constructor(
 
         class Builder {
 
+            private var amount: Long? = null
             private var from: FinancialAccount? = null
             private var to: FinancialAccount? = null
-            private var amount: Long? = null
             private var memo: String? = null
             private var transactionToken: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transferCreateBody: TransferCreateBody) = apply {
+                this.amount = transferCreateBody.amount
                 this.from = transferCreateBody.from
                 this.to = transferCreateBody.to
-                this.amount = transferCreateBody.amount
                 this.memo = transferCreateBody.memo
                 this.transactionToken = transferCreateBody.transactionToken
                 additionalProperties(transferCreateBody.additionalProperties)
             }
-
-            /** Financial Account */
-            @JsonProperty("from") fun from(from: FinancialAccount) = apply { this.from = from }
-
-            /** Financial Account */
-            @JsonProperty("to") fun to(to: FinancialAccount) = apply { this.to = to }
 
             /**
              * Amount to be transferred in the currency’s smallest unit (e.g., cents for USD). This
              * should always be a positive value.
              */
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+
+            /** Financial Account */
+            @JsonProperty("from") fun from(from: FinancialAccount) = apply { this.from = from }
+
+            /** Financial Account */
+            @JsonProperty("to") fun to(to: FinancialAccount) = apply { this.to = to }
 
             /** Optional descriptor for the transfer. */
             @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
@@ -178,9 +178,9 @@ constructor(
 
             fun build(): TransferCreateBody =
                 TransferCreateBody(
+                    checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(from) { "`from` is required but was not set" },
                     checkNotNull(to) { "`to` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
                     memo,
                     transactionToken,
                     additionalProperties.toUnmodifiable(),
@@ -200,9 +200,9 @@ constructor(
         }
 
         return other is TransferCreateParams &&
+            this.amount == other.amount &&
             this.from == other.from &&
             this.to == other.to &&
-            this.amount == other.amount &&
             this.memo == other.memo &&
             this.transactionToken == other.transactionToken &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -212,9 +212,9 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            amount,
             from,
             to,
-            amount,
             memo,
             transactionToken,
             additionalQueryParams,
@@ -224,7 +224,7 @@ constructor(
     }
 
     override fun toString() =
-        "TransferCreateParams{from=$from, to=$to, amount=$amount, memo=$memo, transactionToken=$transactionToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "TransferCreateParams{amount=$amount, from=$from, to=$to, memo=$memo, transactionToken=$transactionToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -236,9 +236,9 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var amount: Long? = null
         private var from: FinancialAccount? = null
         private var to: FinancialAccount? = null
-        private var amount: Long? = null
         private var memo: String? = null
         private var transactionToken: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -246,9 +246,9 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transferCreateParams: TransferCreateParams) = apply {
+            this.amount = transferCreateParams.amount
             this.from = transferCreateParams.from
             this.to = transferCreateParams.to
-            this.amount = transferCreateParams.amount
             this.memo = transferCreateParams.memo
             this.transactionToken = transferCreateParams.transactionToken
             additionalQueryParams(transferCreateParams.additionalQueryParams)
@@ -256,17 +256,17 @@ constructor(
             additionalBodyProperties(transferCreateParams.additionalBodyProperties)
         }
 
-        /** Financial Account */
-        fun from(from: FinancialAccount) = apply { this.from = from }
-
-        /** Financial Account */
-        fun to(to: FinancialAccount) = apply { this.to = to }
-
         /**
          * Amount to be transferred in the currency’s smallest unit (e.g., cents for USD). This
          * should always be a positive value.
          */
         fun amount(amount: Long) = apply { this.amount = amount }
+
+        /** Financial Account */
+        fun from(from: FinancialAccount) = apply { this.from = from }
+
+        /** Financial Account */
+        fun to(to: FinancialAccount) = apply { this.to = to }
 
         /** Optional descriptor for the transfer. */
         fun memo(memo: String) = apply { this.memo = memo }
@@ -332,9 +332,9 @@ constructor(
 
         fun build(): TransferCreateParams =
             TransferCreateParams(
+                checkNotNull(amount) { "`amount` is required but was not set" },
                 checkNotNull(from) { "`from` is required but was not set" },
                 checkNotNull(to) { "`to` is required but was not set" },
-                checkNotNull(amount) { "`amount` is required but was not set" },
                 memo,
                 transactionToken,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

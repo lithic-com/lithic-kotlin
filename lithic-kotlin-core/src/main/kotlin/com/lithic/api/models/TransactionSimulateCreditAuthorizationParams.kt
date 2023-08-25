@@ -16,8 +16,8 @@ constructor(
     private val amount: Long,
     private val descriptor: String,
     private val pan: String,
-    private val merchantAcceptorId: String?,
     private val mcc: String?,
+    private val merchantAcceptorId: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -29,17 +29,17 @@ constructor(
 
     fun pan(): String = pan
 
-    fun merchantAcceptorId(): String? = merchantAcceptorId
-
     fun mcc(): String? = mcc
+
+    fun merchantAcceptorId(): String? = merchantAcceptorId
 
     internal fun getBody(): TransactionSimulateCreditAuthorizationBody {
         return TransactionSimulateCreditAuthorizationBody(
             amount,
             descriptor,
             pan,
-            merchantAcceptorId,
             mcc,
+            merchantAcceptorId,
             additionalBodyProperties,
         )
     }
@@ -55,8 +55,8 @@ constructor(
         private val amount: Long?,
         private val descriptor: String?,
         private val pan: String?,
-        private val merchantAcceptorId: String?,
         private val mcc: String?,
+        private val merchantAcceptorId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -75,15 +75,15 @@ constructor(
         /** Sixteen digit card number. */
         @JsonProperty("pan") fun pan(): String? = pan
 
-        /** Unique identifier to identify the payment card acceptor. */
-        @JsonProperty("merchant_acceptor_id") fun merchantAcceptorId(): String? = merchantAcceptorId
-
         /**
          * Merchant category code for the transaction to be simulated. A four-digit number listed in
          * ISO 18245. Supported merchant category codes can be found
          * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
          */
         @JsonProperty("mcc") fun mcc(): String? = mcc
+
+        /** Unique identifier to identify the payment card acceptor. */
+        @JsonProperty("merchant_acceptor_id") fun merchantAcceptorId(): String? = merchantAcceptorId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -100,8 +100,8 @@ constructor(
                 this.amount == other.amount &&
                 this.descriptor == other.descriptor &&
                 this.pan == other.pan &&
-                this.merchantAcceptorId == other.merchantAcceptorId &&
                 this.mcc == other.mcc &&
+                this.merchantAcceptorId == other.merchantAcceptorId &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -112,8 +112,8 @@ constructor(
                         amount,
                         descriptor,
                         pan,
-                        merchantAcceptorId,
                         mcc,
+                        merchantAcceptorId,
                         additionalProperties,
                     )
             }
@@ -121,7 +121,7 @@ constructor(
         }
 
         override fun toString() =
-            "TransactionSimulateCreditAuthorizationBody{amount=$amount, descriptor=$descriptor, pan=$pan, merchantAcceptorId=$merchantAcceptorId, mcc=$mcc, additionalProperties=$additionalProperties}"
+            "TransactionSimulateCreditAuthorizationBody{amount=$amount, descriptor=$descriptor, pan=$pan, mcc=$mcc, merchantAcceptorId=$merchantAcceptorId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -133,8 +133,8 @@ constructor(
             private var amount: Long? = null
             private var descriptor: String? = null
             private var pan: String? = null
-            private var merchantAcceptorId: String? = null
             private var mcc: String? = null
+            private var merchantAcceptorId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -144,9 +144,9 @@ constructor(
                 this.amount = transactionSimulateCreditAuthorizationBody.amount
                 this.descriptor = transactionSimulateCreditAuthorizationBody.descriptor
                 this.pan = transactionSimulateCreditAuthorizationBody.pan
+                this.mcc = transactionSimulateCreditAuthorizationBody.mcc
                 this.merchantAcceptorId =
                     transactionSimulateCreditAuthorizationBody.merchantAcceptorId
-                this.mcc = transactionSimulateCreditAuthorizationBody.mcc
                 additionalProperties(
                     transactionSimulateCreditAuthorizationBody.additionalProperties
                 )
@@ -166,18 +166,18 @@ constructor(
             /** Sixteen digit card number. */
             @JsonProperty("pan") fun pan(pan: String) = apply { this.pan = pan }
 
-            /** Unique identifier to identify the payment card acceptor. */
-            @JsonProperty("merchant_acceptor_id")
-            fun merchantAcceptorId(merchantAcceptorId: String) = apply {
-                this.merchantAcceptorId = merchantAcceptorId
-            }
-
             /**
              * Merchant category code for the transaction to be simulated. A four-digit number
              * listed in ISO 18245. Supported merchant category codes can be found
              * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
              */
             @JsonProperty("mcc") fun mcc(mcc: String) = apply { this.mcc = mcc }
+
+            /** Unique identifier to identify the payment card acceptor. */
+            @JsonProperty("merchant_acceptor_id")
+            fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+                this.merchantAcceptorId = merchantAcceptorId
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -198,8 +198,8 @@ constructor(
                     checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(descriptor) { "`descriptor` is required but was not set" },
                     checkNotNull(pan) { "`pan` is required but was not set" },
-                    merchantAcceptorId,
                     mcc,
+                    merchantAcceptorId,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -220,8 +220,8 @@ constructor(
             this.amount == other.amount &&
             this.descriptor == other.descriptor &&
             this.pan == other.pan &&
-            this.merchantAcceptorId == other.merchantAcceptorId &&
             this.mcc == other.mcc &&
+            this.merchantAcceptorId == other.merchantAcceptorId &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -232,8 +232,8 @@ constructor(
             amount,
             descriptor,
             pan,
-            merchantAcceptorId,
             mcc,
+            merchantAcceptorId,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -241,7 +241,7 @@ constructor(
     }
 
     override fun toString() =
-        "TransactionSimulateCreditAuthorizationParams{amount=$amount, descriptor=$descriptor, pan=$pan, merchantAcceptorId=$merchantAcceptorId, mcc=$mcc, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "TransactionSimulateCreditAuthorizationParams{amount=$amount, descriptor=$descriptor, pan=$pan, mcc=$mcc, merchantAcceptorId=$merchantAcceptorId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -256,8 +256,8 @@ constructor(
         private var amount: Long? = null
         private var descriptor: String? = null
         private var pan: String? = null
-        private var merchantAcceptorId: String? = null
         private var mcc: String? = null
+        private var merchantAcceptorId: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -269,9 +269,9 @@ constructor(
             this.amount = transactionSimulateCreditAuthorizationParams.amount
             this.descriptor = transactionSimulateCreditAuthorizationParams.descriptor
             this.pan = transactionSimulateCreditAuthorizationParams.pan
+            this.mcc = transactionSimulateCreditAuthorizationParams.mcc
             this.merchantAcceptorId =
                 transactionSimulateCreditAuthorizationParams.merchantAcceptorId
-            this.mcc = transactionSimulateCreditAuthorizationParams.mcc
             additionalQueryParams(
                 transactionSimulateCreditAuthorizationParams.additionalQueryParams
             )
@@ -294,17 +294,17 @@ constructor(
         /** Sixteen digit card number. */
         fun pan(pan: String) = apply { this.pan = pan }
 
-        /** Unique identifier to identify the payment card acceptor. */
-        fun merchantAcceptorId(merchantAcceptorId: String) = apply {
-            this.merchantAcceptorId = merchantAcceptorId
-        }
-
         /**
          * Merchant category code for the transaction to be simulated. A four-digit number listed in
          * ISO 18245. Supported merchant category codes can be found
          * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
          */
         fun mcc(mcc: String) = apply { this.mcc = mcc }
+
+        /** Unique identifier to identify the payment card acceptor. */
+        fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+            this.merchantAcceptorId = merchantAcceptorId
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -365,8 +365,8 @@ constructor(
                 checkNotNull(amount) { "`amount` is required but was not set" },
                 checkNotNull(descriptor) { "`descriptor` is required but was not set" },
                 checkNotNull(pan) { "`pan` is required but was not set" },
-                merchantAcceptorId,
                 mcc,
+                merchantAcceptorId,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

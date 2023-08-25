@@ -14,28 +14,28 @@ import java.util.Objects
 
 class CardGetEmbedHtmlParams
 constructor(
+    private val token: String,
     private val css: String?,
     private val expiration: OffsetDateTime?,
-    private val token: String,
     private val targetOrigin: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
+    fun token(): String = token
+
     fun css(): String? = css
 
     fun expiration(): OffsetDateTime? = expiration
-
-    fun token(): String = token
 
     fun targetOrigin(): String? = targetOrigin
 
     internal fun getBody(): CardGetEmbedHtmlBody {
         return CardGetEmbedHtmlBody(
+            token,
             css,
             expiration,
-            token,
             targetOrigin,
             additionalBodyProperties,
         )
@@ -49,14 +49,17 @@ constructor(
     @NoAutoDetect
     class CardGetEmbedHtmlBody
     internal constructor(
+        private val token: String?,
         private val css: String?,
         private val expiration: OffsetDateTime?,
-        private val token: String?,
         private val targetOrigin: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
+
+        /** Globally unique identifier for the card to be displayed. */
+        @JsonProperty("token") fun token(): String? = token
 
         /**
          * A publicly available URI, so the white-labeled card element can be styled with the
@@ -76,9 +79,6 @@ constructor(
          * they will be able to obtain the response data indefinitely.
          */
         @JsonProperty("expiration") fun expiration(): OffsetDateTime? = expiration
-
-        /** Globally unique identifier for the card to be displayed. */
-        @JsonProperty("token") fun token(): String? = token
 
         /**
          * Required if you want to post the element clicked to the parent iframe.
@@ -100,9 +100,9 @@ constructor(
             }
 
             return other is CardGetEmbedHtmlBody &&
+                this.token == other.token &&
                 this.css == other.css &&
                 this.expiration == other.expiration &&
-                this.token == other.token &&
                 this.targetOrigin == other.targetOrigin &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -111,9 +111,9 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        token,
                         css,
                         expiration,
-                        token,
                         targetOrigin,
                         additionalProperties,
                     )
@@ -122,7 +122,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardGetEmbedHtmlBody{css=$css, expiration=$expiration, token=$token, targetOrigin=$targetOrigin, additionalProperties=$additionalProperties}"
+            "CardGetEmbedHtmlBody{token=$token, css=$css, expiration=$expiration, targetOrigin=$targetOrigin, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -131,19 +131,22 @@ constructor(
 
         class Builder {
 
+            private var token: String? = null
             private var css: String? = null
             private var expiration: OffsetDateTime? = null
-            private var token: String? = null
             private var targetOrigin: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardGetEmbedHtmlBody: CardGetEmbedHtmlBody) = apply {
+                this.token = cardGetEmbedHtmlBody.token
                 this.css = cardGetEmbedHtmlBody.css
                 this.expiration = cardGetEmbedHtmlBody.expiration
-                this.token = cardGetEmbedHtmlBody.token
                 this.targetOrigin = cardGetEmbedHtmlBody.targetOrigin
                 additionalProperties(cardGetEmbedHtmlBody.additionalProperties)
             }
+
+            /** Globally unique identifier for the card to be displayed. */
+            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
              * A publicly available URI, so the white-labeled card element can be styled with the
@@ -164,9 +167,6 @@ constructor(
              */
             @JsonProperty("expiration")
             fun expiration(expiration: OffsetDateTime) = apply { this.expiration = expiration }
-
-            /** Globally unique identifier for the card to be displayed. */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
              * Required if you want to post the element clicked to the parent iframe.
@@ -193,9 +193,9 @@ constructor(
 
             fun build(): CardGetEmbedHtmlBody =
                 CardGetEmbedHtmlBody(
+                    checkNotNull(token) { "`token` is required but was not set" },
                     css,
                     expiration,
-                    checkNotNull(token) { "`token` is required but was not set" },
                     targetOrigin,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -214,9 +214,9 @@ constructor(
         }
 
         return other is CardGetEmbedHtmlParams &&
+            this.token == other.token &&
             this.css == other.css &&
             this.expiration == other.expiration &&
-            this.token == other.token &&
             this.targetOrigin == other.targetOrigin &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -225,9 +225,9 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            token,
             css,
             expiration,
-            token,
             targetOrigin,
             additionalQueryParams,
             additionalHeaders,
@@ -236,7 +236,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardGetEmbedHtmlParams{css=$css, expiration=$expiration, token=$token, targetOrigin=$targetOrigin, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardGetEmbedHtmlParams{token=$token, css=$css, expiration=$expiration, targetOrigin=$targetOrigin, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -248,23 +248,26 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var token: String? = null
         private var css: String? = null
         private var expiration: OffsetDateTime? = null
-        private var token: String? = null
         private var targetOrigin: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardGetEmbedHtmlParams: CardGetEmbedHtmlParams) = apply {
+            this.token = cardGetEmbedHtmlParams.token
             this.css = cardGetEmbedHtmlParams.css
             this.expiration = cardGetEmbedHtmlParams.expiration
-            this.token = cardGetEmbedHtmlParams.token
             this.targetOrigin = cardGetEmbedHtmlParams.targetOrigin
             additionalQueryParams(cardGetEmbedHtmlParams.additionalQueryParams)
             additionalHeaders(cardGetEmbedHtmlParams.additionalHeaders)
             additionalBodyProperties(cardGetEmbedHtmlParams.additionalBodyProperties)
         }
+
+        /** Globally unique identifier for the card to be displayed. */
+        fun token(token: String) = apply { this.token = token }
 
         /**
          * A publicly available URI, so the white-labeled card element can be styled with the
@@ -284,9 +287,6 @@ constructor(
          * they will be able to obtain the response data indefinitely.
          */
         fun expiration(expiration: OffsetDateTime) = apply { this.expiration = expiration }
-
-        /** Globally unique identifier for the card to be displayed. */
-        fun token(token: String) = apply { this.token = token }
 
         /**
          * Required if you want to post the element clicked to the parent iframe.
@@ -352,9 +352,9 @@ constructor(
 
         fun build(): CardGetEmbedHtmlParams =
             CardGetEmbedHtmlParams(
+                checkNotNull(token) { "`token` is required but was not set" },
                 css,
                 expiration,
-                checkNotNull(token) { "`token` is required but was not set" },
                 targetOrigin,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
