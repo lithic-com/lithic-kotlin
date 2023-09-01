@@ -38,6 +38,7 @@ class ExternalBankAccountCreateResponseTest {
                 .dob(LocalDate.parse("2019-12-27"))
                 .doingBusinessAs("string")
                 .name("string")
+                .userDefinedId("string")
                 .build()
         assertThat(externalBankAccountCreateResponse).isNotNull
         assertThat(externalBankAccountCreateResponse.token())
@@ -76,5 +77,6 @@ class ExternalBankAccountCreateResponseTest {
         assertThat(externalBankAccountCreateResponse.dob()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(externalBankAccountCreateResponse.doingBusinessAs()).isEqualTo("string")
         assertThat(externalBankAccountCreateResponse.name()).isEqualTo("string")
+        assertThat(externalBankAccountCreateResponse.userDefinedId()).isEqualTo("string")
     }
 }
