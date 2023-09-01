@@ -38,6 +38,7 @@ private constructor(
     private val address: JsonField<ExternalBankAccountAddress>,
     private val dob: JsonField<LocalDate>,
     private val doingBusinessAs: JsonField<String>,
+    private val userDefinedId: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -109,6 +110,8 @@ private constructor(
 
     fun doingBusinessAs(): String? = doingBusinessAs.getNullable("doing_business_as")
 
+    fun userDefinedId(): String? = userDefinedId.getNullable("user_defined_id")
+
     /**
      * A globally unique identifier for this record of an external bank account association. If a
      * program links an external bank account to more than one end-user or to both the program and
@@ -174,6 +177,8 @@ private constructor(
 
     @JsonProperty("doing_business_as") @ExcludeMissing fun _doingBusinessAs() = doingBusinessAs
 
+    @JsonProperty("user_defined_id") @ExcludeMissing fun _userDefinedId() = userDefinedId
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -198,6 +203,7 @@ private constructor(
             address()?.validate()
             dob()
             doingBusinessAs()
+            userDefinedId()
             validated = true
         }
     }
@@ -228,6 +234,7 @@ private constructor(
             this.address == other.address &&
             this.dob == other.dob &&
             this.doingBusinessAs == other.doingBusinessAs &&
+            this.userDefinedId == other.userDefinedId &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -253,6 +260,7 @@ private constructor(
                     address,
                     dob,
                     doingBusinessAs,
+                    userDefinedId,
                     additionalProperties,
                 )
         }
@@ -260,7 +268,7 @@ private constructor(
     }
 
     override fun toString() =
-        "ExternalBankAccountRetrieveResponse{token=$token, type=$type, verificationMethod=$verificationMethod, ownerType=$ownerType, owner=$owner, state=$state, verificationState=$verificationState, routingNumber=$routingNumber, lastFour=$lastFour, name=$name, currency=$currency, country=$country, accountToken=$accountToken, created=$created, companyId=$companyId, address=$address, dob=$dob, doingBusinessAs=$doingBusinessAs, additionalProperties=$additionalProperties}"
+        "ExternalBankAccountRetrieveResponse{token=$token, type=$type, verificationMethod=$verificationMethod, ownerType=$ownerType, owner=$owner, state=$state, verificationState=$verificationState, routingNumber=$routingNumber, lastFour=$lastFour, name=$name, currency=$currency, country=$country, accountToken=$accountToken, created=$created, companyId=$companyId, address=$address, dob=$dob, doingBusinessAs=$doingBusinessAs, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -287,6 +295,7 @@ private constructor(
         private var address: JsonField<ExternalBankAccountAddress> = JsonMissing.of()
         private var dob: JsonField<LocalDate> = JsonMissing.of()
         private var doingBusinessAs: JsonField<String> = JsonMissing.of()
+        private var userDefinedId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
@@ -310,6 +319,7 @@ private constructor(
             this.address = externalBankAccountRetrieveResponse.address
             this.dob = externalBankAccountRetrieveResponse.dob
             this.doingBusinessAs = externalBankAccountRetrieveResponse.doingBusinessAs
+            this.userDefinedId = externalBankAccountRetrieveResponse.userDefinedId
             additionalProperties(externalBankAccountRetrieveResponse.additionalProperties)
         }
 
@@ -498,6 +508,14 @@ private constructor(
             this.doingBusinessAs = doingBusinessAs
         }
 
+        fun userDefinedId(userDefinedId: String) = userDefinedId(JsonField.of(userDefinedId))
+
+        @JsonProperty("user_defined_id")
+        @ExcludeMissing
+        fun userDefinedId(userDefinedId: JsonField<String>) = apply {
+            this.userDefinedId = userDefinedId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -532,6 +550,7 @@ private constructor(
                 address,
                 dob,
                 doingBusinessAs,
+                userDefinedId,
                 additionalProperties.toUnmodifiable(),
             )
     }

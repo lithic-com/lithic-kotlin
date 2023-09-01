@@ -39,7 +39,7 @@ constructor(
     private val retrieveHandler: Handler<Transaction> =
         jsonHandler<Transaction>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /** Get specific transaction. */
+    /** Get specific card transaction. */
     override suspend fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions
@@ -67,7 +67,7 @@ constructor(
         jsonHandler<TransactionListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
-    /** List transactions. */
+    /** List card transactions. */
     override suspend fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions

@@ -24,13 +24,13 @@ import com.lithic.api.models.TransactionSimulateVoidResponse
 
 interface TransactionServiceAsync {
 
-    /** Get specific transaction. */
+    /** Get specific card transaction. */
     suspend fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Transaction
 
-    /** List transactions. */
+    /** List card transactions. */
     suspend fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
