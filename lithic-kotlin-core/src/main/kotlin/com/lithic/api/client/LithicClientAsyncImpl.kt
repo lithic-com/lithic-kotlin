@@ -37,6 +37,10 @@ constructor(
         TokenizationDecisioningServiceAsyncImpl(clientOptions)
     }
 
+    private val tokenizations: TokenizationServiceAsync by lazy {
+        TokenizationServiceAsyncImpl(clientOptions)
+    }
+
     private val cards: CardServiceAsync by lazy { CardServiceAsyncImpl(clientOptions) }
 
     private val balances: BalanceServiceAsync by lazy { BalanceServiceAsyncImpl(clientOptions) }
@@ -85,6 +89,8 @@ constructor(
 
     override fun tokenizationDecisioning(): TokenizationDecisioningServiceAsync =
         tokenizationDecisioning
+
+    override fun tokenizations(): TokenizationServiceAsync = tokenizations
 
     override fun cards(): CardServiceAsync = cards
 
