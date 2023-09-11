@@ -11,6 +11,8 @@ import com.lithic.api.models.PaymentListParams
 import com.lithic.api.models.PaymentRetrieveParams
 import com.lithic.api.models.PaymentSimulateReleaseParams
 import com.lithic.api.models.PaymentSimulateReleaseResponse
+import com.lithic.api.models.PaymentSimulateReturnParams
+import com.lithic.api.models.PaymentSimulateReturnResponse
 
 interface PaymentService {
 
@@ -37,4 +39,10 @@ interface PaymentService {
         params: PaymentSimulateReleaseParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): PaymentSimulateReleaseResponse
+
+    /** Simulates a return of a Payment. */
+    fun simulateReturn(
+        params: PaymentSimulateReturnParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): PaymentSimulateReturnResponse
 }
