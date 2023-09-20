@@ -18,6 +18,7 @@ import com.lithic.api.models.EventSubscriptionReplayMissingParams
 import com.lithic.api.models.EventSubscriptionRetrieveParams
 import com.lithic.api.models.EventSubscriptionRetrieveSecretParams
 import com.lithic.api.models.EventSubscriptionRotateSecretParams
+import com.lithic.api.models.EventSubscriptionSendSimulatedExampleParams
 import com.lithic.api.models.EventSubscriptionUpdateParams
 import com.lithic.api.models.SubscriptionRetrieveSecretResponse
 import com.lithic.api.services.emptyHandler
@@ -289,6 +290,33 @@ constructor(
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response.use { rotateSecretHandler.handle(it) }
+        }
+    }
+
+    private val sendSimulatedExampleHandler: Handler<Void?> =
+        emptyHandler().withErrorHandler(errorHandler)
+
+    /** Send an example message for event. */
+    override suspend fun sendSimulatedExample(
+        params: EventSubscriptionSendSimulatedExampleParams,
+        requestOptions: RequestOptions
+    ) {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments(
+                    "simulate",
+                    "event_subscriptions",
+                    params.getPathParam(0),
+                    "send_example"
+                )
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
+            response.use { sendSimulatedExampleHandler.handle(it) }
         }
     }
 }
