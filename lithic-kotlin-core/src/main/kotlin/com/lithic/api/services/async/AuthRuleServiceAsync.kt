@@ -3,10 +3,9 @@
 package com.lithic.api.services.async
 
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.models.AuthRule
 import com.lithic.api.models.AuthRuleApplyParams
-import com.lithic.api.models.AuthRuleApplyResponse
 import com.lithic.api.models.AuthRuleCreateParams
-import com.lithic.api.models.AuthRuleCreateResponse
 import com.lithic.api.models.AuthRuleListPageAsync
 import com.lithic.api.models.AuthRuleListParams
 import com.lithic.api.models.AuthRuleRemoveParams
@@ -14,7 +13,6 @@ import com.lithic.api.models.AuthRuleRemoveResponse
 import com.lithic.api.models.AuthRuleRetrieveParams
 import com.lithic.api.models.AuthRuleRetrieveResponse
 import com.lithic.api.models.AuthRuleUpdateParams
-import com.lithic.api.models.AuthRuleUpdateResponse
 
 interface AuthRuleServiceAsync {
 
@@ -25,7 +23,7 @@ interface AuthRuleServiceAsync {
     suspend fun create(
         params: AuthRuleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AuthRuleCreateResponse
+    ): AuthRule
 
     /**
      * Detail the properties and entities (program, accounts, and cards) associated with an existing
@@ -40,7 +38,7 @@ interface AuthRuleServiceAsync {
     suspend fun update(
         params: AuthRuleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AuthRuleUpdateResponse
+    ): AuthRule
 
     /** Return all of the Auth Rules under the program. */
     suspend fun list(
@@ -52,7 +50,7 @@ interface AuthRuleServiceAsync {
     suspend fun apply(
         params: AuthRuleApplyParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AuthRuleApplyResponse
+    ): AuthRule
 
     /**
      * Remove an existing authorization rule (Auth Rule) from an program, account, or card-level.
