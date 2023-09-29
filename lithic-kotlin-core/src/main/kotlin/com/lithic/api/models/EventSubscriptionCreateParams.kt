@@ -351,6 +351,12 @@ constructor(
 
         companion object {
 
+            val ACCOUNT_HOLDER_CREATED = EventType(JsonField.of("account_holder.created"))
+
+            val ACCOUNT_HOLDER_UPDATED = EventType(JsonField.of("account_holder.updated"))
+
+            val ACCOUNT_HOLDER_VERIFICATION = EventType(JsonField.of("account_holder.verification"))
+
             val CARD_CREATED = EventType(JsonField.of("card.created"))
 
             val CARD_SHIPPED = EventType(JsonField.of("card.shipped"))
@@ -387,6 +393,9 @@ constructor(
         }
 
         enum class Known {
+            ACCOUNT_HOLDER_CREATED,
+            ACCOUNT_HOLDER_UPDATED,
+            ACCOUNT_HOLDER_VERIFICATION,
             CARD_CREATED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
@@ -402,6 +411,9 @@ constructor(
         }
 
         enum class Value {
+            ACCOUNT_HOLDER_CREATED,
+            ACCOUNT_HOLDER_UPDATED,
+            ACCOUNT_HOLDER_VERIFICATION,
             CARD_CREATED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
@@ -419,6 +431,9 @@ constructor(
 
         fun value(): Value =
             when (this) {
+                ACCOUNT_HOLDER_CREATED -> Value.ACCOUNT_HOLDER_CREATED
+                ACCOUNT_HOLDER_UPDATED -> Value.ACCOUNT_HOLDER_UPDATED
+                ACCOUNT_HOLDER_VERIFICATION -> Value.ACCOUNT_HOLDER_VERIFICATION
                 CARD_CREATED -> Value.CARD_CREATED
                 CARD_SHIPPED -> Value.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Value.CARD_TRANSACTION_UPDATED
@@ -438,6 +453,9 @@ constructor(
 
         fun known(): Known =
             when (this) {
+                ACCOUNT_HOLDER_CREATED -> Known.ACCOUNT_HOLDER_CREATED
+                ACCOUNT_HOLDER_UPDATED -> Known.ACCOUNT_HOLDER_UPDATED
+                ACCOUNT_HOLDER_VERIFICATION -> Known.ACCOUNT_HOLDER_VERIFICATION
                 CARD_CREATED -> Known.CARD_CREATED
                 CARD_SHIPPED -> Known.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Known.CARD_TRANSACTION_UPDATED
