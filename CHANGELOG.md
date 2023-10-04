@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.13.0 (2023-10-04)
+
+Full Changelog: [v0.12.5...v0.13.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.12.5...v0.13.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** remove `post /webhooks/account_holders` endpoint ([#77](https://github.com/lithic-com/lithic-kotlin/issues/77))
+
+### Chores
+
+* **ci:** remove reviewer ([#80](https://github.com/lithic-com/lithic-kotlin/issues/80)) ([45f3c35](https://github.com/lithic-com/lithic-kotlin/commit/45f3c35e3b9add10e180f1d37183c665242b2103))
+* **internal:** add a top-level generated comment to each file ([#83](https://github.com/lithic-com/lithic-kotlin/issues/83)) ([569a940](https://github.com/lithic-com/lithic-kotlin/commit/569a9403538e7dc578e59dafb008d2205877fa82))
+* **internal:** remove redundant namespacing in references ([#82](https://github.com/lithic-com/lithic-kotlin/issues/82)) ([50c2aaf](https://github.com/lithic-com/lithic-kotlin/commit/50c2aafa8599afee9b12064cbea861a26cc447ca))
+
+
+### Refactors
+
+* **api:** remove `post /webhooks/account_holders` endpoint ([#77](https://github.com/lithic-com/lithic-kotlin/issues/77)) ([801f26d](https://github.com/lithic-com/lithic-kotlin/commit/801f26d3db9fa05490924ac62d9bbcd33e6d5ddc))
+
 ## 0.12.5 (2023-09-20)
 
 Full Changelog: [v0.12.4...v0.12.5](https://github.com/lithic-com/lithic-kotlin/compare/v0.12.4...v0.12.5)
