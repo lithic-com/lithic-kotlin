@@ -37,10 +37,10 @@ private constructor(
     private var hashCode: Int = 0
 
     /** Globally unique identifier. */
-    fun token(): String? = token.getNullable("token")
+    fun token(): String = token.getRequired("token")
 
     /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
-    fun state(): State? = state.getNullable("state")
+    fun state(): State = state.getRequired("state")
 
     /** Merchant category codes for which the Auth Rule permits transactions. */
     fun allowedMcc(): List<String>? = allowedMcc.getNullable("allowed_mcc")
