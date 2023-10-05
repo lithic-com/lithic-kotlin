@@ -9,19 +9,23 @@ import java.util.Objects
 
 class AuthRuleListParams
 constructor(
-    private val page: Long?,
+    private val startingAfter: String?,
+    private val endingBefore: String?,
     private val pageSize: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
-    fun page(): Long? = page
+    fun startingAfter(): String? = startingAfter
+
+    fun endingBefore(): String? = endingBefore
 
     fun pageSize(): Long? = pageSize
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
-        this.page?.let { params.put("page", listOf(it.toString())) }
+        this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
+        this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
         this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
@@ -39,7 +43,8 @@ constructor(
         }
 
         return other is AuthRuleListParams &&
-            this.page == other.page &&
+            this.startingAfter == other.startingAfter &&
+            this.endingBefore == other.endingBefore &&
             this.pageSize == other.pageSize &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
@@ -47,7 +52,8 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
-            page,
+            startingAfter,
+            endingBefore,
             pageSize,
             additionalQueryParams,
             additionalHeaders,
@@ -55,7 +61,7 @@ constructor(
     }
 
     override fun toString() =
-        "AuthRuleListParams{page=$page, pageSize=$pageSize, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "AuthRuleListParams{startingAfter=$startingAfter, endingBefore=$endingBefore, pageSize=$pageSize, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -67,20 +73,31 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var page: Long? = null
+        private var startingAfter: String? = null
+        private var endingBefore: String? = null
         private var pageSize: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(authRuleListParams: AuthRuleListParams) = apply {
-            this.page = authRuleListParams.page
+            this.startingAfter = authRuleListParams.startingAfter
+            this.endingBefore = authRuleListParams.endingBefore
             this.pageSize = authRuleListParams.pageSize
             additionalQueryParams(authRuleListParams.additionalQueryParams)
             additionalHeaders(authRuleListParams.additionalHeaders)
         }
 
-        /** Page (for pagination). */
-        fun page(page: Long) = apply { this.page = page }
+        /**
+         * A cursor representing an item's token after which a page of results should begin. Used to
+         * retrieve the next page of results after this item.
+         */
+        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
+
+        /**
+         * A cursor representing an item's token before which a page of results should end. Used to
+         * retrieve the previous page of results before this item.
+         */
+        fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
 
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
@@ -127,7 +144,8 @@ constructor(
 
         fun build(): AuthRuleListParams =
             AuthRuleListParams(
-                page,
+                startingAfter,
+                endingBefore,
                 pageSize,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

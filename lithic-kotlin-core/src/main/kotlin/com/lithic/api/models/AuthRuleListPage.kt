@@ -26,11 +26,7 @@ private constructor(
 
     fun data(): List<AuthRule> = response().data()
 
-    fun page(): Long = response().page()
-
-    fun totalEntries(): Long = response().totalEntries()
-
-    fun totalPages(): Long = response().totalPages()
+    fun hasMore(): Boolean = response().hasMore()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -55,11 +51,7 @@ private constructor(
         "AuthRuleListPage{authRulesService=$authRulesService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        if (data().isEmpty()) {
-            return false
-        }
-
-        return page() < totalPages()
+        return data().isEmpty()
     }
 
     fun getNextPageParams(): AuthRuleListParams? {
@@ -67,7 +59,11 @@ private constructor(
             return null
         }
 
-        return AuthRuleListParams.builder().from(params).page((params.page() ?: 0) + 1).build()
+        return if (params.endingBefore() != null) {
+            AuthRuleListParams.builder().from(params).endingBefore(data().first().token()).build()
+        } else {
+            AuthRuleListParams.builder().from(params).startingAfter(data().last().token()).build()
+        }
     }
 
     fun getNextPage(): AuthRuleListPage? {
@@ -91,9 +87,7 @@ private constructor(
     class Response
     constructor(
         private val data: JsonField<List<AuthRule>>,
-        private val page: JsonField<Long>,
-        private val totalEntries: JsonField<Long>,
-        private val totalPages: JsonField<Long>,
+        private val hasMore: JsonField<Boolean>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -101,19 +95,11 @@ private constructor(
 
         fun data(): List<AuthRule> = data.getNullable("data") ?: listOf()
 
-        fun page(): Long = page.getRequired("page")
-
-        fun totalEntries(): Long = totalEntries.getRequired("total_entries")
-
-        fun totalPages(): Long = totalPages.getRequired("total_pages")
+        fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
         @JsonProperty("data") fun _data(): JsonField<List<AuthRule>>? = data
 
-        @JsonProperty("page") fun _page(): JsonField<Long>? = page
-
-        @JsonProperty("total_entries") fun _totalEntries(): JsonField<Long>? = totalEntries
-
-        @JsonProperty("total_pages") fun _totalPages(): JsonField<Long>? = totalPages
+        @JsonProperty("has_more") fun _hasMore(): JsonField<Boolean>? = hasMore
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -122,9 +108,7 @@ private constructor(
         fun validate(): Response = apply {
             if (!validated) {
                 data().map { it.validate() }
-                page()
-                totalEntries()
-                totalPages()
+                hasMore()
                 validated = true
             }
         }
@@ -138,24 +122,20 @@ private constructor(
 
             return other is Response &&
                 this.data == other.data &&
-                this.page == other.page &&
-                this.totalEntries == other.totalEntries &&
-                this.totalPages == other.totalPages &&
+                this.hasMore == other.hasMore &&
                 this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
             return Objects.hash(
                 data,
-                page,
-                totalEntries,
-                totalPages,
+                hasMore,
                 additionalProperties,
             )
         }
 
         override fun toString() =
-            "AuthRuleListPage.Response{data=$data, page=$page, totalEntries=$totalEntries, totalPages=$totalPages, additionalProperties=$additionalProperties}"
+            "AuthRuleListPage.Response{data=$data, hasMore=$hasMore, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -165,16 +145,12 @@ private constructor(
         class Builder {
 
             private var data: JsonField<List<AuthRule>> = JsonMissing.of()
-            private var page: JsonField<Long> = JsonMissing.of()
-            private var totalEntries: JsonField<Long> = JsonMissing.of()
-            private var totalPages: JsonField<Long> = JsonMissing.of()
+            private var hasMore: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(page: Response) = apply {
                 this.data = page.data
-                this.page = page.page
-                this.totalEntries = page.totalEntries
-                this.totalPages = page.totalPages
+                this.hasMore = page.hasMore
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
@@ -183,21 +159,10 @@ private constructor(
             @JsonProperty("data")
             fun data(data: JsonField<List<AuthRule>>) = apply { this.data = data }
 
-            fun page(page: Long) = page(JsonField.of(page))
+            fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
-            @JsonProperty("page") fun page(page: JsonField<Long>) = apply { this.page = page }
-
-            fun totalEntries(totalEntries: Long) = totalEntries(JsonField.of(totalEntries))
-
-            @JsonProperty("total_entries")
-            fun totalEntries(totalEntries: JsonField<Long>) = apply {
-                this.totalEntries = totalEntries
-            }
-
-            fun totalPages(totalPages: Long) = totalPages(JsonField.of(totalPages))
-
-            @JsonProperty("total_pages")
-            fun totalPages(totalPages: JsonField<Long>) = apply { this.totalPages = totalPages }
+            @JsonProperty("has_more")
+            fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
@@ -207,9 +172,7 @@ private constructor(
             fun build() =
                 Response(
                     data,
-                    page,
-                    totalEntries,
-                    totalPages,
+                    hasMore,
                     additionalProperties.toUnmodifiable(),
                 )
         }
