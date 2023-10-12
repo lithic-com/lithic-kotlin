@@ -39,15 +39,15 @@ implementation("com.lithic.api:lithic-kotlin:0.13.1")
 Use `LithicOkHttpClient.builder()` to configure the client. At a minimum you need to set `.apiKey()`:
 
 ```kotlin
-import com.lithic.api.client.LithicClient
+import com.lithic.api.client.LithicOkHttpClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
 val client = LithicOkHttpClient.builder()
-    .apiKey("<your API Key>")
+    .apiKey("My Lithic API Key")
     .build()
 ```
 
-Alternately, use `LithicOkHttpClient.fromEnv()` to read client arguments from environment variables:
+Alternately, set the environment with `LITHIC_API_KEY` or `LITHIC_WEBHOOK_SECRET`, and use `LithicOkHttpClient.fromEnv()` to read from the environment.
 
 ```kotlin
 val client = LithicOkHttpClient.fromEnv()
