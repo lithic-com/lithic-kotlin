@@ -15,11 +15,11 @@ import java.util.Objects
 class EventListAttemptsParams
 constructor(
     private val eventToken: String,
-    private val pageSize: Long?,
-    private val startingAfter: String?,
-    private val endingBefore: String?,
     private val begin: OffsetDateTime?,
     private val end: OffsetDateTime?,
+    private val endingBefore: String?,
+    private val pageSize: Long?,
+    private val startingAfter: String?,
     private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -27,25 +27,25 @@ constructor(
 
     fun eventToken(): String = eventToken
 
-    fun pageSize(): Long? = pageSize
-
-    fun startingAfter(): String? = startingAfter
-
-    fun endingBefore(): String? = endingBefore
-
     fun begin(): OffsetDateTime? = begin
 
     fun end(): OffsetDateTime? = end
+
+    fun endingBefore(): String? = endingBefore
+
+    fun pageSize(): Long? = pageSize
+
+    fun startingAfter(): String? = startingAfter
 
     fun status(): Status? = status
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
-        this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
-        this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
-        this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
         this.begin?.let { params.put("begin", listOf(it.toString())) }
         this.end?.let { params.put("end", listOf(it.toString())) }
+        this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
+        this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
+        this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
@@ -71,11 +71,11 @@ constructor(
 
         return other is EventListAttemptsParams &&
             this.eventToken == other.eventToken &&
-            this.pageSize == other.pageSize &&
-            this.startingAfter == other.startingAfter &&
-            this.endingBefore == other.endingBefore &&
             this.begin == other.begin &&
             this.end == other.end &&
+            this.endingBefore == other.endingBefore &&
+            this.pageSize == other.pageSize &&
+            this.startingAfter == other.startingAfter &&
             this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
@@ -84,11 +84,11 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             eventToken,
-            pageSize,
-            startingAfter,
-            endingBefore,
             begin,
             end,
+            endingBefore,
+            pageSize,
+            startingAfter,
             status,
             additionalQueryParams,
             additionalHeaders,
@@ -96,7 +96,7 @@ constructor(
     }
 
     override fun toString() =
-        "EventListAttemptsParams{eventToken=$eventToken, pageSize=$pageSize, startingAfter=$startingAfter, endingBefore=$endingBefore, begin=$begin, end=$end, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "EventListAttemptsParams{eventToken=$eventToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -109,43 +109,28 @@ constructor(
     class Builder {
 
         private var eventToken: String? = null
-        private var pageSize: Long? = null
-        private var startingAfter: String? = null
-        private var endingBefore: String? = null
         private var begin: OffsetDateTime? = null
         private var end: OffsetDateTime? = null
+        private var endingBefore: String? = null
+        private var pageSize: Long? = null
+        private var startingAfter: String? = null
         private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(eventListAttemptsParams: EventListAttemptsParams) = apply {
             this.eventToken = eventListAttemptsParams.eventToken
-            this.pageSize = eventListAttemptsParams.pageSize
-            this.startingAfter = eventListAttemptsParams.startingAfter
-            this.endingBefore = eventListAttemptsParams.endingBefore
             this.begin = eventListAttemptsParams.begin
             this.end = eventListAttemptsParams.end
+            this.endingBefore = eventListAttemptsParams.endingBefore
+            this.pageSize = eventListAttemptsParams.pageSize
+            this.startingAfter = eventListAttemptsParams.startingAfter
             this.status = eventListAttemptsParams.status
             additionalQueryParams(eventListAttemptsParams.additionalQueryParams)
             additionalHeaders(eventListAttemptsParams.additionalHeaders)
         }
 
         fun eventToken(eventToken: String) = apply { this.eventToken = eventToken }
-
-        /** Page size (for pagination). */
-        fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
-
-        /**
-         * A cursor representing an item's token after which a page of results should begin. Used to
-         * retrieve the next page of results after this item.
-         */
-        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
-
-        /**
-         * A cursor representing an item's token before which a page of results should end. Used to
-         * retrieve the previous page of results before this item.
-         */
-        fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
 
         /**
          * Date string in RFC 3339 format. Only entries created after the specified date will be
@@ -158,6 +143,21 @@ constructor(
          * included. UTC time zone.
          */
         fun end(end: OffsetDateTime) = apply { this.end = end }
+
+        /**
+         * A cursor representing an item's token before which a page of results should end. Used to
+         * retrieve the previous page of results before this item.
+         */
+        fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
+
+        /** Page size (for pagination). */
+        fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
+
+        /**
+         * A cursor representing an item's token after which a page of results should begin. Used to
+         * retrieve the next page of results after this item.
+         */
+        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
 
         fun status(status: Status) = apply { this.status = status }
 
@@ -204,11 +204,11 @@ constructor(
         fun build(): EventListAttemptsParams =
             EventListAttemptsParams(
                 checkNotNull(eventToken) { "`eventToken` is required but was not set" },
-                pageSize,
-                startingAfter,
-                endingBefore,
                 begin,
                 end,
+                endingBefore,
+                pageSize,
+                startingAfter,
                 status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

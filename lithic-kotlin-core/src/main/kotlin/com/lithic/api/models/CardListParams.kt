@@ -15,39 +15,39 @@ import java.util.Objects
 class CardListParams
 constructor(
     private val accountToken: String?,
-    private val state: State?,
     private val begin: OffsetDateTime?,
     private val end: OffsetDateTime?,
-    private val startingAfter: String?,
     private val endingBefore: String?,
     private val pageSize: Long?,
+    private val startingAfter: String?,
+    private val state: State?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun accountToken(): String? = accountToken
 
-    fun state(): State? = state
-
     fun begin(): OffsetDateTime? = begin
 
     fun end(): OffsetDateTime? = end
-
-    fun startingAfter(): String? = startingAfter
 
     fun endingBefore(): String? = endingBefore
 
     fun pageSize(): Long? = pageSize
 
+    fun startingAfter(): String? = startingAfter
+
+    fun state(): State? = state
+
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.accountToken?.let { params.put("account_token", listOf(it.toString())) }
-        this.state?.let { params.put("state", listOf(it.toString())) }
         this.begin?.let { params.put("begin", listOf(it.toString())) }
         this.end?.let { params.put("end", listOf(it.toString())) }
-        this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
         this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
+        this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
+        this.state?.let { params.put("state", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -65,12 +65,12 @@ constructor(
 
         return other is CardListParams &&
             this.accountToken == other.accountToken &&
-            this.state == other.state &&
             this.begin == other.begin &&
             this.end == other.end &&
-            this.startingAfter == other.startingAfter &&
             this.endingBefore == other.endingBefore &&
             this.pageSize == other.pageSize &&
+            this.startingAfter == other.startingAfter &&
+            this.state == other.state &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
     }
@@ -78,19 +78,19 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             accountToken,
-            state,
             begin,
             end,
-            startingAfter,
             endingBefore,
             pageSize,
+            startingAfter,
+            state,
             additionalQueryParams,
             additionalHeaders,
         )
     }
 
     override fun toString() =
-        "CardListParams{accountToken=$accountToken, state=$state, begin=$begin, end=$end, startingAfter=$startingAfter, endingBefore=$endingBefore, pageSize=$pageSize, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "CardListParams{accountToken=$accountToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -103,32 +103,29 @@ constructor(
     class Builder {
 
         private var accountToken: String? = null
-        private var state: State? = null
         private var begin: OffsetDateTime? = null
         private var end: OffsetDateTime? = null
-        private var startingAfter: String? = null
         private var endingBefore: String? = null
         private var pageSize: Long? = null
+        private var startingAfter: String? = null
+        private var state: State? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(cardListParams: CardListParams) = apply {
             this.accountToken = cardListParams.accountToken
-            this.state = cardListParams.state
             this.begin = cardListParams.begin
             this.end = cardListParams.end
-            this.startingAfter = cardListParams.startingAfter
             this.endingBefore = cardListParams.endingBefore
             this.pageSize = cardListParams.pageSize
+            this.startingAfter = cardListParams.startingAfter
+            this.state = cardListParams.state
             additionalQueryParams(cardListParams.additionalQueryParams)
             additionalHeaders(cardListParams.additionalHeaders)
         }
 
         /** Returns cards associated with the specified account. */
         fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
-
-        /** Returns cards with the specified state. */
-        fun state(state: State) = apply { this.state = state }
 
         /**
          * Date string in RFC 3339 format. Only entries created after the specified date will be
@@ -143,12 +140,6 @@ constructor(
         fun end(end: OffsetDateTime) = apply { this.end = end }
 
         /**
-         * A cursor representing an item's token after which a page of results should begin. Used to
-         * retrieve the next page of results after this item.
-         */
-        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
-
-        /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
@@ -156,6 +147,15 @@ constructor(
 
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
+
+        /**
+         * A cursor representing an item's token after which a page of results should begin. Used to
+         * retrieve the next page of results after this item.
+         */
+        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
+
+        /** Returns cards with the specified state. */
+        fun state(state: State) = apply { this.state = state }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -200,12 +200,12 @@ constructor(
         fun build(): CardListParams =
             CardListParams(
                 accountToken,
-                state,
                 begin,
                 end,
-                startingAfter,
                 endingBefore,
                 pageSize,
+                startingAfter,
+                state,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
