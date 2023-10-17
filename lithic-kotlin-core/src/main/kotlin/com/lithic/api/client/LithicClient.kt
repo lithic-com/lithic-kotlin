@@ -50,6 +50,10 @@ interface LithicClient {
 
     fun threeDS(): ThreeDSService
 
+    fun reports(): ReportService
+
+    fun cardProduct(): CardProductService
+
     /** API status check */
     fun apiStatus(
         params: ClientApiStatusParams,
