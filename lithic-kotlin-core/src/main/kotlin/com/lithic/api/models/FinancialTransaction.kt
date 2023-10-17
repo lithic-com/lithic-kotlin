@@ -515,7 +515,7 @@ private constructor(
         private val created: JsonField<OffsetDateTime>,
         private val result: JsonField<Result>,
         private val token: JsonField<String>,
-        private val type: JsonField<Type>,
+        private val type: JsonField<FinancialEventType>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -576,7 +576,7 @@ private constructor(
          * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to insufficient
          * balance of the sender.
          */
-        fun type(): Type? = type.getNullable("type")
+        fun type(): FinancialEventType? = type.getNullable("type")
 
         /**
          * Amount of the financial event that has been settled in the currency's smallest unit
@@ -693,7 +693,7 @@ private constructor(
             private var created: JsonField<OffsetDateTime> = JsonMissing.of()
             private var result: JsonField<Result> = JsonMissing.of()
             private var token: JsonField<String> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
+            private var type: JsonField<FinancialEventType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(financialEvent: FinancialEvent) = apply {
@@ -784,7 +784,7 @@ private constructor(
              * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to
              * insufficient balance of the sender.
              */
-            fun type(type: Type) = type(JsonField.of(type))
+            fun type(type: FinancialEventType) = type(JsonField.of(type))
 
             /**
              * Event types:
@@ -823,7 +823,7 @@ private constructor(
              */
             @JsonProperty("type")
             @ExcludeMissing
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<FinancialEventType>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -907,7 +907,7 @@ private constructor(
             fun asString(): String = _value().asStringOrThrow()
         }
 
-        class Type
+        class FinancialEventType
         @JsonCreator
         private constructor(
             private val value: JsonField<String>,
@@ -920,7 +920,7 @@ private constructor(
                     return true
                 }
 
-                return other is Type && this.value == other.value
+                return other is FinancialEventType && this.value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -929,52 +929,59 @@ private constructor(
 
             companion object {
 
-                val ACH_INSUFFICIENT_FUNDS = Type(JsonField.of("ACH_INSUFFICIENT_FUNDS"))
+                val ACH_INSUFFICIENT_FUNDS =
+                    FinancialEventType(JsonField.of("ACH_INSUFFICIENT_FUNDS"))
 
-                val ACH_ORIGINATION_PENDING = Type(JsonField.of("ACH_ORIGINATION_PENDING"))
+                val ACH_ORIGINATION_PENDING =
+                    FinancialEventType(JsonField.of("ACH_ORIGINATION_PENDING"))
 
-                val ACH_ORIGINATION_RELEASED = Type(JsonField.of("ACH_ORIGINATION_RELEASED"))
+                val ACH_ORIGINATION_RELEASED =
+                    FinancialEventType(JsonField.of("ACH_ORIGINATION_RELEASED"))
 
-                val ACH_RECEIPT_PENDING = Type(JsonField.of("ACH_RECEIPT_PENDING"))
+                val ACH_RECEIPT_PENDING = FinancialEventType(JsonField.of("ACH_RECEIPT_PENDING"))
 
-                val ACH_RECEIPT_RELEASED = Type(JsonField.of("ACH_RECEIPT_RELEASED"))
+                val ACH_RECEIPT_RELEASED = FinancialEventType(JsonField.of("ACH_RECEIPT_RELEASED"))
 
-                val ACH_RETURN = Type(JsonField.of("ACH_RETURN"))
+                val ACH_RETURN = FinancialEventType(JsonField.of("ACH_RETURN"))
 
-                val AUTHORIZATION = Type(JsonField.of("AUTHORIZATION"))
+                val AUTHORIZATION = FinancialEventType(JsonField.of("AUTHORIZATION"))
 
-                val AUTHORIZATION_ADVICE = Type(JsonField.of("AUTHORIZATION_ADVICE"))
+                val AUTHORIZATION_ADVICE = FinancialEventType(JsonField.of("AUTHORIZATION_ADVICE"))
 
-                val AUTHORIZATION_EXPIRY = Type(JsonField.of("AUTHORIZATION_EXPIRY"))
+                val AUTHORIZATION_EXPIRY = FinancialEventType(JsonField.of("AUTHORIZATION_EXPIRY"))
 
-                val AUTHORIZATION_REVERSAL = Type(JsonField.of("AUTHORIZATION_REVERSAL"))
+                val AUTHORIZATION_REVERSAL =
+                    FinancialEventType(JsonField.of("AUTHORIZATION_REVERSAL"))
 
-                val BALANCE_INQUIRY = Type(JsonField.of("BALANCE_INQUIRY"))
+                val BALANCE_INQUIRY = FinancialEventType(JsonField.of("BALANCE_INQUIRY"))
 
-                val CLEARING = Type(JsonField.of("CLEARING"))
+                val CLEARING = FinancialEventType(JsonField.of("CLEARING"))
 
-                val CORRECTION_DEBIT = Type(JsonField.of("CORRECTION_DEBIT"))
+                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
 
-                val CORRECTION_CREDIT = Type(JsonField.of("CORRECTION_CREDIT"))
+                val CORRECTION_CREDIT = FinancialEventType(JsonField.of("CORRECTION_CREDIT"))
 
-                val CREDIT_AUTHORIZATION = Type(JsonField.of("CREDIT_AUTHORIZATION"))
+                val CREDIT_AUTHORIZATION = FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION"))
 
-                val CREDIT_AUTHORIZATION_ADVICE = Type(JsonField.of("CREDIT_AUTHORIZATION_ADVICE"))
+                val CREDIT_AUTHORIZATION_ADVICE =
+                    FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION_ADVICE"))
 
-                val FINANCIAL_AUTHORIZATION = Type(JsonField.of("FINANCIAL_AUTHORIZATION"))
+                val FINANCIAL_AUTHORIZATION =
+                    FinancialEventType(JsonField.of("FINANCIAL_AUTHORIZATION"))
 
                 val FINANCIAL_CREDIT_AUTHORIZATION =
-                    Type(JsonField.of("FINANCIAL_CREDIT_AUTHORIZATION"))
+                    FinancialEventType(JsonField.of("FINANCIAL_CREDIT_AUTHORIZATION"))
 
-                val RETURN = Type(JsonField.of("RETURN"))
+                val RETURN = FinancialEventType(JsonField.of("RETURN"))
 
-                val RETURN_REVERSAL = Type(JsonField.of("RETURN_REVERSAL"))
+                val RETURN_REVERSAL = FinancialEventType(JsonField.of("RETURN_REVERSAL"))
 
-                val TRANSFER = Type(JsonField.of("TRANSFER"))
+                val TRANSFER = FinancialEventType(JsonField.of("TRANSFER"))
 
-                val TRANSFER_INSUFFICIENT_FUNDS = Type(JsonField.of("TRANSFER_INSUFFICIENT_FUNDS"))
+                val TRANSFER_INSUFFICIENT_FUNDS =
+                    FinancialEventType(JsonField.of("TRANSFER_INSUFFICIENT_FUNDS"))
 
-                fun of(value: String) = Type(JsonField.of(value))
+                fun of(value: String) = FinancialEventType(JsonField.of(value))
             }
 
             enum class Known {
@@ -1079,7 +1086,7 @@ private constructor(
                     RETURN_REVERSAL -> Known.RETURN_REVERSAL
                     TRANSFER -> Known.TRANSFER
                     TRANSFER_INSUFFICIENT_FUNDS -> Known.TRANSFER_INSUFFICIENT_FUNDS
-                    else -> throw LithicInvalidDataException("Unknown Type: $value")
+                    else -> throw LithicInvalidDataException("Unknown FinancialEventType: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()

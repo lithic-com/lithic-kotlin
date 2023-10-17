@@ -50,6 +50,10 @@ interface LithicClientAsync {
 
     fun threeDS(): ThreeDSServiceAsync
 
+    fun reports(): ReportServiceAsync
+
+    fun cardProduct(): CardProductServiceAsync
+
     /** API status check */
     suspend fun apiStatus(
         params: ClientApiStatusParams,

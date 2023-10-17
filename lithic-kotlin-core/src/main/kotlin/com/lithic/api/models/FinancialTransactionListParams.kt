@@ -143,7 +143,7 @@ constructor(
         }
 
         /**
-         * Date string in RFC 3339 format. Only entries created after the specified date will be
+         * Date string in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
         fun begin(begin: OffsetDateTime) = apply { this.begin = begin }
@@ -152,7 +152,7 @@ constructor(
         fun category(category: Category) = apply { this.category = category }
 
         /**
-         * Date string in RFC 3339 format. Only entries created before the specified date will be
+         * Date string in RFC 3339 format. Only entries created before the specified time will be
          * included. UTC time zone.
          */
         fun end(end: OffsetDateTime) = apply { this.end = end }
@@ -380,6 +380,8 @@ constructor(
 
             val PENDING = Status(JsonField.of("PENDING"))
 
+            val RETURNED = Status(JsonField.of("RETURNED"))
+
             val SETTLED = Status(JsonField.of("SETTLED"))
 
             val VOIDED = Status(JsonField.of("VOIDED"))
@@ -391,6 +393,7 @@ constructor(
             DECLINED,
             EXPIRED,
             PENDING,
+            RETURNED,
             SETTLED,
             VOIDED,
         }
@@ -399,6 +402,7 @@ constructor(
             DECLINED,
             EXPIRED,
             PENDING,
+            RETURNED,
             SETTLED,
             VOIDED,
             _UNKNOWN,
@@ -409,6 +413,7 @@ constructor(
                 DECLINED -> Value.DECLINED
                 EXPIRED -> Value.EXPIRED
                 PENDING -> Value.PENDING
+                RETURNED -> Value.RETURNED
                 SETTLED -> Value.SETTLED
                 VOIDED -> Value.VOIDED
                 else -> Value._UNKNOWN
@@ -419,6 +424,7 @@ constructor(
                 DECLINED -> Known.DECLINED
                 EXPIRED -> Known.EXPIRED
                 PENDING -> Known.PENDING
+                RETURNED -> Known.RETURNED
                 SETTLED -> Known.SETTLED
                 VOIDED -> Known.VOIDED
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
