@@ -11,6 +11,8 @@ import com.lithic.api.models.PaymentCreateResponse
 import com.lithic.api.models.PaymentListPage
 import com.lithic.api.models.PaymentListParams
 import com.lithic.api.models.PaymentRetrieveParams
+import com.lithic.api.models.PaymentRetryParams
+import com.lithic.api.models.PaymentRetryResponse
 import com.lithic.api.models.PaymentSimulateReleaseParams
 import com.lithic.api.models.PaymentSimulateReleaseResponse
 import com.lithic.api.models.PaymentSimulateReturnParams
@@ -35,6 +37,12 @@ interface PaymentService {
         params: PaymentListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): PaymentListPage
+
+    /** Retry an origination which has been returned. */
+    fun retry(
+        params: PaymentRetryParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): PaymentRetryResponse
 
     /** Simulates a release of a Payment. */
     fun simulateRelease(
