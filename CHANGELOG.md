@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.14.0 (2023-10-24)
+
+Full Changelog: [v0.13.1...v0.14.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.13.1...v0.14.0)
+
+### Features
+
+* **api:** add AUTH_STREAM_ACCESS to responder endpoints ([#96](https://github.com/lithic-com/lithic-kotlin/issues/96)) ([6f4de68](https://github.com/lithic-com/lithic-kotlin/commit/6f4de680a2073b569ea3acabe8970f50f90c193b))
+* **api:** add verification_failed_reason ([#94](https://github.com/lithic-com/lithic-kotlin/issues/94)) ([3caf5b1](https://github.com/lithic-com/lithic-kotlin/commit/3caf5b1f65aef08e645019e6fecf9aedb906c20b))
+* **api:** updates ([#93](https://github.com/lithic-com/lithic-kotlin/issues/93)) ([3815a94](https://github.com/lithic-com/lithic-kotlin/commit/3815a94e416498765dbc94c8fef2f2d471be9763))
+* **client:** adjust retry behavior ([#97](https://github.com/lithic-com/lithic-kotlin/issues/97)) ([3bb4c8b](https://github.com/lithic-com/lithic-kotlin/commit/3bb4c8bf5695623a950e82bb1ca87fb851e1cc58))
+* make webhook headers case insensitive ([#91](https://github.com/lithic-com/lithic-kotlin/issues/91)) ([08458d7](https://github.com/lithic-com/lithic-kotlin/commit/08458d7ef14b019bb7c33dc4748271f6fa5e5649))
+
+
+### Chores
+
+* **internal:** minor reformatting ([#89](https://github.com/lithic-com/lithic-kotlin/issues/89)) ([288b577](https://github.com/lithic-com/lithic-kotlin/commit/288b5778f08ad64db7bb4e8dfd33120e0614d14b))
+* **internal:** rearrange client arguments ([#88](https://github.com/lithic-com/lithic-kotlin/issues/88)) ([7326d1f](https://github.com/lithic-com/lithic-kotlin/commit/7326d1f4cdba544c5e7c560915356a3c5cd5c1a3))
+* update README ([#86](https://github.com/lithic-com/lithic-kotlin/issues/86)) ([2b1a91e](https://github.com/lithic-com/lithic-kotlin/commit/2b1a91e0b44954a80a14810bc8da92f59dc75113))
+
+
+### Documentation
+
+* organisation -&gt; organization (UK to US English) ([#92](https://github.com/lithic-com/lithic-kotlin/issues/92)) ([93dcbb3](https://github.com/lithic-com/lithic-kotlin/commit/93dcbb39ed3c4ec0ee07b86f1451168eb5767ede))
+
 ## 0.13.1 (2023-10-05)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.13.0...v0.13.1)
