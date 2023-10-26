@@ -70,10 +70,16 @@ constructor(
          */
         @JsonProperty("amount") fun amount(): Long? = amount
 
-        /** Globally unique identifier for the financial account that will send the funds. */
+        /**
+         * Globally unique identifier for the financial account or card that will send the funds.
+         * Accepted type dependent on the program's use case.
+         */
         @JsonProperty("from") fun from(): String? = from
 
-        /** Globally unique identifier for the financial account that will receive the funds. */
+        /**
+         * Globally unique identifier for the financial account or card that will receive the funds.
+         * Accepted type dependent on the program's use case.
+         */
         @JsonProperty("to") fun to(): String? = to
 
         /** Optional descriptor for the transfer. */
@@ -149,10 +155,16 @@ constructor(
              */
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
 
-            /** Globally unique identifier for the financial account that will send the funds. */
+            /**
+             * Globally unique identifier for the financial account or card that will send the
+             * funds. Accepted type dependent on the program's use case.
+             */
             @JsonProperty("from") fun from(from: String) = apply { this.from = from }
 
-            /** Globally unique identifier for the financial account that will receive the funds. */
+            /**
+             * Globally unique identifier for the financial account or card that will receive the
+             * funds. Accepted type dependent on the program's use case.
+             */
             @JsonProperty("to") fun to(to: String) = apply { this.to = to }
 
             /** Optional descriptor for the transfer. */
@@ -264,10 +276,16 @@ constructor(
          */
         fun amount(amount: Long) = apply { this.amount = amount }
 
-        /** Globally unique identifier for the financial account that will send the funds. */
+        /**
+         * Globally unique identifier for the financial account or card that will send the funds.
+         * Accepted type dependent on the program's use case.
+         */
         fun from(from: String) = apply { this.from = from }
 
-        /** Globally unique identifier for the financial account that will receive the funds. */
+        /**
+         * Globally unique identifier for the financial account or card that will receive the funds.
+         * Accepted type dependent on the program's use case.
+         */
         fun to(to: String) = apply { this.to = to }
 
         /** Optional descriptor for the transfer. */
