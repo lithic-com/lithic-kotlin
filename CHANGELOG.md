@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0 (2023-10-26)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** add CardProgram and DigitalCardArt resources ([#100](https://github.com/lithic-com/lithic-kotlin/issues/100)) ([217b950](https://github.com/lithic-com/lithic-kotlin/commit/217b9501550fc31ffa57a4d39b91c43ac75b5a13))
+
 ## 0.14.0 (2023-10-24)
 
 Full Changelog: [v0.13.1...v0.14.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.13.1...v0.14.0)
