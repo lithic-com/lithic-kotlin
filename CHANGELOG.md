@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.0 (2023-11-01)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** add verification_attempts response property ([#104](https://github.com/lithic-com/lithic-kotlin/issues/104)) ([ec23d4a](https://github.com/lithic-com/lithic-kotlin/commit/ec23d4aa820d6eaaf7e7694b59b6cdb593d34041))
+* **github:** include a devcontainer setup ([#102](https://github.com/lithic-com/lithic-kotlin/issues/102)) ([786d170](https://github.com/lithic-com/lithic-kotlin/commit/786d1705b9d3114822a27ba06badbeb08c86dbaf))
+
 ## 0.15.0 (2023-10-26)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.14.0...v0.15.0)
