@@ -496,6 +496,8 @@ constructor(
         private val retries: Long?,
         private val returnReasonCode: String?,
         private val secCode: SecCode?,
+        private val companyId: String?,
+        private val receiptRoutingNumber: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -506,6 +508,11 @@ constructor(
         @JsonProperty("return_reason_code") fun returnReasonCode(): String? = returnReasonCode
 
         @JsonProperty("sec_code") fun secCode(): SecCode? = secCode
+
+        @JsonProperty("company_id") fun companyId(): String? = companyId
+
+        @JsonProperty("receipt_routing_number")
+        fun receiptRoutingNumber(): String? = receiptRoutingNumber
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -522,6 +529,8 @@ constructor(
                 this.retries == other.retries &&
                 this.returnReasonCode == other.returnReasonCode &&
                 this.secCode == other.secCode &&
+                this.companyId == other.companyId &&
+                this.receiptRoutingNumber == other.receiptRoutingNumber &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -532,6 +541,8 @@ constructor(
                         retries,
                         returnReasonCode,
                         secCode,
+                        companyId,
+                        receiptRoutingNumber,
                         additionalProperties,
                     )
             }
@@ -539,7 +550,7 @@ constructor(
         }
 
         override fun toString() =
-            "PaymentMethodAttributes{retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, additionalProperties=$additionalProperties}"
+            "PaymentMethodAttributes{retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -551,12 +562,16 @@ constructor(
             private var retries: Long? = null
             private var returnReasonCode: String? = null
             private var secCode: SecCode? = null
+            private var companyId: String? = null
+            private var receiptRoutingNumber: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentMethodAttributes: PaymentMethodAttributes) = apply {
                 this.retries = paymentMethodAttributes.retries
                 this.returnReasonCode = paymentMethodAttributes.returnReasonCode
                 this.secCode = paymentMethodAttributes.secCode
+                this.companyId = paymentMethodAttributes.companyId
+                this.receiptRoutingNumber = paymentMethodAttributes.receiptRoutingNumber
                 additionalProperties(paymentMethodAttributes.additionalProperties)
             }
 
@@ -569,6 +584,14 @@ constructor(
 
             @JsonProperty("sec_code")
             fun secCode(secCode: SecCode) = apply { this.secCode = secCode }
+
+            @JsonProperty("company_id")
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
+
+            @JsonProperty("receipt_routing_number")
+            fun receiptRoutingNumber(receiptRoutingNumber: String) = apply {
+                this.receiptRoutingNumber = receiptRoutingNumber
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -589,6 +612,8 @@ constructor(
                     retries,
                     returnReasonCode,
                     checkNotNull(secCode) { "`secCode` is required but was not set" },
+                    companyId,
+                    receiptRoutingNumber,
                     additionalProperties.toUnmodifiable(),
                 )
         }

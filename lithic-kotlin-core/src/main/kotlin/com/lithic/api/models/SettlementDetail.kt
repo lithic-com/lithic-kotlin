@@ -24,7 +24,7 @@ private constructor(
     private val token: JsonField<String>,
     private val institution: JsonField<String>,
     private val accountToken: JsonField<String>,
-    private val eventTokens: JsonField<List<JsonValue>>,
+    private val eventTokens: JsonField<List<String>>,
     private val transactionToken: JsonField<String>,
     private val cardToken: JsonField<String>,
     private val cardProgramToken: JsonField<String>,
@@ -56,7 +56,7 @@ private constructor(
     fun accountToken(): String = accountToken.getRequired("account_token")
 
     /** Globally unique identifiers denoting the Events associated with this settlement. */
-    fun eventTokens(): List<JsonValue> = eventTokens.getRequired("event_tokens")
+    fun eventTokens(): List<String> = eventTokens.getRequired("event_tokens")
 
     /** Globally unique identifier denoting the associated Transaction object. */
     fun transactionToken(): String = transactionToken.getRequired("transaction_token")
@@ -274,7 +274,7 @@ private constructor(
         private var token: JsonField<String> = JsonMissing.of()
         private var institution: JsonField<String> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
-        private var eventTokens: JsonField<List<JsonValue>> = JsonMissing.of()
+        private var eventTokens: JsonField<List<String>> = JsonMissing.of()
         private var transactionToken: JsonField<String> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
         private var cardProgramToken: JsonField<String> = JsonMissing.of()
@@ -348,12 +348,12 @@ private constructor(
         }
 
         /** Globally unique identifiers denoting the Events associated with this settlement. */
-        fun eventTokens(eventTokens: List<JsonValue>) = eventTokens(JsonField.of(eventTokens))
+        fun eventTokens(eventTokens: List<String>) = eventTokens(JsonField.of(eventTokens))
 
         /** Globally unique identifiers denoting the Events associated with this settlement. */
         @JsonProperty("event_tokens")
         @ExcludeMissing
-        fun eventTokens(eventTokens: JsonField<List<JsonValue>>) = apply {
+        fun eventTokens(eventTokens: JsonField<List<String>>) = apply {
             this.eventTokens = eventTokens
         }
 
@@ -626,8 +626,7 @@ private constructor(
     @NoAutoDetect
     class OtherFeesDetails
     private constructor(
-        private val title: JsonValue,
-        private val type: JsonValue,
+        private val isa: JsonField<Long>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -635,9 +634,9 @@ private constructor(
 
         private var hashCode: Int = 0
 
-        @JsonProperty("title") @ExcludeMissing fun _title() = title
+        fun isa(): Long? = isa.getNullable("ISA")
 
-        @JsonProperty("type") @ExcludeMissing fun _type() = type
+        @JsonProperty("ISA") @ExcludeMissing fun _isa() = isa
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -645,6 +644,7 @@ private constructor(
 
         fun validate(): OtherFeesDetails = apply {
             if (!validated) {
+                isa()
                 validated = true
             }
         }
@@ -657,25 +657,19 @@ private constructor(
             }
 
             return other is OtherFeesDetails &&
-                this.title == other.title &&
-                this.type == other.type &&
+                this.isa == other.isa &&
                 this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        title,
-                        type,
-                        additionalProperties,
-                    )
+                hashCode = Objects.hash(isa, additionalProperties)
             }
             return hashCode
         }
 
         override fun toString() =
-            "OtherFeesDetails{title=$title, type=$type, additionalProperties=$additionalProperties}"
+            "OtherFeesDetails{isa=$isa, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -684,23 +678,19 @@ private constructor(
 
         class Builder {
 
-            private var title: JsonValue = JsonMissing.of()
-            private var type: JsonValue = JsonMissing.of()
+            private var isa: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(otherFeesDetails: OtherFeesDetails) = apply {
-                this.title = otherFeesDetails.title
-                this.type = otherFeesDetails.type
+                this.isa = otherFeesDetails.isa
                 additionalProperties(otherFeesDetails.additionalProperties)
             }
 
-            @JsonProperty("title")
-            @ExcludeMissing
-            fun title(title: JsonValue) = apply { this.title = title }
+            fun isa(isa: Long) = isa(JsonField.of(isa))
 
-            @JsonProperty("type")
+            @JsonProperty("ISA")
             @ExcludeMissing
-            fun type(type: JsonValue) = apply { this.type = type }
+            fun isa(isa: JsonField<Long>) = apply { this.isa = isa }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -717,11 +707,7 @@ private constructor(
             }
 
             fun build(): OtherFeesDetails =
-                OtherFeesDetails(
-                    title,
-                    type,
-                    additionalProperties.toUnmodifiable(),
-                )
+                OtherFeesDetails(isa, additionalProperties.toUnmodifiable())
         }
     }
 }
