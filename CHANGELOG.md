@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.17.0 (2023-11-08)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **client:** allow binary returns ([#105](https://github.com/lithic-com/lithic-kotlin/issues/105)) ([1c77051](https://github.com/lithic-com/lithic-kotlin/commit/1c77051c686e33c5922da54fd7ae1675fb2549ed))
+
+
+### Bug Fixes
+
+* **api:** correct type for other fees details ([#109](https://github.com/lithic-com/lithic-kotlin/issues/109)) ([69c93f8](https://github.com/lithic-com/lithic-kotlin/commit/69c93f8376c7489ea85646cd17fdc894d9b76759))
+
+
+### Chores
+
+* remove bad tests ([#108](https://github.com/lithic-com/lithic-kotlin/issues/108)) ([eb6d1f0](https://github.com/lithic-com/lithic-kotlin/commit/eb6d1f071876931581eaedfb7efcbe5df8b66566))
+
+
+### Documentation
+
+* improve account holder control person documentation ([#107](https://github.com/lithic-com/lithic-kotlin/issues/107)) ([bb80486](https://github.com/lithic-com/lithic-kotlin/commit/bb8048627aca35ba793cd3ee3c9071b3adb90eb4))
+
 ## 0.16.0 (2023-11-01)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.15.0...v0.16.0)
