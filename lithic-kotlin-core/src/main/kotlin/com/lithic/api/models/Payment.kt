@@ -698,6 +698,8 @@ private constructor(
         private val retries: JsonField<Long>,
         private val returnReasonCode: JsonField<String>,
         private val secCode: JsonField<SecCode>,
+        private val companyId: JsonField<String>,
+        private val receiptRoutingNumber: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -711,6 +713,11 @@ private constructor(
 
         fun secCode(): SecCode = secCode.getRequired("sec_code")
 
+        fun companyId(): String? = companyId.getNullable("company_id")
+
+        fun receiptRoutingNumber(): String? =
+            receiptRoutingNumber.getNullable("receipt_routing_number")
+
         @JsonProperty("retries") @ExcludeMissing fun _retries() = retries
 
         @JsonProperty("return_reason_code")
@@ -718,6 +725,12 @@ private constructor(
         fun _returnReasonCode() = returnReasonCode
 
         @JsonProperty("sec_code") @ExcludeMissing fun _secCode() = secCode
+
+        @JsonProperty("company_id") @ExcludeMissing fun _companyId() = companyId
+
+        @JsonProperty("receipt_routing_number")
+        @ExcludeMissing
+        fun _receiptRoutingNumber() = receiptRoutingNumber
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -728,6 +741,8 @@ private constructor(
                 retries()
                 returnReasonCode()
                 secCode()
+                companyId()
+                receiptRoutingNumber()
                 validated = true
             }
         }
@@ -743,6 +758,8 @@ private constructor(
                 this.retries == other.retries &&
                 this.returnReasonCode == other.returnReasonCode &&
                 this.secCode == other.secCode &&
+                this.companyId == other.companyId &&
+                this.receiptRoutingNumber == other.receiptRoutingNumber &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -753,6 +770,8 @@ private constructor(
                         retries,
                         returnReasonCode,
                         secCode,
+                        companyId,
+                        receiptRoutingNumber,
                         additionalProperties,
                     )
             }
@@ -760,7 +779,7 @@ private constructor(
         }
 
         override fun toString() =
-            "PaymentMethodAttributes{retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, additionalProperties=$additionalProperties}"
+            "PaymentMethodAttributes{retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -772,12 +791,16 @@ private constructor(
             private var retries: JsonField<Long> = JsonMissing.of()
             private var returnReasonCode: JsonField<String> = JsonMissing.of()
             private var secCode: JsonField<SecCode> = JsonMissing.of()
+            private var companyId: JsonField<String> = JsonMissing.of()
+            private var receiptRoutingNumber: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentMethodAttributes: PaymentMethodAttributes) = apply {
                 this.retries = paymentMethodAttributes.retries
                 this.returnReasonCode = paymentMethodAttributes.returnReasonCode
                 this.secCode = paymentMethodAttributes.secCode
+                this.companyId = paymentMethodAttributes.companyId
+                this.receiptRoutingNumber = paymentMethodAttributes.receiptRoutingNumber
                 additionalProperties(paymentMethodAttributes.additionalProperties)
             }
 
@@ -802,6 +825,21 @@ private constructor(
             @ExcludeMissing
             fun secCode(secCode: JsonField<SecCode>) = apply { this.secCode = secCode }
 
+            fun companyId(companyId: String) = companyId(JsonField.of(companyId))
+
+            @JsonProperty("company_id")
+            @ExcludeMissing
+            fun companyId(companyId: JsonField<String>) = apply { this.companyId = companyId }
+
+            fun receiptRoutingNumber(receiptRoutingNumber: String) =
+                receiptRoutingNumber(JsonField.of(receiptRoutingNumber))
+
+            @JsonProperty("receipt_routing_number")
+            @ExcludeMissing
+            fun receiptRoutingNumber(receiptRoutingNumber: JsonField<String>) = apply {
+                this.receiptRoutingNumber = receiptRoutingNumber
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -821,6 +859,8 @@ private constructor(
                     retries,
                     returnReasonCode,
                     secCode,
+                    companyId,
+                    receiptRoutingNumber,
                     additionalProperties.toUnmodifiable(),
                 )
         }
