@@ -16,6 +16,8 @@ import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardProvisionResponse
 import com.lithic.api.models.CardReissueParams
 import com.lithic.api.models.CardRetrieveParams
+import com.lithic.api.models.CardRetrieveSpendLimitsParams
+import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.services.async.cards.AggregateBalanceServiceAsync
 import com.lithic.api.services.async.cards.BalanceServiceAsync
@@ -113,6 +115,17 @@ interface CardServiceAsync {
         params: CardReissueParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Card
+
+    /**
+     * Get a Card's available spend limit, which is based on the spend limit configured on the Card
+     * and the amount already spent over the spend limit's duration. For example, if the Card has a
+     * monthly spend limit of $1000 configured, and has spent $600 in the last month, the available
+     * spend limit returned would be $400.
+     */
+    suspend fun retrieveSpendLimits(
+        params: CardRetrieveSpendLimitsParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CardSpendLimits
 
     suspend fun getEmbedHtml(
         params: CardGetEmbedHtmlParams,
