@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2023-11-28)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** add `get spend_limits` endpoints to `cards` and `accounts` ([#116](https://github.com/lithic-com/lithic-kotlin/issues/116)) ([e15ec9e](https://github.com/lithic-com/lithic-kotlin/commit/e15ec9e2a03ab40917e9e697573373f5e8cf1e82))
+
+
+### Chores
+
+* **internal:** update stats file ([#114](https://github.com/lithic-com/lithic-kotlin/issues/114)) ([6edf142](https://github.com/lithic-com/lithic-kotlin/commit/6edf14226a56d0af0320636a9de08ed6828066be))
+
 ## 0.19.0 (2023-11-16)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.18.0...v0.19.0)
