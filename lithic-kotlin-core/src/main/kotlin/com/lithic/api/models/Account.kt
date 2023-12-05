@@ -47,7 +47,6 @@ private constructor(
      * - `ACTIVE` - Account is able to transact and create new cards.
      * - `PAUSED` - Account will not be able to transact or create new cards. It can be set back to
      * `ACTIVE`.
-     * - `CLOSED` - Account will permanently not be able to transact or create new cards.
      */
     fun state(): State = state.getRequired("state")
 
@@ -79,7 +78,6 @@ private constructor(
      * - `ACTIVE` - Account is able to transact and create new cards.
      * - `PAUSED` - Account will not be able to transact or create new cards. It can be set back to
      * `ACTIVE`.
-     * - `CLOSED` - Account will permanently not be able to transact or create new cards.
      */
     @JsonProperty("state") @ExcludeMissing fun _state() = state
 
@@ -199,7 +197,6 @@ private constructor(
          * - `ACTIVE` - Account is able to transact and create new cards.
          * - `PAUSED` - Account will not be able to transact or create new cards. It can be set back
          * to `ACTIVE`.
-         * - `CLOSED` - Account will permanently not be able to transact or create new cards.
          */
         fun state(state: State) = state(JsonField.of(state))
 
@@ -209,7 +206,6 @@ private constructor(
          * - `ACTIVE` - Account is able to transact and create new cards.
          * - `PAUSED` - Account will not be able to transact or create new cards. It can be set back
          * to `ACTIVE`.
-         * - `CLOSED` - Account will permanently not be able to transact or create new cards.
          */
         @JsonProperty("state")
         @ExcludeMissing
@@ -457,21 +453,17 @@ private constructor(
 
             val PAUSED = State(JsonField.of("PAUSED"))
 
-            val CLOSED = State(JsonField.of("CLOSED"))
-
             fun of(value: String) = State(JsonField.of(value))
         }
 
         enum class Known {
             ACTIVE,
             PAUSED,
-            CLOSED,
         }
 
         enum class Value {
             ACTIVE,
             PAUSED,
-            CLOSED,
             _UNKNOWN,
         }
 
@@ -479,7 +471,6 @@ private constructor(
             when (this) {
                 ACTIVE -> Value.ACTIVE
                 PAUSED -> Value.PAUSED
-                CLOSED -> Value.CLOSED
                 else -> Value._UNKNOWN
             }
 
@@ -487,7 +478,6 @@ private constructor(
             when (this) {
                 ACTIVE -> Known.ACTIVE
                 PAUSED -> Known.PAUSED
-                CLOSED -> Known.CLOSED
                 else -> throw LithicInvalidDataException("Unknown State: $value")
             }
 
