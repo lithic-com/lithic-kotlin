@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0 (2023-12-05)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** remove `CLOSED` account enum and update docstrings ([#119](https://github.com/lithic-com/lithic-kotlin/issues/119)) ([24dc0e1](https://github.com/lithic-com/lithic-kotlin/commit/24dc0e11c4eb64970cea33c0a1bc5b6ff6a2fe14))
+
 ## 0.20.0 (2023-11-28)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.19.0...v0.20.0)
