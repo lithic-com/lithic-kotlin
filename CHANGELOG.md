@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.0 (2023-12-15)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** rename `token` and `type` to `financial_account_token` and `financial_account_type` ([#122](https://github.com/lithic-com/lithic-kotlin/issues/122)) ([c1ec448](https://github.com/lithic-com/lithic-kotlin/commit/c1ec448d09fb76cdd3bff9f9253ec762f638da2f))
+
 ## 0.21.0 (2023-12-05)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.20.0...v0.21.0)
