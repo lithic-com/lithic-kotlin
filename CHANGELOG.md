@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.23.0 (2023-12-18)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **api:** remove /auth_stream enrollment endpoints ([#125](https://github.com/lithic-com/lithic-kotlin/issues/125)) ([cd14d3d](https://github.com/lithic-com/lithic-kotlin/commit/cd14d3d842047b95f5f20f3db89a0d4e4871719c))
+
+
+### Chores
+
+* **ci:** run release workflow once per day ([#123](https://github.com/lithic-com/lithic-kotlin/issues/123)) ([dd4da4f](https://github.com/lithic-com/lithic-kotlin/commit/dd4da4f81adeafcd49eb115bdd58b7b8d2b6dc75))
+
 ## 0.22.0 (2023-12-15)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.21.0...v0.22.0)
