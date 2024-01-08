@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.1 (2024-01-08)
+
+Full Changelog: [v0.23.0...v0.23.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.23.0...v0.23.1)
+
+### Chores
+
+* **internal:** bump license ([#126](https://github.com/lithic-com/lithic-kotlin/issues/126)) ([42d198b](https://github.com/lithic-com/lithic-kotlin/commit/42d198bda0edfde96991003ab109cc3055351511))
+
 ## 0.23.0 (2023-12-18)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.22.0...v0.23.0)
