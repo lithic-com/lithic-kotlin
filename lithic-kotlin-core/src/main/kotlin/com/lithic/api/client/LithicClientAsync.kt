@@ -58,7 +58,7 @@ interface LithicClientAsync {
 
     fun digitalCardArt(): DigitalCardArtServiceAsync
 
-    /** API status check */
+    /** Status of api */
     suspend fun apiStatus(
         params: ClientApiStatusParams,
         requestOptions: RequestOptions = RequestOptions.none()

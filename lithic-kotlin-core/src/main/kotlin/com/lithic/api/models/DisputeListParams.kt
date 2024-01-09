@@ -243,71 +243,71 @@ constructor(
 
         companion object {
 
+            val ARBITRATION = Status(JsonField.of("ARBITRATION"))
+
+            val CASE_CLOSED = Status(JsonField.of("CASE_CLOSED"))
+
+            val CASE_WON = Status(JsonField.of("CASE_WON"))
+
             val NEW = Status(JsonField.of("NEW"))
 
             val PENDING_CUSTOMER = Status(JsonField.of("PENDING_CUSTOMER"))
 
-            val SUBMITTED = Status(JsonField.of("SUBMITTED"))
+            val PREARBITRATION = Status(JsonField.of("PREARBITRATION"))
 
             val REPRESENTMENT = Status(JsonField.of("REPRESENTMENT"))
 
-            val PREARBITRATION = Status(JsonField.of("PREARBITRATION"))
-
-            val ARBITRATION = Status(JsonField.of("ARBITRATION"))
-
-            val CASE_WON = Status(JsonField.of("CASE_WON"))
-
-            val CASE_CLOSED = Status(JsonField.of("CASE_CLOSED"))
+            val SUBMITTED = Status(JsonField.of("SUBMITTED"))
 
             fun of(value: String) = Status(JsonField.of(value))
         }
 
         enum class Known {
+            ARBITRATION,
+            CASE_CLOSED,
+            CASE_WON,
             NEW,
             PENDING_CUSTOMER,
-            SUBMITTED,
-            REPRESENTMENT,
             PREARBITRATION,
-            ARBITRATION,
-            CASE_WON,
-            CASE_CLOSED,
+            REPRESENTMENT,
+            SUBMITTED,
         }
 
         enum class Value {
+            ARBITRATION,
+            CASE_CLOSED,
+            CASE_WON,
             NEW,
             PENDING_CUSTOMER,
-            SUBMITTED,
-            REPRESENTMENT,
             PREARBITRATION,
-            ARBITRATION,
-            CASE_WON,
-            CASE_CLOSED,
+            REPRESENTMENT,
+            SUBMITTED,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
+                ARBITRATION -> Value.ARBITRATION
+                CASE_CLOSED -> Value.CASE_CLOSED
+                CASE_WON -> Value.CASE_WON
                 NEW -> Value.NEW
                 PENDING_CUSTOMER -> Value.PENDING_CUSTOMER
-                SUBMITTED -> Value.SUBMITTED
-                REPRESENTMENT -> Value.REPRESENTMENT
                 PREARBITRATION -> Value.PREARBITRATION
-                ARBITRATION -> Value.ARBITRATION
-                CASE_WON -> Value.CASE_WON
-                CASE_CLOSED -> Value.CASE_CLOSED
+                REPRESENTMENT -> Value.REPRESENTMENT
+                SUBMITTED -> Value.SUBMITTED
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
+                ARBITRATION -> Known.ARBITRATION
+                CASE_CLOSED -> Known.CASE_CLOSED
+                CASE_WON -> Known.CASE_WON
                 NEW -> Known.NEW
                 PENDING_CUSTOMER -> Known.PENDING_CUSTOMER
-                SUBMITTED -> Known.SUBMITTED
-                REPRESENTMENT -> Known.REPRESENTMENT
                 PREARBITRATION -> Known.PREARBITRATION
-                ARBITRATION -> Known.ARBITRATION
-                CASE_WON -> Known.CASE_WON
-                CASE_CLOSED -> Known.CASE_CLOSED
+                REPRESENTMENT -> Known.REPRESENTMENT
+                SUBMITTED -> Known.SUBMITTED
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
             }
 

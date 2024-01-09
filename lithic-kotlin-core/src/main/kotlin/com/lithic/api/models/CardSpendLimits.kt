@@ -18,7 +18,6 @@ import java.util.Objects
 @NoAutoDetect
 class CardSpendLimits
 private constructor(
-    private val required: JsonValue,
     private val availableSpendLimit: JsonField<AvailableSpendLimit>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
@@ -27,10 +26,8 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    fun availableSpendLimit(): AvailableSpendLimit? =
-        availableSpendLimit.getNullable("available_spend_limit")
-
-    @JsonProperty("required") @ExcludeMissing fun _required() = required
+    fun availableSpendLimit(): AvailableSpendLimit =
+        availableSpendLimit.getRequired("available_spend_limit")
 
     @JsonProperty("available_spend_limit")
     @ExcludeMissing
@@ -42,7 +39,7 @@ private constructor(
 
     fun validate(): CardSpendLimits = apply {
         if (!validated) {
-            availableSpendLimit()?.validate()
+            availableSpendLimit().validate()
             validated = true
         }
     }
@@ -55,25 +52,19 @@ private constructor(
         }
 
         return other is CardSpendLimits &&
-            this.required == other.required &&
             this.availableSpendLimit == other.availableSpendLimit &&
             this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    required,
-                    availableSpendLimit,
-                    additionalProperties,
-                )
+            hashCode = Objects.hash(availableSpendLimit, additionalProperties)
         }
         return hashCode
     }
 
     override fun toString() =
-        "CardSpendLimits{required=$required, availableSpendLimit=$availableSpendLimit, additionalProperties=$additionalProperties}"
+        "CardSpendLimits{availableSpendLimit=$availableSpendLimit, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -82,19 +73,13 @@ private constructor(
 
     class Builder {
 
-        private var required: JsonValue = JsonMissing.of()
         private var availableSpendLimit: JsonField<AvailableSpendLimit> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardSpendLimits: CardSpendLimits) = apply {
-            this.required = cardSpendLimits.required
             this.availableSpendLimit = cardSpendLimits.availableSpendLimit
             additionalProperties(cardSpendLimits.additionalProperties)
         }
-
-        @JsonProperty("required")
-        @ExcludeMissing
-        fun required(required: JsonValue) = apply { this.required = required }
 
         fun availableSpendLimit(availableSpendLimit: AvailableSpendLimit) =
             availableSpendLimit(JsonField.of(availableSpendLimit))
@@ -120,29 +105,22 @@ private constructor(
         }
 
         fun build(): CardSpendLimits =
-            CardSpendLimits(
-                required,
-                availableSpendLimit,
-                additionalProperties.toUnmodifiable(),
-            )
+            CardSpendLimits(availableSpendLimit, additionalProperties.toUnmodifiable())
     }
 
     @JsonDeserialize(builder = AvailableSpendLimit.Builder::class)
     @NoAutoDetect
     class AvailableSpendLimit
     private constructor(
-        private val monthly: JsonField<Long>,
         private val annually: JsonField<Long>,
         private val forever: JsonField<Long>,
+        private val monthly: JsonField<Long>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var validated: Boolean = false
 
         private var hashCode: Int = 0
-
-        /** The available spend limit relative to the monthly limit configured on the Card. */
-        fun monthly(): Long? = monthly.getNullable("monthly")
 
         /** The available spend limit relative to the annual limit configured on the Card. */
         fun annually(): Long? = annually.getNullable("annually")
@@ -151,7 +129,7 @@ private constructor(
         fun forever(): Long? = forever.getNullable("forever")
 
         /** The available spend limit relative to the monthly limit configured on the Card. */
-        @JsonProperty("monthly") @ExcludeMissing fun _monthly() = monthly
+        fun monthly(): Long? = monthly.getNullable("monthly")
 
         /** The available spend limit relative to the annual limit configured on the Card. */
         @JsonProperty("annually") @ExcludeMissing fun _annually() = annually
@@ -159,15 +137,18 @@ private constructor(
         /** The available spend limit relative to the forever limit configured on the Card. */
         @JsonProperty("forever") @ExcludeMissing fun _forever() = forever
 
+        /** The available spend limit relative to the monthly limit configured on the Card. */
+        @JsonProperty("monthly") @ExcludeMissing fun _monthly() = monthly
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun validate(): AvailableSpendLimit = apply {
             if (!validated) {
-                monthly()
                 annually()
                 forever()
+                monthly()
                 validated = true
             }
         }
@@ -180,9 +161,9 @@ private constructor(
             }
 
             return other is AvailableSpendLimit &&
-                this.monthly == other.monthly &&
                 this.annually == other.annually &&
                 this.forever == other.forever &&
+                this.monthly == other.monthly &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -190,9 +171,9 @@ private constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        monthly,
                         annually,
                         forever,
+                        monthly,
                         additionalProperties,
                     )
             }
@@ -200,7 +181,7 @@ private constructor(
         }
 
         override fun toString() =
-            "AvailableSpendLimit{monthly=$monthly, annually=$annually, forever=$forever, additionalProperties=$additionalProperties}"
+            "AvailableSpendLimit{annually=$annually, forever=$forever, monthly=$monthly, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -209,25 +190,17 @@ private constructor(
 
         class Builder {
 
-            private var monthly: JsonField<Long> = JsonMissing.of()
             private var annually: JsonField<Long> = JsonMissing.of()
             private var forever: JsonField<Long> = JsonMissing.of()
+            private var monthly: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(availableSpendLimit: AvailableSpendLimit) = apply {
-                this.monthly = availableSpendLimit.monthly
                 this.annually = availableSpendLimit.annually
                 this.forever = availableSpendLimit.forever
+                this.monthly = availableSpendLimit.monthly
                 additionalProperties(availableSpendLimit.additionalProperties)
             }
-
-            /** The available spend limit relative to the monthly limit configured on the Card. */
-            fun monthly(monthly: Long) = monthly(JsonField.of(monthly))
-
-            /** The available spend limit relative to the monthly limit configured on the Card. */
-            @JsonProperty("monthly")
-            @ExcludeMissing
-            fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
 
             /** The available spend limit relative to the annual limit configured on the Card. */
             fun annually(annually: Long) = annually(JsonField.of(annually))
@@ -245,6 +218,14 @@ private constructor(
             @ExcludeMissing
             fun forever(forever: JsonField<Long>) = apply { this.forever = forever }
 
+            /** The available spend limit relative to the monthly limit configured on the Card. */
+            fun monthly(monthly: Long) = monthly(JsonField.of(monthly))
+
+            /** The available spend limit relative to the monthly limit configured on the Card. */
+            @JsonProperty("monthly")
+            @ExcludeMissing
+            fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -261,9 +242,9 @@ private constructor(
 
             fun build(): AvailableSpendLimit =
                 AvailableSpendLimit(
-                    monthly,
                     annually,
                     forever,
+                    monthly,
                     additionalProperties.toUnmodifiable(),
                 )
         }

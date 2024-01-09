@@ -21,8 +21,8 @@ class EmbedRequestParams
 private constructor(
     private val css: JsonField<String>,
     private val expiration: JsonField<OffsetDateTime>,
-    private val token: JsonField<String>,
     private val targetOrigin: JsonField<String>,
+    private val token: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -49,9 +49,6 @@ private constructor(
      */
     fun expiration(): OffsetDateTime? = expiration.getNullable("expiration")
 
-    /** Globally unique identifier for the card to be displayed. */
-    fun token(): String = token.getRequired("token")
-
     /**
      * Required if you want to post the element clicked to the parent iframe.
      *
@@ -59,6 +56,9 @@ private constructor(
      * event listener.
      */
     fun targetOrigin(): String? = targetOrigin.getNullable("target_origin")
+
+    /** Globally unique identifier for the card to be displayed. */
+    fun token(): String = token.getRequired("token")
 
     /**
      * A publicly available URI, so the white-labeled card element can be styled with the client's
@@ -79,9 +79,6 @@ private constructor(
      */
     @JsonProperty("expiration") @ExcludeMissing fun _expiration() = expiration
 
-    /** Globally unique identifier for the card to be displayed. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     /**
      * Required if you want to post the element clicked to the parent iframe.
      *
@@ -89,6 +86,9 @@ private constructor(
      * event listener.
      */
     @JsonProperty("target_origin") @ExcludeMissing fun _targetOrigin() = targetOrigin
+
+    /** Globally unique identifier for the card to be displayed. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -98,8 +98,8 @@ private constructor(
         if (!validated) {
             css()
             expiration()
-            token()
             targetOrigin()
+            token()
             validated = true
         }
     }
@@ -114,8 +114,8 @@ private constructor(
         return other is EmbedRequestParams &&
             this.css == other.css &&
             this.expiration == other.expiration &&
-            this.token == other.token &&
             this.targetOrigin == other.targetOrigin &&
+            this.token == other.token &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -125,8 +125,8 @@ private constructor(
                 Objects.hash(
                     css,
                     expiration,
-                    token,
                     targetOrigin,
+                    token,
                     additionalProperties,
                 )
         }
@@ -134,7 +134,7 @@ private constructor(
     }
 
     override fun toString() =
-        "EmbedRequestParams{css=$css, expiration=$expiration, token=$token, targetOrigin=$targetOrigin, additionalProperties=$additionalProperties}"
+        "EmbedRequestParams{css=$css, expiration=$expiration, targetOrigin=$targetOrigin, token=$token, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -145,15 +145,15 @@ private constructor(
 
         private var css: JsonField<String> = JsonMissing.of()
         private var expiration: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var targetOrigin: JsonField<String> = JsonMissing.of()
+        private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(embedRequestParams: EmbedRequestParams) = apply {
             this.css = embedRequestParams.css
             this.expiration = embedRequestParams.expiration
-            this.token = embedRequestParams.token
             this.targetOrigin = embedRequestParams.targetOrigin
+            this.token = embedRequestParams.token
             additionalProperties(embedRequestParams.additionalProperties)
         }
 
@@ -201,14 +201,6 @@ private constructor(
             this.expiration = expiration
         }
 
-        /** Globally unique identifier for the card to be displayed. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for the card to be displayed. */
-        @JsonProperty("token")
-        @ExcludeMissing
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
         /**
          * Required if you want to post the element clicked to the parent iframe.
          *
@@ -229,6 +221,14 @@ private constructor(
             this.targetOrigin = targetOrigin
         }
 
+        /** Globally unique identifier for the card to be displayed. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for the card to be displayed. */
+        @JsonProperty("token")
+        @ExcludeMissing
+        fun token(token: JsonField<String>) = apply { this.token = token }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -247,8 +247,8 @@ private constructor(
             EmbedRequestParams(
                 css,
                 expiration,
-                token,
                 targetOrigin,
+                token,
                 additionalProperties.toUnmodifiable(),
             )
     }
