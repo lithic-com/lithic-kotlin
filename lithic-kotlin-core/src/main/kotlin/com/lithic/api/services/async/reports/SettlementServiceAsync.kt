@@ -8,7 +8,7 @@ import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.ReportSettlementListDetailsPageAsync
 import com.lithic.api.models.ReportSettlementListDetailsParams
 import com.lithic.api.models.ReportSettlementSummaryParams
-import com.lithic.api.models.SettlementSummaryResponse
+import com.lithic.api.models.SettlementReport
 
 interface SettlementServiceAsync {
 
@@ -22,5 +22,5 @@ interface SettlementServiceAsync {
     suspend fun summary(
         params: ReportSettlementSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): SettlementSummaryResponse
+    ): SettlementReport
 }

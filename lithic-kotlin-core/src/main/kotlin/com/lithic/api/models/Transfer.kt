@@ -26,14 +26,14 @@ private constructor(
     private val currency: JsonField<String>,
     private val descriptor: JsonField<String>,
     private val events: JsonField<List<FinancialEvent>>,
+    private val fromBalance: JsonField<List<Balance>>,
     private val pendingAmount: JsonField<Long>,
     private val result: JsonField<Result>,
     private val settledAmount: JsonField<Long>,
     private val status: JsonField<Status>,
+    private val toBalance: JsonField<List<Balance>>,
     private val token: JsonField<String>,
     private val updated: JsonField<OffsetDateTime>,
-    private val fromBalance: JsonField<List<Balance>>,
-    private val toBalance: JsonField<List<Balance>>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -59,6 +59,9 @@ private constructor(
 
     /** A list of all financial events that have modified this trasnfer. */
     fun events(): List<FinancialEvent>? = events.getNullable("events")
+
+    /** The updated balance of the sending financial account. */
+    fun fromBalance(): List<Balance>? = fromBalance.getNullable("from_balance")
 
     /**
      * Pending amount of the transaction in the currency's smallest unit (e.g., cents), including
@@ -90,17 +93,14 @@ private constructor(
      */
     fun status(): Status? = status.getNullable("status")
 
+    /** The updated balance of the receiving financial account. */
+    fun toBalance(): List<Balance>? = toBalance.getNullable("to_balance")
+
     /** Globally unique identifier for the transfer event. */
     fun token(): String? = token.getNullable("token")
 
     /** Date and time when the financial transaction was last updated. UTC time zone. */
     fun updated(): OffsetDateTime? = updated.getNullable("updated")
-
-    /** The updated balance of the sending financial account. */
-    fun fromBalance(): List<Balance>? = fromBalance.getNullable("from_balance")
-
-    /** The updated balance of the receiving financial account. */
-    fun toBalance(): List<Balance>? = toBalance.getNullable("to_balance")
 
     /**
      * Status types:
@@ -120,6 +120,9 @@ private constructor(
 
     /** A list of all financial events that have modified this trasnfer. */
     @JsonProperty("events") @ExcludeMissing fun _events() = events
+
+    /** The updated balance of the sending financial account. */
+    @JsonProperty("from_balance") @ExcludeMissing fun _fromBalance() = fromBalance
 
     /**
      * Pending amount of the transaction in the currency's smallest unit (e.g., cents), including
@@ -151,17 +154,14 @@ private constructor(
      */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
 
+    /** The updated balance of the receiving financial account. */
+    @JsonProperty("to_balance") @ExcludeMissing fun _toBalance() = toBalance
+
     /** Globally unique identifier for the transfer event. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /** Date and time when the financial transaction was last updated. UTC time zone. */
     @JsonProperty("updated") @ExcludeMissing fun _updated() = updated
-
-    /** The updated balance of the sending financial account. */
-    @JsonProperty("from_balance") @ExcludeMissing fun _fromBalance() = fromBalance
-
-    /** The updated balance of the receiving financial account. */
-    @JsonProperty("to_balance") @ExcludeMissing fun _toBalance() = toBalance
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -174,14 +174,14 @@ private constructor(
             currency()
             descriptor()
             events()?.forEach { it.validate() }
+            fromBalance()?.forEach { it.validate() }
             pendingAmount()
             result()
             settledAmount()
             status()
+            toBalance()?.forEach { it.validate() }
             token()
             updated()
-            fromBalance()?.forEach { it.validate() }
-            toBalance()?.forEach { it.validate() }
             validated = true
         }
     }
@@ -199,14 +199,14 @@ private constructor(
             this.currency == other.currency &&
             this.descriptor == other.descriptor &&
             this.events == other.events &&
+            this.fromBalance == other.fromBalance &&
             this.pendingAmount == other.pendingAmount &&
             this.result == other.result &&
             this.settledAmount == other.settledAmount &&
             this.status == other.status &&
+            this.toBalance == other.toBalance &&
             this.token == other.token &&
             this.updated == other.updated &&
-            this.fromBalance == other.fromBalance &&
-            this.toBalance == other.toBalance &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -219,14 +219,14 @@ private constructor(
                     currency,
                     descriptor,
                     events,
+                    fromBalance,
                     pendingAmount,
                     result,
                     settledAmount,
                     status,
+                    toBalance,
                     token,
                     updated,
-                    fromBalance,
-                    toBalance,
                     additionalProperties,
                 )
         }
@@ -234,7 +234,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Transfer{category=$category, created=$created, currency=$currency, descriptor=$descriptor, events=$events, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, status=$status, token=$token, updated=$updated, fromBalance=$fromBalance, toBalance=$toBalance, additionalProperties=$additionalProperties}"
+        "Transfer{category=$category, created=$created, currency=$currency, descriptor=$descriptor, events=$events, fromBalance=$fromBalance, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, status=$status, toBalance=$toBalance, token=$token, updated=$updated, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -248,14 +248,14 @@ private constructor(
         private var currency: JsonField<String> = JsonMissing.of()
         private var descriptor: JsonField<String> = JsonMissing.of()
         private var events: JsonField<List<FinancialEvent>> = JsonMissing.of()
+        private var fromBalance: JsonField<List<Balance>> = JsonMissing.of()
         private var pendingAmount: JsonField<Long> = JsonMissing.of()
         private var result: JsonField<Result> = JsonMissing.of()
         private var settledAmount: JsonField<Long> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
+        private var toBalance: JsonField<List<Balance>> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
         private var updated: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var fromBalance: JsonField<List<Balance>> = JsonMissing.of()
-        private var toBalance: JsonField<List<Balance>> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transfer: Transfer) = apply {
@@ -264,14 +264,14 @@ private constructor(
             this.currency = transfer.currency
             this.descriptor = transfer.descriptor
             this.events = transfer.events
+            this.fromBalance = transfer.fromBalance
             this.pendingAmount = transfer.pendingAmount
             this.result = transfer.result
             this.settledAmount = transfer.settledAmount
             this.status = transfer.status
+            this.toBalance = transfer.toBalance
             this.token = transfer.token
             this.updated = transfer.updated
-            this.fromBalance = transfer.fromBalance
-            this.toBalance = transfer.toBalance
             additionalProperties(transfer.additionalProperties)
         }
 
@@ -326,6 +326,16 @@ private constructor(
         @JsonProperty("events")
         @ExcludeMissing
         fun events(events: JsonField<List<FinancialEvent>>) = apply { this.events = events }
+
+        /** The updated balance of the sending financial account. */
+        fun fromBalance(fromBalance: List<Balance>) = fromBalance(JsonField.of(fromBalance))
+
+        /** The updated balance of the sending financial account. */
+        @JsonProperty("from_balance")
+        @ExcludeMissing
+        fun fromBalance(fromBalance: JsonField<List<Balance>>) = apply {
+            this.fromBalance = fromBalance
+        }
 
         /**
          * Pending amount of the transaction in the currency's smallest unit (e.g., cents),
@@ -399,6 +409,14 @@ private constructor(
         @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        /** The updated balance of the receiving financial account. */
+        fun toBalance(toBalance: List<Balance>) = toBalance(JsonField.of(toBalance))
+
+        /** The updated balance of the receiving financial account. */
+        @JsonProperty("to_balance")
+        @ExcludeMissing
+        fun toBalance(toBalance: JsonField<List<Balance>>) = apply { this.toBalance = toBalance }
+
         /** Globally unique identifier for the transfer event. */
         fun token(token: String) = token(JsonField.of(token))
 
@@ -414,24 +432,6 @@ private constructor(
         @JsonProperty("updated")
         @ExcludeMissing
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
-
-        /** The updated balance of the sending financial account. */
-        fun fromBalance(fromBalance: List<Balance>) = fromBalance(JsonField.of(fromBalance))
-
-        /** The updated balance of the sending financial account. */
-        @JsonProperty("from_balance")
-        @ExcludeMissing
-        fun fromBalance(fromBalance: JsonField<List<Balance>>) = apply {
-            this.fromBalance = fromBalance
-        }
-
-        /** The updated balance of the receiving financial account. */
-        fun toBalance(toBalance: List<Balance>) = toBalance(JsonField.of(toBalance))
-
-        /** The updated balance of the receiving financial account. */
-        @JsonProperty("to_balance")
-        @ExcludeMissing
-        fun toBalance(toBalance: JsonField<List<Balance>>) = apply { this.toBalance = toBalance }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -454,14 +454,14 @@ private constructor(
                 currency,
                 descriptor,
                 events.map { it.toUnmodifiable() },
+                fromBalance.map { it.toUnmodifiable() },
                 pendingAmount,
                 result,
                 settledAmount,
                 status,
+                toBalance.map { it.toUnmodifiable() },
                 token,
                 updated,
-                fromBalance.map { it.toUnmodifiable() },
-                toBalance.map { it.toUnmodifiable() },
                 additionalProperties.toUnmodifiable(),
             )
     }
@@ -967,9 +967,9 @@ private constructor(
 
                 val CLEARING = FinancialEventType(JsonField.of("CLEARING"))
 
-                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
-
                 val CORRECTION_CREDIT = FinancialEventType(JsonField.of("CORRECTION_CREDIT"))
+
+                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
 
                 val CREDIT_AUTHORIZATION = FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION"))
 
@@ -1007,8 +1007,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1032,8 +1032,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1059,8 +1059,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Value.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
                     CLEARING -> Value.CLEARING
-                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Value.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Value.FINANCIAL_AUTHORIZATION
@@ -1086,8 +1086,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Known.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
                     CLEARING -> Known.CLEARING
-                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Known.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Known.FINANCIAL_AUTHORIZATION

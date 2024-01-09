@@ -21,11 +21,13 @@ import java.util.Objects
 @NoAutoDetect
 class Card
 private constructor(
+    private val authRuleTokens: JsonField<List<String>>,
     private val created: JsonField<OffsetDateTime>,
     private val cvv: JsonField<String>,
-    private val funding: JsonField<FundingAccount>,
+    private val digitalCardArtToken: JsonField<String>,
     private val expMonth: JsonField<String>,
     private val expYear: JsonField<String>,
+    private val funding: JsonField<FundingAccount>,
     private val hostname: JsonField<String>,
     private val lastFour: JsonField<String>,
     private val memo: JsonField<String>,
@@ -33,10 +35,8 @@ private constructor(
     private val spendLimit: JsonField<Long>,
     private val spendLimitDuration: JsonField<SpendLimitDuration>,
     private val state: JsonField<State>,
-    private val authRuleTokens: JsonField<List<String>>,
     private val token: JsonField<String>,
     private val type: JsonField<Type>,
-    private val digitalCardArtToken: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -44,19 +44,31 @@ private constructor(
 
     private var hashCode: Int = 0
 
+    /** List of identifiers for the Auth Rule(s) that are applied on the card. */
+    fun authRuleTokens(): List<String>? = authRuleTokens.getNullable("auth_rule_tokens")
+
     /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
     fun created(): OffsetDateTime = created.getRequired("created")
 
     /** Three digit cvv printed on the back of the card. */
     fun cvv(): String? = cvv.getNullable("cvv")
 
-    fun funding(): FundingAccount = funding.getRequired("funding")
+    /**
+     * Specifies the digital card art to be displayed in the user’s digital wallet after
+     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
+     * See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+     * .
+     */
+    fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
 
     /** Two digit (MM) expiry month. */
     fun expMonth(): String? = expMonth.getNullable("exp_month")
 
     /** Four digit (yyyy) expiry year. */
     fun expYear(): String? = expYear.getNullable("exp_year")
+
+    fun funding(): FundingAccount = funding.getRequired("funding")
 
     /** Hostname of card’s locked merchant (will be empty if not applicable). */
     fun hostname(): String? = hostname.getNullable("hostname")
@@ -116,9 +128,6 @@ private constructor(
      */
     fun state(): State = state.getRequired("state")
 
-    /** List of identifiers for the Auth Rule(s) that are applied on the card. */
-    fun authRuleTokens(): List<String>? = authRuleTokens.getNullable("auth_rule_tokens")
-
     /** Globally unique identifier. */
     fun token(): String = token.getRequired("token")
 
@@ -136,14 +145,8 @@ private constructor(
      */
     fun type(): Type = type.getRequired("type")
 
-    /**
-     * Specifies the digital card art to be displayed in the user’s digital wallet after
-     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
-     * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-     * .
-     */
-    fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
+    /** List of identifiers for the Auth Rule(s) that are applied on the card. */
+    @JsonProperty("auth_rule_tokens") @ExcludeMissing fun _authRuleTokens() = authRuleTokens
 
     /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
     @JsonProperty("created") @ExcludeMissing fun _created() = created
@@ -151,13 +154,24 @@ private constructor(
     /** Three digit cvv printed on the back of the card. */
     @JsonProperty("cvv") @ExcludeMissing fun _cvv() = cvv
 
-    @JsonProperty("funding") @ExcludeMissing fun _funding() = funding
+    /**
+     * Specifies the digital card art to be displayed in the user’s digital wallet after
+     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
+     * See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+     * .
+     */
+    @JsonProperty("digital_card_art_token")
+    @ExcludeMissing
+    fun _digitalCardArtToken() = digitalCardArtToken
 
     /** Two digit (MM) expiry month. */
     @JsonProperty("exp_month") @ExcludeMissing fun _expMonth() = expMonth
 
     /** Four digit (yyyy) expiry year. */
     @JsonProperty("exp_year") @ExcludeMissing fun _expYear() = expYear
+
+    @JsonProperty("funding") @ExcludeMissing fun _funding() = funding
 
     /** Hostname of card’s locked merchant (will be empty if not applicable). */
     @JsonProperty("hostname") @ExcludeMissing fun _hostname() = hostname
@@ -218,9 +232,6 @@ private constructor(
      */
     @JsonProperty("state") @ExcludeMissing fun _state() = state
 
-    /** List of identifiers for the Auth Rule(s) that are applied on the card. */
-    @JsonProperty("auth_rule_tokens") @ExcludeMissing fun _authRuleTokens() = authRuleTokens
-
     /** Globally unique identifier. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
@@ -238,28 +249,19 @@ private constructor(
      */
     @JsonProperty("type") @ExcludeMissing fun _type() = type
 
-    /**
-     * Specifies the digital card art to be displayed in the user’s digital wallet after
-     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
-     * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-     * .
-     */
-    @JsonProperty("digital_card_art_token")
-    @ExcludeMissing
-    fun _digitalCardArtToken() = digitalCardArtToken
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
     fun validate(): Card = apply {
         if (!validated) {
+            authRuleTokens()
             created()
             cvv()
-            funding().validate()
+            digitalCardArtToken()
             expMonth()
             expYear()
+            funding().validate()
             hostname()
             lastFour()
             memo()
@@ -267,10 +269,8 @@ private constructor(
             spendLimit()
             spendLimitDuration()
             state()
-            authRuleTokens()
             token()
             type()
-            digitalCardArtToken()
             validated = true
         }
     }
@@ -283,11 +283,13 @@ private constructor(
         }
 
         return other is Card &&
+            this.authRuleTokens == other.authRuleTokens &&
             this.created == other.created &&
             this.cvv == other.cvv &&
-            this.funding == other.funding &&
+            this.digitalCardArtToken == other.digitalCardArtToken &&
             this.expMonth == other.expMonth &&
             this.expYear == other.expYear &&
+            this.funding == other.funding &&
             this.hostname == other.hostname &&
             this.lastFour == other.lastFour &&
             this.memo == other.memo &&
@@ -295,10 +297,8 @@ private constructor(
             this.spendLimit == other.spendLimit &&
             this.spendLimitDuration == other.spendLimitDuration &&
             this.state == other.state &&
-            this.authRuleTokens == other.authRuleTokens &&
             this.token == other.token &&
             this.type == other.type &&
-            this.digitalCardArtToken == other.digitalCardArtToken &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -306,11 +306,13 @@ private constructor(
         if (hashCode == 0) {
             hashCode =
                 Objects.hash(
+                    authRuleTokens,
                     created,
                     cvv,
-                    funding,
+                    digitalCardArtToken,
                     expMonth,
                     expYear,
+                    funding,
                     hostname,
                     lastFour,
                     memo,
@@ -318,10 +320,8 @@ private constructor(
                     spendLimit,
                     spendLimitDuration,
                     state,
-                    authRuleTokens,
                     token,
                     type,
-                    digitalCardArtToken,
                     additionalProperties,
                 )
         }
@@ -329,7 +329,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Card{created=$created, cvv=$cvv, funding=$funding, expMonth=$expMonth, expYear=$expYear, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, authRuleTokens=$authRuleTokens, token=$token, type=$type, digitalCardArtToken=$digitalCardArtToken, additionalProperties=$additionalProperties}"
+        "Card{authRuleTokens=$authRuleTokens, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -338,11 +338,13 @@ private constructor(
 
     class Builder {
 
+        private var authRuleTokens: JsonField<List<String>> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var cvv: JsonField<String> = JsonMissing.of()
-        private var funding: JsonField<FundingAccount> = JsonMissing.of()
+        private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var expMonth: JsonField<String> = JsonMissing.of()
         private var expYear: JsonField<String> = JsonMissing.of()
+        private var funding: JsonField<FundingAccount> = JsonMissing.of()
         private var hostname: JsonField<String> = JsonMissing.of()
         private var lastFour: JsonField<String> = JsonMissing.of()
         private var memo: JsonField<String> = JsonMissing.of()
@@ -350,18 +352,18 @@ private constructor(
         private var spendLimit: JsonField<Long> = JsonMissing.of()
         private var spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of()
         private var state: JsonField<State> = JsonMissing.of()
-        private var authRuleTokens: JsonField<List<String>> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
-        private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(card: Card) = apply {
+            this.authRuleTokens = card.authRuleTokens
             this.created = card.created
             this.cvv = card.cvv
-            this.funding = card.funding
+            this.digitalCardArtToken = card.digitalCardArtToken
             this.expMonth = card.expMonth
             this.expYear = card.expYear
+            this.funding = card.funding
             this.hostname = card.hostname
             this.lastFour = card.lastFour
             this.memo = card.memo
@@ -369,11 +371,20 @@ private constructor(
             this.spendLimit = card.spendLimit
             this.spendLimitDuration = card.spendLimitDuration
             this.state = card.state
-            this.authRuleTokens = card.authRuleTokens
             this.token = card.token
             this.type = card.type
-            this.digitalCardArtToken = card.digitalCardArtToken
             additionalProperties(card.additionalProperties)
+        }
+
+        /** List of identifiers for the Auth Rule(s) that are applied on the card. */
+        fun authRuleTokens(authRuleTokens: List<String>) =
+            authRuleTokens(JsonField.of(authRuleTokens))
+
+        /** List of identifiers for the Auth Rule(s) that are applied on the card. */
+        @JsonProperty("auth_rule_tokens")
+        @ExcludeMissing
+        fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
+            this.authRuleTokens = authRuleTokens
         }
 
         /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
@@ -392,11 +403,28 @@ private constructor(
         @ExcludeMissing
         fun cvv(cvv: JsonField<String>) = apply { this.cvv = cvv }
 
-        fun funding(funding: FundingAccount) = funding(JsonField.of(funding))
+        /**
+         * Specifies the digital card art to be displayed in the user’s digital wallet after
+         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
+         * use. See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+         * .
+         */
+        fun digitalCardArtToken(digitalCardArtToken: String) =
+            digitalCardArtToken(JsonField.of(digitalCardArtToken))
 
-        @JsonProperty("funding")
+        /**
+         * Specifies the digital card art to be displayed in the user’s digital wallet after
+         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
+         * use. See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
+         * .
+         */
+        @JsonProperty("digital_card_art_token")
         @ExcludeMissing
-        fun funding(funding: JsonField<FundingAccount>) = apply { this.funding = funding }
+        fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
+            this.digitalCardArtToken = digitalCardArtToken
+        }
 
         /** Two digit (MM) expiry month. */
         fun expMonth(expMonth: String) = expMonth(JsonField.of(expMonth))
@@ -413,6 +441,12 @@ private constructor(
         @JsonProperty("exp_year")
         @ExcludeMissing
         fun expYear(expYear: JsonField<String>) = apply { this.expYear = expYear }
+
+        fun funding(funding: FundingAccount) = funding(JsonField.of(funding))
+
+        @JsonProperty("funding")
+        @ExcludeMissing
+        fun funding(funding: JsonField<FundingAccount>) = apply { this.funding = funding }
 
         /** Hostname of card’s locked merchant (will be empty if not applicable). */
         fun hostname(hostname: String) = hostname(JsonField.of(hostname))
@@ -549,17 +583,6 @@ private constructor(
         @ExcludeMissing
         fun state(state: JsonField<State>) = apply { this.state = state }
 
-        /** List of identifiers for the Auth Rule(s) that are applied on the card. */
-        fun authRuleTokens(authRuleTokens: List<String>) =
-            authRuleTokens(JsonField.of(authRuleTokens))
-
-        /** List of identifiers for the Auth Rule(s) that are applied on the card. */
-        @JsonProperty("auth_rule_tokens")
-        @ExcludeMissing
-        fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
-            this.authRuleTokens = authRuleTokens
-        }
-
         /** Globally unique identifier. */
         fun token(token: String) = token(JsonField.of(token))
 
@@ -598,29 +621,6 @@ private constructor(
         @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
-        /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
-         */
-        fun digitalCardArtToken(digitalCardArtToken: String) =
-            digitalCardArtToken(JsonField.of(digitalCardArtToken))
-
-        /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
-         */
-        @JsonProperty("digital_card_art_token")
-        @ExcludeMissing
-        fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
-            this.digitalCardArtToken = digitalCardArtToken
-        }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -637,11 +637,13 @@ private constructor(
 
         fun build(): Card =
             Card(
+                authRuleTokens.map { it.toUnmodifiable() },
                 created,
                 cvv,
-                funding,
+                digitalCardArtToken,
                 expMonth,
                 expYear,
+                funding,
                 hostname,
                 lastFour,
                 memo,
@@ -649,10 +651,8 @@ private constructor(
                 spendLimit,
                 spendLimitDuration,
                 state,
-                authRuleTokens.map { it.toUnmodifiable() },
                 token,
                 type,
-                digitalCardArtToken,
                 additionalProperties.toUnmodifiable(),
             )
     }
@@ -988,41 +988,41 @@ private constructor(
 
             companion object {
 
+                val DELETED = State(JsonField.of("DELETED"))
+
                 val ENABLED = State(JsonField.of("ENABLED"))
 
                 val PENDING = State(JsonField.of("PENDING"))
-
-                val DELETED = State(JsonField.of("DELETED"))
 
                 fun of(value: String) = State(JsonField.of(value))
             }
 
             enum class Known {
+                DELETED,
                 ENABLED,
                 PENDING,
-                DELETED,
             }
 
             enum class Value {
+                DELETED,
                 ENABLED,
                 PENDING,
-                DELETED,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
+                    DELETED -> Value.DELETED
                     ENABLED -> Value.ENABLED
                     PENDING -> Value.PENDING
-                    DELETED -> Value.DELETED
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
+                    DELETED -> Known.DELETED
                     ENABLED -> Known.ENABLED
                     PENDING -> Known.PENDING
-                    DELETED -> Known.DELETED
                     else -> throw LithicInvalidDataException("Unknown State: $value")
                 }
 
@@ -1184,47 +1184,47 @@ private constructor(
 
         companion object {
 
-            val VIRTUAL = Type(JsonField.of("VIRTUAL"))
+            val MERCHANT_LOCKED = Type(JsonField.of("MERCHANT_LOCKED"))
 
             val PHYSICAL = Type(JsonField.of("PHYSICAL"))
 
-            val MERCHANT_LOCKED = Type(JsonField.of("MERCHANT_LOCKED"))
-
             val SINGLE_USE = Type(JsonField.of("SINGLE_USE"))
+
+            val VIRTUAL = Type(JsonField.of("VIRTUAL"))
 
             fun of(value: String) = Type(JsonField.of(value))
         }
 
         enum class Known {
-            VIRTUAL,
-            PHYSICAL,
             MERCHANT_LOCKED,
+            PHYSICAL,
             SINGLE_USE,
+            VIRTUAL,
         }
 
         enum class Value {
-            VIRTUAL,
-            PHYSICAL,
             MERCHANT_LOCKED,
+            PHYSICAL,
             SINGLE_USE,
+            VIRTUAL,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                VIRTUAL -> Value.VIRTUAL
-                PHYSICAL -> Value.PHYSICAL
                 MERCHANT_LOCKED -> Value.MERCHANT_LOCKED
+                PHYSICAL -> Value.PHYSICAL
                 SINGLE_USE -> Value.SINGLE_USE
+                VIRTUAL -> Value.VIRTUAL
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                VIRTUAL -> Known.VIRTUAL
-                PHYSICAL -> Known.PHYSICAL
                 MERCHANT_LOCKED -> Known.MERCHANT_LOCKED
+                PHYSICAL -> Known.PHYSICAL
                 SINGLE_USE -> Known.SINGLE_USE
+                VIRTUAL -> Known.VIRTUAL
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 

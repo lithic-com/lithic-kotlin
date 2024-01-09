@@ -2,7 +2,6 @@
 
 package com.lithic.api.models
 
-import com.lithic.api.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -19,7 +18,6 @@ class AccountSpendLimitsTest {
                         .monthly(123L)
                         .build()
                 )
-                .required(JsonValue.from(mapOf<String, Any>()))
                 .build()
         assertThat(accountSpendLimits).isNotNull
         assertThat(accountSpendLimits.availableSpendLimit())
@@ -30,6 +28,5 @@ class AccountSpendLimitsTest {
                     .monthly(123L)
                     .build()
             )
-        assertThat(accountSpendLimits._required()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
     }
 }

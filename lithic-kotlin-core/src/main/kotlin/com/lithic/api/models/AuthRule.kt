@@ -20,15 +20,15 @@ import java.util.Objects
 @NoAutoDetect
 class AuthRule
 private constructor(
-    private val token: JsonField<String>,
-    private val state: JsonField<State>,
-    private val allowedMcc: JsonField<List<String>>,
-    private val blockedMcc: JsonField<List<String>>,
-    private val allowedCountries: JsonField<List<String>>,
-    private val blockedCountries: JsonField<List<String>>,
     private val accountTokens: JsonField<List<String>>,
+    private val allowedCountries: JsonField<List<String>>,
+    private val allowedMcc: JsonField<List<String>>,
+    private val blockedCountries: JsonField<List<String>>,
+    private val blockedMcc: JsonField<List<String>>,
     private val cardTokens: JsonField<List<String>>,
     private val programLevel: JsonField<Boolean>,
+    private val state: JsonField<State>,
+    private val token: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -36,17 +36,11 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    /** Globally unique identifier. */
-    fun token(): String = token.getRequired("token")
-
-    /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
-    fun state(): State = state.getRequired("state")
-
-    /** Merchant category codes for which the Auth Rule permits transactions. */
-    fun allowedMcc(): List<String>? = allowedMcc.getNullable("allowed_mcc")
-
-    /** Merchant category codes for which the Auth Rule automatically declines transactions. */
-    fun blockedMcc(): List<String>? = blockedMcc.getNullable("blocked_mcc")
+    /**
+     * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note that
+     * only this field or `card_tokens` can be provided for a given Auth Rule.
+     */
+    fun accountTokens(): List<String>? = accountTokens.getNullable("account_tokens")
 
     /**
      * Countries in which the Auth Rule permits transactions. Note that Lithic maintains a list of
@@ -55,14 +49,14 @@ private constructor(
      */
     fun allowedCountries(): List<String>? = allowedCountries.getNullable("allowed_countries")
 
+    /** Merchant category codes for which the Auth Rule permits transactions. */
+    fun allowedMcc(): List<String>? = allowedMcc.getNullable("allowed_mcc")
+
     /** Countries in which the Auth Rule automatically declines transactions. */
     fun blockedCountries(): List<String>? = blockedCountries.getNullable("blocked_countries")
 
-    /**
-     * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note that
-     * only this field or `card_tokens` can be provided for a given Auth Rule.
-     */
-    fun accountTokens(): List<String>? = accountTokens.getNullable("account_tokens")
+    /** Merchant category codes for which the Auth Rule automatically declines transactions. */
+    fun blockedMcc(): List<String>? = blockedMcc.getNullable("blocked_mcc")
 
     /**
      * Array of card_token(s) identifying the cards that the Auth Rule applies to. Note that only
@@ -73,17 +67,17 @@ private constructor(
     /** Boolean indicating whether the Auth Rule is applied at the program level. */
     fun programLevel(): Boolean? = programLevel.getNullable("program_level")
 
-    /** Globally unique identifier. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
-    @JsonProperty("state") @ExcludeMissing fun _state() = state
+    fun state(): State = state.getRequired("state")
 
-    /** Merchant category codes for which the Auth Rule permits transactions. */
-    @JsonProperty("allowed_mcc") @ExcludeMissing fun _allowedMcc() = allowedMcc
+    /** Globally unique identifier. */
+    fun token(): String = token.getRequired("token")
 
-    /** Merchant category codes for which the Auth Rule automatically declines transactions. */
-    @JsonProperty("blocked_mcc") @ExcludeMissing fun _blockedMcc() = blockedMcc
+    /**
+     * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note that
+     * only this field or `card_tokens` can be provided for a given Auth Rule.
+     */
+    @JsonProperty("account_tokens") @ExcludeMissing fun _accountTokens() = accountTokens
 
     /**
      * Countries in which the Auth Rule permits transactions. Note that Lithic maintains a list of
@@ -92,14 +86,14 @@ private constructor(
      */
     @JsonProperty("allowed_countries") @ExcludeMissing fun _allowedCountries() = allowedCountries
 
+    /** Merchant category codes for which the Auth Rule permits transactions. */
+    @JsonProperty("allowed_mcc") @ExcludeMissing fun _allowedMcc() = allowedMcc
+
     /** Countries in which the Auth Rule automatically declines transactions. */
     @JsonProperty("blocked_countries") @ExcludeMissing fun _blockedCountries() = blockedCountries
 
-    /**
-     * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note that
-     * only this field or `card_tokens` can be provided for a given Auth Rule.
-     */
-    @JsonProperty("account_tokens") @ExcludeMissing fun _accountTokens() = accountTokens
+    /** Merchant category codes for which the Auth Rule automatically declines transactions. */
+    @JsonProperty("blocked_mcc") @ExcludeMissing fun _blockedMcc() = blockedMcc
 
     /**
      * Array of card_token(s) identifying the cards that the Auth Rule applies to. Note that only
@@ -110,21 +104,27 @@ private constructor(
     /** Boolean indicating whether the Auth Rule is applied at the program level. */
     @JsonProperty("program_level") @ExcludeMissing fun _programLevel() = programLevel
 
+    /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
+    @JsonProperty("state") @ExcludeMissing fun _state() = state
+
+    /** Globally unique identifier. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
     fun validate(): AuthRule = apply {
         if (!validated) {
-            token()
-            state()
-            allowedMcc()
-            blockedMcc()
-            allowedCountries()
-            blockedCountries()
             accountTokens()
+            allowedCountries()
+            allowedMcc()
+            blockedCountries()
+            blockedMcc()
             cardTokens()
             programLevel()
+            state()
+            token()
             validated = true
         }
     }
@@ -137,15 +137,15 @@ private constructor(
         }
 
         return other is AuthRule &&
-            this.token == other.token &&
-            this.state == other.state &&
-            this.allowedMcc == other.allowedMcc &&
-            this.blockedMcc == other.blockedMcc &&
-            this.allowedCountries == other.allowedCountries &&
-            this.blockedCountries == other.blockedCountries &&
             this.accountTokens == other.accountTokens &&
+            this.allowedCountries == other.allowedCountries &&
+            this.allowedMcc == other.allowedMcc &&
+            this.blockedCountries == other.blockedCountries &&
+            this.blockedMcc == other.blockedMcc &&
             this.cardTokens == other.cardTokens &&
             this.programLevel == other.programLevel &&
+            this.state == other.state &&
+            this.token == other.token &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -153,15 +153,15 @@ private constructor(
         if (hashCode == 0) {
             hashCode =
                 Objects.hash(
-                    token,
-                    state,
-                    allowedMcc,
-                    blockedMcc,
-                    allowedCountries,
-                    blockedCountries,
                     accountTokens,
+                    allowedCountries,
+                    allowedMcc,
+                    blockedCountries,
+                    blockedMcc,
                     cardTokens,
                     programLevel,
+                    state,
+                    token,
                     additionalProperties,
                 )
         }
@@ -169,7 +169,7 @@ private constructor(
     }
 
     override fun toString() =
-        "AuthRule{token=$token, state=$state, allowedMcc=$allowedMcc, blockedMcc=$blockedMcc, allowedCountries=$allowedCountries, blockedCountries=$blockedCountries, accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
+        "AuthRule{accountTokens=$accountTokens, allowedCountries=$allowedCountries, allowedMcc=$allowedMcc, blockedCountries=$blockedCountries, blockedMcc=$blockedMcc, cardTokens=$cardTokens, programLevel=$programLevel, state=$state, token=$token, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -178,61 +178,45 @@ private constructor(
 
     class Builder {
 
-        private var token: JsonField<String> = JsonMissing.of()
-        private var state: JsonField<State> = JsonMissing.of()
-        private var allowedMcc: JsonField<List<String>> = JsonMissing.of()
-        private var blockedMcc: JsonField<List<String>> = JsonMissing.of()
-        private var allowedCountries: JsonField<List<String>> = JsonMissing.of()
-        private var blockedCountries: JsonField<List<String>> = JsonMissing.of()
         private var accountTokens: JsonField<List<String>> = JsonMissing.of()
+        private var allowedCountries: JsonField<List<String>> = JsonMissing.of()
+        private var allowedMcc: JsonField<List<String>> = JsonMissing.of()
+        private var blockedCountries: JsonField<List<String>> = JsonMissing.of()
+        private var blockedMcc: JsonField<List<String>> = JsonMissing.of()
         private var cardTokens: JsonField<List<String>> = JsonMissing.of()
         private var programLevel: JsonField<Boolean> = JsonMissing.of()
+        private var state: JsonField<State> = JsonMissing.of()
+        private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authRule: AuthRule) = apply {
-            this.token = authRule.token
-            this.state = authRule.state
-            this.allowedMcc = authRule.allowedMcc
-            this.blockedMcc = authRule.blockedMcc
-            this.allowedCountries = authRule.allowedCountries
-            this.blockedCountries = authRule.blockedCountries
             this.accountTokens = authRule.accountTokens
+            this.allowedCountries = authRule.allowedCountries
+            this.allowedMcc = authRule.allowedMcc
+            this.blockedCountries = authRule.blockedCountries
+            this.blockedMcc = authRule.blockedMcc
             this.cardTokens = authRule.cardTokens
             this.programLevel = authRule.programLevel
+            this.state = authRule.state
+            this.token = authRule.token
             additionalProperties(authRule.additionalProperties)
         }
 
-        /** Globally unique identifier. */
-        fun token(token: String) = token(JsonField.of(token))
+        /**
+         * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note
+         * that only this field or `card_tokens` can be provided for a given Auth Rule.
+         */
+        fun accountTokens(accountTokens: List<String>) = accountTokens(JsonField.of(accountTokens))
 
-        /** Globally unique identifier. */
-        @JsonProperty("token")
+        /**
+         * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note
+         * that only this field or `card_tokens` can be provided for a given Auth Rule.
+         */
+        @JsonProperty("account_tokens")
         @ExcludeMissing
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
-        /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
-        fun state(state: State) = state(JsonField.of(state))
-
-        /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
-        @JsonProperty("state")
-        @ExcludeMissing
-        fun state(state: JsonField<State>) = apply { this.state = state }
-
-        /** Merchant category codes for which the Auth Rule permits transactions. */
-        fun allowedMcc(allowedMcc: List<String>) = allowedMcc(JsonField.of(allowedMcc))
-
-        /** Merchant category codes for which the Auth Rule permits transactions. */
-        @JsonProperty("allowed_mcc")
-        @ExcludeMissing
-        fun allowedMcc(allowedMcc: JsonField<List<String>>) = apply { this.allowedMcc = allowedMcc }
-
-        /** Merchant category codes for which the Auth Rule automatically declines transactions. */
-        fun blockedMcc(blockedMcc: List<String>) = blockedMcc(JsonField.of(blockedMcc))
-
-        /** Merchant category codes for which the Auth Rule automatically declines transactions. */
-        @JsonProperty("blocked_mcc")
-        @ExcludeMissing
-        fun blockedMcc(blockedMcc: JsonField<List<String>>) = apply { this.blockedMcc = blockedMcc }
+        fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
+            this.accountTokens = accountTokens
+        }
 
         /**
          * Countries in which the Auth Rule permits transactions. Note that Lithic maintains a list
@@ -253,6 +237,14 @@ private constructor(
             this.allowedCountries = allowedCountries
         }
 
+        /** Merchant category codes for which the Auth Rule permits transactions. */
+        fun allowedMcc(allowedMcc: List<String>) = allowedMcc(JsonField.of(allowedMcc))
+
+        /** Merchant category codes for which the Auth Rule permits transactions. */
+        @JsonProperty("allowed_mcc")
+        @ExcludeMissing
+        fun allowedMcc(allowedMcc: JsonField<List<String>>) = apply { this.allowedMcc = allowedMcc }
+
         /** Countries in which the Auth Rule automatically declines transactions. */
         fun blockedCountries(blockedCountries: List<String>) =
             blockedCountries(JsonField.of(blockedCountries))
@@ -264,21 +256,13 @@ private constructor(
             this.blockedCountries = blockedCountries
         }
 
-        /**
-         * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note
-         * that only this field or `card_tokens` can be provided for a given Auth Rule.
-         */
-        fun accountTokens(accountTokens: List<String>) = accountTokens(JsonField.of(accountTokens))
+        /** Merchant category codes for which the Auth Rule automatically declines transactions. */
+        fun blockedMcc(blockedMcc: List<String>) = blockedMcc(JsonField.of(blockedMcc))
 
-        /**
-         * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note
-         * that only this field or `card_tokens` can be provided for a given Auth Rule.
-         */
-        @JsonProperty("account_tokens")
+        /** Merchant category codes for which the Auth Rule automatically declines transactions. */
+        @JsonProperty("blocked_mcc")
         @ExcludeMissing
-        fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
-            this.accountTokens = accountTokens
-        }
+        fun blockedMcc(blockedMcc: JsonField<List<String>>) = apply { this.blockedMcc = blockedMcc }
 
         /**
          * Array of card_token(s) identifying the cards that the Auth Rule applies to. Note that
@@ -304,6 +288,22 @@ private constructor(
             this.programLevel = programLevel
         }
 
+        /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
+        fun state(state: State) = state(JsonField.of(state))
+
+        /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
+        @JsonProperty("state")
+        @ExcludeMissing
+        fun state(state: JsonField<State>) = apply { this.state = state }
+
+        /** Globally unique identifier. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier. */
+        @JsonProperty("token")
+        @ExcludeMissing
+        fun token(token: JsonField<String>) = apply { this.token = token }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -320,15 +320,15 @@ private constructor(
 
         fun build(): AuthRule =
             AuthRule(
-                token,
-                state,
-                allowedMcc.map { it.toUnmodifiable() },
-                blockedMcc.map { it.toUnmodifiable() },
-                allowedCountries.map { it.toUnmodifiable() },
-                blockedCountries.map { it.toUnmodifiable() },
                 accountTokens.map { it.toUnmodifiable() },
+                allowedCountries.map { it.toUnmodifiable() },
+                allowedMcc.map { it.toUnmodifiable() },
+                blockedCountries.map { it.toUnmodifiable() },
+                blockedMcc.map { it.toUnmodifiable() },
                 cardTokens.map { it.toUnmodifiable() },
                 programLevel,
+                state,
+                token,
                 additionalProperties.toUnmodifiable(),
             )
     }

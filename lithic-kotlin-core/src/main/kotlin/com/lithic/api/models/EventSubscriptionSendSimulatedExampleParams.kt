@@ -288,7 +288,11 @@ constructor(
 
             val ACCOUNT_HOLDER_VERIFICATION = EventType(JsonField.of("account_holder.verification"))
 
+            val BALANCE_UPDATED = EventType(JsonField.of("balance.updated"))
+
             val CARD_CREATED = EventType(JsonField.of("card.created"))
+
+            val CARD_RENEWED = EventType(JsonField.of("card.renewed"))
 
             val CARD_SHIPPED = EventType(JsonField.of("card.shipped"))
 
@@ -310,12 +314,12 @@ constructor(
             val DISPUTE_EVIDENCE_UPLOAD_FAILED =
                 EventType(JsonField.of("dispute_evidence.upload_failed"))
 
-            val THREE_DS_AUTHENTICATION_CREATED =
-                EventType(JsonField.of("three_ds_authentication.created"))
-
             val PAYMENT_TRANSACTION_CREATED = EventType(JsonField.of("payment_transaction.created"))
 
             val PAYMENT_TRANSACTION_UPDATED = EventType(JsonField.of("payment_transaction.updated"))
+
+            val THREE_DS_AUTHENTICATION_CREATED =
+                EventType(JsonField.of("three_ds_authentication.created"))
 
             val TRANSFER_TRANSACTION_CREATED =
                 EventType(JsonField.of("transfer_transaction.created"))
@@ -327,7 +331,9 @@ constructor(
             ACCOUNT_HOLDER_CREATED,
             ACCOUNT_HOLDER_UPDATED,
             ACCOUNT_HOLDER_VERIFICATION,
+            BALANCE_UPDATED,
             CARD_CREATED,
+            CARD_RENEWED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST,
@@ -335,9 +341,9 @@ constructor(
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DISPUTE_UPDATED,
             DISPUTE_EVIDENCE_UPLOAD_FAILED,
-            THREE_DS_AUTHENTICATION_CREATED,
             PAYMENT_TRANSACTION_CREATED,
             PAYMENT_TRANSACTION_UPDATED,
+            THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
         }
 
@@ -345,7 +351,9 @@ constructor(
             ACCOUNT_HOLDER_CREATED,
             ACCOUNT_HOLDER_UPDATED,
             ACCOUNT_HOLDER_VERIFICATION,
+            BALANCE_UPDATED,
             CARD_CREATED,
+            CARD_RENEWED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST,
@@ -353,9 +361,9 @@ constructor(
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DISPUTE_UPDATED,
             DISPUTE_EVIDENCE_UPLOAD_FAILED,
-            THREE_DS_AUTHENTICATION_CREATED,
             PAYMENT_TRANSACTION_CREATED,
             PAYMENT_TRANSACTION_UPDATED,
+            THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
             _UNKNOWN,
         }
@@ -365,7 +373,9 @@ constructor(
                 ACCOUNT_HOLDER_CREATED -> Value.ACCOUNT_HOLDER_CREATED
                 ACCOUNT_HOLDER_UPDATED -> Value.ACCOUNT_HOLDER_UPDATED
                 ACCOUNT_HOLDER_VERIFICATION -> Value.ACCOUNT_HOLDER_VERIFICATION
+                BALANCE_UPDATED -> Value.BALANCE_UPDATED
                 CARD_CREATED -> Value.CARD_CREATED
+                CARD_RENEWED -> Value.CARD_RENEWED
                 CARD_SHIPPED -> Value.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Value.CARD_TRANSACTION_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST ->
@@ -375,9 +385,9 @@ constructor(
                     Value.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
                 DISPUTE_UPDATED -> Value.DISPUTE_UPDATED
                 DISPUTE_EVIDENCE_UPLOAD_FAILED -> Value.DISPUTE_EVIDENCE_UPLOAD_FAILED
-                THREE_DS_AUTHENTICATION_CREATED -> Value.THREE_DS_AUTHENTICATION_CREATED
                 PAYMENT_TRANSACTION_CREATED -> Value.PAYMENT_TRANSACTION_CREATED
                 PAYMENT_TRANSACTION_UPDATED -> Value.PAYMENT_TRANSACTION_UPDATED
+                THREE_DS_AUTHENTICATION_CREATED -> Value.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Value.TRANSFER_TRANSACTION_CREATED
                 else -> Value._UNKNOWN
             }
@@ -387,7 +397,9 @@ constructor(
                 ACCOUNT_HOLDER_CREATED -> Known.ACCOUNT_HOLDER_CREATED
                 ACCOUNT_HOLDER_UPDATED -> Known.ACCOUNT_HOLDER_UPDATED
                 ACCOUNT_HOLDER_VERIFICATION -> Known.ACCOUNT_HOLDER_VERIFICATION
+                BALANCE_UPDATED -> Known.BALANCE_UPDATED
                 CARD_CREATED -> Known.CARD_CREATED
+                CARD_RENEWED -> Known.CARD_RENEWED
                 CARD_SHIPPED -> Known.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Known.CARD_TRANSACTION_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST ->
@@ -397,9 +409,9 @@ constructor(
                     Known.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
                 DISPUTE_UPDATED -> Known.DISPUTE_UPDATED
                 DISPUTE_EVIDENCE_UPLOAD_FAILED -> Known.DISPUTE_EVIDENCE_UPLOAD_FAILED
-                THREE_DS_AUTHENTICATION_CREATED -> Known.THREE_DS_AUTHENTICATION_CREATED
                 PAYMENT_TRANSACTION_CREATED -> Known.PAYMENT_TRANSACTION_CREATED
                 PAYMENT_TRANSACTION_UPDATED -> Known.PAYMENT_TRANSACTION_UPDATED
+                THREE_DS_AUTHENTICATION_CREATED -> Known.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Known.TRANSFER_TRANSACTION_CREATED
                 else -> throw LithicInvalidDataException("Unknown EventType: $value")
             }

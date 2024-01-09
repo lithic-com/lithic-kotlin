@@ -233,53 +233,53 @@ constructor(
 
         companion object {
 
+            val CLOSED = State(JsonField.of("CLOSED"))
+
             val OPEN = State(JsonField.of("OPEN"))
 
             val PAUSED = State(JsonField.of("PAUSED"))
 
-            val CLOSED = State(JsonField.of("CLOSED"))
+            val PENDING_ACTIVATION = State(JsonField.of("PENDING_ACTIVATION"))
 
             val PENDING_FULFILLMENT = State(JsonField.of("PENDING_FULFILLMENT"))
-
-            val PENDING_ACTIVATION = State(JsonField.of("PENDING_ACTIVATION"))
 
             fun of(value: String) = State(JsonField.of(value))
         }
 
         enum class Known {
+            CLOSED,
             OPEN,
             PAUSED,
-            CLOSED,
-            PENDING_FULFILLMENT,
             PENDING_ACTIVATION,
+            PENDING_FULFILLMENT,
         }
 
         enum class Value {
+            CLOSED,
             OPEN,
             PAUSED,
-            CLOSED,
-            PENDING_FULFILLMENT,
             PENDING_ACTIVATION,
+            PENDING_FULFILLMENT,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
+                CLOSED -> Value.CLOSED
                 OPEN -> Value.OPEN
                 PAUSED -> Value.PAUSED
-                CLOSED -> Value.CLOSED
-                PENDING_FULFILLMENT -> Value.PENDING_FULFILLMENT
                 PENDING_ACTIVATION -> Value.PENDING_ACTIVATION
+                PENDING_FULFILLMENT -> Value.PENDING_FULFILLMENT
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
+                CLOSED -> Known.CLOSED
                 OPEN -> Known.OPEN
                 PAUSED -> Known.PAUSED
-                CLOSED -> Known.CLOSED
-                PENDING_FULFILLMENT -> Known.PENDING_FULFILLMENT
                 PENDING_ACTIVATION -> Known.PENDING_ACTIVATION
+                PENDING_FULFILLMENT -> Known.PENDING_FULFILLMENT
                 else -> throw LithicInvalidDataException("Unknown State: $value")
             }
 

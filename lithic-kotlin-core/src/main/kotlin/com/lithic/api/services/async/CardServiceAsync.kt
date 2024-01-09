@@ -15,6 +15,7 @@ import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardProvisionResponse
 import com.lithic.api.models.CardReissueParams
+import com.lithic.api.models.CardRenewParams
 import com.lithic.api.models.CardRetrieveParams
 import com.lithic.api.models.CardRetrieveSpendLimitsParams
 import com.lithic.api.models.CardSpendLimits
@@ -113,6 +114,16 @@ interface CardServiceAsync {
      */
     suspend fun reissue(
         params: CardReissueParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Card
+
+    /**
+     * Initiate print and shipment of a renewed physical card.
+     *
+     * Only applies to cards of type `PHYSICAL`.
+     */
+    suspend fun renew(
+        params: CardRenewParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Card
 
