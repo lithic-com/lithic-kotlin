@@ -466,9 +466,9 @@ private constructor(
 
         companion object {
 
-            val CARD = Category(JsonField.of("CARD"))
-
             val ACH = Category(JsonField.of("ACH"))
+
+            val CARD = Category(JsonField.of("CARD"))
 
             val TRANSFER = Category(JsonField.of("TRANSFER"))
 
@@ -476,30 +476,30 @@ private constructor(
         }
 
         enum class Known {
-            CARD,
             ACH,
+            CARD,
             TRANSFER,
         }
 
         enum class Value {
-            CARD,
             ACH,
+            CARD,
             TRANSFER,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                CARD -> Value.CARD
                 ACH -> Value.ACH
+                CARD -> Value.CARD
                 TRANSFER -> Value.TRANSFER
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                CARD -> Known.CARD
                 ACH -> Known.ACH
+                CARD -> Known.CARD
                 TRANSFER -> Known.TRANSFER
                 else -> throw LithicInvalidDataException("Unknown Category: $value")
             }
@@ -957,9 +957,9 @@ private constructor(
 
                 val CLEARING = FinancialEventType(JsonField.of("CLEARING"))
 
-                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
-
                 val CORRECTION_CREDIT = FinancialEventType(JsonField.of("CORRECTION_CREDIT"))
+
+                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
 
                 val CREDIT_AUTHORIZATION = FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION"))
 
@@ -997,8 +997,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1022,8 +1022,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1049,8 +1049,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Value.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
                     CLEARING -> Value.CLEARING
-                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Value.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Value.FINANCIAL_AUTHORIZATION
@@ -1076,8 +1076,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Known.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
                     CLEARING -> Known.CLEARING
-                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Known.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Known.FINANCIAL_AUTHORIZATION

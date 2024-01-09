@@ -29,35 +29,35 @@ private constructor(
 
     companion object {
 
-        val INDIVIDUAL = OwnerType(JsonField.of("INDIVIDUAL"))
-
         val BUSINESS = OwnerType(JsonField.of("BUSINESS"))
+
+        val INDIVIDUAL = OwnerType(JsonField.of("INDIVIDUAL"))
 
         fun of(value: String) = OwnerType(JsonField.of(value))
     }
 
     enum class Known {
-        INDIVIDUAL,
         BUSINESS,
+        INDIVIDUAL,
     }
 
     enum class Value {
-        INDIVIDUAL,
         BUSINESS,
+        INDIVIDUAL,
         _UNKNOWN,
     }
 
     fun value(): Value =
         when (this) {
-            INDIVIDUAL -> Value.INDIVIDUAL
             BUSINESS -> Value.BUSINESS
+            INDIVIDUAL -> Value.INDIVIDUAL
             else -> Value._UNKNOWN
         }
 
     fun known(): Known =
         when (this) {
-            INDIVIDUAL -> Known.INDIVIDUAL
             BUSINESS -> Known.BUSINESS
+            INDIVIDUAL -> Known.INDIVIDUAL
             else -> throw LithicInvalidDataException("Unknown OwnerType: $value")
         }
 

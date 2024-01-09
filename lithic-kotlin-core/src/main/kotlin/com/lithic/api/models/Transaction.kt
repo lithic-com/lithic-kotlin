@@ -658,6 +658,7 @@ private constructor(
     private constructor(
         private val amount: JsonField<Long>,
         private val created: JsonField<OffsetDateTime>,
+        private val detailedResults: JsonField<List<DetailedResult>>,
         private val result: JsonField<Result>,
         private val token: JsonField<String>,
         private val type: JsonField<Type>,
@@ -673,6 +674,9 @@ private constructor(
 
         /** RFC 3339 date and time this event entered the system. UTC time zone. */
         fun created(): OffsetDateTime = created.getRequired("created")
+
+        fun detailedResults(): List<DetailedResult> =
+            detailedResults.getRequired("detailed_results")
 
         /**
          * `APPROVED` or decline reason.
@@ -740,6 +744,8 @@ private constructor(
 
         /** RFC 3339 date and time this event entered the system. UTC time zone. */
         @JsonProperty("created") @ExcludeMissing fun _created() = created
+
+        @JsonProperty("detailed_results") @ExcludeMissing fun _detailedResults() = detailedResults
 
         /**
          * `APPROVED` or decline reason.
@@ -810,6 +816,7 @@ private constructor(
             if (!validated) {
                 amount()
                 created()
+                detailedResults()
                 result()
                 token()
                 type()
@@ -827,6 +834,7 @@ private constructor(
             return other is TransactionEvent &&
                 this.amount == other.amount &&
                 this.created == other.created &&
+                this.detailedResults == other.detailedResults &&
                 this.result == other.result &&
                 this.token == other.token &&
                 this.type == other.type &&
@@ -839,6 +847,7 @@ private constructor(
                     Objects.hash(
                         amount,
                         created,
+                        detailedResults,
                         result,
                         token,
                         type,
@@ -849,7 +858,7 @@ private constructor(
         }
 
         override fun toString() =
-            "TransactionEvent{amount=$amount, created=$created, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
+            "TransactionEvent{amount=$amount, created=$created, detailedResults=$detailedResults, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -860,6 +869,7 @@ private constructor(
 
             private var amount: JsonField<Long> = JsonMissing.of()
             private var created: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of()
             private var result: JsonField<Result> = JsonMissing.of()
             private var token: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
@@ -868,6 +878,7 @@ private constructor(
             internal fun from(transactionEvent: TransactionEvent) = apply {
                 this.amount = transactionEvent.amount
                 this.created = transactionEvent.created
+                this.detailedResults = transactionEvent.detailedResults
                 this.result = transactionEvent.result
                 this.token = transactionEvent.token
                 this.type = transactionEvent.type
@@ -889,6 +900,15 @@ private constructor(
             @JsonProperty("created")
             @ExcludeMissing
             fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
+            fun detailedResults(detailedResults: List<DetailedResult>) =
+                detailedResults(JsonField.of(detailedResults))
+
+            @JsonProperty("detailed_results")
+            @ExcludeMissing
+            fun detailedResults(detailedResults: JsonField<List<DetailedResult>>) = apply {
+                this.detailedResults = detailedResults
+            }
 
             /**
              * `APPROVED` or decline reason.
@@ -1038,11 +1058,372 @@ private constructor(
                 TransactionEvent(
                     amount,
                     created,
+                    detailedResults.map { it.toUnmodifiable() },
                     result,
                     token,
                     type,
                     additionalProperties.toUnmodifiable(),
                 )
+        }
+
+        class DetailedResult
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is DetailedResult && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED =
+                    DetailedResult(JsonField.of("ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED"))
+
+                val ACCOUNT_INACTIVE = DetailedResult(JsonField.of("ACCOUNT_INACTIVE"))
+
+                val ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED =
+                    DetailedResult(JsonField.of("ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED"))
+
+                val ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED =
+                    DetailedResult(JsonField.of("ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED"))
+
+                val ACCOUNT_UNDER_REVIEW = DetailedResult(JsonField.of("ACCOUNT_UNDER_REVIEW"))
+
+                val ADDRESS_INCORRECT = DetailedResult(JsonField.of("ADDRESS_INCORRECT"))
+
+                val APPROVED = DetailedResult(JsonField.of("APPROVED"))
+
+                val AUTH_RULE_ALLOWED_COUNTRY =
+                    DetailedResult(JsonField.of("AUTH_RULE_ALLOWED_COUNTRY"))
+
+                val AUTH_RULE_ALLOWED_MCC = DetailedResult(JsonField.of("AUTH_RULE_ALLOWED_MCC"))
+
+                val AUTH_RULE_BLOCKED_COUNTRY =
+                    DetailedResult(JsonField.of("AUTH_RULE_BLOCKED_COUNTRY"))
+
+                val AUTH_RULE_BLOCKED_MCC = DetailedResult(JsonField.of("AUTH_RULE_BLOCKED_MCC"))
+
+                val CARD_CLOSED = DetailedResult(JsonField.of("CARD_CLOSED"))
+
+                val CARD_CRYPTOGRAM_VALIDATION_FAILURE =
+                    DetailedResult(JsonField.of("CARD_CRYPTOGRAM_VALIDATION_FAILURE"))
+
+                val CARD_EXPIRED = DetailedResult(JsonField.of("CARD_EXPIRED"))
+
+                val CARD_EXPIRY_DATE_INCORRECT =
+                    DetailedResult(JsonField.of("CARD_EXPIRY_DATE_INCORRECT"))
+
+                val CARD_INVALID = DetailedResult(JsonField.of("CARD_INVALID"))
+
+                val CARD_PAUSED = DetailedResult(JsonField.of("CARD_PAUSED"))
+
+                val CARD_PIN_INCORRECT = DetailedResult(JsonField.of("CARD_PIN_INCORRECT"))
+
+                val CARD_RESTRICTED = DetailedResult(JsonField.of("CARD_RESTRICTED"))
+
+                val CARD_SECURITY_CODE_INCORRECT =
+                    DetailedResult(JsonField.of("CARD_SECURITY_CODE_INCORRECT"))
+
+                val CARD_SPEND_LIMIT_EXCEEDED =
+                    DetailedResult(JsonField.of("CARD_SPEND_LIMIT_EXCEEDED"))
+
+                val CONTACT_CARD_ISSUER = DetailedResult(JsonField.of("CONTACT_CARD_ISSUER"))
+
+                val CUSTOMER_ASA_TIMEOUT = DetailedResult(JsonField.of("CUSTOMER_ASA_TIMEOUT"))
+
+                val CUSTOM_ASA_RESULT = DetailedResult(JsonField.of("CUSTOM_ASA_RESULT"))
+
+                val DECLINED = DetailedResult(JsonField.of("DECLINED"))
+
+                val DO_NOT_HONOR = DetailedResult(JsonField.of("DO_NOT_HONOR"))
+
+                val FORMAT_ERROR = DetailedResult(JsonField.of("FORMAT_ERROR"))
+
+                val INSUFFICIENT_FUNDING_SOURCE_BALANCE =
+                    DetailedResult(JsonField.of("INSUFFICIENT_FUNDING_SOURCE_BALANCE"))
+
+                val INSUFFICIENT_FUNDS = DetailedResult(JsonField.of("INSUFFICIENT_FUNDS"))
+
+                val LITHIC_SYSTEM_ERROR = DetailedResult(JsonField.of("LITHIC_SYSTEM_ERROR"))
+
+                val LITHIC_SYSTEM_RATE_LIMIT =
+                    DetailedResult(JsonField.of("LITHIC_SYSTEM_RATE_LIMIT"))
+
+                val MALFORMED_ASA_RESPONSE = DetailedResult(JsonField.of("MALFORMED_ASA_RESPONSE"))
+
+                val MERCHANT_INVALID = DetailedResult(JsonField.of("MERCHANT_INVALID"))
+
+                val MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE =
+                    DetailedResult(JsonField.of("MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE"))
+
+                val MERCHANT_NOT_PERMITTED = DetailedResult(JsonField.of("MERCHANT_NOT_PERMITTED"))
+
+                val OVER_REVERSAL_ATTEMPTED =
+                    DetailedResult(JsonField.of("OVER_REVERSAL_ATTEMPTED"))
+
+                val PROGRAM_CARD_SPEND_LIMIT_EXCEEDED =
+                    DetailedResult(JsonField.of("PROGRAM_CARD_SPEND_LIMIT_EXCEEDED"))
+
+                val PROGRAM_SUSPENDED = DetailedResult(JsonField.of("PROGRAM_SUSPENDED"))
+
+                val PROGRAM_USAGE_RESTRICTION =
+                    DetailedResult(JsonField.of("PROGRAM_USAGE_RESTRICTION"))
+
+                val REVERSAL_UNMATCHED = DetailedResult(JsonField.of("REVERSAL_UNMATCHED"))
+
+                val SECURITY_VIOLATION = DetailedResult(JsonField.of("SECURITY_VIOLATION"))
+
+                val SINGLE_USE_CARD_REATTEMPTED =
+                    DetailedResult(JsonField.of("SINGLE_USE_CARD_REATTEMPTED"))
+
+                val TRANSACTION_INVALID = DetailedResult(JsonField.of("TRANSACTION_INVALID"))
+
+                val TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL =
+                    DetailedResult(
+                        JsonField.of("TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL")
+                    )
+
+                val TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER =
+                    DetailedResult(
+                        JsonField.of("TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER")
+                    )
+
+                val TRANSACTION_PREVIOUSLY_COMPLETED =
+                    DetailedResult(JsonField.of("TRANSACTION_PREVIOUSLY_COMPLETED"))
+
+                val UNAUTHORIZED_MERCHANT = DetailedResult(JsonField.of("UNAUTHORIZED_MERCHANT"))
+
+                fun of(value: String) = DetailedResult(JsonField.of(value))
+            }
+
+            enum class Known {
+                ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_INACTIVE,
+                ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_UNDER_REVIEW,
+                ADDRESS_INCORRECT,
+                APPROVED,
+                AUTH_RULE_ALLOWED_COUNTRY,
+                AUTH_RULE_ALLOWED_MCC,
+                AUTH_RULE_BLOCKED_COUNTRY,
+                AUTH_RULE_BLOCKED_MCC,
+                CARD_CLOSED,
+                CARD_CRYPTOGRAM_VALIDATION_FAILURE,
+                CARD_EXPIRED,
+                CARD_EXPIRY_DATE_INCORRECT,
+                CARD_INVALID,
+                CARD_PAUSED,
+                CARD_PIN_INCORRECT,
+                CARD_RESTRICTED,
+                CARD_SECURITY_CODE_INCORRECT,
+                CARD_SPEND_LIMIT_EXCEEDED,
+                CONTACT_CARD_ISSUER,
+                CUSTOMER_ASA_TIMEOUT,
+                CUSTOM_ASA_RESULT,
+                DECLINED,
+                DO_NOT_HONOR,
+                FORMAT_ERROR,
+                INSUFFICIENT_FUNDING_SOURCE_BALANCE,
+                INSUFFICIENT_FUNDS,
+                LITHIC_SYSTEM_ERROR,
+                LITHIC_SYSTEM_RATE_LIMIT,
+                MALFORMED_ASA_RESPONSE,
+                MERCHANT_INVALID,
+                MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE,
+                MERCHANT_NOT_PERMITTED,
+                OVER_REVERSAL_ATTEMPTED,
+                PROGRAM_CARD_SPEND_LIMIT_EXCEEDED,
+                PROGRAM_SUSPENDED,
+                PROGRAM_USAGE_RESTRICTION,
+                REVERSAL_UNMATCHED,
+                SECURITY_VIOLATION,
+                SINGLE_USE_CARD_REATTEMPTED,
+                TRANSACTION_INVALID,
+                TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
+                TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
+                TRANSACTION_PREVIOUSLY_COMPLETED,
+                UNAUTHORIZED_MERCHANT,
+            }
+
+            enum class Value {
+                ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_INACTIVE,
+                ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_UNDER_REVIEW,
+                ADDRESS_INCORRECT,
+                APPROVED,
+                AUTH_RULE_ALLOWED_COUNTRY,
+                AUTH_RULE_ALLOWED_MCC,
+                AUTH_RULE_BLOCKED_COUNTRY,
+                AUTH_RULE_BLOCKED_MCC,
+                CARD_CLOSED,
+                CARD_CRYPTOGRAM_VALIDATION_FAILURE,
+                CARD_EXPIRED,
+                CARD_EXPIRY_DATE_INCORRECT,
+                CARD_INVALID,
+                CARD_PAUSED,
+                CARD_PIN_INCORRECT,
+                CARD_RESTRICTED,
+                CARD_SECURITY_CODE_INCORRECT,
+                CARD_SPEND_LIMIT_EXCEEDED,
+                CONTACT_CARD_ISSUER,
+                CUSTOMER_ASA_TIMEOUT,
+                CUSTOM_ASA_RESULT,
+                DECLINED,
+                DO_NOT_HONOR,
+                FORMAT_ERROR,
+                INSUFFICIENT_FUNDING_SOURCE_BALANCE,
+                INSUFFICIENT_FUNDS,
+                LITHIC_SYSTEM_ERROR,
+                LITHIC_SYSTEM_RATE_LIMIT,
+                MALFORMED_ASA_RESPONSE,
+                MERCHANT_INVALID,
+                MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE,
+                MERCHANT_NOT_PERMITTED,
+                OVER_REVERSAL_ATTEMPTED,
+                PROGRAM_CARD_SPEND_LIMIT_EXCEEDED,
+                PROGRAM_SUSPENDED,
+                PROGRAM_USAGE_RESTRICTION,
+                REVERSAL_UNMATCHED,
+                SECURITY_VIOLATION,
+                SINGLE_USE_CARD_REATTEMPTED,
+                TRANSACTION_INVALID,
+                TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
+                TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
+                TRANSACTION_PREVIOUSLY_COMPLETED,
+                UNAUTHORIZED_MERCHANT,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED -> Value.ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_INACTIVE -> Value.ACCOUNT_INACTIVE
+                    ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED ->
+                        Value.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
+                        Value.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_UNDER_REVIEW -> Value.ACCOUNT_UNDER_REVIEW
+                    ADDRESS_INCORRECT -> Value.ADDRESS_INCORRECT
+                    APPROVED -> Value.APPROVED
+                    AUTH_RULE_ALLOWED_COUNTRY -> Value.AUTH_RULE_ALLOWED_COUNTRY
+                    AUTH_RULE_ALLOWED_MCC -> Value.AUTH_RULE_ALLOWED_MCC
+                    AUTH_RULE_BLOCKED_COUNTRY -> Value.AUTH_RULE_BLOCKED_COUNTRY
+                    AUTH_RULE_BLOCKED_MCC -> Value.AUTH_RULE_BLOCKED_MCC
+                    CARD_CLOSED -> Value.CARD_CLOSED
+                    CARD_CRYPTOGRAM_VALIDATION_FAILURE -> Value.CARD_CRYPTOGRAM_VALIDATION_FAILURE
+                    CARD_EXPIRED -> Value.CARD_EXPIRED
+                    CARD_EXPIRY_DATE_INCORRECT -> Value.CARD_EXPIRY_DATE_INCORRECT
+                    CARD_INVALID -> Value.CARD_INVALID
+                    CARD_PAUSED -> Value.CARD_PAUSED
+                    CARD_PIN_INCORRECT -> Value.CARD_PIN_INCORRECT
+                    CARD_RESTRICTED -> Value.CARD_RESTRICTED
+                    CARD_SECURITY_CODE_INCORRECT -> Value.CARD_SECURITY_CODE_INCORRECT
+                    CARD_SPEND_LIMIT_EXCEEDED -> Value.CARD_SPEND_LIMIT_EXCEEDED
+                    CONTACT_CARD_ISSUER -> Value.CONTACT_CARD_ISSUER
+                    CUSTOMER_ASA_TIMEOUT -> Value.CUSTOMER_ASA_TIMEOUT
+                    CUSTOM_ASA_RESULT -> Value.CUSTOM_ASA_RESULT
+                    DECLINED -> Value.DECLINED
+                    DO_NOT_HONOR -> Value.DO_NOT_HONOR
+                    FORMAT_ERROR -> Value.FORMAT_ERROR
+                    INSUFFICIENT_FUNDING_SOURCE_BALANCE -> Value.INSUFFICIENT_FUNDING_SOURCE_BALANCE
+                    INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                    LITHIC_SYSTEM_ERROR -> Value.LITHIC_SYSTEM_ERROR
+                    LITHIC_SYSTEM_RATE_LIMIT -> Value.LITHIC_SYSTEM_RATE_LIMIT
+                    MALFORMED_ASA_RESPONSE -> Value.MALFORMED_ASA_RESPONSE
+                    MERCHANT_INVALID -> Value.MERCHANT_INVALID
+                    MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE ->
+                        Value.MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE
+                    MERCHANT_NOT_PERMITTED -> Value.MERCHANT_NOT_PERMITTED
+                    OVER_REVERSAL_ATTEMPTED -> Value.OVER_REVERSAL_ATTEMPTED
+                    PROGRAM_CARD_SPEND_LIMIT_EXCEEDED -> Value.PROGRAM_CARD_SPEND_LIMIT_EXCEEDED
+                    PROGRAM_SUSPENDED -> Value.PROGRAM_SUSPENDED
+                    PROGRAM_USAGE_RESTRICTION -> Value.PROGRAM_USAGE_RESTRICTION
+                    REVERSAL_UNMATCHED -> Value.REVERSAL_UNMATCHED
+                    SECURITY_VIOLATION -> Value.SECURITY_VIOLATION
+                    SINGLE_USE_CARD_REATTEMPTED -> Value.SINGLE_USE_CARD_REATTEMPTED
+                    TRANSACTION_INVALID -> Value.TRANSACTION_INVALID
+                    TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
+                        Value.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
+                    TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER ->
+                        Value.TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER
+                    TRANSACTION_PREVIOUSLY_COMPLETED -> Value.TRANSACTION_PREVIOUSLY_COMPLETED
+                    UNAUTHORIZED_MERCHANT -> Value.UNAUTHORIZED_MERCHANT
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED -> Known.ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_INACTIVE -> Known.ACCOUNT_INACTIVE
+                    ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED ->
+                        Known.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
+                        Known.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_UNDER_REVIEW -> Known.ACCOUNT_UNDER_REVIEW
+                    ADDRESS_INCORRECT -> Known.ADDRESS_INCORRECT
+                    APPROVED -> Known.APPROVED
+                    AUTH_RULE_ALLOWED_COUNTRY -> Known.AUTH_RULE_ALLOWED_COUNTRY
+                    AUTH_RULE_ALLOWED_MCC -> Known.AUTH_RULE_ALLOWED_MCC
+                    AUTH_RULE_BLOCKED_COUNTRY -> Known.AUTH_RULE_BLOCKED_COUNTRY
+                    AUTH_RULE_BLOCKED_MCC -> Known.AUTH_RULE_BLOCKED_MCC
+                    CARD_CLOSED -> Known.CARD_CLOSED
+                    CARD_CRYPTOGRAM_VALIDATION_FAILURE -> Known.CARD_CRYPTOGRAM_VALIDATION_FAILURE
+                    CARD_EXPIRED -> Known.CARD_EXPIRED
+                    CARD_EXPIRY_DATE_INCORRECT -> Known.CARD_EXPIRY_DATE_INCORRECT
+                    CARD_INVALID -> Known.CARD_INVALID
+                    CARD_PAUSED -> Known.CARD_PAUSED
+                    CARD_PIN_INCORRECT -> Known.CARD_PIN_INCORRECT
+                    CARD_RESTRICTED -> Known.CARD_RESTRICTED
+                    CARD_SECURITY_CODE_INCORRECT -> Known.CARD_SECURITY_CODE_INCORRECT
+                    CARD_SPEND_LIMIT_EXCEEDED -> Known.CARD_SPEND_LIMIT_EXCEEDED
+                    CONTACT_CARD_ISSUER -> Known.CONTACT_CARD_ISSUER
+                    CUSTOMER_ASA_TIMEOUT -> Known.CUSTOMER_ASA_TIMEOUT
+                    CUSTOM_ASA_RESULT -> Known.CUSTOM_ASA_RESULT
+                    DECLINED -> Known.DECLINED
+                    DO_NOT_HONOR -> Known.DO_NOT_HONOR
+                    FORMAT_ERROR -> Known.FORMAT_ERROR
+                    INSUFFICIENT_FUNDING_SOURCE_BALANCE -> Known.INSUFFICIENT_FUNDING_SOURCE_BALANCE
+                    INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                    LITHIC_SYSTEM_ERROR -> Known.LITHIC_SYSTEM_ERROR
+                    LITHIC_SYSTEM_RATE_LIMIT -> Known.LITHIC_SYSTEM_RATE_LIMIT
+                    MALFORMED_ASA_RESPONSE -> Known.MALFORMED_ASA_RESPONSE
+                    MERCHANT_INVALID -> Known.MERCHANT_INVALID
+                    MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE ->
+                        Known.MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE
+                    MERCHANT_NOT_PERMITTED -> Known.MERCHANT_NOT_PERMITTED
+                    OVER_REVERSAL_ATTEMPTED -> Known.OVER_REVERSAL_ATTEMPTED
+                    PROGRAM_CARD_SPEND_LIMIT_EXCEEDED -> Known.PROGRAM_CARD_SPEND_LIMIT_EXCEEDED
+                    PROGRAM_SUSPENDED -> Known.PROGRAM_SUSPENDED
+                    PROGRAM_USAGE_RESTRICTION -> Known.PROGRAM_USAGE_RESTRICTION
+                    REVERSAL_UNMATCHED -> Known.REVERSAL_UNMATCHED
+                    SECURITY_VIOLATION -> Known.SECURITY_VIOLATION
+                    SINGLE_USE_CARD_REATTEMPTED -> Known.SINGLE_USE_CARD_REATTEMPTED
+                    TRANSACTION_INVALID -> Known.TRANSACTION_INVALID
+                    TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
+                        Known.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
+                    TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER ->
+                        Known.TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER
+                    TRANSACTION_PREVIOUSLY_COMPLETED -> Known.TRANSACTION_PREVIOUSLY_COMPLETED
+                    UNAUTHORIZED_MERCHANT -> Known.UNAUTHORIZED_MERCHANT
+                    else -> throw LithicInvalidDataException("Unknown DetailedResult: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
         }
 
         class Result
@@ -1081,19 +1462,19 @@ private constructor(
 
                 val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
 
+                val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
+
                 val GLOBAL_TRANSACTION_LIMIT = Result(JsonField.of("GLOBAL_TRANSACTION_LIMIT"))
 
                 val GLOBAL_WEEKLY_LIMIT = Result(JsonField.of("GLOBAL_WEEKLY_LIMIT"))
-
-                val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
 
                 val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
 
                 val INCORRECT_PIN = Result(JsonField.of("INCORRECT_PIN"))
 
-                val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
-
                 val INSUFFICIENT_FUNDS = Result(JsonField.of("INSUFFICIENT_FUNDS"))
+
+                val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
 
                 val MERCHANT_BLACKLIST = Result(JsonField.of("MERCHANT_BLACKLIST"))
 
@@ -1118,13 +1499,13 @@ private constructor(
                 CARD_CLOSED,
                 CARD_PAUSED,
                 FRAUD_ADVICE,
+                GLOBAL_MONTHLY_LIMIT,
                 GLOBAL_TRANSACTION_LIMIT,
                 GLOBAL_WEEKLY_LIMIT,
-                GLOBAL_MONTHLY_LIMIT,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
-                INVALID_CARD_DETAILS,
                 INSUFFICIENT_FUNDS,
+                INVALID_CARD_DETAILS,
                 MERCHANT_BLACKLIST,
                 SINGLE_USE_RECHARGED,
                 SWITCH_INOPERATIVE_ADVICE,
@@ -1141,13 +1522,13 @@ private constructor(
                 CARD_CLOSED,
                 CARD_PAUSED,
                 FRAUD_ADVICE,
+                GLOBAL_MONTHLY_LIMIT,
                 GLOBAL_TRANSACTION_LIMIT,
                 GLOBAL_WEEKLY_LIMIT,
-                GLOBAL_MONTHLY_LIMIT,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
-                INVALID_CARD_DETAILS,
                 INSUFFICIENT_FUNDS,
+                INVALID_CARD_DETAILS,
                 MERCHANT_BLACKLIST,
                 SINGLE_USE_RECHARGED,
                 SWITCH_INOPERATIVE_ADVICE,
@@ -1166,13 +1547,13 @@ private constructor(
                     CARD_CLOSED -> Value.CARD_CLOSED
                     CARD_PAUSED -> Value.CARD_PAUSED
                     FRAUD_ADVICE -> Value.FRAUD_ADVICE
+                    GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
                     GLOBAL_TRANSACTION_LIMIT -> Value.GLOBAL_TRANSACTION_LIMIT
                     GLOBAL_WEEKLY_LIMIT -> Value.GLOBAL_WEEKLY_LIMIT
-                    GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
                     INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Value.INCORRECT_PIN
-                    INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
                     INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                    INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
                     MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
                     SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
                     SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
@@ -1191,13 +1572,13 @@ private constructor(
                     CARD_CLOSED -> Known.CARD_CLOSED
                     CARD_PAUSED -> Known.CARD_PAUSED
                     FRAUD_ADVICE -> Known.FRAUD_ADVICE
+                    GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
                     GLOBAL_TRANSACTION_LIMIT -> Known.GLOBAL_TRANSACTION_LIMIT
                     GLOBAL_WEEKLY_LIMIT -> Known.GLOBAL_WEEKLY_LIMIT
-                    GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
                     INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Known.INCORRECT_PIN
-                    INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
                     INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                    INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
                     MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
                     SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
                     SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
@@ -1244,9 +1625,9 @@ private constructor(
 
                 val CLEARING = Type(JsonField.of("CLEARING"))
 
-                val CORRECTION_DEBIT = Type(JsonField.of("CORRECTION_DEBIT"))
-
                 val CORRECTION_CREDIT = Type(JsonField.of("CORRECTION_CREDIT"))
+
+                val CORRECTION_DEBIT = Type(JsonField.of("CORRECTION_DEBIT"))
 
                 val CREDIT_AUTHORIZATION = Type(JsonField.of("CREDIT_AUTHORIZATION"))
 
@@ -1273,8 +1654,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1291,8 +1672,8 @@ private constructor(
                 AUTHORIZATION_REVERSAL,
                 BALANCE_INQUIRY,
                 CLEARING,
-                CORRECTION_DEBIT,
                 CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
                 CREDIT_AUTHORIZATION_ADVICE,
                 FINANCIAL_AUTHORIZATION,
@@ -1311,8 +1692,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Value.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
                     CLEARING -> Value.CLEARING
-                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Value.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Value.FINANCIAL_AUTHORIZATION
@@ -1331,8 +1712,8 @@ private constructor(
                     AUTHORIZATION_REVERSAL -> Known.AUTHORIZATION_REVERSAL
                     BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
                     CLEARING -> Known.CLEARING
-                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION
                     CREDIT_AUTHORIZATION_ADVICE -> Known.CREDIT_AUTHORIZATION_ADVICE
                     FINANCIAL_AUTHORIZATION -> Known.FINANCIAL_AUTHORIZATION
@@ -1592,9 +1973,9 @@ private constructor(
 
             val MASTERCARD = Network(JsonField.of("MASTERCARD"))
 
-            val VISA = Network(JsonField.of("VISA"))
-
             val UNKNOWN = Network(JsonField.of("UNKNOWN"))
+
+            val VISA = Network(JsonField.of("VISA"))
 
             fun of(value: String) = Network(JsonField.of(value))
         }
@@ -1603,16 +1984,16 @@ private constructor(
             INTERLINK,
             MAESTRO,
             MASTERCARD,
-            VISA,
             UNKNOWN,
+            VISA,
         }
 
         enum class Value {
             INTERLINK,
             MAESTRO,
             MASTERCARD,
-            VISA,
             UNKNOWN,
+            VISA,
             _UNKNOWN,
         }
 
@@ -1621,8 +2002,8 @@ private constructor(
                 INTERLINK -> Value.INTERLINK
                 MAESTRO -> Value.MAESTRO
                 MASTERCARD -> Value.MASTERCARD
-                VISA -> Value.VISA
                 UNKNOWN -> Value.UNKNOWN
+                VISA -> Value.VISA
                 else -> Value._UNKNOWN
             }
 
@@ -1631,8 +2012,8 @@ private constructor(
                 INTERLINK -> Known.INTERLINK
                 MAESTRO -> Known.MAESTRO
                 MASTERCARD -> Known.MASTERCARD
-                VISA -> Known.VISA
                 UNKNOWN -> Known.UNKNOWN
+                VISA -> Known.VISA
                 else -> throw LithicInvalidDataException("Unknown Network: $value")
             }
 
@@ -1675,19 +2056,19 @@ private constructor(
 
             val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
 
+            val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
+
             val GLOBAL_TRANSACTION_LIMIT = Result(JsonField.of("GLOBAL_TRANSACTION_LIMIT"))
 
             val GLOBAL_WEEKLY_LIMIT = Result(JsonField.of("GLOBAL_WEEKLY_LIMIT"))
-
-            val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
 
             val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
 
             val INCORRECT_PIN = Result(JsonField.of("INCORRECT_PIN"))
 
-            val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
-
             val INSUFFICIENT_FUNDS = Result(JsonField.of("INSUFFICIENT_FUNDS"))
+
+            val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
 
             val MERCHANT_BLACKLIST = Result(JsonField.of("MERCHANT_BLACKLIST"))
 
@@ -1712,13 +2093,13 @@ private constructor(
             CARD_CLOSED,
             CARD_PAUSED,
             FRAUD_ADVICE,
+            GLOBAL_MONTHLY_LIMIT,
             GLOBAL_TRANSACTION_LIMIT,
             GLOBAL_WEEKLY_LIMIT,
-            GLOBAL_MONTHLY_LIMIT,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
-            INVALID_CARD_DETAILS,
             INSUFFICIENT_FUNDS,
+            INVALID_CARD_DETAILS,
             MERCHANT_BLACKLIST,
             SINGLE_USE_RECHARGED,
             SWITCH_INOPERATIVE_ADVICE,
@@ -1735,13 +2116,13 @@ private constructor(
             CARD_CLOSED,
             CARD_PAUSED,
             FRAUD_ADVICE,
+            GLOBAL_MONTHLY_LIMIT,
             GLOBAL_TRANSACTION_LIMIT,
             GLOBAL_WEEKLY_LIMIT,
-            GLOBAL_MONTHLY_LIMIT,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
-            INVALID_CARD_DETAILS,
             INSUFFICIENT_FUNDS,
+            INVALID_CARD_DETAILS,
             MERCHANT_BLACKLIST,
             SINGLE_USE_RECHARGED,
             SWITCH_INOPERATIVE_ADVICE,
@@ -1760,13 +2141,13 @@ private constructor(
                 CARD_CLOSED -> Value.CARD_CLOSED
                 CARD_PAUSED -> Value.CARD_PAUSED
                 FRAUD_ADVICE -> Value.FRAUD_ADVICE
+                GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
                 GLOBAL_TRANSACTION_LIMIT -> Value.GLOBAL_TRANSACTION_LIMIT
                 GLOBAL_WEEKLY_LIMIT -> Value.GLOBAL_WEEKLY_LIMIT
-                GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
                 INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Value.INCORRECT_PIN
-                INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
                 INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
                 MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
                 SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
                 SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
@@ -1785,13 +2166,13 @@ private constructor(
                 CARD_CLOSED -> Known.CARD_CLOSED
                 CARD_PAUSED -> Known.CARD_PAUSED
                 FRAUD_ADVICE -> Known.FRAUD_ADVICE
+                GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
                 GLOBAL_TRANSACTION_LIMIT -> Known.GLOBAL_TRANSACTION_LIMIT
                 GLOBAL_WEEKLY_LIMIT -> Known.GLOBAL_WEEKLY_LIMIT
-                GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
                 INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Known.INCORRECT_PIN
-                INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
                 INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
                 MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
                 SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
                 SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
@@ -1894,9 +2275,9 @@ private constructor(
         private val authenticationResult: JsonField<AuthenticationResult>,
         private val decisionMadeBy: JsonField<DecisionMadeBy>,
         private val liabilityShift: JsonField<LiabilityShift>,
+        private val threeDSAuthenticationToken: JsonField<String>,
         private val verificationAttempted: JsonField<VerificationAttempted>,
         private val verificationResult: JsonField<VerificationResult>,
-        private val threeDSAuthenticationToken: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -1982,6 +2363,14 @@ private constructor(
         fun liabilityShift(): LiabilityShift = liabilityShift.getRequired("liability_shift")
 
         /**
+         * Unique identifier you can use to match a given 3DS authentication and the transaction.
+         * Note that in cases where liability shift does not occur, this token is matched to the
+         * transaction on a best-effort basis.
+         */
+        fun threeDSAuthenticationToken(): String =
+            threeDSAuthenticationToken.getRequired("three_ds_authentication_token")
+
+        /**
          * Verification attempted values:
          *
          * - `APP_LOGIN`: Out-of-band login verification was attempted by the ACS.
@@ -2027,14 +2416,6 @@ private constructor(
          */
         fun verificationResult(): VerificationResult =
             verificationResult.getRequired("verification_result")
-
-        /**
-         * Unique identifier you can use to match a given 3DS authentication and the transaction.
-         * Note that in cases where liability shift does not occur, this token is matched to the
-         * transaction on a best-effort basis.
-         */
-        fun threeDSAuthenticationToken(): String =
-            threeDSAuthenticationToken.getRequired("three_ds_authentication_token")
 
         /**
          * 3-D Secure Protocol version. Possible enum values:
@@ -2116,6 +2497,15 @@ private constructor(
         @JsonProperty("liability_shift") @ExcludeMissing fun _liabilityShift() = liabilityShift
 
         /**
+         * Unique identifier you can use to match a given 3DS authentication and the transaction.
+         * Note that in cases where liability shift does not occur, this token is matched to the
+         * transaction on a best-effort basis.
+         */
+        @JsonProperty("three_ds_authentication_token")
+        @ExcludeMissing
+        fun _threeDSAuthenticationToken() = threeDSAuthenticationToken
+
+        /**
          * Verification attempted values:
          *
          * - `APP_LOGIN`: Out-of-band login verification was attempted by the ACS.
@@ -2164,15 +2554,6 @@ private constructor(
         @ExcludeMissing
         fun _verificationResult() = verificationResult
 
-        /**
-         * Unique identifier you can use to match a given 3DS authentication and the transaction.
-         * Note that in cases where liability shift does not occur, this token is matched to the
-         * transaction on a best-effort basis.
-         */
-        @JsonProperty("three_ds_authentication_token")
-        @ExcludeMissing
-        fun _threeDSAuthenticationToken() = threeDSAuthenticationToken
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -2184,9 +2565,9 @@ private constructor(
                 authenticationResult()
                 decisionMadeBy()
                 liabilityShift()
+                threeDSAuthenticationToken()
                 verificationAttempted()
                 verificationResult()
-                threeDSAuthenticationToken()
                 validated = true
             }
         }
@@ -2204,9 +2585,9 @@ private constructor(
                 this.authenticationResult == other.authenticationResult &&
                 this.decisionMadeBy == other.decisionMadeBy &&
                 this.liabilityShift == other.liabilityShift &&
+                this.threeDSAuthenticationToken == other.threeDSAuthenticationToken &&
                 this.verificationAttempted == other.verificationAttempted &&
                 this.verificationResult == other.verificationResult &&
-                this.threeDSAuthenticationToken == other.threeDSAuthenticationToken &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -2219,9 +2600,9 @@ private constructor(
                         authenticationResult,
                         decisionMadeBy,
                         liabilityShift,
+                        threeDSAuthenticationToken,
                         verificationAttempted,
                         verificationResult,
-                        threeDSAuthenticationToken,
                         additionalProperties,
                     )
             }
@@ -2229,7 +2610,7 @@ private constructor(
         }
 
         override fun toString() =
-            "CardholderAuthentication{_3dsVersion=$_3dsVersion, acquirerExemption=$acquirerExemption, authenticationResult=$authenticationResult, decisionMadeBy=$decisionMadeBy, liabilityShift=$liabilityShift, verificationAttempted=$verificationAttempted, verificationResult=$verificationResult, threeDSAuthenticationToken=$threeDSAuthenticationToken, additionalProperties=$additionalProperties}"
+            "CardholderAuthentication{_3dsVersion=$_3dsVersion, acquirerExemption=$acquirerExemption, authenticationResult=$authenticationResult, decisionMadeBy=$decisionMadeBy, liabilityShift=$liabilityShift, threeDSAuthenticationToken=$threeDSAuthenticationToken, verificationAttempted=$verificationAttempted, verificationResult=$verificationResult, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -2243,9 +2624,9 @@ private constructor(
             private var authenticationResult: JsonField<AuthenticationResult> = JsonMissing.of()
             private var decisionMadeBy: JsonField<DecisionMadeBy> = JsonMissing.of()
             private var liabilityShift: JsonField<LiabilityShift> = JsonMissing.of()
+            private var threeDSAuthenticationToken: JsonField<String> = JsonMissing.of()
             private var verificationAttempted: JsonField<VerificationAttempted> = JsonMissing.of()
             private var verificationResult: JsonField<VerificationResult> = JsonMissing.of()
-            private var threeDSAuthenticationToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardholderAuthentication: CardholderAuthentication) = apply {
@@ -2254,10 +2635,10 @@ private constructor(
                 this.authenticationResult = cardholderAuthentication.authenticationResult
                 this.decisionMadeBy = cardholderAuthentication.decisionMadeBy
                 this.liabilityShift = cardholderAuthentication.liabilityShift
-                this.verificationAttempted = cardholderAuthentication.verificationAttempted
-                this.verificationResult = cardholderAuthentication.verificationResult
                 this.threeDSAuthenticationToken =
                     cardholderAuthentication.threeDSAuthenticationToken
+                this.verificationAttempted = cardholderAuthentication.verificationAttempted
+                this.verificationResult = cardholderAuthentication.verificationResult
                 additionalProperties(cardholderAuthentication.additionalProperties)
             }
 
@@ -2441,6 +2822,25 @@ private constructor(
             }
 
             /**
+             * Unique identifier you can use to match a given 3DS authentication and the
+             * transaction. Note that in cases where liability shift does not occur, this token is
+             * matched to the transaction on a best-effort basis.
+             */
+            fun threeDSAuthenticationToken(threeDSAuthenticationToken: String) =
+                threeDSAuthenticationToken(JsonField.of(threeDSAuthenticationToken))
+
+            /**
+             * Unique identifier you can use to match a given 3DS authentication and the
+             * transaction. Note that in cases where liability shift does not occur, this token is
+             * matched to the transaction on a best-effort basis.
+             */
+            @JsonProperty("three_ds_authentication_token")
+            @ExcludeMissing
+            fun threeDSAuthenticationToken(threeDSAuthenticationToken: JsonField<String>) = apply {
+                this.threeDSAuthenticationToken = threeDSAuthenticationToken
+            }
+
+            /**
              * Verification attempted values:
              *
              * - `APP_LOGIN`: Out-of-band login verification was attempted by the ACS.
@@ -2543,25 +2943,6 @@ private constructor(
                 this.verificationResult = verificationResult
             }
 
-            /**
-             * Unique identifier you can use to match a given 3DS authentication and the
-             * transaction. Note that in cases where liability shift does not occur, this token is
-             * matched to the transaction on a best-effort basis.
-             */
-            fun threeDSAuthenticationToken(threeDSAuthenticationToken: String) =
-                threeDSAuthenticationToken(JsonField.of(threeDSAuthenticationToken))
-
-            /**
-             * Unique identifier you can use to match a given 3DS authentication and the
-             * transaction. Note that in cases where liability shift does not occur, this token is
-             * matched to the transaction on a best-effort basis.
-             */
-            @JsonProperty("three_ds_authentication_token")
-            @ExcludeMissing
-            fun threeDSAuthenticationToken(threeDSAuthenticationToken: JsonField<String>) = apply {
-                this.threeDSAuthenticationToken = threeDSAuthenticationToken
-            }
-
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -2583,9 +2964,9 @@ private constructor(
                     authenticationResult,
                     decisionMadeBy,
                     liabilityShift,
+                    threeDSAuthenticationToken,
                     verificationAttempted,
                     verificationResult,
-                    threeDSAuthenticationToken,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -2712,47 +3093,47 @@ private constructor(
 
             companion object {
 
-                val SUCCESS = AuthenticationResult(JsonField.of("SUCCESS"))
+                val ATTEMPTS = AuthenticationResult(JsonField.of("ATTEMPTS"))
 
                 val DECLINE = AuthenticationResult(JsonField.of("DECLINE"))
 
-                val ATTEMPTS = AuthenticationResult(JsonField.of("ATTEMPTS"))
-
                 val NONE = AuthenticationResult(JsonField.of("NONE"))
+
+                val SUCCESS = AuthenticationResult(JsonField.of("SUCCESS"))
 
                 fun of(value: String) = AuthenticationResult(JsonField.of(value))
             }
 
             enum class Known {
-                SUCCESS,
-                DECLINE,
                 ATTEMPTS,
+                DECLINE,
                 NONE,
+                SUCCESS,
             }
 
             enum class Value {
-                SUCCESS,
-                DECLINE,
                 ATTEMPTS,
+                DECLINE,
                 NONE,
+                SUCCESS,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
-                    SUCCESS -> Value.SUCCESS
-                    DECLINE -> Value.DECLINE
                     ATTEMPTS -> Value.ATTEMPTS
+                    DECLINE -> Value.DECLINE
                     NONE -> Value.NONE
+                    SUCCESS -> Value.SUCCESS
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
-                    SUCCESS -> Known.SUCCESS
-                    DECLINE -> Known.DECLINE
                     ATTEMPTS -> Known.ATTEMPTS
+                    DECLINE -> Known.DECLINE
                     NONE -> Known.NONE
+                    SUCCESS -> Known.SUCCESS
                     else -> throw LithicInvalidDataException("Unknown AuthenticationResult: $value")
                 }
 
@@ -2781,13 +3162,13 @@ private constructor(
 
             companion object {
 
-                val NETWORK = DecisionMadeBy(JsonField.of("NETWORK"))
+                val CUSTOMER_ENDPOINT = DecisionMadeBy(JsonField.of("CUSTOMER_ENDPOINT"))
 
                 val LITHIC_DEFAULT = DecisionMadeBy(JsonField.of("LITHIC_DEFAULT"))
 
                 val LITHIC_RULES = DecisionMadeBy(JsonField.of("LITHIC_RULES"))
 
-                val CUSTOMER_ENDPOINT = DecisionMadeBy(JsonField.of("CUSTOMER_ENDPOINT"))
+                val NETWORK = DecisionMadeBy(JsonField.of("NETWORK"))
 
                 val UNKNOWN = DecisionMadeBy(JsonField.of("UNKNOWN"))
 
@@ -2795,38 +3176,38 @@ private constructor(
             }
 
             enum class Known {
-                NETWORK,
+                CUSTOMER_ENDPOINT,
                 LITHIC_DEFAULT,
                 LITHIC_RULES,
-                CUSTOMER_ENDPOINT,
+                NETWORK,
                 UNKNOWN,
             }
 
             enum class Value {
-                NETWORK,
+                CUSTOMER_ENDPOINT,
                 LITHIC_DEFAULT,
                 LITHIC_RULES,
-                CUSTOMER_ENDPOINT,
+                NETWORK,
                 UNKNOWN,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
-                    NETWORK -> Value.NETWORK
+                    CUSTOMER_ENDPOINT -> Value.CUSTOMER_ENDPOINT
                     LITHIC_DEFAULT -> Value.LITHIC_DEFAULT
                     LITHIC_RULES -> Value.LITHIC_RULES
-                    CUSTOMER_ENDPOINT -> Value.CUSTOMER_ENDPOINT
+                    NETWORK -> Value.NETWORK
                     UNKNOWN -> Value.UNKNOWN
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
-                    NETWORK -> Known.NETWORK
+                    CUSTOMER_ENDPOINT -> Known.CUSTOMER_ENDPOINT
                     LITHIC_DEFAULT -> Known.LITHIC_DEFAULT
                     LITHIC_RULES -> Known.LITHIC_RULES
-                    CUSTOMER_ENDPOINT -> Known.CUSTOMER_ENDPOINT
+                    NETWORK -> Known.NETWORK
                     UNKNOWN -> Known.UNKNOWN
                     else -> throw LithicInvalidDataException("Unknown DecisionMadeBy: $value")
                 }

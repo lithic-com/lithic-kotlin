@@ -58,7 +58,7 @@ interface LithicClient {
 
     fun digitalCardArt(): DigitalCardArtService
 
-    /** API status check */
+    /** Status of api */
     fun apiStatus(
         params: ClientApiStatusParams,
         requestOptions: RequestOptions = RequestOptions.none()
