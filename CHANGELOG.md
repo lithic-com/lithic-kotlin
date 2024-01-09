@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.24.0 (2024-01-09)
+
+Full Changelog: [v0.23.0...v0.24.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.23.0...v0.24.0)
+
+### Features
+
+* **api:** add card renew endpoint ([#129](https://github.com/lithic-com/lithic-kotlin/issues/129)) ([9efed55](https://github.com/lithic-com/lithic-kotlin/commit/9efed5539578c3363ba4a4c7f4c42363f63d5c2e))
+
+
+### Chores
+
+* add .keep files for examples and custom code directories ([#128](https://github.com/lithic-com/lithic-kotlin/issues/128)) ([6dee7d0](https://github.com/lithic-com/lithic-kotlin/commit/6dee7d03b3d26386f0a66c6065a58d9ad68e2d1d))
+* **internal:** bump license ([#126](https://github.com/lithic-com/lithic-kotlin/issues/126)) ([42d198b](https://github.com/lithic-com/lithic-kotlin/commit/42d198bda0edfde96991003ab109cc3055351511))
+
 ## 0.23.0 (2023-12-18)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.22.0...v0.23.0)
