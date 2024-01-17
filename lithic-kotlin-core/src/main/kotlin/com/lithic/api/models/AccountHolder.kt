@@ -138,7 +138,7 @@ private constructor(
     fun statusReasons(): List<StatusReason>? = statusReasons.getNullable("status_reasons")
 
     /** Globally unique identifier for the account holder. */
-    fun token(): String? = token.getNullable("token")
+    fun token(): String = token.getRequired("token")
 
     /**
      * The type of Account Holder. If the type is "INDIVIDUAL", the "individual" attribute will be
