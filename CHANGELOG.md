@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.26.0 (2024-01-23)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.25.0...v0.26.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** change account holder creation response, new settlement detail type ([#136](https://github.com/lithic-com/lithic-kotlin/issues/136))
+
+### Features
+
+* **api:** change account holder creation response, new settlement detail type ([#136](https://github.com/lithic-com/lithic-kotlin/issues/136)) ([54c62de](https://github.com/lithic-com/lithic-kotlin/commit/54c62de0417fc8ca36d4effd011eb9a8cdc64ae1))
+
+
+### Chores
+
+* **ci:** rely on Stainless GitHub App for releases ([#135](https://github.com/lithic-com/lithic-kotlin/issues/135)) ([45580b6](https://github.com/lithic-com/lithic-kotlin/commit/45580b65f473d691fc4b3f5ce0defa2a4c43a71a))
+* **internal:** speculative retry-after-ms support ([#133](https://github.com/lithic-com/lithic-kotlin/issues/133)) ([fe60a46](https://github.com/lithic-com/lithic-kotlin/commit/fe60a46814724427d75867bdcf0b43d548785852))
+
 ## 0.25.0 (2024-01-17)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.24.0...v0.25.0)
