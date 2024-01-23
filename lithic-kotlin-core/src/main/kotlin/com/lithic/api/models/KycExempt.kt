@@ -28,6 +28,7 @@ private constructor(
     private val lastName: JsonField<String>,
     private val phoneNumber: JsonField<String>,
     private val workflow: JsonField<Workflow>,
+    private val externalId: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -66,6 +67,9 @@ private constructor(
     /** Specifies the workflow type. This must be 'KYC_EXEMPT' */
     fun workflow(): Workflow = workflow.getRequired("workflow")
 
+    /** A user provided id that can be used to link an account holder with an external system */
+    fun externalId(): String? = externalId.getNullable("external_id")
+
     /**
      * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
      * APO/FPO are acceptable. Only USA addresses are currently supported.
@@ -99,6 +103,9 @@ private constructor(
     /** Specifies the workflow type. This must be 'KYC_EXEMPT' */
     @JsonProperty("workflow") @ExcludeMissing fun _workflow() = workflow
 
+    /** A user provided id that can be used to link an account holder with an external system */
+    @JsonProperty("external_id") @ExcludeMissing fun _externalId() = externalId
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -113,6 +120,7 @@ private constructor(
             lastName()
             phoneNumber()
             workflow()
+            externalId()
             validated = true
         }
     }
@@ -133,6 +141,7 @@ private constructor(
             this.lastName == other.lastName &&
             this.phoneNumber == other.phoneNumber &&
             this.workflow == other.workflow &&
+            this.externalId == other.externalId &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -148,6 +157,7 @@ private constructor(
                     lastName,
                     phoneNumber,
                     workflow,
+                    externalId,
                     additionalProperties,
                 )
         }
@@ -155,7 +165,7 @@ private constructor(
     }
 
     override fun toString() =
-        "KycExempt{address=$address, businessAccountToken=$businessAccountToken, email=$email, firstName=$firstName, kycExemptionType=$kycExemptionType, lastName=$lastName, phoneNumber=$phoneNumber, workflow=$workflow, additionalProperties=$additionalProperties}"
+        "KycExempt{address=$address, businessAccountToken=$businessAccountToken, email=$email, firstName=$firstName, kycExemptionType=$kycExemptionType, lastName=$lastName, phoneNumber=$phoneNumber, workflow=$workflow, externalId=$externalId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -172,6 +182,7 @@ private constructor(
         private var lastName: JsonField<String> = JsonMissing.of()
         private var phoneNumber: JsonField<String> = JsonMissing.of()
         private var workflow: JsonField<Workflow> = JsonMissing.of()
+        private var externalId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(kycExempt: KycExempt) = apply {
@@ -183,6 +194,7 @@ private constructor(
             this.lastName = kycExempt.lastName
             this.phoneNumber = kycExempt.phoneNumber
             this.workflow = kycExempt.workflow
+            this.externalId = kycExempt.externalId
             additionalProperties(kycExempt.additionalProperties)
         }
 
@@ -270,6 +282,14 @@ private constructor(
         @ExcludeMissing
         fun workflow(workflow: JsonField<Workflow>) = apply { this.workflow = workflow }
 
+        /** A user provided id that can be used to link an account holder with an external system */
+        fun externalId(externalId: String) = externalId(JsonField.of(externalId))
+
+        /** A user provided id that can be used to link an account holder with an external system */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -294,6 +314,7 @@ private constructor(
                 lastName,
                 phoneNumber,
                 workflow,
+                externalId,
                 additionalProperties.toUnmodifiable(),
             )
     }
