@@ -21,7 +21,9 @@ import java.util.Objects
 @NoAutoDetect
 class Card
 private constructor(
+    private val accountToken: JsonField<String>,
     private val authRuleTokens: JsonField<List<String>>,
+    private val cardProgramToken: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
     private val cvv: JsonField<String>,
     private val digitalCardArtToken: JsonField<String>,
@@ -44,8 +46,14 @@ private constructor(
 
     private var hashCode: Int = 0
 
+    /** Globally unique identifier for the account to which the card belongs. */
+    fun accountToken(): String = accountToken.getRequired("account_token")
+
     /** List of identifiers for the Auth Rule(s) that are applied on the card. */
     fun authRuleTokens(): List<String>? = authRuleTokens.getNullable("auth_rule_tokens")
+
+    /** Globally unique identifier for the card program on which the card exists. */
+    fun cardProgramToken(): String = cardProgramToken.getRequired("card_program_token")
 
     /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
     fun created(): OffsetDateTime = created.getRequired("created")
@@ -145,8 +153,14 @@ private constructor(
      */
     fun type(): Type = type.getRequired("type")
 
+    /** Globally unique identifier for the account to which the card belongs. */
+    @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
+
     /** List of identifiers for the Auth Rule(s) that are applied on the card. */
     @JsonProperty("auth_rule_tokens") @ExcludeMissing fun _authRuleTokens() = authRuleTokens
+
+    /** Globally unique identifier for the card program on which the card exists. */
+    @JsonProperty("card_program_token") @ExcludeMissing fun _cardProgramToken() = cardProgramToken
 
     /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
     @JsonProperty("created") @ExcludeMissing fun _created() = created
@@ -255,7 +269,9 @@ private constructor(
 
     fun validate(): Card = apply {
         if (!validated) {
+            accountToken()
             authRuleTokens()
+            cardProgramToken()
             created()
             cvv()
             digitalCardArtToken()
@@ -283,7 +299,9 @@ private constructor(
         }
 
         return other is Card &&
+            this.accountToken == other.accountToken &&
             this.authRuleTokens == other.authRuleTokens &&
+            this.cardProgramToken == other.cardProgramToken &&
             this.created == other.created &&
             this.cvv == other.cvv &&
             this.digitalCardArtToken == other.digitalCardArtToken &&
@@ -306,7 +324,9 @@ private constructor(
         if (hashCode == 0) {
             hashCode =
                 Objects.hash(
+                    accountToken,
                     authRuleTokens,
+                    cardProgramToken,
                     created,
                     cvv,
                     digitalCardArtToken,
@@ -329,7 +349,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Card{authRuleTokens=$authRuleTokens, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
+        "Card{accountToken=$accountToken, authRuleTokens=$authRuleTokens, cardProgramToken=$cardProgramToken, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -338,7 +358,9 @@ private constructor(
 
     class Builder {
 
+        private var accountToken: JsonField<String> = JsonMissing.of()
         private var authRuleTokens: JsonField<List<String>> = JsonMissing.of()
+        private var cardProgramToken: JsonField<String> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var cvv: JsonField<String> = JsonMissing.of()
         private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
@@ -357,7 +379,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(card: Card) = apply {
+            this.accountToken = card.accountToken
             this.authRuleTokens = card.authRuleTokens
+            this.cardProgramToken = card.cardProgramToken
             this.created = card.created
             this.cvv = card.cvv
             this.digitalCardArtToken = card.digitalCardArtToken
@@ -376,6 +400,16 @@ private constructor(
             additionalProperties(card.additionalProperties)
         }
 
+        /** Globally unique identifier for the account to which the card belongs. */
+        fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
+
+        /** Globally unique identifier for the account to which the card belongs. */
+        @JsonProperty("account_token")
+        @ExcludeMissing
+        fun accountToken(accountToken: JsonField<String>) = apply {
+            this.accountToken = accountToken
+        }
+
         /** List of identifiers for the Auth Rule(s) that are applied on the card. */
         fun authRuleTokens(authRuleTokens: List<String>) =
             authRuleTokens(JsonField.of(authRuleTokens))
@@ -385,6 +419,17 @@ private constructor(
         @ExcludeMissing
         fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
             this.authRuleTokens = authRuleTokens
+        }
+
+        /** Globally unique identifier for the card program on which the card exists. */
+        fun cardProgramToken(cardProgramToken: String) =
+            cardProgramToken(JsonField.of(cardProgramToken))
+
+        /** Globally unique identifier for the card program on which the card exists. */
+        @JsonProperty("card_program_token")
+        @ExcludeMissing
+        fun cardProgramToken(cardProgramToken: JsonField<String>) = apply {
+            this.cardProgramToken = cardProgramToken
         }
 
         /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
@@ -637,7 +682,9 @@ private constructor(
 
         fun build(): Card =
             Card(
+                accountToken,
                 authRuleTokens.map { it.toUnmodifiable() },
+                cardProgramToken,
                 created,
                 cvv,
                 digitalCardArtToken,
