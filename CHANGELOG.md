@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.28.0 (2024-01-31)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.27.0...v0.28.0)
+
+### Features
+
+* **api:** add `account_token` and `card_program_token` to `Card` ([#141](https://github.com/lithic-com/lithic-kotlin/issues/141)) ([e2a0765](https://github.com/lithic-com/lithic-kotlin/commit/e2a076549d5946f453c1f4fd7b8f86e8e3c55e68))
+
 ## 0.27.0 (2024-01-31)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.26.0...v0.27.0)
