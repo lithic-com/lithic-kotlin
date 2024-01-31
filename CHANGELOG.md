@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.27.0 (2024-01-31)
+
+Full Changelog: [v0.26.0...v0.27.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.26.0...v0.27.0)
+
+### Features
+
+* **api:** add search_by_pan endpoint ([#137](https://github.com/lithic-com/lithic-kotlin/issues/137)) ([368501d](https://github.com/lithic-com/lithic-kotlin/commit/368501da87d699a1e46a58db099b0bbae0f2c074))
+* remove idempotency headers ([#140](https://github.com/lithic-com/lithic-kotlin/issues/140)) ([7a2c139](https://github.com/lithic-com/lithic-kotlin/commit/7a2c13943526c2a078007d7a016bffc421157134))
+
+
+### Chores
+
+* **internal:** support pre-release versioning ([#139](https://github.com/lithic-com/lithic-kotlin/issues/139)) ([893cdb1](https://github.com/lithic-com/lithic-kotlin/commit/893cdb1b61b09edd7ab64672e74b9c4ebb8e8c4c))
+
 ## 0.26.0 (2024-01-23)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.25.0...v0.26.0)
