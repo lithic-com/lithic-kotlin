@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.28.1 (2024-02-01)
+
+Full Changelog: [v0.28.0...v0.28.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.28.0...v0.28.1)
+
+### Bug Fixes
+
+* **pagination:** correct hasNextPage check ([#143](https://github.com/lithic-com/lithic-kotlin/issues/143)) ([b3aa008](https://github.com/lithic-com/lithic-kotlin/commit/b3aa00805c09d728bb01129005fdd70b2eefa3c6))
+
 ## 0.28.0 (2024-01-31)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.27.0...v0.28.0)
