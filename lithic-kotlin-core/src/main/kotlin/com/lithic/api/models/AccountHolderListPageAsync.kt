@@ -53,7 +53,7 @@ private constructor(
         "AccountHolderListPageAsync{accountHoldersService=$accountHoldersService, params=$params, response=$response}"
 
     fun hasNextPage(): Boolean {
-        return data().isEmpty()
+        return !data().isEmpty()
     }
 
     fun getNextPageParams(): AccountHolderListParams? {
