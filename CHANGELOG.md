@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.29.0 (2024-02-07)
+
+Full Changelog: [v0.28.1...v0.29.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.28.1...v0.29.0)
+
+### Features
+
+* **api:** updates ([#147](https://github.com/lithic-com/lithic-kotlin/issues/147)) ([7731eb5](https://github.com/lithic-com/lithic-kotlin/commit/7731eb58d38b3ad93065886c3f01195f474a2b99))
+
+
+### Chores
+
+* **interal:** make link to api.md relative ([#145](https://github.com/lithic-com/lithic-kotlin/issues/145)) ([f852960](https://github.com/lithic-com/lithic-kotlin/commit/f852960950780bd4c269457ecb65b1c1e7d7dae0))
+
 ## 0.28.1 (2024-02-01)
 
 Full Changelog: [v0.28.0...v0.28.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.28.0...v0.28.1)
