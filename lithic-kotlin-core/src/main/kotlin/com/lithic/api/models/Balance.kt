@@ -399,17 +399,21 @@ private constructor(
 
             val RESERVE = FinancialAccountType(JsonField.of("RESERVE"))
 
+            val OPERATING = FinancialAccountType(JsonField.of("OPERATING"))
+
             fun of(value: String) = FinancialAccountType(JsonField.of(value))
         }
 
         enum class Known {
             ISSUING,
             RESERVE,
+            OPERATING,
         }
 
         enum class Value {
             ISSUING,
             RESERVE,
+            OPERATING,
             _UNKNOWN,
         }
 
@@ -417,6 +421,7 @@ private constructor(
             when (this) {
                 ISSUING -> Value.ISSUING
                 RESERVE -> Value.RESERVE
+                OPERATING -> Value.OPERATING
                 else -> Value._UNKNOWN
             }
 
@@ -424,6 +429,7 @@ private constructor(
             when (this) {
                 ISSUING -> Known.ISSUING
                 RESERVE -> Known.RESERVE
+                OPERATING -> Known.OPERATING
                 else -> throw LithicInvalidDataException("Unknown FinancialAccountType: $value")
             }
 
