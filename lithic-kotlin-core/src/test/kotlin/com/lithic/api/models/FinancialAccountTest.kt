@@ -17,6 +17,7 @@ class FinancialAccountTest {
                 .type(FinancialAccount.Type.ISSUING)
                 .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .accountNumber("string")
+                .nickname("string")
                 .routingNumber("string")
                 .build()
         assertThat(financialAccount).isNotNull
@@ -27,6 +28,7 @@ class FinancialAccountTest {
         assertThat(financialAccount.updated())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(financialAccount.accountNumber()).isEqualTo("string")
+        assertThat(financialAccount.nickname()).isEqualTo("string")
         assertThat(financialAccount.routingNumber()).isEqualTo("string")
     }
 }
