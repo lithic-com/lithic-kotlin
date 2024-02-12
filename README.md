@@ -39,7 +39,7 @@ implementation("com.lithic.api:lithic-kotlin:0.29.0")
 Use `LithicOkHttpClient.builder()` to configure the client. At a minimum you need to set `.apiKey()`:
 
 ```kotlin
-import com.lithic.api.client.LithicOkHttpClient
+import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
 val client = LithicOkHttpClient.builder()
