@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.1 (2024-02-12)
+
+Full Changelog: [v0.29.0...v0.29.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.29.0...v0.29.1)
+
+### Bug Fixes
+
+* **docs:** wrong client import in readme usage example ([#148](https://github.com/lithic-com/lithic-kotlin/issues/148)) ([bd94f9b](https://github.com/lithic-com/lithic-kotlin/commit/bd94f9b9c21ddc8a7de7d35a192388ba7d6d6a36))
+
 ## 0.29.0 (2024-02-07)
 
 Full Changelog: [v0.28.1...v0.29.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.28.1...v0.29.0)
