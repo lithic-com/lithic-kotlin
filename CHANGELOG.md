@@ -1,5 +1,82 @@
 # Changelog
 
+## 0.0.1 (2024-02-15)
+
+Full Changelog: [...abc-v0.0.1](https://github.com/lithic-com/lithic-kotlin/compare/...abc-v0.0.1)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** change account holder creation response, new settlement detail type ([#136](https://github.com/lithic-com/lithic-kotlin/issues/136))
+* **api:** remove `post /webhooks/account_holders` endpoint ([#77](https://github.com/lithic-com/lithic-kotlin/issues/77))
+* **api:** change `key` to `secret` ([#49](https://github.com/lithic-com/lithic-kotlin/issues/49))
+* **api:** remove previous_auth_rule_tokens from auth rules ([#4](https://github.com/lithic-com/lithic-kotlin/issues/4))
+
+### Features
+
+* add with_content param, event message attempts, and auto-close responses ([7297e9c](https://github.com/lithic-com/lithic-kotlin/commit/7297e9ca4107810247c4eb82744b80a9cddc4de3))
+* allOf models now have toXxx methods to access the separate allOf models ([#47](https://github.com/lithic-com/lithic-kotlin/issues/47)) ([4a6fa98](https://github.com/lithic-com/lithic-kotlin/commit/4a6fa985582292dee2e8e6b0dd1af84aec1a122e))
+* **api:** add `account_token` and `card_program_token` to `Card` ([#141](https://github.com/lithic-com/lithic-kotlin/issues/141)) ([557ce9e](https://github.com/lithic-com/lithic-kotlin/commit/557ce9e8e270e94010862c1dbc3e1be78aa856e8))
+* **api:** add `get spend_limits` endpoints to `cards` and `accounts` ([#116](https://github.com/lithic-com/lithic-kotlin/issues/116)) ([601fcbf](https://github.com/lithic-com/lithic-kotlin/commit/601fcbf2d6e2e6370fff8309f9f64ba6f2fe01fe))
+* **api:** add `state` query param for cards ([#9](https://github.com/lithic-com/lithic-kotlin/issues/9)) ([2bfb26f](https://github.com/lithic-com/lithic-kotlin/commit/2bfb26f8c8c64598b9f7df53be5367e3c761b74d))
+* **api:** add `with_content` param ([#23](https://github.com/lithic-com/lithic-kotlin/issues/23)) ([035ed26](https://github.com/lithic-com/lithic-kotlin/commit/035ed26936fd9dd395e4ca2d8236a6a66afc3b4f))
+* **api:** add AUTH_STREAM_ACCESS to responder endpoints ([#96](https://github.com/lithic-com/lithic-kotlin/issues/96)) ([ccbdc83](https://github.com/lithic-com/lithic-kotlin/commit/ccbdc83c134e9605f9c292a42d9ba805146f5cfb))
+* **api:** add card reissue shipping options ([#45](https://github.com/lithic-com/lithic-kotlin/issues/45)) ([a303848](https://github.com/lithic-com/lithic-kotlin/commit/a30384827b265705b94bd019864919f496ee6f7f))
+* **api:** add card renew endpoint ([#129](https://github.com/lithic-com/lithic-kotlin/issues/129)) ([27c0d17](https://github.com/lithic-com/lithic-kotlin/commit/27c0d17c2b15ad1ded77514fb82908607cfa8cae))
+* **api:** add CardProgram and DigitalCardArt resources ([#100](https://github.com/lithic-com/lithic-kotlin/issues/100)) ([c451254](https://github.com/lithic-com/lithic-kotlin/commit/c45125405f1ed336449dc2e1559eced39753e5c0))
+* **api:** add carrier property to card create and reissue params ([#43](https://github.com/lithic-com/lithic-kotlin/issues/43)) ([a0fc2bf](https://github.com/lithic-com/lithic-kotlin/commit/a0fc2bf189c86f2989f881fe5c2e3b86e40252a1))
+* **api:** add digital wallet tokenization result event type ([#11](https://github.com/lithic-com/lithic-kotlin/issues/11)) ([306a0db](https://github.com/lithic-com/lithic-kotlin/commit/306a0dbe87fe18dc3655dbe7724378e4ee06b48a))
+* **api:** add event message attempts ([#20](https://github.com/lithic-com/lithic-kotlin/issues/20)) ([303c384](https://github.com/lithic-com/lithic-kotlin/commit/303c384d7d5bb57ae006d00535e8110161188008))
+* **api:** add event message attempts ([#20](https://github.com/lithic-com/lithic-kotlin/issues/20)) ([745fdc8](https://github.com/lithic-com/lithic-kotlin/commit/745fdc8e8e79ae07cdd160fdbcac4211c1bcee51))
+* **api:** add more enum members to event types ([#14](https://github.com/lithic-com/lithic-kotlin/issues/14)) ([d47c22d](https://github.com/lithic-com/lithic-kotlin/commit/d47c22d0a3b1503da18228ebf35fdd9e4d4b29d5))
+* **api:** add payment and external bank accounts resource ([#29](https://github.com/lithic-com/lithic-kotlin/issues/29)) ([b09b7fd](https://github.com/lithic-com/lithic-kotlin/commit/b09b7fdf9edd282522c046ac4a0d3610fa0c04d9))
+* **api:** add search_by_pan endpoint ([#137](https://github.com/lithic-com/lithic-kotlin/issues/137)) ([91999ee](https://github.com/lithic-com/lithic-kotlin/commit/91999eef8fbf2cc2ddbe36ce7993a36a2b21de96))
+* **api:** add Simulate Return Payment endpoint ([#69](https://github.com/lithic-com/lithic-kotlin/issues/69)) ([ab9ca4f](https://github.com/lithic-com/lithic-kotlin/commit/ab9ca4f732c1973ed05fb359c7c843eb6a2ac663))
+* **api:** add simulation endpoints, event types, fix transfer request AuthRule ([#75](https://github.com/lithic-com/lithic-kotlin/issues/75)) ([44c93d3](https://github.com/lithic-com/lithic-kotlin/commit/44c93d3cebe17e648f6886fdf292b959d482aa16))
+* **api:** add tokenizations.simulate and correct typo'd enum  ([#68](https://github.com/lithic-com/lithic-kotlin/issues/68)) ([264ac08](https://github.com/lithic-com/lithic-kotlin/commit/264ac08f312dc736476d0e4eebff0f90d538b27e))
+* **api:** add user defined id ([#67](https://github.com/lithic-com/lithic-kotlin/issues/67)) ([73c0a2f](https://github.com/lithic-com/lithic-kotlin/commit/73c0a2f08f05f04080b62b2ca8bbbe4696012eb3))
+* **api:** add verification_attempts response property ([#104](https://github.com/lithic-com/lithic-kotlin/issues/104)) ([e9c6045](https://github.com/lithic-com/lithic-kotlin/commit/e9c60455354329f5c4c098765cca24ffd2035963))
+* **api:** add verification_failed_reason ([#94](https://github.com/lithic-com/lithic-kotlin/issues/94)) ([a718573](https://github.com/lithic-com/lithic-kotlin/commit/a718573ca137581bc7539a76b2af2591268a4a0f))
+* **api:** change `key` to `secret` ([#49](https://github.com/lithic-com/lithic-kotlin/issues/49)) ([d86c8ba](https://github.com/lithic-com/lithic-kotlin/commit/d86c8ba101c628ee1f44ab06e265407729662475))
+* **api:** change account holder creation response, new settlement detail type ([#136](https://github.com/lithic-com/lithic-kotlin/issues/136)) ([b6f4454](https://github.com/lithic-com/lithic-kotlin/commit/b6f4454ac44e0f4e11e4fdaac329ed771ed7eb9f))
+* **api:** enable more of the payments and external bank api ([#40](https://github.com/lithic-com/lithic-kotlin/issues/40)) ([765db4e](https://github.com/lithic-com/lithic-kotlin/commit/765db4e21f7e9535045494bce095376aebe89df7))
+* **api:** no longer require `website_url` property on KYB object ([#18](https://github.com/lithic-com/lithic-kotlin/issues/18)) ([0bde74f](https://github.com/lithic-com/lithic-kotlin/commit/0bde74fcd9dd7d8df6275b8dc289766cffc53e52))
+* **api:** remove /auth_stream enrollment endpoints ([#125](https://github.com/lithic-com/lithic-kotlin/issues/125)) ([1348a56](https://github.com/lithic-com/lithic-kotlin/commit/1348a56760f7410686b38db89467e6042d6714c3))
+* **api:** remove `CLOSED` account enum and update docstrings ([#119](https://github.com/lithic-com/lithic-kotlin/issues/119)) ([1f90e55](https://github.com/lithic-com/lithic-kotlin/commit/1f90e55cc419b1dcc0f391b8eb54860490cef84f))
+* **api:** rename `token` and `type` to `financial_account_token` and `financial_account_type` ([#122](https://github.com/lithic-com/lithic-kotlin/issues/122)) ([1985b8c](https://github.com/lithic-com/lithic-kotlin/commit/1985b8ccee7b5310f4b672e6a4bdedb0dda1f7b8))
+* **api:** updates ([#110](https://github.com/lithic-com/lithic-kotlin/issues/110)) ([bec7291](https://github.com/lithic-com/lithic-kotlin/commit/bec729121c2cf7b32a051e59c5a0901041657be2))
+* **api:** updates ([#112](https://github.com/lithic-com/lithic-kotlin/issues/112)) ([e9bb9c4](https://github.com/lithic-com/lithic-kotlin/commit/e9bb9c4fefdadfad0d17a7b297f4a7324f77722b))
+* **api:** updates ([#132](https://github.com/lithic-com/lithic-kotlin/issues/132)) ([4409efb](https://github.com/lithic-com/lithic-kotlin/commit/4409efb665f61cceecea9a78c3dd960525c65bc2))
+* **api:** updates ([#147](https://github.com/lithic-com/lithic-kotlin/issues/147)) ([086b744](https://github.com/lithic-com/lithic-kotlin/commit/086b74442bde4c4b61df888607f7a69020311be2))
+* **api:** updates ([#31](https://github.com/lithic-com/lithic-kotlin/issues/31)) ([6f74a6a](https://github.com/lithic-com/lithic-kotlin/commit/6f74a6a2ca3adf6372c3ff4bd70f66832eb41256))
+* **api:** updates ([#84](https://github.com/lithic-com/lithic-kotlin/issues/84)) ([a9a61c4](https://github.com/lithic-com/lithic-kotlin/commit/a9a61c4df3347fa9fa1522d50a49e786787db23c))
+* **api:** updates ([#93](https://github.com/lithic-com/lithic-kotlin/issues/93)) ([bcb0e16](https://github.com/lithic-com/lithic-kotlin/commit/bcb0e1654b5e00bbde8afa14e5e18d91b68e287f))
+* **ci:** add a publish-sonatype workflow for manual running ([#30](https://github.com/lithic-com/lithic-kotlin/issues/30)) ([69ae5d4](https://github.com/lithic-com/lithic-kotlin/commit/69ae5d44da69c868ebf64b03eda8e64954726762))
+* **client:** adjust retry behavior ([#97](https://github.com/lithic-com/lithic-kotlin/issues/97)) ([aaf5bb5](https://github.com/lithic-com/lithic-kotlin/commit/aaf5bb54ade286b42ba49e32ff645aff17d373f6))
+* **client:** allow binary returns ([#105](https://github.com/lithic-com/lithic-kotlin/issues/105)) ([618d3b7](https://github.com/lithic-com/lithic-kotlin/commit/618d3b724cab6de6af59c5a6e03777cc9339e45c))
+* **client:** retry on 408 Request Timeout ([#72](https://github.com/lithic-com/lithic-kotlin/issues/72)) ([fb36cde](https://github.com/lithic-com/lithic-kotlin/commit/fb36cde8d24aeaebe4ddfb28743124ba612c4f97))
+* default timeout is set for java clients ([#51](https://github.com/lithic-com/lithic-kotlin/issues/51)) ([a30f0d4](https://github.com/lithic-com/lithic-kotlin/commit/a30f0d4b8ae6622486b085c638c8ce61c9311213))
+* generate addXxx methods for array types ([#53](https://github.com/lithic-com/lithic-kotlin/issues/53)) ([940a832](https://github.com/lithic-com/lithic-kotlin/commit/940a8329331f012c45eeaaf13e5f1ac97a9b7f2f))
+* **github:** include a devcontainer setup ([#102](https://github.com/lithic-com/lithic-kotlin/issues/102)) ([8e13a0d](https://github.com/lithic-com/lithic-kotlin/commit/8e13a0d1c0dbd5a8d0b46de819f021f4fb6f194b))
+* make webhook headers case insensitive ([#91](https://github.com/lithic-com/lithic-kotlin/issues/91)) ([fd365da](https://github.com/lithic-com/lithic-kotlin/commit/fd365da8dccc5b183903e23d5e201030d0f0b73d))
+* remove idempotency headers ([#140](https://github.com/lithic-com/lithic-kotlin/issues/140)) ([5b7240f](https://github.com/lithic-com/lithic-kotlin/commit/5b7240fe03f17801dbf2d52079a91d1b38513a03))
+
+
+### Bug Fixes
+
+* adjust typo of 'descisioning' to 'decisioning' ([#33](https://github.com/lithic-com/lithic-kotlin/issues/33)) ([b8948db](https://github.com/lithic-com/lithic-kotlin/commit/b8948dbb159b4ef93dfd73965da765b1cce48975))
+* **api:** correct type for other fees details ([#109](https://github.com/lithic-com/lithic-kotlin/issues/109)) ([2b523f7](https://github.com/lithic-com/lithic-kotlin/commit/2b523f70f4b7cc0f306e8e0af6b7a8b8c0f8d890))
+* auto-close responses even if an exception is thrown during deserialization ([#25](https://github.com/lithic-com/lithic-kotlin/issues/25)) ([812042c](https://github.com/lithic-com/lithic-kotlin/commit/812042c8939ffd6554a72f9d84720a6cd289677f))
+* change names of `ThreeDDecision...` to `ThreeDSDecision...` ([#34](https://github.com/lithic-com/lithic-kotlin/issues/34)) ([eacc782](https://github.com/lithic-com/lithic-kotlin/commit/eacc78297ea7f6674caf45ec5c8b9bc52eb0d530))
+* **docs:** wrong client import in readme usage example ([#148](https://github.com/lithic-com/lithic-kotlin/issues/148)) ([a45af28](https://github.com/lithic-com/lithic-kotlin/commit/a45af282453e3c570b76b0668763f94a7304a78b))
+* **pagination:** correct hasNextPage check ([#143](https://github.com/lithic-com/lithic-kotlin/issues/143)) ([217466d](https://github.com/lithic-com/lithic-kotlin/commit/217466d871d333567fd898bcf9a3f61ed1a4a757))
+* set correct timeouts on okhttp client ([#56](https://github.com/lithic-com/lithic-kotlin/issues/56)) ([5ee1f95](https://github.com/lithic-com/lithic-kotlin/commit/5ee1f959b8a6bee2a5f47b545f7613621992d343))
+
+
+### Code Refactoring
+
+* **api:** remove `post /webhooks/account_holders` endpoint ([#77](https://github.com/lithic-com/lithic-kotlin/issues/77)) ([950ec91](https://github.com/lithic-com/lithic-kotlin/commit/950ec919b28fcd4e14a53c2a6ee550d0e6acd489))
+* **api:** remove previous_auth_rule_tokens from auth rules ([#4](https://github.com/lithic-com/lithic-kotlin/issues/4)) ([6762e21](https://github.com/lithic-com/lithic-kotlin/commit/6762e21de4bc4d55f880e6d61d428ea147afc104))
+
 ## 0.29.1 (2024-02-12)
 
 Full Changelog: [v0.29.0...v0.29.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.29.0...v0.29.1)
