@@ -29,8 +29,8 @@ private constructor(
     private val disputesGrossAmount: JsonField<Long>,
     private val eventTokens: JsonField<List<String>>,
     private val institution: JsonField<String>,
-    private val interchangeGrossAmount: JsonField<Long>,
     private val interchangeFeeExtendedPrecision: JsonField<Long>,
+    private val interchangeGrossAmount: JsonField<Long>,
     private val network: JsonField<Network>,
     private val otherFeesDetails: JsonField<OtherFeesDetails>,
     private val otherFeesGrossAmount: JsonField<Long>,
@@ -75,13 +75,13 @@ private constructor(
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     fun institution(): String = institution.getRequired("institution")
 
-    /** The total amount of interchange. */
-    fun interchangeGrossAmount(): Long =
-        interchangeGrossAmount.getRequired("interchange_gross_amount")
-
     /** The total amount of interchange in six-digit extended precision. */
     fun interchangeFeeExtendedPrecision(): Long =
         interchangeFeeExtendedPrecision.getRequired("interchange_fee_extended_precision")
+
+    /** The total amount of interchange. */
+    fun interchangeGrossAmount(): Long =
+        interchangeGrossAmount.getRequired("interchange_gross_amount")
 
     /** Card network where the transaction took place. */
     fun network(): Network = network.getRequired("network")
@@ -146,15 +146,15 @@ private constructor(
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     @JsonProperty("institution") @ExcludeMissing fun _institution() = institution
 
-    /** The total amount of interchange. */
-    @JsonProperty("interchange_gross_amount")
-    @ExcludeMissing
-    fun _interchangeGrossAmount() = interchangeGrossAmount
-
     /** The total amount of interchange in six-digit extended precision. */
     @JsonProperty("interchange_fee_extended_precision")
     @ExcludeMissing
     fun _interchangeFeeExtendedPrecision() = interchangeFeeExtendedPrecision
+
+    /** The total amount of interchange. */
+    @JsonProperty("interchange_gross_amount")
+    @ExcludeMissing
+    fun _interchangeGrossAmount() = interchangeGrossAmount
 
     /** Card network where the transaction took place. */
     @JsonProperty("network") @ExcludeMissing fun _network() = network
@@ -207,8 +207,8 @@ private constructor(
             disputesGrossAmount()
             eventTokens()
             institution()
-            interchangeGrossAmount()
             interchangeFeeExtendedPrecision()
+            interchangeGrossAmount()
             network()
             otherFeesDetails().validate()
             otherFeesGrossAmount()
@@ -239,8 +239,8 @@ private constructor(
             this.disputesGrossAmount == other.disputesGrossAmount &&
             this.eventTokens == other.eventTokens &&
             this.institution == other.institution &&
-            this.interchangeGrossAmount == other.interchangeGrossAmount &&
             this.interchangeFeeExtendedPrecision == other.interchangeFeeExtendedPrecision &&
+            this.interchangeGrossAmount == other.interchangeGrossAmount &&
             this.network == other.network &&
             this.otherFeesDetails == other.otherFeesDetails &&
             this.otherFeesGrossAmount == other.otherFeesGrossAmount &&
@@ -266,8 +266,8 @@ private constructor(
                     disputesGrossAmount,
                     eventTokens,
                     institution,
-                    interchangeGrossAmount,
                     interchangeFeeExtendedPrecision,
+                    interchangeGrossAmount,
                     network,
                     otherFeesDetails,
                     otherFeesGrossAmount,
@@ -285,7 +285,7 @@ private constructor(
     }
 
     override fun toString() =
-        "SettlementDetail{accountToken=$accountToken, cardProgramToken=$cardProgramToken, cardToken=$cardToken, created=$created, currency=$currency, disputesGrossAmount=$disputesGrossAmount, eventTokens=$eventTokens, institution=$institution, interchangeGrossAmount=$interchangeGrossAmount, interchangeFeeExtendedPrecision=$interchangeFeeExtendedPrecision, network=$network, otherFeesDetails=$otherFeesDetails, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settlementDate=$settlementDate, token=$token, transactionToken=$transactionToken, transactionsGrossAmount=$transactionsGrossAmount, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
+        "SettlementDetail{accountToken=$accountToken, cardProgramToken=$cardProgramToken, cardToken=$cardToken, created=$created, currency=$currency, disputesGrossAmount=$disputesGrossAmount, eventTokens=$eventTokens, institution=$institution, interchangeFeeExtendedPrecision=$interchangeFeeExtendedPrecision, interchangeGrossAmount=$interchangeGrossAmount, network=$network, otherFeesDetails=$otherFeesDetails, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settlementDate=$settlementDate, token=$token, transactionToken=$transactionToken, transactionsGrossAmount=$transactionsGrossAmount, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -302,8 +302,8 @@ private constructor(
         private var disputesGrossAmount: JsonField<Long> = JsonMissing.of()
         private var eventTokens: JsonField<List<String>> = JsonMissing.of()
         private var institution: JsonField<String> = JsonMissing.of()
-        private var interchangeGrossAmount: JsonField<Long> = JsonMissing.of()
         private var interchangeFeeExtendedPrecision: JsonField<Long> = JsonMissing.of()
+        private var interchangeGrossAmount: JsonField<Long> = JsonMissing.of()
         private var network: JsonField<Network> = JsonMissing.of()
         private var otherFeesDetails: JsonField<OtherFeesDetails> = JsonMissing.of()
         private var otherFeesGrossAmount: JsonField<Long> = JsonMissing.of()
@@ -325,8 +325,8 @@ private constructor(
             this.disputesGrossAmount = settlementDetail.disputesGrossAmount
             this.eventTokens = settlementDetail.eventTokens
             this.institution = settlementDetail.institution
-            this.interchangeGrossAmount = settlementDetail.interchangeGrossAmount
             this.interchangeFeeExtendedPrecision = settlementDetail.interchangeFeeExtendedPrecision
+            this.interchangeGrossAmount = settlementDetail.interchangeGrossAmount
             this.network = settlementDetail.network
             this.otherFeesDetails = settlementDetail.otherFeesDetails
             this.otherFeesGrossAmount = settlementDetail.otherFeesGrossAmount
@@ -432,17 +432,6 @@ private constructor(
         @ExcludeMissing
         fun institution(institution: JsonField<String>) = apply { this.institution = institution }
 
-        /** The total amount of interchange. */
-        fun interchangeGrossAmount(interchangeGrossAmount: Long) =
-            interchangeGrossAmount(JsonField.of(interchangeGrossAmount))
-
-        /** The total amount of interchange. */
-        @JsonProperty("interchange_gross_amount")
-        @ExcludeMissing
-        fun interchangeGrossAmount(interchangeGrossAmount: JsonField<Long>) = apply {
-            this.interchangeGrossAmount = interchangeGrossAmount
-        }
-
         /** The total amount of interchange in six-digit extended precision. */
         fun interchangeFeeExtendedPrecision(interchangeFeeExtendedPrecision: Long) =
             interchangeFeeExtendedPrecision(JsonField.of(interchangeFeeExtendedPrecision))
@@ -454,6 +443,17 @@ private constructor(
             apply {
                 this.interchangeFeeExtendedPrecision = interchangeFeeExtendedPrecision
             }
+
+        /** The total amount of interchange. */
+        fun interchangeGrossAmount(interchangeGrossAmount: Long) =
+            interchangeGrossAmount(JsonField.of(interchangeGrossAmount))
+
+        /** The total amount of interchange. */
+        @JsonProperty("interchange_gross_amount")
+        @ExcludeMissing
+        fun interchangeGrossAmount(interchangeGrossAmount: JsonField<Long>) = apply {
+            this.interchangeGrossAmount = interchangeGrossAmount
+        }
 
         /** Card network where the transaction took place. */
         fun network(network: Network) = network(JsonField.of(network))
@@ -579,8 +579,8 @@ private constructor(
                 disputesGrossAmount,
                 eventTokens.map { it.toUnmodifiable() },
                 institution,
-                interchangeGrossAmount,
                 interchangeFeeExtendedPrecision,
+                interchangeGrossAmount,
                 network,
                 otherFeesDetails,
                 otherFeesGrossAmount,
@@ -782,77 +782,77 @@ private constructor(
 
         companion object {
 
+            val ADJUSTMENT = Type(JsonField.of("ADJUSTMENT"))
+
+            val ARBITRATION = Type(JsonField.of("ARBITRATION"))
+
+            val CHARGEBACK = Type(JsonField.of("CHARGEBACK"))
+
             val CLEARING = Type(JsonField.of("CLEARING"))
+
+            val FEE = Type(JsonField.of("FEE"))
 
             val FINANCIAL = Type(JsonField.of("FINANCIAL"))
 
             val NON_FINANCIAL = Type(JsonField.of("NON-FINANCIAL"))
 
-            val ADJUSTMENT = Type(JsonField.of("ADJUSTMENT"))
-
-            val CHARGEBACK = Type(JsonField.of("CHARGEBACK"))
-
-            val REPRESENTMENT = Type(JsonField.of("REPRESENTMENT"))
-
             val PREARBITRATION = Type(JsonField.of("PREARBITRATION"))
 
-            val ARBITRATION = Type(JsonField.of("ARBITRATION"))
-
-            val FEE = Type(JsonField.of("FEE"))
+            val REPRESENTMENT = Type(JsonField.of("REPRESENTMENT"))
 
             fun of(value: String) = Type(JsonField.of(value))
         }
 
         enum class Known {
+            ADJUSTMENT,
+            ARBITRATION,
+            CHARGEBACK,
             CLEARING,
+            FEE,
             FINANCIAL,
             NON_FINANCIAL,
-            ADJUSTMENT,
-            CHARGEBACK,
-            REPRESENTMENT,
             PREARBITRATION,
-            ARBITRATION,
-            FEE,
+            REPRESENTMENT,
         }
 
         enum class Value {
+            ADJUSTMENT,
+            ARBITRATION,
+            CHARGEBACK,
             CLEARING,
+            FEE,
             FINANCIAL,
             NON_FINANCIAL,
-            ADJUSTMENT,
-            CHARGEBACK,
-            REPRESENTMENT,
             PREARBITRATION,
-            ARBITRATION,
-            FEE,
+            REPRESENTMENT,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
+                ADJUSTMENT -> Value.ADJUSTMENT
+                ARBITRATION -> Value.ARBITRATION
+                CHARGEBACK -> Value.CHARGEBACK
                 CLEARING -> Value.CLEARING
+                FEE -> Value.FEE
                 FINANCIAL -> Value.FINANCIAL
                 NON_FINANCIAL -> Value.NON_FINANCIAL
-                ADJUSTMENT -> Value.ADJUSTMENT
-                CHARGEBACK -> Value.CHARGEBACK
-                REPRESENTMENT -> Value.REPRESENTMENT
                 PREARBITRATION -> Value.PREARBITRATION
-                ARBITRATION -> Value.ARBITRATION
-                FEE -> Value.FEE
+                REPRESENTMENT -> Value.REPRESENTMENT
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
+                ADJUSTMENT -> Known.ADJUSTMENT
+                ARBITRATION -> Known.ARBITRATION
+                CHARGEBACK -> Known.CHARGEBACK
                 CLEARING -> Known.CLEARING
+                FEE -> Known.FEE
                 FINANCIAL -> Known.FINANCIAL
                 NON_FINANCIAL -> Known.NON_FINANCIAL
-                ADJUSTMENT -> Known.ADJUSTMENT
-                CHARGEBACK -> Known.CHARGEBACK
-                REPRESENTMENT -> Known.REPRESENTMENT
                 PREARBITRATION -> Known.PREARBITRATION
-                ARBITRATION -> Known.ARBITRATION
-                FEE -> Known.FEE
+                REPRESENTMENT -> Known.REPRESENTMENT
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 
