@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.30.0 (2024-02-21)
+
+Full Changelog: [v0.29.1...v0.30.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.29.1...v0.30.0)
+
+### Features
+
+* **api:** create financial account and retry microdeposits endpoints ([#154](https://github.com/lithic-com/lithic-kotlin/issues/154)) ([93777b8](https://github.com/lithic-com/lithic-kotlin/commit/93777b850b0b01a735ea8dd22de3d60ede024b85))
+* **api:** update financial_account_type and documentation ([#152](https://github.com/lithic-com/lithic-kotlin/issues/152)) ([f3293c2](https://github.com/lithic-com/lithic-kotlin/commit/f3293c24cf51ceb1a2ee0adccd552ce46341a7b7))
+
+
+### Chores
+
+* **internal:** refactor release environment script ([#150](https://github.com/lithic-com/lithic-kotlin/issues/150)) ([c13ea05](https://github.com/lithic-com/lithic-kotlin/commit/c13ea05409dc8dc8c1210757a07b748de6bf5445))
+
 ## 0.29.1 (2024-02-12)
 
 Full Changelog: [v0.29.0...v0.29.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.29.0...v0.29.1)
