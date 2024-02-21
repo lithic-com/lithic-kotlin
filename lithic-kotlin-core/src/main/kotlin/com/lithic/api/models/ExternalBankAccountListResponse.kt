@@ -831,6 +831,8 @@ private constructor(
 
             val PLAID = VerificationMethod(JsonField.of("PLAID"))
 
+            val PRENOTE = VerificationMethod(JsonField.of("PRENOTE"))
+
             fun of(value: String) = VerificationMethod(JsonField.of(value))
         }
 
@@ -838,12 +840,14 @@ private constructor(
             MANUAL,
             MICRO_DEPOSIT,
             PLAID,
+            PRENOTE,
         }
 
         enum class Value {
             MANUAL,
             MICRO_DEPOSIT,
             PLAID,
+            PRENOTE,
             _UNKNOWN,
         }
 
@@ -852,6 +856,7 @@ private constructor(
                 MANUAL -> Value.MANUAL
                 MICRO_DEPOSIT -> Value.MICRO_DEPOSIT
                 PLAID -> Value.PLAID
+                PRENOTE -> Value.PRENOTE
                 else -> Value._UNKNOWN
             }
 
@@ -860,6 +865,7 @@ private constructor(
                 MANUAL -> Known.MANUAL
                 MICRO_DEPOSIT -> Known.MICRO_DEPOSIT
                 PLAID -> Known.PLAID
+                PRENOTE -> Known.PRENOTE
                 else -> throw LithicInvalidDataException("Unknown VerificationMethod: $value")
             }
 
@@ -892,6 +898,8 @@ private constructor(
 
             val FAILED_VERIFICATION = VerificationState(JsonField.of("FAILED_VERIFICATION"))
 
+            val INSUFFICIENT_FUNDS = VerificationState(JsonField.of("INSUFFICIENT_FUNDS"))
+
             val PENDING = VerificationState(JsonField.of("PENDING"))
 
             fun of(value: String) = VerificationState(JsonField.of(value))
@@ -900,12 +908,14 @@ private constructor(
         enum class Known {
             ENABLED,
             FAILED_VERIFICATION,
+            INSUFFICIENT_FUNDS,
             PENDING,
         }
 
         enum class Value {
             ENABLED,
             FAILED_VERIFICATION,
+            INSUFFICIENT_FUNDS,
             PENDING,
             _UNKNOWN,
         }
@@ -914,6 +924,7 @@ private constructor(
             when (this) {
                 ENABLED -> Value.ENABLED
                 FAILED_VERIFICATION -> Value.FAILED_VERIFICATION
+                INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
                 PENDING -> Value.PENDING
                 else -> Value._UNKNOWN
             }
@@ -922,6 +933,7 @@ private constructor(
             when (this) {
                 ENABLED -> Known.ENABLED
                 FAILED_VERIFICATION -> Known.FAILED_VERIFICATION
+                INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
                 PENDING -> Known.PENDING
                 else -> throw LithicInvalidDataException("Unknown VerificationState: $value")
             }

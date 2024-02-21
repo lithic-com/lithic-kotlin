@@ -399,6 +399,8 @@ constructor(
 
             val FAILED_VERIFICATION = VerificationState(JsonField.of("FAILED_VERIFICATION"))
 
+            val INSUFFICIENT_FUNDS = VerificationState(JsonField.of("INSUFFICIENT_FUNDS"))
+
             val PENDING = VerificationState(JsonField.of("PENDING"))
 
             fun of(value: String) = VerificationState(JsonField.of(value))
@@ -407,12 +409,14 @@ constructor(
         enum class Known {
             ENABLED,
             FAILED_VERIFICATION,
+            INSUFFICIENT_FUNDS,
             PENDING,
         }
 
         enum class Value {
             ENABLED,
             FAILED_VERIFICATION,
+            INSUFFICIENT_FUNDS,
             PENDING,
             _UNKNOWN,
         }
@@ -421,6 +425,7 @@ constructor(
             when (this) {
                 ENABLED -> Value.ENABLED
                 FAILED_VERIFICATION -> Value.FAILED_VERIFICATION
+                INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
                 PENDING -> Value.PENDING
                 else -> Value._UNKNOWN
             }
@@ -429,6 +434,7 @@ constructor(
             when (this) {
                 ENABLED -> Known.ENABLED
                 FAILED_VERIFICATION -> Known.FAILED_VERIFICATION
+                INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
                 PENDING -> Known.PENDING
                 else -> throw LithicInvalidDataException("Unknown VerificationState: $value")
             }
