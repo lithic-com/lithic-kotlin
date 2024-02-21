@@ -35,6 +35,8 @@ private constructor(
 
         val PLAID = VerificationMethod(JsonField.of("PLAID"))
 
+        val PRENOTE = VerificationMethod(JsonField.of("PRENOTE"))
+
         fun of(value: String) = VerificationMethod(JsonField.of(value))
     }
 
@@ -42,12 +44,14 @@ private constructor(
         MANUAL,
         MICRO_DEPOSIT,
         PLAID,
+        PRENOTE,
     }
 
     enum class Value {
         MANUAL,
         MICRO_DEPOSIT,
         PLAID,
+        PRENOTE,
         _UNKNOWN,
     }
 
@@ -56,6 +60,7 @@ private constructor(
             MANUAL -> Value.MANUAL
             MICRO_DEPOSIT -> Value.MICRO_DEPOSIT
             PLAID -> Value.PLAID
+            PRENOTE -> Value.PRENOTE
             else -> Value._UNKNOWN
         }
 
@@ -64,6 +69,7 @@ private constructor(
             MANUAL -> Known.MANUAL
             MICRO_DEPOSIT -> Known.MICRO_DEPOSIT
             PLAID -> Known.PLAID
+            PRENOTE -> Known.PRENOTE
             else -> throw LithicInvalidDataException("Unknown VerificationMethod: $value")
         }
 
