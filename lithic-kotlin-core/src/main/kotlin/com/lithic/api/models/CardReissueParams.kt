@@ -88,10 +88,9 @@ constructor(
         /**
          * Shipping method for the card. Use of options besides `STANDARD` require additional
          * permissions.
-         *
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         * tracking
+         *   tracking
          * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
          * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
          * - `2_DAY` - FedEx 2-day shipping, with tracking
@@ -177,15 +176,14 @@ constructor(
             /**
              * Shipping method for the card. Use of options besides `STANDARD` require additional
              * permissions.
-             *
              * - `STANDARD` - USPS regular mail or similar international option, with no tracking
              * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-             * tracking
+             *   tracking
              * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
              * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
              * - `2_DAY` - FedEx 2-day shipping, with tracking
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
-             * tracking
+             *   tracking
              */
             @JsonProperty("shipping_method")
             fun shippingMethod(shippingMethod: ShippingMethod) = apply {
@@ -305,10 +303,9 @@ constructor(
         /**
          * Shipping method for the card. Use of options besides `STANDARD` require additional
          * permissions.
-         *
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         * tracking
+         *   tracking
          * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
          * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
          * - `2_DAY` - FedEx 2-day shipping, with tracking

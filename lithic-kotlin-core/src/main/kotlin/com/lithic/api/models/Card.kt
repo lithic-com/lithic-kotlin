@@ -66,8 +66,7 @@ private constructor(
      * Specifies the digital card art to be displayed in the user’s digital wallet after
      * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
      * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-     * .
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
      */
     fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
 
@@ -113,34 +112,32 @@ private constructor(
 
     /**
      * Spend limit duration values:
-     *
      * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
      * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
      * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
-     * support recurring monthly payments, which can occur on different day every month, the time
-     * window we consider for monthly velocity starts 6 days after the current calendar date one
-     * month prior.
+     *   support recurring monthly payments, which can occur on different day every month, the time
+     *   window we consider for monthly velocity starts 6 days after the current calendar date one
+     *   month prior.
      * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
-     * under the spend limit.
+     *   under the spend limit.
      */
     fun spendLimitDuration(): SpendLimitDuration =
         spendLimitDuration.getRequired("spend_limit_duration")
 
     /**
      * Card state values:
-     *
      * - `CLOSED` - Card will no longer approve authorizations. Closing a card cannot be undone.
      * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
      * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
      * - `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
-     * provisioned pending manufacturing and fulfillment. Cards in this state can accept
-     * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-     * physical card itself is present.
+     *   provisioned pending manufacturing and fulfillment. Cards in this state can accept
+     *   authorizations for e-commerce purchases, but not for "Card Present" purchases where the
+     *   physical card itself is present.
      * - `PENDING_ACTIVATION` - Each business day at 2pm Eastern Time Zone (ET), cards of type
-     * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
-     * updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this state
-     * can be used for e-commerce transactions. API clients should update the card's state to `OPEN`
-     * only after the cardholder confirms receipt of the card.
+     *   `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+     *   updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
+     *   state can be used for e-commerce transactions. API clients should update the card's state
+     *   to `OPEN` only after the cardholder confirms receipt of the card.
      *
      * In sandbox, the same daily batch fulfillment occurs, but no cards are actually manufactured.
      */
@@ -151,15 +148,14 @@ private constructor(
 
     /**
      * Card types:
-     *
      * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet like
-     * Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+     *   Apple Pay or Google Pay (if the card program is digital wallet-enabled).
      * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-     * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-     * [lithic.com/contact](https://lithic.com/contact) for more information.
+     *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+     *   [lithic.com/contact](https://lithic.com/contact) for more information.
      * - `SINGLE_USE` - Card is closed upon first successful authorization.
      * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that successfully
-     * authorizes the card.
+     *   authorizes the card.
      */
     fun type(): Type = type.getRequired("type")
 
@@ -182,8 +178,7 @@ private constructor(
      * Specifies the digital card art to be displayed in the user’s digital wallet after
      * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
      * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-     * .
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
      */
     @JsonProperty("digital_card_art_token")
     @ExcludeMissing
@@ -231,15 +226,14 @@ private constructor(
 
     /**
      * Spend limit duration values:
-     *
      * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
      * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
      * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
-     * support recurring monthly payments, which can occur on different day every month, the time
-     * window we consider for monthly velocity starts 6 days after the current calendar date one
-     * month prior.
+     *   support recurring monthly payments, which can occur on different day every month, the time
+     *   window we consider for monthly velocity starts 6 days after the current calendar date one
+     *   month prior.
      * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
-     * under the spend limit.
+     *   under the spend limit.
      */
     @JsonProperty("spend_limit_duration")
     @ExcludeMissing
@@ -247,19 +241,18 @@ private constructor(
 
     /**
      * Card state values:
-     *
      * - `CLOSED` - Card will no longer approve authorizations. Closing a card cannot be undone.
      * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
      * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
      * - `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
-     * provisioned pending manufacturing and fulfillment. Cards in this state can accept
-     * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-     * physical card itself is present.
+     *   provisioned pending manufacturing and fulfillment. Cards in this state can accept
+     *   authorizations for e-commerce purchases, but not for "Card Present" purchases where the
+     *   physical card itself is present.
      * - `PENDING_ACTIVATION` - Each business day at 2pm Eastern Time Zone (ET), cards of type
-     * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
-     * updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this state
-     * can be used for e-commerce transactions. API clients should update the card's state to `OPEN`
-     * only after the cardholder confirms receipt of the card.
+     *   `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+     *   updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
+     *   state can be used for e-commerce transactions. API clients should update the card's state
+     *   to `OPEN` only after the cardholder confirms receipt of the card.
      *
      * In sandbox, the same daily batch fulfillment occurs, but no cards are actually manufactured.
      */
@@ -270,15 +263,14 @@ private constructor(
 
     /**
      * Card types:
-     *
      * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet like
-     * Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+     *   Apple Pay or Google Pay (if the card program is digital wallet-enabled).
      * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-     * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-     * [lithic.com/contact](https://lithic.com/contact) for more information.
+     *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+     *   [lithic.com/contact](https://lithic.com/contact) for more information.
      * - `SINGLE_USE` - Card is closed upon first successful authorization.
      * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that successfully
-     * authorizes the card.
+     *   authorizes the card.
      */
     @JsonProperty("type") @ExcludeMissing fun _type() = type
 
@@ -476,8 +468,7 @@ private constructor(
          * Specifies the digital card art to be displayed in the user’s digital wallet after
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
          * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
         fun digitalCardArtToken(digitalCardArtToken: String) =
             digitalCardArtToken(JsonField.of(digitalCardArtToken))
@@ -486,8 +477,7 @@ private constructor(
          * Specifies the digital card art to be displayed in the user’s digital wallet after
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
          * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art)
-         * .
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
         @JsonProperty("digital_card_art_token")
         @ExcludeMissing
@@ -595,32 +585,30 @@ private constructor(
 
         /**
          * Spend limit duration values:
-         *
          * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
          * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
-         * card.
+         *   card.
          * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
-         * To support recurring monthly payments, which can occur on different day every month, the
-         * time window we consider for monthly velocity starts 6 days after the current calendar
-         * date one month prior.
+         *   To support recurring monthly payments, which can occur on different day every month,
+         *   the time window we consider for monthly velocity starts 6 days after the current
+         *   calendar date one month prior.
          * - `TRANSACTION` - Card will authorize multiple transactions if each individual
-         * transaction is under the spend limit.
+         *   transaction is under the spend limit.
          */
         fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) =
             spendLimitDuration(JsonField.of(spendLimitDuration))
 
         /**
          * Spend limit duration values:
-         *
          * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
          * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
-         * card.
+         *   card.
          * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
-         * To support recurring monthly payments, which can occur on different day every month, the
-         * time window we consider for monthly velocity starts 6 days after the current calendar
-         * date one month prior.
+         *   To support recurring monthly payments, which can occur on different day every month,
+         *   the time window we consider for monthly velocity starts 6 days after the current
+         *   calendar date one month prior.
          * - `TRANSACTION` - Card will authorize multiple transactions if each individual
-         * transaction is under the spend limit.
+         *   transaction is under the spend limit.
          */
         @JsonProperty("spend_limit_duration")
         @ExcludeMissing
@@ -630,19 +618,18 @@ private constructor(
 
         /**
          * Card state values:
-         *
          * - `CLOSED` - Card will no longer approve authorizations. Closing a card cannot be undone.
          * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          * - `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
-         * provisioned pending manufacturing and fulfillment. Cards in this state can accept
-         * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-         * physical card itself is present.
+         *   provisioned pending manufacturing and fulfillment. Cards in this state can accept
+         *   authorizations for e-commerce purchases, but not for "Card Present" purchases where the
+         *   physical card itself is present.
          * - `PENDING_ACTIVATION` - Each business day at 2pm Eastern Time Zone (ET), cards of type
-         * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
-         * updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
-         * state can be used for e-commerce transactions. API clients should update the card's state
-         * to `OPEN` only after the cardholder confirms receipt of the card.
+         *   `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+         *   updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
+         *   state can be used for e-commerce transactions. API clients should update the card's
+         *   state to `OPEN` only after the cardholder confirms receipt of the card.
          *
          * In sandbox, the same daily batch fulfillment occurs, but no cards are actually
          * manufactured.
@@ -651,19 +638,18 @@ private constructor(
 
         /**
          * Card state values:
-         *
          * - `CLOSED` - Card will no longer approve authorizations. Closing a card cannot be undone.
          * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          * - `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
-         * provisioned pending manufacturing and fulfillment. Cards in this state can accept
-         * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-         * physical card itself is present.
+         *   provisioned pending manufacturing and fulfillment. Cards in this state can accept
+         *   authorizations for e-commerce purchases, but not for "Card Present" purchases where the
+         *   physical card itself is present.
          * - `PENDING_ACTIVATION` - Each business day at 2pm Eastern Time Zone (ET), cards of type
-         * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
-         * updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
-         * state can be used for e-commerce transactions. API clients should update the card's state
-         * to `OPEN` only after the cardholder confirms receipt of the card.
+         *   `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+         *   updated to state `PENDING_ACTIVATION` . Similar to `PENDING_FULFILLMENT`, cards in this
+         *   state can be used for e-commerce transactions. API clients should update the card's
+         *   state to `OPEN` only after the cardholder confirms receipt of the card.
          *
          * In sandbox, the same daily batch fulfillment occurs, but no cards are actually
          * manufactured.
@@ -682,29 +668,27 @@ private constructor(
 
         /**
          * Card types:
-         *
          * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+         *   like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
          * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         * [lithic.com/contact](https://lithic.com/contact) for more information.
+         *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+         *   [lithic.com/contact](https://lithic.com/contact) for more information.
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         * successfully authorizes the card.
+         *   successfully authorizes the card.
          */
         fun type(type: Type) = type(JsonField.of(type))
 
         /**
          * Card types:
-         *
          * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         * like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
+         *   like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
          * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         * credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         * [lithic.com/contact](https://lithic.com/contact) for more information.
+         *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
+         *   [lithic.com/contact](https://lithic.com/contact) for more information.
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         * successfully authorizes the card.
+         *   successfully authorizes the card.
          */
         @JsonProperty("type")
         @ExcludeMissing
@@ -789,10 +773,9 @@ private constructor(
          * State of funding source.
          *
          * Funding source states:
-         *
          * - `ENABLED` - The funding account is available to use for card creation and transactions.
          * - `PENDING` - The funding account is still being verified e.g. bank micro-deposits
-         * verification.
+         *   verification.
          * - `DELETED` - The founding account has been deleted.
          */
         fun state(): State = state.getRequired("state")
@@ -802,7 +785,6 @@ private constructor(
 
         /**
          * Types of funding source:
-         *
          * - `DEPOSITORY_CHECKING` - Bank checking account.
          * - `DEPOSITORY_SAVINGS` - Bank savings account.
          */
@@ -830,10 +812,9 @@ private constructor(
          * State of funding source.
          *
          * Funding source states:
-         *
          * - `ENABLED` - The funding account is available to use for card creation and transactions.
          * - `PENDING` - The funding account is still being verified e.g. bank micro-deposits
-         * verification.
+         *   verification.
          * - `DELETED` - The founding account has been deleted.
          */
         @JsonProperty("state") @ExcludeMissing fun _state() = state
@@ -843,7 +824,6 @@ private constructor(
 
         /**
          * Types of funding source:
-         *
          * - `DEPOSITORY_CHECKING` - Bank checking account.
          * - `DEPOSITORY_SAVINGS` - Bank savings account.
          */
@@ -981,11 +961,10 @@ private constructor(
              * State of funding source.
              *
              * Funding source states:
-             *
              * - `ENABLED` - The funding account is available to use for card creation and
-             * transactions.
+             *   transactions.
              * - `PENDING` - The funding account is still being verified e.g. bank micro-deposits
-             * verification.
+             *   verification.
              * - `DELETED` - The founding account has been deleted.
              */
             fun state(state: State) = state(JsonField.of(state))
@@ -994,11 +973,10 @@ private constructor(
              * State of funding source.
              *
              * Funding source states:
-             *
              * - `ENABLED` - The funding account is available to use for card creation and
-             * transactions.
+             *   transactions.
              * - `PENDING` - The funding account is still being verified e.g. bank micro-deposits
-             * verification.
+             *   verification.
              * - `DELETED` - The founding account has been deleted.
              */
             @JsonProperty("state")
@@ -1015,7 +993,6 @@ private constructor(
 
             /**
              * Types of funding source:
-             *
              * - `DEPOSITORY_CHECKING` - Bank checking account.
              * - `DEPOSITORY_SAVINGS` - Bank savings account.
              */
@@ -1023,7 +1000,6 @@ private constructor(
 
             /**
              * Types of funding source:
-             *
              * - `DEPOSITORY_CHECKING` - Bank checking account.
              * - `DEPOSITORY_SAVINGS` - Bank savings account.
              */

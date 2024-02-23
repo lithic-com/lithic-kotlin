@@ -84,7 +84,6 @@ private constructor(
 
     /**
      * Dispute reason:
-     *
      * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
      * - `CANCELLED`: Transaction was cancelled by the customer.
      * - `DUPLICATED`: The transaction was a duplicate.
@@ -116,7 +115,6 @@ private constructor(
 
     /**
      * Reason for the dispute resolution:
-     *
      * - `CASE_LOST`: This case was lost at final arbitration.
      * - `NETWORK_REJECTED`: Network rejected.
      * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
@@ -139,7 +137,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `NEW` - New dispute case is opened.
      * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
      * - `SUBMITTED` - Dispute is submitted to the card network.
@@ -201,7 +198,6 @@ private constructor(
 
     /**
      * Dispute reason:
-     *
      * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
      * - `CANCELLED`: Transaction was cancelled by the customer.
      * - `DUPLICATED`: The transaction was a duplicate.
@@ -233,7 +229,6 @@ private constructor(
 
     /**
      * Reason for the dispute resolution:
-     *
      * - `CASE_LOST`: This case was lost at final arbitration.
      * - `NETWORK_REJECTED`: Network rejected.
      * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
@@ -256,7 +251,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `NEW` - New dispute case is opened.
      * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
      * - `SUBMITTED` - Dispute is submitted to the card network.
@@ -529,14 +523,13 @@ private constructor(
 
         /**
          * Dispute reason:
-         *
          * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
          * - `CANCELLED`: Transaction was cancelled by the customer.
          * - `DUPLICATED`: The transaction was a duplicate.
          * - `FRAUD_CARD_NOT_PRESENT`: Fraudulent transaction, card not present.
          * - `FRAUD_CARD_PRESENT`: Fraudulent transaction, card present.
          * - `FRAUD_OTHER`: Fraudulent transaction, other types such as questionable merchant
-         * activity.
+         *   activity.
          * - `GOODS_SERVICES_NOT_AS_DESCRIBED`: The goods or services were not as described.
          * - `GOODS_SERVICES_NOT_RECEIVED`: The goods or services were not received.
          * - `INCORRECT_AMOUNT`: The transaction amount was incorrect.
@@ -550,14 +543,13 @@ private constructor(
 
         /**
          * Dispute reason:
-         *
          * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
          * - `CANCELLED`: Transaction was cancelled by the customer.
          * - `DUPLICATED`: The transaction was a duplicate.
          * - `FRAUD_CARD_NOT_PRESENT`: Fraudulent transaction, card not present.
          * - `FRAUD_CARD_PRESENT`: Fraudulent transaction, card present.
          * - `FRAUD_OTHER`: Fraudulent transaction, other types such as questionable merchant
-         * activity.
+         *   activity.
          * - `GOODS_SERVICES_NOT_AS_DESCRIBED`: The goods or services were not as described.
          * - `GOODS_SERVICES_NOT_RECEIVED`: The goods or services were not received.
          * - `INCORRECT_AMOUNT`: The transaction amount was incorrect.
@@ -616,7 +608,6 @@ private constructor(
 
         /**
          * Reason for the dispute resolution:
-         *
          * - `CASE_LOST`: This case was lost at final arbitration.
          * - `NETWORK_REJECTED`: Network rejected.
          * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
@@ -640,7 +631,6 @@ private constructor(
 
         /**
          * Reason for the dispute resolution:
-         *
          * - `CASE_LOST`: This case was lost at final arbitration.
          * - `NETWORK_REJECTED`: Network rejected.
          * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
@@ -667,7 +657,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `NEW` - New dispute case is opened.
          * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
          * - `SUBMITTED` - Dispute is submitted to the card network.
@@ -681,7 +670,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `NEW` - New dispute case is opened.
          * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
          * - `SUBMITTED` - Dispute is submitted to the card network.
