@@ -47,7 +47,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `CARD` - Issuing card transaction.
      * - `ACH` - Transaction over ACH.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
@@ -90,11 +89,10 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `DECLINED` - The card transaction was declined.
      * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration time.
      * - `PENDING` - Authorization is pending completion from the merchant or pending release from
-     * ACH hold period
+     *   ACH hold period
      * - `SETTLED` - The financial transaction is completed.
      * - `VOIDED` - The merchant has voided the previously pending card authorization.
      */
@@ -137,7 +135,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `CARD` - Issuing card transaction.
      * - `ACH` - Transaction over ACH.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
@@ -180,11 +177,10 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `DECLINED` - The card transaction was declined.
      * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration time.
      * - `PENDING` - Authorization is pending completion from the merchant or pending release from
-     * ACH hold period
+     *   ACH hold period
      * - `SETTLED` - The financial transaction is completed.
      * - `VOIDED` - The merchant has voided the previously pending card authorization.
      */
@@ -344,7 +340,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `CARD` - Issuing card transaction.
          * - `ACH` - Transaction over ACH.
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
@@ -353,7 +348,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `CARD` - Issuing card transaction.
          * - `ACH` - Transaction over ACH.
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
@@ -454,12 +448,11 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `DECLINED` - The card transaction was declined.
          * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration
-         * time.
+         *   time.
          * - `PENDING` - Authorization is pending completion from the merchant or pending release
-         * from ACH hold period
+         *   from ACH hold period
          * - `SETTLED` - The financial transaction is completed.
          * - `VOIDED` - The merchant has voided the previously pending card authorization.
          */
@@ -467,12 +460,11 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `DECLINED` - The card transaction was declined.
          * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration
-         * time.
+         *   time.
          * - `PENDING` - Authorization is pending completion from the merchant or pending release
-         * from ACH hold period
+         *   from ACH hold period
          * - `SETTLED` - The financial transaction is completed.
          * - `VOIDED` - The merchant has voided the previously pending card authorization.
          */

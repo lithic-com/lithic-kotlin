@@ -57,15 +57,21 @@ constructor(
     ) {
 
         fun kyb(): Kyb? = kyb
+
         fun kyc(): Kyc? = kyc
+
         fun kycExempt(): KycExempt? = kycExempt
 
         fun isKyb(): Boolean = kyb != null
+
         fun isKyc(): Boolean = kyc != null
+
         fun isKycExempt(): Boolean = kycExempt != null
 
         fun asKyb(): Kyb = kyb.getOrThrow("kyb")
+
         fun asKyc(): Kyc = kyc.getOrThrow("kyc")
+
         fun asKycExempt(): KycExempt = kycExempt.getOrThrow("kycExempt")
 
         fun _json(): JsonValue? = _json
@@ -226,11 +232,13 @@ constructor(
             this.kyc = null
             this.kycExempt = null
         }
+
         fun forKyc(kyc: Kyc) = apply {
             this.kyb = null
             this.kyc = kyc
             this.kycExempt = null
         }
+
         fun forKycExempt(kycExempt: KycExempt) = apply {
             this.kyb = null
             this.kyc = null
