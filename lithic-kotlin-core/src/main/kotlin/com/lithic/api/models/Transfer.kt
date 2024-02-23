@@ -43,7 +43,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
     fun category(): Category? = category.getNullable("category")
@@ -84,7 +83,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `DECLINED` - The transfer was declined.
      * - `EXPIRED` - The transfer was held in pending for too long and expired.
      * - `PENDING` - The transfer is pending release from a hold.
@@ -104,7 +102,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
     @JsonProperty("category") @ExcludeMissing fun _category() = category
@@ -145,7 +142,6 @@ private constructor(
 
     /**
      * Status types:
-     *
      * - `DECLINED` - The transfer was declined.
      * - `EXPIRED` - The transfer was held in pending for too long and expired.
      * - `PENDING` - The transfer is pending release from a hold.
@@ -277,14 +273,12 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
          */
         fun category(category: Category) = category(JsonField.of(category))
 
         /**
          * Status types:
-         *
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
          */
         @JsonProperty("category")
@@ -387,7 +381,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `DECLINED` - The transfer was declined.
          * - `EXPIRED` - The transfer was held in pending for too long and expired.
          * - `PENDING` - The transfer is pending release from a hold.
@@ -398,7 +391,6 @@ private constructor(
 
         /**
          * Status types:
-         *
          * - `DECLINED` - The transfer was declined.
          * - `EXPIRED` - The transfer was held in pending for too long and expired.
          * - `PENDING` - The transfer is pending release from a hold.
@@ -553,38 +545,37 @@ private constructor(
 
         /**
          * Event types:
-         *
          * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
-         * balance.
+         *   balance.
          * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
          * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
-         * balance.
+         *   balance.
          * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
          * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
          * - `ACH_RETURN` - ACH origination returned by the Receiving Depository Financial
-         * Institution.
+         *   Institution.
          * - `AUTHORIZATION` - Authorize a card transaction.
          * - `AUTHORIZATION_ADVICE` - Advice on a card transaction.
          * - `AUTHORIZATION_EXPIRY` - Card Authorization has expired and reversed by Lithic.
          * - `AUTHORIZATION_REVERSAL` - Card Authorization was reversed by the merchant.
          * - `BALANCE_INQUIRY` - A card balance inquiry (typically a $0 authorization) has occurred
-         * on a card.
+         *   on a card.
          * - `CLEARING` - Card Transaction is settled.
          * - `CORRECTION_DEBIT` - Manual card transaction correction (Debit).
          * - `CORRECTION_CREDIT` - Manual card transaction correction (Credit).
          * - `CREDIT_AUTHORIZATION` - A refund or credit card authorization from a merchant.
          * - `CREDIT_AUTHORIZATION_ADVICE` - A credit card authorization was approved on your behalf
-         * by the network.
+         *   by the network.
          * - `FINANCIAL_AUTHORIZATION` - A request from a merchant to debit card funds without
-         * additional clearing.
+         *   additional clearing.
          * - `FINANCIAL_CREDIT_AUTHORIZATION` - A request from a merchant to refund or credit card
-         * funds without additional clearing.
+         *   funds without additional clearing.
          * - `RETURN` - A card refund has been processed on the transaction.
          * - `RETURN_REVERSAL` - A card refund has been reversed (e.g., when a merchant reverses an
-         * incorrect refund).
+         *   incorrect refund).
          * - `TRANSFER` - Successful internal transfer of funds between financial accounts.
          * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to insufficient
-         * balance of the sender.
+         *   balance of the sender.
          */
         fun type(): FinancialEventType? = type.getNullable("type")
 
@@ -608,38 +599,37 @@ private constructor(
 
         /**
          * Event types:
-         *
          * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
-         * balance.
+         *   balance.
          * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
          * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
-         * balance.
+         *   balance.
          * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
          * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
          * - `ACH_RETURN` - ACH origination returned by the Receiving Depository Financial
-         * Institution.
+         *   Institution.
          * - `AUTHORIZATION` - Authorize a card transaction.
          * - `AUTHORIZATION_ADVICE` - Advice on a card transaction.
          * - `AUTHORIZATION_EXPIRY` - Card Authorization has expired and reversed by Lithic.
          * - `AUTHORIZATION_REVERSAL` - Card Authorization was reversed by the merchant.
          * - `BALANCE_INQUIRY` - A card balance inquiry (typically a $0 authorization) has occurred
-         * on a card.
+         *   on a card.
          * - `CLEARING` - Card Transaction is settled.
          * - `CORRECTION_DEBIT` - Manual card transaction correction (Debit).
          * - `CORRECTION_CREDIT` - Manual card transaction correction (Credit).
          * - `CREDIT_AUTHORIZATION` - A refund or credit card authorization from a merchant.
          * - `CREDIT_AUTHORIZATION_ADVICE` - A credit card authorization was approved on your behalf
-         * by the network.
+         *   by the network.
          * - `FINANCIAL_AUTHORIZATION` - A request from a merchant to debit card funds without
-         * additional clearing.
+         *   additional clearing.
          * - `FINANCIAL_CREDIT_AUTHORIZATION` - A request from a merchant to refund or credit card
-         * funds without additional clearing.
+         *   funds without additional clearing.
          * - `RETURN` - A card refund has been processed on the transaction.
          * - `RETURN_REVERSAL` - A card refund has been reversed (e.g., when a merchant reverses an
-         * incorrect refund).
+         *   incorrect refund).
          * - `TRANSFER` - Successful internal transfer of funds between financial accounts.
          * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to insufficient
-         * balance of the sender.
+         *   balance of the sender.
          */
         @JsonProperty("type") @ExcludeMissing fun _type() = type
 
@@ -761,75 +751,73 @@ private constructor(
 
             /**
              * Event types:
-             *
              * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
-             * balance.
+             *   balance.
              * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
              * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
-             * balance.
+             *   balance.
              * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
              * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
              * - `ACH_RETURN` - ACH origination returned by the Receiving Depository Financial
-             * Institution.
+             *   Institution.
              * - `AUTHORIZATION` - Authorize a card transaction.
              * - `AUTHORIZATION_ADVICE` - Advice on a card transaction.
              * - `AUTHORIZATION_EXPIRY` - Card Authorization has expired and reversed by Lithic.
              * - `AUTHORIZATION_REVERSAL` - Card Authorization was reversed by the merchant.
              * - `BALANCE_INQUIRY` - A card balance inquiry (typically a $0 authorization) has
-             * occurred on a card.
+             *   occurred on a card.
              * - `CLEARING` - Card Transaction is settled.
              * - `CORRECTION_DEBIT` - Manual card transaction correction (Debit).
              * - `CORRECTION_CREDIT` - Manual card transaction correction (Credit).
              * - `CREDIT_AUTHORIZATION` - A refund or credit card authorization from a merchant.
              * - `CREDIT_AUTHORIZATION_ADVICE` - A credit card authorization was approved on your
-             * behalf by the network.
+             *   behalf by the network.
              * - `FINANCIAL_AUTHORIZATION` - A request from a merchant to debit card funds without
-             * additional clearing.
+             *   additional clearing.
              * - `FINANCIAL_CREDIT_AUTHORIZATION` - A request from a merchant to refund or credit
-             * card funds without additional clearing.
+             *   card funds without additional clearing.
              * - `RETURN` - A card refund has been processed on the transaction.
              * - `RETURN_REVERSAL` - A card refund has been reversed (e.g., when a merchant reverses
-             * an incorrect refund).
+             *   an incorrect refund).
              * - `TRANSFER` - Successful internal transfer of funds between financial accounts.
              * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to
-             * insufficient balance of the sender.
+             *   insufficient balance of the sender.
              */
             fun type(type: FinancialEventType) = type(JsonField.of(type))
 
             /**
              * Event types:
-             *
              * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
-             * balance.
+             *   balance.
              * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
              * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
-             * balance.
+             *   balance.
              * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
              * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
              * - `ACH_RETURN` - ACH origination returned by the Receiving Depository Financial
-             * Institution.
+             *   Institution.
              * - `AUTHORIZATION` - Authorize a card transaction.
              * - `AUTHORIZATION_ADVICE` - Advice on a card transaction.
              * - `AUTHORIZATION_EXPIRY` - Card Authorization has expired and reversed by Lithic.
              * - `AUTHORIZATION_REVERSAL` - Card Authorization was reversed by the merchant.
              * - `BALANCE_INQUIRY` - A card balance inquiry (typically a $0 authorization) has
-             * occurred on a card.
+             *   occurred on a card.
              * - `CLEARING` - Card Transaction is settled.
              * - `CORRECTION_DEBIT` - Manual card transaction correction (Debit).
              * - `CORRECTION_CREDIT` - Manual card transaction correction (Credit).
              * - `CREDIT_AUTHORIZATION` - A refund or credit card authorization from a merchant.
              * - `CREDIT_AUTHORIZATION_ADVICE` - A credit card authorization was approved on your
-             * behalf by the network.
+             *   behalf by the network.
              * - `FINANCIAL_AUTHORIZATION` - A request from a merchant to debit card funds without
-             * additional clearing.
+             *   additional clearing.
              * - `FINANCIAL_CREDIT_AUTHORIZATION` - A request from a merchant to refund or credit
-             * card funds without additional clearing.
+             *   card funds without additional clearing.
              * - `RETURN` - A card refund has been processed on the transaction.
              * - `RETURN_REVERSAL` - A card refund has been reversed (e.g., when a merchant reverses
-             * an incorrect refund).
+             *   an incorrect refund).
              * - `TRANSFER` - Successful internal transfer of funds between financial accounts.
              * - `TRANSFER_INSUFFICIENT_FUNDS` - Declined internl transfer of funds due to
-             * insufficient balance of the sender.
+             *   insufficient balance of the sender.
              */
             @JsonProperty("type")
             @ExcludeMissing
