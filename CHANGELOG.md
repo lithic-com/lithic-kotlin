@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.31.0 (2024-02-23)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* **api:** tokenizations ([#168](https://github.com/lithic-com/lithic-kotlin/issues/168)) ([b205322](https://github.com/lithic-com/lithic-kotlin/commit/b2053228093cc98859dfaea169bff40cb806532b))
+
+
+### Chores
+
+* **ci:** update actions/setup-java action to v4 ([#162](https://github.com/lithic-com/lithic-kotlin/issues/162)) ([2f334c1](https://github.com/lithic-com/lithic-kotlin/commit/2f334c11596668edfee42048bea234e29f2998c2))
+* **internal:** update deps ([#160](https://github.com/lithic-com/lithic-kotlin/issues/160)) ([ef2d327](https://github.com/lithic-com/lithic-kotlin/commit/ef2d32707dfb5ee45c1b3a376d9b7a39890698c2))
+* update dependency com.diffplug.spotless:spotless-plugin-gradle to v6.25.0 ([#164](https://github.com/lithic-com/lithic-kotlin/issues/164)) ([8831a75](https://github.com/lithic-com/lithic-kotlin/commit/8831a75c3bca9500e01ff01e16bbe4c3bf9c14d8))
+* update dependency com.github.tomakehurst:wiremock-jre8 to v2.35.2 ([#167](https://github.com/lithic-com/lithic-kotlin/issues/167)) ([f643fad](https://github.com/lithic-com/lithic-kotlin/commit/f643fad34ac654097792807942e94cd2ed4932c0))
+* update dependency com.google.guava:guava to v33 ([#165](https://github.com/lithic-com/lithic-kotlin/issues/165)) ([d3ef0e0](https://github.com/lithic-com/lithic-kotlin/commit/d3ef0e00739ada2c1a76a9e02d3b408e3fb7c885))
+* update dependency com.squareup.okhttp3:okhttp to v4.12.0 ([#163](https://github.com/lithic-com/lithic-kotlin/issues/163)) ([e649925](https://github.com/lithic-com/lithic-kotlin/commit/e649925def14b87bac2fe3485277776e634c7c60))
+* update dependency org.apache.httpcomponents.client5:httpclient5 to v5.3.1 ([#161](https://github.com/lithic-com/lithic-kotlin/issues/161)) ([12d6a10](https://github.com/lithic-com/lithic-kotlin/commit/12d6a1083534d25862c6dbddef7ef7d36fbace38))
+* update dependency org.apache.httpcomponents.core5:httpcore5 to v5.2.4 ([#155](https://github.com/lithic-com/lithic-kotlin/issues/155)) ([6ace276](https://github.com/lithic-com/lithic-kotlin/commit/6ace276f60d830985b0f188ead8bf67dc278fb1b))
+* update dependency org.assertj:assertj-core to v3.25.3 ([#158](https://github.com/lithic-com/lithic-kotlin/issues/158)) ([221e017](https://github.com/lithic-com/lithic-kotlin/commit/221e01718e6059d891c9d910e7e288cb6acc306f))
+* update dependency org.assertj:assertj-guava to v3.25.3 ([#159](https://github.com/lithic-com/lithic-kotlin/issues/159)) ([af41587](https://github.com/lithic-com/lithic-kotlin/commit/af41587f80f04e5b9daf85d1f9bd736398d12c4e))
+* update dependency org.slf4j:slf4j-simple to v1.7.36 ([#157](https://github.com/lithic-com/lithic-kotlin/issues/157)) ([f940803](https://github.com/lithic-com/lithic-kotlin/commit/f94080315421d8d83cf980129bad310edf0e421a))
+* update dependency org.slf4j:slf4j-simple to v2 ([#166](https://github.com/lithic-com/lithic-kotlin/issues/166)) ([139216f](https://github.com/lithic-com/lithic-kotlin/commit/139216fb264dcdd34619032bd79821336566dbc0))
+
 ## 0.30.0 (2024-02-21)
 
 Full Changelog: [v0.29.1...v0.30.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.29.1...v0.30.0)
