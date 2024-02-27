@@ -26,6 +26,7 @@ private constructor(
     private val amount: JsonField<Long>,
     private val authorizationAmount: JsonField<Long>,
     private val authorizationCode: JsonField<String>,
+    private val avs: JsonField<Avs>,
     private val cardToken: JsonField<String>,
     private val cardholderAuthentication: JsonField<CardholderAuthentication>,
     private val created: JsonField<OffsetDateTime>,
@@ -35,10 +36,13 @@ private constructor(
     private val merchantAuthorizationAmount: JsonField<Long>,
     private val merchantCurrency: JsonField<String>,
     private val network: JsonField<Network>,
+    private val networkRiskScore: JsonField<Double>,
+    private val pos: JsonField<Pos>,
     private val result: JsonField<Result>,
     private val settledAmount: JsonField<Long>,
     private val status: JsonField<Status>,
     private val token: JsonField<String>,
+    private val tokenInfo: JsonField<TokenInfo>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -78,6 +82,8 @@ private constructor(
      */
     fun authorizationCode(): String = authorizationCode.getRequired("authorization_code")
 
+    fun avs(): Avs = avs.getRequired("avs")
+
     /** Token for the card used in this transaction. */
     fun cardToken(): String = cardToken.getRequired("card_token")
 
@@ -115,6 +121,19 @@ private constructor(
      */
     fun network(): Network? = network.getNullable("network")
 
+    /**
+     * Network-provided score assessing risk level associated with a given authorization. Scores are
+     * on a range of 0-999, with 0 representing the lowest risk and 999 representing the highest
+     * risk. For Visa transactions, where the raw score has a range of 0-99, Lithic will normalize
+     * the score by multiplying the raw score by 10x.
+     *
+     * A score may not be available for all authorizations, and where it is not, this field will be
+     * set to null.
+     */
+    fun networkRiskScore(): Double = networkRiskScore.getRequired("network_risk_score")
+
+    fun pos(): Pos = pos.getRequired("pos")
+
     /** `APPROVED` or decline reason. See Event result types */
     fun result(): Result = result.getRequired("result")
 
@@ -136,6 +155,8 @@ private constructor(
 
     /** Globally unique identifier. */
     fun token(): String = token.getRequired("token")
+
+    fun tokenInfo(): TokenInfo = tokenInfo.getRequired("token_info")
 
     /**
      * Fee assessed by the merchant and paid for by the cardholder in the smallest unit of the
@@ -171,6 +192,8 @@ private constructor(
      * networks.
      */
     @JsonProperty("authorization_code") @ExcludeMissing fun _authorizationCode() = authorizationCode
+
+    @JsonProperty("avs") @ExcludeMissing fun _avs() = avs
 
     /** Token for the card used in this transaction. */
     @JsonProperty("card_token") @ExcludeMissing fun _cardToken() = cardToken
@@ -211,6 +234,19 @@ private constructor(
      */
     @JsonProperty("network") @ExcludeMissing fun _network() = network
 
+    /**
+     * Network-provided score assessing risk level associated with a given authorization. Scores are
+     * on a range of 0-999, with 0 representing the lowest risk and 999 representing the highest
+     * risk. For Visa transactions, where the raw score has a range of 0-99, Lithic will normalize
+     * the score by multiplying the raw score by 10x.
+     *
+     * A score may not be available for all authorizations, and where it is not, this field will be
+     * set to null.
+     */
+    @JsonProperty("network_risk_score") @ExcludeMissing fun _networkRiskScore() = networkRiskScore
+
+    @JsonProperty("pos") @ExcludeMissing fun _pos() = pos
+
     /** `APPROVED` or decline reason. See Event result types */
     @JsonProperty("result") @ExcludeMissing fun _result() = result
 
@@ -233,6 +269,8 @@ private constructor(
     /** Globally unique identifier. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
+    @JsonProperty("token_info") @ExcludeMissing fun _tokenInfo() = tokenInfo
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -244,6 +282,7 @@ private constructor(
             amount()
             authorizationAmount()
             authorizationCode()
+            avs().validate()
             cardToken()
             cardholderAuthentication()?.validate()
             created()
@@ -253,10 +292,13 @@ private constructor(
             merchantAuthorizationAmount()
             merchantCurrency()
             network()
+            networkRiskScore()
+            pos().validate()
             result()
             settledAmount()
             status()
             token()
+            tokenInfo().validate()
             validated = true
         }
     }
@@ -274,6 +316,7 @@ private constructor(
             this.amount == other.amount &&
             this.authorizationAmount == other.authorizationAmount &&
             this.authorizationCode == other.authorizationCode &&
+            this.avs == other.avs &&
             this.cardToken == other.cardToken &&
             this.cardholderAuthentication == other.cardholderAuthentication &&
             this.created == other.created &&
@@ -283,10 +326,13 @@ private constructor(
             this.merchantAuthorizationAmount == other.merchantAuthorizationAmount &&
             this.merchantCurrency == other.merchantCurrency &&
             this.network == other.network &&
+            this.networkRiskScore == other.networkRiskScore &&
+            this.pos == other.pos &&
             this.result == other.result &&
             this.settledAmount == other.settledAmount &&
             this.status == other.status &&
             this.token == other.token &&
+            this.tokenInfo == other.tokenInfo &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -299,6 +345,7 @@ private constructor(
                     amount,
                     authorizationAmount,
                     authorizationCode,
+                    avs,
                     cardToken,
                     cardholderAuthentication,
                     created,
@@ -308,10 +355,13 @@ private constructor(
                     merchantAuthorizationAmount,
                     merchantCurrency,
                     network,
+                    networkRiskScore,
+                    pos,
                     result,
                     settledAmount,
                     status,
                     token,
+                    tokenInfo,
                     additionalProperties,
                 )
         }
@@ -319,7 +369,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Transaction{acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, events=$events, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, result=$result, settledAmount=$settledAmount, status=$status, token=$token, additionalProperties=$additionalProperties}"
+        "Transaction{acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, events=$events, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, token=$token, tokenInfo=$tokenInfo, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -333,6 +383,7 @@ private constructor(
         private var amount: JsonField<Long> = JsonMissing.of()
         private var authorizationAmount: JsonField<Long> = JsonMissing.of()
         private var authorizationCode: JsonField<String> = JsonMissing.of()
+        private var avs: JsonField<Avs> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
         private var cardholderAuthentication: JsonField<CardholderAuthentication> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -342,10 +393,13 @@ private constructor(
         private var merchantAuthorizationAmount: JsonField<Long> = JsonMissing.of()
         private var merchantCurrency: JsonField<String> = JsonMissing.of()
         private var network: JsonField<Network> = JsonMissing.of()
+        private var networkRiskScore: JsonField<Double> = JsonMissing.of()
+        private var pos: JsonField<Pos> = JsonMissing.of()
         private var result: JsonField<Result> = JsonMissing.of()
         private var settledAmount: JsonField<Long> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
+        private var tokenInfo: JsonField<TokenInfo> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transaction: Transaction) = apply {
@@ -354,6 +408,7 @@ private constructor(
             this.amount = transaction.amount
             this.authorizationAmount = transaction.authorizationAmount
             this.authorizationCode = transaction.authorizationCode
+            this.avs = transaction.avs
             this.cardToken = transaction.cardToken
             this.cardholderAuthentication = transaction.cardholderAuthentication
             this.created = transaction.created
@@ -363,10 +418,13 @@ private constructor(
             this.merchantAuthorizationAmount = transaction.merchantAuthorizationAmount
             this.merchantCurrency = transaction.merchantCurrency
             this.network = transaction.network
+            this.networkRiskScore = transaction.networkRiskScore
+            this.pos = transaction.pos
             this.result = transaction.result
             this.settledAmount = transaction.settledAmount
             this.status = transaction.status
             this.token = transaction.token
+            this.tokenInfo = transaction.tokenInfo
             additionalProperties(transaction.additionalProperties)
         }
 
@@ -452,6 +510,10 @@ private constructor(
         fun authorizationCode(authorizationCode: JsonField<String>) = apply {
             this.authorizationCode = authorizationCode
         }
+
+        fun avs(avs: Avs) = avs(JsonField.of(avs))
+
+        @JsonProperty("avs") @ExcludeMissing fun avs(avs: JsonField<Avs>) = apply { this.avs = avs }
 
         /** Token for the card used in this transaction. */
         fun cardToken(cardToken: String) = cardToken(JsonField.of(cardToken))
@@ -552,6 +614,37 @@ private constructor(
         @ExcludeMissing
         fun network(network: JsonField<Network>) = apply { this.network = network }
 
+        /**
+         * Network-provided score assessing risk level associated with a given authorization. Scores
+         * are on a range of 0-999, with 0 representing the lowest risk and 999 representing the
+         * highest risk. For Visa transactions, where the raw score has a range of 0-99, Lithic will
+         * normalize the score by multiplying the raw score by 10x.
+         *
+         * A score may not be available for all authorizations, and where it is not, this field will
+         * be set to null.
+         */
+        fun networkRiskScore(networkRiskScore: Double) =
+            networkRiskScore(JsonField.of(networkRiskScore))
+
+        /**
+         * Network-provided score assessing risk level associated with a given authorization. Scores
+         * are on a range of 0-999, with 0 representing the lowest risk and 999 representing the
+         * highest risk. For Visa transactions, where the raw score has a range of 0-99, Lithic will
+         * normalize the score by multiplying the raw score by 10x.
+         *
+         * A score may not be available for all authorizations, and where it is not, this field will
+         * be set to null.
+         */
+        @JsonProperty("network_risk_score")
+        @ExcludeMissing
+        fun networkRiskScore(networkRiskScore: JsonField<Double>) = apply {
+            this.networkRiskScore = networkRiskScore
+        }
+
+        fun pos(pos: Pos) = pos(JsonField.of(pos))
+
+        @JsonProperty("pos") @ExcludeMissing fun pos(pos: JsonField<Pos>) = apply { this.pos = pos }
+
         /** `APPROVED` or decline reason. See Event result types */
         fun result(result: Result) = result(JsonField.of(result))
 
@@ -606,6 +699,12 @@ private constructor(
         @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
+        fun tokenInfo(tokenInfo: TokenInfo) = tokenInfo(JsonField.of(tokenInfo))
+
+        @JsonProperty("token_info")
+        @ExcludeMissing
+        fun tokenInfo(tokenInfo: JsonField<TokenInfo>) = apply { this.tokenInfo = tokenInfo }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -627,6 +726,7 @@ private constructor(
                 amount,
                 authorizationAmount,
                 authorizationCode,
+                avs,
                 cardToken,
                 cardholderAuthentication,
                 created,
@@ -636,12 +736,136 @@ private constructor(
                 merchantAuthorizationAmount,
                 merchantCurrency,
                 network,
+                networkRiskScore,
+                pos,
                 result,
                 settledAmount,
                 status,
                 token,
+                tokenInfo,
                 additionalProperties.toUnmodifiable(),
             )
+    }
+
+    @JsonDeserialize(builder = Avs.Builder::class)
+    @NoAutoDetect
+    class Avs
+    private constructor(
+        private val address: JsonField<String>,
+        private val zipcode: JsonField<String>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        private var hashCode: Int = 0
+
+        /** Cardholder address */
+        fun address(): String? = address.getNullable("address")
+
+        /** Cardholder ZIP code */
+        fun zipcode(): String? = zipcode.getNullable("zipcode")
+
+        /** Cardholder address */
+        @JsonProperty("address") @ExcludeMissing fun _address() = address
+
+        /** Cardholder ZIP code */
+        @JsonProperty("zipcode") @ExcludeMissing fun _zipcode() = zipcode
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): Avs = apply {
+            if (!validated) {
+                address()
+                zipcode()
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Avs &&
+                this.address == other.address &&
+                this.zipcode == other.zipcode &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        address,
+                        zipcode,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Avs{address=$address, zipcode=$zipcode, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var address: JsonField<String> = JsonMissing.of()
+            private var zipcode: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(avs: Avs) = apply {
+                this.address = avs.address
+                this.zipcode = avs.zipcode
+                additionalProperties(avs.additionalProperties)
+            }
+
+            /** Cardholder address */
+            fun address(address: String) = address(JsonField.of(address))
+
+            /** Cardholder address */
+            @JsonProperty("address")
+            @ExcludeMissing
+            fun address(address: JsonField<String>) = apply { this.address = address }
+
+            /** Cardholder ZIP code */
+            fun zipcode(zipcode: String) = zipcode(JsonField.of(zipcode))
+
+            /** Cardholder ZIP code */
+            @JsonProperty("zipcode")
+            @ExcludeMissing
+            fun zipcode(zipcode: JsonField<String>) = apply { this.zipcode = zipcode }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): Avs =
+                Avs(
+                    address,
+                    zipcode,
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
     }
 
     /**
@@ -686,12 +910,6 @@ private constructor(
          * - `CARD_CLOSED` - Card state was closed at the time of authorization.
          * - `CARD_PAUSED` - Card state was paused at the time of authorization.
          * - `FRAUD_ADVICE` - Transaction declined due to risk.
-         * - `GLOBAL_TRANSACTION_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
-         * - `GLOBAL_WEEKLY_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
-         * - `GLOBAL_MONTHLY_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
          * - `INACTIVE_ACCOUNT` - Account is inactive. Contact
          *   [support@lithic.com](mailto:support@lithic.com).
          * - `INCORRECT_PIN` - PIN verification failed.
@@ -753,12 +971,6 @@ private constructor(
          * - `CARD_CLOSED` - Card state was closed at the time of authorization.
          * - `CARD_PAUSED` - Card state was paused at the time of authorization.
          * - `FRAUD_ADVICE` - Transaction declined due to risk.
-         * - `GLOBAL_TRANSACTION_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
-         * - `GLOBAL_WEEKLY_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
-         * - `GLOBAL_MONTHLY_LIMIT` - Platform spend limit exceeded, contact
-         *   [support@lithic.com](mailto:support@lithic.com).
          * - `INACTIVE_ACCOUNT` - Account is inactive. Contact
          *   [support@lithic.com](mailto:support@lithic.com).
          * - `INCORRECT_PIN` - PIN verification failed.
@@ -914,12 +1126,6 @@ private constructor(
              * - `CARD_CLOSED` - Card state was closed at the time of authorization.
              * - `CARD_PAUSED` - Card state was paused at the time of authorization.
              * - `FRAUD_ADVICE` - Transaction declined due to risk.
-             * - `GLOBAL_TRANSACTION_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
-             * - `GLOBAL_WEEKLY_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
-             * - `GLOBAL_MONTHLY_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
              * - `INACTIVE_ACCOUNT` - Account is inactive. Contact
              *   [support@lithic.com](mailto:support@lithic.com).
              * - `INCORRECT_PIN` - PIN verification failed.
@@ -947,12 +1153,6 @@ private constructor(
              * - `CARD_CLOSED` - Card state was closed at the time of authorization.
              * - `CARD_PAUSED` - Card state was paused at the time of authorization.
              * - `FRAUD_ADVICE` - Transaction declined due to risk.
-             * - `GLOBAL_TRANSACTION_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
-             * - `GLOBAL_WEEKLY_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
-             * - `GLOBAL_MONTHLY_LIMIT` - Platform spend limit exceeded, contact
-             *   [support@lithic.com](mailto:support@lithic.com).
              * - `INACTIVE_ACCOUNT` - Account is inactive. Contact
              *   [support@lithic.com](mailto:support@lithic.com).
              * - `INCORRECT_PIN` - PIN verification failed.
@@ -1436,8 +1636,6 @@ private constructor(
 
             companion object {
 
-                val ACCOUNT_STATE_TRANSACTION = Result(JsonField.of("ACCOUNT_STATE_TRANSACTION"))
-
                 val APPROVED = Result(JsonField.of("APPROVED"))
 
                 val BANK_CONNECTION_ERROR = Result(JsonField.of("BANK_CONNECTION_ERROR"))
@@ -1448,13 +1646,9 @@ private constructor(
 
                 val CARD_PAUSED = Result(JsonField.of("CARD_PAUSED"))
 
+                val DECLINED = Result(JsonField.of("DECLINED"))
+
                 val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
-
-                val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
-
-                val GLOBAL_TRANSACTION_LIMIT = Result(JsonField.of("GLOBAL_TRANSACTION_LIMIT"))
-
-                val GLOBAL_WEEKLY_LIMIT = Result(JsonField.of("GLOBAL_WEEKLY_LIMIT"))
 
                 val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
 
@@ -1480,16 +1674,13 @@ private constructor(
             }
 
             enum class Known {
-                ACCOUNT_STATE_TRANSACTION,
                 APPROVED,
                 BANK_CONNECTION_ERROR,
                 BANK_NOT_VERIFIED,
                 CARD_CLOSED,
                 CARD_PAUSED,
+                DECLINED,
                 FRAUD_ADVICE,
-                GLOBAL_MONTHLY_LIMIT,
-                GLOBAL_TRANSACTION_LIMIT,
-                GLOBAL_WEEKLY_LIMIT,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INSUFFICIENT_FUNDS,
@@ -1503,16 +1694,13 @@ private constructor(
             }
 
             enum class Value {
-                ACCOUNT_STATE_TRANSACTION,
                 APPROVED,
                 BANK_CONNECTION_ERROR,
                 BANK_NOT_VERIFIED,
                 CARD_CLOSED,
                 CARD_PAUSED,
+                DECLINED,
                 FRAUD_ADVICE,
-                GLOBAL_MONTHLY_LIMIT,
-                GLOBAL_TRANSACTION_LIMIT,
-                GLOBAL_WEEKLY_LIMIT,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INSUFFICIENT_FUNDS,
@@ -1528,16 +1716,13 @@ private constructor(
 
             fun value(): Value =
                 when (this) {
-                    ACCOUNT_STATE_TRANSACTION -> Value.ACCOUNT_STATE_TRANSACTION
                     APPROVED -> Value.APPROVED
                     BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
                     BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
                     CARD_CLOSED -> Value.CARD_CLOSED
                     CARD_PAUSED -> Value.CARD_PAUSED
+                    DECLINED -> Value.DECLINED
                     FRAUD_ADVICE -> Value.FRAUD_ADVICE
-                    GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
-                    GLOBAL_TRANSACTION_LIMIT -> Value.GLOBAL_TRANSACTION_LIMIT
-                    GLOBAL_WEEKLY_LIMIT -> Value.GLOBAL_WEEKLY_LIMIT
                     INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Value.INCORRECT_PIN
                     INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
@@ -1553,16 +1738,13 @@ private constructor(
 
             fun known(): Known =
                 when (this) {
-                    ACCOUNT_STATE_TRANSACTION -> Known.ACCOUNT_STATE_TRANSACTION
                     APPROVED -> Known.APPROVED
                     BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
                     BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
                     CARD_CLOSED -> Known.CARD_CLOSED
                     CARD_PAUSED -> Known.CARD_PAUSED
+                    DECLINED -> Known.DECLINED
                     FRAUD_ADVICE -> Known.FRAUD_ADVICE
-                    GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
-                    GLOBAL_TRANSACTION_LIMIT -> Known.GLOBAL_TRANSACTION_LIMIT
-                    GLOBAL_WEEKLY_LIMIT -> Known.GLOBAL_WEEKLY_LIMIT
                     INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Known.INCORRECT_PIN
                     INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
@@ -2008,6 +2190,1162 @@ private constructor(
         fun asString(): String = _value().asStringOrThrow()
     }
 
+    @JsonDeserialize(builder = Pos.Builder::class)
+    @NoAutoDetect
+    class Pos
+    private constructor(
+        private val entryMode: JsonField<EntryMode>,
+        private val terminal: JsonField<Terminal>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        private var hashCode: Int = 0
+
+        fun entryMode(): EntryMode = entryMode.getRequired("entry_mode")
+
+        fun terminal(): Terminal = terminal.getRequired("terminal")
+
+        @JsonProperty("entry_mode") @ExcludeMissing fun _entryMode() = entryMode
+
+        @JsonProperty("terminal") @ExcludeMissing fun _terminal() = terminal
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): Pos = apply {
+            if (!validated) {
+                entryMode().validate()
+                terminal().validate()
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Pos &&
+                this.entryMode == other.entryMode &&
+                this.terminal == other.terminal &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        entryMode,
+                        terminal,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Pos{entryMode=$entryMode, terminal=$terminal, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var entryMode: JsonField<EntryMode> = JsonMissing.of()
+            private var terminal: JsonField<Terminal> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(pos: Pos) = apply {
+                this.entryMode = pos.entryMode
+                this.terminal = pos.terminal
+                additionalProperties(pos.additionalProperties)
+            }
+
+            fun entryMode(entryMode: EntryMode) = entryMode(JsonField.of(entryMode))
+
+            @JsonProperty("entry_mode")
+            @ExcludeMissing
+            fun entryMode(entryMode: JsonField<EntryMode>) = apply { this.entryMode = entryMode }
+
+            fun terminal(terminal: Terminal) = terminal(JsonField.of(terminal))
+
+            @JsonProperty("terminal")
+            @ExcludeMissing
+            fun terminal(terminal: JsonField<Terminal>) = apply { this.terminal = terminal }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): Pos =
+                Pos(
+                    entryMode,
+                    terminal,
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
+
+        @JsonDeserialize(builder = EntryMode.Builder::class)
+        @NoAutoDetect
+        class EntryMode
+        private constructor(
+            private val card: JsonField<Card>,
+            private val cardholder: JsonField<Cardholder>,
+            private val pan: JsonField<Pan>,
+            private val pinEntered: JsonField<Boolean>,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var validated: Boolean = false
+
+            private var hashCode: Int = 0
+
+            /** Card status */
+            fun card(): Card = card.getRequired("card")
+
+            /** Cardholder Presence status */
+            fun cardholder(): Cardholder = cardholder.getRequired("cardholder")
+
+            /** Method of entry for the PAN */
+            fun pan(): Pan = pan.getRequired("pan")
+
+            /** True if the PIN was entered */
+            fun pinEntered(): Boolean = pinEntered.getRequired("pin_entered")
+
+            /** Card status */
+            @JsonProperty("card") @ExcludeMissing fun _card() = card
+
+            /** Cardholder Presence status */
+            @JsonProperty("cardholder") @ExcludeMissing fun _cardholder() = cardholder
+
+            /** Method of entry for the PAN */
+            @JsonProperty("pan") @ExcludeMissing fun _pan() = pan
+
+            /** True if the PIN was entered */
+            @JsonProperty("pin_entered") @ExcludeMissing fun _pinEntered() = pinEntered
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun validate(): EntryMode = apply {
+                if (!validated) {
+                    card()
+                    cardholder()
+                    pan()
+                    pinEntered()
+                    validated = true
+                }
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is EntryMode &&
+                    this.card == other.card &&
+                    this.cardholder == other.cardholder &&
+                    this.pan == other.pan &&
+                    this.pinEntered == other.pinEntered &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            card,
+                            cardholder,
+                            pan,
+                            pinEntered,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "EntryMode{card=$card, cardholder=$cardholder, pan=$pan, pinEntered=$pinEntered, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var card: JsonField<Card> = JsonMissing.of()
+                private var cardholder: JsonField<Cardholder> = JsonMissing.of()
+                private var pan: JsonField<Pan> = JsonMissing.of()
+                private var pinEntered: JsonField<Boolean> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(entryMode: EntryMode) = apply {
+                    this.card = entryMode.card
+                    this.cardholder = entryMode.cardholder
+                    this.pan = entryMode.pan
+                    this.pinEntered = entryMode.pinEntered
+                    additionalProperties(entryMode.additionalProperties)
+                }
+
+                /** Card status */
+                fun card(card: Card) = card(JsonField.of(card))
+
+                /** Card status */
+                @JsonProperty("card")
+                @ExcludeMissing
+                fun card(card: JsonField<Card>) = apply { this.card = card }
+
+                /** Cardholder Presence status */
+                fun cardholder(cardholder: Cardholder) = cardholder(JsonField.of(cardholder))
+
+                /** Cardholder Presence status */
+                @JsonProperty("cardholder")
+                @ExcludeMissing
+                fun cardholder(cardholder: JsonField<Cardholder>) = apply {
+                    this.cardholder = cardholder
+                }
+
+                /** Method of entry for the PAN */
+                fun pan(pan: Pan) = pan(JsonField.of(pan))
+
+                /** Method of entry for the PAN */
+                @JsonProperty("pan")
+                @ExcludeMissing
+                fun pan(pan: JsonField<Pan>) = apply { this.pan = pan }
+
+                /** True if the PIN was entered */
+                fun pinEntered(pinEntered: Boolean) = pinEntered(JsonField.of(pinEntered))
+
+                /** True if the PIN was entered */
+                @JsonProperty("pin_entered")
+                @ExcludeMissing
+                fun pinEntered(pinEntered: JsonField<Boolean>) = apply {
+                    this.pinEntered = pinEntered
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): EntryMode =
+                    EntryMode(
+                        card,
+                        cardholder,
+                        pan,
+                        pinEntered,
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            class Card
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Card && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val NOT_PRESENT = Card(JsonField.of("NOT_PRESENT"))
+
+                    val PREAUTHORIZED = Card(JsonField.of("PREAUTHORIZED"))
+
+                    val PRESENT = Card(JsonField.of("PRESENT"))
+
+                    val UNKNOWN = Card(JsonField.of("UNKNOWN"))
+
+                    fun of(value: String) = Card(JsonField.of(value))
+                }
+
+                enum class Known {
+                    NOT_PRESENT,
+                    PREAUTHORIZED,
+                    PRESENT,
+                    UNKNOWN,
+                }
+
+                enum class Value {
+                    NOT_PRESENT,
+                    PREAUTHORIZED,
+                    PRESENT,
+                    UNKNOWN,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        NOT_PRESENT -> Value.NOT_PRESENT
+                        PREAUTHORIZED -> Value.PREAUTHORIZED
+                        PRESENT -> Value.PRESENT
+                        UNKNOWN -> Value.UNKNOWN
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        NOT_PRESENT -> Known.NOT_PRESENT
+                        PREAUTHORIZED -> Known.PREAUTHORIZED
+                        PRESENT -> Known.PRESENT
+                        UNKNOWN -> Known.UNKNOWN
+                        else -> throw LithicInvalidDataException("Unknown Card: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+
+            class Cardholder
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Cardholder && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val DEFERRED_BILLING = Cardholder(JsonField.of("DEFERRED_BILLING"))
+
+                    val ELECTRONIC_ORDER = Cardholder(JsonField.of("ELECTRONIC_ORDER"))
+
+                    val INSTALLMENT = Cardholder(JsonField.of("INSTALLMENT"))
+
+                    val MAIL_ORDER = Cardholder(JsonField.of("MAIL_ORDER"))
+
+                    val NOT_PRESENT = Cardholder(JsonField.of("NOT_PRESENT"))
+
+                    val PREAUTHORIZED = Cardholder(JsonField.of("PREAUTHORIZED"))
+
+                    val PRESENT = Cardholder(JsonField.of("PRESENT"))
+
+                    val REOCCURRING = Cardholder(JsonField.of("REOCCURRING"))
+
+                    val TELEPHONE_ORDER = Cardholder(JsonField.of("TELEPHONE_ORDER"))
+
+                    val UNKNOWN = Cardholder(JsonField.of("UNKNOWN"))
+
+                    fun of(value: String) = Cardholder(JsonField.of(value))
+                }
+
+                enum class Known {
+                    DEFERRED_BILLING,
+                    ELECTRONIC_ORDER,
+                    INSTALLMENT,
+                    MAIL_ORDER,
+                    NOT_PRESENT,
+                    PREAUTHORIZED,
+                    PRESENT,
+                    REOCCURRING,
+                    TELEPHONE_ORDER,
+                    UNKNOWN,
+                }
+
+                enum class Value {
+                    DEFERRED_BILLING,
+                    ELECTRONIC_ORDER,
+                    INSTALLMENT,
+                    MAIL_ORDER,
+                    NOT_PRESENT,
+                    PREAUTHORIZED,
+                    PRESENT,
+                    REOCCURRING,
+                    TELEPHONE_ORDER,
+                    UNKNOWN,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        DEFERRED_BILLING -> Value.DEFERRED_BILLING
+                        ELECTRONIC_ORDER -> Value.ELECTRONIC_ORDER
+                        INSTALLMENT -> Value.INSTALLMENT
+                        MAIL_ORDER -> Value.MAIL_ORDER
+                        NOT_PRESENT -> Value.NOT_PRESENT
+                        PREAUTHORIZED -> Value.PREAUTHORIZED
+                        PRESENT -> Value.PRESENT
+                        REOCCURRING -> Value.REOCCURRING
+                        TELEPHONE_ORDER -> Value.TELEPHONE_ORDER
+                        UNKNOWN -> Value.UNKNOWN
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        DEFERRED_BILLING -> Known.DEFERRED_BILLING
+                        ELECTRONIC_ORDER -> Known.ELECTRONIC_ORDER
+                        INSTALLMENT -> Known.INSTALLMENT
+                        MAIL_ORDER -> Known.MAIL_ORDER
+                        NOT_PRESENT -> Known.NOT_PRESENT
+                        PREAUTHORIZED -> Known.PREAUTHORIZED
+                        PRESENT -> Known.PRESENT
+                        REOCCURRING -> Known.REOCCURRING
+                        TELEPHONE_ORDER -> Known.TELEPHONE_ORDER
+                        UNKNOWN -> Known.UNKNOWN
+                        else -> throw LithicInvalidDataException("Unknown Cardholder: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+
+            class Pan
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Pan && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val AUTO_ENTRY = Pan(JsonField.of("AUTO_ENTRY"))
+
+                    val BAR_CODE = Pan(JsonField.of("BAR_CODE"))
+
+                    val CONTACTLESS = Pan(JsonField.of("CONTACTLESS"))
+
+                    val CREDENTIAL_ON_FILE = Pan(JsonField.of("CREDENTIAL_ON_FILE"))
+
+                    val ECOMMERCE = Pan(JsonField.of("ECOMMERCE"))
+
+                    val ERROR_KEYED = Pan(JsonField.of("ERROR_KEYED"))
+
+                    val ERROR_MAGNETIC_STRIPE = Pan(JsonField.of("ERROR_MAGNETIC_STRIPE"))
+
+                    val ICC = Pan(JsonField.of("ICC"))
+
+                    val KEY_ENTERED = Pan(JsonField.of("KEY_ENTERED"))
+
+                    val MAGNETIC_STRIPE = Pan(JsonField.of("MAGNETIC_STRIPE"))
+
+                    val MANUAL = Pan(JsonField.of("MANUAL"))
+
+                    val OCR = Pan(JsonField.of("OCR"))
+
+                    val SECURE_CARDLESS = Pan(JsonField.of("SECURE_CARDLESS"))
+
+                    val UNKNOWN = Pan(JsonField.of("UNKNOWN"))
+
+                    val UNSPECIFIED = Pan(JsonField.of("UNSPECIFIED"))
+
+                    fun of(value: String) = Pan(JsonField.of(value))
+                }
+
+                enum class Known {
+                    AUTO_ENTRY,
+                    BAR_CODE,
+                    CONTACTLESS,
+                    CREDENTIAL_ON_FILE,
+                    ECOMMERCE,
+                    ERROR_KEYED,
+                    ERROR_MAGNETIC_STRIPE,
+                    ICC,
+                    KEY_ENTERED,
+                    MAGNETIC_STRIPE,
+                    MANUAL,
+                    OCR,
+                    SECURE_CARDLESS,
+                    UNKNOWN,
+                    UNSPECIFIED,
+                }
+
+                enum class Value {
+                    AUTO_ENTRY,
+                    BAR_CODE,
+                    CONTACTLESS,
+                    CREDENTIAL_ON_FILE,
+                    ECOMMERCE,
+                    ERROR_KEYED,
+                    ERROR_MAGNETIC_STRIPE,
+                    ICC,
+                    KEY_ENTERED,
+                    MAGNETIC_STRIPE,
+                    MANUAL,
+                    OCR,
+                    SECURE_CARDLESS,
+                    UNKNOWN,
+                    UNSPECIFIED,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        AUTO_ENTRY -> Value.AUTO_ENTRY
+                        BAR_CODE -> Value.BAR_CODE
+                        CONTACTLESS -> Value.CONTACTLESS
+                        CREDENTIAL_ON_FILE -> Value.CREDENTIAL_ON_FILE
+                        ECOMMERCE -> Value.ECOMMERCE
+                        ERROR_KEYED -> Value.ERROR_KEYED
+                        ERROR_MAGNETIC_STRIPE -> Value.ERROR_MAGNETIC_STRIPE
+                        ICC -> Value.ICC
+                        KEY_ENTERED -> Value.KEY_ENTERED
+                        MAGNETIC_STRIPE -> Value.MAGNETIC_STRIPE
+                        MANUAL -> Value.MANUAL
+                        OCR -> Value.OCR
+                        SECURE_CARDLESS -> Value.SECURE_CARDLESS
+                        UNKNOWN -> Value.UNKNOWN
+                        UNSPECIFIED -> Value.UNSPECIFIED
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        AUTO_ENTRY -> Known.AUTO_ENTRY
+                        BAR_CODE -> Known.BAR_CODE
+                        CONTACTLESS -> Known.CONTACTLESS
+                        CREDENTIAL_ON_FILE -> Known.CREDENTIAL_ON_FILE
+                        ECOMMERCE -> Known.ECOMMERCE
+                        ERROR_KEYED -> Known.ERROR_KEYED
+                        ERROR_MAGNETIC_STRIPE -> Known.ERROR_MAGNETIC_STRIPE
+                        ICC -> Known.ICC
+                        KEY_ENTERED -> Known.KEY_ENTERED
+                        MAGNETIC_STRIPE -> Known.MAGNETIC_STRIPE
+                        MANUAL -> Known.MANUAL
+                        OCR -> Known.OCR
+                        SECURE_CARDLESS -> Known.SECURE_CARDLESS
+                        UNKNOWN -> Known.UNKNOWN
+                        UNSPECIFIED -> Known.UNSPECIFIED
+                        else -> throw LithicInvalidDataException("Unknown Pan: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+        }
+
+        @JsonDeserialize(builder = Terminal.Builder::class)
+        @NoAutoDetect
+        class Terminal
+        private constructor(
+            private val attended: JsonField<Boolean>,
+            private val cardRetentionCapable: JsonField<Boolean>,
+            private val onPremise: JsonField<Boolean>,
+            private val operator: JsonField<Operator>,
+            private val pinCapability: JsonField<PinCapability>,
+            private val type: JsonField<Type>,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var validated: Boolean = false
+
+            private var hashCode: Int = 0
+
+            /** True if a clerk is present at the sale. */
+            fun attended(): Boolean = attended.getRequired("attended")
+
+            /**
+             * True if the terminal is capable of partial approval. Partial approval is when part of
+             * a transaction is approved and another payment must be used for the remainder. Example
+             * scenario: A $40 transaction is attempted on a prepaid card with a $25 balance. If
+             * partial approval is enabled, $25 can be authorized, at which point the POS will
+             * prompt the user for an additional payment of $15.
+             */
+            fun cardRetentionCapable(): Boolean =
+                cardRetentionCapable.getRequired("card_retention_capable")
+
+            /** True if the sale was made at the place of business (vs. mobile). */
+            fun onPremise(): Boolean = onPremise.getRequired("on_premise")
+
+            /** The person that is designed to swipe the card */
+            fun operator(): Operator = operator.getRequired("operator")
+
+            /** Status of whether the POS is able to accept PINs */
+            fun pinCapability(): PinCapability = pinCapability.getRequired("pin_capability")
+
+            /** POS Type */
+            fun type(): Type = type.getRequired("type")
+
+            /** True if a clerk is present at the sale. */
+            @JsonProperty("attended") @ExcludeMissing fun _attended() = attended
+
+            /**
+             * True if the terminal is capable of partial approval. Partial approval is when part of
+             * a transaction is approved and another payment must be used for the remainder. Example
+             * scenario: A $40 transaction is attempted on a prepaid card with a $25 balance. If
+             * partial approval is enabled, $25 can be authorized, at which point the POS will
+             * prompt the user for an additional payment of $15.
+             */
+            @JsonProperty("card_retention_capable")
+            @ExcludeMissing
+            fun _cardRetentionCapable() = cardRetentionCapable
+
+            /** True if the sale was made at the place of business (vs. mobile). */
+            @JsonProperty("on_premise") @ExcludeMissing fun _onPremise() = onPremise
+
+            /** The person that is designed to swipe the card */
+            @JsonProperty("operator") @ExcludeMissing fun _operator() = operator
+
+            /** Status of whether the POS is able to accept PINs */
+            @JsonProperty("pin_capability") @ExcludeMissing fun _pinCapability() = pinCapability
+
+            /** POS Type */
+            @JsonProperty("type") @ExcludeMissing fun _type() = type
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun validate(): Terminal = apply {
+                if (!validated) {
+                    attended()
+                    cardRetentionCapable()
+                    onPremise()
+                    operator()
+                    pinCapability()
+                    type()
+                    validated = true
+                }
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Terminal &&
+                    this.attended == other.attended &&
+                    this.cardRetentionCapable == other.cardRetentionCapable &&
+                    this.onPremise == other.onPremise &&
+                    this.operator == other.operator &&
+                    this.pinCapability == other.pinCapability &&
+                    this.type == other.type &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            attended,
+                            cardRetentionCapable,
+                            onPremise,
+                            operator,
+                            pinCapability,
+                            type,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "Terminal{attended=$attended, cardRetentionCapable=$cardRetentionCapable, onPremise=$onPremise, operator=$operator, pinCapability=$pinCapability, type=$type, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var attended: JsonField<Boolean> = JsonMissing.of()
+                private var cardRetentionCapable: JsonField<Boolean> = JsonMissing.of()
+                private var onPremise: JsonField<Boolean> = JsonMissing.of()
+                private var operator: JsonField<Operator> = JsonMissing.of()
+                private var pinCapability: JsonField<PinCapability> = JsonMissing.of()
+                private var type: JsonField<Type> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(terminal: Terminal) = apply {
+                    this.attended = terminal.attended
+                    this.cardRetentionCapable = terminal.cardRetentionCapable
+                    this.onPremise = terminal.onPremise
+                    this.operator = terminal.operator
+                    this.pinCapability = terminal.pinCapability
+                    this.type = terminal.type
+                    additionalProperties(terminal.additionalProperties)
+                }
+
+                /** True if a clerk is present at the sale. */
+                fun attended(attended: Boolean) = attended(JsonField.of(attended))
+
+                /** True if a clerk is present at the sale. */
+                @JsonProperty("attended")
+                @ExcludeMissing
+                fun attended(attended: JsonField<Boolean>) = apply { this.attended = attended }
+
+                /**
+                 * True if the terminal is capable of partial approval. Partial approval is when
+                 * part of a transaction is approved and another payment must be used for the
+                 * remainder. Example scenario: A $40 transaction is attempted on a prepaid card
+                 * with a $25 balance. If partial approval is enabled, $25 can be authorized, at
+                 * which point the POS will prompt the user for an additional payment of $15.
+                 */
+                fun cardRetentionCapable(cardRetentionCapable: Boolean) =
+                    cardRetentionCapable(JsonField.of(cardRetentionCapable))
+
+                /**
+                 * True if the terminal is capable of partial approval. Partial approval is when
+                 * part of a transaction is approved and another payment must be used for the
+                 * remainder. Example scenario: A $40 transaction is attempted on a prepaid card
+                 * with a $25 balance. If partial approval is enabled, $25 can be authorized, at
+                 * which point the POS will prompt the user for an additional payment of $15.
+                 */
+                @JsonProperty("card_retention_capable")
+                @ExcludeMissing
+                fun cardRetentionCapable(cardRetentionCapable: JsonField<Boolean>) = apply {
+                    this.cardRetentionCapable = cardRetentionCapable
+                }
+
+                /** True if the sale was made at the place of business (vs. mobile). */
+                fun onPremise(onPremise: Boolean) = onPremise(JsonField.of(onPremise))
+
+                /** True if the sale was made at the place of business (vs. mobile). */
+                @JsonProperty("on_premise")
+                @ExcludeMissing
+                fun onPremise(onPremise: JsonField<Boolean>) = apply { this.onPremise = onPremise }
+
+                /** The person that is designed to swipe the card */
+                fun operator(operator: Operator) = operator(JsonField.of(operator))
+
+                /** The person that is designed to swipe the card */
+                @JsonProperty("operator")
+                @ExcludeMissing
+                fun operator(operator: JsonField<Operator>) = apply { this.operator = operator }
+
+                /** Status of whether the POS is able to accept PINs */
+                fun pinCapability(pinCapability: PinCapability) =
+                    pinCapability(JsonField.of(pinCapability))
+
+                /** Status of whether the POS is able to accept PINs */
+                @JsonProperty("pin_capability")
+                @ExcludeMissing
+                fun pinCapability(pinCapability: JsonField<PinCapability>) = apply {
+                    this.pinCapability = pinCapability
+                }
+
+                /** POS Type */
+                fun type(type: Type) = type(JsonField.of(type))
+
+                /** POS Type */
+                @JsonProperty("type")
+                @ExcludeMissing
+                fun type(type: JsonField<Type>) = apply { this.type = type }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): Terminal =
+                    Terminal(
+                        attended,
+                        cardRetentionCapable,
+                        onPremise,
+                        operator,
+                        pinCapability,
+                        type,
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            class Operator
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Operator && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val ADMINISTRATIVE = Operator(JsonField.of("ADMINISTRATIVE"))
+
+                    val CARDHOLDER = Operator(JsonField.of("CARDHOLDER"))
+
+                    val CARD_ACCEPTOR = Operator(JsonField.of("CARD_ACCEPTOR"))
+
+                    val UNKNOWN = Operator(JsonField.of("UNKNOWN"))
+
+                    fun of(value: String) = Operator(JsonField.of(value))
+                }
+
+                enum class Known {
+                    ADMINISTRATIVE,
+                    CARDHOLDER,
+                    CARD_ACCEPTOR,
+                    UNKNOWN,
+                }
+
+                enum class Value {
+                    ADMINISTRATIVE,
+                    CARDHOLDER,
+                    CARD_ACCEPTOR,
+                    UNKNOWN,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        ADMINISTRATIVE -> Value.ADMINISTRATIVE
+                        CARDHOLDER -> Value.CARDHOLDER
+                        CARD_ACCEPTOR -> Value.CARD_ACCEPTOR
+                        UNKNOWN -> Value.UNKNOWN
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        ADMINISTRATIVE -> Known.ADMINISTRATIVE
+                        CARDHOLDER -> Known.CARDHOLDER
+                        CARD_ACCEPTOR -> Known.CARD_ACCEPTOR
+                        UNKNOWN -> Known.UNKNOWN
+                        else -> throw LithicInvalidDataException("Unknown Operator: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+
+            class PinCapability
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is PinCapability && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val CAPABLE = PinCapability(JsonField.of("CAPABLE"))
+
+                    val INOPERATIVE = PinCapability(JsonField.of("INOPERATIVE"))
+
+                    val NOT_CAPABLE = PinCapability(JsonField.of("NOT_CAPABLE"))
+
+                    val UNSPECIFIED = PinCapability(JsonField.of("UNSPECIFIED"))
+
+                    fun of(value: String) = PinCapability(JsonField.of(value))
+                }
+
+                enum class Known {
+                    CAPABLE,
+                    INOPERATIVE,
+                    NOT_CAPABLE,
+                    UNSPECIFIED,
+                }
+
+                enum class Value {
+                    CAPABLE,
+                    INOPERATIVE,
+                    NOT_CAPABLE,
+                    UNSPECIFIED,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        CAPABLE -> Value.CAPABLE
+                        INOPERATIVE -> Value.INOPERATIVE
+                        NOT_CAPABLE -> Value.NOT_CAPABLE
+                        UNSPECIFIED -> Value.UNSPECIFIED
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        CAPABLE -> Known.CAPABLE
+                        INOPERATIVE -> Known.INOPERATIVE
+                        NOT_CAPABLE -> Known.NOT_CAPABLE
+                        UNSPECIFIED -> Known.UNSPECIFIED
+                        else -> throw LithicInvalidDataException("Unknown PinCapability: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+
+            class Type
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Type && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val ADMINISTRATIVE = Type(JsonField.of("ADMINISTRATIVE"))
+
+                    val ATM = Type(JsonField.of("ATM"))
+
+                    val AUTHORIZATION = Type(JsonField.of("AUTHORIZATION"))
+
+                    val COUPON_MACHINE = Type(JsonField.of("COUPON_MACHINE"))
+
+                    val DIAL_TERMINAL = Type(JsonField.of("DIAL_TERMINAL"))
+
+                    val ECOMMERCE = Type(JsonField.of("ECOMMERCE"))
+
+                    val ECR = Type(JsonField.of("ECR"))
+
+                    val FUEL_MACHINE = Type(JsonField.of("FUEL_MACHINE"))
+
+                    val HOME_TERMINAL = Type(JsonField.of("HOME_TERMINAL"))
+
+                    val MICR = Type(JsonField.of("MICR"))
+
+                    val OFF_PREMISE = Type(JsonField.of("OFF_PREMISE"))
+
+                    val PAYMENT = Type(JsonField.of("PAYMENT"))
+
+                    val PDA = Type(JsonField.of("PDA"))
+
+                    val PHONE = Type(JsonField.of("PHONE"))
+
+                    val POINT = Type(JsonField.of("POINT"))
+
+                    val POS_TERMINAL = Type(JsonField.of("POS_TERMINAL"))
+
+                    val PUBLIC_UTILITY = Type(JsonField.of("PUBLIC_UTILITY"))
+
+                    val SELF_SERVICE = Type(JsonField.of("SELF_SERVICE"))
+
+                    val TELEVISION = Type(JsonField.of("TELEVISION"))
+
+                    val TELLER = Type(JsonField.of("TELLER"))
+
+                    val TRAVELERS_CHECK_MACHINE = Type(JsonField.of("TRAVELERS_CHECK_MACHINE"))
+
+                    val UNKNOWN = Type(JsonField.of("UNKNOWN"))
+
+                    val VENDING = Type(JsonField.of("VENDING"))
+
+                    val VOICE = Type(JsonField.of("VOICE"))
+
+                    fun of(value: String) = Type(JsonField.of(value))
+                }
+
+                enum class Known {
+                    ADMINISTRATIVE,
+                    ATM,
+                    AUTHORIZATION,
+                    COUPON_MACHINE,
+                    DIAL_TERMINAL,
+                    ECOMMERCE,
+                    ECR,
+                    FUEL_MACHINE,
+                    HOME_TERMINAL,
+                    MICR,
+                    OFF_PREMISE,
+                    PAYMENT,
+                    PDA,
+                    PHONE,
+                    POINT,
+                    POS_TERMINAL,
+                    PUBLIC_UTILITY,
+                    SELF_SERVICE,
+                    TELEVISION,
+                    TELLER,
+                    TRAVELERS_CHECK_MACHINE,
+                    UNKNOWN,
+                    VENDING,
+                    VOICE,
+                }
+
+                enum class Value {
+                    ADMINISTRATIVE,
+                    ATM,
+                    AUTHORIZATION,
+                    COUPON_MACHINE,
+                    DIAL_TERMINAL,
+                    ECOMMERCE,
+                    ECR,
+                    FUEL_MACHINE,
+                    HOME_TERMINAL,
+                    MICR,
+                    OFF_PREMISE,
+                    PAYMENT,
+                    PDA,
+                    PHONE,
+                    POINT,
+                    POS_TERMINAL,
+                    PUBLIC_UTILITY,
+                    SELF_SERVICE,
+                    TELEVISION,
+                    TELLER,
+                    TRAVELERS_CHECK_MACHINE,
+                    UNKNOWN,
+                    VENDING,
+                    VOICE,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        ADMINISTRATIVE -> Value.ADMINISTRATIVE
+                        ATM -> Value.ATM
+                        AUTHORIZATION -> Value.AUTHORIZATION
+                        COUPON_MACHINE -> Value.COUPON_MACHINE
+                        DIAL_TERMINAL -> Value.DIAL_TERMINAL
+                        ECOMMERCE -> Value.ECOMMERCE
+                        ECR -> Value.ECR
+                        FUEL_MACHINE -> Value.FUEL_MACHINE
+                        HOME_TERMINAL -> Value.HOME_TERMINAL
+                        MICR -> Value.MICR
+                        OFF_PREMISE -> Value.OFF_PREMISE
+                        PAYMENT -> Value.PAYMENT
+                        PDA -> Value.PDA
+                        PHONE -> Value.PHONE
+                        POINT -> Value.POINT
+                        POS_TERMINAL -> Value.POS_TERMINAL
+                        PUBLIC_UTILITY -> Value.PUBLIC_UTILITY
+                        SELF_SERVICE -> Value.SELF_SERVICE
+                        TELEVISION -> Value.TELEVISION
+                        TELLER -> Value.TELLER
+                        TRAVELERS_CHECK_MACHINE -> Value.TRAVELERS_CHECK_MACHINE
+                        UNKNOWN -> Value.UNKNOWN
+                        VENDING -> Value.VENDING
+                        VOICE -> Value.VOICE
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        ADMINISTRATIVE -> Known.ADMINISTRATIVE
+                        ATM -> Known.ATM
+                        AUTHORIZATION -> Known.AUTHORIZATION
+                        COUPON_MACHINE -> Known.COUPON_MACHINE
+                        DIAL_TERMINAL -> Known.DIAL_TERMINAL
+                        ECOMMERCE -> Known.ECOMMERCE
+                        ECR -> Known.ECR
+                        FUEL_MACHINE -> Known.FUEL_MACHINE
+                        HOME_TERMINAL -> Known.HOME_TERMINAL
+                        MICR -> Known.MICR
+                        OFF_PREMISE -> Known.OFF_PREMISE
+                        PAYMENT -> Known.PAYMENT
+                        PDA -> Known.PDA
+                        PHONE -> Known.PHONE
+                        POINT -> Known.POINT
+                        POS_TERMINAL -> Known.POS_TERMINAL
+                        PUBLIC_UTILITY -> Known.PUBLIC_UTILITY
+                        SELF_SERVICE -> Known.SELF_SERVICE
+                        TELEVISION -> Known.TELEVISION
+                        TELLER -> Known.TELLER
+                        TRAVELERS_CHECK_MACHINE -> Known.TRAVELERS_CHECK_MACHINE
+                        UNKNOWN -> Known.UNKNOWN
+                        VENDING -> Known.VENDING
+                        VOICE -> Known.VOICE
+                        else -> throw LithicInvalidDataException("Unknown Type: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+        }
+    }
+
     class Result
     @JsonCreator
     private constructor(
@@ -2030,8 +3368,6 @@ private constructor(
 
         companion object {
 
-            val ACCOUNT_STATE_TRANSACTION = Result(JsonField.of("ACCOUNT_STATE_TRANSACTION"))
-
             val APPROVED = Result(JsonField.of("APPROVED"))
 
             val BANK_CONNECTION_ERROR = Result(JsonField.of("BANK_CONNECTION_ERROR"))
@@ -2042,13 +3378,9 @@ private constructor(
 
             val CARD_PAUSED = Result(JsonField.of("CARD_PAUSED"))
 
+            val DECLINED = Result(JsonField.of("DECLINED"))
+
             val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
-
-            val GLOBAL_MONTHLY_LIMIT = Result(JsonField.of("GLOBAL_MONTHLY_LIMIT"))
-
-            val GLOBAL_TRANSACTION_LIMIT = Result(JsonField.of("GLOBAL_TRANSACTION_LIMIT"))
-
-            val GLOBAL_WEEKLY_LIMIT = Result(JsonField.of("GLOBAL_WEEKLY_LIMIT"))
 
             val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
 
@@ -2074,16 +3406,13 @@ private constructor(
         }
 
         enum class Known {
-            ACCOUNT_STATE_TRANSACTION,
             APPROVED,
             BANK_CONNECTION_ERROR,
             BANK_NOT_VERIFIED,
             CARD_CLOSED,
             CARD_PAUSED,
+            DECLINED,
             FRAUD_ADVICE,
-            GLOBAL_MONTHLY_LIMIT,
-            GLOBAL_TRANSACTION_LIMIT,
-            GLOBAL_WEEKLY_LIMIT,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
             INSUFFICIENT_FUNDS,
@@ -2097,16 +3426,13 @@ private constructor(
         }
 
         enum class Value {
-            ACCOUNT_STATE_TRANSACTION,
             APPROVED,
             BANK_CONNECTION_ERROR,
             BANK_NOT_VERIFIED,
             CARD_CLOSED,
             CARD_PAUSED,
+            DECLINED,
             FRAUD_ADVICE,
-            GLOBAL_MONTHLY_LIMIT,
-            GLOBAL_TRANSACTION_LIMIT,
-            GLOBAL_WEEKLY_LIMIT,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
             INSUFFICIENT_FUNDS,
@@ -2122,16 +3448,13 @@ private constructor(
 
         fun value(): Value =
             when (this) {
-                ACCOUNT_STATE_TRANSACTION -> Value.ACCOUNT_STATE_TRANSACTION
                 APPROVED -> Value.APPROVED
                 BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
                 BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
                 CARD_CLOSED -> Value.CARD_CLOSED
                 CARD_PAUSED -> Value.CARD_PAUSED
+                DECLINED -> Value.DECLINED
                 FRAUD_ADVICE -> Value.FRAUD_ADVICE
-                GLOBAL_MONTHLY_LIMIT -> Value.GLOBAL_MONTHLY_LIMIT
-                GLOBAL_TRANSACTION_LIMIT -> Value.GLOBAL_TRANSACTION_LIMIT
-                GLOBAL_WEEKLY_LIMIT -> Value.GLOBAL_WEEKLY_LIMIT
                 INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Value.INCORRECT_PIN
                 INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
@@ -2147,16 +3470,13 @@ private constructor(
 
         fun known(): Known =
             when (this) {
-                ACCOUNT_STATE_TRANSACTION -> Known.ACCOUNT_STATE_TRANSACTION
                 APPROVED -> Known.APPROVED
                 BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
                 BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
                 CARD_CLOSED -> Known.CARD_CLOSED
                 CARD_PAUSED -> Known.CARD_PAUSED
+                DECLINED -> Known.DECLINED
                 FRAUD_ADVICE -> Known.FRAUD_ADVICE
-                GLOBAL_MONTHLY_LIMIT -> Known.GLOBAL_MONTHLY_LIMIT
-                GLOBAL_TRANSACTION_LIMIT -> Known.GLOBAL_TRANSACTION_LIMIT
-                GLOBAL_WEEKLY_LIMIT -> Known.GLOBAL_WEEKLY_LIMIT
                 INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Known.INCORRECT_PIN
                 INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
@@ -2195,8 +3515,6 @@ private constructor(
 
         companion object {
 
-            val BOUNCED = Status(JsonField.of("BOUNCED"))
-
             val DECLINED = Status(JsonField.of("DECLINED"))
 
             val EXPIRED = Status(JsonField.of("EXPIRED"))
@@ -2211,7 +3529,6 @@ private constructor(
         }
 
         enum class Known {
-            BOUNCED,
             DECLINED,
             EXPIRED,
             PENDING,
@@ -2220,7 +3537,6 @@ private constructor(
         }
 
         enum class Value {
-            BOUNCED,
             DECLINED,
             EXPIRED,
             PENDING,
@@ -2231,7 +3547,6 @@ private constructor(
 
         fun value(): Value =
             when (this) {
-                BOUNCED -> Value.BOUNCED
                 DECLINED -> Value.DECLINED
                 EXPIRED -> Value.EXPIRED
                 PENDING -> Value.PENDING
@@ -2242,7 +3557,6 @@ private constructor(
 
         fun known(): Known =
             when (this) {
-                BOUNCED -> Known.BOUNCED
                 DECLINED -> Known.DECLINED
                 EXPIRED -> Known.EXPIRED
                 PENDING -> Known.PENDING
@@ -2252,6 +3566,181 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+    }
+
+    @JsonDeserialize(builder = TokenInfo.Builder::class)
+    @NoAutoDetect
+    class TokenInfo
+    private constructor(
+        private val walletType: JsonField<WalletType>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        private var hashCode: Int = 0
+
+        /** Source of the token */
+        fun walletType(): WalletType? = walletType.getNullable("wallet_type")
+
+        /** Source of the token */
+        @JsonProperty("wallet_type") @ExcludeMissing fun _walletType() = walletType
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): TokenInfo = apply {
+            if (!validated) {
+                walletType()
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is TokenInfo &&
+                this.walletType == other.walletType &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(walletType, additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "TokenInfo{walletType=$walletType, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var walletType: JsonField<WalletType> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(tokenInfo: TokenInfo) = apply {
+                this.walletType = tokenInfo.walletType
+                additionalProperties(tokenInfo.additionalProperties)
+            }
+
+            /** Source of the token */
+            fun walletType(walletType: WalletType) = walletType(JsonField.of(walletType))
+
+            /** Source of the token */
+            @JsonProperty("wallet_type")
+            @ExcludeMissing
+            fun walletType(walletType: JsonField<WalletType>) = apply {
+                this.walletType = walletType
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): TokenInfo = TokenInfo(walletType, additionalProperties.toUnmodifiable())
+        }
+
+        class WalletType
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is WalletType && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val APPLE_PAY = WalletType(JsonField.of("APPLE_PAY"))
+
+                val GOOGLE_PAY = WalletType(JsonField.of("GOOGLE_PAY"))
+
+                val MASTERPASS = WalletType(JsonField.of("MASTERPASS"))
+
+                val MERCHANT = WalletType(JsonField.of("MERCHANT"))
+
+                val OTHER = WalletType(JsonField.of("OTHER"))
+
+                val SAMSUNG_PAY = WalletType(JsonField.of("SAMSUNG_PAY"))
+
+                fun of(value: String) = WalletType(JsonField.of(value))
+            }
+
+            enum class Known {
+                APPLE_PAY,
+                GOOGLE_PAY,
+                MASTERPASS,
+                MERCHANT,
+                OTHER,
+                SAMSUNG_PAY,
+            }
+
+            enum class Value {
+                APPLE_PAY,
+                GOOGLE_PAY,
+                MASTERPASS,
+                MERCHANT,
+                OTHER,
+                SAMSUNG_PAY,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    APPLE_PAY -> Value.APPLE_PAY
+                    GOOGLE_PAY -> Value.GOOGLE_PAY
+                    MASTERPASS -> Value.MASTERPASS
+                    MERCHANT -> Value.MERCHANT
+                    OTHER -> Value.OTHER
+                    SAMSUNG_PAY -> Value.SAMSUNG_PAY
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    APPLE_PAY -> Known.APPLE_PAY
+                    GOOGLE_PAY -> Known.GOOGLE_PAY
+                    MASTERPASS -> Known.MASTERPASS
+                    MERCHANT -> Known.MERCHANT
+                    OTHER -> Known.OTHER
+                    SAMSUNG_PAY -> Known.SAMSUNG_PAY
+                    else -> throw LithicInvalidDataException("Unknown WalletType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
     }
 
     @JsonDeserialize(builder = CardholderAuthentication.Builder::class)
