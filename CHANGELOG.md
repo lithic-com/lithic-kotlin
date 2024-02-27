@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.32.0 (2024-02-27)
+
+Full Changelog: [v0.31.0...v0.32.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.31.0...v0.32.0)
+
+### Features
+
+* **api:** updates ([#169](https://github.com/lithic-com/lithic-kotlin/issues/169)) ([33d9ebe](https://github.com/lithic-com/lithic-kotlin/commit/33d9ebe9df44773ce9ad5d52ba5164aef4f70317))
+
 ## 0.31.0 (2024-02-23)
 
 Full Changelog: [v0.30.0...v0.31.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.30.0...v0.31.0)
