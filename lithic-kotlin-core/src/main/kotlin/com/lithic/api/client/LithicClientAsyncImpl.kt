@@ -69,6 +69,8 @@ constructor(
         ResponderEndpointServiceAsyncImpl(clientOptions)
     }
 
+    private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
+
     private val externalBankAccounts: ExternalBankAccountServiceAsync by lazy {
         ExternalBankAccountServiceAsyncImpl(clientOptions)
     }
@@ -123,6 +125,8 @@ constructor(
     override fun transactions(): TransactionServiceAsync = transactions
 
     override fun responderEndpoints(): ResponderEndpointServiceAsync = responderEndpoints
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
 
