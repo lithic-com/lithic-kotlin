@@ -83,6 +83,4 @@ interface DisputeServiceAsync {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): DisputeEvidence
-
-    suspend fun uploadEvidence(disputeToken: String, file: ByteArray)
 }
