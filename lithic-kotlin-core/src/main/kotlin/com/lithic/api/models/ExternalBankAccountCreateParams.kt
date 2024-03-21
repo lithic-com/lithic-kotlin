@@ -331,6 +331,7 @@ constructor(
         private val currency: String?,
         private val dob: LocalDate?,
         private val doingBusinessAs: String?,
+        private val financialAccountToken: String?,
         private val name: String?,
         private val owner: String?,
         private val ownerType: OwnerType?,
@@ -364,6 +365,10 @@ constructor(
         @JsonProperty("dob") fun dob(): LocalDate? = dob
 
         @JsonProperty("doing_business_as") fun doingBusinessAs(): String? = doingBusinessAs
+
+        /** The financial account token of the operating account used to verify the account */
+        @JsonProperty("financial_account_token")
+        fun financialAccountToken(): String? = financialAccountToken
 
         @JsonProperty("name") fun name(): String? = name
 
@@ -409,6 +414,7 @@ constructor(
                 this.currency == other.currency &&
                 this.dob == other.dob &&
                 this.doingBusinessAs == other.doingBusinessAs &&
+                this.financialAccountToken == other.financialAccountToken &&
                 this.name == other.name &&
                 this.owner == other.owner &&
                 this.ownerType == other.ownerType &&
@@ -432,6 +438,7 @@ constructor(
                         currency,
                         dob,
                         doingBusinessAs,
+                        financialAccountToken,
                         name,
                         owner,
                         ownerType,
@@ -447,7 +454,7 @@ constructor(
         }
 
         override fun toString() =
-            "BankVerifiedCreateBankAccountApiRequest{accountNumber=$accountNumber, accountToken=$accountToken, address=$address, companyId=$companyId, country=$country, currency=$currency, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, type=$type, userDefinedId=$userDefinedId, verificationEnforcement=$verificationEnforcement, verificationMethod=$verificationMethod, additionalProperties=$additionalProperties}"
+            "BankVerifiedCreateBankAccountApiRequest{accountNumber=$accountNumber, accountToken=$accountToken, address=$address, companyId=$companyId, country=$country, currency=$currency, dob=$dob, doingBusinessAs=$doingBusinessAs, financialAccountToken=$financialAccountToken, name=$name, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, type=$type, userDefinedId=$userDefinedId, verificationEnforcement=$verificationEnforcement, verificationMethod=$verificationMethod, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -464,6 +471,7 @@ constructor(
             private var currency: String? = null
             private var dob: LocalDate? = null
             private var doingBusinessAs: String? = null
+            private var financialAccountToken: String? = null
             private var name: String? = null
             private var owner: String? = null
             private var ownerType: OwnerType? = null
@@ -485,6 +493,8 @@ constructor(
                 this.currency = bankVerifiedCreateBankAccountApiRequest.currency
                 this.dob = bankVerifiedCreateBankAccountApiRequest.dob
                 this.doingBusinessAs = bankVerifiedCreateBankAccountApiRequest.doingBusinessAs
+                this.financialAccountToken =
+                    bankVerifiedCreateBankAccountApiRequest.financialAccountToken
                 this.name = bankVerifiedCreateBankAccountApiRequest.name
                 this.owner = bankVerifiedCreateBankAccountApiRequest.owner
                 this.ownerType = bankVerifiedCreateBankAccountApiRequest.ownerType
@@ -524,6 +534,12 @@ constructor(
             @JsonProperty("doing_business_as")
             fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
+            }
+
+            /** The financial account token of the operating account used to verify the account */
+            @JsonProperty("financial_account_token")
+            fun financialAccountToken(financialAccountToken: String) = apply {
+                this.financialAccountToken = financialAccountToken
             }
 
             @JsonProperty("name") fun name(name: String) = apply { this.name = name }
@@ -581,6 +597,7 @@ constructor(
                     checkNotNull(currency) { "`currency` is required but was not set" },
                     dob,
                     doingBusinessAs,
+                    financialAccountToken,
                     name,
                     checkNotNull(owner) { "`owner` is required but was not set" },
                     checkNotNull(ownerType) { "`ownerType` is required but was not set" },

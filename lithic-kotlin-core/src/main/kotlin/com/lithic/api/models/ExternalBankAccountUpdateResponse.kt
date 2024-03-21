@@ -32,6 +32,7 @@ private constructor(
     private val doingBusinessAs: JsonField<String>,
     private val lastFour: JsonField<String>,
     private val name: JsonField<String>,
+    private val financialAccountToken: JsonField<String>,
     private val owner: JsonField<String>,
     private val ownerType: JsonField<OwnerType>,
     private val routingNumber: JsonField<String>,
@@ -87,6 +88,10 @@ private constructor(
 
     /** The nickname given to this record of External Bank Account */
     fun name(): String? = name.getNullable("name")
+
+    /** The financial account token of the operating account used to verify the account */
+    fun financialAccountToken(): String? =
+        financialAccountToken.getNullable("financial_account_token")
 
     /**
      * Legal Name of the business or individual who owns the external account. This will appear in
@@ -165,6 +170,11 @@ private constructor(
     /** The nickname given to this record of External Bank Account */
     @JsonProperty("name") @ExcludeMissing fun _name() = name
 
+    /** The financial account token of the operating account used to verify the account */
+    @JsonProperty("financial_account_token")
+    @ExcludeMissing
+    fun _financialAccountToken() = financialAccountToken
+
     /**
      * Legal Name of the business or individual who owns the external account. This will appear in
      * statements
@@ -224,6 +234,7 @@ private constructor(
             doingBusinessAs()
             lastFour()
             name()
+            financialAccountToken()
             owner()
             ownerType()
             routingNumber()
@@ -257,6 +268,7 @@ private constructor(
             this.doingBusinessAs == other.doingBusinessAs &&
             this.lastFour == other.lastFour &&
             this.name == other.name &&
+            this.financialAccountToken == other.financialAccountToken &&
             this.owner == other.owner &&
             this.ownerType == other.ownerType &&
             this.routingNumber == other.routingNumber &&
@@ -285,6 +297,7 @@ private constructor(
                     doingBusinessAs,
                     lastFour,
                     name,
+                    financialAccountToken,
                     owner,
                     ownerType,
                     routingNumber,
@@ -303,7 +316,7 @@ private constructor(
     }
 
     override fun toString() =
-        "ExternalBankAccountUpdateResponse{accountToken=$accountToken, address=$address, companyId=$companyId, country=$country, created=$created, currency=$currency, dob=$dob, doingBusinessAs=$doingBusinessAs, lastFour=$lastFour, name=$name, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, state=$state, token=$token, type=$type, userDefinedId=$userDefinedId, verificationAttempts=$verificationAttempts, verificationFailedReason=$verificationFailedReason, verificationMethod=$verificationMethod, verificationState=$verificationState, additionalProperties=$additionalProperties}"
+        "ExternalBankAccountUpdateResponse{accountToken=$accountToken, address=$address, companyId=$companyId, country=$country, created=$created, currency=$currency, dob=$dob, doingBusinessAs=$doingBusinessAs, lastFour=$lastFour, name=$name, financialAccountToken=$financialAccountToken, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, state=$state, token=$token, type=$type, userDefinedId=$userDefinedId, verificationAttempts=$verificationAttempts, verificationFailedReason=$verificationFailedReason, verificationMethod=$verificationMethod, verificationState=$verificationState, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -322,6 +335,7 @@ private constructor(
         private var doingBusinessAs: JsonField<String> = JsonMissing.of()
         private var lastFour: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
+        private var financialAccountToken: JsonField<String> = JsonMissing.of()
         private var owner: JsonField<String> = JsonMissing.of()
         private var ownerType: JsonField<OwnerType> = JsonMissing.of()
         private var routingNumber: JsonField<String> = JsonMissing.of()
@@ -347,6 +361,7 @@ private constructor(
                 this.doingBusinessAs = externalBankAccountUpdateResponse.doingBusinessAs
                 this.lastFour = externalBankAccountUpdateResponse.lastFour
                 this.name = externalBankAccountUpdateResponse.name
+                this.financialAccountToken = externalBankAccountUpdateResponse.financialAccountToken
                 this.owner = externalBankAccountUpdateResponse.owner
                 this.ownerType = externalBankAccountUpdateResponse.ownerType
                 this.routingNumber = externalBankAccountUpdateResponse.routingNumber
@@ -472,6 +487,17 @@ private constructor(
         @JsonProperty("name")
         @ExcludeMissing
         fun name(name: JsonField<String>) = apply { this.name = name }
+
+        /** The financial account token of the operating account used to verify the account */
+        fun financialAccountToken(financialAccountToken: String) =
+            financialAccountToken(JsonField.of(financialAccountToken))
+
+        /** The financial account token of the operating account used to verify the account */
+        @JsonProperty("financial_account_token")
+        @ExcludeMissing
+        fun financialAccountToken(financialAccountToken: JsonField<String>) = apply {
+            this.financialAccountToken = financialAccountToken
+        }
 
         /**
          * Legal Name of the business or individual who owns the external account. This will appear
@@ -611,6 +637,7 @@ private constructor(
                 doingBusinessAs,
                 lastFour,
                 name,
+                financialAccountToken,
                 owner,
                 ownerType,
                 routingNumber,
