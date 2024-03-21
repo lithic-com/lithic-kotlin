@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.33.0 (2024-03-21)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* add HttpRequestBody.contentLength() ([#173](https://github.com/lithic-com/lithic-kotlin/issues/173)) ([21d5a9e](https://github.com/lithic-com/lithic-kotlin/commit/21d5a9e0d46dc9c30670e6bd0f787a483d9abc8c))
+* **api:** adds closed state ([#179](https://github.com/lithic-com/lithic-kotlin/issues/179)) ([5a935c7](https://github.com/lithic-com/lithic-kotlin/commit/5a935c79ddd6f92b5ff643d8182d0bbe56d55ab0))
+* **api:** updates ([#178](https://github.com/lithic-com/lithic-kotlin/issues/178)) ([0be26d4](https://github.com/lithic-com/lithic-kotlin/commit/0be26d4af74bfcb142b89b615939465e64be04a5))
+
+
+### Chores
+
+* add api.md ([#171](https://github.com/lithic-com/lithic-kotlin/issues/171)) ([2158ad3](https://github.com/lithic-com/lithic-kotlin/commit/2158ad35178ec1764491a1cb57f030c031b40ff1))
+* add back removed code ([62e2839](https://github.com/lithic-com/lithic-kotlin/commit/62e28395b41af99f7c223bbb9830e957be85560b))
+* **docs:** add back custom readme code ([0ff33b5](https://github.com/lithic-com/lithic-kotlin/commit/0ff33b586ae0e297bda5b53c05ee3a0985b315e5))
+* **docs:** temporarily remove custom readme code ([#175](https://github.com/lithic-com/lithic-kotlin/issues/175)) ([bb93822](https://github.com/lithic-com/lithic-kotlin/commit/bb9382206c6b24ce16b757484ca213433e08bcfd))
+* temporarily remove various code as part of refactor ([#176](https://github.com/lithic-com/lithic-kotlin/issues/176)) ([7796e44](https://github.com/lithic-com/lithic-kotlin/commit/7796e44d8c6d8cc635710c1998c522c7975ed5eb))
+
+
+### Documentation
+
+* **readme:** consistent use of sentence case in headings ([#177](https://github.com/lithic-com/lithic-kotlin/issues/177)) ([df7ad43](https://github.com/lithic-com/lithic-kotlin/commit/df7ad43a977dde44bf67523fc19146900482963d))
+
 ## 0.32.0 (2024-02-27)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.31.0...v0.32.0)
