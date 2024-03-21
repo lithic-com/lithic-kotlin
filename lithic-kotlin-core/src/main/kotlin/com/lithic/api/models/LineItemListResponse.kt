@@ -542,10 +542,17 @@ private constructor(
 
         companion object {
 
+            val ACH_EXCEEDED_THRESHOLD = FinancialEventType(JsonField.of("ACH_EXCEEDED_THRESHOLD"))
+
             val ACH_INSUFFICIENT_FUNDS = FinancialEventType(JsonField.of("ACH_INSUFFICIENT_FUNDS"))
+
+            val ACH_INVALID_ACCOUNT = FinancialEventType(JsonField.of("ACH_INVALID_ACCOUNT"))
 
             val ACH_ORIGINATION_PENDING =
                 FinancialEventType(JsonField.of("ACH_ORIGINATION_PENDING"))
+
+            val ACH_ORIGINATION_PROCESSED =
+                FinancialEventType(JsonField.of("ACH_ORIGINATION_PROCESSED"))
 
             val ACH_ORIGINATION_RELEASED =
                 FinancialEventType(JsonField.of("ACH_ORIGINATION_RELEASED"))
@@ -555,6 +562,8 @@ private constructor(
             val ACH_RECEIPT_RELEASED = FinancialEventType(JsonField.of("ACH_RECEIPT_RELEASED"))
 
             val ACH_RETURN = FinancialEventType(JsonField.of("ACH_RETURN"))
+
+            val ACH_RETURN_PENDING = FinancialEventType(JsonField.of("ACH_RETURN_PENDING"))
 
             val AUTHORIZATION = FinancialEventType(JsonField.of("AUTHORIZATION"))
 
@@ -596,12 +605,16 @@ private constructor(
         }
 
         enum class Known {
+            ACH_EXCEEDED_THRESHOLD,
             ACH_INSUFFICIENT_FUNDS,
+            ACH_INVALID_ACCOUNT,
             ACH_ORIGINATION_PENDING,
+            ACH_ORIGINATION_PROCESSED,
             ACH_ORIGINATION_RELEASED,
             ACH_RECEIPT_PENDING,
             ACH_RECEIPT_RELEASED,
             ACH_RETURN,
+            ACH_RETURN_PENDING,
             AUTHORIZATION,
             AUTHORIZATION_ADVICE,
             AUTHORIZATION_EXPIRY,
@@ -621,12 +634,16 @@ private constructor(
         }
 
         enum class Value {
+            ACH_EXCEEDED_THRESHOLD,
             ACH_INSUFFICIENT_FUNDS,
+            ACH_INVALID_ACCOUNT,
             ACH_ORIGINATION_PENDING,
+            ACH_ORIGINATION_PROCESSED,
             ACH_ORIGINATION_RELEASED,
             ACH_RECEIPT_PENDING,
             ACH_RECEIPT_RELEASED,
             ACH_RETURN,
+            ACH_RETURN_PENDING,
             AUTHORIZATION,
             AUTHORIZATION_ADVICE,
             AUTHORIZATION_EXPIRY,
@@ -648,12 +665,16 @@ private constructor(
 
         fun value(): Value =
             when (this) {
+                ACH_EXCEEDED_THRESHOLD -> Value.ACH_EXCEEDED_THRESHOLD
                 ACH_INSUFFICIENT_FUNDS -> Value.ACH_INSUFFICIENT_FUNDS
+                ACH_INVALID_ACCOUNT -> Value.ACH_INVALID_ACCOUNT
                 ACH_ORIGINATION_PENDING -> Value.ACH_ORIGINATION_PENDING
+                ACH_ORIGINATION_PROCESSED -> Value.ACH_ORIGINATION_PROCESSED
                 ACH_ORIGINATION_RELEASED -> Value.ACH_ORIGINATION_RELEASED
                 ACH_RECEIPT_PENDING -> Value.ACH_RECEIPT_PENDING
                 ACH_RECEIPT_RELEASED -> Value.ACH_RECEIPT_RELEASED
                 ACH_RETURN -> Value.ACH_RETURN
+                ACH_RETURN_PENDING -> Value.ACH_RETURN_PENDING
                 AUTHORIZATION -> Value.AUTHORIZATION
                 AUTHORIZATION_ADVICE -> Value.AUTHORIZATION_ADVICE
                 AUTHORIZATION_EXPIRY -> Value.AUTHORIZATION_EXPIRY
@@ -675,12 +696,16 @@ private constructor(
 
         fun known(): Known =
             when (this) {
+                ACH_EXCEEDED_THRESHOLD -> Known.ACH_EXCEEDED_THRESHOLD
                 ACH_INSUFFICIENT_FUNDS -> Known.ACH_INSUFFICIENT_FUNDS
+                ACH_INVALID_ACCOUNT -> Known.ACH_INVALID_ACCOUNT
                 ACH_ORIGINATION_PENDING -> Known.ACH_ORIGINATION_PENDING
+                ACH_ORIGINATION_PROCESSED -> Known.ACH_ORIGINATION_PROCESSED
                 ACH_ORIGINATION_RELEASED -> Known.ACH_ORIGINATION_RELEASED
                 ACH_RECEIPT_PENDING -> Known.ACH_RECEIPT_PENDING
                 ACH_RECEIPT_RELEASED -> Known.ACH_RECEIPT_RELEASED
                 ACH_RETURN -> Known.ACH_RETURN
+                ACH_RETURN_PENDING -> Known.ACH_RETURN_PENDING
                 AUTHORIZATION -> Known.AUTHORIZATION
                 AUTHORIZATION_ADVICE -> Known.AUTHORIZATION_ADVICE
                 AUTHORIZATION_EXPIRY -> Known.AUTHORIZATION_EXPIRY
