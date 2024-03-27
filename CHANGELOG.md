@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.34.0 (2024-03-27)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** add settlement_report.updated enum ([#180](https://github.com/lithic-com/lithic-kotlin/issues/180)) ([ce2607d](https://github.com/lithic-com/lithic-kotlin/commit/ce2607d4ce630ef027c10647964a29ce2a094c22))
+* **api:** updates ([#182](https://github.com/lithic-com/lithic-kotlin/issues/182)) ([396c2a1](https://github.com/lithic-com/lithic-kotlin/commit/396c2a166f346ecdd0c9c385ccae61ef46ff5383))
+
 ## 0.33.0 (2024-03-21)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.32.0...v0.33.0)
