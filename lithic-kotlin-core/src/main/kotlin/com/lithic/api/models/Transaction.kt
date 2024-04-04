@@ -36,7 +36,7 @@ private constructor(
     private val merchantAuthorizationAmount: JsonField<Long>,
     private val merchantCurrency: JsonField<String>,
     private val network: JsonField<Network>,
-    private val networkRiskScore: JsonField<Double>,
+    private val networkRiskScore: JsonField<Long>,
     private val pos: JsonField<Pos>,
     private val result: JsonField<Result>,
     private val settledAmount: JsonField<Long>,
@@ -55,7 +55,7 @@ private constructor(
      * currency. Will be zero if no fee is assessed. Rebates may be transmitted as a negative value
      * to indicate credited fees.
      */
-    fun acquirerFee(): Long = acquirerFee.getRequired("acquirer_fee")
+    fun acquirerFee(): Long? = acquirerFee.getNullable("acquirer_fee")
 
     /**
      * Unique identifier assigned to a transaction by the acquirer that can be used in dispute and
@@ -74,15 +74,15 @@ private constructor(
      * Authorization amount (in cents) of the transaction, including any acquirer fees. This amount
      * always represents the amount authorized for the transaction, unaffected by settlement.
      */
-    fun authorizationAmount(): Long = authorizationAmount.getRequired("authorization_amount")
+    fun authorizationAmount(): Long? = authorizationAmount.getNullable("authorization_amount")
 
     /**
      * A fixed-width 6-digit numeric identifier that can be used to identify a transaction with
      * networks.
      */
-    fun authorizationCode(): String = authorizationCode.getRequired("authorization_code")
+    fun authorizationCode(): String? = authorizationCode.getNullable("authorization_code")
 
-    fun avs(): Avs = avs.getRequired("avs")
+    fun avs(): Avs? = avs.getNullable("avs")
 
     /** Token for the card used in this transaction. */
     fun cardToken(): String = cardToken.getRequired("card_token")
@@ -102,14 +102,14 @@ private constructor(
      * Analogous to the "amount" property, but will represent the amount in the transaction's local
      * currency (smallest unit), including any acquirer fees.
      */
-    fun merchantAmount(): Long = merchantAmount.getRequired("merchant_amount")
+    fun merchantAmount(): Long? = merchantAmount.getNullable("merchant_amount")
 
     /**
      * Analogous to the "authorization_amount" property, but will represent the amount in the
      * transaction's local currency (smallest unit), including any acquirer fees.
      */
-    fun merchantAuthorizationAmount(): Long =
-        merchantAuthorizationAmount.getRequired("merchant_authorization_amount")
+    fun merchantAuthorizationAmount(): Long? =
+        merchantAuthorizationAmount.getNullable("merchant_authorization_amount")
 
     /** 3-digit alphabetic ISO 4217 code for the local currency of the transaction. */
     fun merchantCurrency(): String = merchantCurrency.getRequired("merchant_currency")
@@ -130,9 +130,9 @@ private constructor(
      * A score may not be available for all authorizations, and where it is not, this field will be
      * set to null.
      */
-    fun networkRiskScore(): Double = networkRiskScore.getRequired("network_risk_score")
+    fun networkRiskScore(): Long? = networkRiskScore.getNullable("network_risk_score")
 
-    fun pos(): Pos = pos.getRequired("pos")
+    fun pos(): Pos? = pos.getNullable("pos")
 
     /** `APPROVED` or decline reason. See Event result types */
     fun result(): Result = result.getRequired("result")
@@ -156,7 +156,7 @@ private constructor(
     /** Globally unique identifier. */
     fun token(): String = token.getRequired("token")
 
-    fun tokenInfo(): TokenInfo = tokenInfo.getRequired("token_info")
+    fun tokenInfo(): TokenInfo? = tokenInfo.getNullable("token_info")
 
     /**
      * Fee assessed by the merchant and paid for by the cardholder in the smallest unit of the
@@ -282,7 +282,7 @@ private constructor(
             amount()
             authorizationAmount()
             authorizationCode()
-            avs().validate()
+            avs()?.validate()
             cardToken()
             cardholderAuthentication()?.validate()
             created()
@@ -293,12 +293,12 @@ private constructor(
             merchantCurrency()
             network()
             networkRiskScore()
-            pos().validate()
+            pos()?.validate()
             result()
             settledAmount()
             status()
             token()
-            tokenInfo().validate()
+            tokenInfo()?.validate()
             validated = true
         }
     }
@@ -393,7 +393,7 @@ private constructor(
         private var merchantAuthorizationAmount: JsonField<Long> = JsonMissing.of()
         private var merchantCurrency: JsonField<String> = JsonMissing.of()
         private var network: JsonField<Network> = JsonMissing.of()
-        private var networkRiskScore: JsonField<Double> = JsonMissing.of()
+        private var networkRiskScore: JsonField<Long> = JsonMissing.of()
         private var pos: JsonField<Pos> = JsonMissing.of()
         private var result: JsonField<Result> = JsonMissing.of()
         private var settledAmount: JsonField<Long> = JsonMissing.of()
@@ -623,7 +623,7 @@ private constructor(
          * A score may not be available for all authorizations, and where it is not, this field will
          * be set to null.
          */
-        fun networkRiskScore(networkRiskScore: Double) =
+        fun networkRiskScore(networkRiskScore: Long) =
             networkRiskScore(JsonField.of(networkRiskScore))
 
         /**
@@ -637,7 +637,7 @@ private constructor(
          */
         @JsonProperty("network_risk_score")
         @ExcludeMissing
-        fun networkRiskScore(networkRiskScore: JsonField<Double>) = apply {
+        fun networkRiskScore(networkRiskScore: JsonField<Long>) = apply {
             this.networkRiskScore = networkRiskScore
         }
 
