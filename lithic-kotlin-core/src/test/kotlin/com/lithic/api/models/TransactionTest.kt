@@ -52,7 +52,7 @@ class TransactionTest {
                 .merchantAuthorizationAmount(123L)
                 .merchantCurrency("USD")
                 .network(Transaction.Network.INTERLINK)
-                .networkRiskScore(42.23)
+                .networkRiskScore(123L)
                 .pos(
                     Transaction.Pos.builder()
                         .entryMode(
@@ -152,7 +152,7 @@ class TransactionTest {
         assertThat(transaction.merchantAuthorizationAmount()).isEqualTo(123L)
         assertThat(transaction.merchantCurrency()).isEqualTo("USD")
         assertThat(transaction.network()).isEqualTo(Transaction.Network.INTERLINK)
-        assertThat(transaction.networkRiskScore()).isEqualTo(42.23)
+        assertThat(transaction.networkRiskScore()).isEqualTo(123L)
         assertThat(transaction.pos())
             .isEqualTo(
                 Transaction.Pos.builder()
