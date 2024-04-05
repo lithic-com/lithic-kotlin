@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.34.0 (2024-04-05)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** add detailed result CARD_NOT_ACTIVATED ([#190](https://github.com/lithic-com/lithic-kotlin/issues/190)) ([4edf742](https://github.com/lithic-com/lithic-kotlin/commit/4edf7420ddc32ae389b6a37bf002f3960c7bde32))
+* **api:** add event type digital_wallet.tokenization_two_factor_authentication_code_sent ([#184](https://github.com/lithic-com/lithic-kotlin/issues/184)) ([a7935a9](https://github.com/lithic-com/lithic-kotlin/commit/a7935a974891436f593c7d4814394f211be6c402))
+* **api:** add params spend_limit and spend_velocity ([#189](https://github.com/lithic-com/lithic-kotlin/issues/189)) ([d33dd08](https://github.com/lithic-com/lithic-kotlin/commit/d33dd08878d15faeaa554fff9e77b91062cb55f9))
+* **api:** add settlement_report.updated enum ([#180](https://github.com/lithic-com/lithic-kotlin/issues/180)) ([ce2607d](https://github.com/lithic-com/lithic-kotlin/commit/ce2607d4ce630ef027c10647964a29ce2a094c22))
+* **api:** update financial transaction status enum ([#183](https://github.com/lithic-com/lithic-kotlin/issues/183)) ([2439098](https://github.com/lithic-com/lithic-kotlin/commit/24390983242a0208eaec42c8ea56e53894be77b7))
+* **api:** update link to encrypted PIN block docs ([#191](https://github.com/lithic-com/lithic-kotlin/issues/191)) ([c420f88](https://github.com/lithic-com/lithic-kotlin/commit/c420f88a4cb92e1dc2d3d0dd47f47602e67a5047))
+* **api:** updates ([#182](https://github.com/lithic-com/lithic-kotlin/issues/182)) ([396c2a1](https://github.com/lithic-com/lithic-kotlin/commit/396c2a166f346ecdd0c9c385ccae61ef46ff5383))
+
+
+### Chores
+
+* **deps:** update jackson to v2.14.3 ([#185](https://github.com/lithic-com/lithic-kotlin/issues/185)) ([5fb4035](https://github.com/lithic-com/lithic-kotlin/commit/5fb4035b3bab6866f994b843c2728ac2bde35bc7))
+* **deps:** update junit5 to v5.9.3 ([#187](https://github.com/lithic-com/lithic-kotlin/issues/187)) ([506c037](https://github.com/lithic-com/lithic-kotlin/commit/506c037651d8d98928577e01484810ab69fe37a1))
+* **deps:** update kotlin-gradle-plugin to v1.9.23 ([#186](https://github.com/lithic-com/lithic-kotlin/issues/186)) ([fc02542](https://github.com/lithic-com/lithic-kotlin/commit/fc025428acda54f2faa49ff03f70713c2e73e2d9))
+* **deps:** update kotlinx-coroutines-core to v1.8.0 ([#188](https://github.com/lithic-com/lithic-kotlin/issues/188)) ([41e4d21](https://github.com/lithic-com/lithic-kotlin/commit/41e4d214f4fee943a60e341f59dafc6d66234818))
+
 ## 0.33.0 (2024-03-21)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.32.0...v0.33.0)
