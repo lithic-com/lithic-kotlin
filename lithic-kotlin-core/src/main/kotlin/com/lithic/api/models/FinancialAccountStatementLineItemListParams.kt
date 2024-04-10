@@ -2,6 +2,7 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.models.*
@@ -16,6 +17,7 @@ constructor(
     private val startingAfter: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun financialAccountToken(): String = financialAccountToken
@@ -51,6 +53,8 @@ constructor(
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -63,7 +67,8 @@ constructor(
             this.pageSize == other.pageSize &&
             this.startingAfter == other.startingAfter &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
@@ -75,11 +80,12 @@ constructor(
             startingAfter,
             additionalQueryParams,
             additionalHeaders,
+            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "FinancialAccountStatementLineItemListParams{financialAccountToken=$financialAccountToken, statementToken=$statementToken, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "FinancialAccountStatementLineItemListParams{financialAccountToken=$financialAccountToken, statementToken=$statementToken, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -98,6 +104,7 @@ constructor(
         private var startingAfter: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
+        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             financialAccountStatementLineItemListParams: FinancialAccountStatementLineItemListParams
@@ -110,6 +117,9 @@ constructor(
             this.startingAfter = financialAccountStatementLineItemListParams.startingAfter
             additionalQueryParams(financialAccountStatementLineItemListParams.additionalQueryParams)
             additionalHeaders(financialAccountStatementLineItemListParams.additionalHeaders)
+            additionalBodyProperties(
+                financialAccountStatementLineItemListParams.additionalBodyProperties
+            )
         }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
@@ -173,6 +183,20 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.clear()
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            this.additionalBodyProperties.put(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
+
         fun build(): FinancialAccountStatementLineItemListParams =
             FinancialAccountStatementLineItemListParams(
                 checkNotNull(financialAccountToken) {
@@ -184,6 +208,7 @@ constructor(
                 startingAfter,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
             )
     }
 }
