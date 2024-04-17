@@ -59,7 +59,13 @@ private constructor(
     /**
      * Event types:
      * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient balance.
-     * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
+     * - `ACH_ORIGINATION_PENDING` - ACH origination received and pending approval/release from an
+     *   ACH hold.
+     * - `ACH_ORIGINATION_APPROVED` - ACH origination has been approved and pending processing.
+     * - `ACH_ORIGINATION_DECLINED` - ACH origination has been declined.
+     * - `ACH_ORIGINATION_CANCELLED` - ACH origination has been cancelled.
+     * - `ACH_ORIGINATION_PROCESSED` - ACH origination has been processed.
+     * - `ACH_ORIGINATION_SETTLED` - ACH origination has settled.
      * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available balance.
      * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
      * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
@@ -121,7 +127,13 @@ private constructor(
     /**
      * Event types:
      * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient balance.
-     * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
+     * - `ACH_ORIGINATION_PENDING` - ACH origination received and pending approval/release from an
+     *   ACH hold.
+     * - `ACH_ORIGINATION_APPROVED` - ACH origination has been approved and pending processing.
+     * - `ACH_ORIGINATION_DECLINED` - ACH origination has been declined.
+     * - `ACH_ORIGINATION_CANCELLED` - ACH origination has been cancelled.
+     * - `ACH_ORIGINATION_PROCESSED` - ACH origination has been processed.
+     * - `ACH_ORIGINATION_SETTLED` - ACH origination has settled.
      * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available balance.
      * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
      * - `ACH_RECEIPT_RELEASED` - ACH receipt released from pending to available balance.
@@ -315,7 +327,13 @@ private constructor(
          * Event types:
          * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
          *   balance.
-         * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
+         * - `ACH_ORIGINATION_PENDING` - ACH origination received and pending approval/release from
+         *   an ACH hold.
+         * - `ACH_ORIGINATION_APPROVED` - ACH origination has been approved and pending processing.
+         * - `ACH_ORIGINATION_DECLINED` - ACH origination has been declined.
+         * - `ACH_ORIGINATION_CANCELLED` - ACH origination has been cancelled.
+         * - `ACH_ORIGINATION_PROCESSED` - ACH origination has been processed.
+         * - `ACH_ORIGINATION_SETTLED` - ACH origination has settled.
          * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
          *   balance.
          * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
@@ -351,7 +369,13 @@ private constructor(
          * Event types:
          * - `ACH_INSUFFICIENT_FUNDS` - Attempted ACH origination declined due to insufficient
          *   balance.
-         * - `ACH_ORIGINATION_PENDING` - ACH origination pending release from an ACH hold.
+         * - `ACH_ORIGINATION_PENDING` - ACH origination received and pending approval/release from
+         *   an ACH hold.
+         * - `ACH_ORIGINATION_APPROVED` - ACH origination has been approved and pending processing.
+         * - `ACH_ORIGINATION_DECLINED` - ACH origination has been declined.
+         * - `ACH_ORIGINATION_CANCELLED` - ACH origination has been cancelled.
+         * - `ACH_ORIGINATION_PROCESSED` - ACH origination has been processed.
+         * - `ACH_ORIGINATION_SETTLED` - ACH origination has settled.
          * - `ACH_ORIGINATION_RELEASED` - ACH origination released from pending to available
          *   balance.
          * - `ACH_RECEIPT_PENDING` - ACH receipt pending release from an ACH holder.
@@ -552,8 +576,20 @@ private constructor(
             val ACH_ORIGINATION_PENDING =
                 FinancialEventType(JsonField.of("ACH_ORIGINATION_PENDING"))
 
+            val ACH_ORIGINATION_APPROVED =
+                FinancialEventType(JsonField.of("ACH_ORIGINATION_APPROVED"))
+
+            val ACH_ORIGINATION_DECLINED =
+                FinancialEventType(JsonField.of("ACH_ORIGINATION_DECLINED"))
+
+            val ACH_ORIGINATION_CANCELLED =
+                FinancialEventType(JsonField.of("ACH_ORIGINATION_CANCELLED"))
+
             val ACH_ORIGINATION_PROCESSED =
                 FinancialEventType(JsonField.of("ACH_ORIGINATION_PROCESSED"))
+
+            val ACH_ORIGINATION_SETTLED =
+                FinancialEventType(JsonField.of("ACH_ORIGINATION_SETTLED"))
 
             val ACH_ORIGINATION_RELEASED =
                 FinancialEventType(JsonField.of("ACH_ORIGINATION_RELEASED"))
@@ -610,7 +646,11 @@ private constructor(
             ACH_INSUFFICIENT_FUNDS,
             ACH_INVALID_ACCOUNT,
             ACH_ORIGINATION_PENDING,
+            ACH_ORIGINATION_APPROVED,
+            ACH_ORIGINATION_DECLINED,
+            ACH_ORIGINATION_CANCELLED,
             ACH_ORIGINATION_PROCESSED,
+            ACH_ORIGINATION_SETTLED,
             ACH_ORIGINATION_RELEASED,
             ACH_RECEIPT_PENDING,
             ACH_RECEIPT_RELEASED,
@@ -639,7 +679,11 @@ private constructor(
             ACH_INSUFFICIENT_FUNDS,
             ACH_INVALID_ACCOUNT,
             ACH_ORIGINATION_PENDING,
+            ACH_ORIGINATION_APPROVED,
+            ACH_ORIGINATION_DECLINED,
+            ACH_ORIGINATION_CANCELLED,
             ACH_ORIGINATION_PROCESSED,
+            ACH_ORIGINATION_SETTLED,
             ACH_ORIGINATION_RELEASED,
             ACH_RECEIPT_PENDING,
             ACH_RECEIPT_RELEASED,
@@ -670,7 +714,11 @@ private constructor(
                 ACH_INSUFFICIENT_FUNDS -> Value.ACH_INSUFFICIENT_FUNDS
                 ACH_INVALID_ACCOUNT -> Value.ACH_INVALID_ACCOUNT
                 ACH_ORIGINATION_PENDING -> Value.ACH_ORIGINATION_PENDING
+                ACH_ORIGINATION_APPROVED -> Value.ACH_ORIGINATION_APPROVED
+                ACH_ORIGINATION_DECLINED -> Value.ACH_ORIGINATION_DECLINED
+                ACH_ORIGINATION_CANCELLED -> Value.ACH_ORIGINATION_CANCELLED
                 ACH_ORIGINATION_PROCESSED -> Value.ACH_ORIGINATION_PROCESSED
+                ACH_ORIGINATION_SETTLED -> Value.ACH_ORIGINATION_SETTLED
                 ACH_ORIGINATION_RELEASED -> Value.ACH_ORIGINATION_RELEASED
                 ACH_RECEIPT_PENDING -> Value.ACH_RECEIPT_PENDING
                 ACH_RECEIPT_RELEASED -> Value.ACH_RECEIPT_RELEASED
@@ -701,7 +749,11 @@ private constructor(
                 ACH_INSUFFICIENT_FUNDS -> Known.ACH_INSUFFICIENT_FUNDS
                 ACH_INVALID_ACCOUNT -> Known.ACH_INVALID_ACCOUNT
                 ACH_ORIGINATION_PENDING -> Known.ACH_ORIGINATION_PENDING
+                ACH_ORIGINATION_APPROVED -> Known.ACH_ORIGINATION_APPROVED
+                ACH_ORIGINATION_DECLINED -> Known.ACH_ORIGINATION_DECLINED
+                ACH_ORIGINATION_CANCELLED -> Known.ACH_ORIGINATION_CANCELLED
                 ACH_ORIGINATION_PROCESSED -> Known.ACH_ORIGINATION_PROCESSED
+                ACH_ORIGINATION_SETTLED -> Known.ACH_ORIGINATION_SETTLED
                 ACH_ORIGINATION_RELEASED -> Known.ACH_ORIGINATION_RELEASED
                 ACH_RECEIPT_PENDING -> Known.ACH_RECEIPT_PENDING
                 ACH_RECEIPT_RELEASED -> Known.ACH_RECEIPT_RELEASED
