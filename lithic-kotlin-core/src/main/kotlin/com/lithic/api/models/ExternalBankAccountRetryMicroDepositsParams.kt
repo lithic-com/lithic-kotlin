@@ -2,6 +2,11 @@
 
 package com.lithic.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.toUnmodifiable
@@ -11,6 +16,7 @@ import java.util.Objects
 class ExternalBankAccountRetryMicroDepositsParams
 constructor(
     private val externalBankAccountToken: String,
+    private val financialAccountToken: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -18,8 +24,13 @@ constructor(
 
     fun externalBankAccountToken(): String = externalBankAccountToken
 
-    internal fun getBody(): Map<String, JsonValue>? {
-        return additionalBodyProperties.ifEmpty { null }
+    fun financialAccountToken(): String? = financialAccountToken
+
+    internal fun getBody(): ExternalBankAccountRetryMicroDepositsBody {
+        return ExternalBankAccountRetryMicroDepositsBody(
+            financialAccountToken,
+            additionalBodyProperties
+        )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -30,6 +41,98 @@ constructor(
         return when (index) {
             0 -> externalBankAccountToken
             else -> ""
+        }
+    }
+
+    @JsonDeserialize(builder = ExternalBankAccountRetryMicroDepositsBody.Builder::class)
+    @NoAutoDetect
+    class ExternalBankAccountRetryMicroDepositsBody
+    internal constructor(
+        private val financialAccountToken: String?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        /**
+         * The financial account token of the operating account, which will provide the funds for
+         * micro deposits used to verify the account
+         */
+        @JsonProperty("financial_account_token")
+        fun financialAccountToken(): String? = financialAccountToken
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ExternalBankAccountRetryMicroDepositsBody &&
+                this.financialAccountToken == other.financialAccountToken &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(financialAccountToken, additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "ExternalBankAccountRetryMicroDepositsBody{financialAccountToken=$financialAccountToken, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var financialAccountToken: String? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(
+                externalBankAccountRetryMicroDepositsBody: ExternalBankAccountRetryMicroDepositsBody
+            ) = apply {
+                this.financialAccountToken =
+                    externalBankAccountRetryMicroDepositsBody.financialAccountToken
+                additionalProperties(externalBankAccountRetryMicroDepositsBody.additionalProperties)
+            }
+
+            /**
+             * The financial account token of the operating account, which will provide the funds
+             * for micro deposits used to verify the account
+             */
+            @JsonProperty("financial_account_token")
+            fun financialAccountToken(financialAccountToken: String) = apply {
+                this.financialAccountToken = financialAccountToken
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): ExternalBankAccountRetryMicroDepositsBody =
+                ExternalBankAccountRetryMicroDepositsBody(
+                    financialAccountToken,
+                    additionalProperties.toUnmodifiable()
+                )
         }
     }
 
@@ -46,6 +149,7 @@ constructor(
 
         return other is ExternalBankAccountRetryMicroDepositsParams &&
             this.externalBankAccountToken == other.externalBankAccountToken &&
+            this.financialAccountToken == other.financialAccountToken &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -54,6 +158,7 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             externalBankAccountToken,
+            financialAccountToken,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -61,7 +166,7 @@ constructor(
     }
 
     override fun toString() =
-        "ExternalBankAccountRetryMicroDepositsParams{externalBankAccountToken=$externalBankAccountToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalBankAccountRetryMicroDepositsParams{externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -74,6 +179,7 @@ constructor(
     class Builder {
 
         private var externalBankAccountToken: String? = null
+        private var financialAccountToken: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -83,6 +189,8 @@ constructor(
         ) = apply {
             this.externalBankAccountToken =
                 externalBankAccountRetryMicroDepositsParams.externalBankAccountToken
+            this.financialAccountToken =
+                externalBankAccountRetryMicroDepositsParams.financialAccountToken
             additionalQueryParams(externalBankAccountRetryMicroDepositsParams.additionalQueryParams)
             additionalHeaders(externalBankAccountRetryMicroDepositsParams.additionalHeaders)
             additionalBodyProperties(
@@ -92,6 +200,14 @@ constructor(
 
         fun externalBankAccountToken(externalBankAccountToken: String) = apply {
             this.externalBankAccountToken = externalBankAccountToken
+        }
+
+        /**
+         * The financial account token of the operating account, which will provide the funds for
+         * micro deposits used to verify the account
+         */
+        fun financialAccountToken(financialAccountToken: String) = apply {
+            this.financialAccountToken = financialAccountToken
         }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -153,6 +269,7 @@ constructor(
                 checkNotNull(externalBankAccountToken) {
                     "`externalBankAccountToken` is required but was not set"
                 },
+                financialAccountToken,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
