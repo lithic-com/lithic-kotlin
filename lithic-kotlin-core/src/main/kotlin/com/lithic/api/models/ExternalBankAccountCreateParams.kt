@@ -367,7 +367,10 @@ constructor(
 
         @JsonProperty("doing_business_as") fun doingBusinessAs(): String? = doingBusinessAs
 
-        /** The financial account token of the operating account used to verify the account */
+        /**
+         * The financial account token of the operating account, which will provide the funds for
+         * micro deposits used to verify the account
+         */
         @JsonProperty("financial_account_token")
         fun financialAccountToken(): String? = financialAccountToken
 
@@ -537,7 +540,10 @@ constructor(
                 this.doingBusinessAs = doingBusinessAs
             }
 
-            /** The financial account token of the operating account used to verify the account */
+            /**
+             * The financial account token of the operating account, which will provide the funds
+             * for micro deposits used to verify the account
+             */
             @JsonProperty("financial_account_token")
             fun financialAccountToken(financialAccountToken: String) = apply {
                 this.financialAccountToken = financialAccountToken
@@ -598,7 +604,9 @@ constructor(
                     checkNotNull(currency) { "`currency` is required but was not set" },
                     dob,
                     doingBusinessAs,
-                    financialAccountToken,
+                    checkNotNull(financialAccountToken) {
+                        "`financialAccountToken` is required but was not set"
+                    },
                     name,
                     checkNotNull(owner) { "`owner` is required but was not set" },
                     checkNotNull(ownerType) { "`ownerType` is required but was not set" },

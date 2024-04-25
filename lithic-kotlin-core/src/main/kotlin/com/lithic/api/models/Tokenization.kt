@@ -25,6 +25,7 @@ private constructor(
     private val accountToken: JsonField<String>,
     private val cardToken: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
+    private val digitalCardArtToken: JsonField<String>,
     private val events: JsonField<List<TokenizationEvent>>,
     private val status: JsonField<Status>,
     private val token: JsonField<String>,
@@ -46,6 +47,13 @@ private constructor(
 
     /** Date and time when the tokenization first occurred. UTC time zone. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+     * This will be null if the tokenization was created without an associated digital card art. See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     */
+    fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
 
     /** A list of events related to the tokenization. */
     fun events(): List<TokenizationEvent>? = events.getNullable("events")
@@ -74,6 +82,15 @@ private constructor(
 
     /** Date and time when the tokenization first occurred. UTC time zone. */
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+    /**
+     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+     * This will be null if the tokenization was created without an associated digital card art. See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     */
+    @JsonProperty("digital_card_art_token")
+    @ExcludeMissing
+    fun _digitalCardArtToken() = digitalCardArtToken
 
     /** A list of events related to the tokenization. */
     @JsonProperty("events") @ExcludeMissing fun _events() = events
@@ -106,6 +123,7 @@ private constructor(
             accountToken()
             cardToken()
             createdAt()
+            digitalCardArtToken()
             events()?.forEach { it.validate() }
             status()
             token()
@@ -127,6 +145,7 @@ private constructor(
             this.accountToken == other.accountToken &&
             this.cardToken == other.cardToken &&
             this.createdAt == other.createdAt &&
+            this.digitalCardArtToken == other.digitalCardArtToken &&
             this.events == other.events &&
             this.status == other.status &&
             this.token == other.token &&
@@ -143,6 +162,7 @@ private constructor(
                     accountToken,
                     cardToken,
                     createdAt,
+                    digitalCardArtToken,
                     events,
                     status,
                     token,
@@ -156,7 +176,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Tokenization{accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, events=$events, status=$status, token=$token, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "Tokenization{accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, digitalCardArtToken=$digitalCardArtToken, events=$events, status=$status, token=$token, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -168,6 +188,7 @@ private constructor(
         private var accountToken: JsonField<String> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var events: JsonField<List<TokenizationEvent>> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
@@ -180,6 +201,7 @@ private constructor(
             this.accountToken = tokenization.accountToken
             this.cardToken = tokenization.cardToken
             this.createdAt = tokenization.createdAt
+            this.digitalCardArtToken = tokenization.digitalCardArtToken
             this.events = tokenization.events
             this.status = tokenization.status
             this.token = tokenization.token
@@ -214,6 +236,27 @@ private constructor(
         @JsonProperty("created_at")
         @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /**
+         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+         * This will be null if the tokenization was created without an associated digital card art.
+         * See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         */
+        fun digitalCardArtToken(digitalCardArtToken: String) =
+            digitalCardArtToken(JsonField.of(digitalCardArtToken))
+
+        /**
+         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+         * This will be null if the tokenization was created without an associated digital card art.
+         * See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         */
+        @JsonProperty("digital_card_art_token")
+        @ExcludeMissing
+        fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
+            this.digitalCardArtToken = digitalCardArtToken
+        }
 
         /** A list of events related to the tokenization. */
         fun events(events: List<TokenizationEvent>) = events(JsonField.of(events))
@@ -288,6 +331,7 @@ private constructor(
                 accountToken,
                 cardToken,
                 createdAt,
+                digitalCardArtToken,
                 events.map { it.toUnmodifiable() },
                 status,
                 token,
