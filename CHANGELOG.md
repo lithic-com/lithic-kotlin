@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.35.0 (2024-05-01)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** changes to balance-related return types and other API changes ([#202](https://github.com/lithic-com/lithic-kotlin/issues/202)) ([777e8dc](https://github.com/lithic-com/lithic-kotlin/commit/777e8dc55de04ab0cff731d67cea17e32679ba6e))
+* **api:** updates ([#194](https://github.com/lithic-com/lithic-kotlin/issues/194)) ([e4487eb](https://github.com/lithic-com/lithic-kotlin/commit/e4487eb9105220ec9ad9aff6eace588ca33e5ddb))
+* **api:** updates ([#198](https://github.com/lithic-com/lithic-kotlin/issues/198)) ([00557c7](https://github.com/lithic-com/lithic-kotlin/commit/00557c7d9a3ac8cdf7b061c09fe2a64dc52919cf))
+* **api:** updates ([#207](https://github.com/lithic-com/lithic-kotlin/issues/207)) ([7536d66](https://github.com/lithic-com/lithic-kotlin/commit/7536d66948e6fe133a76b17e50717654c74d5367))
+* **client:** implement support for multipart/form-data body requests ([#195](https://github.com/lithic-com/lithic-kotlin/issues/195)) ([8a4085c](https://github.com/lithic-com/lithic-kotlin/commit/8a4085ce387d65778b9ab81b81b82cbd7cb2b791))
+
+
+### Bug Fixes
+
+* **client:** do not strip date-time 00 seconds when getQueryParams() is called ([#203](https://github.com/lithic-com/lithic-kotlin/issues/203)) ([9b86dbc](https://github.com/lithic-com/lithic-kotlin/commit/9b86dbcafca9e6667c687f79550c46990ccb9258))
+* **internal:** escape characters for POM description in gradle publish ([#204](https://github.com/lithic-com/lithic-kotlin/issues/204)) ([07642c1](https://github.com/lithic-com/lithic-kotlin/commit/07642c1cb84c0f5185081551425b1012c2f8f14a))
+
+
+### Chores
+
+* add back uploadEvidence override ([bc68d66](https://github.com/lithic-com/lithic-kotlin/commit/bc68d6669c71bd804e52f1b886b99e20bb8e4001))
+* **ci:** validate Gradle wrapper ([#199](https://github.com/lithic-com/lithic-kotlin/issues/199)) ([1d3aa88](https://github.com/lithic-com/lithic-kotlin/commit/1d3aa88134590e368cfa7201f043eb86d1bdd890))
+* **internal:** add scripts/mock ([#205](https://github.com/lithic-com/lithic-kotlin/issues/205)) ([5097efb](https://github.com/lithic-com/lithic-kotlin/commit/5097efb6d0c67e7b091aa2f0305875562fc962c0))
+* **internal:** bump mock server version to ~5.8.0 ([#206](https://github.com/lithic-com/lithic-kotlin/issues/206)) ([6b5e8f6](https://github.com/lithic-com/lithic-kotlin/commit/6b5e8f605431fbbb45e19e75086f8c91e8a19f94))
+* **internal:** formatting ([#196](https://github.com/lithic-com/lithic-kotlin/issues/196)) ([282a12b](https://github.com/lithic-com/lithic-kotlin/commit/282a12b4fd33d2781989a51e68692d99fd1af89e))
+* **internal:** gradlew v8.7, use gradle task config avoidance APIs ([#200](https://github.com/lithic-com/lithic-kotlin/issues/200)) ([d1ad9e1](https://github.com/lithic-com/lithic-kotlin/commit/d1ad9e1080c6208ef89d065f729b259c74765f75))
+* **internal:** use actions/checkout@v4 for codeflow ([#201](https://github.com/lithic-com/lithic-kotlin/issues/201)) ([488c41c](https://github.com/lithic-com/lithic-kotlin/commit/488c41cada7ad4ae7fffe5602ca09eee25987727))
+* temporarily remove custom code ([0de2e21](https://github.com/lithic-com/lithic-kotlin/commit/0de2e2168ba3ffb506e3c065d28aec7ca78533f9))
+* **tests:** import wiremock.client.WireMock.put ([#192](https://github.com/lithic-com/lithic-kotlin/issues/192)) ([cf7752c](https://github.com/lithic-com/lithic-kotlin/commit/cf7752cd5559b01400f0a9a9b2697871d3849c1b))
+
+
+### Build System
+
+* configure UTF-8 locale in devcontainer ([#197](https://github.com/lithic-com/lithic-kotlin/issues/197)) ([8e7d089](https://github.com/lithic-com/lithic-kotlin/commit/8e7d0897d470c52d1d25f787032f2820e28f058b))
+
 ## 0.34.0 (2024-04-05)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.33.0...v0.34.0)
