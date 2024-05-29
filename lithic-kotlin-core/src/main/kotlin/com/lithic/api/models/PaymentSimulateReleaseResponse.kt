@@ -21,9 +21,9 @@ import java.util.Objects
 @NoAutoDetect
 class PaymentSimulateReleaseResponse
 private constructor(
-    private val debuggingRequestId: JsonField<String>,
     private val result: JsonField<Result>,
     private val transactionEventToken: JsonField<String>,
+    private val debuggingRequestId: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -31,22 +31,28 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    fun debuggingRequestId(): String? = debuggingRequestId.getNullable("debugging_request_id")
+    /** Request Result */
+    fun result(): Result = result.getRequired("result")
 
-    fun result(): Result? = result.getNullable("result")
+    /** Transaction Event Token */
+    fun transactionEventToken(): String =
+        transactionEventToken.getRequired("transaction_event_token")
 
-    fun transactionEventToken(): String? =
-        transactionEventToken.getNullable("transaction_event_token")
+    /** Debugging Request Id */
+    fun debuggingRequestId(): String = debuggingRequestId.getRequired("debugging_request_id")
 
-    @JsonProperty("debugging_request_id")
-    @ExcludeMissing
-    fun _debuggingRequestId() = debuggingRequestId
-
+    /** Request Result */
     @JsonProperty("result") @ExcludeMissing fun _result() = result
 
+    /** Transaction Event Token */
     @JsonProperty("transaction_event_token")
     @ExcludeMissing
     fun _transactionEventToken() = transactionEventToken
+
+    /** Debugging Request Id */
+    @JsonProperty("debugging_request_id")
+    @ExcludeMissing
+    fun _debuggingRequestId() = debuggingRequestId
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -54,9 +60,9 @@ private constructor(
 
     fun validate(): PaymentSimulateReleaseResponse = apply {
         if (!validated) {
-            debuggingRequestId()
             result()
             transactionEventToken()
+            debuggingRequestId()
             validated = true
         }
     }
@@ -69,9 +75,9 @@ private constructor(
         }
 
         return other is PaymentSimulateReleaseResponse &&
-            this.debuggingRequestId == other.debuggingRequestId &&
             this.result == other.result &&
             this.transactionEventToken == other.transactionEventToken &&
+            this.debuggingRequestId == other.debuggingRequestId &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -79,9 +85,9 @@ private constructor(
         if (hashCode == 0) {
             hashCode =
                 Objects.hash(
-                    debuggingRequestId,
                     result,
                     transactionEventToken,
+                    debuggingRequestId,
                     additionalProperties,
                 )
         }
@@ -89,7 +95,7 @@ private constructor(
     }
 
     override fun toString() =
-        "PaymentSimulateReleaseResponse{debuggingRequestId=$debuggingRequestId, result=$result, transactionEventToken=$transactionEventToken, additionalProperties=$additionalProperties}"
+        "PaymentSimulateReleaseResponse{result=$result, transactionEventToken=$transactionEventToken, debuggingRequestId=$debuggingRequestId, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -98,40 +104,46 @@ private constructor(
 
     class Builder {
 
-        private var debuggingRequestId: JsonField<String> = JsonMissing.of()
         private var result: JsonField<Result> = JsonMissing.of()
         private var transactionEventToken: JsonField<String> = JsonMissing.of()
+        private var debuggingRequestId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(paymentSimulateReleaseResponse: PaymentSimulateReleaseResponse) = apply {
-            this.debuggingRequestId = paymentSimulateReleaseResponse.debuggingRequestId
             this.result = paymentSimulateReleaseResponse.result
             this.transactionEventToken = paymentSimulateReleaseResponse.transactionEventToken
+            this.debuggingRequestId = paymentSimulateReleaseResponse.debuggingRequestId
             additionalProperties(paymentSimulateReleaseResponse.additionalProperties)
         }
 
-        fun debuggingRequestId(debuggingRequestId: String) =
-            debuggingRequestId(JsonField.of(debuggingRequestId))
-
-        @JsonProperty("debugging_request_id")
-        @ExcludeMissing
-        fun debuggingRequestId(debuggingRequestId: JsonField<String>) = apply {
-            this.debuggingRequestId = debuggingRequestId
-        }
-
+        /** Request Result */
         fun result(result: Result) = result(JsonField.of(result))
 
+        /** Request Result */
         @JsonProperty("result")
         @ExcludeMissing
         fun result(result: JsonField<Result>) = apply { this.result = result }
 
+        /** Transaction Event Token */
         fun transactionEventToken(transactionEventToken: String) =
             transactionEventToken(JsonField.of(transactionEventToken))
 
+        /** Transaction Event Token */
         @JsonProperty("transaction_event_token")
         @ExcludeMissing
         fun transactionEventToken(transactionEventToken: JsonField<String>) = apply {
             this.transactionEventToken = transactionEventToken
+        }
+
+        /** Debugging Request Id */
+        fun debuggingRequestId(debuggingRequestId: String) =
+            debuggingRequestId(JsonField.of(debuggingRequestId))
+
+        /** Debugging Request Id */
+        @JsonProperty("debugging_request_id")
+        @ExcludeMissing
+        fun debuggingRequestId(debuggingRequestId: JsonField<String>) = apply {
+            this.debuggingRequestId = debuggingRequestId
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -150,9 +162,9 @@ private constructor(
 
         fun build(): PaymentSimulateReleaseResponse =
             PaymentSimulateReleaseResponse(
-                debuggingRequestId,
                 result,
                 transactionEventToken,
+                debuggingRequestId,
                 additionalProperties.toUnmodifiable(),
             )
     }
