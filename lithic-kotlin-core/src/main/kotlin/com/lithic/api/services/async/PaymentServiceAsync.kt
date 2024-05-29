@@ -13,6 +13,10 @@ import com.lithic.api.models.PaymentListParams
 import com.lithic.api.models.PaymentRetrieveParams
 import com.lithic.api.models.PaymentRetryParams
 import com.lithic.api.models.PaymentRetryResponse
+import com.lithic.api.models.PaymentSimulateActionParams
+import com.lithic.api.models.PaymentSimulateActionResponse
+import com.lithic.api.models.PaymentSimulateReceiptParams
+import com.lithic.api.models.PaymentSimulateReceiptResponse
 import com.lithic.api.models.PaymentSimulateReleaseParams
 import com.lithic.api.models.PaymentSimulateReleaseResponse
 import com.lithic.api.models.PaymentSimulateReturnParams
@@ -43,6 +47,18 @@ interface PaymentServiceAsync {
         params: PaymentRetryParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): PaymentRetryResponse
+
+    /** Simulate payment lifecycle event */
+    suspend fun simulateAction(
+        params: PaymentSimulateActionParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): PaymentSimulateActionResponse
+
+    /** Simulates a receipt of a Payment. */
+    suspend fun simulateReceipt(
+        params: PaymentSimulateReceiptParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): PaymentSimulateReceiptResponse
 
     /** Simulates a release of a Payment. */
     suspend fun simulateRelease(
