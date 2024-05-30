@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.38.1 (2024-05-30)
+
+Full Changelog: [v0.38.0...v0.38.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.38.0...v0.38.1)
+
+### Bug Fixes
+
+* **examples:** generate correctly typed example snippets for enums ([#218](https://github.com/lithic-com/lithic-kotlin/issues/218)) ([2047283](https://github.com/lithic-com/lithic-kotlin/commit/20472832b716b0a682eccbba009ebef4ddecb4a2))
+
 ## 0.38.0 (2024-05-30)
 
 Full Changelog: [v0.37.0...v0.38.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.37.0...v0.38.0)
