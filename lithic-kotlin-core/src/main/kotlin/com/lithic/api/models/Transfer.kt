@@ -920,9 +920,9 @@ private constructor(
 
                 val APPROVED = DetailedResult(JsonField.of("APPROVED"))
 
-                val INSUFFICIENT_FUNDS = DetailedResult(JsonField.of("INSUFFICIENT_FUNDS"))
+                val FUNDS_INSUFFICIENT = DetailedResult(JsonField.of("FUNDS_INSUFFICIENT"))
 
-                val INVALID_ACCOUNT = DetailedResult(JsonField.of("INVALID_ACCOUNT"))
+                val ACCOUNT_INVALID = DetailedResult(JsonField.of("ACCOUNT_INVALID"))
 
                 val PROGRAM_TRANSACTION_LIMITS_EXCEEDED =
                     DetailedResult(JsonField.of("PROGRAM_TRANSACTION_LIMITS_EXCEEDED"))
@@ -938,8 +938,8 @@ private constructor(
 
             enum class Known {
                 APPROVED,
-                INSUFFICIENT_FUNDS,
-                INVALID_ACCOUNT,
+                FUNDS_INSUFFICIENT,
+                ACCOUNT_INVALID,
                 PROGRAM_TRANSACTION_LIMITS_EXCEEDED,
                 PROGRAM_DAILY_LIMITS_EXCEEDED,
                 PROGRAM_MONTHLY_LIMITS_EXCEEDED,
@@ -947,8 +947,8 @@ private constructor(
 
             enum class Value {
                 APPROVED,
-                INSUFFICIENT_FUNDS,
-                INVALID_ACCOUNT,
+                FUNDS_INSUFFICIENT,
+                ACCOUNT_INVALID,
                 PROGRAM_TRANSACTION_LIMITS_EXCEEDED,
                 PROGRAM_DAILY_LIMITS_EXCEEDED,
                 PROGRAM_MONTHLY_LIMITS_EXCEEDED,
@@ -958,8 +958,8 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     APPROVED -> Value.APPROVED
-                    INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
-                    INVALID_ACCOUNT -> Value.INVALID_ACCOUNT
+                    FUNDS_INSUFFICIENT -> Value.FUNDS_INSUFFICIENT
+                    ACCOUNT_INVALID -> Value.ACCOUNT_INVALID
                     PROGRAM_TRANSACTION_LIMITS_EXCEEDED -> Value.PROGRAM_TRANSACTION_LIMITS_EXCEEDED
                     PROGRAM_DAILY_LIMITS_EXCEEDED -> Value.PROGRAM_DAILY_LIMITS_EXCEEDED
                     PROGRAM_MONTHLY_LIMITS_EXCEEDED -> Value.PROGRAM_MONTHLY_LIMITS_EXCEEDED
@@ -969,8 +969,8 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     APPROVED -> Known.APPROVED
-                    INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
-                    INVALID_ACCOUNT -> Known.INVALID_ACCOUNT
+                    FUNDS_INSUFFICIENT -> Known.FUNDS_INSUFFICIENT
+                    ACCOUNT_INVALID -> Known.ACCOUNT_INVALID
                     PROGRAM_TRANSACTION_LIMITS_EXCEEDED -> Known.PROGRAM_TRANSACTION_LIMITS_EXCEEDED
                     PROGRAM_DAILY_LIMITS_EXCEEDED -> Known.PROGRAM_DAILY_LIMITS_EXCEEDED
                     PROGRAM_MONTHLY_LIMITS_EXCEEDED -> Known.PROGRAM_MONTHLY_LIMITS_EXCEEDED
