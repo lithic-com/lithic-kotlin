@@ -355,9 +355,9 @@ constructor(
 
         companion object {
 
-            val ENABLED = AccountState(JsonField.of("ENABLED"))
-
             val CLOSED = AccountState(JsonField.of("CLOSED"))
+
+            val ENABLED = AccountState(JsonField.of("ENABLED"))
 
             val PAUSED = AccountState(JsonField.of("PAUSED"))
 
@@ -365,30 +365,30 @@ constructor(
         }
 
         enum class Known {
-            ENABLED,
             CLOSED,
+            ENABLED,
             PAUSED,
         }
 
         enum class Value {
-            ENABLED,
             CLOSED,
+            ENABLED,
             PAUSED,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                ENABLED -> Value.ENABLED
                 CLOSED -> Value.CLOSED
+                ENABLED -> Value.ENABLED
                 PAUSED -> Value.PAUSED
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                ENABLED -> Known.ENABLED
                 CLOSED -> Known.CLOSED
+                ENABLED -> Known.ENABLED
                 PAUSED -> Known.PAUSED
                 else -> throw LithicInvalidDataException("Unknown AccountState: $value")
             }
@@ -418,47 +418,47 @@ constructor(
 
         companion object {
 
-            val PENDING = VerificationState(JsonField.of("PENDING"))
-
             val ENABLED = VerificationState(JsonField.of("ENABLED"))
 
             val FAILED_VERIFICATION = VerificationState(JsonField.of("FAILED_VERIFICATION"))
 
             val INSUFFICIENT_FUNDS = VerificationState(JsonField.of("INSUFFICIENT_FUNDS"))
 
+            val PENDING = VerificationState(JsonField.of("PENDING"))
+
             fun of(value: String) = VerificationState(JsonField.of(value))
         }
 
         enum class Known {
-            PENDING,
             ENABLED,
             FAILED_VERIFICATION,
             INSUFFICIENT_FUNDS,
+            PENDING,
         }
 
         enum class Value {
-            PENDING,
             ENABLED,
             FAILED_VERIFICATION,
             INSUFFICIENT_FUNDS,
+            PENDING,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                PENDING -> Value.PENDING
                 ENABLED -> Value.ENABLED
                 FAILED_VERIFICATION -> Value.FAILED_VERIFICATION
                 INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                PENDING -> Value.PENDING
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                PENDING -> Known.PENDING
                 ENABLED -> Known.ENABLED
                 FAILED_VERIFICATION -> Known.FAILED_VERIFICATION
                 INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                PENDING -> Known.PENDING
                 else -> throw LithicInvalidDataException("Unknown VerificationState: $value")
             }
 

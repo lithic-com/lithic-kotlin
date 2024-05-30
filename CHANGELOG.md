@@ -10,20 +10,11 @@ Full Changelog: [v0.36.0...v0.37.0](https://github.com/lithic-com/lithic-kotlin/
 
 ## 0.36.0 (2024-05-29)
 
-Full Changelog: [v0.35.0...v0.36.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.35.0...v0.36.0)
+Full Changelog: [v0.35.0...v0.35.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.35.0...v0.35.1)
 
-### Features
+### Bug Fixes
 
-* **api:** updates ([#217](https://github.com/lithic-com/lithic-kotlin/issues/217)) ([fdde33a](https://github.com/lithic-com/lithic-kotlin/commit/fdde33a1452d3cea3b8238467535cc7aa2de8afe))
-* propagate resource description field from stainless config to SDK docs ([#211](https://github.com/lithic-com/lithic-kotlin/issues/211)) ([2766431](https://github.com/lithic-com/lithic-kotlin/commit/27664312ee72328866d54ab7847e51ccef8f3926))
-
-
-### Chores
-
-* **docs:** add SECURITY.md ([#213](https://github.com/lithic-com/lithic-kotlin/issues/213)) ([95f873c](https://github.com/lithic-com/lithic-kotlin/commit/95f873cce537b26faafc1bd592bf5f810f9c7d54))
-* **internal:** add dev scripts ([#216](https://github.com/lithic-com/lithic-kotlin/issues/216)) ([1733718](https://github.com/lithic-com/lithic-kotlin/commit/1733718a52b45fc50bfbe5599a75e15831bf14c1))
-* **internal:** add scripts-to-rule-them-all ([#214](https://github.com/lithic-com/lithic-kotlin/issues/214)) ([7a8b587](https://github.com/lithic-com/lithic-kotlin/commit/7a8b5870f567d491232f8bd78be830cadd404f3a))
-* **tests:** update some example values ([#215](https://github.com/lithic-com/lithic-kotlin/issues/215)) ([5761db9](https://github.com/lithic-com/lithic-kotlin/commit/5761db993c0912e80f0ed08fee11a4fa2342589a))
+* **examples:** generate correctly typed example snippets for enums ([7532341](https://github.com/lithic-com/lithic-kotlin/commit/75323416f82d33b553a275c5233b47231cdac6e2))
 
 ## 0.35.0 (2024-05-01)
 
