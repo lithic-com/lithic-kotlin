@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.38.0 (2024-05-30)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** add simulate_receipt and simulate_action endpoints ([#220](https://github.com/lithic-com/lithic-kotlin/issues/220)) ([b4e310d](https://github.com/lithic-com/lithic-kotlin/commit/b4e310de34f752a5100496e0c568e98b231fbaa2))
+* **api:** update detailed_results enum values ([#222](https://github.com/lithic-com/lithic-kotlin/issues/222)) ([3df79bd](https://github.com/lithic-com/lithic-kotlin/commit/3df79bdc0b622de57e14275eab759775f0aee73e))
+
 ## 0.37.0 (2024-05-29)
 
 Full Changelog: [v0.36.0...v0.37.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.36.0...v0.37.0)
