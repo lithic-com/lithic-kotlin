@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.38.2 (2024-06-03)
+
+Full Changelog: [v0.38.1...v0.38.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.38.1...v0.38.2)
+
+### Bug Fixes
+
+* **examples:** numerical examples now respect [min, max] range ([#226](https://github.com/lithic-com/lithic-kotlin/issues/226)) ([56ec032](https://github.com/lithic-com/lithic-kotlin/commit/56ec032b53091677c51374efbeefd25e39e4d988))
+
 ## 0.38.1 (2024-05-30)
 
 Full Changelog: [v0.38.0...v0.38.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.38.0...v0.38.1)
