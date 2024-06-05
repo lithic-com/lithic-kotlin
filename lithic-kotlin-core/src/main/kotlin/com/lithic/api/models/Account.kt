@@ -15,6 +15,7 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.errors.LithicInvalidDataException
+import java.time.OffsetDateTime
 import java.util.Objects
 
 @JsonDeserialize(builder = Account.Builder::class)
@@ -27,6 +28,7 @@ private constructor(
     private val state: JsonField<State>,
     private val token: JsonField<String>,
     private val verificationAddress: JsonField<VerificationAddress>,
+    private val created: JsonField<OffsetDateTime>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -68,6 +70,12 @@ private constructor(
     fun verificationAddress(): VerificationAddress? =
         verificationAddress.getNullable("verification_address")
 
+    /**
+     * Timestamp of when the account was created. For accounts created before 2023-05-11, this field
+     * will be null.
+     */
+    fun created(): OffsetDateTime? = created.getNullable("created")
+
     @JsonProperty("account_holder") @ExcludeMissing fun _accountHolder() = accountHolder
 
     /** List of identifiers for the Auth Rule(s) that are applied on the account. */
@@ -103,6 +111,12 @@ private constructor(
     @ExcludeMissing
     fun _verificationAddress() = verificationAddress
 
+    /**
+     * Timestamp of when the account was created. For accounts created before 2023-05-11, this field
+     * will be null.
+     */
+    @JsonProperty("created") @ExcludeMissing fun _created() = created
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -115,6 +129,7 @@ private constructor(
             state()
             token()
             verificationAddress()?.validate()
+            created()
             validated = true
         }
     }
@@ -133,6 +148,7 @@ private constructor(
             this.state == other.state &&
             this.token == other.token &&
             this.verificationAddress == other.verificationAddress &&
+            this.created == other.created &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -146,6 +162,7 @@ private constructor(
                     state,
                     token,
                     verificationAddress,
+                    created,
                     additionalProperties,
                 )
         }
@@ -153,7 +170,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Account{accountHolder=$accountHolder, authRuleTokens=$authRuleTokens, spendLimit=$spendLimit, state=$state, token=$token, verificationAddress=$verificationAddress, additionalProperties=$additionalProperties}"
+        "Account{accountHolder=$accountHolder, authRuleTokens=$authRuleTokens, spendLimit=$spendLimit, state=$state, token=$token, verificationAddress=$verificationAddress, created=$created, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -168,6 +185,7 @@ private constructor(
         private var state: JsonField<State> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
         private var verificationAddress: JsonField<VerificationAddress> = JsonMissing.of()
+        private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(account: Account) = apply {
@@ -177,6 +195,7 @@ private constructor(
             this.state = account.state
             this.token = account.token
             this.verificationAddress = account.verificationAddress
+            this.created = account.created
             additionalProperties(account.additionalProperties)
         }
 
@@ -268,6 +287,20 @@ private constructor(
             this.verificationAddress = verificationAddress
         }
 
+        /**
+         * Timestamp of when the account was created. For accounts created before 2023-05-11, this
+         * field will be null.
+         */
+        fun created(created: OffsetDateTime) = created(JsonField.of(created))
+
+        /**
+         * Timestamp of when the account was created. For accounts created before 2023-05-11, this
+         * field will be null.
+         */
+        @JsonProperty("created")
+        @ExcludeMissing
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -290,6 +323,7 @@ private constructor(
                 state,
                 token,
                 verificationAddress,
+                created,
                 additionalProperties.toUnmodifiable(),
             )
     }
