@@ -84,13 +84,12 @@ private constructor(
 
     /**
      * Status types:
-     * - `DECLINED` - The card transaction was declined.
-     * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration time.
-     * - `PENDING` - Authorization is pending completion from the merchant or pending release from
-     *   ACH hold period
-     * - `RETURNED` - The financial transaction has been returned.
-     * - `SETTLED` - The financial transaction is completed.
-     * - `VOIDED` - The merchant has voided the previously pending card authorization.
+     * - `DECLINED` - The transaction was declined.
+     * - `EXPIRED` - The authorization as it has passed its expiration time. Card transaction only.
+     * - `PENDING` - The transaction is expected to settle.
+     * - `RETURNED` - The transaction has been returned.
+     * - `SETTLED` - The transaction is completed.
+     * - `VOIDED` - The transaction was voided. Card transaction only.
      */
     fun status(): Status = status.getRequired("status")
 
@@ -144,13 +143,12 @@ private constructor(
 
     /**
      * Status types:
-     * - `DECLINED` - The card transaction was declined.
-     * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration time.
-     * - `PENDING` - Authorization is pending completion from the merchant or pending release from
-     *   ACH hold period
-     * - `RETURNED` - The financial transaction has been returned.
-     * - `SETTLED` - The financial transaction is completed.
-     * - `VOIDED` - The merchant has voided the previously pending card authorization.
+     * - `DECLINED` - The transaction was declined.
+     * - `EXPIRED` - The authorization as it has passed its expiration time. Card transaction only.
+     * - `PENDING` - The transaction is expected to settle.
+     * - `RETURNED` - The transaction has been returned.
+     * - `SETTLED` - The transaction is completed.
+     * - `VOIDED` - The transaction was voided. Card transaction only.
      */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
 
@@ -368,27 +366,25 @@ private constructor(
 
         /**
          * Status types:
-         * - `DECLINED` - The card transaction was declined.
-         * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration
-         *   time.
-         * - `PENDING` - Authorization is pending completion from the merchant or pending release
-         *   from ACH hold period
-         * - `RETURNED` - The financial transaction has been returned.
-         * - `SETTLED` - The financial transaction is completed.
-         * - `VOIDED` - The merchant has voided the previously pending card authorization.
+         * - `DECLINED` - The transaction was declined.
+         * - `EXPIRED` - The authorization as it has passed its expiration time. Card transaction
+         *   only.
+         * - `PENDING` - The transaction is expected to settle.
+         * - `RETURNED` - The transaction has been returned.
+         * - `SETTLED` - The transaction is completed.
+         * - `VOIDED` - The transaction was voided. Card transaction only.
          */
         fun status(status: Status) = status(JsonField.of(status))
 
         /**
          * Status types:
-         * - `DECLINED` - The card transaction was declined.
-         * - `EXPIRED` - Lithic reversed the card authorization as it has passed its expiration
-         *   time.
-         * - `PENDING` - Authorization is pending completion from the merchant or pending release
-         *   from ACH hold period
-         * - `RETURNED` - The financial transaction has been returned.
-         * - `SETTLED` - The financial transaction is completed.
-         * - `VOIDED` - The merchant has voided the previously pending card authorization.
+         * - `DECLINED` - The transaction was declined.
+         * - `EXPIRED` - The authorization as it has passed its expiration time. Card transaction
+         *   only.
+         * - `PENDING` - The transaction is expected to settle.
+         * - `RETURNED` - The transaction has been returned.
+         * - `SETTLED` - The transaction is completed.
+         * - `VOIDED` - The transaction was voided. Card transaction only.
          */
         @JsonProperty("status")
         @ExcludeMissing
@@ -510,7 +506,6 @@ private constructor(
     private constructor(
         private val amount: JsonField<Long>,
         private val created: JsonField<OffsetDateTime>,
-        private val detailedResults: JsonField<List<DetailedResult>>,
         private val result: JsonField<Result>,
         private val token: JsonField<String>,
         private val type: JsonField<FinancialEventType>,
@@ -529,10 +524,6 @@ private constructor(
 
         /** Date and time when the financial event occurred. UTC time zone. */
         fun created(): OffsetDateTime? = created.getNullable("created")
-
-        /** More detailed reasons for the event */
-        fun detailedResults(): List<DetailedResult>? =
-            detailedResults.getNullable("detailed_results")
 
         /**
          * APPROVED financial events were successful while DECLINED financial events were declined
@@ -593,9 +584,6 @@ private constructor(
         /** Date and time when the financial event occurred. UTC time zone. */
         @JsonProperty("created") @ExcludeMissing fun _created() = created
 
-        /** More detailed reasons for the event */
-        @JsonProperty("detailed_results") @ExcludeMissing fun _detailedResults() = detailedResults
-
         /**
          * APPROVED financial events were successful while DECLINED financial events were declined
          * by user, Lithic, or the network.
@@ -654,7 +642,6 @@ private constructor(
             if (!validated) {
                 amount()
                 created()
-                detailedResults()
                 result()
                 token()
                 type()
@@ -672,7 +659,6 @@ private constructor(
             return other is FinancialEvent &&
                 this.amount == other.amount &&
                 this.created == other.created &&
-                this.detailedResults == other.detailedResults &&
                 this.result == other.result &&
                 this.token == other.token &&
                 this.type == other.type &&
@@ -685,7 +671,6 @@ private constructor(
                     Objects.hash(
                         amount,
                         created,
-                        detailedResults,
                         result,
                         token,
                         type,
@@ -696,7 +681,7 @@ private constructor(
         }
 
         override fun toString() =
-            "FinancialEvent{amount=$amount, created=$created, detailedResults=$detailedResults, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
+            "FinancialEvent{amount=$amount, created=$created, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -707,7 +692,6 @@ private constructor(
 
             private var amount: JsonField<Long> = JsonMissing.of()
             private var created: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of()
             private var result: JsonField<Result> = JsonMissing.of()
             private var token: JsonField<String> = JsonMissing.of()
             private var type: JsonField<FinancialEventType> = JsonMissing.of()
@@ -716,7 +700,6 @@ private constructor(
             internal fun from(financialEvent: FinancialEvent) = apply {
                 this.amount = financialEvent.amount
                 this.created = financialEvent.created
-                this.detailedResults = financialEvent.detailedResults
                 this.result = financialEvent.result
                 this.token = financialEvent.token
                 this.type = financialEvent.type
@@ -744,17 +727,6 @@ private constructor(
             @JsonProperty("created")
             @ExcludeMissing
             fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
-
-            /** More detailed reasons for the event */
-            fun detailedResults(detailedResults: List<DetailedResult>) =
-                detailedResults(JsonField.of(detailedResults))
-
-            /** More detailed reasons for the event */
-            @JsonProperty("detailed_results")
-            @ExcludeMissing
-            fun detailedResults(detailedResults: JsonField<List<DetailedResult>>) = apply {
-                this.detailedResults = detailedResults
-            }
 
             /**
              * APPROVED financial events were successful while DECLINED financial events were
@@ -882,96 +854,11 @@ private constructor(
                 FinancialEvent(
                     amount,
                     created,
-                    detailedResults.map { it.toUnmodifiable() },
                     result,
                     token,
                     type,
                     additionalProperties.toUnmodifiable(),
                 )
-        }
-
-        class DetailedResult
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
-
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is DetailedResult && this.value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
-            companion object {
-
-                val APPROVED = DetailedResult(JsonField.of("APPROVED"))
-
-                val FUNDS_INSUFFICIENT = DetailedResult(JsonField.of("FUNDS_INSUFFICIENT"))
-
-                val ACCOUNT_INVALID = DetailedResult(JsonField.of("ACCOUNT_INVALID"))
-
-                val PROGRAM_TRANSACTION_LIMITS_EXCEEDED =
-                    DetailedResult(JsonField.of("PROGRAM_TRANSACTION_LIMITS_EXCEEDED"))
-
-                val PROGRAM_DAILY_LIMITS_EXCEEDED =
-                    DetailedResult(JsonField.of("PROGRAM_DAILY_LIMITS_EXCEEDED"))
-
-                val PROGRAM_MONTHLY_LIMITS_EXCEEDED =
-                    DetailedResult(JsonField.of("PROGRAM_MONTHLY_LIMITS_EXCEEDED"))
-
-                fun of(value: String) = DetailedResult(JsonField.of(value))
-            }
-
-            enum class Known {
-                APPROVED,
-                FUNDS_INSUFFICIENT,
-                ACCOUNT_INVALID,
-                PROGRAM_TRANSACTION_LIMITS_EXCEEDED,
-                PROGRAM_DAILY_LIMITS_EXCEEDED,
-                PROGRAM_MONTHLY_LIMITS_EXCEEDED,
-            }
-
-            enum class Value {
-                APPROVED,
-                FUNDS_INSUFFICIENT,
-                ACCOUNT_INVALID,
-                PROGRAM_TRANSACTION_LIMITS_EXCEEDED,
-                PROGRAM_DAILY_LIMITS_EXCEEDED,
-                PROGRAM_MONTHLY_LIMITS_EXCEEDED,
-                _UNKNOWN,
-            }
-
-            fun value(): Value =
-                when (this) {
-                    APPROVED -> Value.APPROVED
-                    FUNDS_INSUFFICIENT -> Value.FUNDS_INSUFFICIENT
-                    ACCOUNT_INVALID -> Value.ACCOUNT_INVALID
-                    PROGRAM_TRANSACTION_LIMITS_EXCEEDED -> Value.PROGRAM_TRANSACTION_LIMITS_EXCEEDED
-                    PROGRAM_DAILY_LIMITS_EXCEEDED -> Value.PROGRAM_DAILY_LIMITS_EXCEEDED
-                    PROGRAM_MONTHLY_LIMITS_EXCEEDED -> Value.PROGRAM_MONTHLY_LIMITS_EXCEEDED
-                    else -> Value._UNKNOWN
-                }
-
-            fun known(): Known =
-                when (this) {
-                    APPROVED -> Known.APPROVED
-                    FUNDS_INSUFFICIENT -> Known.FUNDS_INSUFFICIENT
-                    ACCOUNT_INVALID -> Known.ACCOUNT_INVALID
-                    PROGRAM_TRANSACTION_LIMITS_EXCEEDED -> Known.PROGRAM_TRANSACTION_LIMITS_EXCEEDED
-                    PROGRAM_DAILY_LIMITS_EXCEEDED -> Known.PROGRAM_DAILY_LIMITS_EXCEEDED
-                    PROGRAM_MONTHLY_LIMITS_EXCEEDED -> Known.PROGRAM_MONTHLY_LIMITS_EXCEEDED
-                    else -> throw LithicInvalidDataException("Unknown DetailedResult: $value")
-                }
-
-            fun asString(): String = _value().asStringOrThrow()
         }
 
         class Result

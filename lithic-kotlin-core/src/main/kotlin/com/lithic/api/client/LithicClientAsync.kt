@@ -50,8 +50,6 @@ interface LithicClientAsync {
 
     fun reports(): ReportServiceAsync
 
-    fun cardProduct(): CardProductServiceAsync
-
     fun cardPrograms(): CardProgramServiceAsync
 
     fun digitalCardArt(): DigitalCardArtServiceAsync
