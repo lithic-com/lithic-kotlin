@@ -56,6 +56,8 @@ interface LithicClientAsync {
 
     fun digitalCardArt(): DigitalCardArtServiceAsync
 
+    fun bookTransfers(): BookTransferServiceAsync
+
     /** Status of api */
     suspend fun apiStatus(
         params: ClientApiStatusParams,
