@@ -1259,6 +1259,7 @@ private constructor(
         private val retries: JsonField<Long>,
         private val returnReasonCode: JsonField<String>,
         private val secCode: JsonField<SecCode>,
+        private val traceNumbers: JsonField<List<String?>>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -1277,6 +1278,8 @@ private constructor(
 
         fun secCode(): SecCode = secCode.getRequired("sec_code")
 
+        fun traceNumbers(): List<String?> = traceNumbers.getRequired("trace_numbers")
+
         @JsonProperty("company_id") @ExcludeMissing fun _companyId() = companyId
 
         @JsonProperty("receipt_routing_number")
@@ -1291,6 +1294,8 @@ private constructor(
 
         @JsonProperty("sec_code") @ExcludeMissing fun _secCode() = secCode
 
+        @JsonProperty("trace_numbers") @ExcludeMissing fun _traceNumbers() = traceNumbers
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -1302,6 +1307,7 @@ private constructor(
                 retries()
                 returnReasonCode()
                 secCode()
+                traceNumbers()
                 validated = true
             }
         }
@@ -1319,6 +1325,7 @@ private constructor(
                 this.retries == other.retries &&
                 this.returnReasonCode == other.returnReasonCode &&
                 this.secCode == other.secCode &&
+                this.traceNumbers == other.traceNumbers &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -1331,6 +1338,7 @@ private constructor(
                         retries,
                         returnReasonCode,
                         secCode,
+                        traceNumbers,
                         additionalProperties,
                     )
             }
@@ -1338,7 +1346,7 @@ private constructor(
         }
 
         override fun toString() =
-            "PaymentMethodAttributes{companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, additionalProperties=$additionalProperties}"
+            "PaymentMethodAttributes{companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, retries=$retries, returnReasonCode=$returnReasonCode, secCode=$secCode, traceNumbers=$traceNumbers, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1352,6 +1360,7 @@ private constructor(
             private var retries: JsonField<Long> = JsonMissing.of()
             private var returnReasonCode: JsonField<String> = JsonMissing.of()
             private var secCode: JsonField<SecCode> = JsonMissing.of()
+            private var traceNumbers: JsonField<List<String?>> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentMethodAttributes: PaymentMethodAttributes) = apply {
@@ -1360,6 +1369,7 @@ private constructor(
                 this.retries = paymentMethodAttributes.retries
                 this.returnReasonCode = paymentMethodAttributes.returnReasonCode
                 this.secCode = paymentMethodAttributes.secCode
+                this.traceNumbers = paymentMethodAttributes.traceNumbers
                 additionalProperties(paymentMethodAttributes.additionalProperties)
             }
 
@@ -1399,6 +1409,14 @@ private constructor(
             @ExcludeMissing
             fun secCode(secCode: JsonField<SecCode>) = apply { this.secCode = secCode }
 
+            fun traceNumbers(traceNumbers: List<String?>) = traceNumbers(JsonField.of(traceNumbers))
+
+            @JsonProperty("trace_numbers")
+            @ExcludeMissing
+            fun traceNumbers(traceNumbers: JsonField<List<String?>>) = apply {
+                this.traceNumbers = traceNumbers
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -1420,6 +1438,7 @@ private constructor(
                     retries,
                     returnReasonCode,
                     secCode,
+                    traceNumbers.map { it.toUnmodifiable() },
                     additionalProperties.toUnmodifiable(),
                 )
         }
