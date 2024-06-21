@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.41.0 (2024-06-21)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.40.0...v0.41.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** remove unused event type 'statement.created'
+* **api:** remove unused business account type
+* **api:** remove unused embed request params type
+* **api:** updates ([#234](https://github.com/lithic-com/lithic-kotlin/issues/234))
+
+### Features
+
+* **api:** add 'reverse' method for book transfers ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **api:** add field 'trace numbers' to payment method attribute model ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **api:** remove unused business account type ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **api:** remove unused embed request params type ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **api:** remove unused event type 'statement.created' ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **api:** updates ([#234](https://github.com/lithic-com/lithic-kotlin/issues/234)) ([2f07357](https://github.com/lithic-com/lithic-kotlin/commit/2f073575d7c676b94aab662cecf3c6334018b09a))
+* **client:** add support for `putQueryParam` on `ClientOptions` ([#232](https://github.com/lithic-com/lithic-kotlin/issues/232)) ([d2b2c82](https://github.com/lithic-com/lithic-kotlin/commit/d2b2c82123e72349e10c8c367f44074a68b850ff))
+
 ## 0.40.0 (2024-06-12)
 
 Full Changelog: [v0.39.0...v0.40.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.39.0...v0.40.0)
