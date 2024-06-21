@@ -10,6 +10,7 @@ import com.lithic.api.models.BookTransferListPageAsync
 import com.lithic.api.models.BookTransferListParams
 import com.lithic.api.models.BookTransferResponse
 import com.lithic.api.models.BookTransferRetrieveParams
+import com.lithic.api.models.BookTransferReverseParams
 
 interface BookTransferServiceAsync {
 
@@ -32,4 +33,10 @@ interface BookTransferServiceAsync {
         params: BookTransferListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): BookTransferListPageAsync
+
+    /** Reverse a book transfer */
+    suspend fun reverse(
+        params: BookTransferReverseParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): BookTransferResponse
 }

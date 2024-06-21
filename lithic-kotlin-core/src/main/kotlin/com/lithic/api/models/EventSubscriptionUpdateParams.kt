@@ -429,8 +429,6 @@ constructor(
 
             val SETTLEMENT_REPORT_UPDATED = EventType(JsonField.of("settlement_report.updated"))
 
-            val STATEMENTS_CREATED = EventType(JsonField.of("statements.created"))
-
             val THREE_DS_AUTHENTICATION_CREATED =
                 EventType(JsonField.of("three_ds_authentication.created"))
 
@@ -462,7 +460,6 @@ constructor(
             PAYMENT_TRANSACTION_CREATED,
             PAYMENT_TRANSACTION_UPDATED,
             SETTLEMENT_REPORT_UPDATED,
-            STATEMENTS_CREATED,
             THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
         }
@@ -489,7 +486,6 @@ constructor(
             PAYMENT_TRANSACTION_CREATED,
             PAYMENT_TRANSACTION_UPDATED,
             SETTLEMENT_REPORT_UPDATED,
-            STATEMENTS_CREATED,
             THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
             _UNKNOWN,
@@ -521,7 +517,6 @@ constructor(
                 PAYMENT_TRANSACTION_CREATED -> Value.PAYMENT_TRANSACTION_CREATED
                 PAYMENT_TRANSACTION_UPDATED -> Value.PAYMENT_TRANSACTION_UPDATED
                 SETTLEMENT_REPORT_UPDATED -> Value.SETTLEMENT_REPORT_UPDATED
-                STATEMENTS_CREATED -> Value.STATEMENTS_CREATED
                 THREE_DS_AUTHENTICATION_CREATED -> Value.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Value.TRANSFER_TRANSACTION_CREATED
                 else -> Value._UNKNOWN
@@ -553,7 +548,6 @@ constructor(
                 PAYMENT_TRANSACTION_CREATED -> Known.PAYMENT_TRANSACTION_CREATED
                 PAYMENT_TRANSACTION_UPDATED -> Known.PAYMENT_TRANSACTION_UPDATED
                 SETTLEMENT_REPORT_UPDATED -> Known.SETTLEMENT_REPORT_UPDATED
-                STATEMENTS_CREATED -> Known.STATEMENTS_CREATED
                 THREE_DS_AUTHENTICATION_CREATED -> Known.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Known.TRANSFER_TRANSACTION_CREATED
                 else -> throw LithicInvalidDataException("Unknown EventType: $value")
