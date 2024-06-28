@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.1 (2024-06-28)
+
+Full Changelog: [v0.41.0...v0.41.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.41.0...v0.41.1)
+
+### Chores
+
+* gitignore test server logs ([#235](https://github.com/lithic-com/lithic-kotlin/issues/235)) ([4570334](https://github.com/lithic-com/lithic-kotlin/commit/4570334b560913a1a49b92222217831566e7506e))
+
 ## 0.41.0 (2024-06-21)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.40.0...v0.41.0)
