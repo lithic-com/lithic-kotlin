@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.42.0 (2024-07-11)
+
+Full Changelog: [v0.41.1...v0.42.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.41.1...v0.42.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** param 'financial account token` when creating an external bank account is now required ([#240](https://github.com/lithic-com/lithic-kotlin/issues/240))
+
+### Features
+
+* **api:** param 'financial account token` when creating an external bank account is now required ([#240](https://github.com/lithic-com/lithic-kotlin/issues/240)) ([17c5d5d](https://github.com/lithic-com/lithic-kotlin/commit/17c5d5dd1a6abd0242715962b174b2e968ce58cc))
+
 ## 0.41.1 (2024-07-11)
 
 Full Changelog: [v0.41.0...v0.41.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.41.0...v0.41.1)
