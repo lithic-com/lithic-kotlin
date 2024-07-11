@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.41.1 (2024-07-11)
+
+Full Changelog: [v0.41.0...v0.41.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.41.0...v0.41.1)
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#238](https://github.com/lithic-com/lithic-kotlin/issues/238)) ([1e9eaad](https://github.com/lithic-com/lithic-kotlin/commit/1e9eaadaf4a88d969a2d53b9e394f6597766bafe))
+* **docs:** document minimum Java version (Java 8) in README ([#237](https://github.com/lithic-com/lithic-kotlin/issues/237)) ([68dfb1f](https://github.com/lithic-com/lithic-kotlin/commit/68dfb1f2a64e13de303ab1d55a16ddba86ec4909))
+* gitignore test server logs ([#235](https://github.com/lithic-com/lithic-kotlin/issues/235)) ([4570334](https://github.com/lithic-com/lithic-kotlin/commit/4570334b560913a1a49b92222217831566e7506e))
+
+
+### Documentation
+
+* **examples:** update example values ([#239](https://github.com/lithic-com/lithic-kotlin/issues/239)) ([84883bb](https://github.com/lithic-com/lithic-kotlin/commit/84883bb215aa9599637ccb935b5797569047a509))
+
 ## 0.41.0 (2024-06-21)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.40.0...v0.41.0)

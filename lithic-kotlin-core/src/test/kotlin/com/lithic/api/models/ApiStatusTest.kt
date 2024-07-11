@@ -9,8 +9,8 @@ class ApiStatusTest {
 
     @Test
     fun createApiStatus() {
-        val apiStatus = ApiStatus.builder().message("string").build()
+        val apiStatus = ApiStatus.builder().message("message").build()
         assertThat(apiStatus).isNotNull
-        assertThat(apiStatus.message()).isEqualTo("string")
+        assertThat(apiStatus.message()).isEqualTo("message")
     }
 }

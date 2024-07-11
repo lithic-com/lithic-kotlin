@@ -19,7 +19,7 @@ The REST API documentation can be found [on docs.lithic.com](https://docs.lithi
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.41.0")
+implementation("com.lithic.api:lithic-kotlin:0.41.1")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.lithic.api:lithic-kotlin:0.41.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.41.0</version>
+    <version>0.41.1</version>
 </dependency>
 ```
 
@@ -354,3 +354,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
 We are keen for your feedback; please open an [issue](https://www.github.com/lithic-com/lithic-kotlin/issues) with questions, bugs, or suggestions.
+
+## Requirements
+
+This library requires Java 8 or later.
