@@ -16,9 +16,9 @@ class DisputeEvidenceTest {
                 .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .disputeToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .uploadStatus(DisputeEvidence.UploadStatus.DELETED)
-                .downloadUrl("string")
-                .filename("string")
-                .uploadUrl("string")
+                .downloadUrl("download_url")
+                .filename("filename")
+                .uploadUrl("upload_url")
                 .build()
         assertThat(disputeEvidence).isNotNull
         assertThat(disputeEvidence.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -26,8 +26,8 @@ class DisputeEvidenceTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(disputeEvidence.disputeToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(disputeEvidence.uploadStatus()).isEqualTo(DisputeEvidence.UploadStatus.DELETED)
-        assertThat(disputeEvidence.downloadUrl()).isEqualTo("string")
-        assertThat(disputeEvidence.filename()).isEqualTo("string")
-        assertThat(disputeEvidence.uploadUrl()).isEqualTo("string")
+        assertThat(disputeEvidence.downloadUrl()).isEqualTo("download_url")
+        assertThat(disputeEvidence.filename()).isEqualTo("filename")
+        assertThat(disputeEvidence.uploadUrl()).isEqualTo("upload_url")
     }
 }

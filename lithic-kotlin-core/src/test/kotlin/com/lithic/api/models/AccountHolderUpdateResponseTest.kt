@@ -11,15 +11,16 @@ class AccountHolderUpdateResponseTest {
     fun createAccountHolderUpdateResponse() {
         val accountHolderUpdateResponse =
             AccountHolderUpdateResponse.builder()
-                .token("string")
-                .businessAccountToken("string")
-                .email("string")
-                .phoneNumber("string")
+                .token("token")
+                .businessAccountToken("business_account_token")
+                .email("email")
+                .phoneNumber("phone_number")
                 .build()
         assertThat(accountHolderUpdateResponse).isNotNull
-        assertThat(accountHolderUpdateResponse.token()).isEqualTo("string")
-        assertThat(accountHolderUpdateResponse.businessAccountToken()).isEqualTo("string")
-        assertThat(accountHolderUpdateResponse.email()).isEqualTo("string")
-        assertThat(accountHolderUpdateResponse.phoneNumber()).isEqualTo("string")
+        assertThat(accountHolderUpdateResponse.token()).isEqualTo("token")
+        assertThat(accountHolderUpdateResponse.businessAccountToken())
+            .isEqualTo("business_account_token")
+        assertThat(accountHolderUpdateResponse.email()).isEqualTo("email")
+        assertThat(accountHolderUpdateResponse.phoneNumber()).isEqualTo("phone_number")
     }
 }
