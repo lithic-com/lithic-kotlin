@@ -9,8 +9,8 @@ class CarrierTest {
 
     @Test
     fun createCarrier() {
-        val carrier = Carrier.builder().qrCodeUrl("string").build()
+        val carrier = Carrier.builder().qrCodeUrl("qr_code_url").build()
         assertThat(carrier).isNotNull
-        assertThat(carrier.qrCodeUrl()).isEqualTo("string")
+        assertThat(carrier.qrCodeUrl()).isEqualTo("qr_code_url")
     }
 }
