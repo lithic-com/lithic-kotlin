@@ -435,6 +435,19 @@ constructor(
             val TRANSFER_TRANSACTION_CREATED =
                 EventType(JsonField.of("transfer_transaction.created"))
 
+            val TOKENIZATION_APPROVAL_REQUEST =
+                EventType(JsonField.of("tokenization.approval_request"))
+
+            val TOKENIZATION_RESULT = EventType(JsonField.of("tokenization.result"))
+
+            val TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE =
+                EventType(JsonField.of("tokenization.two_factor_authentication_code"))
+
+            val TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT =
+                EventType(JsonField.of("tokenization.two_factor_authentication_code_sent"))
+
+            val TOKENIZATION_UPDATED = EventType(JsonField.of("tokenization.updated"))
+
             fun of(value: String) = EventType(JsonField.of(value))
         }
 
@@ -462,6 +475,11 @@ constructor(
             SETTLEMENT_REPORT_UPDATED,
             THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
+            TOKENIZATION_APPROVAL_REQUEST,
+            TOKENIZATION_RESULT,
+            TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
+            TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT,
+            TOKENIZATION_UPDATED,
         }
 
         enum class Value {
@@ -488,6 +506,11 @@ constructor(
             SETTLEMENT_REPORT_UPDATED,
             THREE_DS_AUTHENTICATION_CREATED,
             TRANSFER_TRANSACTION_CREATED,
+            TOKENIZATION_APPROVAL_REQUEST,
+            TOKENIZATION_RESULT,
+            TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
+            TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT,
+            TOKENIZATION_UPDATED,
             _UNKNOWN,
         }
 
@@ -519,6 +542,13 @@ constructor(
                 SETTLEMENT_REPORT_UPDATED -> Value.SETTLEMENT_REPORT_UPDATED
                 THREE_DS_AUTHENTICATION_CREATED -> Value.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Value.TRANSFER_TRANSACTION_CREATED
+                TOKENIZATION_APPROVAL_REQUEST -> Value.TOKENIZATION_APPROVAL_REQUEST
+                TOKENIZATION_RESULT -> Value.TOKENIZATION_RESULT
+                TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
+                    Value.TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
+                TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT ->
+                    Value.TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT
+                TOKENIZATION_UPDATED -> Value.TOKENIZATION_UPDATED
                 else -> Value._UNKNOWN
             }
 
@@ -550,6 +580,13 @@ constructor(
                 SETTLEMENT_REPORT_UPDATED -> Known.SETTLEMENT_REPORT_UPDATED
                 THREE_DS_AUTHENTICATION_CREATED -> Known.THREE_DS_AUTHENTICATION_CREATED
                 TRANSFER_TRANSACTION_CREATED -> Known.TRANSFER_TRANSACTION_CREATED
+                TOKENIZATION_APPROVAL_REQUEST -> Known.TOKENIZATION_APPROVAL_REQUEST
+                TOKENIZATION_RESULT -> Known.TOKENIZATION_RESULT
+                TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
+                    Known.TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
+                TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT ->
+                    Known.TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT
+                TOKENIZATION_UPDATED -> Known.TOKENIZATION_UPDATED
                 else -> throw LithicInvalidDataException("Unknown EventType: $value")
             }
 

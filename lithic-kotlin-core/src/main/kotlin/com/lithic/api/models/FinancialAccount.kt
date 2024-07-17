@@ -31,6 +31,7 @@ private constructor(
     private val token: JsonField<String>,
     private val type: JsonField<Type>,
     private val updated: JsonField<OffsetDateTime>,
+    private val isForBenefitOf: JsonField<Boolean>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -62,6 +63,9 @@ private constructor(
     /** Date and time for when the financial account was last updated. */
     fun updated(): OffsetDateTime = updated.getRequired("updated")
 
+    /** Whether the financial account holds funds for benefit of another party. */
+    fun isForBenefitOf(): Boolean = isForBenefitOf.getRequired("is_for_benefit_of")
+
     /** Account number for your Lithic-assigned bank account number, if applicable. */
     @JsonProperty("account_number") @ExcludeMissing fun _accountNumber() = accountNumber
 
@@ -86,6 +90,9 @@ private constructor(
     /** Date and time for when the financial account was last updated. */
     @JsonProperty("updated") @ExcludeMissing fun _updated() = updated
 
+    /** Whether the financial account holds funds for benefit of another party. */
+    @JsonProperty("is_for_benefit_of") @ExcludeMissing fun _isForBenefitOf() = isForBenefitOf
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -100,6 +107,7 @@ private constructor(
             token()
             type()
             updated()
+            isForBenefitOf()
             validated = true
         }
     }
@@ -120,6 +128,7 @@ private constructor(
             this.token == other.token &&
             this.type == other.type &&
             this.updated == other.updated &&
+            this.isForBenefitOf == other.isForBenefitOf &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -135,6 +144,7 @@ private constructor(
                     token,
                     type,
                     updated,
+                    isForBenefitOf,
                     additionalProperties,
                 )
         }
@@ -142,7 +152,7 @@ private constructor(
     }
 
     override fun toString() =
-        "FinancialAccount{accountNumber=$accountNumber, accountToken=$accountToken, created=$created, nickname=$nickname, routingNumber=$routingNumber, token=$token, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
+        "FinancialAccount{accountNumber=$accountNumber, accountToken=$accountToken, created=$created, nickname=$nickname, routingNumber=$routingNumber, token=$token, type=$type, updated=$updated, isForBenefitOf=$isForBenefitOf, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -159,6 +169,7 @@ private constructor(
         private var token: JsonField<String> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
         private var updated: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var isForBenefitOf: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccount: FinancialAccount) = apply {
@@ -170,6 +181,7 @@ private constructor(
             this.token = financialAccount.token
             this.type = financialAccount.type
             this.updated = financialAccount.updated
+            this.isForBenefitOf = financialAccount.isForBenefitOf
             additionalProperties(financialAccount.additionalProperties)
         }
 
@@ -243,6 +255,16 @@ private constructor(
         @ExcludeMissing
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
+        /** Whether the financial account holds funds for benefit of another party. */
+        fun isForBenefitOf(isForBenefitOf: Boolean) = isForBenefitOf(JsonField.of(isForBenefitOf))
+
+        /** Whether the financial account holds funds for benefit of another party. */
+        @JsonProperty("is_for_benefit_of")
+        @ExcludeMissing
+        fun isForBenefitOf(isForBenefitOf: JsonField<Boolean>) = apply {
+            this.isForBenefitOf = isForBenefitOf
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -267,6 +289,7 @@ private constructor(
                 token,
                 type,
                 updated,
+                isForBenefitOf,
                 additionalProperties.toUnmodifiable(),
             )
     }
