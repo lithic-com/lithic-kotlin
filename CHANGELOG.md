@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.43.0 (2024-07-17)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** updates ([#244](https://github.com/lithic-com/lithic-kotlin/issues/244)) ([a708fdd](https://github.com/lithic-com/lithic-kotlin/commit/a708fdd9a60468c711bb661b6be644fb6e7a4536))
+
+
+### Chores
+
+* **docs:** minor update to formatting of API link in README ([#242](https://github.com/lithic-com/lithic-kotlin/issues/242)) ([04d2c82](https://github.com/lithic-com/lithic-kotlin/commit/04d2c824c2d4e9dfd16e6aaf452787ab3c791509))
+
 ## 0.42.0 (2024-07-11)
 
 Full Changelog: [v0.41.1...v0.42.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.41.1...v0.42.0)
