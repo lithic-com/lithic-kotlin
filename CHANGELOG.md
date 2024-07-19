@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.44.0 (2024-07-19)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** add method to retrieve a transaction's enhanced commercial data ([#247](https://github.com/lithic-com/lithic-kotlin/issues/247)) ([73ff1c7](https://github.com/lithic-com/lithic-kotlin/commit/73ff1c73c55ca2a4c60765db0b73c7d39942e1e2))
+
+
+### Chores
+
+* **ci:** limit release doctor target branches ([#245](https://github.com/lithic-com/lithic-kotlin/issues/245)) ([8ba0aab](https://github.com/lithic-com/lithic-kotlin/commit/8ba0aab354593dffabaa424afd1e9df4255cc388))
+
 ## 0.43.0 (2024-07-17)
 
 Full Changelog: [v0.42.0...v0.43.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.42.0...v0.43.0)
