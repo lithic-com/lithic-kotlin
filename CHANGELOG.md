@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.45.0 (2024-07-23)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.44.0...v0.45.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** deprecate 'auth rule token' in 'card' and 'account holder' models ([#250](https://github.com/lithic-com/lithic-kotlin/issues/250))
+
+### Features
+
+* **api:** deprecate 'auth rule token' in 'card' and 'account holder' models ([#250](https://github.com/lithic-com/lithic-kotlin/issues/250)) ([f8807ee](https://github.com/lithic-com/lithic-kotlin/commit/f8807ee7447bb765c9d0c9e5a2622395972030d8))
+
+
+### Chores
+
+* **tests:** update prism version ([#248](https://github.com/lithic-com/lithic-kotlin/issues/248)) ([296a74b](https://github.com/lithic-com/lithic-kotlin/commit/296a74b4f5560f48a533fac3f50e6d68882385c9))
+
 ## 0.44.0 (2024-07-19)
 
 Full Changelog: [v0.43.0...v0.44.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.43.0...v0.44.0)
