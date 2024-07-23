@@ -12,13 +12,19 @@ import com.lithic.api.models.FinancialAccountListParams
 import com.lithic.api.models.FinancialAccountRetrieveParams
 import com.lithic.api.models.FinancialAccountUpdateParams
 import com.lithic.api.services.async.financialAccounts.BalanceServiceAsync
+import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsync
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
+import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
 
 interface FinancialAccountServiceAsync {
 
     fun balances(): BalanceServiceAsync
 
     fun financialTransactions(): FinancialTransactionServiceAsync
+
+    fun creditConfiguration(): CreditConfigurationServiceAsync
+
+    fun statements(): StatementServiceAsync
 
     /** Create a new financial account */
     suspend fun create(

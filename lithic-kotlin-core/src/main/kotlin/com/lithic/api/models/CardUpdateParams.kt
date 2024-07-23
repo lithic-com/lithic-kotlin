@@ -20,7 +20,6 @@ import java.util.Objects
 class CardUpdateParams
 constructor(
     private val cardToken: String,
-    private val authRuleToken: String?,
     private val digitalCardArtToken: String?,
     private val memo: String?,
     private val pin: String?,
@@ -33,8 +32,6 @@ constructor(
 ) {
 
     fun cardToken(): String = cardToken
-
-    fun authRuleToken(): String? = authRuleToken
 
     fun digitalCardArtToken(): String? = digitalCardArtToken
 
@@ -50,7 +47,6 @@ constructor(
 
     internal fun getBody(): CardUpdateBody {
         return CardUpdateBody(
-            authRuleToken,
             digitalCardArtToken,
             memo,
             pin,
@@ -76,7 +72,6 @@ constructor(
     @NoAutoDetect
     class CardUpdateBody
     internal constructor(
-        private val authRuleToken: String?,
         private val digitalCardArtToken: String?,
         private val memo: String?,
         private val pin: String?,
@@ -87,12 +82,6 @@ constructor(
     ) {
 
         private var hashCode: Int = 0
-
-        /**
-         * Identifier for any Auth Rules that will be applied to transactions taking place with the
-         * card.
-         */
-        @JsonProperty("auth_rule_token") fun authRuleToken(): String? = authRuleToken
 
         /**
          * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -159,7 +148,6 @@ constructor(
             }
 
             return other is CardUpdateBody &&
-                this.authRuleToken == other.authRuleToken &&
                 this.digitalCardArtToken == other.digitalCardArtToken &&
                 this.memo == other.memo &&
                 this.pin == other.pin &&
@@ -173,7 +161,6 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        authRuleToken,
                         digitalCardArtToken,
                         memo,
                         pin,
@@ -187,7 +174,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardUpdateBody{authRuleToken=$authRuleToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
+            "CardUpdateBody{digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -196,7 +183,6 @@ constructor(
 
         class Builder {
 
-            private var authRuleToken: String? = null
             private var digitalCardArtToken: String? = null
             private var memo: String? = null
             private var pin: String? = null
@@ -206,7 +192,6 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardUpdateBody: CardUpdateBody) = apply {
-                this.authRuleToken = cardUpdateBody.authRuleToken
                 this.digitalCardArtToken = cardUpdateBody.digitalCardArtToken
                 this.memo = cardUpdateBody.memo
                 this.pin = cardUpdateBody.pin
@@ -215,13 +200,6 @@ constructor(
                 this.state = cardUpdateBody.state
                 additionalProperties(cardUpdateBody.additionalProperties)
             }
-
-            /**
-             * Identifier for any Auth Rules that will be applied to transactions taking place with
-             * the card.
-             */
-            @JsonProperty("auth_rule_token")
-            fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
             /**
              * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -300,7 +278,6 @@ constructor(
 
             fun build(): CardUpdateBody =
                 CardUpdateBody(
-                    authRuleToken,
                     digitalCardArtToken,
                     memo,
                     pin,
@@ -325,7 +302,6 @@ constructor(
 
         return other is CardUpdateParams &&
             this.cardToken == other.cardToken &&
-            this.authRuleToken == other.authRuleToken &&
             this.digitalCardArtToken == other.digitalCardArtToken &&
             this.memo == other.memo &&
             this.pin == other.pin &&
@@ -340,7 +316,6 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             cardToken,
-            authRuleToken,
             digitalCardArtToken,
             memo,
             pin,
@@ -354,7 +329,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardUpdateParams{cardToken=$cardToken, authRuleToken=$authRuleToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -367,7 +342,6 @@ constructor(
     class Builder {
 
         private var cardToken: String? = null
-        private var authRuleToken: String? = null
         private var digitalCardArtToken: String? = null
         private var memo: String? = null
         private var pin: String? = null
@@ -380,7 +354,6 @@ constructor(
 
         internal fun from(cardUpdateParams: CardUpdateParams) = apply {
             this.cardToken = cardUpdateParams.cardToken
-            this.authRuleToken = cardUpdateParams.authRuleToken
             this.digitalCardArtToken = cardUpdateParams.digitalCardArtToken
             this.memo = cardUpdateParams.memo
             this.pin = cardUpdateParams.pin
@@ -393,12 +366,6 @@ constructor(
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
-
-        /**
-         * Identifier for any Auth Rules that will be applied to transactions taking place with the
-         * card.
-         */
-        fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /**
          * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -512,7 +479,6 @@ constructor(
         fun build(): CardUpdateParams =
             CardUpdateParams(
                 checkNotNull(cardToken) { "`cardToken` is required but was not set" },
-                authRuleToken,
                 digitalCardArtToken,
                 memo,
                 pin,
