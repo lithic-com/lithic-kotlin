@@ -212,11 +212,11 @@ private constructor(
 
         private var hashCode: Int = 0
 
-        /** An optional customer identifier. */
+        /** A customer identifier. */
         fun customerReferenceNumber(): String? =
             customerReferenceNumber.getNullable("customer_reference_number")
 
-        /** An optional merchant identifier. */
+        /** A merchant identifier. */
         fun merchantReferenceNumber(): String? =
             merchantReferenceNumber.getNullable("merchant_reference_number")
 
@@ -227,12 +227,12 @@ private constructor(
 
         fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
-        /** An optional customer identifier. */
+        /** A customer identifier. */
         @JsonProperty("customer_reference_number")
         @ExcludeMissing
         fun _customerReferenceNumber() = customerReferenceNumber
 
-        /** An optional merchant identifier. */
+        /** A merchant identifier. */
         @JsonProperty("merchant_reference_number")
         @ExcludeMissing
         fun _merchantReferenceNumber() = merchantReferenceNumber
@@ -316,22 +316,22 @@ private constructor(
                 additionalProperties(commonData.additionalProperties)
             }
 
-            /** An optional customer identifier. */
+            /** A customer identifier. */
             fun customerReferenceNumber(customerReferenceNumber: String) =
                 customerReferenceNumber(JsonField.of(customerReferenceNumber))
 
-            /** An optional customer identifier. */
+            /** A customer identifier. */
             @JsonProperty("customer_reference_number")
             @ExcludeMissing
             fun customerReferenceNumber(customerReferenceNumber: JsonField<String>) = apply {
                 this.customerReferenceNumber = customerReferenceNumber
             }
 
-            /** An optional merchant identifier. */
+            /** A merchant identifier. */
             fun merchantReferenceNumber(merchantReferenceNumber: String) =
                 merchantReferenceNumber(JsonField.of(merchantReferenceNumber))
 
-            /** An optional merchant identifier. */
+            /** A merchant identifier. */
             @JsonProperty("merchant_reference_number")
             @ExcludeMissing
             fun merchantReferenceNumber(merchantReferenceNumber: JsonField<String>) = apply {
@@ -785,17 +785,17 @@ private constructor(
         /** The type of fuel service. */
         fun serviceType(): ServiceType? = serviceType.getNullable("service_type")
 
-        /** The odometer reading entered into at the terminal at the time of sale. */
+        /** The odometer reading entered into the terminal at the time of sale. */
         fun odometer(): Long? = odometer.getNullable("odometer")
 
         /**
-         * The vehicle number entered into at the terminal at the time of sale, with leading zeroes
+         * The vehicle number entered into the terminal at the time of sale, with leading zeros
          * stripped.
          */
         fun vehicleNumber(): String? = vehicleNumber.getNullable("vehicle_number")
 
         /**
-         * The driver number entered into at the terminal at the time of sale, with leading zeroes
+         * The driver number entered into the terminal at the time of sale, with leading zeros
          * stripped.
          */
         fun driverNumber(): String? = driverNumber.getNullable("driver_number")
@@ -807,17 +807,17 @@ private constructor(
         /** The type of fuel service. */
         @JsonProperty("service_type") @ExcludeMissing fun _serviceType() = serviceType
 
-        /** The odometer reading entered into at the terminal at the time of sale. */
+        /** The odometer reading entered into the terminal at the time of sale. */
         @JsonProperty("odometer") @ExcludeMissing fun _odometer() = odometer
 
         /**
-         * The vehicle number entered into at the terminal at the time of sale, with leading zeroes
+         * The vehicle number entered into the terminal at the time of sale, with leading zeros
          * stripped.
          */
         @JsonProperty("vehicle_number") @ExcludeMissing fun _vehicleNumber() = vehicleNumber
 
         /**
-         * The driver number entered into at the terminal at the time of sale, with leading zeroes
+         * The driver number entered into the terminal at the time of sale, with leading zeros
          * stripped.
          */
         @JsonProperty("driver_number") @ExcludeMissing fun _driverNumber() = driverNumber
@@ -913,23 +913,23 @@ private constructor(
                 this.serviceType = serviceType
             }
 
-            /** The odometer reading entered into at the terminal at the time of sale. */
+            /** The odometer reading entered into the terminal at the time of sale. */
             fun odometer(odometer: Long) = odometer(JsonField.of(odometer))
 
-            /** The odometer reading entered into at the terminal at the time of sale. */
+            /** The odometer reading entered into the terminal at the time of sale. */
             @JsonProperty("odometer")
             @ExcludeMissing
             fun odometer(odometer: JsonField<Long>) = apply { this.odometer = odometer }
 
             /**
-             * The vehicle number entered into at the terminal at the time of sale, with leading
-             * zeroes stripped.
+             * The vehicle number entered into the terminal at the time of sale, with leading zeros
+             * stripped.
              */
             fun vehicleNumber(vehicleNumber: String) = vehicleNumber(JsonField.of(vehicleNumber))
 
             /**
-             * The vehicle number entered into at the terminal at the time of sale, with leading
-             * zeroes stripped.
+             * The vehicle number entered into the terminal at the time of sale, with leading zeros
+             * stripped.
              */
             @JsonProperty("vehicle_number")
             @ExcludeMissing
@@ -938,14 +938,14 @@ private constructor(
             }
 
             /**
-             * The driver number entered into at the terminal at the time of sale, with leading
-             * zeroes stripped.
+             * The driver number entered into the terminal at the time of sale, with leading zeros
+             * stripped.
              */
             fun driverNumber(driverNumber: String) = driverNumber(JsonField.of(driverNumber))
 
             /**
-             * The driver number entered into at the terminal at the time of sale, with leading
-             * zeroes stripped.
+             * The driver number entered into the terminal at the time of sale, with leading zeros
+             * stripped.
              */
             @JsonProperty("driver_number")
             @ExcludeMissing
