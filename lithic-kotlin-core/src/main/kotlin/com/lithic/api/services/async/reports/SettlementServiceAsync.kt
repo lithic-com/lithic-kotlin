@@ -18,7 +18,7 @@ interface SettlementServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none()
     ): ReportSettlementListDetailsPageAsync
 
-    /** Get the settlement report for a specified report date. */
+    /** Get the settlement report for a specified report date. Not available in sandbox. */
     suspend fun summary(
         params: ReportSettlementSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none()
