@@ -10,7 +10,10 @@ import com.lithic.api.models.TransactionEnhancedCommercialDataRetrieveParams
 
 interface EnhancedCommercialDataServiceAsync {
 
-    /** Get all L2/L3 enhanced commercial data associated with a transaction. */
+    /**
+     * Get all L2/L3 enhanced commercial data associated with a transaction. Not available in
+     * sandbox.
+     */
     suspend fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
