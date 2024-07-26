@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.46.0 (2024-07-26)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** add method to fetch the extended credit for a given credit product ([#253](https://github.com/lithic-com/lithic-kotlin/issues/253)) ([e8e2af8](https://github.com/lithic-com/lithic-kotlin/commit/e8e2af8b690697068534af510e09067ce6b51ac7))
+
+
+### Chores
+
+* **docs:** set of improvements ([#251](https://github.com/lithic-com/lithic-kotlin/issues/251)) ([4d7e3d1](https://github.com/lithic-com/lithic-kotlin/commit/4d7e3d1b355750b5faba517b3d5ad3b916f51cf2))
+
 ## 0.45.0 (2024-07-23)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.44.0...v0.45.0)
