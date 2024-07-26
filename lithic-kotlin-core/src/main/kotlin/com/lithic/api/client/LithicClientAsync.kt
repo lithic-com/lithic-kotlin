@@ -56,6 +56,8 @@ interface LithicClientAsync {
 
     fun bookTransfers(): BookTransferServiceAsync
 
+    fun creditProducts(): CreditProductServiceAsync
+
     /** Status of api */
     suspend fun apiStatus(
         params: ClientApiStatusParams,
