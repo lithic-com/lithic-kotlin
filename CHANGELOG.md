@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.47.0 (2024-07-30)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **client:** improve binary return values ([#256](https://github.com/lithic-com/lithic-kotlin/issues/256)) ([c25532d](https://github.com/lithic-com/lithic-kotlin/commit/c25532da4398d7afe616ca1e220b8cde1a47902c))
+
+
+### Chores
+
+* **ci:** run tests in CI ([#257](https://github.com/lithic-com/lithic-kotlin/issues/257)) ([c7ab14b](https://github.com/lithic-com/lithic-kotlin/commit/c7ab14b8c124b57cedefbb9be2da739e654471e9))
+* **internal:** remove unused test file ([#254](https://github.com/lithic-com/lithic-kotlin/issues/254)) ([a5ec664](https://github.com/lithic-com/lithic-kotlin/commit/a5ec6647ef2044b1dfad4ae825382fea6289b956))
+
 ## 0.46.0 (2024-07-26)
 
 Full Changelog: [v0.45.0...v0.46.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.45.0...v0.46.0)
