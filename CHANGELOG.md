@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.48.0 (2024-08-05)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **api:** add event type 'statements.created' ([#258](https://github.com/lithic-com/lithic-kotlin/issues/258)) ([b3710bf](https://github.com/lithic-com/lithic-kotlin/commit/b3710bfda552698357b90cec73a684aec44d5367))
+
 ## 0.47.0 (2024-07-30)
 
 Full Changelog: [v0.46.0...v0.47.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.46.0...v0.47.0)
