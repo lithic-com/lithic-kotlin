@@ -279,6 +279,8 @@ constructor(
 
             val CARD_RENEWED = EventType(JsonField.of("card.renewed"))
 
+            val CARD_REISSUED = EventType(JsonField.of("card.reissued"))
+
             val CARD_SHIPPED = EventType(JsonField.of("card.shipped"))
 
             val CARD_TRANSACTION_UPDATED = EventType(JsonField.of("card_transaction.updated"))
@@ -352,6 +354,7 @@ constructor(
             BALANCE_UPDATED,
             CARD_CREATED,
             CARD_RENEWED,
+            CARD_REISSUED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST,
@@ -384,6 +387,7 @@ constructor(
             BALANCE_UPDATED,
             CARD_CREATED,
             CARD_RENEWED,
+            CARD_REISSUED,
             CARD_SHIPPED,
             CARD_TRANSACTION_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST,
@@ -418,6 +422,7 @@ constructor(
                 BALANCE_UPDATED -> Value.BALANCE_UPDATED
                 CARD_CREATED -> Value.CARD_CREATED
                 CARD_RENEWED -> Value.CARD_RENEWED
+                CARD_REISSUED -> Value.CARD_REISSUED
                 CARD_SHIPPED -> Value.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Value.CARD_TRANSACTION_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST ->
@@ -457,6 +462,7 @@ constructor(
                 BALANCE_UPDATED -> Known.BALANCE_UPDATED
                 CARD_CREATED -> Known.CARD_CREATED
                 CARD_RENEWED -> Known.CARD_RENEWED
+                CARD_REISSUED -> Known.CARD_REISSUED
                 CARD_SHIPPED -> Known.CARD_SHIPPED
                 CARD_TRANSACTION_UPDATED -> Known.CARD_TRANSACTION_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST ->
