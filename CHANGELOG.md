@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.49.1 (2024-08-09)
+
+Full Changelog: [v0.49.0...v0.49.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.49.0...v0.49.1)
+
+### Chores
+
+* **ci:** bump prism mock server version ([#264](https://github.com/lithic-com/lithic-kotlin/issues/264)) ([9f1fd05](https://github.com/lithic-com/lithic-kotlin/commit/9f1fd051a8cfee430ca12ca442648dfa3f1af7dc))
+
 ## 0.49.0 (2024-08-09)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.48.0...v0.49.0)
