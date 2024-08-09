@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.49.0 (2024-08-09)
+
+Full Changelog: [v0.48.0...v0.49.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.48.0...v0.49.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** rename model property 'Statement.AccountStanding.state' to 'period_state' ([#263](https://github.com/lithic-com/lithic-kotlin/issues/263))
+
+### Features
+
+* **api:** add event type 'card.reissued' ([#260](https://github.com/lithic-com/lithic-kotlin/issues/260)) ([262e63f](https://github.com/lithic-com/lithic-kotlin/commit/262e63f0f3fa6dcde3ae7fe813cf7262ef35ad35))
+* **api:** add methods to simulate enrollment review and enrollment document review ([#262](https://github.com/lithic-com/lithic-kotlin/issues/262)) ([e99ada3](https://github.com/lithic-com/lithic-kotlin/commit/e99ada345183207ef695aa07fdc58f4dddcd3878))
+* **api:** rename model property 'Statement.AccountStanding.state' to 'period_state' ([#263](https://github.com/lithic-com/lithic-kotlin/issues/263)) ([15a1fa4](https://github.com/lithic-com/lithic-kotlin/commit/15a1fa4b05fe0a251f3599d80b159b88a41ecac9))
+
 ## 0.48.0 (2024-08-05)
 
 Full Changelog: [v0.47.0...v0.48.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.47.0...v0.48.0)
