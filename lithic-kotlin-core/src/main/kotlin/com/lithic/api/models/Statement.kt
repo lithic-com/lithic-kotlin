@@ -546,7 +546,7 @@ private constructor(
     @NoAutoDetect
     class AccountStanding
     private constructor(
-        private val state: JsonField<AccountState2>,
+        private val periodState: JsonField<PeriodState>,
         private val periodNumber: JsonField<Long>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -555,12 +555,12 @@ private constructor(
 
         private var hashCode: Int = 0
 
-        fun state(): AccountState2 = state.getRequired("state")
+        fun periodState(): PeriodState = periodState.getRequired("period_state")
 
         /** Current overall period number */
         fun periodNumber(): Long = periodNumber.getRequired("period_number")
 
-        @JsonProperty("state") @ExcludeMissing fun _state() = state
+        @JsonProperty("period_state") @ExcludeMissing fun _periodState() = periodState
 
         /** Current overall period number */
         @JsonProperty("period_number") @ExcludeMissing fun _periodNumber() = periodNumber
@@ -571,7 +571,7 @@ private constructor(
 
         fun validate(): AccountStanding = apply {
             if (!validated) {
-                state()
+                periodState()
                 periodNumber()
                 validated = true
             }
@@ -585,7 +585,7 @@ private constructor(
             }
 
             return other is AccountStanding &&
-                this.state == other.state &&
+                this.periodState == other.periodState &&
                 this.periodNumber == other.periodNumber &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -594,7 +594,7 @@ private constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
-                        state,
+                        periodState,
                         periodNumber,
                         additionalProperties,
                     )
@@ -603,7 +603,7 @@ private constructor(
         }
 
         override fun toString() =
-            "AccountStanding{state=$state, periodNumber=$periodNumber, additionalProperties=$additionalProperties}"
+            "AccountStanding{periodState=$periodState, periodNumber=$periodNumber, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -612,21 +612,23 @@ private constructor(
 
         class Builder {
 
-            private var state: JsonField<AccountState2> = JsonMissing.of()
+            private var periodState: JsonField<PeriodState> = JsonMissing.of()
             private var periodNumber: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountStanding: AccountStanding) = apply {
-                this.state = accountStanding.state
+                this.periodState = accountStanding.periodState
                 this.periodNumber = accountStanding.periodNumber
                 additionalProperties(accountStanding.additionalProperties)
             }
 
-            fun state(state: AccountState2) = state(JsonField.of(state))
+            fun periodState(periodState: PeriodState) = periodState(JsonField.of(periodState))
 
-            @JsonProperty("state")
+            @JsonProperty("period_state")
             @ExcludeMissing
-            fun state(state: JsonField<AccountState2>) = apply { this.state = state }
+            fun periodState(periodState: JsonField<PeriodState>) = apply {
+                this.periodState = periodState
+            }
 
             /** Current overall period number */
             fun periodNumber(periodNumber: Long) = periodNumber(JsonField.of(periodNumber))
@@ -654,13 +656,13 @@ private constructor(
 
             fun build(): AccountStanding =
                 AccountStanding(
-                    state,
+                    periodState,
                     periodNumber,
                     additionalProperties.toUnmodifiable(),
                 )
         }
 
-        class AccountState2
+        class PeriodState
         @JsonCreator
         private constructor(
             private val value: JsonField<String>,
@@ -673,7 +675,7 @@ private constructor(
                     return true
                 }
 
-                return other is AccountState2 && this.value == other.value
+                return other is PeriodState && this.value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -682,13 +684,13 @@ private constructor(
 
             companion object {
 
-                val STANDARD = AccountState2(JsonField.of("STANDARD"))
+                val STANDARD = PeriodState(JsonField.of("STANDARD"))
 
-                val PROMO = AccountState2(JsonField.of("PROMO"))
+                val PROMO = PeriodState(JsonField.of("PROMO"))
 
-                val PENALTY = AccountState2(JsonField.of("PENALTY"))
+                val PENALTY = PeriodState(JsonField.of("PENALTY"))
 
-                fun of(value: String) = AccountState2(JsonField.of(value))
+                fun of(value: String) = PeriodState(JsonField.of(value))
             }
 
             enum class Known {
@@ -717,7 +719,7 @@ private constructor(
                     STANDARD -> Known.STANDARD
                     PROMO -> Known.PROMO
                     PENALTY -> Known.PENALTY
-                    else -> throw LithicInvalidDataException("Unknown AccountState2: $value")
+                    else -> throw LithicInvalidDataException("Unknown PeriodState: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()
