@@ -27,6 +27,7 @@ class AccountTest {
                         .build()
                 )
                 .authRuleTokens(listOf("string"))
+                .cardholderCurrency("USD")
                 .verificationAddress(
                     Account.VerificationAddress.builder()
                         .address1("124 Old Forest Way")
@@ -56,6 +57,7 @@ class AccountTest {
                     .build()
             )
         assertThat(account.authRuleTokens()).containsExactly("string")
+        assertThat(account.cardholderCurrency()).isEqualTo("USD")
         assertThat(account.verificationAddress())
             .isEqualTo(
                 Account.VerificationAddress.builder()
