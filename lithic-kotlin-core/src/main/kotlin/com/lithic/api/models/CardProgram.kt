@@ -19,10 +19,12 @@ import java.util.Objects
 @NoAutoDetect
 class CardProgram
 private constructor(
+    private val cardholderCurrency: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
     private val name: JsonField<String>,
     private val panRangeEnd: JsonField<String>,
     private val panRangeStart: JsonField<String>,
+    private val settlementCurrencies: JsonField<List<String>>,
     private val token: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
@@ -30,6 +32,9 @@ private constructor(
     private var validated: Boolean = false
 
     private var hashCode: Int = 0
+
+    /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
+    fun cardholderCurrency(): String? = cardholderCurrency.getNullable("cardholder_currency")
 
     /** Timestamp of when the card program was created. */
     fun created(): OffsetDateTime = created.getRequired("created")
@@ -43,8 +48,20 @@ private constructor(
     /** The first digits of the card number that this card program starts with. */
     fun panRangeStart(): String = panRangeStart.getRequired("pan_range_start")
 
+    /**
+     * List of 3-digit alphabetic ISO 4217 codes for the currencies that the card program supports
+     * for settlement.
+     */
+    fun settlementCurrencies(): List<String>? =
+        settlementCurrencies.getNullable("settlement_currencies")
+
     /** Globally unique identifier. */
     fun token(): String = token.getRequired("token")
+
+    /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
+    @JsonProperty("cardholder_currency")
+    @ExcludeMissing
+    fun _cardholderCurrency() = cardholderCurrency
 
     /** Timestamp of when the card program was created. */
     @JsonProperty("created") @ExcludeMissing fun _created() = created
@@ -58,6 +75,14 @@ private constructor(
     /** The first digits of the card number that this card program starts with. */
     @JsonProperty("pan_range_start") @ExcludeMissing fun _panRangeStart() = panRangeStart
 
+    /**
+     * List of 3-digit alphabetic ISO 4217 codes for the currencies that the card program supports
+     * for settlement.
+     */
+    @JsonProperty("settlement_currencies")
+    @ExcludeMissing
+    fun _settlementCurrencies() = settlementCurrencies
+
     /** Globally unique identifier. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
@@ -67,10 +92,12 @@ private constructor(
 
     fun validate(): CardProgram = apply {
         if (!validated) {
+            cardholderCurrency()
             created()
             name()
             panRangeEnd()
             panRangeStart()
+            settlementCurrencies()
             token()
             validated = true
         }
@@ -84,10 +111,12 @@ private constructor(
         }
 
         return other is CardProgram &&
+            this.cardholderCurrency == other.cardholderCurrency &&
             this.created == other.created &&
             this.name == other.name &&
             this.panRangeEnd == other.panRangeEnd &&
             this.panRangeStart == other.panRangeStart &&
+            this.settlementCurrencies == other.settlementCurrencies &&
             this.token == other.token &&
             this.additionalProperties == other.additionalProperties
     }
@@ -96,10 +125,12 @@ private constructor(
         if (hashCode == 0) {
             hashCode =
                 Objects.hash(
+                    cardholderCurrency,
                     created,
                     name,
                     panRangeEnd,
                     panRangeStart,
+                    settlementCurrencies,
                     token,
                     additionalProperties,
                 )
@@ -108,7 +139,7 @@ private constructor(
     }
 
     override fun toString() =
-        "CardProgram{created=$created, name=$name, panRangeEnd=$panRangeEnd, panRangeStart=$panRangeStart, token=$token, additionalProperties=$additionalProperties}"
+        "CardProgram{cardholderCurrency=$cardholderCurrency, created=$created, name=$name, panRangeEnd=$panRangeEnd, panRangeStart=$panRangeStart, settlementCurrencies=$settlementCurrencies, token=$token, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -117,20 +148,35 @@ private constructor(
 
     class Builder {
 
+        private var cardholderCurrency: JsonField<String> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var panRangeEnd: JsonField<String> = JsonMissing.of()
         private var panRangeStart: JsonField<String> = JsonMissing.of()
+        private var settlementCurrencies: JsonField<List<String>> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardProgram: CardProgram) = apply {
+            this.cardholderCurrency = cardProgram.cardholderCurrency
             this.created = cardProgram.created
             this.name = cardProgram.name
             this.panRangeEnd = cardProgram.panRangeEnd
             this.panRangeStart = cardProgram.panRangeStart
+            this.settlementCurrencies = cardProgram.settlementCurrencies
             this.token = cardProgram.token
             additionalProperties(cardProgram.additionalProperties)
+        }
+
+        /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
+        fun cardholderCurrency(cardholderCurrency: String) =
+            cardholderCurrency(JsonField.of(cardholderCurrency))
+
+        /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
+        @JsonProperty("cardholder_currency")
+        @ExcludeMissing
+        fun cardholderCurrency(cardholderCurrency: JsonField<String>) = apply {
+            this.cardholderCurrency = cardholderCurrency
         }
 
         /** Timestamp of when the card program was created. */
@@ -167,6 +213,23 @@ private constructor(
             this.panRangeStart = panRangeStart
         }
 
+        /**
+         * List of 3-digit alphabetic ISO 4217 codes for the currencies that the card program
+         * supports for settlement.
+         */
+        fun settlementCurrencies(settlementCurrencies: List<String>) =
+            settlementCurrencies(JsonField.of(settlementCurrencies))
+
+        /**
+         * List of 3-digit alphabetic ISO 4217 codes for the currencies that the card program
+         * supports for settlement.
+         */
+        @JsonProperty("settlement_currencies")
+        @ExcludeMissing
+        fun settlementCurrencies(settlementCurrencies: JsonField<List<String>>) = apply {
+            this.settlementCurrencies = settlementCurrencies
+        }
+
         /** Globally unique identifier. */
         fun token(token: String) = token(JsonField.of(token))
 
@@ -191,10 +254,12 @@ private constructor(
 
         fun build(): CardProgram =
             CardProgram(
+                cardholderCurrency,
                 created,
                 name,
                 panRangeEnd,
                 panRangeStart,
+                settlementCurrencies.map { it.toUnmodifiable() },
                 token,
                 additionalProperties.toUnmodifiable(),
             )
