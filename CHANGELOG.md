@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.50.0 (2024-08-12)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** add property `Account.cardholderCurrency` ([#266](https://github.com/lithic-com/lithic-kotlin/issues/266)) ([cd90d10](https://github.com/lithic-com/lithic-kotlin/commit/cd90d10acf8652b27b4c43574e105febb4c32278))
+* **api:** add property `Card.cardholderCurrency` ([cd90d10](https://github.com/lithic-com/lithic-kotlin/commit/cd90d10acf8652b27b4c43574e105febb4c32278))
+* **api:** add property `CardProgram.cardholderCurrencies` ([cd90d10](https://github.com/lithic-com/lithic-kotlin/commit/cd90d10acf8652b27b4c43574e105febb4c32278))
+* **api:** add property `CardProgram.cardholderCurrency` ([cd90d10](https://github.com/lithic-com/lithic-kotlin/commit/cd90d10acf8652b27b4c43574e105febb4c32278))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#264](https://github.com/lithic-com/lithic-kotlin/issues/264)) ([9f1fd05](https://github.com/lithic-com/lithic-kotlin/commit/9f1fd051a8cfee430ca12ca442648dfa3f1af7dc))
+
 ## 0.49.0 (2024-08-09)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.48.0...v0.49.0)
