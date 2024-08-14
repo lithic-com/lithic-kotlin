@@ -24,6 +24,7 @@ private constructor(
     private val details: JsonField<List<SettlementSummaryDetails>>,
     private val disputesGrossAmount: JsonField<Long>,
     private val interchangeGrossAmount: JsonField<Long>,
+    private val isComplete: JsonField<Boolean>,
     private val otherFeesGrossAmount: JsonField<Long>,
     private val reportDate: JsonField<String>,
     private val settledNetAmount: JsonField<Long>,
@@ -50,6 +51,9 @@ private constructor(
     /** The total amount of interchange. */
     fun interchangeGrossAmount(): Long =
         interchangeGrossAmount.getRequired("interchange_gross_amount")
+
+    /** Indicates that all data expected on the given report date is available. */
+    fun isComplete(): Boolean? = isComplete.getNullable("is_complete")
 
     /** Total amount of gross other fees outside of interchange. */
     fun otherFeesGrossAmount(): Long = otherFeesGrossAmount.getRequired("other_fees_gross_amount")
@@ -90,6 +94,9 @@ private constructor(
     @ExcludeMissing
     fun _interchangeGrossAmount() = interchangeGrossAmount
 
+    /** Indicates that all data expected on the given report date is available. */
+    @JsonProperty("is_complete") @ExcludeMissing fun _isComplete() = isComplete
+
     /** Total amount of gross other fees outside of interchange. */
     @JsonProperty("other_fees_gross_amount")
     @ExcludeMissing
@@ -125,6 +132,7 @@ private constructor(
             details().forEach { it.validate() }
             disputesGrossAmount()
             interchangeGrossAmount()
+            isComplete()
             otherFeesGrossAmount()
             reportDate()
             settledNetAmount()
@@ -147,6 +155,7 @@ private constructor(
             this.details == other.details &&
             this.disputesGrossAmount == other.disputesGrossAmount &&
             this.interchangeGrossAmount == other.interchangeGrossAmount &&
+            this.isComplete == other.isComplete &&
             this.otherFeesGrossAmount == other.otherFeesGrossAmount &&
             this.reportDate == other.reportDate &&
             this.settledNetAmount == other.settledNetAmount &&
@@ -164,6 +173,7 @@ private constructor(
                     details,
                     disputesGrossAmount,
                     interchangeGrossAmount,
+                    isComplete,
                     otherFeesGrossAmount,
                     reportDate,
                     settledNetAmount,
@@ -176,7 +186,7 @@ private constructor(
     }
 
     override fun toString() =
-        "SettlementReport{created=$created, currency=$currency, details=$details, disputesGrossAmount=$disputesGrossAmount, interchangeGrossAmount=$interchangeGrossAmount, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settledNetAmount=$settledNetAmount, transactionsGrossAmount=$transactionsGrossAmount, updated=$updated, additionalProperties=$additionalProperties}"
+        "SettlementReport{created=$created, currency=$currency, details=$details, disputesGrossAmount=$disputesGrossAmount, interchangeGrossAmount=$interchangeGrossAmount, isComplete=$isComplete, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settledNetAmount=$settledNetAmount, transactionsGrossAmount=$transactionsGrossAmount, updated=$updated, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -190,6 +200,7 @@ private constructor(
         private var details: JsonField<List<SettlementSummaryDetails>> = JsonMissing.of()
         private var disputesGrossAmount: JsonField<Long> = JsonMissing.of()
         private var interchangeGrossAmount: JsonField<Long> = JsonMissing.of()
+        private var isComplete: JsonField<Boolean> = JsonMissing.of()
         private var otherFeesGrossAmount: JsonField<Long> = JsonMissing.of()
         private var reportDate: JsonField<String> = JsonMissing.of()
         private var settledNetAmount: JsonField<Long> = JsonMissing.of()
@@ -203,6 +214,7 @@ private constructor(
             this.details = settlementReport.details
             this.disputesGrossAmount = settlementReport.disputesGrossAmount
             this.interchangeGrossAmount = settlementReport.interchangeGrossAmount
+            this.isComplete = settlementReport.isComplete
             this.otherFeesGrossAmount = settlementReport.otherFeesGrossAmount
             this.reportDate = settlementReport.reportDate
             this.settledNetAmount = settlementReport.settledNetAmount
@@ -256,6 +268,14 @@ private constructor(
         fun interchangeGrossAmount(interchangeGrossAmount: JsonField<Long>) = apply {
             this.interchangeGrossAmount = interchangeGrossAmount
         }
+
+        /** Indicates that all data expected on the given report date is available. */
+        fun isComplete(isComplete: Boolean) = isComplete(JsonField.of(isComplete))
+
+        /** Indicates that all data expected on the given report date is available. */
+        @JsonProperty("is_complete")
+        @ExcludeMissing
+        fun isComplete(isComplete: JsonField<Boolean>) = apply { this.isComplete = isComplete }
 
         /** Total amount of gross other fees outside of interchange. */
         fun otherFeesGrossAmount(otherFeesGrossAmount: Long) =
@@ -339,6 +359,7 @@ private constructor(
                 details.map { it.toUnmodifiable() },
                 disputesGrossAmount,
                 interchangeGrossAmount,
+                isComplete,
                 otherFeesGrossAmount,
                 reportDate,
                 settledNetAmount,
