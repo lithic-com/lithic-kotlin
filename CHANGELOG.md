@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.51.0 (2024-08-14)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** add SettlementReport property `is_complete` ([#267](https://github.com/lithic-com/lithic-kotlin/issues/267)) ([5a8d111](https://github.com/lithic-com/lithic-kotlin/commit/5a8d111f6a1b58f190ea89f6fb0489735216fdd0))
+
 ## 0.50.0 (2024-08-12)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.49.0...v0.50.0)
