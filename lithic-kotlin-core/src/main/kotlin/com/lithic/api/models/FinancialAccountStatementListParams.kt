@@ -15,6 +15,7 @@ constructor(
     private val begin: LocalDate?,
     private val end: LocalDate?,
     private val endingBefore: String?,
+    private val includeInitialStatements: Boolean?,
     private val pageSize: Long?,
     private val startingAfter: String?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -30,6 +31,8 @@ constructor(
 
     fun endingBefore(): String? = endingBefore
 
+    fun includeInitialStatements(): Boolean? = includeInitialStatements
+
     fun pageSize(): Long? = pageSize
 
     fun startingAfter(): String? = startingAfter
@@ -39,6 +42,9 @@ constructor(
         this.begin?.let { params.put("begin", listOf(it.toString())) }
         this.end?.let { params.put("end", listOf(it.toString())) }
         this.endingBefore?.let { params.put("ending_before", listOf(it.toString())) }
+        this.includeInitialStatements?.let {
+            params.put("include_initial_statements", listOf(it.toString()))
+        }
         this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
         this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
@@ -70,6 +76,7 @@ constructor(
             this.begin == other.begin &&
             this.end == other.end &&
             this.endingBefore == other.endingBefore &&
+            this.includeInitialStatements == other.includeInitialStatements &&
             this.pageSize == other.pageSize &&
             this.startingAfter == other.startingAfter &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -83,6 +90,7 @@ constructor(
             begin,
             end,
             endingBefore,
+            includeInitialStatements,
             pageSize,
             startingAfter,
             additionalQueryParams,
@@ -92,7 +100,7 @@ constructor(
     }
 
     override fun toString() =
-        "FinancialAccountStatementListParams{financialAccountToken=$financialAccountToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "FinancialAccountStatementListParams{financialAccountToken=$financialAccountToken, begin=$begin, end=$end, endingBefore=$endingBefore, includeInitialStatements=$includeInitialStatements, pageSize=$pageSize, startingAfter=$startingAfter, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -108,6 +116,7 @@ constructor(
         private var begin: LocalDate? = null
         private var end: LocalDate? = null
         private var endingBefore: String? = null
+        private var includeInitialStatements: Boolean? = null
         private var pageSize: Long? = null
         private var startingAfter: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -121,6 +130,8 @@ constructor(
             this.begin = financialAccountStatementListParams.begin
             this.end = financialAccountStatementListParams.end
             this.endingBefore = financialAccountStatementListParams.endingBefore
+            this.includeInitialStatements =
+                financialAccountStatementListParams.includeInitialStatements
             this.pageSize = financialAccountStatementListParams.pageSize
             this.startingAfter = financialAccountStatementListParams.startingAfter
             additionalQueryParams(financialAccountStatementListParams.additionalQueryParams)
@@ -150,6 +161,11 @@ constructor(
          * retrieve the previous page of results before this item.
          */
         fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
+
+        /** Whether to include the initial statement. It is not included by default. */
+        fun includeInitialStatements(includeInitialStatements: Boolean) = apply {
+            this.includeInitialStatements = includeInitialStatements
+        }
 
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
@@ -222,6 +238,7 @@ constructor(
                 begin,
                 end,
                 endingBefore,
+                includeInitialStatements,
                 pageSize,
                 startingAfter,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
