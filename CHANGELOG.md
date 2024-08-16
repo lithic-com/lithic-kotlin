@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.52.0 (2024-08-16)
+
+Full Changelog: [v0.51.0...v0.52.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.51.0...v0.52.0)
+
+### Features
+
+* **api:** add StatementListParams property include_initial_statements ([#269](https://github.com/lithic-com/lithic-kotlin/issues/269)) ([fabe1c0](https://github.com/lithic-com/lithic-kotlin/commit/fabe1c021fbb48611f6b3d730e7c0b2b312c42ab))
+
 ## 0.51.0 (2024-08-14)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.50.0...v0.51.0)
