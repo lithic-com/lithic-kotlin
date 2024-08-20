@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.53.0 (2024-08-20)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** add property `next_payment_end_date` and `next_payment_due_date` to Statement model ([#273](https://github.com/lithic-com/lithic-kotlin/issues/273)) ([734ed51](https://github.com/lithic-com/lithic-kotlin/commit/734ed51cf0a3d55a0f158a593f9910ca4d6532ab))
+
+
+### Chores
+
+* **docs:** update state description on Card ([#271](https://github.com/lithic-com/lithic-kotlin/issues/271)) ([b205cd1](https://github.com/lithic-com/lithic-kotlin/commit/b205cd1a96ae4c9b57bdc1702a7c375522cfb846))
+
 ## 0.52.0 (2024-08-16)
 
 Full Changelog: [v0.51.0...v0.52.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.51.0...v0.52.0)
