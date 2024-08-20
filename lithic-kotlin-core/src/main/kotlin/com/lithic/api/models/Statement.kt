@@ -27,7 +27,9 @@ private constructor(
     private val financialAccountToken: JsonField<String>,
     private val statementStartDate: JsonField<LocalDate>,
     private val statementEndDate: JsonField<LocalDate>,
+    private val nextStatementEndDate: JsonField<LocalDate>,
     private val paymentDueDate: JsonField<LocalDate>,
+    private val nextPaymentDueDate: JsonField<LocalDate>,
     private val daysInBillingCycle: JsonField<Long>,
     private val creditLimit: JsonField<Long>,
     private val availableCredit: JsonField<Long>,
@@ -61,8 +63,15 @@ private constructor(
     /** Date when the billing period ended */
     fun statementEndDate(): LocalDate = statementEndDate.getRequired("statement_end_date")
 
+    /** Date when the next billing period will end */
+    fun nextStatementEndDate(): LocalDate? =
+        nextStatementEndDate.getNullable("next_statement_end_date")
+
     /** Date when the payment is due */
     fun paymentDueDate(): LocalDate = paymentDueDate.getRequired("payment_due_date")
+
+    /** Date when the next payment is due */
+    fun nextPaymentDueDate(): LocalDate? = nextPaymentDueDate.getNullable("next_payment_due_date")
 
     /** Number of days in the billing cycle */
     fun daysInBillingCycle(): Long = daysInBillingCycle.getRequired("days_in_billing_cycle")
@@ -126,8 +135,18 @@ private constructor(
     /** Date when the billing period ended */
     @JsonProperty("statement_end_date") @ExcludeMissing fun _statementEndDate() = statementEndDate
 
+    /** Date when the next billing period will end */
+    @JsonProperty("next_statement_end_date")
+    @ExcludeMissing
+    fun _nextStatementEndDate() = nextStatementEndDate
+
     /** Date when the payment is due */
     @JsonProperty("payment_due_date") @ExcludeMissing fun _paymentDueDate() = paymentDueDate
+
+    /** Date when the next payment is due */
+    @JsonProperty("next_payment_due_date")
+    @ExcludeMissing
+    fun _nextPaymentDueDate() = nextPaymentDueDate
 
     /** Number of days in the billing cycle */
     @JsonProperty("days_in_billing_cycle")
@@ -189,7 +208,9 @@ private constructor(
             financialAccountToken()
             statementStartDate()
             statementEndDate()
+            nextStatementEndDate()
             paymentDueDate()
+            nextPaymentDueDate()
             daysInBillingCycle()
             creditLimit()
             availableCredit()
@@ -219,7 +240,9 @@ private constructor(
             this.financialAccountToken == other.financialAccountToken &&
             this.statementStartDate == other.statementStartDate &&
             this.statementEndDate == other.statementEndDate &&
+            this.nextStatementEndDate == other.nextStatementEndDate &&
             this.paymentDueDate == other.paymentDueDate &&
+            this.nextPaymentDueDate == other.nextPaymentDueDate &&
             this.daysInBillingCycle == other.daysInBillingCycle &&
             this.creditLimit == other.creditLimit &&
             this.availableCredit == other.availableCredit &&
@@ -244,7 +267,9 @@ private constructor(
                     financialAccountToken,
                     statementStartDate,
                     statementEndDate,
+                    nextStatementEndDate,
                     paymentDueDate,
+                    nextPaymentDueDate,
                     daysInBillingCycle,
                     creditLimit,
                     availableCredit,
@@ -265,7 +290,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Statement{token=$token, financialAccountToken=$financialAccountToken, statementStartDate=$statementStartDate, statementEndDate=$statementEndDate, paymentDueDate=$paymentDueDate, daysInBillingCycle=$daysInBillingCycle, creditLimit=$creditLimit, availableCredit=$availableCredit, startingBalance=$startingBalance, endingBalance=$endingBalance, amountDue=$amountDue, amountPastDue=$amountPastDue, periodTotals=$periodTotals, ytdTotals=$ytdTotals, created=$created, updated=$updated, creditProductToken=$creditProductToken, accountStanding=$accountStanding, additionalProperties=$additionalProperties}"
+        "Statement{token=$token, financialAccountToken=$financialAccountToken, statementStartDate=$statementStartDate, statementEndDate=$statementEndDate, nextStatementEndDate=$nextStatementEndDate, paymentDueDate=$paymentDueDate, nextPaymentDueDate=$nextPaymentDueDate, daysInBillingCycle=$daysInBillingCycle, creditLimit=$creditLimit, availableCredit=$availableCredit, startingBalance=$startingBalance, endingBalance=$endingBalance, amountDue=$amountDue, amountPastDue=$amountPastDue, periodTotals=$periodTotals, ytdTotals=$ytdTotals, created=$created, updated=$updated, creditProductToken=$creditProductToken, accountStanding=$accountStanding, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -278,7 +303,9 @@ private constructor(
         private var financialAccountToken: JsonField<String> = JsonMissing.of()
         private var statementStartDate: JsonField<LocalDate> = JsonMissing.of()
         private var statementEndDate: JsonField<LocalDate> = JsonMissing.of()
+        private var nextStatementEndDate: JsonField<LocalDate> = JsonMissing.of()
         private var paymentDueDate: JsonField<LocalDate> = JsonMissing.of()
+        private var nextPaymentDueDate: JsonField<LocalDate> = JsonMissing.of()
         private var daysInBillingCycle: JsonField<Long> = JsonMissing.of()
         private var creditLimit: JsonField<Long> = JsonMissing.of()
         private var availableCredit: JsonField<Long> = JsonMissing.of()
@@ -299,7 +326,9 @@ private constructor(
             this.financialAccountToken = statement.financialAccountToken
             this.statementStartDate = statement.statementStartDate
             this.statementEndDate = statement.statementEndDate
+            this.nextStatementEndDate = statement.nextStatementEndDate
             this.paymentDueDate = statement.paymentDueDate
+            this.nextPaymentDueDate = statement.nextPaymentDueDate
             this.daysInBillingCycle = statement.daysInBillingCycle
             this.creditLimit = statement.creditLimit
             this.availableCredit = statement.availableCredit
@@ -357,6 +386,17 @@ private constructor(
             this.statementEndDate = statementEndDate
         }
 
+        /** Date when the next billing period will end */
+        fun nextStatementEndDate(nextStatementEndDate: LocalDate) =
+            nextStatementEndDate(JsonField.of(nextStatementEndDate))
+
+        /** Date when the next billing period will end */
+        @JsonProperty("next_statement_end_date")
+        @ExcludeMissing
+        fun nextStatementEndDate(nextStatementEndDate: JsonField<LocalDate>) = apply {
+            this.nextStatementEndDate = nextStatementEndDate
+        }
+
         /** Date when the payment is due */
         fun paymentDueDate(paymentDueDate: LocalDate) = paymentDueDate(JsonField.of(paymentDueDate))
 
@@ -365,6 +405,17 @@ private constructor(
         @ExcludeMissing
         fun paymentDueDate(paymentDueDate: JsonField<LocalDate>) = apply {
             this.paymentDueDate = paymentDueDate
+        }
+
+        /** Date when the next payment is due */
+        fun nextPaymentDueDate(nextPaymentDueDate: LocalDate) =
+            nextPaymentDueDate(JsonField.of(nextPaymentDueDate))
+
+        /** Date when the next payment is due */
+        @JsonProperty("next_payment_due_date")
+        @ExcludeMissing
+        fun nextPaymentDueDate(nextPaymentDueDate: JsonField<LocalDate>) = apply {
+            this.nextPaymentDueDate = nextPaymentDueDate
         }
 
         /** Number of days in the billing cycle */
@@ -524,7 +575,9 @@ private constructor(
                 financialAccountToken,
                 statementStartDate,
                 statementEndDate,
+                nextStatementEndDate,
                 paymentDueDate,
+                nextPaymentDueDate,
                 daysInBillingCycle,
                 creditLimit,
                 availableCredit,
