@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.1 (2024-08-21)
+
+Full Changelog: [v0.53.0...v0.53.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.0...v0.53.1)
+
+### Bug Fixes
+
+* **docs:** use correct putAdditionalProperty value ([#274](https://github.com/lithic-com/lithic-kotlin/issues/274)) ([5740039](https://github.com/lithic-com/lithic-kotlin/commit/57400396adb0318132d5cb337020e83130df5ffb))
+
 ## 0.53.0 (2024-08-20)
 
 Full Changelog: [v0.52.0...v0.53.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.52.0...v0.53.0)
