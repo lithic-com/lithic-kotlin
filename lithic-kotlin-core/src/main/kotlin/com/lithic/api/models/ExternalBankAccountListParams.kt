@@ -25,7 +25,6 @@ constructor(
     private val verificationStates: List<VerificationState>?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun accountToken(): String? = accountToken
@@ -71,8 +70,6 @@ constructor(
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -89,8 +86,7 @@ constructor(
             this.states == other.states &&
             this.verificationStates == other.verificationStates &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
@@ -106,12 +102,11 @@ constructor(
             verificationStates,
             additionalQueryParams,
             additionalHeaders,
-            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "ExternalBankAccountListParams{accountToken=$accountToken, accountTypes=$accountTypes, countries=$countries, endingBefore=$endingBefore, ownerTypes=$ownerTypes, pageSize=$pageSize, startingAfter=$startingAfter, states=$states, verificationStates=$verificationStates, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalBankAccountListParams{accountToken=$accountToken, accountTypes=$accountTypes, countries=$countries, endingBefore=$endingBefore, ownerTypes=$ownerTypes, pageSize=$pageSize, startingAfter=$startingAfter, states=$states, verificationStates=$verificationStates, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -134,7 +129,6 @@ constructor(
         private var verificationStates: MutableList<VerificationState> = mutableListOf()
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(externalBankAccountListParams: ExternalBankAccountListParams) = apply {
             this.accountToken = externalBankAccountListParams.accountToken
@@ -148,7 +142,6 @@ constructor(
             this.verificationStates(externalBankAccountListParams.verificationStates ?: listOf())
             additionalQueryParams(externalBankAccountListParams.additionalQueryParams)
             additionalHeaders(externalBankAccountListParams.additionalHeaders)
-            additionalBodyProperties(externalBankAccountListParams.additionalBodyProperties)
         }
 
         fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
@@ -245,20 +238,6 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
         fun build(): ExternalBankAccountListParams =
             ExternalBankAccountListParams(
                 accountToken,
@@ -272,7 +251,6 @@ constructor(
                 if (verificationStates.size == 0) null else verificationStates.toUnmodifiable(),
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
             )
     }
 
