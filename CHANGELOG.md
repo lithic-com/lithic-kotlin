@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.53.2 (2024-08-22)
+
+Full Changelog: [v0.53.1...v0.53.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.1...v0.53.2)
+
+### Bug Fixes
+
+* remove additionalBodyProperties from methods that don't support request bodies ([#276](https://github.com/lithic-com/lithic-kotlin/issues/276)) ([f77ede1](https://github.com/lithic-com/lithic-kotlin/commit/f77ede11a203078eb315e5019ade685dd171b980))
+
 ## 0.53.1 (2024-08-21)
 
 Full Changelog: [v0.53.0...v0.53.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.0...v0.53.1)
