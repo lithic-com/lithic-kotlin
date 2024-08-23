@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.55.0 (2024-08-23)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* **api:** add endpoints and webhooks for 3DS challenge decisions and challenges ([#280](https://github.com/lithic-com/lithic-kotlin/issues/280)) ([bdc1f7c](https://github.com/lithic-com/lithic-kotlin/commit/bdc1f7c1145556505558f49b09230f5bf17ddfaa))
+
 ## 0.54.0 (2024-08-23)
 
 Full Changelog: [v0.53.2...v0.54.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.2...v0.54.0)
