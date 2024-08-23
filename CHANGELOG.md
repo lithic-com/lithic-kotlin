@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.54.0 (2024-08-23)
+
+Full Changelog: [v0.53.2...v0.54.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.2...v0.54.0)
+
+### Features
+
+* **api:** new book_transfer_transaction events and Settlement Report field deprecations ([#278](https://github.com/lithic-com/lithic-kotlin/issues/278)) ([605d4de](https://github.com/lithic-com/lithic-kotlin/commit/605d4deb839306957ca32750c53c4ff5eb3a10dc))
+
 ## 0.53.2 (2024-08-22)
 
 Full Changelog: [v0.53.1...v0.53.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.53.1...v0.53.2)
