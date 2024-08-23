@@ -249,17 +249,21 @@ constructor(
 
             val MERCHANT = TokenizationChannel(JsonField.of("MERCHANT"))
 
+            val ALL = TokenizationChannel(JsonField.of("ALL"))
+
             fun of(value: String) = TokenizationChannel(JsonField.of(value))
         }
 
         enum class Known {
             DIGITAL_WALLET,
             MERCHANT,
+            ALL,
         }
 
         enum class Value {
             DIGITAL_WALLET,
             MERCHANT,
+            ALL,
             _UNKNOWN,
         }
 
@@ -267,6 +271,7 @@ constructor(
             when (this) {
                 DIGITAL_WALLET -> Value.DIGITAL_WALLET
                 MERCHANT -> Value.MERCHANT
+                ALL -> Value.ALL
                 else -> Value._UNKNOWN
             }
 
@@ -274,6 +279,7 @@ constructor(
             when (this) {
                 DIGITAL_WALLET -> Known.DIGITAL_WALLET
                 MERCHANT -> Known.MERCHANT
+                ALL -> Known.ALL
                 else -> throw LithicInvalidDataException("Unknown TokenizationChannel: $value")
             }
 
