@@ -11,6 +11,7 @@ class SettlementSummaryDetailsTest {
     fun createSettlementSummaryDetails() {
         val settlementSummaryDetails =
             SettlementSummaryDetails.builder()
+                .currency("USD")
                 .disputesGrossAmount(123L)
                 .institution("00001")
                 .interchangeGrossAmount(123L)
@@ -20,6 +21,7 @@ class SettlementSummaryDetailsTest {
                 .transactionsGrossAmount(123L)
                 .build()
         assertThat(settlementSummaryDetails).isNotNull
+        assertThat(settlementSummaryDetails.currency()).isEqualTo("USD")
         assertThat(settlementSummaryDetails.disputesGrossAmount()).isEqualTo(123L)
         assertThat(settlementSummaryDetails.institution()).isEqualTo("00001")
         assertThat(settlementSummaryDetails.interchangeGrossAmount()).isEqualTo(123L)

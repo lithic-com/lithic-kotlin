@@ -549,7 +549,7 @@ private constructor(
          */
         fun amount(): Long = amount.getRequired("amount")
 
-        /** Subtype of the book transfer */
+        /** Type of the book transfer */
         fun type(): String = type.getRequired("type")
 
         /**
@@ -571,8 +571,8 @@ private constructor(
         fun memo(): String = memo.getRequired("memo")
 
         /** Detailed Results */
-        fun detailedResults(): List<DetailedResult>? =
-            detailedResults.getNullable("detailed_results")
+        fun detailedResults(): List<DetailedResult> =
+            detailedResults.getRequired("detailed_results")
 
         /**
          * Amount of the financial event that has been settled in the currency's smallest unit
@@ -580,7 +580,7 @@ private constructor(
          */
         @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-        /** Subtype of the book transfer */
+        /** Type of the book transfer */
         @JsonProperty("type") @ExcludeMissing fun _type() = type
 
         /**
@@ -705,10 +705,10 @@ private constructor(
             @ExcludeMissing
             fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
-            /** Subtype of the book transfer */
+            /** Type of the book transfer */
             fun type(type: String) = type(JsonField.of(type))
 
-            /** Subtype of the book transfer */
+            /** Type of the book transfer */
             @JsonProperty("type")
             @ExcludeMissing
             fun type(type: JsonField<String>) = apply { this.type = type }
@@ -798,63 +798,6 @@ private constructor(
                 )
         }
 
-        class Result
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
-
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Result && this.value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
-            companion object {
-
-                val APPROVED = Result(JsonField.of("APPROVED"))
-
-                val DECLINED = Result(JsonField.of("DECLINED"))
-
-                fun of(value: String) = Result(JsonField.of(value))
-            }
-
-            enum class Known {
-                APPROVED,
-                DECLINED,
-            }
-
-            enum class Value {
-                APPROVED,
-                DECLINED,
-                _UNKNOWN,
-            }
-
-            fun value(): Value =
-                when (this) {
-                    APPROVED -> Value.APPROVED
-                    DECLINED -> Value.DECLINED
-                    else -> Value._UNKNOWN
-                }
-
-            fun known(): Known =
-                when (this) {
-                    APPROVED -> Known.APPROVED
-                    DECLINED -> Known.DECLINED
-                    else -> throw LithicInvalidDataException("Unknown Result: $value")
-                }
-
-            fun asString(): String = _value().asStringOrThrow()
-        }
-
         class DetailedResult
         @JsonCreator
         private constructor(
@@ -907,6 +850,63 @@ private constructor(
                     APPROVED -> Known.APPROVED
                     FUNDS_INSUFFICIENT -> Known.FUNDS_INSUFFICIENT
                     else -> throw LithicInvalidDataException("Unknown DetailedResult: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        class Result
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Result && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val APPROVED = Result(JsonField.of("APPROVED"))
+
+                val DECLINED = Result(JsonField.of("DECLINED"))
+
+                fun of(value: String) = Result(JsonField.of(value))
+            }
+
+            enum class Known {
+                APPROVED,
+                DECLINED,
+            }
+
+            enum class Value {
+                APPROVED,
+                DECLINED,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    APPROVED -> Value.APPROVED
+                    DECLINED -> Value.DECLINED
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    APPROVED -> Known.APPROVED
+                    DECLINED -> Known.DECLINED
+                    else -> throw LithicInvalidDataException("Unknown Result: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()
