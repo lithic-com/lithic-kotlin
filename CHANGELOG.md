@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.55.1 (2024-08-26)
+
+Full Changelog: [v0.55.0...v0.55.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.55.0...v0.55.1)
+
+### Bug Fixes
+
+* do not pass through `\` when escaping string literals ([#284](https://github.com/lithic-com/lithic-kotlin/issues/284)) ([3dc6ef5](https://github.com/lithic-com/lithic-kotlin/commit/3dc6ef5ce50d0420acd5347171ce6c27e17956fb))
+
+
+### Chores
+
+* **docs:** minor edits ([#282](https://github.com/lithic-com/lithic-kotlin/issues/282)) ([c518504](https://github.com/lithic-com/lithic-kotlin/commit/c5185047d146b489833b1153f99ad43bbac794da))
+
 ## 0.55.0 (2024-08-23)
 
 Full Changelog: [v0.54.0...v0.55.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.54.0...v0.55.0)
