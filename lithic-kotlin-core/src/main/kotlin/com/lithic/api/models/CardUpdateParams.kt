@@ -23,6 +23,7 @@ constructor(
     private val digitalCardArtToken: String?,
     private val memo: String?,
     private val pin: String?,
+    private val pinStatus: PinStatus?,
     private val spendLimit: Long?,
     private val spendLimitDuration: SpendLimitDuration?,
     private val state: State?,
@@ -39,6 +40,8 @@ constructor(
 
     fun pin(): String? = pin
 
+    fun pinStatus(): PinStatus? = pinStatus
+
     fun spendLimit(): Long? = spendLimit
 
     fun spendLimitDuration(): SpendLimitDuration? = spendLimitDuration
@@ -50,6 +53,7 @@ constructor(
             digitalCardArtToken,
             memo,
             pin,
+            pinStatus,
             spendLimit,
             spendLimitDuration,
             state,
@@ -75,6 +79,7 @@ constructor(
         private val digitalCardArtToken: String?,
         private val memo: String?,
         private val pin: String?,
+        private val pinStatus: PinStatus?,
         private val spendLimit: Long?,
         private val spendLimitDuration: SpendLimitDuration?,
         private val state: State?,
@@ -100,10 +105,16 @@ constructor(
 
         /**
          * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
+         * Changing PIN also resets PIN status to `OK`. See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
         @JsonProperty("pin") fun pin(): String? = pin
+
+        /**
+         * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
+         * attempts). Can only be set to `OK` to unblock a card.
+         */
+        @JsonProperty("pin_status") fun pinStatus(): PinStatus? = pinStatus
 
         /**
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
@@ -151,6 +162,7 @@ constructor(
                 this.digitalCardArtToken == other.digitalCardArtToken &&
                 this.memo == other.memo &&
                 this.pin == other.pin &&
+                this.pinStatus == other.pinStatus &&
                 this.spendLimit == other.spendLimit &&
                 this.spendLimitDuration == other.spendLimitDuration &&
                 this.state == other.state &&
@@ -164,6 +176,7 @@ constructor(
                         digitalCardArtToken,
                         memo,
                         pin,
+                        pinStatus,
                         spendLimit,
                         spendLimitDuration,
                         state,
@@ -174,7 +187,7 @@ constructor(
         }
 
         override fun toString() =
-            "CardUpdateBody{digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
+            "CardUpdateBody{digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -186,6 +199,7 @@ constructor(
             private var digitalCardArtToken: String? = null
             private var memo: String? = null
             private var pin: String? = null
+            private var pinStatus: PinStatus? = null
             private var spendLimit: Long? = null
             private var spendLimitDuration: SpendLimitDuration? = null
             private var state: State? = null
@@ -195,6 +209,7 @@ constructor(
                 this.digitalCardArtToken = cardUpdateBody.digitalCardArtToken
                 this.memo = cardUpdateBody.memo
                 this.pin = cardUpdateBody.pin
+                this.pinStatus = cardUpdateBody.pinStatus
                 this.spendLimit = cardUpdateBody.spendLimit
                 this.spendLimitDuration = cardUpdateBody.spendLimitDuration
                 this.state = cardUpdateBody.state
@@ -220,10 +235,17 @@ constructor(
 
             /**
              * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
-             * `VIRTUAL`. See
-             * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
+             * `VIRTUAL`. Changing PIN also resets PIN status to `OK`. See
+             * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
             @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
+
+            /**
+             * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
+             * attempts). Can only be set to `OK` to unblock a card.
+             */
+            @JsonProperty("pin_status")
+            fun pinStatus(pinStatus: PinStatus) = apply { this.pinStatus = pinStatus }
 
             /**
              * Amount (in cents) to limit approved authorizations. Transaction requests above the
@@ -281,6 +303,7 @@ constructor(
                     digitalCardArtToken,
                     memo,
                     pin,
+                    pinStatus,
                     spendLimit,
                     spendLimitDuration,
                     state,
@@ -305,6 +328,7 @@ constructor(
             this.digitalCardArtToken == other.digitalCardArtToken &&
             this.memo == other.memo &&
             this.pin == other.pin &&
+            this.pinStatus == other.pinStatus &&
             this.spendLimit == other.spendLimit &&
             this.spendLimitDuration == other.spendLimitDuration &&
             this.state == other.state &&
@@ -319,6 +343,7 @@ constructor(
             digitalCardArtToken,
             memo,
             pin,
+            pinStatus,
             spendLimit,
             spendLimitDuration,
             state,
@@ -329,7 +354,7 @@ constructor(
     }
 
     override fun toString() =
-        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -345,6 +370,7 @@ constructor(
         private var digitalCardArtToken: String? = null
         private var memo: String? = null
         private var pin: String? = null
+        private var pinStatus: PinStatus? = null
         private var spendLimit: Long? = null
         private var spendLimitDuration: SpendLimitDuration? = null
         private var state: State? = null
@@ -357,6 +383,7 @@ constructor(
             this.digitalCardArtToken = cardUpdateParams.digitalCardArtToken
             this.memo = cardUpdateParams.memo
             this.pin = cardUpdateParams.pin
+            this.pinStatus = cardUpdateParams.pinStatus
             this.spendLimit = cardUpdateParams.spendLimit
             this.spendLimitDuration = cardUpdateParams.spendLimitDuration
             this.state = cardUpdateParams.state
@@ -385,10 +412,16 @@ constructor(
 
         /**
          * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block-enterprise).
+         * Changing PIN also resets PIN status to `OK`. See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
         fun pin(pin: String) = apply { this.pin = pin }
+
+        /**
+         * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
+         * attempts). Can only be set to `OK` to unblock a card.
+         */
+        fun pinStatus(pinStatus: PinStatus) = apply { this.pinStatus = pinStatus }
 
         /**
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
@@ -482,6 +515,7 @@ constructor(
                 digitalCardArtToken,
                 memo,
                 pin,
+                pinStatus,
                 spendLimit,
                 spendLimitDuration,
                 state,
@@ -489,6 +523,57 @@ constructor(
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
             )
+    }
+
+    class PinStatus
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PinStatus && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val OK = PinStatus(JsonField.of("OK"))
+
+            fun of(value: String) = PinStatus(JsonField.of(value))
+        }
+
+        enum class Known {
+            OK,
+        }
+
+        enum class Value {
+            OK,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                OK -> Value.OK
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                OK -> Known.OK
+                else -> throw LithicInvalidDataException("Unknown PinStatus: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 
     class State

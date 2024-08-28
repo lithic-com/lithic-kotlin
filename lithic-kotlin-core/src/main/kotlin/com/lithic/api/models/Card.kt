@@ -36,6 +36,8 @@ private constructor(
     private val lastFour: JsonField<String>,
     private val memo: JsonField<String>,
     private val pan: JsonField<String>,
+    private val pendingCommands: JsonField<List<String>>,
+    private val pinStatus: JsonField<PinStatus>,
     private val productId: JsonField<String>,
     private val spendLimit: JsonField<Long>,
     private val spendLimitDuration: JsonField<SpendLimitDuration>,
@@ -107,6 +109,18 @@ private constructor(
      * [support@lithic.com](mailto:support@lithic.com) for questions.
      */
     fun pan(): String? = pan.getNullable("pan")
+
+    /**
+     * Indicates if there are offline PIN changes pending card interaction with an offline PIN
+     * terminal. Possible commands are: CHANGE_PIN, UNBLOCK_PIN. Applicable only to cards issued in
+     * markets supporting offline PINs.
+     */
+    fun pendingCommands(): List<String>? = pendingCommands.getNullable("pending_commands")
+
+    /**
+     * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect attempts).
+     */
+    fun pinStatus(): PinStatus = pinStatus.getRequired("pin_status")
 
     /**
      * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before use.
@@ -234,6 +248,18 @@ private constructor(
     @JsonProperty("pan") @ExcludeMissing fun _pan() = pan
 
     /**
+     * Indicates if there are offline PIN changes pending card interaction with an offline PIN
+     * terminal. Possible commands are: CHANGE_PIN, UNBLOCK_PIN. Applicable only to cards issued in
+     * markets supporting offline PINs.
+     */
+    @JsonProperty("pending_commands") @ExcludeMissing fun _pendingCommands() = pendingCommands
+
+    /**
+     * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect attempts).
+     */
+    @JsonProperty("pin_status") @ExcludeMissing fun _pinStatus() = pinStatus
+
+    /**
      * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before use.
      * Specifies the configuration (i.e., physical card art) that the card should be manufactured
      * with.
@@ -316,6 +342,8 @@ private constructor(
             lastFour()
             memo()
             pan()
+            pendingCommands()
+            pinStatus()
             productId()
             spendLimit()
             spendLimitDuration()
@@ -348,6 +376,8 @@ private constructor(
             this.lastFour == other.lastFour &&
             this.memo == other.memo &&
             this.pan == other.pan &&
+            this.pendingCommands == other.pendingCommands &&
+            this.pinStatus == other.pinStatus &&
             this.productId == other.productId &&
             this.spendLimit == other.spendLimit &&
             this.spendLimitDuration == other.spendLimitDuration &&
@@ -375,6 +405,8 @@ private constructor(
                     lastFour,
                     memo,
                     pan,
+                    pendingCommands,
+                    pinStatus,
                     productId,
                     spendLimit,
                     spendLimitDuration,
@@ -388,7 +420,7 @@ private constructor(
     }
 
     override fun toString() =
-        "Card{accountToken=$accountToken, authRuleTokens=$authRuleTokens, cardProgramToken=$cardProgramToken, cardholderCurrency=$cardholderCurrency, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, productId=$productId, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
+        "Card{accountToken=$accountToken, authRuleTokens=$authRuleTokens, cardProgramToken=$cardProgramToken, cardholderCurrency=$cardholderCurrency, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, pendingCommands=$pendingCommands, pinStatus=$pinStatus, productId=$productId, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -411,6 +443,8 @@ private constructor(
         private var lastFour: JsonField<String> = JsonMissing.of()
         private var memo: JsonField<String> = JsonMissing.of()
         private var pan: JsonField<String> = JsonMissing.of()
+        private var pendingCommands: JsonField<List<String>> = JsonMissing.of()
+        private var pinStatus: JsonField<PinStatus> = JsonMissing.of()
         private var productId: JsonField<String> = JsonMissing.of()
         private var spendLimit: JsonField<Long> = JsonMissing.of()
         private var spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of()
@@ -434,6 +468,8 @@ private constructor(
             this.lastFour = card.lastFour
             this.memo = card.memo
             this.pan = card.pan
+            this.pendingCommands = card.pendingCommands
+            this.pinStatus = card.pinStatus
             this.productId = card.productId
             this.spendLimit = card.spendLimit
             this.spendLimitDuration = card.spendLimitDuration
@@ -602,6 +638,39 @@ private constructor(
         @JsonProperty("pan")
         @ExcludeMissing
         fun pan(pan: JsonField<String>) = apply { this.pan = pan }
+
+        /**
+         * Indicates if there are offline PIN changes pending card interaction with an offline PIN
+         * terminal. Possible commands are: CHANGE_PIN, UNBLOCK_PIN. Applicable only to cards issued
+         * in markets supporting offline PINs.
+         */
+        fun pendingCommands(pendingCommands: List<String>) =
+            pendingCommands(JsonField.of(pendingCommands))
+
+        /**
+         * Indicates if there are offline PIN changes pending card interaction with an offline PIN
+         * terminal. Possible commands are: CHANGE_PIN, UNBLOCK_PIN. Applicable only to cards issued
+         * in markets supporting offline PINs.
+         */
+        @JsonProperty("pending_commands")
+        @ExcludeMissing
+        fun pendingCommands(pendingCommands: JsonField<List<String>>) = apply {
+            this.pendingCommands = pendingCommands
+        }
+
+        /**
+         * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
+         * attempts).
+         */
+        fun pinStatus(pinStatus: PinStatus) = pinStatus(JsonField.of(pinStatus))
+
+        /**
+         * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
+         * attempts).
+         */
+        @JsonProperty("pin_status")
+        @ExcludeMissing
+        fun pinStatus(pinStatus: JsonField<PinStatus>) = apply { this.pinStatus = pinStatus }
 
         /**
          * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
@@ -774,6 +843,8 @@ private constructor(
                 lastFour,
                 memo,
                 pan,
+                pendingCommands.map { it.toUnmodifiable() },
+                pinStatus,
                 productId,
                 spendLimit,
                 spendLimitDuration,
@@ -1205,6 +1276,69 @@ private constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+    }
+
+    class PinStatus
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is PinStatus && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val OK = PinStatus(JsonField.of("OK"))
+
+            val BLOCKED = PinStatus(JsonField.of("BLOCKED"))
+
+            val NOT_SET = PinStatus(JsonField.of("NOT_SET"))
+
+            fun of(value: String) = PinStatus(JsonField.of(value))
+        }
+
+        enum class Known {
+            OK,
+            BLOCKED,
+            NOT_SET,
+        }
+
+        enum class Value {
+            OK,
+            BLOCKED,
+            NOT_SET,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                OK -> Value.OK
+                BLOCKED -> Value.BLOCKED
+                NOT_SET -> Value.NOT_SET
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                OK -> Known.OK
+                BLOCKED -> Known.BLOCKED
+                NOT_SET -> Known.NOT_SET
+                else -> throw LithicInvalidDataException("Unknown PinStatus: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 
     class State
