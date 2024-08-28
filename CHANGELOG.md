@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.56.0 (2024-08-28)
+
+Full Changelog: [v0.55.1...v0.56.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.55.1...v0.56.0)
+
+### Features
+
+* **api:** add 'pin status' and 'pending_commands' to Card model ([#285](https://github.com/lithic-com/lithic-kotlin/issues/285)) ([187b1ae](https://github.com/lithic-com/lithic-kotlin/commit/187b1aebd1a25eb550cc1bd0a795e130a18372d8))
+
 ## 0.55.1 (2024-08-26)
 
 Full Changelog: [v0.55.0...v0.55.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.55.0...v0.55.1)
