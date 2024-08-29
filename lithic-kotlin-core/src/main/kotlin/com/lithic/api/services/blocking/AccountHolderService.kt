@@ -8,7 +8,6 @@ import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.AccountHolder
 import com.lithic.api.models.AccountHolderCreateParams
 import com.lithic.api.models.AccountHolderCreateResponse
-import com.lithic.api.models.AccountHolderDocument
 import com.lithic.api.models.AccountHolderListDocumentsParams
 import com.lithic.api.models.AccountHolderListDocumentsResponse
 import com.lithic.api.models.AccountHolderListPage
@@ -17,12 +16,12 @@ import com.lithic.api.models.AccountHolderResubmitParams
 import com.lithic.api.models.AccountHolderRetrieveDocumentParams
 import com.lithic.api.models.AccountHolderRetrieveParams
 import com.lithic.api.models.AccountHolderSimulateEnrollmentDocumentReviewParams
-import com.lithic.api.models.AccountHolderSimulateEnrollmentDocumentReviewResponse
 import com.lithic.api.models.AccountHolderSimulateEnrollmentReviewParams
 import com.lithic.api.models.AccountHolderSimulateEnrollmentReviewResponse
 import com.lithic.api.models.AccountHolderUpdateParams
 import com.lithic.api.models.AccountHolderUpdateResponse
 import com.lithic.api.models.AccountHolderUploadDocumentParams
+import com.lithic.api.models.Document
 
 interface AccountHolderService {
 
@@ -110,13 +109,13 @@ interface AccountHolderService {
     fun retrieveDocument(
         params: AccountHolderRetrieveDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AccountHolderDocument
+    ): Document
 
     /** Simulates a review for an account holder document upload. */
     fun simulateEnrollmentDocumentReview(
         params: AccountHolderSimulateEnrollmentDocumentReviewParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AccountHolderSimulateEnrollmentDocumentReviewResponse
+    ): Document
 
     /**
      * Simulates an enrollment review for an account holder. This endpoint is only applicable for
@@ -148,5 +147,5 @@ interface AccountHolderService {
     fun uploadDocument(
         params: AccountHolderUploadDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none()
-    ): AccountHolderDocument
+    ): Document
 }
