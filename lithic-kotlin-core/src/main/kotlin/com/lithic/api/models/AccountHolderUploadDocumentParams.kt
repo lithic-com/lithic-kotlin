@@ -20,8 +20,8 @@ import java.util.Objects
 class AccountHolderUploadDocumentParams
 constructor(
     private val accountHolderToken: String,
-    private val documentType: DocumentType?,
-    private val entityToken: String?,
+    private val documentType: DocumentType,
+    private val entityToken: String,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -29,9 +29,9 @@ constructor(
 
     fun accountHolderToken(): String = accountHolderToken
 
-    fun documentType(): DocumentType? = documentType
+    fun documentType(): DocumentType = documentType
 
-    fun entityToken(): String? = entityToken
+    fun entityToken(): String = entityToken
 
     internal fun getBody(): AccountHolderUploadDocumentBody {
         return AccountHolderUploadDocumentBody(
@@ -145,8 +145,8 @@ constructor(
 
             fun build(): AccountHolderUploadDocumentBody =
                 AccountHolderUploadDocumentBody(
-                    documentType,
-                    entityToken,
+                    checkNotNull(documentType) { "`documentType` is required but was not set" },
+                    checkNotNull(entityToken) { "`entityToken` is required but was not set" },
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -282,8 +282,8 @@ constructor(
                 checkNotNull(accountHolderToken) {
                     "`accountHolderToken` is required but was not set"
                 },
-                documentType,
-                entityToken,
+                checkNotNull(documentType) { "`documentType` is required but was not set" },
+                checkNotNull(entityToken) { "`entityToken` is required but was not set" },
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

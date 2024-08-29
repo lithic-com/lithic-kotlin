@@ -17,10 +17,10 @@ import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
-/** A document to be submitted for account holder verification. */
-@JsonDeserialize(builder = AccountHolderSimulateEnrollmentDocumentReviewResponse.Builder::class)
+/** Describes the document and the required document image uploads required to re-run KYC */
+@JsonDeserialize(builder = Document.Builder::class)
 @NoAutoDetect
-class AccountHolderSimulateEnrollmentDocumentReviewResponse
+class Document
 private constructor(
     private val token: JsonField<String>,
     private val accountHolderToken: JsonField<String>,
@@ -34,17 +34,17 @@ private constructor(
     private var hashCode: Int = 0
 
     /** Globally unique identifier for the document. */
-    fun token(): String? = token.getNullable("token")
+    fun token(): String = token.getRequired("token")
 
     /** Globally unique identifier for the account holder. */
-    fun accountHolderToken(): String? = accountHolderToken.getNullable("account_holder_token")
+    fun accountHolderToken(): String = accountHolderToken.getRequired("account_holder_token")
 
     /** Type of documentation to be submitted for verification. */
-    fun documentType(): DocumentType? = documentType.getNullable("document_type")
+    fun documentType(): DocumentType = documentType.getRequired("document_type")
 
-    /** List of required document images to upload. */
-    fun requiredDocumentUploads(): List<RequiredDocumentUpload>? =
-        requiredDocumentUploads.getNullable("required_document_uploads")
+    /** Represents a single image of the document to upload. */
+    fun requiredDocumentUploads(): List<RequiredDocumentUpload> =
+        requiredDocumentUploads.getRequired("required_document_uploads")
 
     /** Globally unique identifier for the document. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
@@ -57,7 +57,7 @@ private constructor(
     /** Type of documentation to be submitted for verification. */
     @JsonProperty("document_type") @ExcludeMissing fun _documentType() = documentType
 
-    /** List of required document images to upload. */
+    /** Represents a single image of the document to upload. */
     @JsonProperty("required_document_uploads")
     @ExcludeMissing
     fun _requiredDocumentUploads() = requiredDocumentUploads
@@ -66,12 +66,12 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun validate(): AccountHolderSimulateEnrollmentDocumentReviewResponse = apply {
+    fun validate(): Document = apply {
         if (!validated) {
             token()
             accountHolderToken()
             documentType()
-            requiredDocumentUploads()?.forEach { it.validate() }
+            requiredDocumentUploads().forEach { it.validate() }
             validated = true
         }
     }
@@ -83,7 +83,7 @@ private constructor(
             return true
         }
 
-        return other is AccountHolderSimulateEnrollmentDocumentReviewResponse &&
+        return other is Document &&
             this.token == other.token &&
             this.accountHolderToken == other.accountHolderToken &&
             this.documentType == other.documentType &&
@@ -106,7 +106,7 @@ private constructor(
     }
 
     override fun toString() =
-        "AccountHolderSimulateEnrollmentDocumentReviewResponse{token=$token, accountHolderToken=$accountHolderToken, documentType=$documentType, requiredDocumentUploads=$requiredDocumentUploads, additionalProperties=$additionalProperties}"
+        "Document{token=$token, accountHolderToken=$accountHolderToken, documentType=$documentType, requiredDocumentUploads=$requiredDocumentUploads, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -122,19 +122,12 @@ private constructor(
             JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(
-            accountHolderSimulateEnrollmentDocumentReviewResponse:
-                AccountHolderSimulateEnrollmentDocumentReviewResponse
-        ) = apply {
-            this.token = accountHolderSimulateEnrollmentDocumentReviewResponse.token
-            this.accountHolderToken =
-                accountHolderSimulateEnrollmentDocumentReviewResponse.accountHolderToken
-            this.documentType = accountHolderSimulateEnrollmentDocumentReviewResponse.documentType
-            this.requiredDocumentUploads =
-                accountHolderSimulateEnrollmentDocumentReviewResponse.requiredDocumentUploads
-            additionalProperties(
-                accountHolderSimulateEnrollmentDocumentReviewResponse.additionalProperties
-            )
+        internal fun from(document: Document) = apply {
+            this.token = document.token
+            this.accountHolderToken = document.accountHolderToken
+            this.documentType = document.documentType
+            this.requiredDocumentUploads = document.requiredDocumentUploads
+            additionalProperties(document.additionalProperties)
         }
 
         /** Globally unique identifier for the document. */
@@ -166,11 +159,11 @@ private constructor(
             this.documentType = documentType
         }
 
-        /** List of required document images to upload. */
+        /** Represents a single image of the document to upload. */
         fun requiredDocumentUploads(requiredDocumentUploads: List<RequiredDocumentUpload>) =
             requiredDocumentUploads(JsonField.of(requiredDocumentUploads))
 
-        /** List of required document images to upload. */
+        /** Represents a single image of the document to upload. */
         @JsonProperty("required_document_uploads")
         @ExcludeMissing
         fun requiredDocumentUploads(
@@ -191,8 +184,8 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): AccountHolderSimulateEnrollmentDocumentReviewResponse =
-            AccountHolderSimulateEnrollmentDocumentReviewResponse(
+        fun build(): Document =
+            Document(
                 token,
                 accountHolderToken,
                 documentType,
@@ -223,53 +216,133 @@ private constructor(
 
         companion object {
 
-            val COMMERCIAL_LICENSE = DocumentType(JsonField.of("commercial_license"))
+            val DRIVERS_LICENSE = DocumentType(JsonField.of("DRIVERS_LICENSE"))
 
-            val DRIVERS_LICENSE = DocumentType(JsonField.of("drivers_license"))
+            val PASSPORT = DocumentType(JsonField.of("PASSPORT"))
 
-            val PASSPORT = DocumentType(JsonField.of("passport"))
+            val PASSPORT_CARD = DocumentType(JsonField.of("PASSPORT_CARD"))
 
-            val PASSPORT_CARD = DocumentType(JsonField.of("passport_card"))
+            val EIN_LETTER = DocumentType(JsonField.of("EIN_LETTER"))
 
-            val VISA = DocumentType(JsonField.of("visa"))
+            val TAX_RETURN = DocumentType(JsonField.of("TAX_RETURN"))
+
+            val OPERATING_AGREEMENT = DocumentType(JsonField.of("OPERATING_AGREEMENT"))
+
+            val CERTIFICATE_OF_FORMATION = DocumentType(JsonField.of("CERTIFICATE_OF_FORMATION"))
+
+            val CERTIFICATE_OF_GOOD_STANDING =
+                DocumentType(JsonField.of("CERTIFICATE_OF_GOOD_STANDING"))
+
+            val ARTICLES_OF_INCORPORATION = DocumentType(JsonField.of("ARTICLES_OF_INCORPORATION"))
+
+            val ARTICLES_OF_ORGANIZATION = DocumentType(JsonField.of("ARTICLES_OF_ORGANIZATION"))
+
+            val BYLAWS = DocumentType(JsonField.of("BYLAWS"))
+
+            val GOVERNMENT_BUSINESS_LICENSE =
+                DocumentType(JsonField.of("GOVERNMENT_BUSINESS_LICENSE"))
+
+            val PARTNERSHIP_AGREEMENT = DocumentType(JsonField.of("PARTNERSHIP_AGREEMENT"))
+
+            val SS4_FORM = DocumentType(JsonField.of("SS4_FORM"))
+
+            val BANK_STATEMENT = DocumentType(JsonField.of("BANK_STATEMENT"))
+
+            val UTILITY_BILL_STATEMENT = DocumentType(JsonField.of("UTILITY_BILL_STATEMENT"))
+
+            val SSN_CARD = DocumentType(JsonField.of("SSN_CARD"))
+
+            val ITIN_LETTER = DocumentType(JsonField.of("ITIN_LETTER"))
 
             fun of(value: String) = DocumentType(JsonField.of(value))
         }
 
         enum class Known {
-            COMMERCIAL_LICENSE,
             DRIVERS_LICENSE,
             PASSPORT,
             PASSPORT_CARD,
-            VISA,
+            EIN_LETTER,
+            TAX_RETURN,
+            OPERATING_AGREEMENT,
+            CERTIFICATE_OF_FORMATION,
+            CERTIFICATE_OF_GOOD_STANDING,
+            ARTICLES_OF_INCORPORATION,
+            ARTICLES_OF_ORGANIZATION,
+            BYLAWS,
+            GOVERNMENT_BUSINESS_LICENSE,
+            PARTNERSHIP_AGREEMENT,
+            SS4_FORM,
+            BANK_STATEMENT,
+            UTILITY_BILL_STATEMENT,
+            SSN_CARD,
+            ITIN_LETTER,
         }
 
         enum class Value {
-            COMMERCIAL_LICENSE,
             DRIVERS_LICENSE,
             PASSPORT,
             PASSPORT_CARD,
-            VISA,
+            EIN_LETTER,
+            TAX_RETURN,
+            OPERATING_AGREEMENT,
+            CERTIFICATE_OF_FORMATION,
+            CERTIFICATE_OF_GOOD_STANDING,
+            ARTICLES_OF_INCORPORATION,
+            ARTICLES_OF_ORGANIZATION,
+            BYLAWS,
+            GOVERNMENT_BUSINESS_LICENSE,
+            PARTNERSHIP_AGREEMENT,
+            SS4_FORM,
+            BANK_STATEMENT,
+            UTILITY_BILL_STATEMENT,
+            SSN_CARD,
+            ITIN_LETTER,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                COMMERCIAL_LICENSE -> Value.COMMERCIAL_LICENSE
                 DRIVERS_LICENSE -> Value.DRIVERS_LICENSE
                 PASSPORT -> Value.PASSPORT
                 PASSPORT_CARD -> Value.PASSPORT_CARD
-                VISA -> Value.VISA
+                EIN_LETTER -> Value.EIN_LETTER
+                TAX_RETURN -> Value.TAX_RETURN
+                OPERATING_AGREEMENT -> Value.OPERATING_AGREEMENT
+                CERTIFICATE_OF_FORMATION -> Value.CERTIFICATE_OF_FORMATION
+                CERTIFICATE_OF_GOOD_STANDING -> Value.CERTIFICATE_OF_GOOD_STANDING
+                ARTICLES_OF_INCORPORATION -> Value.ARTICLES_OF_INCORPORATION
+                ARTICLES_OF_ORGANIZATION -> Value.ARTICLES_OF_ORGANIZATION
+                BYLAWS -> Value.BYLAWS
+                GOVERNMENT_BUSINESS_LICENSE -> Value.GOVERNMENT_BUSINESS_LICENSE
+                PARTNERSHIP_AGREEMENT -> Value.PARTNERSHIP_AGREEMENT
+                SS4_FORM -> Value.SS4_FORM
+                BANK_STATEMENT -> Value.BANK_STATEMENT
+                UTILITY_BILL_STATEMENT -> Value.UTILITY_BILL_STATEMENT
+                SSN_CARD -> Value.SSN_CARD
+                ITIN_LETTER -> Value.ITIN_LETTER
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                COMMERCIAL_LICENSE -> Known.COMMERCIAL_LICENSE
                 DRIVERS_LICENSE -> Known.DRIVERS_LICENSE
                 PASSPORT -> Known.PASSPORT
                 PASSPORT_CARD -> Known.PASSPORT_CARD
-                VISA -> Known.VISA
+                EIN_LETTER -> Known.EIN_LETTER
+                TAX_RETURN -> Known.TAX_RETURN
+                OPERATING_AGREEMENT -> Known.OPERATING_AGREEMENT
+                CERTIFICATE_OF_FORMATION -> Known.CERTIFICATE_OF_FORMATION
+                CERTIFICATE_OF_GOOD_STANDING -> Known.CERTIFICATE_OF_GOOD_STANDING
+                ARTICLES_OF_INCORPORATION -> Known.ARTICLES_OF_INCORPORATION
+                ARTICLES_OF_ORGANIZATION -> Known.ARTICLES_OF_ORGANIZATION
+                BYLAWS -> Known.BYLAWS
+                GOVERNMENT_BUSINESS_LICENSE -> Known.GOVERNMENT_BUSINESS_LICENSE
+                PARTNERSHIP_AGREEMENT -> Known.PARTNERSHIP_AGREEMENT
+                SS4_FORM -> Known.SS4_FORM
+                BANK_STATEMENT -> Known.BANK_STATEMENT
+                UTILITY_BILL_STATEMENT -> Known.UTILITY_BILL_STATEMENT
+                SSN_CARD -> Known.SSN_CARD
+                ITIN_LETTER -> Known.ITIN_LETTER
                 else -> throw LithicInvalidDataException("Unknown DocumentType: $value")
             }
 
@@ -293,13 +366,13 @@ private constructor(
         private var hashCode: Int = 0
 
         /** Type of image to upload. */
-        fun imageType(): ImageType? = imageType.getNullable("image_type")
+        fun imageType(): ImageType = imageType.getRequired("image_type")
 
         /** Status of document image upload. */
-        fun status(): Status? = status.getNullable("status")
+        fun status(): Status = status.getRequired("status")
 
         /** Reasons for document image upload status. */
-        fun statusReasons(): List<StatusReason>? = statusReasons.getNullable("status_reasons")
+        fun statusReasons(): List<StatusReason> = statusReasons.getRequired("status_reasons")
 
         /**
          * URL to upload document image to.
@@ -308,7 +381,7 @@ private constructor(
          * the URLs by retrieving the document upload from `GET
          * /account_holders/{account_holder_token}/documents`.
          */
-        fun uploadUrl(): String? = uploadUrl.getNullable("upload_url")
+        fun uploadUrl(): String = uploadUrl.getRequired("upload_url")
 
         /** Type of image to upload. */
         @JsonProperty("image_type") @ExcludeMissing fun _imageType() = imageType
@@ -488,35 +561,35 @@ private constructor(
 
             companion object {
 
-                val BACK = ImageType(JsonField.of("back"))
+                val FRONT = ImageType(JsonField.of("FRONT"))
 
-                val FRONT = ImageType(JsonField.of("front"))
+                val BACK = ImageType(JsonField.of("BACK"))
 
                 fun of(value: String) = ImageType(JsonField.of(value))
             }
 
             enum class Known {
-                BACK,
                 FRONT,
+                BACK,
             }
 
             enum class Value {
-                BACK,
                 FRONT,
+                BACK,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
-                    BACK -> Value.BACK
                     FRONT -> Value.FRONT
+                    BACK -> Value.BACK
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
-                    BACK -> Known.BACK
                     FRONT -> Known.FRONT
+                    BACK -> Known.BACK
                     else -> throw LithicInvalidDataException("Unknown ImageType: $value")
                 }
 
@@ -545,11 +618,11 @@ private constructor(
 
             companion object {
 
-                val COMPLETED = Status(JsonField.of("COMPLETED"))
+                val ACCEPTED = Status(JsonField.of("ACCEPTED"))
 
-                val FAILED = Status(JsonField.of("FAILED"))
+                val REJECTED = Status(JsonField.of("REJECTED"))
 
-                val PENDING = Status(JsonField.of("PENDING"))
+                val PENDING_UPLOAD = Status(JsonField.of("PENDING_UPLOAD"))
 
                 val UPLOADED = Status(JsonField.of("UPLOADED"))
 
@@ -557,34 +630,34 @@ private constructor(
             }
 
             enum class Known {
-                COMPLETED,
-                FAILED,
-                PENDING,
+                ACCEPTED,
+                REJECTED,
+                PENDING_UPLOAD,
                 UPLOADED,
             }
 
             enum class Value {
-                COMPLETED,
-                FAILED,
-                PENDING,
+                ACCEPTED,
+                REJECTED,
+                PENDING_UPLOAD,
                 UPLOADED,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
-                    COMPLETED -> Value.COMPLETED
-                    FAILED -> Value.FAILED
-                    PENDING -> Value.PENDING
+                    ACCEPTED -> Value.ACCEPTED
+                    REJECTED -> Value.REJECTED
+                    PENDING_UPLOAD -> Value.PENDING_UPLOAD
                     UPLOADED -> Value.UPLOADED
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
-                    COMPLETED -> Known.COMPLETED
-                    FAILED -> Known.FAILED
-                    PENDING -> Known.PENDING
+                    ACCEPTED -> Known.ACCEPTED
+                    REJECTED -> Known.REJECTED
+                    PENDING_UPLOAD -> Known.PENDING_UPLOAD
                     UPLOADED -> Known.UPLOADED
                     else -> throw LithicInvalidDataException("Unknown Status: $value")
                 }
@@ -614,15 +687,17 @@ private constructor(
 
             companion object {
 
-                val BACK_IMAGE_BLURRY = StatusReason(JsonField.of("BACK_IMAGE_BLURRY"))
+                val DOCUMENT_MISSING_REQUIRED_DATA =
+                    StatusReason(JsonField.of("DOCUMENT_MISSING_REQUIRED_DATA"))
+
+                val DOCUMENT_UPLOAD_TOO_BLURRY =
+                    StatusReason(JsonField.of("DOCUMENT_UPLOAD_TOO_BLURRY"))
 
                 val FILE_SIZE_TOO_LARGE = StatusReason(JsonField.of("FILE_SIZE_TOO_LARGE"))
 
-                val FRONT_IMAGE_BLURRY = StatusReason(JsonField.of("FRONT_IMAGE_BLURRY"))
+                val INVALID_DOCUMENT_TYPE = StatusReason(JsonField.of("INVALID_DOCUMENT_TYPE"))
 
-                val FRONT_IMAGE_GLARE = StatusReason(JsonField.of("FRONT_IMAGE_GLARE"))
-
-                val INVALID_FILE_TYPE = StatusReason(JsonField.of("INVALID_FILE_TYPE"))
+                val INVALID_DOCUMENT_UPLOAD = StatusReason(JsonField.of("INVALID_DOCUMENT_UPLOAD"))
 
                 val UNKNOWN_ERROR = StatusReason(JsonField.of("UNKNOWN_ERROR"))
 
@@ -630,42 +705,42 @@ private constructor(
             }
 
             enum class Known {
-                BACK_IMAGE_BLURRY,
+                DOCUMENT_MISSING_REQUIRED_DATA,
+                DOCUMENT_UPLOAD_TOO_BLURRY,
                 FILE_SIZE_TOO_LARGE,
-                FRONT_IMAGE_BLURRY,
-                FRONT_IMAGE_GLARE,
-                INVALID_FILE_TYPE,
+                INVALID_DOCUMENT_TYPE,
+                INVALID_DOCUMENT_UPLOAD,
                 UNKNOWN_ERROR,
             }
 
             enum class Value {
-                BACK_IMAGE_BLURRY,
+                DOCUMENT_MISSING_REQUIRED_DATA,
+                DOCUMENT_UPLOAD_TOO_BLURRY,
                 FILE_SIZE_TOO_LARGE,
-                FRONT_IMAGE_BLURRY,
-                FRONT_IMAGE_GLARE,
-                INVALID_FILE_TYPE,
+                INVALID_DOCUMENT_TYPE,
+                INVALID_DOCUMENT_UPLOAD,
                 UNKNOWN_ERROR,
                 _UNKNOWN,
             }
 
             fun value(): Value =
                 when (this) {
-                    BACK_IMAGE_BLURRY -> Value.BACK_IMAGE_BLURRY
+                    DOCUMENT_MISSING_REQUIRED_DATA -> Value.DOCUMENT_MISSING_REQUIRED_DATA
+                    DOCUMENT_UPLOAD_TOO_BLURRY -> Value.DOCUMENT_UPLOAD_TOO_BLURRY
                     FILE_SIZE_TOO_LARGE -> Value.FILE_SIZE_TOO_LARGE
-                    FRONT_IMAGE_BLURRY -> Value.FRONT_IMAGE_BLURRY
-                    FRONT_IMAGE_GLARE -> Value.FRONT_IMAGE_GLARE
-                    INVALID_FILE_TYPE -> Value.INVALID_FILE_TYPE
+                    INVALID_DOCUMENT_TYPE -> Value.INVALID_DOCUMENT_TYPE
+                    INVALID_DOCUMENT_UPLOAD -> Value.INVALID_DOCUMENT_UPLOAD
                     UNKNOWN_ERROR -> Value.UNKNOWN_ERROR
                     else -> Value._UNKNOWN
                 }
 
             fun known(): Known =
                 when (this) {
-                    BACK_IMAGE_BLURRY -> Known.BACK_IMAGE_BLURRY
+                    DOCUMENT_MISSING_REQUIRED_DATA -> Known.DOCUMENT_MISSING_REQUIRED_DATA
+                    DOCUMENT_UPLOAD_TOO_BLURRY -> Known.DOCUMENT_UPLOAD_TOO_BLURRY
                     FILE_SIZE_TOO_LARGE -> Known.FILE_SIZE_TOO_LARGE
-                    FRONT_IMAGE_BLURRY -> Known.FRONT_IMAGE_BLURRY
-                    FRONT_IMAGE_GLARE -> Known.FRONT_IMAGE_GLARE
-                    INVALID_FILE_TYPE -> Known.INVALID_FILE_TYPE
+                    INVALID_DOCUMENT_TYPE -> Known.INVALID_DOCUMENT_TYPE
+                    INVALID_DOCUMENT_UPLOAD -> Known.INVALID_DOCUMENT_UPLOAD
                     UNKNOWN_ERROR -> Known.UNKNOWN_ERROR
                     else -> throw LithicInvalidDataException("Unknown StatusReason: $value")
                 }

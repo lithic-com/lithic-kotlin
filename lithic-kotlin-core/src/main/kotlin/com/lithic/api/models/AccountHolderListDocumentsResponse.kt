@@ -18,7 +18,7 @@ import java.util.Objects
 @NoAutoDetect
 class AccountHolderListDocumentsResponse
 private constructor(
-    private val data: JsonField<List<AccountHolderDocument>>,
+    private val data: JsonField<List<Document>>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -26,7 +26,7 @@ private constructor(
 
     private var hashCode: Int = 0
 
-    fun data(): List<AccountHolderDocument>? = data.getNullable("data")
+    fun data(): List<Document>? = data.getNullable("data")
 
     @JsonProperty("data") @ExcludeMissing fun _data() = data
 
@@ -70,7 +70,7 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<AccountHolderDocument>> = JsonMissing.of()
+        private var data: JsonField<List<Document>> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountHolderListDocumentsResponse: AccountHolderListDocumentsResponse) =
@@ -79,11 +79,11 @@ private constructor(
                 additionalProperties(accountHolderListDocumentsResponse.additionalProperties)
             }
 
-        fun data(data: List<AccountHolderDocument>) = data(JsonField.of(data))
+        fun data(data: List<Document>) = data(JsonField.of(data))
 
         @JsonProperty("data")
         @ExcludeMissing
-        fun data(data: JsonField<List<AccountHolderDocument>>) = apply { this.data = data }
+        fun data(data: JsonField<List<Document>>) = apply { this.data = data }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
