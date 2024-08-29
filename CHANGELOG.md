@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.57.0 (2024-08-29)
+
+Full Changelog: [v0.56.0...v0.57.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.56.0...v0.57.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** add shared model Document ([#289](https://github.com/lithic-com/lithic-kotlin/issues/289))
+
+### Features
+
+* **api:** add shared model Document ([#289](https://github.com/lithic-com/lithic-kotlin/issues/289)) ([a1b2d77](https://github.com/lithic-com/lithic-kotlin/commit/a1b2d77966c203149989c1a32e20a19b1f8782a2))
+
+
+### Chores
+
+* use headless jdk for containers ([#287](https://github.com/lithic-com/lithic-kotlin/issues/287)) ([25b89bb](https://github.com/lithic-com/lithic-kotlin/commit/25b89bb6ef67f9b31b948e4da97135ae6dd2137f))
+
 ## 0.56.0 (2024-08-28)
 
 Full Changelog: [v0.55.1...v0.56.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.55.1...v0.56.0)
