@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.58.0 (2024-09-03)
+
+Full Changelog: [v0.57.0...v0.58.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.57.0...v0.58.0)
+
+### Features
+
+* **api:** declare AccountHolderBusinessResponse and remove entity_token from BusinessEntity ([#290](https://github.com/lithic-com/lithic-kotlin/issues/290)) ([e6d74b9](https://github.com/lithic-com/lithic-kotlin/commit/e6d74b937e2f594e4df4b3ff45d3b3e56e6bdb20))
+
 ## 0.57.0 (2024-08-29)
 
 Full Changelog: [v0.56.0...v0.57.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.56.0...v0.57.0)
