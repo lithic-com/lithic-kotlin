@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithi
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.57.0")
+implementation("com.lithic.api:lithic-kotlin:0.58.0")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.lithic.api:lithic-kotlin:0.57.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.57.0</version>
+    <version>0.58.0</version>
 </dependency>
 ```
 
