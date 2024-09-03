@@ -482,7 +482,6 @@ private constructor(
         private val legalBusinessName: JsonField<String>,
         private val parentCompany: JsonField<String>,
         private val phoneNumbers: JsonField<List<String>>,
-        private val entityToken: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -517,9 +516,6 @@ private constructor(
         /** One or more of the business's phone number(s), entered as a list in E.164 format. */
         fun phoneNumbers(): List<String> = phoneNumbers.getRequired("phone_numbers")
 
-        /** Globally unique identifier for the entity. */
-        fun entityToken(): String = entityToken.getRequired("entity_token")
-
         /**
          * Business's physical address - PO boxes, UPS drops, and FedEx drops are not acceptable;
          * APO/FPO are acceptable.
@@ -549,9 +545,6 @@ private constructor(
         /** One or more of the business's phone number(s), entered as a list in E.164 format. */
         @JsonProperty("phone_numbers") @ExcludeMissing fun _phoneNumbers() = phoneNumbers
 
-        /** Globally unique identifier for the entity. */
-        @JsonProperty("entity_token") @ExcludeMissing fun _entityToken() = entityToken
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -564,7 +557,6 @@ private constructor(
                 legalBusinessName()
                 parentCompany()
                 phoneNumbers()
-                entityToken()
                 validated = true
             }
         }
@@ -583,7 +575,6 @@ private constructor(
                 this.legalBusinessName == other.legalBusinessName &&
                 this.parentCompany == other.parentCompany &&
                 this.phoneNumbers == other.phoneNumbers &&
-                this.entityToken == other.entityToken &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -597,7 +588,6 @@ private constructor(
                         legalBusinessName,
                         parentCompany,
                         phoneNumbers,
-                        entityToken,
                         additionalProperties,
                     )
             }
@@ -605,7 +595,7 @@ private constructor(
         }
 
         override fun toString() =
-            "BusinessEntity{address=$address, dbaBusinessName=$dbaBusinessName, governmentId=$governmentId, legalBusinessName=$legalBusinessName, parentCompany=$parentCompany, phoneNumbers=$phoneNumbers, entityToken=$entityToken, additionalProperties=$additionalProperties}"
+            "BusinessEntity{address=$address, dbaBusinessName=$dbaBusinessName, governmentId=$governmentId, legalBusinessName=$legalBusinessName, parentCompany=$parentCompany, phoneNumbers=$phoneNumbers, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -620,7 +610,6 @@ private constructor(
             private var legalBusinessName: JsonField<String> = JsonMissing.of()
             private var parentCompany: JsonField<String> = JsonMissing.of()
             private var phoneNumbers: JsonField<List<String>> = JsonMissing.of()
-            private var entityToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(businessEntity: BusinessEntity) = apply {
@@ -630,7 +619,6 @@ private constructor(
                 this.legalBusinessName = businessEntity.legalBusinessName
                 this.parentCompany = businessEntity.parentCompany
                 this.phoneNumbers = businessEntity.phoneNumbers
-                this.entityToken = businessEntity.entityToken
                 additionalProperties(businessEntity.additionalProperties)
             }
 
@@ -712,16 +700,6 @@ private constructor(
                 this.phoneNumbers = phoneNumbers
             }
 
-            /** Globally unique identifier for the entity. */
-            fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
-
-            /** Globally unique identifier for the entity. */
-            @JsonProperty("entity_token")
-            @ExcludeMissing
-            fun entityToken(entityToken: JsonField<String>) = apply {
-                this.entityToken = entityToken
-            }
-
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 this.additionalProperties.putAll(additionalProperties)
@@ -744,7 +722,6 @@ private constructor(
                     legalBusinessName,
                     parentCompany,
                     phoneNumbers.map { it.toUnmodifiable() },
-                    entityToken,
                     additionalProperties.toUnmodifiable(),
                 )
         }
