@@ -39,7 +39,7 @@ private constructor(
 
     /**
      * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
-     * APO/FPO are acceptable. Only USA addresses are currently supported.
+     * APO/FPO are acceptable.
      */
     fun address(): Address = address.getRequired("address")
 
@@ -73,7 +73,7 @@ private constructor(
 
     /**
      * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
-     * APO/FPO are acceptable. Only USA addresses are currently supported.
+     * APO/FPO are acceptable.
      */
     @JsonProperty("address") @ExcludeMissing fun _address() = address
 
@@ -201,13 +201,13 @@ private constructor(
 
         /**
          * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not
-         * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+         * acceptable; APO/FPO are acceptable.
          */
         fun address(address: Address) = address(JsonField.of(address))
 
         /**
          * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not
-         * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+         * acceptable; APO/FPO are acceptable.
          */
         @JsonProperty("address")
         @ExcludeMissing
