@@ -19,6 +19,7 @@ constructor(
     private val creditLimit: Long?,
     private val creditProductToken: String?,
     private val externalBankAccountToken: String?,
+    private val tier: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -32,11 +33,14 @@ constructor(
 
     fun externalBankAccountToken(): String? = externalBankAccountToken
 
+    fun tier(): String? = tier
+
     internal fun getBody(): FinancialAccountCreditConfigurationUpdateBody {
         return FinancialAccountCreditConfigurationUpdateBody(
             creditLimit,
             creditProductToken,
             externalBankAccountToken,
+            tier,
             additionalBodyProperties,
         )
     }
@@ -59,6 +63,7 @@ constructor(
         private val creditLimit: Long?,
         private val creditProductToken: String?,
         private val externalBankAccountToken: String?,
+        private val tier: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -71,6 +76,9 @@ constructor(
 
         @JsonProperty("external_bank_account_token")
         fun externalBankAccountToken(): String? = externalBankAccountToken
+
+        /** Tier to assign to a financial account */
+        @JsonProperty("tier") fun tier(): String? = tier
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -87,6 +95,7 @@ constructor(
                 this.creditLimit == other.creditLimit &&
                 this.creditProductToken == other.creditProductToken &&
                 this.externalBankAccountToken == other.externalBankAccountToken &&
+                this.tier == other.tier &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -97,6 +106,7 @@ constructor(
                         creditLimit,
                         creditProductToken,
                         externalBankAccountToken,
+                        tier,
                         additionalProperties,
                     )
             }
@@ -104,7 +114,7 @@ constructor(
         }
 
         override fun toString() =
-            "FinancialAccountCreditConfigurationUpdateBody{creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, additionalProperties=$additionalProperties}"
+            "FinancialAccountCreditConfigurationUpdateBody{creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, tier=$tier, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -116,6 +126,7 @@ constructor(
             private var creditLimit: Long? = null
             private var creditProductToken: String? = null
             private var externalBankAccountToken: String? = null
+            private var tier: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -127,6 +138,7 @@ constructor(
                     financialAccountCreditConfigurationUpdateBody.creditProductToken
                 this.externalBankAccountToken =
                     financialAccountCreditConfigurationUpdateBody.externalBankAccountToken
+                this.tier = financialAccountCreditConfigurationUpdateBody.tier
                 additionalProperties(
                     financialAccountCreditConfigurationUpdateBody.additionalProperties
                 )
@@ -145,6 +157,9 @@ constructor(
             fun externalBankAccountToken(externalBankAccountToken: String) = apply {
                 this.externalBankAccountToken = externalBankAccountToken
             }
+
+            /** Tier to assign to a financial account */
+            @JsonProperty("tier") fun tier(tier: String) = apply { this.tier = tier }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -165,6 +180,7 @@ constructor(
                     creditLimit,
                     creditProductToken,
                     externalBankAccountToken,
+                    tier,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -186,6 +202,7 @@ constructor(
             this.creditLimit == other.creditLimit &&
             this.creditProductToken == other.creditProductToken &&
             this.externalBankAccountToken == other.externalBankAccountToken &&
+            this.tier == other.tier &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -197,6 +214,7 @@ constructor(
             creditLimit,
             creditProductToken,
             externalBankAccountToken,
+            tier,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -204,7 +222,7 @@ constructor(
     }
 
     override fun toString() =
-        "FinancialAccountCreditConfigurationUpdateParams{financialAccountToken=$financialAccountToken, creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "FinancialAccountCreditConfigurationUpdateParams{financialAccountToken=$financialAccountToken, creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, tier=$tier, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -220,6 +238,7 @@ constructor(
         private var creditLimit: Long? = null
         private var creditProductToken: String? = null
         private var externalBankAccountToken: String? = null
+        private var tier: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -235,6 +254,7 @@ constructor(
                 financialAccountCreditConfigurationUpdateParams.creditProductToken
             this.externalBankAccountToken =
                 financialAccountCreditConfigurationUpdateParams.externalBankAccountToken
+            this.tier = financialAccountCreditConfigurationUpdateParams.tier
             additionalQueryParams(
                 financialAccountCreditConfigurationUpdateParams.additionalQueryParams
             )
@@ -258,6 +278,9 @@ constructor(
         fun externalBankAccountToken(externalBankAccountToken: String) = apply {
             this.externalBankAccountToken = externalBankAccountToken
         }
+
+        /** Tier to assign to a financial account */
+        fun tier(tier: String) = apply { this.tier = tier }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -321,6 +344,7 @@ constructor(
                 creditLimit,
                 creditProductToken,
                 externalBankAccountToken,
+                tier,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
