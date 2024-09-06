@@ -15,6 +15,8 @@ class FinancialAccountCreditConfigTest {
                 .creditLimit(123L)
                 .creditProductToken("credit_product_token")
                 .externalBankAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .financialAccountState("financial_account_state")
+                .tier("tier")
                 .build()
         assertThat(financialAccountCreditConfig).isNotNull
         assertThat(financialAccountCreditConfig.accountToken())
@@ -24,5 +26,8 @@ class FinancialAccountCreditConfigTest {
             .isEqualTo("credit_product_token")
         assertThat(financialAccountCreditConfig.externalBankAccountToken())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(financialAccountCreditConfig.financialAccountState())
+            .isEqualTo("financial_account_state")
+        assertThat(financialAccountCreditConfig.tier()).isEqualTo("tier")
     }
 }
