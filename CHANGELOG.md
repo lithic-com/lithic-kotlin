@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.59.0 (2024-09-06)
+
+Full Changelog: [v0.58.0...v0.59.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.58.0...v0.59.0)
+
+### Features
+
+* **api:** add tier and state to financial_accounts ([#294](https://github.com/lithic-com/lithic-kotlin/issues/294)) ([23f5629](https://github.com/lithic-com/lithic-kotlin/commit/23f562997d6db2b12170badfdfb3d78a3661e320))
+
+
+### Chores
+
+* **docs:** update description for postal codes ([#292](https://github.com/lithic-com/lithic-kotlin/issues/292)) ([e654d06](https://github.com/lithic-com/lithic-kotlin/commit/e654d06bed9c6e42cbc0c3b1da4726ddb476aa61))
+
 ## 0.58.0 (2024-09-03)
 
 Full Changelog: [v0.57.0...v0.58.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.57.0...v0.58.0)
