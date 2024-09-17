@@ -57,8 +57,8 @@ constructor(
 
         /**
          * The communication method that the user has selected to use to receive the authentication
-         * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
-         * "EMAIL_TO_CARDHOLDER_ADDRESS"
+         * code. Supported Values: Sms = 'TEXT_TO_CARDHOLDER_NUMBER'. Email =
+         * 'EMAIL_TO_CARDHOLDER_ADDRESS'
          */
         @JsonProperty("activation_method_type")
         fun activationMethodType(): ActivationMethodType? = activationMethodType
@@ -109,8 +109,8 @@ constructor(
 
             /**
              * The communication method that the user has selected to use to receive the
-             * authentication code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
-             * "EMAIL_TO_CARDHOLDER_ADDRESS"
+             * authentication code. Supported Values: Sms = 'TEXT_TO_CARDHOLDER_NUMBER'. Email =
+             * 'EMAIL_TO_CARDHOLDER_ADDRESS'
              */
             @JsonProperty("activation_method_type")
             fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
@@ -205,8 +205,8 @@ constructor(
 
         /**
          * The communication method that the user has selected to use to receive the authentication
-         * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
-         * "EMAIL_TO_CARDHOLDER_ADDRESS"
+         * code. Supported Values: Sms = 'TEXT_TO_CARDHOLDER_NUMBER'. Email =
+         * 'EMAIL_TO_CARDHOLDER_ADDRESS'
          */
         fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
             this.activationMethodType = activationMethodType
