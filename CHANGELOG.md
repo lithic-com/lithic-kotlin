@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.60.0 (2024-09-17)
+
+Full Changelog: [v0.59.0...v0.60.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.59.0...v0.60.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** updates book transfer status, updates to transactions, add currency model ([#298](https://github.com/lithic-com/lithic-kotlin/issues/298))
+
+### Features
+
+* **api:** updates book transfer status, updates to transactions, add currency model ([#298](https://github.com/lithic-com/lithic-kotlin/issues/298)) ([76d103e](https://github.com/lithic-com/lithic-kotlin/commit/76d103ee27d331636e3c6938b5302f823811c270))
+* **client:** added structured fields to errors ([#297](https://github.com/lithic-com/lithic-kotlin/issues/297)) ([eaeb332](https://github.com/lithic-com/lithic-kotlin/commit/eaeb332cd3645875e26d41f6f17301a3d75c5a2f))
+
+
+### Documentation
+
+* adjust additional properties example ([#295](https://github.com/lithic-com/lithic-kotlin/issues/295)) ([b563a70](https://github.com/lithic-com/lithic-kotlin/commit/b563a708d6582254ed533184f44b177f34d7414f))
+
 ## 0.59.0 (2024-09-06)
 
 Full Changelog: [v0.58.0...v0.59.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.58.0...v0.59.0)
