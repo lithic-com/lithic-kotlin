@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.60.1 (2024-09-18)
+
+Full Changelog: [v0.60.0...v0.60.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.60.0...v0.60.1)
+
+### Chores
+
+* **internal:** specify API version for each endpoints instead of hardcoded in base URLs ([#299](https://github.com/lithic-com/lithic-kotlin/issues/299)) ([17b5ebe](https://github.com/lithic-com/lithic-kotlin/commit/17b5ebe26b1461d611fbb47cbf737cd2ea01b8bb))
+* **tests:** fix getEmbedURL to specify /v1/ prefix ([7de4d7f](https://github.com/lithic-com/lithic-kotlin/commit/7de4d7f900d586a6c2c722eefb3a7519e951ff44))
+
 ## 0.60.0 (2024-09-17)
 
 Full Changelog: [v0.59.0...v0.60.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.59.0...v0.60.0)
