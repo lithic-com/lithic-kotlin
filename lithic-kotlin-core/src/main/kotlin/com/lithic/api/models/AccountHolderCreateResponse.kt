@@ -27,6 +27,7 @@ private constructor(
     private val externalId: JsonField<String>,
     private val status: JsonField<Status>,
     private val statusReasons: JsonField<List<StatusReason>>,
+    private val requiredDocuments: JsonField<List<RequiredDocument>>,
     private val token: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
@@ -60,6 +61,13 @@ private constructor(
     /** Reason for the evaluation status. */
     fun statusReasons(): List<StatusReason> = statusReasons.getRequired("status_reasons")
 
+    /**
+     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
+     * the account holder to be approved.
+     */
+    fun requiredDocuments(): List<RequiredDocument>? =
+        requiredDocuments.getNullable("required_documents")
+
     /** Globally unique identifier for the account holder. */
     fun token(): String = token.getRequired("token")
 
@@ -88,6 +96,12 @@ private constructor(
     /** Reason for the evaluation status. */
     @JsonProperty("status_reasons") @ExcludeMissing fun _statusReasons() = statusReasons
 
+    /**
+     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
+     * the account holder to be approved.
+     */
+    @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
+
     /** Globally unique identifier for the account holder. */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
@@ -102,6 +116,7 @@ private constructor(
             externalId()
             status()
             statusReasons()
+            requiredDocuments()?.forEach { it.validate() }
             token()
             validated = true
         }
@@ -120,6 +135,7 @@ private constructor(
             this.externalId == other.externalId &&
             this.status == other.status &&
             this.statusReasons == other.statusReasons &&
+            this.requiredDocuments == other.requiredDocuments &&
             this.token == other.token &&
             this.additionalProperties == other.additionalProperties
     }
@@ -133,6 +149,7 @@ private constructor(
                     externalId,
                     status,
                     statusReasons,
+                    requiredDocuments,
                     token,
                     additionalProperties,
                 )
@@ -141,7 +158,7 @@ private constructor(
     }
 
     override fun toString() =
-        "AccountHolderCreateResponse{accountToken=$accountToken, created=$created, externalId=$externalId, status=$status, statusReasons=$statusReasons, token=$token, additionalProperties=$additionalProperties}"
+        "AccountHolderCreateResponse{accountToken=$accountToken, created=$created, externalId=$externalId, status=$status, statusReasons=$statusReasons, requiredDocuments=$requiredDocuments, token=$token, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -155,6 +172,7 @@ private constructor(
         private var externalId: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var statusReasons: JsonField<List<StatusReason>> = JsonMissing.of()
+        private var requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of()
         private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -164,6 +182,7 @@ private constructor(
             this.externalId = accountHolderCreateResponse.externalId
             this.status = accountHolderCreateResponse.status
             this.statusReasons = accountHolderCreateResponse.statusReasons
+            this.requiredDocuments = accountHolderCreateResponse.requiredDocuments
             this.token = accountHolderCreateResponse.token
             additionalProperties(accountHolderCreateResponse.additionalProperties)
         }
@@ -233,6 +252,23 @@ private constructor(
             this.statusReasons = statusReasons
         }
 
+        /**
+         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
+         * for the account holder to be approved.
+         */
+        fun requiredDocuments(requiredDocuments: List<RequiredDocument>) =
+            requiredDocuments(JsonField.of(requiredDocuments))
+
+        /**
+         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
+         * for the account holder to be approved.
+         */
+        @JsonProperty("required_documents")
+        @ExcludeMissing
+        fun requiredDocuments(requiredDocuments: JsonField<List<RequiredDocument>>) = apply {
+            this.requiredDocuments = requiredDocuments
+        }
+
         /** Globally unique identifier for the account holder. */
         fun token(token: String) = token(JsonField.of(token))
 
@@ -262,6 +298,7 @@ private constructor(
                 externalId,
                 status,
                 statusReasons.map { it.toUnmodifiable() },
+                requiredDocuments.map { it.toUnmodifiable() },
                 token,
                 additionalProperties.toUnmodifiable(),
             )
