@@ -97,6 +97,10 @@ constructor(
         CreditProductServiceAsyncImpl(clientOptions)
     }
 
+    private val externalPayments: ExternalPaymentServiceAsync by lazy {
+        ExternalPaymentServiceAsyncImpl(clientOptions)
+    }
+
     override fun sync(): LithicClient = sync
 
     override fun accounts(): AccountServiceAsync = accounts
@@ -147,6 +151,8 @@ constructor(
     override fun bookTransfers(): BookTransferServiceAsync = bookTransfers
 
     override fun creditProducts(): CreditProductServiceAsync = creditProducts
+
+    override fun externalPayments(): ExternalPaymentServiceAsync = externalPayments
 
     private val apiStatusHandler: Handler<ApiStatus> =
         jsonHandler<ApiStatus>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
