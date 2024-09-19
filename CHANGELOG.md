@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.61.0 (2024-09-19)
+
+Full Changelog: [v0.60.1...v0.61.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.60.1...v0.61.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** update model `FinancialAccount` ([#301](https://github.com/lithic-com/lithic-kotlin/issues/301))
+
+### Features
+
+* **api:** update model `FinancialAccount` ([#301](https://github.com/lithic-com/lithic-kotlin/issues/301)) ([8148eed](https://github.com/lithic-com/lithic-kotlin/commit/8148eed71a61c86fc4ea701df4345afbee5ed182))
+
 ## 0.60.1 (2024-09-18)
 
 Full Changelog: [v0.60.0...v0.60.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.60.0...v0.60.1)
