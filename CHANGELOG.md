@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.62.0 (2024-09-23)
+
+Full Changelog: [v0.61.0...v0.62.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.61.0...v0.62.0)
+
+### Features
+
+* **api:** add `canceled` to `transaction_status` enum values ([#303](https://github.com/lithic-com/lithic-kotlin/issues/303)) ([c1656e9](https://github.com/lithic-com/lithic-kotlin/commit/c1656e9407a599106773fd992e75840ff3da3d21))
+
 ## 0.61.0 (2024-09-19)
 
 Full Changelog: [v0.60.1...v0.61.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.60.1...v0.61.0)
