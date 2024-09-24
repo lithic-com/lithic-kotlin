@@ -2635,6 +2635,8 @@ private constructor(
                 val ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED =
                     DetailedResult(JsonField.of("ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED"))
 
+                val ACCOUNT_DELINQUENT = DetailedResult(JsonField.of("ACCOUNT_DELINQUENT"))
+
                 val ACCOUNT_INACTIVE = DetailedResult(JsonField.of("ACCOUNT_INACTIVE"))
 
                 val ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED =
@@ -2760,6 +2762,7 @@ private constructor(
 
             enum class Known {
                 ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_DELINQUENT,
                 ACCOUNT_INACTIVE,
                 ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                 ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
@@ -2813,6 +2816,7 @@ private constructor(
 
             enum class Value {
                 ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_DELINQUENT,
                 ACCOUNT_INACTIVE,
                 ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                 ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
@@ -2868,6 +2872,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED -> Value.ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_DELINQUENT -> Value.ACCOUNT_DELINQUENT
                     ACCOUNT_INACTIVE -> Value.ACCOUNT_INACTIVE
                     ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED ->
                         Value.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
@@ -2928,6 +2933,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED -> Known.ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_DELINQUENT -> Known.ACCOUNT_DELINQUENT
                     ACCOUNT_INACTIVE -> Known.ACCOUNT_INACTIVE
                     ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED ->
                         Known.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
