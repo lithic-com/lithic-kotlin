@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.63.0 (2024-09-24)
+
+Full Changelog: [v0.62.0...v0.63.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.62.0...v0.63.0)
+
+### Features
+
+* **api:** add `ACCOUNT_DELINQUENT` to `detailed_results` enum ([#305](https://github.com/lithic-com/lithic-kotlin/issues/305)) ([ea65cfb](https://github.com/lithic-com/lithic-kotlin/commit/ea65cfb79bcead1231121941543d87b1da714397))
+
 ## 0.62.0 (2024-09-23)
 
 Full Changelog: [v0.61.0...v0.62.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.61.0...v0.62.0)
