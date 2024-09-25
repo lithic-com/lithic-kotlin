@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.64.0 (2024-09-25)
+
+Full Changelog: [v0.63.0...v0.64.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.63.0...v0.64.0)
+
+### Features
+
+* **api:** adds endpoint for migrating auth rules from v1 to V2. marks v1 auth rules as deprecated ([#309](https://github.com/lithic-com/lithic-kotlin/issues/309)) ([d1f02bf](https://github.com/lithic-com/lithic-kotlin/commit/d1f02bfc24ecd5de0e936e5b8787a107810c28c5))
+* **client:** send retry count header ([#307](https://github.com/lithic-com/lithic-kotlin/issues/307)) ([949046b](https://github.com/lithic-com/lithic-kotlin/commit/949046b2da5109c2d0a1f3577926aaa77063bfcd))
+
 ## 0.63.0 (2024-09-24)
 
 Full Changelog: [v0.62.0...v0.63.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.62.0...v0.63.0)
