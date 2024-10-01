@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.66.0 (2024-10-01)
+
+Full Changelog: [v0.65.0...v0.66.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.65.0...v0.66.0)
+
+### Features
+
+* **api:** rename `loan_tape_response.statement_balance` to `previous_statement_balance` ([#312](https://github.com/lithic-com/lithic-kotlin/issues/312)) ([95f9791](https://github.com/lithic-com/lithic-kotlin/commit/95f9791d29cfa5868bc52f4fcc33b6d328fa3057))
+
 ## 0.65.0 (2024-10-01)
 
 Full Changelog: [v0.64.0...v0.65.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.64.0...v0.65.0)
