@@ -62,6 +62,8 @@ interface LithicClientAsync {
 
     fun externalPayments(): ExternalPaymentServiceAsync
 
+    fun managementOperations(): ManagementOperationServiceAsync
+
     /** Status of api */
     suspend fun apiStatus(
         params: ClientApiStatusParams,

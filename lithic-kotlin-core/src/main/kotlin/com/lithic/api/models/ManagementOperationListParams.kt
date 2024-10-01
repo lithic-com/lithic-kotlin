@@ -14,16 +14,15 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-class ExternalPaymentListParams
+class ManagementOperationListParams
 constructor(
     private val begin: OffsetDateTime?,
     private val businessAccountToken: String?,
-    private val category: ExternalPaymentCategory?,
+    private val category: ManagementOperationCategory?,
     private val end: OffsetDateTime?,
     private val endingBefore: String?,
     private val financialAccountToken: String?,
     private val pageSize: Long?,
-    private val result: TransactionResult?,
     private val startingAfter: String?,
     private val status: TransactionStatus?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -34,7 +33,7 @@ constructor(
 
     fun businessAccountToken(): String? = businessAccountToken
 
-    fun category(): ExternalPaymentCategory? = category
+    fun category(): ManagementOperationCategory? = category
 
     fun end(): OffsetDateTime? = end
 
@@ -43,8 +42,6 @@ constructor(
     fun financialAccountToken(): String? = financialAccountToken
 
     fun pageSize(): Long? = pageSize
-
-    fun result(): TransactionResult? = result
 
     fun startingAfter(): String? = startingAfter
 
@@ -67,7 +64,6 @@ constructor(
             params.put("financial_account_token", listOf(it.toString()))
         }
         this.pageSize?.let { params.put("page_size", listOf(it.toString())) }
-        this.result?.let { params.put("result", listOf(it.toString())) }
         this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
@@ -85,7 +81,7 @@ constructor(
             return true
         }
 
-        return other is ExternalPaymentListParams &&
+        return other is ManagementOperationListParams &&
             this.begin == other.begin &&
             this.businessAccountToken == other.businessAccountToken &&
             this.category == other.category &&
@@ -93,7 +89,6 @@ constructor(
             this.endingBefore == other.endingBefore &&
             this.financialAccountToken == other.financialAccountToken &&
             this.pageSize == other.pageSize &&
-            this.result == other.result &&
             this.startingAfter == other.startingAfter &&
             this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -109,7 +104,6 @@ constructor(
             endingBefore,
             financialAccountToken,
             pageSize,
-            result,
             startingAfter,
             status,
             additionalQueryParams,
@@ -118,7 +112,7 @@ constructor(
     }
 
     override fun toString() =
-        "ExternalPaymentListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "ManagementOperationListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -132,30 +126,28 @@ constructor(
 
         private var begin: OffsetDateTime? = null
         private var businessAccountToken: String? = null
-        private var category: ExternalPaymentCategory? = null
+        private var category: ManagementOperationCategory? = null
         private var end: OffsetDateTime? = null
         private var endingBefore: String? = null
         private var financialAccountToken: String? = null
         private var pageSize: Long? = null
-        private var result: TransactionResult? = null
         private var startingAfter: String? = null
         private var status: TransactionStatus? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
-        internal fun from(externalPaymentListParams: ExternalPaymentListParams) = apply {
-            this.begin = externalPaymentListParams.begin
-            this.businessAccountToken = externalPaymentListParams.businessAccountToken
-            this.category = externalPaymentListParams.category
-            this.end = externalPaymentListParams.end
-            this.endingBefore = externalPaymentListParams.endingBefore
-            this.financialAccountToken = externalPaymentListParams.financialAccountToken
-            this.pageSize = externalPaymentListParams.pageSize
-            this.result = externalPaymentListParams.result
-            this.startingAfter = externalPaymentListParams.startingAfter
-            this.status = externalPaymentListParams.status
-            additionalQueryParams(externalPaymentListParams.additionalQueryParams)
-            additionalHeaders(externalPaymentListParams.additionalHeaders)
+        internal fun from(managementOperationListParams: ManagementOperationListParams) = apply {
+            this.begin = managementOperationListParams.begin
+            this.businessAccountToken = managementOperationListParams.businessAccountToken
+            this.category = managementOperationListParams.category
+            this.end = managementOperationListParams.end
+            this.endingBefore = managementOperationListParams.endingBefore
+            this.financialAccountToken = managementOperationListParams.financialAccountToken
+            this.pageSize = managementOperationListParams.pageSize
+            this.startingAfter = managementOperationListParams.startingAfter
+            this.status = managementOperationListParams.status
+            additionalQueryParams(managementOperationListParams.additionalQueryParams)
+            additionalHeaders(managementOperationListParams.additionalHeaders)
         }
 
         /**
@@ -168,8 +160,8 @@ constructor(
             this.businessAccountToken = businessAccountToken
         }
 
-        /** External Payment category to be returned. */
-        fun category(category: ExternalPaymentCategory) = apply { this.category = category }
+        /** Management operation category to be returned. */
+        fun category(category: ManagementOperationCategory) = apply { this.category = category }
 
         /**
          * Date string in RFC 3339 format. Only entries created before the specified time will be
@@ -184,8 +176,8 @@ constructor(
         fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
 
         /**
-         * Globally unique identifier for the financial account or card that will send the funds.
-         * Accepted type dependent on the program's use case.
+         * Globally unique identifier for the financial account. Accepted type dependent on the
+         * program's use case.
          */
         fun financialAccountToken(financialAccountToken: String) = apply {
             this.financialAccountToken = financialAccountToken
@@ -194,16 +186,13 @@ constructor(
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
 
-        /** External Payment result to be returned. */
-        fun result(result: TransactionResult) = apply { this.result = result }
-
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
         fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
 
-        /** Book transfer status to be returned. */
+        /** Management operation status to be returned. */
         fun status(status: TransactionStatus) = apply { this.status = status }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -246,8 +235,8 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun build(): ExternalPaymentListParams =
-            ExternalPaymentListParams(
+        fun build(): ManagementOperationListParams =
+            ManagementOperationListParams(
                 begin,
                 businessAccountToken,
                 category,
@@ -255,7 +244,6 @@ constructor(
                 endingBefore,
                 financialAccountToken,
                 pageSize,
-                result,
                 startingAfter,
                 status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
@@ -263,7 +251,7 @@ constructor(
             )
     }
 
-    class ExternalPaymentCategory
+    class ManagementOperationCategory
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
@@ -276,7 +264,7 @@ constructor(
                 return true
             }
 
-            return other is ExternalPaymentCategory && this.value == other.value
+            return other is ManagementOperationCategory && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -285,105 +273,50 @@ constructor(
 
         companion object {
 
-            val EXTERNAL_WIRE = ExternalPaymentCategory(JsonField.of("EXTERNAL_WIRE"))
+            val MANAGEMENT_FEE = ManagementOperationCategory(JsonField.of("MANAGEMENT_FEE"))
 
-            val EXTERNAL_ACH = ExternalPaymentCategory(JsonField.of("EXTERNAL_ACH"))
+            val MANAGEMENT_DISPUTE = ManagementOperationCategory(JsonField.of("MANAGEMENT_DISPUTE"))
 
-            val EXTERNAL_CHECK = ExternalPaymentCategory(JsonField.of("EXTERNAL_CHECK"))
+            val MANAGEMENT_REWARD = ManagementOperationCategory(JsonField.of("MANAGEMENT_REWARD"))
 
-            val EXTERNAL_TRANSFER = ExternalPaymentCategory(JsonField.of("EXTERNAL_TRANSFER"))
+            val MANAGEMENT_ADJUSTMENT =
+                ManagementOperationCategory(JsonField.of("MANAGEMENT_ADJUSTMENT"))
 
-            fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
+            fun of(value: String) = ManagementOperationCategory(JsonField.of(value))
         }
 
         enum class Known {
-            EXTERNAL_WIRE,
-            EXTERNAL_ACH,
-            EXTERNAL_CHECK,
-            EXTERNAL_TRANSFER,
+            MANAGEMENT_FEE,
+            MANAGEMENT_DISPUTE,
+            MANAGEMENT_REWARD,
+            MANAGEMENT_ADJUSTMENT,
         }
 
         enum class Value {
-            EXTERNAL_WIRE,
-            EXTERNAL_ACH,
-            EXTERNAL_CHECK,
-            EXTERNAL_TRANSFER,
+            MANAGEMENT_FEE,
+            MANAGEMENT_DISPUTE,
+            MANAGEMENT_REWARD,
+            MANAGEMENT_ADJUSTMENT,
             _UNKNOWN,
         }
 
         fun value(): Value =
             when (this) {
-                EXTERNAL_WIRE -> Value.EXTERNAL_WIRE
-                EXTERNAL_ACH -> Value.EXTERNAL_ACH
-                EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
-                EXTERNAL_TRANSFER -> Value.EXTERNAL_TRANSFER
+                MANAGEMENT_FEE -> Value.MANAGEMENT_FEE
+                MANAGEMENT_DISPUTE -> Value.MANAGEMENT_DISPUTE
+                MANAGEMENT_REWARD -> Value.MANAGEMENT_REWARD
+                MANAGEMENT_ADJUSTMENT -> Value.MANAGEMENT_ADJUSTMENT
                 else -> Value._UNKNOWN
             }
 
         fun known(): Known =
             when (this) {
-                EXTERNAL_WIRE -> Known.EXTERNAL_WIRE
-                EXTERNAL_ACH -> Known.EXTERNAL_ACH
-                EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
-                EXTERNAL_TRANSFER -> Known.EXTERNAL_TRANSFER
-                else -> throw LithicInvalidDataException("Unknown ExternalPaymentCategory: $value")
-            }
-
-        fun asString(): String = _value().asStringOrThrow()
-    }
-
-    class TransactionResult
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
-
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is TransactionResult && this.value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
-        companion object {
-
-            val APPROVED = TransactionResult(JsonField.of("APPROVED"))
-
-            val DECLINED = TransactionResult(JsonField.of("DECLINED"))
-
-            fun of(value: String) = TransactionResult(JsonField.of(value))
-        }
-
-        enum class Known {
-            APPROVED,
-            DECLINED,
-        }
-
-        enum class Value {
-            APPROVED,
-            DECLINED,
-            _UNKNOWN,
-        }
-
-        fun value(): Value =
-            when (this) {
-                APPROVED -> Value.APPROVED
-                DECLINED -> Value.DECLINED
-                else -> Value._UNKNOWN
-            }
-
-        fun known(): Known =
-            when (this) {
-                APPROVED -> Known.APPROVED
-                DECLINED -> Known.DECLINED
-                else -> throw LithicInvalidDataException("Unknown TransactionResult: $value")
+                MANAGEMENT_FEE -> Known.MANAGEMENT_FEE
+                MANAGEMENT_DISPUTE -> Known.MANAGEMENT_DISPUTE
+                MANAGEMENT_REWARD -> Known.MANAGEMENT_REWARD
+                MANAGEMENT_ADJUSTMENT -> Known.MANAGEMENT_ADJUSTMENT
+                else ->
+                    throw LithicInvalidDataException("Unknown ManagementOperationCategory: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()
