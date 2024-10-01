@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.65.0 (2024-10-01)
+
+Full Changelog: [v0.64.0...v0.65.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.64.0...v0.65.0)
+
+### Features
+
+* **api:** add Management Operations and Loan Tapes API ([#310](https://github.com/lithic-com/lithic-kotlin/issues/310)) ([ebb7321](https://github.com/lithic-com/lithic-kotlin/commit/ebb7321fe49a861b044e94c3e4d8de89ab494b9f))
+
 ## 0.64.0 (2024-09-25)
 
 Full Changelog: [v0.63.0...v0.64.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.63.0...v0.64.0)
