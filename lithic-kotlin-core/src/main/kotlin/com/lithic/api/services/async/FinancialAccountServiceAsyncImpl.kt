@@ -20,6 +20,8 @@ import com.lithic.api.services.async.financialAccounts.CreditConfigurationServic
 import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsyncImpl
+import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsync
+import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
 import com.lithic.api.services.async.financialAccounts.StatementServiceAsyncImpl
 import com.lithic.api.services.errorHandler
@@ -48,6 +50,8 @@ constructor(
         StatementServiceAsyncImpl(clientOptions)
     }
 
+    private val loanTapes: LoanTapeServiceAsync by lazy { LoanTapeServiceAsyncImpl(clientOptions) }
+
     override fun balances(): BalanceServiceAsync = balances
 
     override fun financialTransactions(): FinancialTransactionServiceAsync = financialTransactions
@@ -55,6 +59,8 @@ constructor(
     override fun creditConfiguration(): CreditConfigurationServiceAsync = creditConfiguration
 
     override fun statements(): StatementServiceAsync = statements
+
+    override fun loanTapes(): LoanTapeServiceAsync = loanTapes
 
     private val createHandler: Handler<FinancialAccount> =
         jsonHandler<FinancialAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

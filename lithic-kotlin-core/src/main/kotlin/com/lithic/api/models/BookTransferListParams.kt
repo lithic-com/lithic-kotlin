@@ -16,7 +16,9 @@ import java.util.Objects
 
 class BookTransferListParams
 constructor(
+    private val accountToken: String?,
     private val begin: OffsetDateTime?,
+    private val businessAccountToken: String?,
     private val category: Category?,
     private val end: OffsetDateTime?,
     private val endingBefore: String?,
@@ -29,7 +31,11 @@ constructor(
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
+    fun accountToken(): String? = accountToken
+
     fun begin(): OffsetDateTime? = begin
+
+    fun businessAccountToken(): String? = businessAccountToken
 
     fun category(): Category? = category
 
@@ -49,8 +55,12 @@ constructor(
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
+        this.accountToken?.let { params.put("account_token", listOf(it.toString())) }
         this.begin?.let {
             params.put("begin", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.businessAccountToken?.let {
+            params.put("business_account_token", listOf(it.toString()))
         }
         this.category?.let { params.put("category", listOf(it.toString())) }
         this.end?.let {
@@ -80,7 +90,9 @@ constructor(
         }
 
         return other is BookTransferListParams &&
+            this.accountToken == other.accountToken &&
             this.begin == other.begin &&
+            this.businessAccountToken == other.businessAccountToken &&
             this.category == other.category &&
             this.end == other.end &&
             this.endingBefore == other.endingBefore &&
@@ -95,7 +107,9 @@ constructor(
 
     override fun hashCode(): Int {
         return Objects.hash(
+            accountToken,
             begin,
+            businessAccountToken,
             category,
             end,
             endingBefore,
@@ -110,7 +124,7 @@ constructor(
     }
 
     override fun toString() =
-        "BookTransferListParams{begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "BookTransferListParams{accountToken=$accountToken, begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -122,7 +136,9 @@ constructor(
     @NoAutoDetect
     class Builder {
 
+        private var accountToken: String? = null
         private var begin: OffsetDateTime? = null
+        private var businessAccountToken: String? = null
         private var category: Category? = null
         private var end: OffsetDateTime? = null
         private var endingBefore: String? = null
@@ -135,7 +151,9 @@ constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
 
         internal fun from(bookTransferListParams: BookTransferListParams) = apply {
+            this.accountToken = bookTransferListParams.accountToken
             this.begin = bookTransferListParams.begin
+            this.businessAccountToken = bookTransferListParams.businessAccountToken
             this.category = bookTransferListParams.category
             this.end = bookTransferListParams.end
             this.endingBefore = bookTransferListParams.endingBefore
@@ -148,11 +166,17 @@ constructor(
             additionalHeaders(bookTransferListParams.additionalHeaders)
         }
 
+        fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+
         /**
          * Date string in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
         fun begin(begin: OffsetDateTime) = apply { this.begin = begin }
+
+        fun businessAccountToken(businessAccountToken: String) = apply {
+            this.businessAccountToken = businessAccountToken
+        }
 
         /** Book Transfer category to be returned. */
         fun category(category: Category) = apply { this.category = category }
@@ -234,7 +258,9 @@ constructor(
 
         fun build(): BookTransferListParams =
             BookTransferListParams(
+                accountToken,
                 begin,
+                businessAccountToken,
                 category,
                 end,
                 endingBefore,

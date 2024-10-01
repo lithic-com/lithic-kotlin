@@ -62,6 +62,8 @@ interface LithicClient {
 
     fun externalPayments(): ExternalPaymentService
 
+    fun managementOperations(): ManagementOperationService
+
     /** Status of api */
     fun apiStatus(
         params: ClientApiStatusParams,
