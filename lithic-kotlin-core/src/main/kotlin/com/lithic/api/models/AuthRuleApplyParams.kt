@@ -62,8 +62,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note
          * that only this field or `card_tokens` can be provided for a given Auth Rule.
@@ -84,34 +82,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AuthRuleApplyBody &&
-                this.accountTokens == other.accountTokens &&
-                this.cardTokens == other.cardTokens &&
-                this.programLevel == other.programLevel &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        accountTokens,
-                        cardTokens,
-                        programLevel,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AuthRuleApplyBody{accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -174,6 +144,36 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AuthRuleApplyBody &&
+                this.accountTokens == other.accountTokens &&
+                this.cardTokens == other.cardTokens &&
+                this.programLevel == other.programLevel &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        accountTokens,
+                        cardTokens,
+                        programLevel,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AuthRuleApplyBody{accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
