@@ -24,8 +24,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     /** The secret for the event subscription. */
     fun secret(): String? = secret.getNullable("secret")
 
@@ -44,26 +42,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is SubscriptionRetrieveSecretResponse &&
-            this.secret == other.secret &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = Objects.hash(secret, additionalProperties)
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "SubscriptionRetrieveSecretResponse{secret=$secret, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -106,4 +84,26 @@ private constructor(
         fun build(): SubscriptionRetrieveSecretResponse =
             SubscriptionRetrieveSecretResponse(secret, additionalProperties.toUnmodifiable())
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is SubscriptionRetrieveSecretResponse &&
+            this.secret == other.secret &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = Objects.hash(secret, additionalProperties)
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "SubscriptionRetrieveSecretResponse{secret=$secret, additionalProperties=$additionalProperties}"
 }

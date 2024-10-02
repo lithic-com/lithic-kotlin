@@ -48,8 +48,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     /** Globally unique identifier for a loan tape */
     fun token(): String = token.getRequired("token")
 
@@ -224,68 +222,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is LoanTape &&
-            this.token == other.token &&
-            this.financialAccountToken == other.financialAccountToken &&
-            this.date == other.date &&
-            this.created == other.created &&
-            this.updated == other.updated &&
-            this.version == other.version &&
-            this.ytdTotals == other.ytdTotals &&
-            this.periodTotals == other.periodTotals &&
-            this.dayTotals == other.dayTotals &&
-            this.balancePastDue == other.balancePastDue &&
-            this.balanceDue == other.balanceDue &&
-            this.balanceNextDue == other.balanceNextDue &&
-            this.creditLimit == other.creditLimit &&
-            this.excessCredits == other.excessCredits &&
-            this.accountStanding == other.accountStanding &&
-            this.creditProductToken == other.creditProductToken &&
-            this.tier == other.tier &&
-            this.paymentAllocation == other.paymentAllocation &&
-            this.minimumPaymentBalance == other.minimumPaymentBalance &&
-            this.previousStatementBalance == other.previousStatementBalance &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    token,
-                    financialAccountToken,
-                    date,
-                    created,
-                    updated,
-                    version,
-                    ytdTotals,
-                    periodTotals,
-                    dayTotals,
-                    balancePastDue,
-                    balanceDue,
-                    balanceNextDue,
-                    creditLimit,
-                    excessCredits,
-                    accountStanding,
-                    creditProductToken,
-                    tier,
-                    paymentAllocation,
-                    minimumPaymentBalance,
-                    previousStatementBalance,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "LoanTape{token=$token, financialAccountToken=$financialAccountToken, date=$date, created=$created, updated=$updated, version=$version, ytdTotals=$ytdTotals, periodTotals=$periodTotals, dayTotals=$dayTotals, balancePastDue=$balancePastDue, balanceDue=$balanceDue, balanceNextDue=$balanceNextDue, creditLimit=$creditLimit, excessCredits=$excessCredits, accountStanding=$accountStanding, creditProductToken=$creditProductToken, tier=$tier, paymentAllocation=$paymentAllocation, minimumPaymentBalance=$minimumPaymentBalance, previousStatementBalance=$previousStatementBalance, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -598,8 +534,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         fun periodState(): PeriodState = periodState.getRequired("period_state")
 
         /** Current overall period number */
@@ -667,42 +601,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AccountStanding &&
-                this.periodState == other.periodState &&
-                this.periodNumber == other.periodNumber &&
-                this.consecutiveMinimumPaymentsMade == other.consecutiveMinimumPaymentsMade &&
-                this.consecutiveMinimumPaymentsMissed == other.consecutiveMinimumPaymentsMissed &&
-                this.consecutiveFullPaymentsMade == other.consecutiveFullPaymentsMade &&
-                this.daysPastDue == other.daysPastDue &&
-                this.hasGrace == other.hasGrace &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        periodState,
-                        periodNumber,
-                        consecutiveMinimumPaymentsMade,
-                        consecutiveMinimumPaymentsMissed,
-                        consecutiveFullPaymentsMade,
-                        daysPastDue,
-                        hasGrace,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AccountStanding{periodState=$periodState, periodNumber=$periodNumber, consecutiveMinimumPaymentsMade=$consecutiveMinimumPaymentsMade, consecutiveMinimumPaymentsMissed=$consecutiveMinimumPaymentsMissed, consecutiveFullPaymentsMade=$consecutiveFullPaymentsMade, daysPastDue=$daysPastDue, hasGrace=$hasGrace, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -889,6 +787,44 @@ private constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AccountStanding &&
+                this.periodState == other.periodState &&
+                this.periodNumber == other.periodNumber &&
+                this.consecutiveMinimumPaymentsMade == other.consecutiveMinimumPaymentsMade &&
+                this.consecutiveMinimumPaymentsMissed == other.consecutiveMinimumPaymentsMissed &&
+                this.consecutiveFullPaymentsMade == other.consecutiveFullPaymentsMade &&
+                this.daysPastDue == other.daysPastDue &&
+                this.hasGrace == other.hasGrace &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        periodState,
+                        periodNumber,
+                        consecutiveMinimumPaymentsMade,
+                        consecutiveMinimumPaymentsMissed,
+                        consecutiveFullPaymentsMade,
+                        daysPastDue,
+                        hasGrace,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AccountStanding{periodState=$periodState, periodNumber=$periodNumber, consecutiveMinimumPaymentsMade=$consecutiveMinimumPaymentsMade, consecutiveMinimumPaymentsMissed=$consecutiveMinimumPaymentsMissed, consecutiveFullPaymentsMade=$consecutiveFullPaymentsMade, daysPastDue=$daysPastDue, hasGrace=$hasGrace, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -906,8 +842,6 @@ private constructor(
     ) {
 
         private var validated: Boolean = false
-
-        private var hashCode: Int = 0
 
         fun interest(): Long = interest.getRequired("interest")
 
@@ -935,34 +869,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is CategoryBalances &&
-                this.interest == other.interest &&
-                this.principal == other.principal &&
-                this.fees == other.fees &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        interest,
-                        principal,
-                        fees,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "CategoryBalances{interest=$interest, principal=$principal, fees=$fees, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1023,6 +929,36 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is CategoryBalances &&
+                this.interest == other.interest &&
+                this.principal == other.principal &&
+                this.fees == other.fees &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        interest,
+                        principal,
+                        fees,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "CategoryBalances{interest=$interest, principal=$principal, fees=$fees, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = StatementTotals.Builder::class)
@@ -1040,8 +976,6 @@ private constructor(
     ) {
 
         private var validated: Boolean = false
-
-        private var hashCode: Int = 0
 
         /** Any funds transfers which affective the balance in cents */
         fun payments(): Long = payments.getRequired("payments")
@@ -1109,42 +1043,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is StatementTotals &&
-                this.payments == other.payments &&
-                this.purchases == other.purchases &&
-                this.fees == other.fees &&
-                this.credits == other.credits &&
-                this.interest == other.interest &&
-                this.cashAdvances == other.cashAdvances &&
-                this.balanceTransfers == other.balanceTransfers &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        payments,
-                        purchases,
-                        fees,
-                        credits,
-                        interest,
-                        cashAdvances,
-                        balanceTransfers,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "StatementTotals{payments=$payments, purchases=$purchases, fees=$fees, credits=$credits, interest=$interest, cashAdvances=$cashAdvances, balanceTransfers=$balanceTransfers, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1266,6 +1164,44 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is StatementTotals &&
+                this.payments == other.payments &&
+                this.purchases == other.purchases &&
+                this.fees == other.fees &&
+                this.credits == other.credits &&
+                this.interest == other.interest &&
+                this.cashAdvances == other.cashAdvances &&
+                this.balanceTransfers == other.balanceTransfers &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        payments,
+                        purchases,
+                        fees,
+                        credits,
+                        interest,
+                        cashAdvances,
+                        balanceTransfers,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "StatementTotals{payments=$payments, purchases=$purchases, fees=$fees, credits=$credits, interest=$interest, cashAdvances=$cashAdvances, balanceTransfers=$balanceTransfers, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = BalanceDetails.Builder::class)
@@ -1278,8 +1214,6 @@ private constructor(
     ) {
 
         private var validated: Boolean = false
-
-        private var hashCode: Int = 0
 
         fun amount(): Long = amount.getRequired("amount")
 
@@ -1302,32 +1236,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is BalanceDetails &&
-                this.amount == other.amount &&
-                this.remaining == other.remaining &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        amount,
-                        remaining,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "BalanceDetails{amount=$amount, remaining=$remaining, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1379,5 +1287,97 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is BalanceDetails &&
+                this.amount == other.amount &&
+                this.remaining == other.remaining &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        amount,
+                        remaining,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "BalanceDetails{amount=$amount, remaining=$remaining, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is LoanTape &&
+            this.token == other.token &&
+            this.financialAccountToken == other.financialAccountToken &&
+            this.date == other.date &&
+            this.created == other.created &&
+            this.updated == other.updated &&
+            this.version == other.version &&
+            this.ytdTotals == other.ytdTotals &&
+            this.periodTotals == other.periodTotals &&
+            this.dayTotals == other.dayTotals &&
+            this.balancePastDue == other.balancePastDue &&
+            this.balanceDue == other.balanceDue &&
+            this.balanceNextDue == other.balanceNextDue &&
+            this.creditLimit == other.creditLimit &&
+            this.excessCredits == other.excessCredits &&
+            this.accountStanding == other.accountStanding &&
+            this.creditProductToken == other.creditProductToken &&
+            this.tier == other.tier &&
+            this.paymentAllocation == other.paymentAllocation &&
+            this.minimumPaymentBalance == other.minimumPaymentBalance &&
+            this.previousStatementBalance == other.previousStatementBalance &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    token,
+                    financialAccountToken,
+                    date,
+                    created,
+                    updated,
+                    version,
+                    ytdTotals,
+                    periodTotals,
+                    dayTotals,
+                    balancePastDue,
+                    balanceDue,
+                    balanceNextDue,
+                    creditLimit,
+                    excessCredits,
+                    accountStanding,
+                    creditProductToken,
+                    tier,
+                    paymentAllocation,
+                    minimumPaymentBalance,
+                    previousStatementBalance,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "LoanTape{token=$token, financialAccountToken=$financialAccountToken, date=$date, created=$created, updated=$updated, version=$version, ytdTotals=$ytdTotals, periodTotals=$periodTotals, dayTotals=$dayTotals, balancePastDue=$balancePastDue, balanceDue=$balanceDue, balanceNextDue=$balanceNextDue, creditLimit=$creditLimit, excessCredits=$excessCredits, accountStanding=$accountStanding, creditProductToken=$creditProductToken, tier=$tier, paymentAllocation=$paymentAllocation, minimumPaymentBalance=$minimumPaymentBalance, previousStatementBalance=$previousStatementBalance, additionalProperties=$additionalProperties}"
 }
