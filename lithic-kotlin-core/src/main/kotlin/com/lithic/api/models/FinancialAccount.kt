@@ -37,8 +37,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     /** Globally unique identifier for the account */
     fun token(): String = token.getRequired("token")
 
@@ -107,48 +105,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is FinancialAccount &&
-            this.token == other.token &&
-            this.created == other.created &&
-            this.updated == other.updated &&
-            this.type == other.type &&
-            this.routingNumber == other.routingNumber &&
-            this.accountNumber == other.accountNumber &&
-            this.nickname == other.nickname &&
-            this.accountToken == other.accountToken &&
-            this.isForBenefitOf == other.isForBenefitOf &&
-            this.creditConfiguration == other.creditConfiguration &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    token,
-                    created,
-                    updated,
-                    type,
-                    routingNumber,
-                    accountNumber,
-                    nickname,
-                    accountToken,
-                    isForBenefitOf,
-                    creditConfiguration,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "FinancialAccount{token=$token, created=$created, updated=$updated, type=$type, routingNumber=$routingNumber, accountNumber=$accountNumber, nickname=$nickname, accountToken=$accountToken, isForBenefitOf=$isForBenefitOf, creditConfiguration=$creditConfiguration, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -303,8 +259,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         fun creditLimit(): Long? = creditLimit.getNullable("credit_limit")
 
         fun externalBankAccountToken(): String? =
@@ -355,38 +309,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is FinancialAccountCreditConfig &&
-                this.creditLimit == other.creditLimit &&
-                this.externalBankAccountToken == other.externalBankAccountToken &&
-                this.creditProductToken == other.creditProductToken &&
-                this.tier == other.tier &&
-                this.financialAccountState == other.financialAccountState &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        creditLimit,
-                        externalBankAccountToken,
-                        creditProductToken,
-                        tier,
-                        financialAccountState,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "FinancialAccountCreditConfig{creditLimit=$creditLimit, externalBankAccountToken=$externalBankAccountToken, creditProductToken=$creditProductToken, tier=$tier, financialAccountState=$financialAccountState, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -546,6 +468,40 @@ private constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is FinancialAccountCreditConfig &&
+                this.creditLimit == other.creditLimit &&
+                this.externalBankAccountToken == other.externalBankAccountToken &&
+                this.creditProductToken == other.creditProductToken &&
+                this.tier == other.tier &&
+                this.financialAccountState == other.financialAccountState &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        creditLimit,
+                        externalBankAccountToken,
+                        creditProductToken,
+                        tier,
+                        financialAccountState,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "FinancialAccountCreditConfig{creditLimit=$creditLimit, externalBankAccountToken=$externalBankAccountToken, creditProductToken=$creditProductToken, tier=$tier, financialAccountState=$financialAccountState, additionalProperties=$additionalProperties}"
     }
 
     class Type
@@ -610,4 +566,48 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is FinancialAccount &&
+            this.token == other.token &&
+            this.created == other.created &&
+            this.updated == other.updated &&
+            this.type == other.type &&
+            this.routingNumber == other.routingNumber &&
+            this.accountNumber == other.accountNumber &&
+            this.nickname == other.nickname &&
+            this.accountToken == other.accountToken &&
+            this.isForBenefitOf == other.isForBenefitOf &&
+            this.creditConfiguration == other.creditConfiguration &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    token,
+                    created,
+                    updated,
+                    type,
+                    routingNumber,
+                    accountNumber,
+                    nickname,
+                    accountToken,
+                    isForBenefitOf,
+                    creditConfiguration,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "FinancialAccount{token=$token, created=$created, updated=$updated, type=$type, routingNumber=$routingNumber, accountNumber=$accountNumber, nickname=$nickname, accountToken=$accountToken, isForBenefitOf=$isForBenefitOf, creditConfiguration=$creditConfiguration, additionalProperties=$additionalProperties}"
 }

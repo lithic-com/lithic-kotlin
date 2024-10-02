@@ -371,8 +371,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** Account tokens to which the Auth Rule applies. */
         @JsonProperty("account_tokens") fun accountTokens(): List<String>? = accountTokens
 
@@ -381,26 +379,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is ApplyAuthRuleRequestAccountTokens &&
-                this.accountTokens == other.accountTokens &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(accountTokens, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "ApplyAuthRuleRequestAccountTokens{accountTokens=$accountTokens, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -446,6 +424,28 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ApplyAuthRuleRequestAccountTokens &&
+                this.accountTokens == other.accountTokens &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(accountTokens, additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "ApplyAuthRuleRequestAccountTokens{accountTokens=$accountTokens, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = ApplyAuthRuleRequestCardTokens.Builder::class)
@@ -456,8 +456,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** Card tokens to which the Auth Rule applies. */
         @JsonProperty("card_tokens") fun cardTokens(): List<String>? = cardTokens
 
@@ -466,26 +464,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is ApplyAuthRuleRequestCardTokens &&
-                this.cardTokens == other.cardTokens &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(cardTokens, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "ApplyAuthRuleRequestCardTokens{cardTokens=$cardTokens, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -528,6 +506,28 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ApplyAuthRuleRequestCardTokens &&
+                this.cardTokens == other.cardTokens &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(cardTokens, additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "ApplyAuthRuleRequestCardTokens{cardTokens=$cardTokens, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = ApplyAuthRuleRequestProgramLevel.Builder::class)
@@ -538,8 +538,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** Whether the Auth Rule applies to all authorizations on the card program. */
         @JsonProperty("program_level") fun programLevel(): Boolean? = programLevel
 
@@ -548,26 +546,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is ApplyAuthRuleRequestProgramLevel &&
-                this.programLevel == other.programLevel &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(programLevel, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "ApplyAuthRuleRequestProgramLevel{programLevel=$programLevel, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -609,5 +587,27 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ApplyAuthRuleRequestProgramLevel &&
+                this.programLevel == other.programLevel &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = Objects.hash(programLevel, additionalProperties)
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "ApplyAuthRuleRequestProgramLevel{programLevel=$programLevel, additionalProperties=$additionalProperties}"
     }
 }

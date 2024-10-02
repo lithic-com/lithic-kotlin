@@ -26,8 +26,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun accountTokens(): List<String>? = accountTokens.getNullable("account_tokens")
 
     fun cardTokens(): List<String>? = cardTokens.getNullable("card_tokens")
@@ -54,34 +52,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is AuthRuleRemoveResponse &&
-            this.accountTokens == other.accountTokens &&
-            this.cardTokens == other.cardTokens &&
-            this.programLevel == other.programLevel &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    accountTokens,
-                    cardTokens,
-                    programLevel,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "AuthRuleRemoveResponse{accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -146,4 +116,34 @@ private constructor(
                 additionalProperties.toUnmodifiable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is AuthRuleRemoveResponse &&
+            this.accountTokens == other.accountTokens &&
+            this.cardTokens == other.cardTokens &&
+            this.programLevel == other.programLevel &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    accountTokens,
+                    cardTokens,
+                    programLevel,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "AuthRuleRemoveResponse{accountTokens=$accountTokens, cardTokens=$cardTokens, programLevel=$programLevel, additionalProperties=$additionalProperties}"
 }

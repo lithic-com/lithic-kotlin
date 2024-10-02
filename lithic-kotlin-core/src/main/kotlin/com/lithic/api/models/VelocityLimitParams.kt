@@ -40,8 +40,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun scope(): Scope = scope.getRequired("scope")
 
     fun period(): Period = period.getRequired("period")
@@ -98,38 +96,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is VelocityLimitParams &&
-            this.scope == other.scope &&
-            this.period == other.period &&
-            this.filters == other.filters &&
-            this.limitAmount == other.limitAmount &&
-            this.limitCount == other.limitCount &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    scope,
-                    period,
-                    filters,
-                    limitAmount,
-                    limitCount,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "VelocityLimitParams{scope=$scope, period=$period, filters=$filters, limitAmount=$limitAmount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -242,8 +208,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         /**
          * Merchant Category Codes to include in the velocity calculation. Transactions not matching
          * this MCC will not be included in the calculated velocity.
@@ -283,32 +247,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Filters &&
-                this.includeMccs == other.includeMccs &&
-                this.includeCountries == other.includeCountries &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        includeMccs,
-                        includeCountries,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Filters{includeMccs=$includeMccs, includeCountries=$includeCountries, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -381,6 +319,34 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Filters &&
+                this.includeMccs == other.includeMccs &&
+                this.includeCountries == other.includeCountries &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        includeMccs,
+                        includeCountries,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Filters{includeMccs=$includeMccs, includeCountries=$includeCountries, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(using = Period.Deserializer::class)
@@ -569,4 +535,38 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is VelocityLimitParams &&
+            this.scope == other.scope &&
+            this.period == other.period &&
+            this.filters == other.filters &&
+            this.limitAmount == other.limitAmount &&
+            this.limitCount == other.limitCount &&
+            this.additionalProperties == other.additionalProperties
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    scope,
+                    period,
+                    filters,
+                    limitAmount,
+                    limitCount,
+                    additionalProperties,
+                )
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "VelocityLimitParams{scope=$scope, period=$period, filters=$filters, limitAmount=$limitAmount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
 }
