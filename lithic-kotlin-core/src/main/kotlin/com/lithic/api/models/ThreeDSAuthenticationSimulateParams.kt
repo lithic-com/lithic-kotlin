@@ -52,8 +52,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         @JsonProperty("merchant") fun merchant(): Merchant? = merchant
 
         /** Sixteen digit card number. */
@@ -66,34 +64,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is ThreeDSAuthenticationSimulateBody &&
-                this.merchant == other.merchant &&
-                this.pan == other.pan &&
-                this.transaction == other.transaction &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        merchant,
-                        pan,
-                        transaction,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -147,6 +117,36 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is ThreeDSAuthenticationSimulateBody &&
+                this.merchant == other.merchant &&
+                this.pan == other.pan &&
+                this.transaction == other.transaction &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        merchant,
+                        pan,
+                        transaction,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -294,8 +294,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * Country of the address provided by the cardholder in ISO 3166-1 alpha-3 format (e.g. USA)
          */
@@ -322,36 +320,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Merchant &&
-                this.country == other.country &&
-                this.id == other.id &&
-                this.mcc == other.mcc &&
-                this.name == other.name &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        country,
-                        id,
-                        mcc,
-                        name,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Merchant{country=$country, id=$id, mcc=$mcc, name=$name, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -419,6 +387,38 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Merchant &&
+                this.country == other.country &&
+                this.id == other.id &&
+                this.mcc == other.mcc &&
+                this.name == other.name &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        country,
+                        id,
+                        mcc,
+                        name,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Merchant{country=$country, id=$id, mcc=$mcc, name=$name, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = Transaction.Builder::class)
@@ -429,8 +429,6 @@ constructor(
         private val currency: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /** Amount (in cents) to authenticate. */
         @JsonProperty("amount") fun amount(): Long? = amount
@@ -443,32 +441,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Transaction &&
-                this.amount == other.amount &&
-                this.currency == other.currency &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        amount,
-                        currency,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Transaction{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -515,5 +487,33 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Transaction &&
+                this.amount == other.amount &&
+                this.currency == other.currency &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        amount,
+                        currency,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Transaction{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
     }
 }

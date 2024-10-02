@@ -67,8 +67,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** Amount to dispute */
         @JsonProperty("amount") fun amount(): Long? = amount
 
@@ -90,38 +88,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is DisputeCreateBody &&
-                this.amount == other.amount &&
-                this.reason == other.reason &&
-                this.transactionToken == other.transactionToken &&
-                this.customerFiledDate == other.customerFiledDate &&
-                this.customerNote == other.customerNote &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        amount,
-                        reason,
-                        transactionToken,
-                        customerFiledDate,
-                        customerNote,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "DisputeCreateBody{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -194,6 +160,40 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is DisputeCreateBody &&
+                this.amount == other.amount &&
+                this.reason == other.reason &&
+                this.transactionToken == other.transactionToken &&
+                this.customerFiledDate == other.customerFiledDate &&
+                this.customerNote == other.customerNote &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        amount,
+                        reason,
+                        transactionToken,
+                        customerFiledDate,
+                        customerNote,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "DisputeCreateBody{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
