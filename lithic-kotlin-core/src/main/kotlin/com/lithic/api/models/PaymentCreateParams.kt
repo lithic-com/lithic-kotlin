@@ -220,36 +220,14 @@ constructor(
                 return true
             }
 
-            return other is PaymentCreateBody &&
-                this.amount == other.amount &&
-                this.externalBankAccountToken == other.externalBankAccountToken &&
-                this.financialAccountToken == other.financialAccountToken &&
-                this.method == other.method &&
-                this.methodAttributes == other.methodAttributes &&
-                this.type == other.type &&
-                this.token == other.token &&
-                this.memo == other.memo &&
-                this.userDefinedId == other.userDefinedId &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is PaymentCreateBody && this.amount == other.amount && this.externalBankAccountToken == other.externalBankAccountToken && this.financialAccountToken == other.financialAccountToken && this.method == other.method && this.methodAttributes == other.methodAttributes && this.type == other.type && this.token == other.token && this.memo == other.memo && this.userDefinedId == other.userDefinedId && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        amount,
-                        externalBankAccountToken,
-                        financialAccountToken,
-                        method,
-                        methodAttributes,
-                        type,
-                        token,
-                        memo,
-                        userDefinedId,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(amount, externalBankAccountToken, financialAccountToken, method, methodAttributes, type, token, memo, userDefinedId, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -269,36 +247,11 @@ constructor(
             return true
         }
 
-        return other is PaymentCreateParams &&
-            this.amount == other.amount &&
-            this.externalBankAccountToken == other.externalBankAccountToken &&
-            this.financialAccountToken == other.financialAccountToken &&
-            this.method == other.method &&
-            this.methodAttributes == other.methodAttributes &&
-            this.type == other.type &&
-            this.token == other.token &&
-            this.memo == other.memo &&
-            this.userDefinedId == other.userDefinedId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is PaymentCreateParams && this.amount == other.amount && this.externalBankAccountToken == other.externalBankAccountToken && this.financialAccountToken == other.financialAccountToken && this.method == other.method && this.methodAttributes == other.methodAttributes && this.type == other.type && this.token == other.token && this.memo == other.memo && this.userDefinedId == other.userDefinedId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            amount,
-            externalBankAccountToken,
-            financialAccountToken,
-            method,
-            methodAttributes,
-            type,
-            token,
-            memo,
-            userDefinedId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(amount, externalBankAccountToken, financialAccountToken, method, methodAttributes, type, token, memo, userDefinedId, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -458,7 +411,7 @@ constructor(
                 return true
             }
 
-            return other is Method && this.value == other.value
+            return /* spotless:off */ other is Method && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -571,7 +524,7 @@ constructor(
                     return true
                 }
 
-                return other is SecCode && this.value == other.value
+                return /* spotless:off */ other is SecCode && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -626,16 +579,14 @@ constructor(
                 return true
             }
 
-            return other is PaymentMethodRequestAttributes &&
-                this.secCode == other.secCode &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is PaymentMethodRequestAttributes && this.secCode == other.secCode && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = Objects.hash(secCode, additionalProperties)
+                hashCode = /* spotless:off */ Objects.hash(secCode, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -657,7 +608,7 @@ constructor(
                 return true
             }
 
-            return other is Type && this.value == other.value
+            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

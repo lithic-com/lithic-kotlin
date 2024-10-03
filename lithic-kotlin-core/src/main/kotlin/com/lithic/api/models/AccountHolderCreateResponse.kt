@@ -279,7 +279,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -354,7 +354,7 @@ private constructor(
                 return true
             }
 
-            return other is StatusReason && this.value == other.value
+            return /* spotless:off */ other is StatusReason && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -460,32 +460,14 @@ private constructor(
             return true
         }
 
-        return other is AccountHolderCreateResponse &&
-            this.accountToken == other.accountToken &&
-            this.created == other.created &&
-            this.externalId == other.externalId &&
-            this.status == other.status &&
-            this.statusReasons == other.statusReasons &&
-            this.requiredDocuments == other.requiredDocuments &&
-            this.token == other.token &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is AccountHolderCreateResponse && this.accountToken == other.accountToken && this.created == other.created && this.externalId == other.externalId && this.status == other.status && this.statusReasons == other.statusReasons && this.requiredDocuments == other.requiredDocuments && this.token == other.token && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    accountToken,
-                    created,
-                    externalId,
-                    status,
-                    statusReasons,
-                    requiredDocuments,
-                    token,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(accountToken, created, externalId, status, statusReasons, requiredDocuments, token, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
