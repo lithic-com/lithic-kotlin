@@ -103,7 +103,8 @@ constructor(
 
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
-         * enabled via Auth Rules.
+         * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
+         * Authorization Rules. The field will be removed from the schema in a future release.
          */
         @JsonProperty("verification_address")
         fun verificationAddress(): VerificationAddress? = verificationAddress
@@ -173,7 +174,9 @@ constructor(
 
             /**
              * Address used during Address Verification Service (AVS) checks during transactions if
-             * enabled via Auth Rules.
+             * enabled via Auth Rules. This field is deprecated as AVS checks are no longer
+             * supported by Authorization Rules. The field will be removed from the schema in a
+             * future release.
              */
             @JsonProperty("verification_address")
             fun verificationAddress(verificationAddress: VerificationAddress) = apply {
@@ -347,7 +350,8 @@ constructor(
 
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
-         * enabled via Auth Rules.
+         * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
+         * Authorization Rules. The field will be removed from the schema in a future release.
          */
         fun verificationAddress(verificationAddress: VerificationAddress) = apply {
             this.verificationAddress = verificationAddress
@@ -480,7 +484,8 @@ constructor(
 
     /**
      * Address used during Address Verification Service (AVS) checks during transactions if enabled
-     * via Auth Rules.
+     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
+     * Authorization Rules. The field will be removed from the schema in a future release.
      */
     @JsonDeserialize(builder = VerificationAddress.Builder::class)
     @NoAutoDetect
