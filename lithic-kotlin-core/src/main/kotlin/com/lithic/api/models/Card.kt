@@ -1064,7 +1064,7 @@ private constructor(
                     return true
                 }
 
-                return other is State && this.value == other.value
+                return /* spotless:off */ other is State && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1127,7 +1127,7 @@ private constructor(
                     return true
                 }
 
-                return other is Type && this.value == other.value
+                return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1176,32 +1176,14 @@ private constructor(
                 return true
             }
 
-            return other is FundingAccount &&
-                this.accountName == other.accountName &&
-                this.created == other.created &&
-                this.lastFour == other.lastFour &&
-                this.nickname == other.nickname &&
-                this.state == other.state &&
-                this.token == other.token &&
-                this.type == other.type &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is FundingAccount && this.accountName == other.accountName && this.created == other.created && this.lastFour == other.lastFour && this.nickname == other.nickname && this.state == other.state && this.token == other.token && this.type == other.type && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        accountName,
-                        created,
-                        lastFour,
-                        nickname,
-                        state,
-                        token,
-                        type,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(accountName, created, lastFour, nickname, state, token, type, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -1223,7 +1205,7 @@ private constructor(
                 return true
             }
 
-            return other is PinStatus && this.value == other.value
+            return /* spotless:off */ other is PinStatus && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1286,7 +1268,7 @@ private constructor(
                 return true
             }
 
-            return other is State && this.value == other.value
+            return /* spotless:off */ other is State && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1361,7 +1343,7 @@ private constructor(
                 return true
             }
 
-            return other is Type && this.value == other.value
+            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1422,62 +1404,14 @@ private constructor(
             return true
         }
 
-        return other is Card &&
-            this.accountToken == other.accountToken &&
-            this.authRuleTokens == other.authRuleTokens &&
-            this.cardProgramToken == other.cardProgramToken &&
-            this.cardholderCurrency == other.cardholderCurrency &&
-            this.created == other.created &&
-            this.cvv == other.cvv &&
-            this.digitalCardArtToken == other.digitalCardArtToken &&
-            this.expMonth == other.expMonth &&
-            this.expYear == other.expYear &&
-            this.funding == other.funding &&
-            this.hostname == other.hostname &&
-            this.lastFour == other.lastFour &&
-            this.memo == other.memo &&
-            this.pan == other.pan &&
-            this.pendingCommands == other.pendingCommands &&
-            this.pinStatus == other.pinStatus &&
-            this.productId == other.productId &&
-            this.spendLimit == other.spendLimit &&
-            this.spendLimitDuration == other.spendLimitDuration &&
-            this.state == other.state &&
-            this.token == other.token &&
-            this.type == other.type &&
-            this.additionalProperties == other.additionalProperties
+        return /* spotless:off */ other is Card && this.accountToken == other.accountToken && this.authRuleTokens == other.authRuleTokens && this.cardProgramToken == other.cardProgramToken && this.cardholderCurrency == other.cardholderCurrency && this.created == other.created && this.cvv == other.cvv && this.digitalCardArtToken == other.digitalCardArtToken && this.expMonth == other.expMonth && this.expYear == other.expYear && this.funding == other.funding && this.hostname == other.hostname && this.lastFour == other.lastFour && this.memo == other.memo && this.pan == other.pan && this.pendingCommands == other.pendingCommands && this.pinStatus == other.pinStatus && this.productId == other.productId && this.spendLimit == other.spendLimit && this.spendLimitDuration == other.spendLimitDuration && this.state == other.state && this.token == other.token && this.type == other.type && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    accountToken,
-                    authRuleTokens,
-                    cardProgramToken,
-                    cardholderCurrency,
-                    created,
-                    cvv,
-                    digitalCardArtToken,
-                    expMonth,
-                    expYear,
-                    funding,
-                    hostname,
-                    lastFour,
-                    memo,
-                    pan,
-                    pendingCommands,
-                    pinStatus,
-                    productId,
-                    spendLimit,
-                    spendLimitDuration,
-                    state,
-                    token,
-                    type,
-                    additionalProperties,
-                )
+            hashCode = /* spotless:off */ Objects.hash(accountToken, authRuleTokens, cardProgramToken, cardholderCurrency, created, cvv, digitalCardArtToken, expMonth, expYear, funding, hostname, lastFour, memo, pan, pendingCommands, pinStatus, productId, spendLimit, spendLimitDuration, state, token, type, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
