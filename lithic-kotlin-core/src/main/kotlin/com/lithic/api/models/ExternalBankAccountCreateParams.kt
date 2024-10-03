@@ -128,20 +128,11 @@ constructor(
                 return true
             }
 
-            return other is ExternalBankAccountCreateBody &&
-                this.bankVerifiedCreateBankAccountApiRequest ==
-                    other.bankVerifiedCreateBankAccountApiRequest &&
-                this.plaidCreateBankAccountApiRequest == other.plaidCreateBankAccountApiRequest &&
-                this.externallyVerifiedCreateBankAccountApiRequest ==
-                    other.externallyVerifiedCreateBankAccountApiRequest
+            return /* spotless:off */ other is ExternalBankAccountCreateBody && this.bankVerifiedCreateBankAccountApiRequest == other.bankVerifiedCreateBankAccountApiRequest && this.plaidCreateBankAccountApiRequest == other.plaidCreateBankAccountApiRequest && this.externallyVerifiedCreateBankAccountApiRequest == other.externallyVerifiedCreateBankAccountApiRequest /* spotless:on */
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(
-                bankVerifiedCreateBankAccountApiRequest,
-                plaidCreateBankAccountApiRequest,
-                externallyVerifiedCreateBankAccountApiRequest,
-            )
+            return /* spotless:off */ Objects.hash(bankVerifiedCreateBankAccountApiRequest, plaidCreateBankAccountApiRequest, externallyVerifiedCreateBankAccountApiRequest) /* spotless:on */
         }
 
         override fun toString(): String {
@@ -268,24 +259,11 @@ constructor(
             return true
         }
 
-        return other is ExternalBankAccountCreateParams &&
-            this.bankVerifiedCreateBankAccountApiRequest ==
-                other.bankVerifiedCreateBankAccountApiRequest &&
-            this.plaidCreateBankAccountApiRequest == other.plaidCreateBankAccountApiRequest &&
-            this.externallyVerifiedCreateBankAccountApiRequest ==
-                other.externallyVerifiedCreateBankAccountApiRequest &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is ExternalBankAccountCreateParams && this.bankVerifiedCreateBankAccountApiRequest == other.bankVerifiedCreateBankAccountApiRequest && this.plaidCreateBankAccountApiRequest == other.plaidCreateBankAccountApiRequest && this.externallyVerifiedCreateBankAccountApiRequest == other.externallyVerifiedCreateBankAccountApiRequest && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            bankVerifiedCreateBankAccountApiRequest,
-            plaidCreateBankAccountApiRequest,
-            externallyVerifiedCreateBankAccountApiRequest,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(bankVerifiedCreateBankAccountApiRequest, plaidCreateBankAccountApiRequest, externallyVerifiedCreateBankAccountApiRequest, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -676,7 +654,7 @@ constructor(
                     return true
                 }
 
-                return other is AccountType && this.value == other.value
+                return /* spotless:off */ other is AccountType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -725,52 +703,14 @@ constructor(
                 return true
             }
 
-            return other is BankVerifiedCreateBankAccountApiRequest &&
-                this.verificationMethod == other.verificationMethod &&
-                this.ownerType == other.ownerType &&
-                this.owner == other.owner &&
-                this.accountToken == other.accountToken &&
-                this.companyId == other.companyId &&
-                this.doingBusinessAs == other.doingBusinessAs &&
-                this.dob == other.dob &&
-                this.userDefinedId == other.userDefinedId &&
-                this.type == other.type &&
-                this.routingNumber == other.routingNumber &&
-                this.accountNumber == other.accountNumber &&
-                this.name == other.name &&
-                this.country == other.country &&
-                this.currency == other.currency &&
-                this.verificationEnforcement == other.verificationEnforcement &&
-                this.address == other.address &&
-                this.financialAccountToken == other.financialAccountToken &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is BankVerifiedCreateBankAccountApiRequest && this.verificationMethod == other.verificationMethod && this.ownerType == other.ownerType && this.owner == other.owner && this.accountToken == other.accountToken && this.companyId == other.companyId && this.doingBusinessAs == other.doingBusinessAs && this.dob == other.dob && this.userDefinedId == other.userDefinedId && this.type == other.type && this.routingNumber == other.routingNumber && this.accountNumber == other.accountNumber && this.name == other.name && this.country == other.country && this.currency == other.currency && this.verificationEnforcement == other.verificationEnforcement && this.address == other.address && this.financialAccountToken == other.financialAccountToken && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        verificationMethod,
-                        ownerType,
-                        owner,
-                        accountToken,
-                        companyId,
-                        doingBusinessAs,
-                        dob,
-                        userDefinedId,
-                        type,
-                        routingNumber,
-                        accountNumber,
-                        name,
-                        country,
-                        currency,
-                        verificationEnforcement,
-                        address,
-                        financialAccountToken,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(verificationMethod, ownerType, owner, accountToken, companyId, doingBusinessAs, dob, userDefinedId, type, routingNumber, accountNumber, name, country, currency, verificationEnforcement, address, financialAccountToken, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -948,36 +888,14 @@ constructor(
                 return true
             }
 
-            return other is PlaidCreateBankAccountApiRequest &&
-                this.verificationMethod == other.verificationMethod &&
-                this.ownerType == other.ownerType &&
-                this.owner == other.owner &&
-                this.accountToken == other.accountToken &&
-                this.companyId == other.companyId &&
-                this.doingBusinessAs == other.doingBusinessAs &&
-                this.dob == other.dob &&
-                this.userDefinedId == other.userDefinedId &&
-                this.processorToken == other.processorToken &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is PlaidCreateBankAccountApiRequest && this.verificationMethod == other.verificationMethod && this.ownerType == other.ownerType && this.owner == other.owner && this.accountToken == other.accountToken && this.companyId == other.companyId && this.doingBusinessAs == other.doingBusinessAs && this.dob == other.dob && this.userDefinedId == other.userDefinedId && this.processorToken == other.processorToken && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        verificationMethod,
-                        ownerType,
-                        owner,
-                        accountToken,
-                        companyId,
-                        doingBusinessAs,
-                        dob,
-                        userDefinedId,
-                        processorToken,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(verificationMethod, ownerType, owner, accountToken, companyId, doingBusinessAs, dob, userDefinedId, processorToken, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
@@ -1238,7 +1156,7 @@ constructor(
                     return true
                 }
 
-                return other is Type && this.value == other.value
+                return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1295,7 +1213,7 @@ constructor(
                     return true
                 }
 
-                return other is ExternallyVerifiedVerificationMethod && this.value == other.value
+                return /* spotless:off */ other is ExternallyVerifiedVerificationMethod && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1342,48 +1260,14 @@ constructor(
                 return true
             }
 
-            return other is ExternallyVerifiedCreateBankAccountApiRequest &&
-                this.verificationMethod == other.verificationMethod &&
-                this.ownerType == other.ownerType &&
-                this.owner == other.owner &&
-                this.accountToken == other.accountToken &&
-                this.companyId == other.companyId &&
-                this.doingBusinessAs == other.doingBusinessAs &&
-                this.dob == other.dob &&
-                this.userDefinedId == other.userDefinedId &&
-                this.type == other.type &&
-                this.routingNumber == other.routingNumber &&
-                this.accountNumber == other.accountNumber &&
-                this.name == other.name &&
-                this.country == other.country &&
-                this.currency == other.currency &&
-                this.address == other.address &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is ExternallyVerifiedCreateBankAccountApiRequest && this.verificationMethod == other.verificationMethod && this.ownerType == other.ownerType && this.owner == other.owner && this.accountToken == other.accountToken && this.companyId == other.companyId && this.doingBusinessAs == other.doingBusinessAs && this.dob == other.dob && this.userDefinedId == other.userDefinedId && this.type == other.type && this.routingNumber == other.routingNumber && this.accountNumber == other.accountNumber && this.name == other.name && this.country == other.country && this.currency == other.currency && this.address == other.address && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        verificationMethod,
-                        ownerType,
-                        owner,
-                        accountToken,
-                        companyId,
-                        doingBusinessAs,
-                        dob,
-                        userDefinedId,
-                        type,
-                        routingNumber,
-                        accountNumber,
-                        name,
-                        country,
-                        currency,
-                        address,
-                        additionalProperties,
-                    )
+                hashCode = /* spotless:off */ Objects.hash(verificationMethod, ownerType, owner, accountToken, companyId, doingBusinessAs, dob, userDefinedId, type, routingNumber, accountNumber, name, country, currency, address, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
