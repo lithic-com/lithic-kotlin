@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.67.0 (2024-10-09)
+
+Full Changelog: [v0.66.0...v0.67.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.66.0...v0.67.0)
+
+### Features
+
+* **api:** small updates to Documents, AccountHolders and LoanTapes ([#318](https://github.com/lithic-com/lithic-kotlin/issues/318)) ([65a825d](https://github.com/lithic-com/lithic-kotlin/commit/65a825d1d48cbd04fd12c189267d385c47c05fcd))
+
+
+### Chores
+
+* **api:** small updates to verification addresses and Statement and LoanTape fields ([#316](https://github.com/lithic-com/lithic-kotlin/issues/316)) ([5015f21](https://github.com/lithic-com/lithic-kotlin/commit/5015f21fa85491f4d1263c868e92e2413c805180))
+
+
+### Styles
+
+* **client:** disable formatting for java boilerplate ([#317](https://github.com/lithic-com/lithic-kotlin/issues/317)) ([360ca62](https://github.com/lithic-com/lithic-kotlin/commit/360ca62d01c498cd8f2601bbe44eb782293d4961))
+* **client:** move equals, hashCode, and toString to the bottom of entity files ([#314](https://github.com/lithic-com/lithic-kotlin/issues/314)) ([809bab0](https://github.com/lithic-com/lithic-kotlin/commit/809bab08c3c24f9bfda53c2afeb04fb2cdd28f6e))
+
 ## 0.66.0 (2024-10-01)
 
 Full Changelog: [v0.65.0...v0.66.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.65.0...v0.66.0)
