@@ -19,25 +19,29 @@ import java.util.Objects
 
 class AccountHolderSimulateEnrollmentDocumentReviewParams
 constructor(
-    private val documentUploadToken: String?,
-    private val status: Status?,
-    private val statusReasons: List<StatusReason>?,
+    private val documentUploadToken: String,
+    private val status: Status,
+    private val acceptedEntityStatusReasons: List<String>?,
+    private val statusReason: DocumentUploadStatusReasons?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun documentUploadToken(): String? = documentUploadToken
+    fun documentUploadToken(): String = documentUploadToken
 
-    fun status(): Status? = status
+    fun status(): Status = status
 
-    fun statusReasons(): List<StatusReason>? = statusReasons
+    fun acceptedEntityStatusReasons(): List<String>? = acceptedEntityStatusReasons
+
+    fun statusReason(): DocumentUploadStatusReasons? = statusReason
 
     internal fun getBody(): AccountHolderSimulateEnrollmentDocumentReviewBody {
         return AccountHolderSimulateEnrollmentDocumentReviewBody(
             documentUploadToken,
             status,
-            statusReasons,
+            acceptedEntityStatusReasons,
+            statusReason,
             additionalBodyProperties,
         )
     }
@@ -52,7 +56,8 @@ constructor(
     internal constructor(
         private val documentUploadToken: String?,
         private val status: Status?,
-        private val statusReasons: List<StatusReason>?,
+        private val acceptedEntityStatusReasons: List<String>?,
+        private val statusReason: DocumentUploadStatusReasons?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -63,11 +68,16 @@ constructor(
         /** An account holder document's upload status for use within the simulation. */
         @JsonProperty("status") fun status(): Status? = status
 
+        /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+        @JsonProperty("accepted_entity_status_reasons")
+        fun acceptedEntityStatusReasons(): List<String>? = acceptedEntityStatusReasons
+
         /**
          * Status reason that will be associated with the simulated account holder status. Only
-         * required for a `REJECTED` status.
+         * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
          */
-        @JsonProperty("status_reasons") fun statusReasons(): List<StatusReason>? = statusReasons
+        @JsonProperty("status_reason")
+        fun statusReason(): DocumentUploadStatusReasons? = statusReason
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -84,7 +94,8 @@ constructor(
 
             private var documentUploadToken: String? = null
             private var status: Status? = null
-            private var statusReasons: List<StatusReason>? = null
+            private var acceptedEntityStatusReasons: List<String>? = null
+            private var statusReason: DocumentUploadStatusReasons? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -94,7 +105,9 @@ constructor(
                 this.documentUploadToken =
                     accountHolderSimulateEnrollmentDocumentReviewBody.documentUploadToken
                 this.status = accountHolderSimulateEnrollmentDocumentReviewBody.status
-                this.statusReasons = accountHolderSimulateEnrollmentDocumentReviewBody.statusReasons
+                this.acceptedEntityStatusReasons =
+                    accountHolderSimulateEnrollmentDocumentReviewBody.acceptedEntityStatusReasons
+                this.statusReason = accountHolderSimulateEnrollmentDocumentReviewBody.statusReason
                 additionalProperties(
                     accountHolderSimulateEnrollmentDocumentReviewBody.additionalProperties
                 )
@@ -109,13 +122,19 @@ constructor(
             /** An account holder document's upload status for use within the simulation. */
             @JsonProperty("status") fun status(status: Status) = apply { this.status = status }
 
+            /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+            @JsonProperty("accepted_entity_status_reasons")
+            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
+                this.acceptedEntityStatusReasons = acceptedEntityStatusReasons
+            }
+
             /**
              * Status reason that will be associated with the simulated account holder status. Only
-             * required for a `REJECTED` status.
+             * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
              */
-            @JsonProperty("status_reasons")
-            fun statusReasons(statusReasons: List<StatusReason>) = apply {
-                this.statusReasons = statusReasons
+            @JsonProperty("status_reason")
+            fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
+                this.statusReason = statusReason
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -134,9 +153,12 @@ constructor(
 
             fun build(): AccountHolderSimulateEnrollmentDocumentReviewBody =
                 AccountHolderSimulateEnrollmentDocumentReviewBody(
-                    documentUploadToken,
-                    status,
-                    statusReasons?.toUnmodifiable(),
+                    checkNotNull(documentUploadToken) {
+                        "`documentUploadToken` is required but was not set"
+                    },
+                    checkNotNull(status) { "`status` is required but was not set" },
+                    acceptedEntityStatusReasons?.toUnmodifiable(),
+                    statusReason,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -146,20 +168,20 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderSimulateEnrollmentDocumentReviewBody && this.documentUploadToken == other.documentUploadToken && this.status == other.status && this.statusReasons == other.statusReasons && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountHolderSimulateEnrollmentDocumentReviewBody && this.documentUploadToken == other.documentUploadToken && this.status == other.status && this.acceptedEntityStatusReasons == other.acceptedEntityStatusReasons && this.statusReason == other.statusReason && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(documentUploadToken, status, statusReasons, additionalProperties) /* spotless:on */
+                hashCode = /* spotless:off */ Objects.hash(documentUploadToken, status, acceptedEntityStatusReasons, statusReason, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
 
         override fun toString() =
-            "AccountHolderSimulateEnrollmentDocumentReviewBody{documentUploadToken=$documentUploadToken, status=$status, statusReasons=$statusReasons, additionalProperties=$additionalProperties}"
+            "AccountHolderSimulateEnrollmentDocumentReviewBody{documentUploadToken=$documentUploadToken, status=$status, acceptedEntityStatusReasons=$acceptedEntityStatusReasons, statusReason=$statusReason, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -173,15 +195,15 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderSimulateEnrollmentDocumentReviewParams && this.documentUploadToken == other.documentUploadToken && this.status == other.status && this.statusReasons == other.statusReasons && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AccountHolderSimulateEnrollmentDocumentReviewParams && this.documentUploadToken == other.documentUploadToken && this.status == other.status && this.acceptedEntityStatusReasons == other.acceptedEntityStatusReasons && this.statusReason == other.statusReason && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(documentUploadToken, status, statusReasons, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
+        return /* spotless:off */ Objects.hash(documentUploadToken, status, acceptedEntityStatusReasons, statusReason, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
-        "AccountHolderSimulateEnrollmentDocumentReviewParams{documentUploadToken=$documentUploadToken, status=$status, statusReasons=$statusReasons, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "AccountHolderSimulateEnrollmentDocumentReviewParams{documentUploadToken=$documentUploadToken, status=$status, acceptedEntityStatusReasons=$acceptedEntityStatusReasons, statusReason=$statusReason, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -195,7 +217,8 @@ constructor(
 
         private var documentUploadToken: String? = null
         private var status: Status? = null
-        private var statusReasons: MutableList<StatusReason> = mutableListOf()
+        private var acceptedEntityStatusReasons: MutableList<String> = mutableListOf()
+        private var statusReason: DocumentUploadStatusReasons? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -207,9 +230,11 @@ constructor(
             this.documentUploadToken =
                 accountHolderSimulateEnrollmentDocumentReviewParams.documentUploadToken
             this.status = accountHolderSimulateEnrollmentDocumentReviewParams.status
-            this.statusReasons(
-                accountHolderSimulateEnrollmentDocumentReviewParams.statusReasons ?: listOf()
+            this.acceptedEntityStatusReasons(
+                accountHolderSimulateEnrollmentDocumentReviewParams.acceptedEntityStatusReasons
+                    ?: listOf()
             )
+            this.statusReason = accountHolderSimulateEnrollmentDocumentReviewParams.statusReason
             additionalQueryParams(
                 accountHolderSimulateEnrollmentDocumentReviewParams.additionalQueryParams
             )
@@ -227,21 +252,23 @@ constructor(
         /** An account holder document's upload status for use within the simulation. */
         fun status(status: Status) = apply { this.status = status }
 
-        /**
-         * Status reason that will be associated with the simulated account holder status. Only
-         * required for a `REJECTED` status.
-         */
-        fun statusReasons(statusReasons: List<StatusReason>) = apply {
-            this.statusReasons.clear()
-            this.statusReasons.addAll(statusReasons)
+        /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
+            this.acceptedEntityStatusReasons.clear()
+            this.acceptedEntityStatusReasons.addAll(acceptedEntityStatusReasons)
+        }
+
+        /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+        fun addAcceptedEntityStatusReason(acceptedEntityStatusReason: String) = apply {
+            this.acceptedEntityStatusReasons.add(acceptedEntityStatusReason)
         }
 
         /**
          * Status reason that will be associated with the simulated account holder status. Only
-         * required for a `REJECTED` status.
+         * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
          */
-        fun addStatusReason(statusReason: StatusReason) = apply {
-            this.statusReasons.add(statusReason)
+        fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
+            this.statusReason = statusReason
         }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -300,9 +327,13 @@ constructor(
 
         fun build(): AccountHolderSimulateEnrollmentDocumentReviewParams =
             AccountHolderSimulateEnrollmentDocumentReviewParams(
-                documentUploadToken,
-                status,
-                if (statusReasons.size == 0) null else statusReasons.toUnmodifiable(),
+                checkNotNull(documentUploadToken) {
+                    "`documentUploadToken` is required but was not set"
+                },
+                checkNotNull(status) { "`status` is required but was not set" },
+                if (acceptedEntityStatusReasons.size == 0) null
+                else acceptedEntityStatusReasons.toUnmodifiable(),
+                statusReason,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -337,6 +368,8 @@ constructor(
 
             val REJECTED = Status(JsonField.of("REJECTED"))
 
+            val PARTIAL_APPROVAL = Status(JsonField.of("PARTIAL_APPROVAL"))
+
             fun of(value: String) = Status(JsonField.of(value))
         }
 
@@ -344,12 +377,14 @@ constructor(
             UPLOADED,
             ACCEPTED,
             REJECTED,
+            PARTIAL_APPROVAL,
         }
 
         enum class Value {
             UPLOADED,
             ACCEPTED,
             REJECTED,
+            PARTIAL_APPROVAL,
             _UNKNOWN,
         }
 
@@ -358,6 +393,7 @@ constructor(
                 UPLOADED -> Value.UPLOADED
                 ACCEPTED -> Value.ACCEPTED
                 REJECTED -> Value.REJECTED
+                PARTIAL_APPROVAL -> Value.PARTIAL_APPROVAL
                 else -> Value._UNKNOWN
             }
 
@@ -366,13 +402,14 @@ constructor(
                 UPLOADED -> Known.UPLOADED
                 ACCEPTED -> Known.ACCEPTED
                 REJECTED -> Known.REJECTED
+                PARTIAL_APPROVAL -> Known.PARTIAL_APPROVAL
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()
     }
 
-    class StatusReason
+    class DocumentUploadStatusReasons
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
@@ -385,7 +422,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is StatusReason && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is DocumentUploadStatusReasons && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -395,26 +432,64 @@ constructor(
         companion object {
 
             val DOCUMENT_MISSING_REQUIRED_DATA =
-                StatusReason(JsonField.of("DOCUMENT_MISSING_REQUIRED_DATA"))
+                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_MISSING_REQUIRED_DATA"))
 
             val DOCUMENT_UPLOAD_TOO_BLURRY =
-                StatusReason(JsonField.of("DOCUMENT_UPLOAD_TOO_BLURRY"))
+                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_UPLOAD_TOO_BLURRY"))
 
-            val INVALID_DOCUMENT_TYPE = StatusReason(JsonField.of("INVALID_DOCUMENT_TYPE"))
+            val FILE_SIZE_TOO_LARGE =
+                DocumentUploadStatusReasons(JsonField.of("FILE_SIZE_TOO_LARGE"))
 
-            fun of(value: String) = StatusReason(JsonField.of(value))
+            val INVALID_DOCUMENT_TYPE =
+                DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_TYPE"))
+
+            val INVALID_DOCUMENT_UPLOAD =
+                DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_UPLOAD"))
+
+            val INVALID_ENTITY = DocumentUploadStatusReasons(JsonField.of("INVALID_ENTITY"))
+
+            val DOCUMENT_EXPIRED = DocumentUploadStatusReasons(JsonField.of("DOCUMENT_EXPIRED"))
+
+            val DOCUMENT_ISSUED_GREATER_THAN_30_DAYS =
+                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_ISSUED_GREATER_THAN_30_DAYS"))
+
+            val DOCUMENT_TYPE_NOT_SUPPORTED =
+                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_TYPE_NOT_SUPPORTED"))
+
+            val UNKNOWN_FAILURE_REASON =
+                DocumentUploadStatusReasons(JsonField.of("UNKNOWN_FAILURE_REASON"))
+
+            val UNKNOWN_ERROR = DocumentUploadStatusReasons(JsonField.of("UNKNOWN_ERROR"))
+
+            fun of(value: String) = DocumentUploadStatusReasons(JsonField.of(value))
         }
 
         enum class Known {
             DOCUMENT_MISSING_REQUIRED_DATA,
             DOCUMENT_UPLOAD_TOO_BLURRY,
+            FILE_SIZE_TOO_LARGE,
             INVALID_DOCUMENT_TYPE,
+            INVALID_DOCUMENT_UPLOAD,
+            INVALID_ENTITY,
+            DOCUMENT_EXPIRED,
+            DOCUMENT_ISSUED_GREATER_THAN_30_DAYS,
+            DOCUMENT_TYPE_NOT_SUPPORTED,
+            UNKNOWN_FAILURE_REASON,
+            UNKNOWN_ERROR,
         }
 
         enum class Value {
             DOCUMENT_MISSING_REQUIRED_DATA,
             DOCUMENT_UPLOAD_TOO_BLURRY,
+            FILE_SIZE_TOO_LARGE,
             INVALID_DOCUMENT_TYPE,
+            INVALID_DOCUMENT_UPLOAD,
+            INVALID_ENTITY,
+            DOCUMENT_EXPIRED,
+            DOCUMENT_ISSUED_GREATER_THAN_30_DAYS,
+            DOCUMENT_TYPE_NOT_SUPPORTED,
+            UNKNOWN_FAILURE_REASON,
+            UNKNOWN_ERROR,
             _UNKNOWN,
         }
 
@@ -422,7 +497,15 @@ constructor(
             when (this) {
                 DOCUMENT_MISSING_REQUIRED_DATA -> Value.DOCUMENT_MISSING_REQUIRED_DATA
                 DOCUMENT_UPLOAD_TOO_BLURRY -> Value.DOCUMENT_UPLOAD_TOO_BLURRY
+                FILE_SIZE_TOO_LARGE -> Value.FILE_SIZE_TOO_LARGE
                 INVALID_DOCUMENT_TYPE -> Value.INVALID_DOCUMENT_TYPE
+                INVALID_DOCUMENT_UPLOAD -> Value.INVALID_DOCUMENT_UPLOAD
+                INVALID_ENTITY -> Value.INVALID_ENTITY
+                DOCUMENT_EXPIRED -> Value.DOCUMENT_EXPIRED
+                DOCUMENT_ISSUED_GREATER_THAN_30_DAYS -> Value.DOCUMENT_ISSUED_GREATER_THAN_30_DAYS
+                DOCUMENT_TYPE_NOT_SUPPORTED -> Value.DOCUMENT_TYPE_NOT_SUPPORTED
+                UNKNOWN_FAILURE_REASON -> Value.UNKNOWN_FAILURE_REASON
+                UNKNOWN_ERROR -> Value.UNKNOWN_ERROR
                 else -> Value._UNKNOWN
             }
 
@@ -430,8 +513,17 @@ constructor(
             when (this) {
                 DOCUMENT_MISSING_REQUIRED_DATA -> Known.DOCUMENT_MISSING_REQUIRED_DATA
                 DOCUMENT_UPLOAD_TOO_BLURRY -> Known.DOCUMENT_UPLOAD_TOO_BLURRY
+                FILE_SIZE_TOO_LARGE -> Known.FILE_SIZE_TOO_LARGE
                 INVALID_DOCUMENT_TYPE -> Known.INVALID_DOCUMENT_TYPE
-                else -> throw LithicInvalidDataException("Unknown StatusReason: $value")
+                INVALID_DOCUMENT_UPLOAD -> Known.INVALID_DOCUMENT_UPLOAD
+                INVALID_ENTITY -> Known.INVALID_ENTITY
+                DOCUMENT_EXPIRED -> Known.DOCUMENT_EXPIRED
+                DOCUMENT_ISSUED_GREATER_THAN_30_DAYS -> Known.DOCUMENT_ISSUED_GREATER_THAN_30_DAYS
+                DOCUMENT_TYPE_NOT_SUPPORTED -> Known.DOCUMENT_TYPE_NOT_SUPPORTED
+                UNKNOWN_FAILURE_REASON -> Known.UNKNOWN_FAILURE_REASON
+                UNKNOWN_ERROR -> Known.UNKNOWN_ERROR
+                else ->
+                    throw LithicInvalidDataException("Unknown DocumentUploadStatusReasons: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()
