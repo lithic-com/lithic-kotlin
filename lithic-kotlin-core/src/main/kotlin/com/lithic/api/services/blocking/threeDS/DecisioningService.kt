@@ -6,9 +6,12 @@ package com.lithic.api.services.blocking.threeDS
 
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.DecisioningRetrieveSecretResponse
+import com.lithic.api.models.DecisioningSimulateChallengeResponse
 import com.lithic.api.models.ThreeDSDecisioningChallengeResponseParams
 import com.lithic.api.models.ThreeDSDecisioningRetrieveSecretParams
 import com.lithic.api.models.ThreeDSDecisioningRotateSecretParams
+import com.lithic.api.models.ThreeDSDecisioningSimulateChallengeParams
+import com.lithic.api.models.ThreeDSDecisioningSimulateChallengeResponseParams
 
 interface DecisioningService {
 
@@ -39,6 +42,25 @@ interface DecisioningService {
      */
     fun rotateSecret(
         params: ThreeDSDecisioningRotateSecretParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+
+    /**
+     * Simulates a 3DS authentication challenge request from the payment network as if it came from
+     * an ACS. Requires being configured for 3DS Customer Decisioning, and enrolled with Lithic's
+     * Challenge solution.
+     */
+    fun simulateChallenge(
+        params: ThreeDSDecisioningSimulateChallengeParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): DecisioningSimulateChallengeResponse
+
+    /**
+     * Endpoint for responding to a 3DS Challenge initiated by a call to
+     * /v1/three_ds_decisioning/simulate/challenge
+     */
+    fun simulateChallengeResponse(
+        params: ThreeDSDecisioningSimulateChallengeResponseParams,
         requestOptions: RequestOptions = RequestOptions.none()
     )
 }

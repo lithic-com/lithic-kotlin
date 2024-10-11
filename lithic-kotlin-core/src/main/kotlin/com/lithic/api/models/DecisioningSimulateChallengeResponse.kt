@@ -14,9 +14,9 @@ import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.toUnmodifiable
 import java.util.Objects
 
-@JsonDeserialize(builder = AuthenticationSimulateResponse.Builder::class)
+@JsonDeserialize(builder = DecisioningSimulateChallengeResponse.Builder::class)
 @NoAutoDetect
-class AuthenticationSimulateResponse
+class DecisioningSimulateChallengeResponse
 private constructor(
     private val token: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
@@ -26,13 +26,15 @@ private constructor(
 
     /**
      * A unique token to reference this transaction with later calls to void or clear the
-     * authorization.
+     * authorization. This token is used in /v1/three_ds_decisioning/simulate/challenge_response to
+     * Approve or Decline the authentication
      */
     fun token(): String? = token.getNullable("token")
 
     /**
      * A unique token to reference this transaction with later calls to void or clear the
-     * authorization.
+     * authorization. This token is used in /v1/three_ds_decisioning/simulate/challenge_response to
+     * Approve or Decline the authentication
      */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
 
@@ -40,7 +42,7 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun validate(): AuthenticationSimulateResponse = apply {
+    fun validate(): DecisioningSimulateChallengeResponse = apply {
         if (!validated) {
             token()
             validated = true
@@ -59,20 +61,24 @@ private constructor(
         private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(authenticationSimulateResponse: AuthenticationSimulateResponse) = apply {
-            this.token = authenticationSimulateResponse.token
-            additionalProperties(authenticationSimulateResponse.additionalProperties)
+        internal fun from(
+            decisioningSimulateChallengeResponse: DecisioningSimulateChallengeResponse
+        ) = apply {
+            this.token = decisioningSimulateChallengeResponse.token
+            additionalProperties(decisioningSimulateChallengeResponse.additionalProperties)
         }
 
         /**
          * A unique token to reference this transaction with later calls to void or clear the
-         * authorization.
+         * authorization. This token is used in /v1/three_ds_decisioning/simulate/challenge_response
+         * to Approve or Decline the authentication
          */
         fun token(token: String) = token(JsonField.of(token))
 
         /**
          * A unique token to reference this transaction with later calls to void or clear the
-         * authorization.
+         * authorization. This token is used in /v1/three_ds_decisioning/simulate/challenge_response
+         * to Approve or Decline the authentication
          */
         @JsonProperty("token")
         @ExcludeMissing
@@ -92,8 +98,8 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): AuthenticationSimulateResponse =
-            AuthenticationSimulateResponse(token, additionalProperties.toUnmodifiable())
+        fun build(): DecisioningSimulateChallengeResponse =
+            DecisioningSimulateChallengeResponse(token, additionalProperties.toUnmodifiable())
     }
 
     override fun equals(other: Any?): Boolean {
@@ -101,7 +107,7 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthenticationSimulateResponse && this.token == other.token && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is DecisioningSimulateChallengeResponse && this.token == other.token && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
@@ -114,5 +120,5 @@ private constructor(
     }
 
     override fun toString() =
-        "AuthenticationSimulateResponse{token=$token, additionalProperties=$additionalProperties}"
+        "DecisioningSimulateChallengeResponse{token=$token, additionalProperties=$additionalProperties}"
 }
