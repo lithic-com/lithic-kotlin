@@ -13,7 +13,7 @@ import com.lithic.api.core.toUnmodifiable
 import com.lithic.api.models.*
 import java.util.Objects
 
-class ThreeDSDecisioningChallengeResponseParams
+class ThreeDSDecisioningSimulateChallengeResponseParams
 constructor(
     private val token: String,
     private val challengeResponse: ChallengeResult,
@@ -26,8 +26,8 @@ constructor(
 
     fun challengeResponse(): ChallengeResult = challengeResponse
 
-    internal fun getBody(): ThreeDSDecisioningChallengeResponseBody {
-        return ThreeDSDecisioningChallengeResponseBody(
+    internal fun getBody(): ThreeDSDecisioningSimulateChallengeResponseBody {
+        return ThreeDSDecisioningSimulateChallengeResponseBody(
             token,
             challengeResponse,
             additionalBodyProperties,
@@ -38,9 +38,9 @@ constructor(
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
-    @JsonDeserialize(builder = ThreeDSDecisioningChallengeResponseBody.Builder::class)
+    @JsonDeserialize(builder = ThreeDSDecisioningSimulateChallengeResponseBody.Builder::class)
     @NoAutoDetect
-    class ThreeDSDecisioningChallengeResponseBody
+    class ThreeDSDecisioningSimulateChallengeResponseBody
     internal constructor(
         private val token: String?,
         private val challengeResponse: ChallengeResult?,
@@ -76,11 +76,15 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
-                threeDSDecisioningChallengeResponseBody: ThreeDSDecisioningChallengeResponseBody
+                threeDSDecisioningSimulateChallengeResponseBody:
+                    ThreeDSDecisioningSimulateChallengeResponseBody
             ) = apply {
-                this.token = threeDSDecisioningChallengeResponseBody.token
-                this.challengeResponse = threeDSDecisioningChallengeResponseBody.challengeResponse
-                additionalProperties(threeDSDecisioningChallengeResponseBody.additionalProperties)
+                this.token = threeDSDecisioningSimulateChallengeResponseBody.token
+                this.challengeResponse =
+                    threeDSDecisioningSimulateChallengeResponseBody.challengeResponse
+                additionalProperties(
+                    threeDSDecisioningSimulateChallengeResponseBody.additionalProperties
+                )
             }
 
             /**
@@ -110,8 +114,8 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): ThreeDSDecisioningChallengeResponseBody =
-                ThreeDSDecisioningChallengeResponseBody(
+            fun build(): ThreeDSDecisioningSimulateChallengeResponseBody =
+                ThreeDSDecisioningSimulateChallengeResponseBody(
                     checkNotNull(token) { "`token` is required but was not set" },
                     checkNotNull(challengeResponse) {
                         "`challengeResponse` is required but was not set"
@@ -125,7 +129,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ThreeDSDecisioningChallengeResponseBody && this.token == other.token && this.challengeResponse == other.challengeResponse && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ThreeDSDecisioningSimulateChallengeResponseBody && this.token == other.token && this.challengeResponse == other.challengeResponse && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
@@ -138,7 +142,7 @@ constructor(
         }
 
         override fun toString() =
-            "ThreeDSDecisioningChallengeResponseBody{token=$token, challengeResponse=$challengeResponse, additionalProperties=$additionalProperties}"
+            "ThreeDSDecisioningSimulateChallengeResponseBody{token=$token, challengeResponse=$challengeResponse, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -152,7 +156,7 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ThreeDSDecisioningChallengeResponseParams && this.token == other.token && this.challengeResponse == other.challengeResponse && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ThreeDSDecisioningSimulateChallengeResponseParams && this.token == other.token && this.challengeResponse == other.challengeResponse && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
@@ -160,7 +164,7 @@ constructor(
     }
 
     override fun toString() =
-        "ThreeDSDecisioningChallengeResponseParams{token=$token, challengeResponse=$challengeResponse, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ThreeDSDecisioningSimulateChallengeResponseParams{token=$token, challengeResponse=$challengeResponse, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -179,14 +183,18 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
-            threeDSDecisioningChallengeResponseParams: ThreeDSDecisioningChallengeResponseParams
+            threeDSDecisioningSimulateChallengeResponseParams:
+                ThreeDSDecisioningSimulateChallengeResponseParams
         ) = apply {
-            this.token = threeDSDecisioningChallengeResponseParams.token
-            this.challengeResponse = threeDSDecisioningChallengeResponseParams.challengeResponse
-            additionalQueryParams(threeDSDecisioningChallengeResponseParams.additionalQueryParams)
-            additionalHeaders(threeDSDecisioningChallengeResponseParams.additionalHeaders)
+            this.token = threeDSDecisioningSimulateChallengeResponseParams.token
+            this.challengeResponse =
+                threeDSDecisioningSimulateChallengeResponseParams.challengeResponse
+            additionalQueryParams(
+                threeDSDecisioningSimulateChallengeResponseParams.additionalQueryParams
+            )
+            additionalHeaders(threeDSDecisioningSimulateChallengeResponseParams.additionalHeaders)
             additionalBodyProperties(
-                threeDSDecisioningChallengeResponseParams.additionalBodyProperties
+                threeDSDecisioningSimulateChallengeResponseParams.additionalBodyProperties
             )
         }
 
@@ -256,8 +264,8 @@ constructor(
                 this.additionalBodyProperties.putAll(additionalBodyProperties)
             }
 
-        fun build(): ThreeDSDecisioningChallengeResponseParams =
-            ThreeDSDecisioningChallengeResponseParams(
+        fun build(): ThreeDSDecisioningSimulateChallengeResponseParams =
+            ThreeDSDecisioningSimulateChallengeResponseParams(
                 checkNotNull(token) { "`token` is required but was not set" },
                 checkNotNull(challengeResponse) {
                     "`challengeResponse` is required but was not set"
