@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.68.0 (2024-10-11)
+
+Full Changelog: [v0.67.0...v0.68.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.67.0...v0.68.0)
+
+### Features
+
+* **api:** updates to documentation and addition of new 3DS simulation methods ([#319](https://github.com/lithic-com/lithic-kotlin/issues/319)) ([5115da8](https://github.com/lithic-com/lithic-kotlin/commit/5115da821e3bba96135ebee611f16f2bedc317e1))
+
 ## 0.67.0 (2024-10-09)
 
 Full Changelog: [v0.66.0...v0.67.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.66.0...v0.67.0)
