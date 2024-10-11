@@ -174,10 +174,7 @@ constructor(
          */
         @JsonProperty("exp_year") fun expYear(): String? = expYear
 
-        /**
-         * Friendly name to identify the card. We recommend against using this field to store JSON
-         * data as it can cause unexpected behavior.
-         */
+        /** Friendly name to identify the card. */
         @JsonProperty("memo") fun memo(): String? = memo
 
         /**
@@ -358,10 +355,7 @@ constructor(
             @JsonProperty("exp_year")
             fun expYear(expYear: String) = apply { this.expYear = expYear }
 
-            /**
-             * Friendly name to identify the card. We recommend against using this field to store
-             * JSON data as it can cause unexpected behavior.
-             */
+            /** Friendly name to identify the card. */
             @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
 
             /**
@@ -631,10 +625,7 @@ constructor(
          */
         fun expYear(expYear: String) = apply { this.expYear = expYear }
 
-        /**
-         * Friendly name to identify the card. We recommend against using this field to store JSON
-         * data as it can cause unexpected behavior.
-         */
+        /** Friendly name to identify the card. */
         fun memo(memo: String) = apply { this.memo = memo }
 
         /**

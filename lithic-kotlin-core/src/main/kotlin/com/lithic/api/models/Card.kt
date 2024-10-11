@@ -95,10 +95,7 @@ private constructor(
     /** Last four digits of the card number. */
     fun lastFour(): String = lastFour.getRequired("last_four")
 
-    /**
-     * Friendly name to identify the card. We recommend against using this field to store JSON data
-     * as it can cause unexpected behavior.
-     */
+    /** Friendly name to identify the card. */
     fun memo(): String? = memo.getNullable("memo")
 
     /**
@@ -232,10 +229,7 @@ private constructor(
     /** Last four digits of the card number. */
     @JsonProperty("last_four") @ExcludeMissing fun _lastFour() = lastFour
 
-    /**
-     * Friendly name to identify the card. We recommend against using this field to store JSON data
-     * as it can cause unexpected behavior.
-     */
+    /** Friendly name to identify the card. */
     @JsonProperty("memo") @ExcludeMissing fun _memo() = memo
 
     /**
@@ -541,16 +535,10 @@ private constructor(
         @ExcludeMissing
         fun lastFour(lastFour: JsonField<String>) = apply { this.lastFour = lastFour }
 
-        /**
-         * Friendly name to identify the card. We recommend against using this field to store JSON
-         * data as it can cause unexpected behavior.
-         */
+        /** Friendly name to identify the card. */
         fun memo(memo: String) = memo(JsonField.of(memo))
 
-        /**
-         * Friendly name to identify the card. We recommend against using this field to store JSON
-         * data as it can cause unexpected behavior.
-         */
+        /** Friendly name to identify the card. */
         @JsonProperty("memo")
         @ExcludeMissing
         fun memo(memo: JsonField<String>) = apply { this.memo = memo }

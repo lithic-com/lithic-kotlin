@@ -4,12 +4,16 @@ package com.lithic.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
+import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.models.*
 import java.util.Objects
 
@@ -18,6 +22,7 @@ constructor(
     private val merchant: Merchant,
     private val pan: String,
     private val transaction: Transaction,
+    private val cardExpiryCheck: CardExpiryCheck?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -29,11 +34,14 @@ constructor(
 
     fun transaction(): Transaction = transaction
 
+    fun cardExpiryCheck(): CardExpiryCheck? = cardExpiryCheck
+
     internal fun getBody(): ThreeDSAuthenticationSimulateBody {
         return ThreeDSAuthenticationSimulateBody(
             merchant,
             pan,
             transaction,
+            cardExpiryCheck,
             additionalBodyProperties,
         )
     }
@@ -49,6 +57,7 @@ constructor(
         private val merchant: Merchant?,
         private val pan: String?,
         private val transaction: Transaction?,
+        private val cardExpiryCheck: CardExpiryCheck?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -58,6 +67,12 @@ constructor(
         @JsonProperty("pan") fun pan(): String? = pan
 
         @JsonProperty("transaction") fun transaction(): Transaction? = transaction
+
+        /**
+         * When set will use the following values as part of the Simulated Authentication. When not
+         * set defaults to MATCH
+         */
+        @JsonProperty("card_expiry_check") fun cardExpiryCheck(): CardExpiryCheck? = cardExpiryCheck
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -75,6 +90,7 @@ constructor(
             private var merchant: Merchant? = null
             private var pan: String? = null
             private var transaction: Transaction? = null
+            private var cardExpiryCheck: CardExpiryCheck? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -83,6 +99,7 @@ constructor(
                 this.merchant = threeDSAuthenticationSimulateBody.merchant
                 this.pan = threeDSAuthenticationSimulateBody.pan
                 this.transaction = threeDSAuthenticationSimulateBody.transaction
+                this.cardExpiryCheck = threeDSAuthenticationSimulateBody.cardExpiryCheck
                 additionalProperties(threeDSAuthenticationSimulateBody.additionalProperties)
             }
 
@@ -94,6 +111,15 @@ constructor(
 
             @JsonProperty("transaction")
             fun transaction(transaction: Transaction) = apply { this.transaction = transaction }
+
+            /**
+             * When set will use the following values as part of the Simulated Authentication. When
+             * not set defaults to MATCH
+             */
+            @JsonProperty("card_expiry_check")
+            fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
+                this.cardExpiryCheck = cardExpiryCheck
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -114,6 +140,7 @@ constructor(
                     checkNotNull(merchant) { "`merchant` is required but was not set" },
                     checkNotNull(pan) { "`pan` is required but was not set" },
                     checkNotNull(transaction) { "`transaction` is required but was not set" },
+                    cardExpiryCheck,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -123,20 +150,20 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ThreeDSAuthenticationSimulateBody && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ThreeDSAuthenticationSimulateBody && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.cardExpiryCheck == other.cardExpiryCheck && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(merchant, pan, transaction, additionalProperties) /* spotless:on */
+                hashCode = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
 
         override fun toString() =
-            "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, additionalProperties=$additionalProperties}"
+            "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -150,15 +177,15 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.cardExpiryCheck == other.cardExpiryCheck && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(merchant, pan, transaction, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
+        return /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
-        "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -173,6 +200,7 @@ constructor(
         private var merchant: Merchant? = null
         private var pan: String? = null
         private var transaction: Transaction? = null
+        private var cardExpiryCheck: CardExpiryCheck? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -183,6 +211,7 @@ constructor(
             this.merchant = threeDSAuthenticationSimulateParams.merchant
             this.pan = threeDSAuthenticationSimulateParams.pan
             this.transaction = threeDSAuthenticationSimulateParams.transaction
+            this.cardExpiryCheck = threeDSAuthenticationSimulateParams.cardExpiryCheck
             additionalQueryParams(threeDSAuthenticationSimulateParams.additionalQueryParams)
             additionalHeaders(threeDSAuthenticationSimulateParams.additionalHeaders)
             additionalBodyProperties(threeDSAuthenticationSimulateParams.additionalBodyProperties)
@@ -194,6 +223,14 @@ constructor(
         fun pan(pan: String) = apply { this.pan = pan }
 
         fun transaction(transaction: Transaction) = apply { this.transaction = transaction }
+
+        /**
+         * When set will use the following values as part of the Simulated Authentication. When not
+         * set defaults to MATCH
+         */
+        fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
+            this.cardExpiryCheck = cardExpiryCheck
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -254,6 +291,7 @@ constructor(
                 checkNotNull(merchant) { "`merchant` is required but was not set" },
                 checkNotNull(pan) { "`pan` is required but was not set" },
                 checkNotNull(transaction) { "`transaction` is required but was not set" },
+                cardExpiryCheck,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -472,5 +510,68 @@ constructor(
 
         override fun toString() =
             "Transaction{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
+    }
+
+    class CardExpiryCheck
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CardExpiryCheck && this.value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val MATCH = CardExpiryCheck(JsonField.of("MATCH"))
+
+            val MISMATCH = CardExpiryCheck(JsonField.of("MISMATCH"))
+
+            val NOT_PRESENT = CardExpiryCheck(JsonField.of("NOT_PRESENT"))
+
+            fun of(value: String) = CardExpiryCheck(JsonField.of(value))
+        }
+
+        enum class Known {
+            MATCH,
+            MISMATCH,
+            NOT_PRESENT,
+        }
+
+        enum class Value {
+            MATCH,
+            MISMATCH,
+            NOT_PRESENT,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                MATCH -> Value.MATCH
+                MISMATCH -> Value.MISMATCH
+                NOT_PRESENT -> Value.NOT_PRESENT
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                MATCH -> Known.MATCH
+                MISMATCH -> Known.MISMATCH
+                NOT_PRESENT -> Known.NOT_PRESENT
+                else -> throw LithicInvalidDataException("Unknown CardExpiryCheck: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }
