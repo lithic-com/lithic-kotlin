@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.68.1 (2024-10-14)
+
+Full Changelog: [v0.68.0...v0.68.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.68.0...v0.68.1)
+
+### Styles
+
+* **internal:** improve terseness of handlers ([#321](https://github.com/lithic-com/lithic-kotlin/issues/321)) ([e69f47b](https://github.com/lithic-com/lithic-kotlin/commit/e69f47b54c20edd80b663b990f8b172c3c6b9384))
+* **internal:** improve terseness of Properties.kt ([#323](https://github.com/lithic-com/lithic-kotlin/issues/323)) ([3cf3952](https://github.com/lithic-com/lithic-kotlin/commit/3cf39525d1d7b34209db1edf4551a05305589e26))
+
 ## 0.68.0 (2024-10-11)
 
 Full Changelog: [v0.67.0...v0.68.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.67.0...v0.68.0)
