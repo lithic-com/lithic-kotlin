@@ -200,6 +200,23 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): ExternalBankAccountCreateBody {
                 val json = JsonValue.fromJsonNode(node)
+                val verificationMethod = json.asObject()?.get("verification_method")?.asString()
+
+                when (verificationMethod) {
+                    "EXTERNALLY_VERIFIED" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>()
+                            )
+                            ?.let {
+                                return ExternalBankAccountCreateBody(
+                                    externallyVerifiedCreateBankAccountApiRequest = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                }
+
                 tryDeserialize(node, jacksonTypeRef<BankVerifiedCreateBankAccountApiRequest>())
                     ?.let {
                         return ExternalBankAccountCreateBody(
@@ -213,16 +230,6 @@ constructor(
                         _json = json
                     )
                 }
-                tryDeserialize(
-                        node,
-                        jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>()
-                    )
-                    ?.let {
-                        return ExternalBankAccountCreateBody(
-                            externallyVerifiedCreateBankAccountApiRequest = it,
-                            _json = json
-                        )
-                    }
 
                 return ExternalBankAccountCreateBody(_json = json)
             }

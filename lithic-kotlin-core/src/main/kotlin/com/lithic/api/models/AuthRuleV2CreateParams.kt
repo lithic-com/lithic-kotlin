@@ -183,6 +183,7 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleV2CreateBody {
                 val json = JsonValue.fromJsonNode(node)
+
                 tryDeserialize(node, jacksonTypeRef<CreateAuthRuleRequestAccountTokens>())?.let {
                     return AuthRuleV2CreateBody(
                         createAuthRuleRequestAccountTokens = it,
@@ -526,6 +527,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
@@ -1029,6 +1031,7 @@ constructor(
 
                             override fun ObjectCodec.deserialize(node: JsonNode): Value {
                                 val json = JsonValue.fromJsonNode(node)
+
                                 tryDeserialize(node, jacksonTypeRef<String>())?.let {
                                     return Value(string = it, _json = json)
                                 }
@@ -1361,6 +1364,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
@@ -1864,6 +1868,7 @@ constructor(
 
                             override fun ObjectCodec.deserialize(node: JsonNode): Value {
                                 val json = JsonValue.fromJsonNode(node)
+
                                 tryDeserialize(node, jacksonTypeRef<String>())?.let {
                                     return Value(string = it, _json = json)
                                 }
@@ -2196,6 +2201,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
@@ -2699,6 +2705,7 @@ constructor(
 
                             override fun ObjectCodec.deserialize(node: JsonNode): Value {
                                 val json = JsonValue.fromJsonNode(node)
+
                                 tryDeserialize(node, jacksonTypeRef<String>())?.let {
                                     return Value(string = it, _json = json)
                                 }
