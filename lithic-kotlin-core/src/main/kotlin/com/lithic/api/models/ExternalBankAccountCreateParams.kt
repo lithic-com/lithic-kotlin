@@ -202,19 +202,17 @@ constructor(
                 val json = JsonValue.fromJsonNode(node)
                 val verificationMethod = json.asObject()?.get("verification_method")?.asString()
 
-                when (verificationMethod) {
-                    "EXTERNALLY_VERIFIED" -> {
-                        tryDeserialize(
-                                node,
-                                jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>()
+                if (verificationMethod == "EXTERNALLY_VERIFIED") {
+                    tryDeserialize(
+                            node,
+                            jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>()
+                        )
+                        ?.let {
+                            return ExternalBankAccountCreateBody(
+                                externallyVerifiedCreateBankAccountApiRequest = it,
+                                _json = json
                             )
-                            ?.let {
-                                return ExternalBankAccountCreateBody(
-                                    externallyVerifiedCreateBankAccountApiRequest = it,
-                                    _json = json
-                                )
-                            }
-                    }
+                        }
                 }
 
                 tryDeserialize(node, jacksonTypeRef<BankVerifiedCreateBankAccountApiRequest>())
