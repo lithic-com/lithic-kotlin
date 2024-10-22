@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package com.lithic.api.core.http
 
 import com.lithic.api.core.RequestOptions
