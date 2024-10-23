@@ -1251,8 +1251,8 @@ private constructor(
         fun minimumInterestCharged(): Long? =
             minimumInterestCharged.getNullable("minimum_interest_charged")
 
-        fun actualInterestCharged(): Long =
-            actualInterestCharged.getRequired("actual_interest_charged")
+        fun actualInterestCharged(): Long? =
+            actualInterestCharged.getNullable("actual_interest_charged")
 
         @JsonProperty("prime_rate") @ExcludeMissing fun _primeRate() = primeRate
 
