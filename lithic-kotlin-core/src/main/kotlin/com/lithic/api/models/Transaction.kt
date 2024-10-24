@@ -40,7 +40,7 @@ private constructor(
     private val merchantCurrency: JsonField<String>,
     private val network: JsonField<Network>,
     private val networkRiskScore: JsonField<Long>,
-    private val result: JsonField<Result>,
+    private val result: JsonField<DeclineResult>,
     private val pos: JsonField<Pos>,
     private val settledAmount: JsonField<Long>,
     private val status: JsonField<Status>,
@@ -135,8 +135,7 @@ private constructor(
      */
     fun networkRiskScore(): Long? = networkRiskScore.getNullable("network_risk_score")
 
-    /** `APPROVED` or decline reason. See Event result types */
-    fun result(): Result = result.getRequired("result")
+    fun result(): DeclineResult = result.getRequired("result")
 
     fun pos(): Pos = pos.getRequired("pos")
 
@@ -245,7 +244,6 @@ private constructor(
      */
     @JsonProperty("network_risk_score") @ExcludeMissing fun _networkRiskScore() = networkRiskScore
 
-    /** `APPROVED` or decline reason. See Event result types */
     @JsonProperty("result") @ExcludeMissing fun _result() = result
 
     @JsonProperty("pos") @ExcludeMissing fun _pos() = pos
@@ -329,7 +327,7 @@ private constructor(
         private var merchantCurrency: JsonField<String> = JsonMissing.of()
         private var network: JsonField<Network> = JsonMissing.of()
         private var networkRiskScore: JsonField<Long> = JsonMissing.of()
-        private var result: JsonField<Result> = JsonMissing.of()
+        private var result: JsonField<DeclineResult> = JsonMissing.of()
         private var pos: JsonField<Pos> = JsonMissing.of()
         private var settledAmount: JsonField<Long> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
@@ -588,13 +586,11 @@ private constructor(
             this.networkRiskScore = networkRiskScore
         }
 
-        /** `APPROVED` or decline reason. See Event result types */
-        fun result(result: Result) = result(JsonField.of(result))
+        fun result(result: DeclineResult) = result(JsonField.of(result))
 
-        /** `APPROVED` or decline reason. See Event result types */
         @JsonProperty("result")
         @ExcludeMissing
-        fun result(result: JsonField<Result>) = apply { this.result = result }
+        fun result(result: JsonField<DeclineResult>) = apply { this.result = result }
 
         fun pos(pos: Pos) = pos(JsonField.of(pos))
 
@@ -3763,7 +3759,7 @@ private constructor(
             "Pos{entryMode=$entryMode, terminal=$terminal, additionalProperties=$additionalProperties}"
     }
 
-    class Result
+    class DeclineResult
     @JsonCreator
     private constructor(
         private val value: JsonField<String>,
@@ -3776,7 +3772,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Result && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is DeclineResult && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -3785,44 +3781,59 @@ private constructor(
 
         companion object {
 
-            val APPROVED = Result(JsonField.of("APPROVED"))
+            val ACCOUNT_STATE_TRANSACTION_FAIL =
+                DeclineResult(JsonField.of("ACCOUNT_STATE_TRANSACTION_FAIL"))
 
-            val BANK_CONNECTION_ERROR = Result(JsonField.of("BANK_CONNECTION_ERROR"))
+            val APPROVED = DeclineResult(JsonField.of("APPROVED"))
 
-            val BANK_NOT_VERIFIED = Result(JsonField.of("BANK_NOT_VERIFIED"))
+            val BANK_CONNECTION_ERROR = DeclineResult(JsonField.of("BANK_CONNECTION_ERROR"))
 
-            val CARD_CLOSED = Result(JsonField.of("CARD_CLOSED"))
+            val BANK_NOT_VERIFIED = DeclineResult(JsonField.of("BANK_NOT_VERIFIED"))
 
-            val CARD_PAUSED = Result(JsonField.of("CARD_PAUSED"))
+            val CARD_CLOSED = DeclineResult(JsonField.of("CARD_CLOSED"))
 
-            val DECLINED = Result(JsonField.of("DECLINED"))
+            val CARD_PAUSED = DeclineResult(JsonField.of("CARD_PAUSED"))
 
-            val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
+            val DECLINED = DeclineResult(JsonField.of("DECLINED"))
 
-            val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
+            val FRAUD_ADVICE = DeclineResult(JsonField.of("FRAUD_ADVICE"))
 
-            val INCORRECT_PIN = Result(JsonField.of("INCORRECT_PIN"))
+            val IGNORED_TTL_EXPIRY = DeclineResult(JsonField.of("IGNORED_TTL_EXPIRY"))
 
-            val INSUFFICIENT_FUNDS = Result(JsonField.of("INSUFFICIENT_FUNDS"))
+            val INACTIVE_ACCOUNT = DeclineResult(JsonField.of("INACTIVE_ACCOUNT"))
 
-            val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
+            val INCORRECT_PIN = DeclineResult(JsonField.of("INCORRECT_PIN"))
 
-            val MERCHANT_BLACKLIST = Result(JsonField.of("MERCHANT_BLACKLIST"))
+            val INVALID_CARD_DETAILS = DeclineResult(JsonField.of("INVALID_CARD_DETAILS"))
 
-            val SINGLE_USE_RECHARGED = Result(JsonField.of("SINGLE_USE_RECHARGED"))
+            val INSUFFICIENT_FUNDS = DeclineResult(JsonField.of("INSUFFICIENT_FUNDS"))
 
-            val SWITCH_INOPERATIVE_ADVICE = Result(JsonField.of("SWITCH_INOPERATIVE_ADVICE"))
+            val INSUFFICIENT_FUNDS_PRELOAD =
+                DeclineResult(JsonField.of("INSUFFICIENT_FUNDS_PRELOAD"))
 
-            val UNAUTHORIZED_MERCHANT = Result(JsonField.of("UNAUTHORIZED_MERCHANT"))
+            val INVALID_TRANSACTION = DeclineResult(JsonField.of("INVALID_TRANSACTION"))
 
-            val UNKNOWN_HOST_TIMEOUT = Result(JsonField.of("UNKNOWN_HOST_TIMEOUT"))
+            val MERCHANT_BLACKLIST = DeclineResult(JsonField.of("MERCHANT_BLACKLIST"))
 
-            val USER_TRANSACTION_LIMIT = Result(JsonField.of("USER_TRANSACTION_LIMIT"))
+            val ORIGINAL_NOT_FOUND = DeclineResult(JsonField.of("ORIGINAL_NOT_FOUND"))
 
-            fun of(value: String) = Result(JsonField.of(value))
+            val PREVIOUSLY_COMPLETED = DeclineResult(JsonField.of("PREVIOUSLY_COMPLETED"))
+
+            val SINGLE_USE_RECHARGED = DeclineResult(JsonField.of("SINGLE_USE_RECHARGED"))
+
+            val SWITCH_INOPERATIVE_ADVICE = DeclineResult(JsonField.of("SWITCH_INOPERATIVE_ADVICE"))
+
+            val UNAUTHORIZED_MERCHANT = DeclineResult(JsonField.of("UNAUTHORIZED_MERCHANT"))
+
+            val UNKNOWN_HOST_TIMEOUT = DeclineResult(JsonField.of("UNKNOWN_HOST_TIMEOUT"))
+
+            val USER_TRANSACTION_LIMIT = DeclineResult(JsonField.of("USER_TRANSACTION_LIMIT"))
+
+            fun of(value: String) = DeclineResult(JsonField.of(value))
         }
 
         enum class Known {
+            ACCOUNT_STATE_TRANSACTION_FAIL,
             APPROVED,
             BANK_CONNECTION_ERROR,
             BANK_NOT_VERIFIED,
@@ -3830,11 +3841,16 @@ private constructor(
             CARD_PAUSED,
             DECLINED,
             FRAUD_ADVICE,
+            IGNORED_TTL_EXPIRY,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
-            INSUFFICIENT_FUNDS,
             INVALID_CARD_DETAILS,
+            INSUFFICIENT_FUNDS,
+            INSUFFICIENT_FUNDS_PRELOAD,
+            INVALID_TRANSACTION,
             MERCHANT_BLACKLIST,
+            ORIGINAL_NOT_FOUND,
+            PREVIOUSLY_COMPLETED,
             SINGLE_USE_RECHARGED,
             SWITCH_INOPERATIVE_ADVICE,
             UNAUTHORIZED_MERCHANT,
@@ -3843,6 +3859,7 @@ private constructor(
         }
 
         enum class Value {
+            ACCOUNT_STATE_TRANSACTION_FAIL,
             APPROVED,
             BANK_CONNECTION_ERROR,
             BANK_NOT_VERIFIED,
@@ -3850,11 +3867,16 @@ private constructor(
             CARD_PAUSED,
             DECLINED,
             FRAUD_ADVICE,
+            IGNORED_TTL_EXPIRY,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
-            INSUFFICIENT_FUNDS,
             INVALID_CARD_DETAILS,
+            INSUFFICIENT_FUNDS,
+            INSUFFICIENT_FUNDS_PRELOAD,
+            INVALID_TRANSACTION,
             MERCHANT_BLACKLIST,
+            ORIGINAL_NOT_FOUND,
+            PREVIOUSLY_COMPLETED,
             SINGLE_USE_RECHARGED,
             SWITCH_INOPERATIVE_ADVICE,
             UNAUTHORIZED_MERCHANT,
@@ -3865,6 +3887,7 @@ private constructor(
 
         fun value(): Value =
             when (this) {
+                ACCOUNT_STATE_TRANSACTION_FAIL -> Value.ACCOUNT_STATE_TRANSACTION_FAIL
                 APPROVED -> Value.APPROVED
                 BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
                 BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
@@ -3872,11 +3895,16 @@ private constructor(
                 CARD_PAUSED -> Value.CARD_PAUSED
                 DECLINED -> Value.DECLINED
                 FRAUD_ADVICE -> Value.FRAUD_ADVICE
+                IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
                 INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Value.INCORRECT_PIN
-                INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
                 INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
+                INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                INSUFFICIENT_FUNDS_PRELOAD -> Value.INSUFFICIENT_FUNDS_PRELOAD
+                INVALID_TRANSACTION -> Value.INVALID_TRANSACTION
                 MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
+                ORIGINAL_NOT_FOUND -> Value.ORIGINAL_NOT_FOUND
+                PREVIOUSLY_COMPLETED -> Value.PREVIOUSLY_COMPLETED
                 SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
                 SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
                 UNAUTHORIZED_MERCHANT -> Value.UNAUTHORIZED_MERCHANT
@@ -3887,6 +3915,7 @@ private constructor(
 
         fun known(): Known =
             when (this) {
+                ACCOUNT_STATE_TRANSACTION_FAIL -> Known.ACCOUNT_STATE_TRANSACTION_FAIL
                 APPROVED -> Known.APPROVED
                 BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
                 BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
@@ -3894,17 +3923,22 @@ private constructor(
                 CARD_PAUSED -> Known.CARD_PAUSED
                 DECLINED -> Known.DECLINED
                 FRAUD_ADVICE -> Known.FRAUD_ADVICE
+                IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
                 INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Known.INCORRECT_PIN
-                INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
                 INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
+                INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                INSUFFICIENT_FUNDS_PRELOAD -> Known.INSUFFICIENT_FUNDS_PRELOAD
+                INVALID_TRANSACTION -> Known.INVALID_TRANSACTION
                 MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
+                ORIGINAL_NOT_FOUND -> Known.ORIGINAL_NOT_FOUND
+                PREVIOUSLY_COMPLETED -> Known.PREVIOUSLY_COMPLETED
                 SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
                 SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
                 UNAUTHORIZED_MERCHANT -> Known.UNAUTHORIZED_MERCHANT
                 UNKNOWN_HOST_TIMEOUT -> Known.UNKNOWN_HOST_TIMEOUT
                 USER_TRANSACTION_LIMIT -> Known.USER_TRANSACTION_LIMIT
-                else -> throw LithicInvalidDataException("Unknown Result: $value")
+                else -> throw LithicInvalidDataException("Unknown DeclineResult: $value")
             }
 
         fun asString(): String = _value().asStringOrThrow()
@@ -4187,7 +4221,7 @@ private constructor(
         private val created: JsonField<OffsetDateTime>,
         private val detailedResults: JsonField<List<DetailedResult>>,
         private val effectivePolarity: JsonField<EffectivePolarity>,
-        private val result: JsonField<Result>,
+        private val result: JsonField<DeclineResult>,
         private val token: JsonField<String>,
         private val type: JsonField<Type>,
         private val additionalProperties: Map<String, JsonValue>,
@@ -4210,8 +4244,7 @@ private constructor(
         fun effectivePolarity(): EffectivePolarity =
             effectivePolarity.getRequired("effective_polarity")
 
-        /** Result of the transaction. */
-        fun result(): Result = result.getRequired("result")
+        fun result(): DeclineResult = result.getRequired("result")
 
         /** Transaction event identifier. */
         fun token(): String = token.getRequired("token")
@@ -4234,7 +4267,6 @@ private constructor(
         @ExcludeMissing
         fun _effectivePolarity() = effectivePolarity
 
-        /** Result of the transaction. */
         @JsonProperty("result") @ExcludeMissing fun _result() = result
 
         /** Transaction event identifier. */
@@ -4275,7 +4307,7 @@ private constructor(
             private var created: JsonField<OffsetDateTime> = JsonMissing.of()
             private var detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of()
             private var effectivePolarity: JsonField<EffectivePolarity> = JsonMissing.of()
-            private var result: JsonField<Result> = JsonMissing.of()
+            private var result: JsonField<DeclineResult> = JsonMissing.of()
             private var token: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -4336,13 +4368,11 @@ private constructor(
                 this.effectivePolarity = effectivePolarity
             }
 
-            /** Result of the transaction. */
-            fun result(result: Result) = result(JsonField.of(result))
+            fun result(result: DeclineResult) = result(JsonField.of(result))
 
-            /** Result of the transaction. */
             @JsonProperty("result")
             @ExcludeMissing
-            fun result(result: JsonField<Result>) = apply { this.result = result }
+            fun result(result: JsonField<DeclineResult>) = apply { this.result = result }
 
             /** Transaction event identifier. */
             fun token(token: String) = token(JsonField.of(token))
@@ -5412,7 +5442,7 @@ private constructor(
             fun asString(): String = _value().asStringOrThrow()
         }
 
-        class Result
+        class DeclineResult
         @JsonCreator
         private constructor(
             private val value: JsonField<String>,
@@ -5425,7 +5455,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Result && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is DeclineResult && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -5435,41 +5465,55 @@ private constructor(
             companion object {
 
                 val ACCOUNT_STATE_TRANSACTION_FAIL =
-                    Result(JsonField.of("ACCOUNT_STATE_TRANSACTION_FAIL"))
+                    DeclineResult(JsonField.of("ACCOUNT_STATE_TRANSACTION_FAIL"))
 
-                val APPROVED = Result(JsonField.of("APPROVED"))
+                val APPROVED = DeclineResult(JsonField.of("APPROVED"))
 
-                val BANK_CONNECTION_ERROR = Result(JsonField.of("BANK_CONNECTION_ERROR"))
+                val BANK_CONNECTION_ERROR = DeclineResult(JsonField.of("BANK_CONNECTION_ERROR"))
 
-                val BANK_NOT_VERIFIED = Result(JsonField.of("BANK_NOT_VERIFIED"))
+                val BANK_NOT_VERIFIED = DeclineResult(JsonField.of("BANK_NOT_VERIFIED"))
 
-                val CARD_CLOSED = Result(JsonField.of("CARD_CLOSED"))
+                val CARD_CLOSED = DeclineResult(JsonField.of("CARD_CLOSED"))
 
-                val CARD_PAUSED = Result(JsonField.of("CARD_PAUSED"))
+                val CARD_PAUSED = DeclineResult(JsonField.of("CARD_PAUSED"))
 
-                val FRAUD_ADVICE = Result(JsonField.of("FRAUD_ADVICE"))
+                val DECLINED = DeclineResult(JsonField.of("DECLINED"))
 
-                val INACTIVE_ACCOUNT = Result(JsonField.of("INACTIVE_ACCOUNT"))
+                val FRAUD_ADVICE = DeclineResult(JsonField.of("FRAUD_ADVICE"))
 
-                val INCORRECT_PIN = Result(JsonField.of("INCORRECT_PIN"))
+                val IGNORED_TTL_EXPIRY = DeclineResult(JsonField.of("IGNORED_TTL_EXPIRY"))
 
-                val INVALID_CARD_DETAILS = Result(JsonField.of("INVALID_CARD_DETAILS"))
+                val INACTIVE_ACCOUNT = DeclineResult(JsonField.of("INACTIVE_ACCOUNT"))
 
-                val INSUFFICIENT_FUNDS = Result(JsonField.of("INSUFFICIENT_FUNDS"))
+                val INCORRECT_PIN = DeclineResult(JsonField.of("INCORRECT_PIN"))
 
-                val MERCHANT_BLACKLIST = Result(JsonField.of("MERCHANT_BLACKLIST"))
+                val INVALID_CARD_DETAILS = DeclineResult(JsonField.of("INVALID_CARD_DETAILS"))
 
-                val SINGLE_USE_RECHARGED = Result(JsonField.of("SINGLE_USE_RECHARGED"))
+                val INSUFFICIENT_FUNDS = DeclineResult(JsonField.of("INSUFFICIENT_FUNDS"))
 
-                val SWITCH_INOPERATIVE_ADVICE = Result(JsonField.of("SWITCH_INOPERATIVE_ADVICE"))
+                val INSUFFICIENT_FUNDS_PRELOAD =
+                    DeclineResult(JsonField.of("INSUFFICIENT_FUNDS_PRELOAD"))
 
-                val UNAUTHORIZED_MERCHANT = Result(JsonField.of("UNAUTHORIZED_MERCHANT"))
+                val INVALID_TRANSACTION = DeclineResult(JsonField.of("INVALID_TRANSACTION"))
 
-                val UNKNOWN_HOST_TIMEOUT = Result(JsonField.of("UNKNOWN_HOST_TIMEOUT"))
+                val MERCHANT_BLACKLIST = DeclineResult(JsonField.of("MERCHANT_BLACKLIST"))
 
-                val USER_TRANSACTION_LIMIT = Result(JsonField.of("USER_TRANSACTION_LIMIT"))
+                val ORIGINAL_NOT_FOUND = DeclineResult(JsonField.of("ORIGINAL_NOT_FOUND"))
 
-                fun of(value: String) = Result(JsonField.of(value))
+                val PREVIOUSLY_COMPLETED = DeclineResult(JsonField.of("PREVIOUSLY_COMPLETED"))
+
+                val SINGLE_USE_RECHARGED = DeclineResult(JsonField.of("SINGLE_USE_RECHARGED"))
+
+                val SWITCH_INOPERATIVE_ADVICE =
+                    DeclineResult(JsonField.of("SWITCH_INOPERATIVE_ADVICE"))
+
+                val UNAUTHORIZED_MERCHANT = DeclineResult(JsonField.of("UNAUTHORIZED_MERCHANT"))
+
+                val UNKNOWN_HOST_TIMEOUT = DeclineResult(JsonField.of("UNKNOWN_HOST_TIMEOUT"))
+
+                val USER_TRANSACTION_LIMIT = DeclineResult(JsonField.of("USER_TRANSACTION_LIMIT"))
+
+                fun of(value: String) = DeclineResult(JsonField.of(value))
             }
 
             enum class Known {
@@ -5479,12 +5523,18 @@ private constructor(
                 BANK_NOT_VERIFIED,
                 CARD_CLOSED,
                 CARD_PAUSED,
+                DECLINED,
                 FRAUD_ADVICE,
+                IGNORED_TTL_EXPIRY,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INVALID_CARD_DETAILS,
                 INSUFFICIENT_FUNDS,
+                INSUFFICIENT_FUNDS_PRELOAD,
+                INVALID_TRANSACTION,
                 MERCHANT_BLACKLIST,
+                ORIGINAL_NOT_FOUND,
+                PREVIOUSLY_COMPLETED,
                 SINGLE_USE_RECHARGED,
                 SWITCH_INOPERATIVE_ADVICE,
                 UNAUTHORIZED_MERCHANT,
@@ -5499,12 +5549,18 @@ private constructor(
                 BANK_NOT_VERIFIED,
                 CARD_CLOSED,
                 CARD_PAUSED,
+                DECLINED,
                 FRAUD_ADVICE,
+                IGNORED_TTL_EXPIRY,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INVALID_CARD_DETAILS,
                 INSUFFICIENT_FUNDS,
+                INSUFFICIENT_FUNDS_PRELOAD,
+                INVALID_TRANSACTION,
                 MERCHANT_BLACKLIST,
+                ORIGINAL_NOT_FOUND,
+                PREVIOUSLY_COMPLETED,
                 SINGLE_USE_RECHARGED,
                 SWITCH_INOPERATIVE_ADVICE,
                 UNAUTHORIZED_MERCHANT,
@@ -5521,12 +5577,18 @@ private constructor(
                     BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
                     CARD_CLOSED -> Value.CARD_CLOSED
                     CARD_PAUSED -> Value.CARD_PAUSED
+                    DECLINED -> Value.DECLINED
                     FRAUD_ADVICE -> Value.FRAUD_ADVICE
+                    IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
                     INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Value.INCORRECT_PIN
                     INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
                     INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                    INSUFFICIENT_FUNDS_PRELOAD -> Value.INSUFFICIENT_FUNDS_PRELOAD
+                    INVALID_TRANSACTION -> Value.INVALID_TRANSACTION
                     MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
+                    ORIGINAL_NOT_FOUND -> Value.ORIGINAL_NOT_FOUND
+                    PREVIOUSLY_COMPLETED -> Value.PREVIOUSLY_COMPLETED
                     SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
                     SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
                     UNAUTHORIZED_MERCHANT -> Value.UNAUTHORIZED_MERCHANT
@@ -5543,18 +5605,24 @@ private constructor(
                     BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
                     CARD_CLOSED -> Known.CARD_CLOSED
                     CARD_PAUSED -> Known.CARD_PAUSED
+                    DECLINED -> Known.DECLINED
                     FRAUD_ADVICE -> Known.FRAUD_ADVICE
+                    IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
                     INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Known.INCORRECT_PIN
                     INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
                     INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                    INSUFFICIENT_FUNDS_PRELOAD -> Known.INSUFFICIENT_FUNDS_PRELOAD
+                    INVALID_TRANSACTION -> Known.INVALID_TRANSACTION
                     MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
+                    ORIGINAL_NOT_FOUND -> Known.ORIGINAL_NOT_FOUND
+                    PREVIOUSLY_COMPLETED -> Known.PREVIOUSLY_COMPLETED
                     SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
                     SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
                     UNAUTHORIZED_MERCHANT -> Known.UNAUTHORIZED_MERCHANT
                     UNKNOWN_HOST_TIMEOUT -> Known.UNKNOWN_HOST_TIMEOUT
                     USER_TRANSACTION_LIMIT -> Known.USER_TRANSACTION_LIMIT
-                    else -> throw LithicInvalidDataException("Unknown Result: $value")
+                    else -> throw LithicInvalidDataException("Unknown DeclineResult: $value")
                 }
 
             fun asString(): String = _value().asStringOrThrow()
