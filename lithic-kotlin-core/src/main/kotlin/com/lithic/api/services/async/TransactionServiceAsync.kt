@@ -30,13 +30,19 @@ interface TransactionServiceAsync {
 
     fun events(): EventServiceAsync
 
-    /** Get specific card transaction. */
+    /**
+     * Get a specific card transaction. All amounts are in the smallest unit of their respective
+     * currency (e.g., cents for USD).
+     */
     suspend fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Transaction
 
-    /** List card transactions. */
+    /**
+     * List card transactions. All amounts are in the smallest unit of their respective currency
+     * (e.g., cents for USD) and inclusive of any acquirer fees.
+     */
     suspend fun list(
         params: TransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none()
