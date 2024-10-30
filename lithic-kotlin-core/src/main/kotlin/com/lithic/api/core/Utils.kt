@@ -8,13 +8,8 @@ import com.google.common.collect.Multimaps
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
 
-internal fun <T : Any> T?.getOrThrow(name: String): T {
-    if (this == null) {
-        throw LithicInvalidDataException("'${name}' is not present")
-    }
-
-    return this
-}
+internal fun <T : Any> T?.getOrThrow(name: String): T =
+    this ?: throw LithicInvalidDataException("`${name}` is not present")
 
 internal fun <T> List<T>.toUnmodifiable(): List<T> {
     if (isEmpty()) {
