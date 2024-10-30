@@ -684,6 +684,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     fun operation(): Operation? = operation.getNullable("operation")
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     fun value(): Value? = value.getNullable("value")
 
                     /**
@@ -723,6 +724,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     @JsonProperty("operation") @ExcludeMissing fun _operation() = operation
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     @JsonProperty("value") @ExcludeMissing fun _value() = value
 
                     @JsonAnyGetter
@@ -844,8 +846,10 @@ constructor(
                             this.operation = operation
                         }
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(value: Value) = value(JsonField.of(value))
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         @JsonProperty("value")
                         @ExcludeMissing
                         fun value(value: JsonField<Value>) = apply { this.value = value }
@@ -1647,6 +1651,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     fun operation(): Operation? = operation.getNullable("operation")
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     fun value(): Value? = value.getNullable("value")
 
                     /**
@@ -1686,6 +1691,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     @JsonProperty("operation") @ExcludeMissing fun _operation() = operation
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     @JsonProperty("value") @ExcludeMissing fun _value() = value
 
                     @JsonAnyGetter
@@ -1807,8 +1813,10 @@ constructor(
                             this.operation = operation
                         }
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(value: Value) = value(JsonField.of(value))
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         @JsonProperty("value")
                         @ExcludeMissing
                         fun value(value: JsonField<Value>) = apply { this.value = value }
@@ -2610,6 +2618,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     fun operation(): Operation? = operation.getNullable("operation")
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     fun value(): Value? = value.getNullable("value")
 
                     /**
@@ -2649,6 +2658,7 @@ constructor(
                     /** The operation to apply to the attribute */
                     @JsonProperty("operation") @ExcludeMissing fun _operation() = operation
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     @JsonProperty("value") @ExcludeMissing fun _value() = value
 
                     @JsonAnyGetter
@@ -2770,8 +2780,10 @@ constructor(
                             this.operation = operation
                         }
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(value: Value) = value(JsonField.of(value))
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         @JsonProperty("value")
                         @ExcludeMissing
                         fun value(value: JsonField<Value>) = apply { this.value = value }
