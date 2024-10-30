@@ -351,7 +351,7 @@ constructor(
     private constructor(
         private val accountTokens: List<String>?,
         private val type: AuthRuleType?,
-        private val parameters: AuthRuleParameters?,
+        private val parameters: Parameters?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -362,7 +362,7 @@ constructor(
         @JsonProperty("type") fun type(): AuthRuleType? = type
 
         /** Parameters for the current version of the Auth Rule */
-        @JsonProperty("parameters") fun parameters(): AuthRuleParameters? = parameters
+        @JsonProperty("parameters") fun parameters(): Parameters? = parameters
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -379,7 +379,7 @@ constructor(
 
             private var accountTokens: List<String>? = null
             private var type: AuthRuleType? = null
-            private var parameters: AuthRuleParameters? = null
+            private var parameters: Parameters? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -402,7 +402,7 @@ constructor(
 
             /** Parameters for the current version of the Auth Rule */
             @JsonProperty("parameters")
-            fun parameters(parameters: AuthRuleParameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -428,9 +428,9 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(using = AuthRuleParameters.Deserializer::class)
-        @JsonSerialize(using = AuthRuleParameters.Serializer::class)
-        class AuthRuleParameters
+        @JsonDeserialize(using = Parameters.Deserializer::class)
+        @JsonSerialize(using = Parameters.Serializer::class)
+        class Parameters
         private constructor(
             private val conditionalBlockParameters: ConditionalBlockParameters? = null,
             private val velocityLimitParams: VelocityLimitParams? = null,
@@ -466,10 +466,10 @@ constructor(
                 }
             }
 
-            fun validate(): AuthRuleParameters = apply {
+            fun validate(): Parameters = apply {
                 if (!validated) {
                     if (conditionalBlockParameters == null && velocityLimitParams == null) {
-                        throw LithicInvalidDataException("Unknown AuthRuleParameters: $_json")
+                        throw LithicInvalidDataException("Unknown Parameters: $_json")
                     }
                     conditionalBlockParameters?.validate()
                     velocityLimitParams?.validate()
@@ -482,7 +482,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleParameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
             override fun hashCode(): Int {
@@ -492,11 +492,11 @@ constructor(
             override fun toString(): String {
                 return when {
                     conditionalBlockParameters != null ->
-                        "AuthRuleParameters{conditionalBlockParameters=$conditionalBlockParameters}"
+                        "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
-                        "AuthRuleParameters{velocityLimitParams=$velocityLimitParams}"
-                    _json != null -> "AuthRuleParameters{_unknown=$_json}"
-                    else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        "Parameters{velocityLimitParams=$velocityLimitParams}"
+                    _json != null -> "Parameters{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid Parameters")
                 }
             }
 
@@ -504,10 +504,10 @@ constructor(
 
                 fun ofConditionalBlockParameters(
                     conditionalBlockParameters: ConditionalBlockParameters
-                ) = AuthRuleParameters(conditionalBlockParameters = conditionalBlockParameters)
+                ) = Parameters(conditionalBlockParameters = conditionalBlockParameters)
 
                 fun ofVelocityLimitParams(velocityLimitParams: VelocityLimitParams) =
-                    AuthRuleParameters(velocityLimitParams = velocityLimitParams)
+                    Parameters(velocityLimitParams = velocityLimitParams)
             }
 
             interface Visitor<out T> {
@@ -519,34 +519,34 @@ constructor(
                 fun visitVelocityLimitParams(velocityLimitParams: VelocityLimitParams): T
 
                 fun unknown(json: JsonValue?): T {
-                    throw LithicInvalidDataException("Unknown AuthRuleParameters: $json")
+                    throw LithicInvalidDataException("Unknown Parameters: $json")
                 }
             }
 
-            class Deserializer : BaseDeserializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
-                override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
+                override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
 
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
                         ?.let {
-                            return AuthRuleParameters(conditionalBlockParameters = it, _json = json)
+                            return Parameters(conditionalBlockParameters = it, _json = json)
                         }
                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>()) { it.validate() }
                         ?.let {
-                            return AuthRuleParameters(velocityLimitParams = it, _json = json)
+                            return Parameters(velocityLimitParams = it, _json = json)
                         }
 
-                    return AuthRuleParameters(_json = json)
+                    return Parameters(_json = json)
                 }
             }
 
-            class Serializer : BaseSerializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
-                    value: AuthRuleParameters,
+                    value: Parameters,
                     generator: JsonGenerator,
                     provider: SerializerProvider
                 ) {
@@ -556,7 +556,7 @@ constructor(
                         value.velocityLimitParams != null ->
                             generator.writeObject(value.velocityLimitParams)
                         value._json != null -> generator.writeObject(value._json)
-                        else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        else -> throw IllegalStateException("Invalid Parameters")
                     }
                 }
             }
@@ -1317,7 +1317,7 @@ constructor(
     private constructor(
         private val cardTokens: List<String>?,
         private val type: AuthRuleType?,
-        private val parameters: AuthRuleParameters?,
+        private val parameters: Parameters?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -1328,7 +1328,7 @@ constructor(
         @JsonProperty("type") fun type(): AuthRuleType? = type
 
         /** Parameters for the current version of the Auth Rule */
-        @JsonProperty("parameters") fun parameters(): AuthRuleParameters? = parameters
+        @JsonProperty("parameters") fun parameters(): Parameters? = parameters
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1345,7 +1345,7 @@ constructor(
 
             private var cardTokens: List<String>? = null
             private var type: AuthRuleType? = null
-            private var parameters: AuthRuleParameters? = null
+            private var parameters: Parameters? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(createAuthRuleRequestCardTokens: CreateAuthRuleRequestCardTokens) =
@@ -1365,7 +1365,7 @@ constructor(
 
             /** Parameters for the current version of the Auth Rule */
             @JsonProperty("parameters")
-            fun parameters(parameters: AuthRuleParameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1391,9 +1391,9 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(using = AuthRuleParameters.Deserializer::class)
-        @JsonSerialize(using = AuthRuleParameters.Serializer::class)
-        class AuthRuleParameters
+        @JsonDeserialize(using = Parameters.Deserializer::class)
+        @JsonSerialize(using = Parameters.Serializer::class)
+        class Parameters
         private constructor(
             private val conditionalBlockParameters: ConditionalBlockParameters? = null,
             private val velocityLimitParams: VelocityLimitParams? = null,
@@ -1429,10 +1429,10 @@ constructor(
                 }
             }
 
-            fun validate(): AuthRuleParameters = apply {
+            fun validate(): Parameters = apply {
                 if (!validated) {
                     if (conditionalBlockParameters == null && velocityLimitParams == null) {
-                        throw LithicInvalidDataException("Unknown AuthRuleParameters: $_json")
+                        throw LithicInvalidDataException("Unknown Parameters: $_json")
                     }
                     conditionalBlockParameters?.validate()
                     velocityLimitParams?.validate()
@@ -1445,7 +1445,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleParameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
             override fun hashCode(): Int {
@@ -1455,11 +1455,11 @@ constructor(
             override fun toString(): String {
                 return when {
                     conditionalBlockParameters != null ->
-                        "AuthRuleParameters{conditionalBlockParameters=$conditionalBlockParameters}"
+                        "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
-                        "AuthRuleParameters{velocityLimitParams=$velocityLimitParams}"
-                    _json != null -> "AuthRuleParameters{_unknown=$_json}"
-                    else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        "Parameters{velocityLimitParams=$velocityLimitParams}"
+                    _json != null -> "Parameters{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid Parameters")
                 }
             }
 
@@ -1467,10 +1467,10 @@ constructor(
 
                 fun ofConditionalBlockParameters(
                     conditionalBlockParameters: ConditionalBlockParameters
-                ) = AuthRuleParameters(conditionalBlockParameters = conditionalBlockParameters)
+                ) = Parameters(conditionalBlockParameters = conditionalBlockParameters)
 
                 fun ofVelocityLimitParams(velocityLimitParams: VelocityLimitParams) =
-                    AuthRuleParameters(velocityLimitParams = velocityLimitParams)
+                    Parameters(velocityLimitParams = velocityLimitParams)
             }
 
             interface Visitor<out T> {
@@ -1482,34 +1482,34 @@ constructor(
                 fun visitVelocityLimitParams(velocityLimitParams: VelocityLimitParams): T
 
                 fun unknown(json: JsonValue?): T {
-                    throw LithicInvalidDataException("Unknown AuthRuleParameters: $json")
+                    throw LithicInvalidDataException("Unknown Parameters: $json")
                 }
             }
 
-            class Deserializer : BaseDeserializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
-                override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
+                override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
 
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
                         ?.let {
-                            return AuthRuleParameters(conditionalBlockParameters = it, _json = json)
+                            return Parameters(conditionalBlockParameters = it, _json = json)
                         }
                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>()) { it.validate() }
                         ?.let {
-                            return AuthRuleParameters(velocityLimitParams = it, _json = json)
+                            return Parameters(velocityLimitParams = it, _json = json)
                         }
 
-                    return AuthRuleParameters(_json = json)
+                    return Parameters(_json = json)
                 }
             }
 
-            class Serializer : BaseSerializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
-                    value: AuthRuleParameters,
+                    value: Parameters,
                     generator: JsonGenerator,
                     provider: SerializerProvider
                 ) {
@@ -1519,7 +1519,7 @@ constructor(
                         value.velocityLimitParams != null ->
                             generator.writeObject(value.velocityLimitParams)
                         value._json != null -> generator.writeObject(value._json)
-                        else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        else -> throw IllegalStateException("Invalid Parameters")
                     }
                 }
             }
@@ -2280,7 +2280,7 @@ constructor(
     private constructor(
         private val programLevel: Boolean?,
         private val type: AuthRuleType?,
-        private val parameters: AuthRuleParameters?,
+        private val parameters: Parameters?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -2291,7 +2291,7 @@ constructor(
         @JsonProperty("type") fun type(): AuthRuleType? = type
 
         /** Parameters for the current version of the Auth Rule */
-        @JsonProperty("parameters") fun parameters(): AuthRuleParameters? = parameters
+        @JsonProperty("parameters") fun parameters(): Parameters? = parameters
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2308,7 +2308,7 @@ constructor(
 
             private var programLevel: Boolean? = null
             private var type: AuthRuleType? = null
-            private var parameters: AuthRuleParameters? = null
+            private var parameters: Parameters? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -2329,7 +2329,7 @@ constructor(
 
             /** Parameters for the current version of the Auth Rule */
             @JsonProperty("parameters")
-            fun parameters(parameters: AuthRuleParameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2354,9 +2354,9 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(using = AuthRuleParameters.Deserializer::class)
-        @JsonSerialize(using = AuthRuleParameters.Serializer::class)
-        class AuthRuleParameters
+        @JsonDeserialize(using = Parameters.Deserializer::class)
+        @JsonSerialize(using = Parameters.Serializer::class)
+        class Parameters
         private constructor(
             private val conditionalBlockParameters: ConditionalBlockParameters? = null,
             private val velocityLimitParams: VelocityLimitParams? = null,
@@ -2392,10 +2392,10 @@ constructor(
                 }
             }
 
-            fun validate(): AuthRuleParameters = apply {
+            fun validate(): Parameters = apply {
                 if (!validated) {
                     if (conditionalBlockParameters == null && velocityLimitParams == null) {
-                        throw LithicInvalidDataException("Unknown AuthRuleParameters: $_json")
+                        throw LithicInvalidDataException("Unknown Parameters: $_json")
                     }
                     conditionalBlockParameters?.validate()
                     velocityLimitParams?.validate()
@@ -2408,7 +2408,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleParameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
             override fun hashCode(): Int {
@@ -2418,11 +2418,11 @@ constructor(
             override fun toString(): String {
                 return when {
                     conditionalBlockParameters != null ->
-                        "AuthRuleParameters{conditionalBlockParameters=$conditionalBlockParameters}"
+                        "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
-                        "AuthRuleParameters{velocityLimitParams=$velocityLimitParams}"
-                    _json != null -> "AuthRuleParameters{_unknown=$_json}"
-                    else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        "Parameters{velocityLimitParams=$velocityLimitParams}"
+                    _json != null -> "Parameters{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid Parameters")
                 }
             }
 
@@ -2430,10 +2430,10 @@ constructor(
 
                 fun ofConditionalBlockParameters(
                     conditionalBlockParameters: ConditionalBlockParameters
-                ) = AuthRuleParameters(conditionalBlockParameters = conditionalBlockParameters)
+                ) = Parameters(conditionalBlockParameters = conditionalBlockParameters)
 
                 fun ofVelocityLimitParams(velocityLimitParams: VelocityLimitParams) =
-                    AuthRuleParameters(velocityLimitParams = velocityLimitParams)
+                    Parameters(velocityLimitParams = velocityLimitParams)
             }
 
             interface Visitor<out T> {
@@ -2445,34 +2445,34 @@ constructor(
                 fun visitVelocityLimitParams(velocityLimitParams: VelocityLimitParams): T
 
                 fun unknown(json: JsonValue?): T {
-                    throw LithicInvalidDataException("Unknown AuthRuleParameters: $json")
+                    throw LithicInvalidDataException("Unknown Parameters: $json")
                 }
             }
 
-            class Deserializer : BaseDeserializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
-                override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleParameters {
+                override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
 
                     tryDeserialize(node, jacksonTypeRef<ConditionalBlockParameters>()) {
                             it.validate()
                         }
                         ?.let {
-                            return AuthRuleParameters(conditionalBlockParameters = it, _json = json)
+                            return Parameters(conditionalBlockParameters = it, _json = json)
                         }
                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>()) { it.validate() }
                         ?.let {
-                            return AuthRuleParameters(velocityLimitParams = it, _json = json)
+                            return Parameters(velocityLimitParams = it, _json = json)
                         }
 
-                    return AuthRuleParameters(_json = json)
+                    return Parameters(_json = json)
                 }
             }
 
-            class Serializer : BaseSerializer<AuthRuleParameters>(AuthRuleParameters::class) {
+            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
-                    value: AuthRuleParameters,
+                    value: Parameters,
                     generator: JsonGenerator,
                     provider: SerializerProvider
                 ) {
@@ -2482,7 +2482,7 @@ constructor(
                         value.velocityLimitParams != null ->
                             generator.writeObject(value.velocityLimitParams)
                         value._json != null -> generator.writeObject(value._json)
-                        else -> throw IllegalStateException("Invalid AuthRuleParameters")
+                        else -> throw IllegalStateException("Invalid Parameters")
                     }
                 }
             }
