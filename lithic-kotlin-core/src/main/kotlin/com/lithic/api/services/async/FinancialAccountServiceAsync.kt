@@ -4,7 +4,9 @@ package com.lithic.api.services.async
 
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.models.FinancialAccount
+import com.lithic.api.models.FinancialAccountChargeOffParams
 import com.lithic.api.models.FinancialAccountCreateParams
+import com.lithic.api.models.FinancialAccountCreditConfig
 import com.lithic.api.models.FinancialAccountListPageAsync
 import com.lithic.api.models.FinancialAccountListParams
 import com.lithic.api.models.FinancialAccountRetrieveParams
@@ -50,4 +52,10 @@ interface FinancialAccountServiceAsync {
         params: FinancialAccountListParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): FinancialAccountListPageAsync
+
+    /** Update issuing account state to charged off */
+    suspend fun chargeOff(
+        params: FinancialAccountChargeOffParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): FinancialAccountCreditConfig
 }
