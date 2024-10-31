@@ -13,7 +13,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -509,7 +509,7 @@ private constructor(
                 amountDue,
                 interestDetails,
                 statementType,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -716,7 +716,7 @@ private constructor(
                     consecutiveFullPaymentsMade,
                     daysPastDue,
                     hasGrace,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -912,7 +912,7 @@ private constructor(
                 AmountDue(
                     amount,
                     pastDue,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1137,7 +1137,7 @@ private constructor(
                     interest,
                     cashAdvances,
                     balanceTransfers,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1408,7 +1408,7 @@ private constructor(
                     dailyBalanceAmounts,
                     minimumInterestCharged,
                     actualInterestCharged,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1515,7 +1515,7 @@ private constructor(
                         purchases,
                         cashAdvances,
                         balanceTransfers,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 

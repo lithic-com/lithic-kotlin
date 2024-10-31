@@ -7,7 +7,7 @@ import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.models.*
 import java.time.LocalDate
@@ -54,7 +54,7 @@ constructor(
         this.startingAfter?.let { params.put("starting_after", listOf(it.toString())) }
         this.tokenizationChannel?.let { params.put("tokenization_channel", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        return params.toImmutable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -197,8 +197,8 @@ constructor(
                 pageSize,
                 startingAfter,
                 tokenizationChannel,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 
