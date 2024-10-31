@@ -11,7 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = TransactionSimulateAuthorizationResponse.Builder::class)
@@ -121,7 +121,7 @@ private constructor(
             TransactionSimulateAuthorizationResponse(
                 debuggingRequestId,
                 token,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 

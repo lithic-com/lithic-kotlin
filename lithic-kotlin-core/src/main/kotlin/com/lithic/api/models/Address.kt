@@ -11,7 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = Address.Builder::class)
@@ -218,7 +218,7 @@ private constructor(
                 country,
                 postalCode,
                 state,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 

@@ -13,7 +13,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -740,17 +740,17 @@ private constructor(
                 verificationApplication,
                 individual,
                 businessEntity,
-                beneficialOwnerEntities.map { it.toUnmodifiable() },
-                beneficialOwnerIndividuals.map { it.toUnmodifiable() },
+                beneficialOwnerEntities.map { it.toImmutable() },
+                beneficialOwnerIndividuals.map { it.toImmutable() },
                 controlPerson,
                 natureOfBusiness,
                 websiteUrl,
                 email,
                 phoneNumber,
                 status,
-                statusReasons.map { it.toUnmodifiable() },
-                requiredDocuments.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
+                statusReasons.map { it.toImmutable() },
+                requiredDocuments.map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -967,8 +967,8 @@ private constructor(
                     governmentId,
                     legalBusinessName,
                     parentCompany,
-                    phoneNumbers.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    phoneNumbers.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1179,7 +1179,7 @@ private constructor(
                         country,
                         postalCode,
                         state,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1456,7 +1456,7 @@ private constructor(
                     lastName,
                     phoneNumber,
                     governmentId,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1667,7 +1667,7 @@ private constructor(
                         country,
                         postalCode,
                         state,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2273,9 +2273,9 @@ private constructor(
                 VerificationApplication(
                     created,
                     status,
-                    statusReasons.map { it.toUnmodifiable() },
+                    statusReasons.map { it.toImmutable() },
                     updated,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

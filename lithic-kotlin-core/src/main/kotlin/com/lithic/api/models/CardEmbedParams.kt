@@ -3,7 +3,7 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.models.*
 import java.util.Objects
 
@@ -24,7 +24,7 @@ constructor(
         this.embedRequest.let { params.put("embed_request", listOf(it.toString())) }
         this.hmac.let { params.put("hmac", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        return params.toImmutable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -120,8 +120,8 @@ constructor(
             CardEmbedParams(
                 checkNotNull(embedRequest) { "`embedRequest` is required but was not set" },
                 checkNotNull(hmac) { "`hmac` is required but was not set" },
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 }
