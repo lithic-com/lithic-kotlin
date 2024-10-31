@@ -11,7 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = ResponderEndpointCreateResponse.Builder::class)
@@ -82,7 +82,7 @@ private constructor(
         }
 
         fun build(): ResponderEndpointCreateResponse =
-            ResponderEndpointCreateResponse(enrolled, additionalProperties.toUnmodifiable())
+            ResponderEndpointCreateResponse(enrolled, additionalProperties.toImmutable())
     }
 
     override fun equals(other: Any?): Boolean {

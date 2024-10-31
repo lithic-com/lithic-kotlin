@@ -13,7 +13,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -699,8 +699,8 @@ private constructor(
         fun build(): AccountHolder =
             AccountHolder(
                 accountToken,
-                beneficialOwnerEntities.map { it.toUnmodifiable() },
-                beneficialOwnerIndividuals.map { it.toUnmodifiable() },
+                beneficialOwnerEntities.map { it.toImmutable() },
+                beneficialOwnerIndividuals.map { it.toImmutable() },
                 businessAccountToken,
                 businessEntity,
                 controlPerson,
@@ -712,13 +712,13 @@ private constructor(
                 natureOfBusiness,
                 phoneNumber,
                 status,
-                statusReasons.map { it.toUnmodifiable() },
+                statusReasons.map { it.toImmutable() },
                 token,
                 userType,
                 verificationApplication,
-                requiredDocuments.map { it.toUnmodifiable() },
+                requiredDocuments.map { it.toImmutable() },
                 websiteUrl,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -956,9 +956,9 @@ private constructor(
                     governmentId,
                     legalBusinessName,
                     parentCompany,
-                    phoneNumbers.map { it.toUnmodifiable() },
+                    phoneNumbers.map { it.toImmutable() },
                     entityToken,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1175,7 +1175,7 @@ private constructor(
                     lastName,
                     phoneNumber,
                     entityToken,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1661,9 +1661,9 @@ private constructor(
                 AccountHolderVerificationApplication(
                     created,
                     status,
-                    statusReasons.map { it.toUnmodifiable() },
+                    statusReasons.map { it.toImmutable() },
                     updated,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

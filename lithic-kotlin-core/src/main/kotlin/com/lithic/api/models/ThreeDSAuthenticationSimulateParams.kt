@@ -12,7 +12,7 @@ import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.models.*
 import java.util.Objects
@@ -141,7 +141,7 @@ constructor(
                     checkNotNull(pan) { "`pan` is required but was not set" },
                     checkNotNull(transaction) { "`transaction` is required but was not set" },
                     cardExpiryCheck,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -292,9 +292,9 @@ constructor(
                 checkNotNull(pan) { "`pan` is required but was not set" },
                 checkNotNull(transaction) { "`transaction` is required but was not set" },
                 cardExpiryCheck,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -399,7 +399,7 @@ constructor(
                     checkNotNull(id) { "`id` is required but was not set" },
                     checkNotNull(mcc) { "`mcc` is required but was not set" },
                     checkNotNull(name) { "`name` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -487,7 +487,7 @@ constructor(
                 Transaction(
                     checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(currency) { "`currency` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
