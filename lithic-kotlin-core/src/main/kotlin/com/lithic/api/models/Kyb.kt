@@ -13,7 +13,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
@@ -414,8 +414,8 @@ private constructor(
 
         fun build(): Kyb =
             Kyb(
-                beneficialOwnerEntities.map { it.toUnmodifiable() },
-                beneficialOwnerIndividuals.map { it.toUnmodifiable() },
+                beneficialOwnerEntities.map { it.toImmutable() },
+                beneficialOwnerIndividuals.map { it.toImmutable() },
                 businessEntity,
                 controlPerson,
                 externalId,
@@ -424,7 +424,7 @@ private constructor(
                 tosTimestamp,
                 websiteUrl,
                 workflow,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -641,8 +641,8 @@ private constructor(
                     governmentId,
                     legalBusinessName,
                     parentCompany,
-                    phoneNumbers.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    phoneNumbers.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -899,7 +899,7 @@ private constructor(
                     governmentId,
                     lastName,
                     phoneNumber,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

@@ -11,7 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
-import com.lithic.api.core.toUnmodifiable
+import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = AuthStreamSecret.Builder::class)
@@ -80,8 +80,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): AuthStreamSecret =
-            AuthStreamSecret(secret, additionalProperties.toUnmodifiable())
+        fun build(): AuthStreamSecret = AuthStreamSecret(secret, additionalProperties.toImmutable())
     }
 
     override fun equals(other: Any?): Boolean {
