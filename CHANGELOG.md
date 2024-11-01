@@ -1,5 +1,73 @@
 # Changelog
 
+## 0.69.0 (2024-11-01)
+
+Full Changelog: [v0.68.0...v0.69.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.68.0...v0.69.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** rename some union classes ([#350](https://github.com/lithic-com/lithic-kotlin/issues/350))
+
+### Features
+
+* **api:** add `interest_details` properties to LoanTapes ([#340](https://github.com/lithic-com/lithic-kotlin/issues/340)) ([8cd61db](https://github.com/lithic-com/lithic-kotlin/commit/8cd61db48bfb30be01dd45a9b6eced94a5876ed8))
+* **api:** removes `transfer_transaction.created` webhook and updates to VerificationApplication ([#332](https://github.com/lithic-com/lithic-kotlin/issues/332)) ([7646708](https://github.com/lithic-com/lithic-kotlin/commit/7646708cdf295bcd06fdd5c6291a724de915518f))
+* **api:** updates ([#347](https://github.com/lithic-com/lithic-kotlin/issues/347)) ([75b8c37](https://github.com/lithic-com/lithic-kotlin/commit/75b8c3791da0494ef9c13c087c4f83fa71dd1ec6))
+* **client:** add `Headers` class ([#358](https://github.com/lithic-com/lithic-kotlin/issues/358)) ([e2755bc](https://github.com/lithic-com/lithic-kotlin/commit/e2755bc95f68121cab9ec0ecff50a9bdf242c85e))
+* **client:** add `User-Agent` header ([#345](https://github.com/lithic-com/lithic-kotlin/issues/345)) ([9f537ed](https://github.com/lithic-com/lithic-kotlin/commit/9f537ed560f4b2361e370c8d8473b1ad397516b6))
+* **client:** clean up resource leaks when the resource becomes phantom reachable ([#348](https://github.com/lithic-com/lithic-kotlin/issues/348)) ([2fd7669](https://github.com/lithic-com/lithic-kotlin/commit/2fd76692053c8e6eb6b88c037eb17a366b577487))
+* **client:** set `X-Stainless-Runtime` header ([#344](https://github.com/lithic-com/lithic-kotlin/issues/344)) ([3865552](https://github.com/lithic-com/lithic-kotlin/commit/3865552aa48f3206c3d2ad9ef80d5270582d286b))
+* **client:** support union discriminators in deserialization ([#328](https://github.com/lithic-com/lithic-kotlin/issues/328)) ([0534fed](https://github.com/lithic-com/lithic-kotlin/commit/0534fed2b24678ea99671e5041f5379ccf096221))
+
+
+### Bug Fixes
+
+* **client:** accidental double-wrapping with `RetryingHttpClient` ([#346](https://github.com/lithic-com/lithic-kotlin/issues/346)) ([2825bb9](https://github.com/lithic-com/lithic-kotlin/commit/2825bb9c6f393758a3b51586ec69bf9ea0a22363))
+* **client:** ensure constructed objects are immutable ([#356](https://github.com/lithic-com/lithic-kotlin/issues/356)) ([8f95fce](https://github.com/lithic-com/lithic-kotlin/commit/8f95fce015416d106ef90d8234129885abc71401))
+* **client:** implement `hashCode` for `IsMissing` ([#341](https://github.com/lithic-com/lithic-kotlin/issues/341)) ([a871c61](https://github.com/lithic-com/lithic-kotlin/commit/a871c61d5932254a415970d3ab6e595059447159))
+* **client:** remove `@JvmStatic` from error ([#354](https://github.com/lithic-com/lithic-kotlin/issues/354)) ([a753c44](https://github.com/lithic-com/lithic-kotlin/commit/a753c4496350d48b211edb872e4db453c5771a70))
+* **internal:** remove unnecessary error handlers ([#327](https://github.com/lithic-com/lithic-kotlin/issues/327)) ([26e72f3](https://github.com/lithic-com/lithic-kotlin/commit/26e72f33e7ccf0b5c8e910a41ebc75729fe6b701))
+* merge conflicts ([#360](https://github.com/lithic-com/lithic-kotlin/issues/360)) ([b9e444a](https://github.com/lithic-com/lithic-kotlin/commit/b9e444a6e687414d7b61713cb0d2eb57284a7de3))
+
+
+### Chores
+
+* **api:** add `PIN_BLOCKED` to `detailed_results` property on Event ([#342](https://github.com/lithic-com/lithic-kotlin/issues/342)) ([5667848](https://github.com/lithic-com/lithic-kotlin/commit/56678481b9b03ceb2f84d0c604c546f45304e1dd))
+* **api:** adds `charge_off` functionality to FinancialAccounts ([#351](https://github.com/lithic-com/lithic-kotlin/issues/351)) ([1bf0ec1](https://github.com/lithic-com/lithic-kotlin/commit/1bf0ec1d1fabb366ed595e8f65eed7798dfafd7f))
+* **api:** adds new result types to Transactions and Events ([#343](https://github.com/lithic-com/lithic-kotlin/issues/343)) ([c3fddaf](https://github.com/lithic-com/lithic-kotlin/commit/c3fddaf87ffd1995f6b616d84454102759834176))
+* **docs:** updates to documentation for V2 AuthRules ([#349](https://github.com/lithic-com/lithic-kotlin/issues/349)) ([0f6a69b](https://github.com/lithic-com/lithic-kotlin/commit/0f6a69b7ea3303a4165fda64cabc625cc97b7143))
+* **internal:** delete unused function ([#353](https://github.com/lithic-com/lithic-kotlin/issues/353)) ([7aaa905](https://github.com/lithic-com/lithic-kotlin/commit/7aaa905895c3cd860b6512e4437b88fa69dc94d3))
+* **internal:** omit unnecessary code ([#326](https://github.com/lithic-com/lithic-kotlin/issues/326)) ([89bb442](https://github.com/lithic-com/lithic-kotlin/commit/89bb44292729794d196571bdf231bee71e9a1308))
+* **internal:** remove empty test files ([#331](https://github.com/lithic-com/lithic-kotlin/issues/331)) ([2d660ab](https://github.com/lithic-com/lithic-kotlin/commit/2d660abbaad2ab01f0eaf2d12b2fd2da8d772497))
+* **internal:** remove unnecessary `[@file](https://github.com/file):Suppress("OVERLOADS_INTERFACE")` ([#334](https://github.com/lithic-com/lithic-kotlin/issues/334)) ([f75a999](https://github.com/lithic-com/lithic-kotlin/commit/f75a999dd8fb409e3ee0ece6669de462146c42aa))
+* **internal:** remove unnecessary `[@file](https://github.com/file):Suppress("OVERLOADS_INTERFACE")` ([#338](https://github.com/lithic-com/lithic-kotlin/issues/338)) ([cb2ccf3](https://github.com/lithic-com/lithic-kotlin/commit/cb2ccf3a0ef83094a987600d79f6095f0dc04577))
+* **internal:** remove useless `[@file](https://github.com/file):JvmSynthetic` ([#337](https://github.com/lithic-com/lithic-kotlin/issues/337)) ([954c80c](https://github.com/lithic-com/lithic-kotlin/commit/954c80c5c29a4be4175c4a58b2b0b469c902272e))
+
+
+### Documentation
+
+* add docstrings ([#355](https://github.com/lithic-com/lithic-kotlin/issues/355)) ([9eeab77](https://github.com/lithic-com/lithic-kotlin/commit/9eeab77d798b6f75b19997a8d8a486afc90c74f0))
+
+
+### Styles
+
+* **client:** make toString methods consistent ([#330](https://github.com/lithic-com/lithic-kotlin/issues/330)) ([d1caec0](https://github.com/lithic-com/lithic-kotlin/commit/d1caec0522b94c273beb53642016d10de3286c02))
+* **client:** rename some union classes ([#350](https://github.com/lithic-com/lithic-kotlin/issues/350)) ([ee5d02e](https://github.com/lithic-com/lithic-kotlin/commit/ee5d02ecc3f29ab6923eb36671314c7184f3f494))
+* **internal:** improve `OkHttpClient` formatting ([#335](https://github.com/lithic-com/lithic-kotlin/issues/335)) ([e77faca](https://github.com/lithic-com/lithic-kotlin/commit/e77faca514850a4a5a780d19554aefec626d1533))
+* **internal:** improve `RetryingHttpClient` formatting ([#339](https://github.com/lithic-com/lithic-kotlin/issues/339)) ([600591d](https://github.com/lithic-com/lithic-kotlin/commit/600591d6eef4c89f01caa7ab4f3e9aaf219aa02a))
+* **internal:** improve terseness of handlers ([#321](https://github.com/lithic-com/lithic-kotlin/issues/321)) ([e69f47b](https://github.com/lithic-com/lithic-kotlin/commit/e69f47b54c20edd80b663b990f8b172c3c6b9384))
+* **internal:** improve terseness of Properties.kt ([#323](https://github.com/lithic-com/lithic-kotlin/issues/323)) ([3cf3952](https://github.com/lithic-com/lithic-kotlin/commit/3cf39525d1d7b34209db1edf4551a05305589e26))
+* **internal:** make `getOrThrow` terse and consistent ([#352](https://github.com/lithic-com/lithic-kotlin/issues/352)) ([e642d4e](https://github.com/lithic-com/lithic-kotlin/commit/e642d4ee487054b09a7b0861fba111ffd0efb6f5))
+* **internal:** move Handlers.kt and HttpRequestBodies.kt to core ([#324](https://github.com/lithic-com/lithic-kotlin/issues/324)) ([e02eea0](https://github.com/lithic-com/lithic-kotlin/commit/e02eea0269df2f72c5af45dc1f9541c149d1f997))
+* **internal:** simplify client build method ([#336](https://github.com/lithic-com/lithic-kotlin/issues/336)) ([92ddfe9](https://github.com/lithic-com/lithic-kotlin/commit/92ddfe90bd7b9506f1fbdad47d1636fa8a5e13c0))
+* **internal:** update comment formatting ([#333](https://github.com/lithic-com/lithic-kotlin/issues/333)) ([2b0e988](https://github.com/lithic-com/lithic-kotlin/commit/2b0e9882faaa0b232446816a02044e657ec4f3d7))
+* **internal:** use `if` and `if-else` instead of `when` idiomatically ([#329](https://github.com/lithic-com/lithic-kotlin/issues/329)) ([44e2586](https://github.com/lithic-com/lithic-kotlin/commit/44e2586f02d4e4716269984afe837909a5e5acb0))
+
+
+### Refactors
+
+* **internal:** polish `ClientOptions` ([#357](https://github.com/lithic-com/lithic-kotlin/issues/357)) ([7cdb62b](https://github.com/lithic-com/lithic-kotlin/commit/7cdb62bf9f5b8530f77f2cba026550d318b8b160))
+
 ## 0.68.0 (2024-10-11)
 
 Full Changelog: [v0.67.0...v0.68.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.67.0...v0.68.0)
