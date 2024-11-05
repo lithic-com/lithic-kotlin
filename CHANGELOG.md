@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.70.0 (2024-11-05)
+
+Full Changelog: [v0.69.0...v0.70.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.69.0...v0.70.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** removes AuthRules V1 ([#367](https://github.com/lithic-com/lithic-kotlin/issues/367))
+* **client:** add/rename methods for headers/query params ([#365](https://github.com/lithic-com/lithic-kotlin/issues/365))
+* **client:** rename header and query params builder methods ([#364](https://github.com/lithic-com/lithic-kotlin/issues/364))
+
+### Features
+
+* **api:** removes AuthRules V1 ([#367](https://github.com/lithic-com/lithic-kotlin/issues/367)) ([e975983](https://github.com/lithic-com/lithic-kotlin/commit/e9759839564d4a4111d42623d74a86d1283c4fef))
+* **client:** add `QueryParams` class ([#361](https://github.com/lithic-com/lithic-kotlin/issues/361)) ([bf72ea4](https://github.com/lithic-com/lithic-kotlin/commit/bf72ea41daeed68ce26792c3c47374225a72d956))
+* **client:** add/rename methods for headers/query params ([#365](https://github.com/lithic-com/lithic-kotlin/issues/365)) ([d2ab9bc](https://github.com/lithic-com/lithic-kotlin/commit/d2ab9bc9b6776ccba628d3f1062efd9a5903fb8b))
+* **client:** propagate headers/query params methods to client builders ([#363](https://github.com/lithic-com/lithic-kotlin/issues/363)) ([9d140e6](https://github.com/lithic-com/lithic-kotlin/commit/9d140e6a8ab6ce05f7742fda1c54fd27c53781be))
+
+
+### Refactors
+
+* **client:** http request methods ([d165239](https://github.com/lithic-com/lithic-kotlin/commit/d165239ce1ab3fe494059805372275e7bf3484d2))
+* **client:** rename header and query params builder methods ([#364](https://github.com/lithic-com/lithic-kotlin/issues/364)) ([3e9ec4f](https://github.com/lithic-com/lithic-kotlin/commit/3e9ec4fb636d94fc65eb1739f4b83f4f8e4279fb))
+
 ## 0.69.0 (2024-11-01)
 
 Full Changelog: [v0.68.0...v0.69.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.68.0...v0.69.0)
