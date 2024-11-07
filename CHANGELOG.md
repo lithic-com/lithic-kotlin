@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.71.0 (2024-11-07)
+
+Full Changelog: [v0.70.0...v0.71.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.70.0...v0.71.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** replace multimaps with custom types ([#370](https://github.com/lithic-com/lithic-kotlin/issues/370))
+
+### Features
+
+* **client:** additional builder setters for error class ([2920bb6](https://github.com/lithic-com/lithic-kotlin/commit/2920bb6cfc135107d90b78c2b949549abef1f915))
+* **client:** more additional body param setters ([#372](https://github.com/lithic-com/lithic-kotlin/issues/372)) ([31ba9fb](https://github.com/lithic-com/lithic-kotlin/commit/31ba9fb8827af9142512a1a4c748a8bafee4a527))
+* **client:** replace multimaps with custom types ([#370](https://github.com/lithic-com/lithic-kotlin/issues/370)) ([32d088e](https://github.com/lithic-com/lithic-kotlin/commit/32d088e500679cd4250fdd02524b9ff47da4c345))
+
+
+### Bug Fixes
+
+* **client:** error class `toBuilder` not copying fields ([#373](https://github.com/lithic-com/lithic-kotlin/issues/373)) ([2920bb6](https://github.com/lithic-com/lithic-kotlin/commit/2920bb6cfc135107d90b78c2b949549abef1f915))
+* guava missing errors ([#374](https://github.com/lithic-com/lithic-kotlin/issues/374)) ([c1979a7](https://github.com/lithic-com/lithic-kotlin/commit/c1979a720513549a6208a6c3cabf3a16408e4230))
+
+
+### Chores
+
+* **api:** adds replacement_account_token to Card create parameters ([#368](https://github.com/lithic-com/lithic-kotlin/issues/368)) ([2afcb7a](https://github.com/lithic-com/lithic-kotlin/commit/2afcb7a134cb70a267a87832a53c39952c205580))
+
 ## 0.70.0 (2024-11-05)
 
 Full Changelog: [v0.69.0...v0.70.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.69.0...v0.70.0)
