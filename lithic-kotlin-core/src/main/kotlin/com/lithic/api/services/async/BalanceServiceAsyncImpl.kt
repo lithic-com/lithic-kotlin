@@ -25,7 +25,7 @@ constructor(
         jsonHandler<BalanceListPageAsync.Response>(clientOptions.jsonMapper)
             .withErrorHandler(errorHandler)
 
-    /** Get the balances for a program or a given end-user account */
+    /** Get the balances for a program, business, or a given end-user account */
     override suspend fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions
