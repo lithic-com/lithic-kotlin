@@ -8,7 +8,7 @@ import com.lithic.api.models.BalanceListParams
 
 interface BalanceServiceAsync {
 
-    /** Get the balances for a program or a given end-user account */
+    /** Get the balances for a program, business, or a given end-user account */
     suspend fun list(
         params: BalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none()

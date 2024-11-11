@@ -19,6 +19,7 @@ class BalanceListParams
 constructor(
     private val accountToken: String?,
     private val balanceDate: OffsetDateTime?,
+    private val businessAccountToken: String?,
     private val financialAccountType: FinancialAccountType?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -27,6 +28,8 @@ constructor(
     fun accountToken(): String? = accountToken
 
     fun balanceDate(): OffsetDateTime? = balanceDate
+
+    fun businessAccountToken(): String? = businessAccountToken
 
     fun financialAccountType(): FinancialAccountType? = financialAccountType
 
@@ -40,6 +43,9 @@ constructor(
                 "balance_date",
                 listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
             )
+        }
+        this.businessAccountToken?.let {
+            queryParams.put("business_account_token", listOf(it.toString()))
         }
         this.financialAccountType?.let {
             queryParams.put("financial_account_type", listOf(it.toString()))
@@ -57,15 +63,15 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceListParams && this.accountToken == other.accountToken && this.balanceDate == other.balanceDate && this.financialAccountType == other.financialAccountType && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BalanceListParams && this.accountToken == other.accountToken && this.balanceDate == other.balanceDate && this.businessAccountToken == other.businessAccountToken && this.financialAccountType == other.financialAccountType && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountToken, balanceDate, financialAccountType, additionalHeaders, additionalQueryParams) /* spotless:on */
+        return /* spotless:off */ Objects.hash(accountToken, balanceDate, businessAccountToken, financialAccountType, additionalHeaders, additionalQueryParams) /* spotless:on */
     }
 
     override fun toString() =
-        "BalanceListParams{accountToken=$accountToken, balanceDate=$balanceDate, financialAccountType=$financialAccountType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceListParams{accountToken=$accountToken, balanceDate=$balanceDate, businessAccountToken=$businessAccountToken, financialAccountType=$financialAccountType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -79,6 +85,7 @@ constructor(
 
         private var accountToken: String? = null
         private var balanceDate: OffsetDateTime? = null
+        private var businessAccountToken: String? = null
         private var financialAccountType: FinancialAccountType? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -86,6 +93,7 @@ constructor(
         internal fun from(balanceListParams: BalanceListParams) = apply {
             this.accountToken = balanceListParams.accountToken
             this.balanceDate = balanceListParams.balanceDate
+            this.businessAccountToken = balanceListParams.businessAccountToken
             this.financialAccountType = balanceListParams.financialAccountType
             additionalHeaders(balanceListParams.additionalHeaders)
             additionalQueryParams(balanceListParams.additionalQueryParams)
@@ -96,6 +104,11 @@ constructor(
 
         /** UTC date and time of the balances to retrieve. Defaults to latest available balances */
         fun balanceDate(balanceDate: OffsetDateTime) = apply { this.balanceDate = balanceDate }
+
+        /** List balances for all financial accounts of a given business_account_token. */
+        fun businessAccountToken(businessAccountToken: String) = apply {
+            this.businessAccountToken = businessAccountToken
+        }
 
         /** List balances for a given Financial Account type. */
         fun financialAccountType(financialAccountType: FinancialAccountType) = apply {
@@ -204,6 +217,7 @@ constructor(
             BalanceListParams(
                 accountToken,
                 balanceDate,
+                businessAccountToken,
                 financialAccountType,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
