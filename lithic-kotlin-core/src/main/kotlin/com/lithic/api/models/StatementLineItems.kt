@@ -423,6 +423,8 @@ private constructor(
 
                 val ACH = TransactionCategory(JsonField.of("ACH"))
 
+                val BALANCE_OR_FUNDING = TransactionCategory(JsonField.of("BALANCE_OR_FUNDING"))
+
                 val CARD = TransactionCategory(JsonField.of("CARD"))
 
                 val EXTERNAL_ACH = TransactionCategory(JsonField.of("EXTERNAL_ACH"))
@@ -447,6 +449,7 @@ private constructor(
 
             enum class Known {
                 ACH,
+                BALANCE_OR_FUNDING,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -460,6 +463,7 @@ private constructor(
 
             enum class Value {
                 ACH,
+                BALANCE_OR_FUNDING,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -475,6 +479,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     ACH -> Value.ACH
+                    BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
                     CARD -> Value.CARD
                     EXTERNAL_ACH -> Value.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
@@ -490,6 +495,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     ACH -> Known.ACH
+                    BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
                     CARD -> Known.CARD
                     EXTERNAL_ACH -> Known.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
@@ -569,6 +575,8 @@ private constructor(
 
                 val BILLING_ERROR_REVERSAL =
                     FinancialEventType(JsonField.of("BILLING_ERROR_REVERSAL"))
+
+                val CARD_TO_CARD = FinancialEventType(JsonField.of("CARD_TO_CARD"))
 
                 val CASH_BACK = FinancialEventType(JsonField.of("CASH_BACK"))
 
@@ -701,6 +709,7 @@ private constructor(
                 BALANCE_INQUIRY,
                 BILLING_ERROR,
                 BILLING_ERROR_REVERSAL,
+                CARD_TO_CARD,
                 CASH_BACK,
                 CASH_BACK_REVERSAL,
                 CLEARING,
@@ -763,6 +772,7 @@ private constructor(
                 BALANCE_INQUIRY,
                 BILLING_ERROR,
                 BILLING_ERROR_REVERSAL,
+                CARD_TO_CARD,
                 CASH_BACK,
                 CASH_BACK_REVERSAL,
                 CLEARING,
@@ -827,6 +837,7 @@ private constructor(
                     BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
                     BILLING_ERROR -> Value.BILLING_ERROR
                     BILLING_ERROR_REVERSAL -> Value.BILLING_ERROR_REVERSAL
+                    CARD_TO_CARD -> Value.CARD_TO_CARD
                     CASH_BACK -> Value.CASH_BACK
                     CASH_BACK_REVERSAL -> Value.CASH_BACK_REVERSAL
                     CLEARING -> Value.CLEARING
@@ -891,6 +902,7 @@ private constructor(
                     BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
                     BILLING_ERROR -> Known.BILLING_ERROR
                     BILLING_ERROR_REVERSAL -> Known.BILLING_ERROR_REVERSAL
+                    CARD_TO_CARD -> Known.CARD_TO_CARD
                     CASH_BACK -> Known.CASH_BACK
                     CASH_BACK_REVERSAL -> Known.CASH_BACK_REVERSAL
                     CLEARING -> Known.CLEARING
