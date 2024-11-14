@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.72.0 (2024-11-14)
+
+Full Changelog: [v0.71.0...v0.72.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.71.0...v0.72.0)
+
+### Features
+
+* **api:** adds PrimeRates API ([#378](https://github.com/lithic-com/lithic-kotlin/issues/378)) ([cdf9429](https://github.com/lithic-com/lithic-kotlin/commit/cdf9429b0424cad2604beb7ef289537dd22ed62a))
+
+
+### Performance Improvements
+
+* **tests:** remove unused dependencies ([#377](https://github.com/lithic-com/lithic-kotlin/issues/377)) ([bb3154d](https://github.com/lithic-com/lithic-kotlin/commit/bb3154dac57c5ed4e1a7915402b02a6e36e86543))
+
+
+### Chores
+
+* **api:** add business_account_token param for listing Balances ([#375](https://github.com/lithic-com/lithic-kotlin/issues/375)) ([f0bd4b4](https://github.com/lithic-com/lithic-kotlin/commit/f0bd4b4fbae4c0b4bc619bc8b15a94301634035e))
+
 ## 0.71.0 (2024-11-07)
 
 Full Changelog: [v0.70.0...v0.71.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.70.0...v0.71.0)
