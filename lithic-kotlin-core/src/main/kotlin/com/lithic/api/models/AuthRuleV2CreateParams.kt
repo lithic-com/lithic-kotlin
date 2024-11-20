@@ -118,15 +118,13 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleV2CreateBody && this.createAuthRuleRequestAccountTokens == other.createAuthRuleRequestAccountTokens && this.createAuthRuleRequestCardTokens == other.createAuthRuleRequestCardTokens && this.createAuthRuleRequestProgramLevel == other.createAuthRuleRequestProgramLevel /* spotless:on */
+            return /* spotless:off */ other is AuthRuleV2CreateBody && createAuthRuleRequestAccountTokens == other.createAuthRuleRequestAccountTokens && createAuthRuleRequestCardTokens == other.createAuthRuleRequestCardTokens && createAuthRuleRequestProgramLevel == other.createAuthRuleRequestProgramLevel /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(createAuthRuleRequestAccountTokens, createAuthRuleRequestCardTokens, createAuthRuleRequestProgramLevel) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(createAuthRuleRequestAccountTokens, createAuthRuleRequestCardTokens, createAuthRuleRequestProgramLevel) /* spotless:on */
 
-        override fun toString(): String {
-            return when {
+        override fun toString(): String =
+            when {
                 createAuthRuleRequestAccountTokens != null ->
                     "AuthRuleV2CreateBody{createAuthRuleRequestAccountTokens=$createAuthRuleRequestAccountTokens}"
                 createAuthRuleRequestCardTokens != null ->
@@ -136,7 +134,6 @@ constructor(
                 _json != null -> "AuthRuleV2CreateBody{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid AuthRuleV2CreateBody")
             }
-        }
 
         companion object {
 
@@ -236,12 +233,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2CreateParams && this.createAuthRuleRequestAccountTokens == other.createAuthRuleRequestAccountTokens && this.createAuthRuleRequestCardTokens == other.createAuthRuleRequestCardTokens && this.createAuthRuleRequestProgramLevel == other.createAuthRuleRequestProgramLevel && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2CreateParams && createAuthRuleRequestAccountTokens == other.createAuthRuleRequestAccountTokens && createAuthRuleRequestCardTokens == other.createAuthRuleRequestCardTokens && createAuthRuleRequestProgramLevel == other.createAuthRuleRequestProgramLevel && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(createAuthRuleRequestAccountTokens, createAuthRuleRequestCardTokens, createAuthRuleRequestProgramLevel, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(createAuthRuleRequestAccountTokens, createAuthRuleRequestCardTokens, createAuthRuleRequestProgramLevel, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "AuthRuleV2CreateParams{createAuthRuleRequestAccountTokens=$createAuthRuleRequestAccountTokens, createAuthRuleRequestCardTokens=$createAuthRuleRequestCardTokens, createAuthRuleRequestProgramLevel=$createAuthRuleRequestProgramLevel, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -542,15 +537,13 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && conditionalBlockParameters == other.conditionalBlockParameters && velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
-            override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
-            }
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
 
-            override fun toString(): String {
-                return when {
+            override fun toString(): String =
+                when {
                     conditionalBlockParameters != null ->
                         "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
@@ -558,7 +551,6 @@ constructor(
                     _json != null -> "Parameters{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Parameters")
                 }
-            }
 
             companion object {
 
@@ -952,7 +944,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Attribute && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -1053,7 +1045,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Operation && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -1178,22 +1170,19 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Value && this.string == other.string && this.double == other.double && this.strings == other.strings /* spotless:on */
+                            return /* spotless:off */ other is Value && string == other.string && double == other.double && strings == other.strings /* spotless:on */
                         }
 
-                        override fun hashCode(): Int {
-                            return /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
-                        }
+                        override fun hashCode(): Int = /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
 
-                        override fun toString(): String {
-                            return when {
+                        override fun toString(): String =
+                            when {
                                 string != null -> "Value{string=$string}"
                                 double != null -> "Value{double=$double}"
                                 strings != null -> "Value{strings=$strings}"
                                 _json != null -> "Value{_unknown=$_json}"
                                 else -> throw IllegalStateException("Invalid Value")
                             }
-                        }
 
                         companion object {
 
@@ -1259,17 +1248,14 @@ constructor(
                             return true
                         }
 
-                        return /* spotless:off */ other is Condition && this.attribute == other.attribute && this.operation == other.operation && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+                        return /* spotless:off */ other is Condition && attribute == other.attribute && operation == other.operation && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                     }
 
-                    private var hashCode: Int = 0
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(attribute, operation, value, additionalProperties) }
+                    /* spotless:on */
 
-                    override fun hashCode(): Int {
-                        if (hashCode == 0) {
-                            hashCode = /* spotless:off */ Objects.hash(attribute, operation, value, additionalProperties) /* spotless:on */
-                        }
-                        return hashCode
-                    }
+                    override fun hashCode(): Int = hashCode
 
                     override fun toString() =
                         "Condition{attribute=$attribute, operation=$operation, value=$value, additionalProperties=$additionalProperties}"
@@ -1280,17 +1266,14 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ConditionalBlockParameters && this.conditions == other.conditions && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ConditionalBlockParameters && conditions == other.conditions && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(conditions, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(conditions, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "ConditionalBlockParameters{conditions=$conditions, additionalProperties=$additionalProperties}"
@@ -1310,7 +1293,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1359,17 +1342,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreateAuthRuleRequestAccountTokens && this.accountTokens == other.accountTokens && this.type == other.type && this.parameters == other.parameters && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreateAuthRuleRequestAccountTokens && accountTokens == other.accountTokens && type == other.type && parameters == other.parameters && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(accountTokens, type, parameters, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(accountTokens, type, parameters, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "CreateAuthRuleRequestAccountTokens{accountTokens=$accountTokens, type=$type, parameters=$parameters, additionalProperties=$additionalProperties}"
@@ -1509,15 +1489,13 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && conditionalBlockParameters == other.conditionalBlockParameters && velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
-            override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
-            }
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
 
-            override fun toString(): String {
-                return when {
+            override fun toString(): String =
+                when {
                     conditionalBlockParameters != null ->
                         "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
@@ -1525,7 +1503,6 @@ constructor(
                     _json != null -> "Parameters{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Parameters")
                 }
-            }
 
             companion object {
 
@@ -1919,7 +1896,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Attribute && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -2020,7 +1997,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Operation && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -2145,22 +2122,19 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Value && this.string == other.string && this.double == other.double && this.strings == other.strings /* spotless:on */
+                            return /* spotless:off */ other is Value && string == other.string && double == other.double && strings == other.strings /* spotless:on */
                         }
 
-                        override fun hashCode(): Int {
-                            return /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
-                        }
+                        override fun hashCode(): Int = /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
 
-                        override fun toString(): String {
-                            return when {
+                        override fun toString(): String =
+                            when {
                                 string != null -> "Value{string=$string}"
                                 double != null -> "Value{double=$double}"
                                 strings != null -> "Value{strings=$strings}"
                                 _json != null -> "Value{_unknown=$_json}"
                                 else -> throw IllegalStateException("Invalid Value")
                             }
-                        }
 
                         companion object {
 
@@ -2226,17 +2200,14 @@ constructor(
                             return true
                         }
 
-                        return /* spotless:off */ other is Condition && this.attribute == other.attribute && this.operation == other.operation && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+                        return /* spotless:off */ other is Condition && attribute == other.attribute && operation == other.operation && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                     }
 
-                    private var hashCode: Int = 0
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(attribute, operation, value, additionalProperties) }
+                    /* spotless:on */
 
-                    override fun hashCode(): Int {
-                        if (hashCode == 0) {
-                            hashCode = /* spotless:off */ Objects.hash(attribute, operation, value, additionalProperties) /* spotless:on */
-                        }
-                        return hashCode
-                    }
+                    override fun hashCode(): Int = hashCode
 
                     override fun toString() =
                         "Condition{attribute=$attribute, operation=$operation, value=$value, additionalProperties=$additionalProperties}"
@@ -2247,17 +2218,14 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ConditionalBlockParameters && this.conditions == other.conditions && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ConditionalBlockParameters && conditions == other.conditions && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(conditions, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(conditions, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "ConditionalBlockParameters{conditions=$conditions, additionalProperties=$additionalProperties}"
@@ -2277,7 +2245,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2326,17 +2294,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreateAuthRuleRequestCardTokens && this.cardTokens == other.cardTokens && this.type == other.type && this.parameters == other.parameters && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreateAuthRuleRequestCardTokens && cardTokens == other.cardTokens && type == other.type && parameters == other.parameters && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(cardTokens, type, parameters, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(cardTokens, type, parameters, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "CreateAuthRuleRequestCardTokens{cardTokens=$cardTokens, type=$type, parameters=$parameters, additionalProperties=$additionalProperties}"
@@ -2476,15 +2441,13 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Parameters && this.conditionalBlockParameters == other.conditionalBlockParameters && this.velocityLimitParams == other.velocityLimitParams /* spotless:on */
+                return /* spotless:off */ other is Parameters && conditionalBlockParameters == other.conditionalBlockParameters && velocityLimitParams == other.velocityLimitParams /* spotless:on */
             }
 
-            override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
-            }
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(conditionalBlockParameters, velocityLimitParams) /* spotless:on */
 
-            override fun toString(): String {
-                return when {
+            override fun toString(): String =
+                when {
                     conditionalBlockParameters != null ->
                         "Parameters{conditionalBlockParameters=$conditionalBlockParameters}"
                     velocityLimitParams != null ->
@@ -2492,7 +2455,6 @@ constructor(
                     _json != null -> "Parameters{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Parameters")
                 }
-            }
 
             companion object {
 
@@ -2886,7 +2848,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Attribute && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -2987,7 +2949,7 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Operation && this.value == other.value /* spotless:on */
+                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
                         }
 
                         override fun hashCode() = value.hashCode()
@@ -3112,22 +3074,19 @@ constructor(
                                 return true
                             }
 
-                            return /* spotless:off */ other is Value && this.string == other.string && this.double == other.double && this.strings == other.strings /* spotless:on */
+                            return /* spotless:off */ other is Value && string == other.string && double == other.double && strings == other.strings /* spotless:on */
                         }
 
-                        override fun hashCode(): Int {
-                            return /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
-                        }
+                        override fun hashCode(): Int = /* spotless:off */ Objects.hash(string, double, strings) /* spotless:on */
 
-                        override fun toString(): String {
-                            return when {
+                        override fun toString(): String =
+                            when {
                                 string != null -> "Value{string=$string}"
                                 double != null -> "Value{double=$double}"
                                 strings != null -> "Value{strings=$strings}"
                                 _json != null -> "Value{_unknown=$_json}"
                                 else -> throw IllegalStateException("Invalid Value")
                             }
-                        }
 
                         companion object {
 
@@ -3193,17 +3152,14 @@ constructor(
                             return true
                         }
 
-                        return /* spotless:off */ other is Condition && this.attribute == other.attribute && this.operation == other.operation && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+                        return /* spotless:off */ other is Condition && attribute == other.attribute && operation == other.operation && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
                     }
 
-                    private var hashCode: Int = 0
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(attribute, operation, value, additionalProperties) }
+                    /* spotless:on */
 
-                    override fun hashCode(): Int {
-                        if (hashCode == 0) {
-                            hashCode = /* spotless:off */ Objects.hash(attribute, operation, value, additionalProperties) /* spotless:on */
-                        }
-                        return hashCode
-                    }
+                    override fun hashCode(): Int = hashCode
 
                     override fun toString() =
                         "Condition{attribute=$attribute, operation=$operation, value=$value, additionalProperties=$additionalProperties}"
@@ -3214,17 +3170,14 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ConditionalBlockParameters && this.conditions == other.conditions && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is ConditionalBlockParameters && conditions == other.conditions && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(conditions, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(conditions, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "ConditionalBlockParameters{conditions=$conditions, additionalProperties=$additionalProperties}"
@@ -3244,7 +3197,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AuthRuleType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -3293,17 +3246,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreateAuthRuleRequestProgramLevel && this.programLevel == other.programLevel && this.type == other.type && this.parameters == other.parameters && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreateAuthRuleRequestProgramLevel && programLevel == other.programLevel && type == other.type && parameters == other.parameters && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(programLevel, type, parameters, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(programLevel, type, parameters, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "CreateAuthRuleRequestProgramLevel{programLevel=$programLevel, type=$type, parameters=$parameters, additionalProperties=$additionalProperties}"
