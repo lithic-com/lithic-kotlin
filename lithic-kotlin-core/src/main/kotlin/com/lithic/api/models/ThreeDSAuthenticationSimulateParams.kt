@@ -152,17 +152,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ThreeDSAuthenticationSimulateBody && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.cardExpiryCheck == other.cardExpiryCheck && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ThreeDSAuthenticationSimulateBody && merchant == other.merchant && pan == other.pan && transaction == other.transaction && cardExpiryCheck == other.cardExpiryCheck && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalProperties=$additionalProperties}"
@@ -179,12 +176,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && this.merchant == other.merchant && this.pan == other.pan && this.transaction == other.transaction && this.cardExpiryCheck == other.cardExpiryCheck && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && merchant == other.merchant && pan == other.pan && transaction == other.transaction && cardExpiryCheck == other.cardExpiryCheck && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
@@ -476,17 +471,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Merchant && this.country == other.country && this.id == other.id && this.mcc == other.mcc && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Merchant && country == other.country && id == other.id && mcc == other.mcc && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(country, id, mcc, name, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(country, id, mcc, name, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Merchant{country=$country, id=$id, mcc=$mcc, name=$name, additionalProperties=$additionalProperties}"
@@ -564,17 +556,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Transaction && this.amount == other.amount && this.currency == other.currency && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Transaction && amount == other.amount && currency == other.currency && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(amount, currency, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(amount, currency, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Transaction{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
@@ -593,7 +582,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CardExpiryCheck && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is CardExpiryCheck && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
