@@ -80,12 +80,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialTransactionListParams && this.financialAccountToken == other.financialAccountToken && this.begin == other.begin && this.category == other.category && this.end == other.end && this.endingBefore == other.endingBefore && this.result == other.result && this.startingAfter == other.startingAfter && this.status == other.status && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is FinancialTransactionListParams && financialAccountToken == other.financialAccountToken && begin == other.begin && category == other.category && end == other.end && endingBefore == other.endingBefore && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(financialAccountToken, begin, category, end, endingBefore, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, begin, category, end, endingBefore, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "FinancialTransactionListParams{financialAccountToken=$financialAccountToken, begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -289,7 +287,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Category && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Category && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -352,7 +350,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Result && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Result && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -409,7 +407,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
