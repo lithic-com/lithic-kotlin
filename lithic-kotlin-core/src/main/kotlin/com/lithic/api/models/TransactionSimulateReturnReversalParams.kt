@@ -25,6 +25,12 @@ constructor(
 
     fun token(): String = token
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): TransactionSimulateReturnReversalBody {
         return TransactionSimulateReturnReversalBody(token, additionalBodyProperties)
     }
@@ -109,25 +115,6 @@ constructor(
             "TransactionSimulateReturnReversalBody{token=$token, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TransactionSimulateReturnReversalParams && token == other.token && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "TransactionSimulateReturnReversalParams{token=$token, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -146,12 +133,13 @@ constructor(
         internal fun from(
             transactionSimulateReturnReversalParams: TransactionSimulateReturnReversalParams
         ) = apply {
-            this.token = transactionSimulateReturnReversalParams.token
-            additionalHeaders(transactionSimulateReturnReversalParams.additionalHeaders)
-            additionalQueryParams(transactionSimulateReturnReversalParams.additionalQueryParams)
-            additionalBodyProperties(
-                transactionSimulateReturnReversalParams.additionalBodyProperties
-            )
+            token = transactionSimulateReturnReversalParams.token
+            additionalHeaders =
+                transactionSimulateReturnReversalParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                transactionSimulateReturnReversalParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                transactionSimulateReturnReversalParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The transaction token returned from the /v1/simulate/authorize response. */
@@ -285,4 +273,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TransactionSimulateReturnReversalParams && token == other.token && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "TransactionSimulateReturnReversalParams{token=$token, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

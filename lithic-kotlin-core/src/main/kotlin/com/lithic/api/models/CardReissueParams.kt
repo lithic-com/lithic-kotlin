@@ -41,6 +41,12 @@ constructor(
 
     fun shippingMethod(): ShippingMethod? = shippingMethod
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CardReissueBody {
         return CardReissueBody(
             carrier,
@@ -203,25 +209,6 @@ constructor(
             "CardReissueBody{carrier=$carrier, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardReissueParams && cardToken == other.cardToken && carrier == other.carrier && productId == other.productId && shippingAddress == other.shippingAddress && shippingMethod == other.shippingMethod && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, carrier, productId, shippingAddress, shippingMethod, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CardReissueParams{cardToken=$cardToken, carrier=$carrier, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -242,14 +229,14 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardReissueParams: CardReissueParams) = apply {
-            this.cardToken = cardReissueParams.cardToken
-            this.carrier = cardReissueParams.carrier
-            this.productId = cardReissueParams.productId
-            this.shippingAddress = cardReissueParams.shippingAddress
-            this.shippingMethod = cardReissueParams.shippingMethod
-            additionalHeaders(cardReissueParams.additionalHeaders)
-            additionalQueryParams(cardReissueParams.additionalQueryParams)
-            additionalBodyProperties(cardReissueParams.additionalBodyProperties)
+            cardToken = cardReissueParams.cardToken
+            carrier = cardReissueParams.carrier
+            productId = cardReissueParams.productId
+            shippingAddress = cardReissueParams.shippingAddress
+            shippingMethod = cardReissueParams.shippingMethod
+            additionalHeaders = cardReissueParams.additionalHeaders.toBuilder()
+            additionalQueryParams = cardReissueParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = cardReissueParams.additionalBodyProperties.toMutableMap()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
@@ -497,4 +484,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardReissueParams && cardToken == other.cardToken && carrier == other.carrier && productId == other.productId && shippingAddress == other.shippingAddress && shippingMethod == other.shippingMethod && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, carrier, productId, shippingAddress, shippingMethod, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CardReissueParams{cardToken=$cardToken, carrier=$carrier, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

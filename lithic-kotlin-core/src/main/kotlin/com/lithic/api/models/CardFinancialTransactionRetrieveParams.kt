@@ -20,6 +20,10 @@ constructor(
 
     fun financialTransactionToken(): String = financialTransactionToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -31,23 +35,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardFinancialTransactionRetrieveParams && cardToken == other.cardToken && financialTransactionToken == other.financialTransactionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, financialTransactionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "CardFinancialTransactionRetrieveParams{cardToken=$cardToken, financialTransactionToken=$financialTransactionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -67,11 +54,12 @@ constructor(
         internal fun from(
             cardFinancialTransactionRetrieveParams: CardFinancialTransactionRetrieveParams
         ) = apply {
-            this.cardToken = cardFinancialTransactionRetrieveParams.cardToken
-            this.financialTransactionToken =
+            cardToken = cardFinancialTransactionRetrieveParams.cardToken
+            financialTransactionToken =
                 cardFinancialTransactionRetrieveParams.financialTransactionToken
-            additionalHeaders(cardFinancialTransactionRetrieveParams.additionalHeaders)
-            additionalQueryParams(cardFinancialTransactionRetrieveParams.additionalQueryParams)
+            additionalHeaders = cardFinancialTransactionRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                cardFinancialTransactionRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
@@ -188,4 +176,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardFinancialTransactionRetrieveParams && cardToken == other.cardToken && financialTransactionToken == other.financialTransactionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, financialTransactionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CardFinancialTransactionRetrieveParams{cardToken=$cardToken, financialTransactionToken=$financialTransactionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

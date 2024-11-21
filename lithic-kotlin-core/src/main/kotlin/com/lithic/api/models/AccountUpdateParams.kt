@@ -44,6 +44,12 @@ constructor(
 
     fun verificationAddress(): VerificationAddress? = verificationAddress
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AccountUpdateBody {
         return AccountUpdateBody(
             dailySpendLimit,
@@ -228,25 +234,6 @@ constructor(
             "AccountUpdateBody{dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, verificationAddress=$verificationAddress, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountUpdateParams && accountToken == other.accountToken && dailySpendLimit == other.dailySpendLimit && lifetimeSpendLimit == other.lifetimeSpendLimit && monthlySpendLimit == other.monthlySpendLimit && state == other.state && verificationAddress == other.verificationAddress && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, dailySpendLimit, lifetimeSpendLimit, monthlySpendLimit, state, verificationAddress, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "AccountUpdateParams{accountToken=$accountToken, dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, verificationAddress=$verificationAddress, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -268,15 +255,15 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountUpdateParams: AccountUpdateParams) = apply {
-            this.accountToken = accountUpdateParams.accountToken
-            this.dailySpendLimit = accountUpdateParams.dailySpendLimit
-            this.lifetimeSpendLimit = accountUpdateParams.lifetimeSpendLimit
-            this.monthlySpendLimit = accountUpdateParams.monthlySpendLimit
-            this.state = accountUpdateParams.state
-            this.verificationAddress = accountUpdateParams.verificationAddress
-            additionalHeaders(accountUpdateParams.additionalHeaders)
-            additionalQueryParams(accountUpdateParams.additionalQueryParams)
-            additionalBodyProperties(accountUpdateParams.additionalBodyProperties)
+            accountToken = accountUpdateParams.accountToken
+            dailySpendLimit = accountUpdateParams.dailySpendLimit
+            lifetimeSpendLimit = accountUpdateParams.lifetimeSpendLimit
+            monthlySpendLimit = accountUpdateParams.monthlySpendLimit
+            state = accountUpdateParams.state
+            verificationAddress = accountUpdateParams.verificationAddress
+            additionalHeaders = accountUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = accountUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = accountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
@@ -631,4 +618,17 @@ constructor(
         override fun toString() =
             "VerificationAddress{address1=$address1, address2=$address2, city=$city, country=$country, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountUpdateParams && accountToken == other.accountToken && dailySpendLimit == other.dailySpendLimit && lifetimeSpendLimit == other.lifetimeSpendLimit && monthlySpendLimit == other.monthlySpendLimit && state == other.state && verificationAddress == other.verificationAddress && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, dailySpendLimit, lifetimeSpendLimit, monthlySpendLimit, state, verificationAddress, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AccountUpdateParams{accountToken=$accountToken, dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, verificationAddress=$verificationAddress, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

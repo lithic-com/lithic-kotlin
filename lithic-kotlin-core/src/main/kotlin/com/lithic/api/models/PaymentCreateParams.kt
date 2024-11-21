@@ -53,6 +53,12 @@ constructor(
 
     fun userDefinedId(): String? = userDefinedId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): PaymentCreateBody {
         return PaymentCreateBody(
             amount,
@@ -235,25 +241,6 @@ constructor(
             "PaymentCreateBody{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentCreateParams && amount == other.amount && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && type == other.type && token == other.token && memo == other.memo && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, externalBankAccountToken, financialAccountToken, method, methodAttributes, type, token, memo, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "PaymentCreateParams{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -278,18 +265,18 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(paymentCreateParams: PaymentCreateParams) = apply {
-            this.amount = paymentCreateParams.amount
-            this.externalBankAccountToken = paymentCreateParams.externalBankAccountToken
-            this.financialAccountToken = paymentCreateParams.financialAccountToken
-            this.method = paymentCreateParams.method
-            this.methodAttributes = paymentCreateParams.methodAttributes
-            this.type = paymentCreateParams.type
-            this.token = paymentCreateParams.token
-            this.memo = paymentCreateParams.memo
-            this.userDefinedId = paymentCreateParams.userDefinedId
-            additionalHeaders(paymentCreateParams.additionalHeaders)
-            additionalQueryParams(paymentCreateParams.additionalQueryParams)
-            additionalBodyProperties(paymentCreateParams.additionalBodyProperties)
+            amount = paymentCreateParams.amount
+            externalBankAccountToken = paymentCreateParams.externalBankAccountToken
+            financialAccountToken = paymentCreateParams.financialAccountToken
+            method = paymentCreateParams.method
+            methodAttributes = paymentCreateParams.methodAttributes
+            type = paymentCreateParams.type
+            token = paymentCreateParams.token
+            memo = paymentCreateParams.memo
+            userDefinedId = paymentCreateParams.userDefinedId
+            additionalHeaders = paymentCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = paymentCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun amount(amount: Long) = apply { this.amount = amount }
@@ -711,4 +698,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentCreateParams && amount == other.amount && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && type == other.type && token == other.token && memo == other.memo && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, externalBankAccountToken, financialAccountToken, method, methodAttributes, type, token, memo, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "PaymentCreateParams{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

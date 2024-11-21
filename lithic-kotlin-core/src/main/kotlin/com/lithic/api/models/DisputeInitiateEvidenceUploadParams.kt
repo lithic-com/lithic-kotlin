@@ -28,6 +28,12 @@ constructor(
 
     fun filename(): String? = filename
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): DisputeInitiateEvidenceUploadBody {
         return DisputeInitiateEvidenceUploadBody(filename, additionalBodyProperties)
     }
@@ -117,25 +123,6 @@ constructor(
             "DisputeInitiateEvidenceUploadBody{filename=$filename, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeInitiateEvidenceUploadParams && disputeToken == other.disputeToken && filename == other.filename && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, filename, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "DisputeInitiateEvidenceUploadParams{disputeToken=$disputeToken, filename=$filename, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -155,11 +142,13 @@ constructor(
         internal fun from(
             disputeInitiateEvidenceUploadParams: DisputeInitiateEvidenceUploadParams
         ) = apply {
-            this.disputeToken = disputeInitiateEvidenceUploadParams.disputeToken
-            this.filename = disputeInitiateEvidenceUploadParams.filename
-            additionalHeaders(disputeInitiateEvidenceUploadParams.additionalHeaders)
-            additionalQueryParams(disputeInitiateEvidenceUploadParams.additionalQueryParams)
-            additionalBodyProperties(disputeInitiateEvidenceUploadParams.additionalBodyProperties)
+            disputeToken = disputeInitiateEvidenceUploadParams.disputeToken
+            filename = disputeInitiateEvidenceUploadParams.filename
+            additionalHeaders = disputeInitiateEvidenceUploadParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                disputeInitiateEvidenceUploadParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                disputeInitiateEvidenceUploadParams.additionalBodyProperties.toMutableMap()
         }
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
@@ -296,4 +285,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeInitiateEvidenceUploadParams && disputeToken == other.disputeToken && filename == other.filename && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, filename, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "DisputeInitiateEvidenceUploadParams{disputeToken=$disputeToken, filename=$filename, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

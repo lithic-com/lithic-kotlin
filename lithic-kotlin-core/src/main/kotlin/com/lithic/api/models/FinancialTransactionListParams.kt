@@ -45,6 +45,10 @@ constructor(
 
     fun status(): Status? = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -71,23 +75,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is FinancialTransactionListParams && financialAccountToken == other.financialAccountToken && begin == other.begin && category == other.category && end == other.end && endingBefore == other.endingBefore && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, begin, category, end, endingBefore, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "FinancialTransactionListParams{financialAccountToken=$financialAccountToken, begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -110,16 +97,16 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(financialTransactionListParams: FinancialTransactionListParams) = apply {
-            this.financialAccountToken = financialTransactionListParams.financialAccountToken
-            this.begin = financialTransactionListParams.begin
-            this.category = financialTransactionListParams.category
-            this.end = financialTransactionListParams.end
-            this.endingBefore = financialTransactionListParams.endingBefore
-            this.result = financialTransactionListParams.result
-            this.startingAfter = financialTransactionListParams.startingAfter
-            this.status = financialTransactionListParams.status
-            additionalHeaders(financialTransactionListParams.additionalHeaders)
-            additionalQueryParams(financialTransactionListParams.additionalQueryParams)
+            financialAccountToken = financialTransactionListParams.financialAccountToken
+            begin = financialTransactionListParams.begin
+            category = financialTransactionListParams.category
+            end = financialTransactionListParams.end
+            endingBefore = financialTransactionListParams.endingBefore
+            result = financialTransactionListParams.result
+            startingAfter = financialTransactionListParams.startingAfter
+            status = financialTransactionListParams.status
+            additionalHeaders = financialTransactionListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = financialTransactionListParams.additionalQueryParams.toBuilder()
         }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
@@ -474,4 +461,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is FinancialTransactionListParams && financialAccountToken == other.financialAccountToken && begin == other.begin && category == other.category && end == other.end && endingBefore == other.endingBefore && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, begin, category, end, endingBefore, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "FinancialTransactionListParams{financialAccountToken=$financialAccountToken, begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

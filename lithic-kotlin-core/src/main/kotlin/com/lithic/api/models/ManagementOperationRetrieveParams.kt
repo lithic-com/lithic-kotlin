@@ -17,6 +17,10 @@ constructor(
 
     fun managementOperationToken(): String = managementOperationToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,23 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ManagementOperationRetrieveParams && managementOperationToken == other.managementOperationToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(managementOperationToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "ManagementOperationRetrieveParams{managementOperationToken=$managementOperationToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -61,10 +48,11 @@ constructor(
 
         internal fun from(managementOperationRetrieveParams: ManagementOperationRetrieveParams) =
             apply {
-                this.managementOperationToken =
+                managementOperationToken =
                     managementOperationRetrieveParams.managementOperationToken
-                additionalHeaders(managementOperationRetrieveParams.additionalHeaders)
-                additionalQueryParams(managementOperationRetrieveParams.additionalQueryParams)
+                additionalHeaders = managementOperationRetrieveParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    managementOperationRetrieveParams.additionalQueryParams.toBuilder()
             }
 
         fun managementOperationToken(managementOperationToken: String) = apply {
@@ -178,4 +166,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ManagementOperationRetrieveParams && managementOperationToken == other.managementOperationToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(managementOperationToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ManagementOperationRetrieveParams{managementOperationToken=$managementOperationToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

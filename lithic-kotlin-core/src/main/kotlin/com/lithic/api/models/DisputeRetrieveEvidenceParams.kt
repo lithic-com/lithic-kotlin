@@ -20,6 +20,10 @@ constructor(
 
     fun evidenceToken(): String = evidenceToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -31,23 +35,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeRetrieveEvidenceParams && disputeToken == other.disputeToken && evidenceToken == other.evidenceToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, evidenceToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "DisputeRetrieveEvidenceParams{disputeToken=$disputeToken, evidenceToken=$evidenceToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -65,10 +52,10 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(disputeRetrieveEvidenceParams: DisputeRetrieveEvidenceParams) = apply {
-            this.disputeToken = disputeRetrieveEvidenceParams.disputeToken
-            this.evidenceToken = disputeRetrieveEvidenceParams.evidenceToken
-            additionalHeaders(disputeRetrieveEvidenceParams.additionalHeaders)
-            additionalQueryParams(disputeRetrieveEvidenceParams.additionalQueryParams)
+            disputeToken = disputeRetrieveEvidenceParams.disputeToken
+            evidenceToken = disputeRetrieveEvidenceParams.evidenceToken
+            additionalHeaders = disputeRetrieveEvidenceParams.additionalHeaders.toBuilder()
+            additionalQueryParams = disputeRetrieveEvidenceParams.additionalQueryParams.toBuilder()
         }
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
@@ -181,4 +168,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeRetrieveEvidenceParams && disputeToken == other.disputeToken && evidenceToken == other.evidenceToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, evidenceToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "DisputeRetrieveEvidenceParams{disputeToken=$disputeToken, evidenceToken=$evidenceToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

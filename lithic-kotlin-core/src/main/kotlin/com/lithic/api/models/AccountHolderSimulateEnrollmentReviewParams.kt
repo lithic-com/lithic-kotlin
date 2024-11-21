@@ -35,6 +35,12 @@ constructor(
 
     fun statusReasons(): List<StatusReason>? = statusReasons
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AccountHolderSimulateEnrollmentReviewBody {
         return AccountHolderSimulateEnrollmentReviewBody(
             accountHolderToken,
@@ -157,25 +163,6 @@ constructor(
             "AccountHolderSimulateEnrollmentReviewBody{accountHolderToken=$accountHolderToken, status=$status, statusReasons=$statusReasons, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountHolderSimulateEnrollmentReviewParams && accountHolderToken == other.accountHolderToken && status == other.status && statusReasons == other.statusReasons && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, status, statusReasons, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "AccountHolderSimulateEnrollmentReviewParams{accountHolderToken=$accountHolderToken, status=$status, statusReasons=$statusReasons, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -196,16 +183,17 @@ constructor(
         internal fun from(
             accountHolderSimulateEnrollmentReviewParams: AccountHolderSimulateEnrollmentReviewParams
         ) = apply {
-            this.accountHolderToken = accountHolderSimulateEnrollmentReviewParams.accountHolderToken
-            this.status = accountHolderSimulateEnrollmentReviewParams.status
-            this.statusReasons(
-                accountHolderSimulateEnrollmentReviewParams.statusReasons ?: listOf()
-            )
-            additionalHeaders(accountHolderSimulateEnrollmentReviewParams.additionalHeaders)
-            additionalQueryParams(accountHolderSimulateEnrollmentReviewParams.additionalQueryParams)
-            additionalBodyProperties(
-                accountHolderSimulateEnrollmentReviewParams.additionalBodyProperties
-            )
+            accountHolderToken = accountHolderSimulateEnrollmentReviewParams.accountHolderToken
+            status = accountHolderSimulateEnrollmentReviewParams.status
+            statusReasons =
+                accountHolderSimulateEnrollmentReviewParams.statusReasons?.toMutableList()
+                    ?: mutableListOf()
+            additionalHeaders =
+                accountHolderSimulateEnrollmentReviewParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                accountHolderSimulateEnrollmentReviewParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                accountHolderSimulateEnrollmentReviewParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The account holder which to perform the simulation upon. */
@@ -357,7 +345,7 @@ constructor(
             AccountHolderSimulateEnrollmentReviewParams(
                 accountHolderToken,
                 status,
-                if (statusReasons.size == 0) null else statusReasons.toImmutable(),
+                statusReasons.toImmutable().ifEmpty { null },
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -616,4 +604,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountHolderSimulateEnrollmentReviewParams && accountHolderToken == other.accountHolderToken && status == other.status && statusReasons == other.statusReasons && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, status, statusReasons, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AccountHolderSimulateEnrollmentReviewParams{accountHolderToken=$accountHolderToken, status=$status, statusReasons=$statusReasons, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

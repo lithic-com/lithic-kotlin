@@ -42,6 +42,10 @@ constructor(
 
     fun state(): State? = state
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -60,23 +64,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardListParams && accountToken == other.accountToken && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, begin, end, endingBefore, pageSize, startingAfter, state, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "CardListParams{accountToken=$accountToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -99,15 +86,15 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(cardListParams: CardListParams) = apply {
-            this.accountToken = cardListParams.accountToken
-            this.begin = cardListParams.begin
-            this.end = cardListParams.end
-            this.endingBefore = cardListParams.endingBefore
-            this.pageSize = cardListParams.pageSize
-            this.startingAfter = cardListParams.startingAfter
-            this.state = cardListParams.state
-            additionalHeaders(cardListParams.additionalHeaders)
-            additionalQueryParams(cardListParams.additionalQueryParams)
+            accountToken = cardListParams.accountToken
+            begin = cardListParams.begin
+            end = cardListParams.end
+            endingBefore = cardListParams.endingBefore
+            pageSize = cardListParams.pageSize
+            startingAfter = cardListParams.startingAfter
+            state = cardListParams.state
+            additionalHeaders = cardListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = cardListParams.additionalQueryParams.toBuilder()
         }
 
         /** Returns cards associated with the specified account. */
@@ -329,4 +316,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardListParams && accountToken == other.accountToken && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, begin, end, endingBefore, pageSize, startingAfter, state, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CardListParams{accountToken=$accountToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

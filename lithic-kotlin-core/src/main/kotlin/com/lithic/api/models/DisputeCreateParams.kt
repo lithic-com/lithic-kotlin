@@ -42,6 +42,12 @@ constructor(
 
     fun customerNote(): String? = customerNote
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): DisputeCreateBody {
         return DisputeCreateBody(
             amount,
@@ -181,25 +187,6 @@ constructor(
             "DisputeCreateBody{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeCreateParams && amount == other.amount && reason == other.reason && transactionToken == other.transactionToken && customerFiledDate == other.customerFiledDate && customerNote == other.customerNote && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, reason, transactionToken, customerFiledDate, customerNote, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "DisputeCreateParams{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -220,14 +207,14 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(disputeCreateParams: DisputeCreateParams) = apply {
-            this.amount = disputeCreateParams.amount
-            this.reason = disputeCreateParams.reason
-            this.transactionToken = disputeCreateParams.transactionToken
-            this.customerFiledDate = disputeCreateParams.customerFiledDate
-            this.customerNote = disputeCreateParams.customerNote
-            additionalHeaders(disputeCreateParams.additionalHeaders)
-            additionalQueryParams(disputeCreateParams.additionalQueryParams)
-            additionalBodyProperties(disputeCreateParams.additionalBodyProperties)
+            amount = disputeCreateParams.amount
+            reason = disputeCreateParams.reason
+            transactionToken = disputeCreateParams.transactionToken
+            customerFiledDate = disputeCreateParams.customerFiledDate
+            customerNote = disputeCreateParams.customerNote
+            additionalHeaders = disputeCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = disputeCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = disputeCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** Amount to dispute */
@@ -512,4 +499,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeCreateParams && amount == other.amount && reason == other.reason && transactionToken == other.transactionToken && customerFiledDate == other.customerFiledDate && customerNote == other.customerNote && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, reason, transactionToken, customerFiledDate, customerNote, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "DisputeCreateParams{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -38,6 +38,12 @@ constructor(
 
     fun cardExpiryCheck(): CardExpiryCheck? = cardExpiryCheck
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): ThreeDSAuthenticationSimulateBody {
         return ThreeDSAuthenticationSimulateBody(
             merchant,
@@ -165,25 +171,6 @@ constructor(
             "ThreeDSAuthenticationSimulateBody{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && merchant == other.merchant && pan == other.pan && transaction == other.transaction && cardExpiryCheck == other.cardExpiryCheck && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -205,13 +192,15 @@ constructor(
         internal fun from(
             threeDSAuthenticationSimulateParams: ThreeDSAuthenticationSimulateParams
         ) = apply {
-            this.merchant = threeDSAuthenticationSimulateParams.merchant
-            this.pan = threeDSAuthenticationSimulateParams.pan
-            this.transaction = threeDSAuthenticationSimulateParams.transaction
-            this.cardExpiryCheck = threeDSAuthenticationSimulateParams.cardExpiryCheck
-            additionalHeaders(threeDSAuthenticationSimulateParams.additionalHeaders)
-            additionalQueryParams(threeDSAuthenticationSimulateParams.additionalQueryParams)
-            additionalBodyProperties(threeDSAuthenticationSimulateParams.additionalBodyProperties)
+            merchant = threeDSAuthenticationSimulateParams.merchant
+            pan = threeDSAuthenticationSimulateParams.pan
+            transaction = threeDSAuthenticationSimulateParams.transaction
+            cardExpiryCheck = threeDSAuthenticationSimulateParams.cardExpiryCheck
+            additionalHeaders = threeDSAuthenticationSimulateParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                threeDSAuthenticationSimulateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                threeDSAuthenticationSimulateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun merchant(merchant: Merchant) = apply { this.merchant = merchant }
@@ -631,4 +620,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && merchant == other.merchant && pan == other.pan && transaction == other.transaction && cardExpiryCheck == other.cardExpiryCheck && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
