@@ -42,6 +42,10 @@ constructor(
 
     fun status(): Status? = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -67,23 +71,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventListAttemptsParams && eventToken == other.eventToken && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventToken, begin, end, endingBefore, pageSize, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "EventListAttemptsParams{eventToken=$eventToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -105,15 +92,15 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(eventListAttemptsParams: EventListAttemptsParams) = apply {
-            this.eventToken = eventListAttemptsParams.eventToken
-            this.begin = eventListAttemptsParams.begin
-            this.end = eventListAttemptsParams.end
-            this.endingBefore = eventListAttemptsParams.endingBefore
-            this.pageSize = eventListAttemptsParams.pageSize
-            this.startingAfter = eventListAttemptsParams.startingAfter
-            this.status = eventListAttemptsParams.status
-            additionalHeaders(eventListAttemptsParams.additionalHeaders)
-            additionalQueryParams(eventListAttemptsParams.additionalQueryParams)
+            eventToken = eventListAttemptsParams.eventToken
+            begin = eventListAttemptsParams.begin
+            end = eventListAttemptsParams.end
+            endingBefore = eventListAttemptsParams.endingBefore
+            pageSize = eventListAttemptsParams.pageSize
+            startingAfter = eventListAttemptsParams.startingAfter
+            status = eventListAttemptsParams.status
+            additionalHeaders = eventListAttemptsParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventListAttemptsParams.additionalQueryParams.toBuilder()
         }
 
         fun eventToken(eventToken: String) = apply { this.eventToken = eventToken }
@@ -327,4 +314,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventListAttemptsParams && eventToken == other.eventToken && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventToken, begin, end, endingBefore, pageSize, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventListAttemptsParams{eventToken=$eventToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -43,6 +43,10 @@ constructor(
 
     fun transactionTokens(): List<String>? = transactionTokens
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -63,23 +67,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeListParams && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && transactionTokens == other.transactionTokens && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, end, endingBefore, pageSize, startingAfter, status, transactionTokens, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "DisputeListParams{begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, transactionTokens=$transactionTokens, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -102,15 +89,16 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(disputeListParams: DisputeListParams) = apply {
-            this.begin = disputeListParams.begin
-            this.end = disputeListParams.end
-            this.endingBefore = disputeListParams.endingBefore
-            this.pageSize = disputeListParams.pageSize
-            this.startingAfter = disputeListParams.startingAfter
-            this.status = disputeListParams.status
-            this.transactionTokens(disputeListParams.transactionTokens ?: listOf())
-            additionalHeaders(disputeListParams.additionalHeaders)
-            additionalQueryParams(disputeListParams.additionalQueryParams)
+            begin = disputeListParams.begin
+            end = disputeListParams.end
+            endingBefore = disputeListParams.endingBefore
+            pageSize = disputeListParams.pageSize
+            startingAfter = disputeListParams.startingAfter
+            status = disputeListParams.status
+            transactionTokens =
+                disputeListParams.transactionTokens?.toMutableList() ?: mutableListOf()
+            additionalHeaders = disputeListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = disputeListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -260,7 +248,7 @@ constructor(
                 pageSize,
                 startingAfter,
                 status,
-                if (transactionTokens.size == 0) null else transactionTokens.toImmutable(),
+                transactionTokens.toImmutable().ifEmpty { null },
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -358,4 +346,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeListParams && begin == other.begin && end == other.end && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && transactionTokens == other.transactionTokens && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, end, endingBefore, pageSize, startingAfter, status, transactionTokens, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "DisputeListParams{begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, transactionTokens=$transactionTokens, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

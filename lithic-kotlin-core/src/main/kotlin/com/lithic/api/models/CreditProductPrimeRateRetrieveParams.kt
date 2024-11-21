@@ -24,6 +24,10 @@ constructor(
 
     fun startingAfter(): LocalDate? = startingAfter
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -40,23 +44,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CreditProductPrimeRateRetrieveParams && creditProductToken == other.creditProductToken && endingBefore == other.endingBefore && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditProductToken, endingBefore, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "CreditProductPrimeRateRetrieveParams{creditProductToken=$creditProductToken, endingBefore=$endingBefore, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -77,11 +64,12 @@ constructor(
         internal fun from(
             creditProductPrimeRateRetrieveParams: CreditProductPrimeRateRetrieveParams
         ) = apply {
-            this.creditProductToken = creditProductPrimeRateRetrieveParams.creditProductToken
-            this.endingBefore = creditProductPrimeRateRetrieveParams.endingBefore
-            this.startingAfter = creditProductPrimeRateRetrieveParams.startingAfter
-            additionalHeaders(creditProductPrimeRateRetrieveParams.additionalHeaders)
-            additionalQueryParams(creditProductPrimeRateRetrieveParams.additionalQueryParams)
+            creditProductToken = creditProductPrimeRateRetrieveParams.creditProductToken
+            endingBefore = creditProductPrimeRateRetrieveParams.endingBefore
+            startingAfter = creditProductPrimeRateRetrieveParams.startingAfter
+            additionalHeaders = creditProductPrimeRateRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                creditProductPrimeRateRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         /** Globally unique identifier for credit products. */
@@ -204,4 +192,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CreditProductPrimeRateRetrieveParams && creditProductToken == other.creditProductToken && endingBefore == other.endingBefore && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(creditProductToken, endingBefore, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CreditProductPrimeRateRetrieveParams{creditProductToken=$creditProductToken, endingBefore=$endingBefore, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

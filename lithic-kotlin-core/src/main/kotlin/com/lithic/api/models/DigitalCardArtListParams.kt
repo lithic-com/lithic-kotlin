@@ -23,6 +23,10 @@ constructor(
 
     fun startingAfter(): String? = startingAfter
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -33,23 +37,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DigitalCardArtListParams && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "DigitalCardArtListParams{endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -68,11 +55,11 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(digitalCardArtListParams: DigitalCardArtListParams) = apply {
-            this.endingBefore = digitalCardArtListParams.endingBefore
-            this.pageSize = digitalCardArtListParams.pageSize
-            this.startingAfter = digitalCardArtListParams.startingAfter
-            additionalHeaders(digitalCardArtListParams.additionalHeaders)
-            additionalQueryParams(digitalCardArtListParams.additionalQueryParams)
+            endingBefore = digitalCardArtListParams.endingBefore
+            pageSize = digitalCardArtListParams.pageSize
+            startingAfter = digitalCardArtListParams.startingAfter
+            additionalHeaders = digitalCardArtListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = digitalCardArtListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -197,4 +184,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DigitalCardArtListParams && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "DigitalCardArtListParams{endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

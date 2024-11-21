@@ -17,6 +17,10 @@ constructor(
 
     fun accountHolderToken(): String = accountHolderToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,23 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountHolderListDocumentsParams && accountHolderToken == other.accountHolderToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "AccountHolderListDocumentsParams{accountHolderToken=$accountHolderToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -61,9 +48,10 @@ constructor(
 
         internal fun from(accountHolderListDocumentsParams: AccountHolderListDocumentsParams) =
             apply {
-                this.accountHolderToken = accountHolderListDocumentsParams.accountHolderToken
-                additionalHeaders(accountHolderListDocumentsParams.additionalHeaders)
-                additionalQueryParams(accountHolderListDocumentsParams.additionalQueryParams)
+                accountHolderToken = accountHolderListDocumentsParams.accountHolderToken
+                additionalHeaders = accountHolderListDocumentsParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    accountHolderListDocumentsParams.additionalQueryParams.toBuilder()
             }
 
         fun accountHolderToken(accountHolderToken: String) = apply {
@@ -177,4 +165,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountHolderListDocumentsParams && accountHolderToken == other.accountHolderToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "AccountHolderListDocumentsParams{accountHolderToken=$accountHolderToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

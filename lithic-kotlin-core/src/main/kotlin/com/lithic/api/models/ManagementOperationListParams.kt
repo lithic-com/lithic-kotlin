@@ -48,6 +48,10 @@ constructor(
 
     fun status(): TransactionStatus? = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -73,23 +77,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ManagementOperationListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "ManagementOperationListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -113,17 +100,17 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(managementOperationListParams: ManagementOperationListParams) = apply {
-            this.begin = managementOperationListParams.begin
-            this.businessAccountToken = managementOperationListParams.businessAccountToken
-            this.category = managementOperationListParams.category
-            this.end = managementOperationListParams.end
-            this.endingBefore = managementOperationListParams.endingBefore
-            this.financialAccountToken = managementOperationListParams.financialAccountToken
-            this.pageSize = managementOperationListParams.pageSize
-            this.startingAfter = managementOperationListParams.startingAfter
-            this.status = managementOperationListParams.status
-            additionalHeaders(managementOperationListParams.additionalHeaders)
-            additionalQueryParams(managementOperationListParams.additionalQueryParams)
+            begin = managementOperationListParams.begin
+            businessAccountToken = managementOperationListParams.businessAccountToken
+            category = managementOperationListParams.category
+            end = managementOperationListParams.end
+            endingBefore = managementOperationListParams.endingBefore
+            financialAccountToken = managementOperationListParams.financialAccountToken
+            pageSize = managementOperationListParams.pageSize
+            startingAfter = managementOperationListParams.startingAfter
+            status = managementOperationListParams.status
+            additionalHeaders = managementOperationListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = managementOperationListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -430,4 +417,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ManagementOperationListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ManagementOperationListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

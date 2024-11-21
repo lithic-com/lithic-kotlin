@@ -14,26 +14,13 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
-    internal fun getHeaders(): Headers = additionalHeaders
-
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
-
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+    internal fun getHeaders(): Headers = additionalHeaders
 
-        return /* spotless:off */ other is ThreeDSDecisioningRetrieveSecretParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "ThreeDSDecisioningRetrieveSecretParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    internal fun getQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
 
@@ -51,8 +38,9 @@ constructor(
         internal fun from(
             threeDSDecisioningRetrieveSecretParams: ThreeDSDecisioningRetrieveSecretParams
         ) = apply {
-            additionalHeaders(threeDSDecisioningRetrieveSecretParams.additionalHeaders)
-            additionalQueryParams(threeDSDecisioningRetrieveSecretParams.additionalQueryParams)
+            additionalHeaders = threeDSDecisioningRetrieveSecretParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                threeDSDecisioningRetrieveSecretParams.additionalQueryParams.toBuilder()
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -159,4 +147,17 @@ constructor(
                 additionalQueryParams.build()
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ThreeDSDecisioningRetrieveSecretParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ThreeDSDecisioningRetrieveSecretParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

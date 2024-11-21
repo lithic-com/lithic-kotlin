@@ -43,6 +43,10 @@ constructor(
 
     fun withContent(): Boolean? = withContent
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -63,23 +67,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventListParams && begin == other.begin && end == other.end && endingBefore == other.endingBefore && eventTypes == other.eventTypes && pageSize == other.pageSize && startingAfter == other.startingAfter && withContent == other.withContent && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, end, endingBefore, eventTypes, pageSize, startingAfter, withContent, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "EventListParams{begin=$begin, end=$end, endingBefore=$endingBefore, eventTypes=$eventTypes, pageSize=$pageSize, startingAfter=$startingAfter, withContent=$withContent, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -102,15 +89,15 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(eventListParams: EventListParams) = apply {
-            this.begin = eventListParams.begin
-            this.end = eventListParams.end
-            this.endingBefore = eventListParams.endingBefore
-            this.eventTypes(eventListParams.eventTypes ?: listOf())
-            this.pageSize = eventListParams.pageSize
-            this.startingAfter = eventListParams.startingAfter
-            this.withContent = eventListParams.withContent
-            additionalHeaders(eventListParams.additionalHeaders)
-            additionalQueryParams(eventListParams.additionalQueryParams)
+            begin = eventListParams.begin
+            end = eventListParams.end
+            endingBefore = eventListParams.endingBefore
+            eventTypes = eventListParams.eventTypes?.toMutableList() ?: mutableListOf()
+            pageSize = eventListParams.pageSize
+            startingAfter = eventListParams.startingAfter
+            withContent = eventListParams.withContent
+            additionalHeaders = eventListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -255,7 +242,7 @@ constructor(
                 begin,
                 end,
                 endingBefore,
-                if (eventTypes.size == 0) null else eventTypes.toImmutable(),
+                eventTypes.toImmutable().ifEmpty { null },
                 pageSize,
                 startingAfter,
                 withContent,
@@ -566,4 +553,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventListParams && begin == other.begin && end == other.end && endingBefore == other.endingBefore && eventTypes == other.eventTypes && pageSize == other.pageSize && startingAfter == other.startingAfter && withContent == other.withContent && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, end, endingBefore, eventTypes, pageSize, startingAfter, withContent, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventListParams{begin=$begin, end=$end, endingBefore=$endingBefore, eventTypes=$eventTypes, pageSize=$pageSize, startingAfter=$startingAfter, withContent=$withContent, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

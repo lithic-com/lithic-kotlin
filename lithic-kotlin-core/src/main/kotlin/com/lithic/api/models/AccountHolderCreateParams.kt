@@ -35,6 +35,10 @@ constructor(
 
     fun kycExempt(): KycExempt? = kycExempt
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getBody(): AccountHolderCreateBody {
         return AccountHolderCreateBody(
             kyb,
@@ -165,23 +169,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountHolderCreateParams && kyb == other.kyb && kyc == other.kyc && kycExempt == other.kycExempt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(kyb, kyc, kycExempt, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "AccountHolderCreateParams{kyb=$kyb, kyc=$kyc, kycExempt=$kycExempt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -199,11 +186,11 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(accountHolderCreateParams: AccountHolderCreateParams) = apply {
-            this.kyb = accountHolderCreateParams.kyb
-            this.kyc = accountHolderCreateParams.kyc
-            this.kycExempt = accountHolderCreateParams.kycExempt
-            additionalHeaders(accountHolderCreateParams.additionalHeaders)
-            additionalQueryParams(accountHolderCreateParams.additionalQueryParams)
+            kyb = accountHolderCreateParams.kyb
+            kyc = accountHolderCreateParams.kyc
+            kycExempt = accountHolderCreateParams.kycExempt
+            additionalHeaders = accountHolderCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = accountHolderCreateParams.additionalQueryParams.toBuilder()
         }
 
         fun forKyb(kyb: Kyb) = apply {
@@ -331,4 +318,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountHolderCreateParams && kyb == other.kyb && kyc == other.kyc && kycExempt == other.kycExempt && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(kyb, kyc, kycExempt, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "AccountHolderCreateParams{kyb=$kyb, kyc=$kyc, kycExempt=$kycExempt, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
