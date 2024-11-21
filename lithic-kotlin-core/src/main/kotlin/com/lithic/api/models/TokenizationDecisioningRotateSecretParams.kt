@@ -17,6 +17,12 @@ constructor(
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -24,25 +30,6 @@ constructor(
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TokenizationDecisioningRotateSecretParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "TokenizationDecisioningRotateSecretParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -61,11 +48,12 @@ constructor(
         internal fun from(
             tokenizationDecisioningRotateSecretParams: TokenizationDecisioningRotateSecretParams
         ) = apply {
-            additionalHeaders(tokenizationDecisioningRotateSecretParams.additionalHeaders)
-            additionalQueryParams(tokenizationDecisioningRotateSecretParams.additionalQueryParams)
-            additionalBodyProperties(
-                tokenizationDecisioningRotateSecretParams.additionalBodyProperties
-            )
+            additionalHeaders =
+                tokenizationDecisioningRotateSecretParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                tokenizationDecisioningRotateSecretParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                tokenizationDecisioningRotateSecretParams.additionalBodyProperties.toMutableMap()
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -195,4 +183,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TokenizationDecisioningRotateSecretParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "TokenizationDecisioningRotateSecretParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

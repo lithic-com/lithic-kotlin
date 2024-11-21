@@ -28,6 +28,12 @@ constructor(
 
     fun challengeResponse(): ChallengeResult = challengeResponse
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): ThreeDSDecisioningSimulateChallengeResponseBody {
         return ThreeDSDecisioningSimulateChallengeResponseBody(
             token,
@@ -144,25 +150,6 @@ constructor(
             "ThreeDSDecisioningSimulateChallengeResponseBody{token=$token, challengeResponse=$challengeResponse, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ThreeDSDecisioningSimulateChallengeResponseParams && token == other.token && challengeResponse == other.challengeResponse && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, challengeResponse, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ThreeDSDecisioningSimulateChallengeResponseParams{token=$token, challengeResponse=$challengeResponse, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -183,16 +170,15 @@ constructor(
             threeDSDecisioningSimulateChallengeResponseParams:
                 ThreeDSDecisioningSimulateChallengeResponseParams
         ) = apply {
-            this.token = threeDSDecisioningSimulateChallengeResponseParams.token
-            this.challengeResponse =
-                threeDSDecisioningSimulateChallengeResponseParams.challengeResponse
-            additionalHeaders(threeDSDecisioningSimulateChallengeResponseParams.additionalHeaders)
-            additionalQueryParams(
-                threeDSDecisioningSimulateChallengeResponseParams.additionalQueryParams
-            )
-            additionalBodyProperties(
+            token = threeDSDecisioningSimulateChallengeResponseParams.token
+            challengeResponse = threeDSDecisioningSimulateChallengeResponseParams.challengeResponse
+            additionalHeaders =
+                threeDSDecisioningSimulateChallengeResponseParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                threeDSDecisioningSimulateChallengeResponseParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
                 threeDSDecisioningSimulateChallengeResponseParams.additionalBodyProperties
-            )
+                    .toMutableMap()
         }
 
         /**
@@ -338,4 +324,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ThreeDSDecisioningSimulateChallengeResponseParams && token == other.token && challengeResponse == other.challengeResponse && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, challengeResponse, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ThreeDSDecisioningSimulateChallengeResponseParams{token=$token, challengeResponse=$challengeResponse, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

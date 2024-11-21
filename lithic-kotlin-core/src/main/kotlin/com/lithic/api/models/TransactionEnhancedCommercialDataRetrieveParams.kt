@@ -17,6 +17,10 @@ constructor(
 
     fun transactionToken(): String = transactionToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,23 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TransactionEnhancedCommercialDataRetrieveParams && transactionToken == other.transactionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(transactionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "TransactionEnhancedCommercialDataRetrieveParams{transactionToken=$transactionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -63,11 +50,11 @@ constructor(
             transactionEnhancedCommercialDataRetrieveParams:
                 TransactionEnhancedCommercialDataRetrieveParams
         ) = apply {
-            this.transactionToken = transactionEnhancedCommercialDataRetrieveParams.transactionToken
-            additionalHeaders(transactionEnhancedCommercialDataRetrieveParams.additionalHeaders)
-            additionalQueryParams(
-                transactionEnhancedCommercialDataRetrieveParams.additionalQueryParams
-            )
+            transactionToken = transactionEnhancedCommercialDataRetrieveParams.transactionToken
+            additionalHeaders =
+                transactionEnhancedCommercialDataRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                transactionEnhancedCommercialDataRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         fun transactionToken(transactionToken: String) = apply {
@@ -179,4 +166,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TransactionEnhancedCommercialDataRetrieveParams && transactionToken == other.transactionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(transactionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "TransactionEnhancedCommercialDataRetrieveParams{transactionToken=$transactionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

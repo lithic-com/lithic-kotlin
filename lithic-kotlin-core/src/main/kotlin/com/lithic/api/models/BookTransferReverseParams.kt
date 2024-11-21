@@ -28,6 +28,12 @@ constructor(
 
     fun memo(): String? = memo
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): BookTransferReverseBody {
         return BookTransferReverseBody(memo, additionalBodyProperties)
     }
@@ -114,25 +120,6 @@ constructor(
             "BookTransferReverseBody{memo=$memo, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BookTransferReverseParams && bookTransferToken == other.bookTransferToken && memo == other.memo && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(bookTransferToken, memo, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "BookTransferReverseParams{bookTransferToken=$bookTransferToken, memo=$memo, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -150,11 +137,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(bookTransferReverseParams: BookTransferReverseParams) = apply {
-            this.bookTransferToken = bookTransferReverseParams.bookTransferToken
-            this.memo = bookTransferReverseParams.memo
-            additionalHeaders(bookTransferReverseParams.additionalHeaders)
-            additionalQueryParams(bookTransferReverseParams.additionalQueryParams)
-            additionalBodyProperties(bookTransferReverseParams.additionalBodyProperties)
+            bookTransferToken = bookTransferReverseParams.bookTransferToken
+            memo = bookTransferReverseParams.memo
+            additionalHeaders = bookTransferReverseParams.additionalHeaders.toBuilder()
+            additionalQueryParams = bookTransferReverseParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                bookTransferReverseParams.additionalBodyProperties.toMutableMap()
         }
 
         fun bookTransferToken(bookTransferToken: String) = apply {
@@ -295,4 +283,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BookTransferReverseParams && bookTransferToken == other.bookTransferToken && memo == other.memo && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(bookTransferToken, memo, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "BookTransferReverseParams{bookTransferToken=$bookTransferToken, memo=$memo, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

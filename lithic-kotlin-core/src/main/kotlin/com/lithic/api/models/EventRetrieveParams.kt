@@ -17,6 +17,10 @@ constructor(
 
     fun eventToken(): String = eventToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,23 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventRetrieveParams && eventToken == other.eventToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "EventRetrieveParams{eventToken=$eventToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -60,9 +47,9 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(eventRetrieveParams: EventRetrieveParams) = apply {
-            this.eventToken = eventRetrieveParams.eventToken
-            additionalHeaders(eventRetrieveParams.additionalHeaders)
-            additionalQueryParams(eventRetrieveParams.additionalQueryParams)
+            eventToken = eventRetrieveParams.eventToken
+            additionalHeaders = eventRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         fun eventToken(eventToken: String) = apply { this.eventToken = eventToken }
@@ -172,4 +159,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventRetrieveParams && eventToken == other.eventToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventRetrieveParams{eventToken=$eventToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -57,6 +57,12 @@ constructor(
 
     fun userDefinedId(): String? = userDefinedId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): ManagementOperationCreateBody {
         return ManagementOperationCreateBody(
             amount,
@@ -239,25 +245,6 @@ constructor(
             "ManagementOperationCreateBody{amount=$amount, category=$category, direction=$direction, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, token=$token, memo=$memo, subtype=$subtype, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ManagementOperationCreateParams && amount == other.amount && category == other.category && direction == other.direction && effectiveDate == other.effectiveDate && eventType == other.eventType && financialAccountToken == other.financialAccountToken && token == other.token && memo == other.memo && subtype == other.subtype && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, category, direction, effectiveDate, eventType, financialAccountToken, token, memo, subtype, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "ManagementOperationCreateParams{amount=$amount, category=$category, direction=$direction, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, token=$token, memo=$memo, subtype=$subtype, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -284,19 +271,21 @@ constructor(
 
         internal fun from(managementOperationCreateParams: ManagementOperationCreateParams) =
             apply {
-                this.amount = managementOperationCreateParams.amount
-                this.category = managementOperationCreateParams.category
-                this.direction = managementOperationCreateParams.direction
-                this.effectiveDate = managementOperationCreateParams.effectiveDate
-                this.eventType = managementOperationCreateParams.eventType
-                this.financialAccountToken = managementOperationCreateParams.financialAccountToken
-                this.token = managementOperationCreateParams.token
-                this.memo = managementOperationCreateParams.memo
-                this.subtype = managementOperationCreateParams.subtype
-                this.userDefinedId = managementOperationCreateParams.userDefinedId
-                additionalHeaders(managementOperationCreateParams.additionalHeaders)
-                additionalQueryParams(managementOperationCreateParams.additionalQueryParams)
-                additionalBodyProperties(managementOperationCreateParams.additionalBodyProperties)
+                amount = managementOperationCreateParams.amount
+                category = managementOperationCreateParams.category
+                direction = managementOperationCreateParams.direction
+                effectiveDate = managementOperationCreateParams.effectiveDate
+                eventType = managementOperationCreateParams.eventType
+                financialAccountToken = managementOperationCreateParams.financialAccountToken
+                token = managementOperationCreateParams.token
+                memo = managementOperationCreateParams.memo
+                subtype = managementOperationCreateParams.subtype
+                userDefinedId = managementOperationCreateParams.userDefinedId
+                additionalHeaders = managementOperationCreateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    managementOperationCreateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    managementOperationCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun amount(amount: Long) = apply { this.amount = amount }
@@ -718,4 +707,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ManagementOperationCreateParams && amount == other.amount && category == other.category && direction == other.direction && effectiveDate == other.effectiveDate && eventType == other.eventType && financialAccountToken == other.financialAccountToken && token == other.token && memo == other.memo && subtype == other.subtype && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, category, direction, effectiveDate, eventType, financialAccountToken, token, memo, subtype, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ManagementOperationCreateParams{amount=$amount, category=$category, direction=$direction, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, token=$token, memo=$memo, subtype=$subtype, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
