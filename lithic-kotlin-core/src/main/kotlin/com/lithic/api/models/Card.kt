@@ -25,6 +25,7 @@ private constructor(
     private val accountToken: JsonField<String>,
     private val authRuleTokens: JsonField<List<String>>,
     private val cardProgramToken: JsonField<String>,
+    private val replacementFor: JsonField<String>,
     private val cardholderCurrency: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
     private val cvv: JsonField<String>,
@@ -62,6 +63,12 @@ private constructor(
 
     /** Globally unique identifier for the card program on which the card exists. */
     fun cardProgramToken(): String = cardProgramToken.getRequired("card_program_token")
+
+    /**
+     * If the card is a replacement for another card, the globally unique identifier for the card
+     * that was replaced.
+     */
+    fun replacementFor(): String? = replacementFor.getNullable("replacement_for")
 
     /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
     fun cardholderCurrency(): String? = cardholderCurrency.getNullable("cardholder_currency")
@@ -176,6 +183,9 @@ private constructor(
      * - `SINGLE_USE` - Card is closed upon first successful authorization.
      * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that successfully
      *   authorizes the card.
+     * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
+     * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+     *   instead.
      */
     fun type(): Type = type.getRequired("type")
 
@@ -192,6 +202,12 @@ private constructor(
 
     /** Globally unique identifier for the card program on which the card exists. */
     @JsonProperty("card_program_token") @ExcludeMissing fun _cardProgramToken() = cardProgramToken
+
+    /**
+     * If the card is a replacement for another card, the globally unique identifier for the card
+     * that was replaced.
+     */
+    @JsonProperty("replacement_for") @ExcludeMissing fun _replacementFor() = replacementFor
 
     /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
     @JsonProperty("cardholder_currency")
@@ -311,6 +327,9 @@ private constructor(
      * - `SINGLE_USE` - Card is closed upon first successful authorization.
      * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that successfully
      *   authorizes the card.
+     * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
+     * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+     *   instead.
      */
     @JsonProperty("type") @ExcludeMissing fun _type() = type
 
@@ -323,6 +342,7 @@ private constructor(
             accountToken()
             authRuleTokens()
             cardProgramToken()
+            replacementFor()
             cardholderCurrency()
             created()
             cvv()
@@ -358,6 +378,7 @@ private constructor(
         private var accountToken: JsonField<String> = JsonMissing.of()
         private var authRuleTokens: JsonField<List<String>> = JsonMissing.of()
         private var cardProgramToken: JsonField<String> = JsonMissing.of()
+        private var replacementFor: JsonField<String> = JsonMissing.of()
         private var cardholderCurrency: JsonField<String> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var cvv: JsonField<String> = JsonMissing.of()
@@ -383,6 +404,7 @@ private constructor(
             this.accountToken = card.accountToken
             this.authRuleTokens = card.authRuleTokens
             this.cardProgramToken = card.cardProgramToken
+            this.replacementFor = card.replacementFor
             this.cardholderCurrency = card.cardholderCurrency
             this.created = card.created
             this.cvv = card.cvv
@@ -445,6 +467,22 @@ private constructor(
         @ExcludeMissing
         fun cardProgramToken(cardProgramToken: JsonField<String>) = apply {
             this.cardProgramToken = cardProgramToken
+        }
+
+        /**
+         * If the card is a replacement for another card, the globally unique identifier for the
+         * card that was replaced.
+         */
+        fun replacementFor(replacementFor: String) = replacementFor(JsonField.of(replacementFor))
+
+        /**
+         * If the card is a replacement for another card, the globally unique identifier for the
+         * card that was replaced.
+         */
+        @JsonProperty("replacement_for")
+        @ExcludeMissing
+        fun replacementFor(replacementFor: JsonField<String>) = apply {
+            this.replacementFor = replacementFor
         }
 
         /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
@@ -715,6 +753,10 @@ private constructor(
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
          *   successfully authorizes the card.
+         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
+         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
          */
         fun type(type: Type) = type(JsonField.of(type))
 
@@ -728,6 +770,10 @@ private constructor(
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
          *   successfully authorizes the card.
+         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
+         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
          */
         @JsonProperty("type")
         @ExcludeMissing
@@ -752,6 +798,7 @@ private constructor(
                 accountToken,
                 authRuleTokens.map { it.toImmutable() },
                 cardProgramToken,
+                replacementFor,
                 cardholderCurrency,
                 created,
                 cvv,
@@ -1345,6 +1392,10 @@ private constructor(
 
             val VIRTUAL = Type(JsonField.of("VIRTUAL"))
 
+            val UNLOCKED = Type(JsonField.of("UNLOCKED"))
+
+            val DIGITAL_WALLET = Type(JsonField.of("DIGITAL_WALLET"))
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -1353,6 +1404,8 @@ private constructor(
             PHYSICAL,
             SINGLE_USE,
             VIRTUAL,
+            UNLOCKED,
+            DIGITAL_WALLET,
         }
 
         enum class Value {
@@ -1360,6 +1413,8 @@ private constructor(
             PHYSICAL,
             SINGLE_USE,
             VIRTUAL,
+            UNLOCKED,
+            DIGITAL_WALLET,
             _UNKNOWN,
         }
 
@@ -1369,6 +1424,8 @@ private constructor(
                 PHYSICAL -> Value.PHYSICAL
                 SINGLE_USE -> Value.SINGLE_USE
                 VIRTUAL -> Value.VIRTUAL
+                UNLOCKED -> Value.UNLOCKED
+                DIGITAL_WALLET -> Value.DIGITAL_WALLET
                 else -> Value._UNKNOWN
             }
 
@@ -1378,6 +1435,8 @@ private constructor(
                 PHYSICAL -> Known.PHYSICAL
                 SINGLE_USE -> Known.SINGLE_USE
                 VIRTUAL -> Known.VIRTUAL
+                UNLOCKED -> Known.UNLOCKED
+                DIGITAL_WALLET -> Known.DIGITAL_WALLET
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 
@@ -1389,15 +1448,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Card && accountToken == other.accountToken && authRuleTokens == other.authRuleTokens && cardProgramToken == other.cardProgramToken && cardholderCurrency == other.cardholderCurrency && created == other.created && cvv == other.cvv && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && funding == other.funding && hostname == other.hostname && lastFour == other.lastFour && memo == other.memo && pan == other.pan && pendingCommands == other.pendingCommands && pinStatus == other.pinStatus && productId == other.productId && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && token == other.token && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Card && accountToken == other.accountToken && authRuleTokens == other.authRuleTokens && cardProgramToken == other.cardProgramToken && replacementFor == other.replacementFor && cardholderCurrency == other.cardholderCurrency && created == other.created && cvv == other.cvv && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && funding == other.funding && hostname == other.hostname && lastFour == other.lastFour && memo == other.memo && pan == other.pan && pendingCommands == other.pendingCommands && pinStatus == other.pinStatus && productId == other.productId && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && token == other.token && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, authRuleTokens, cardProgramToken, cardholderCurrency, created, cvv, digitalCardArtToken, expMonth, expYear, funding, hostname, lastFour, memo, pan, pendingCommands, pinStatus, productId, spendLimit, spendLimitDuration, state, token, type, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(accountToken, authRuleTokens, cardProgramToken, replacementFor, cardholderCurrency, created, cvv, digitalCardArtToken, expMonth, expYear, funding, hostname, lastFour, memo, pan, pendingCommands, pinStatus, productId, spendLimit, spendLimitDuration, state, token, type, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Card{accountToken=$accountToken, authRuleTokens=$authRuleTokens, cardProgramToken=$cardProgramToken, cardholderCurrency=$cardholderCurrency, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, pendingCommands=$pendingCommands, pinStatus=$pinStatus, productId=$productId, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
+        "Card{accountToken=$accountToken, authRuleTokens=$authRuleTokens, cardProgramToken=$cardProgramToken, replacementFor=$replacementFor, cardholderCurrency=$cardholderCurrency, created=$created, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, funding=$funding, hostname=$hostname, lastFour=$lastFour, memo=$memo, pan=$pan, pendingCommands=$pendingCommands, pinStatus=$pinStatus, productId=$productId, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, token=$token, type=$type, additionalProperties=$additionalProperties}"
 }
