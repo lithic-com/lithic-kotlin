@@ -44,6 +44,7 @@ class CardTest {
                 .pan("4111111289144142")
                 .pendingCommands(listOf("string"))
                 .productId("1")
+                .replacementFor("5e9483eb-8103-4e16-9794-2106111b2eca")
                 .build()
         assertThat(card).isNotNull
         assertThat(card.token()).isEqualTo("7ef7d65c-9023-4da3-b113-3b8583fd7951")
@@ -79,5 +80,6 @@ class CardTest {
         assertThat(card.pan()).isEqualTo("4111111289144142")
         assertThat(card.pendingCommands()).containsExactly("string")
         assertThat(card.productId()).isEqualTo("1")
+        assertThat(card.replacementFor()).isEqualTo("5e9483eb-8103-4e16-9794-2106111b2eca")
     }
 }
