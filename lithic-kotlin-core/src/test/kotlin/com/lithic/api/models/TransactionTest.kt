@@ -89,7 +89,7 @@ class TransactionTest {
                 )
                 .merchantAmount(123L)
                 .merchantAuthorizationAmount(123L)
-                .merchantCurrency("merchant_currency")
+                .merchantCurrency("USD")
                 .network(Transaction.Network.INTERLINK)
                 .networkRiskScore(123L)
                 .pos(
@@ -263,7 +263,7 @@ class TransactionTest {
             )
         assertThat(transaction.merchantAmount()).isEqualTo(123L)
         assertThat(transaction.merchantAuthorizationAmount()).isEqualTo(123L)
-        assertThat(transaction.merchantCurrency()).isEqualTo("merchant_currency")
+        assertThat(transaction.merchantCurrency()).isEqualTo("USD")
         assertThat(transaction.network()).isEqualTo(Transaction.Network.INTERLINK)
         assertThat(transaction.networkRiskScore()).isEqualTo(123L)
         assertThat(transaction.pos())
