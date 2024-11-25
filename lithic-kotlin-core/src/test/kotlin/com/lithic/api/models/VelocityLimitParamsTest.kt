@@ -17,10 +17,10 @@ class VelocityLimitParamsTest {
                         .includeMccs(listOf("5542"))
                         .build()
                 )
-                .period(VelocityLimitParams.Period.ofDouble(42.23))
+                .period(VelocityLimitParams.Period.ofDouble(10.0))
                 .scope(VelocityLimitParams.Scope.CARD)
-                .limitAmount(42.23)
-                .limitCount(42.23)
+                .limitAmount(10000.0)
+                .limitCount(0.0)
                 .build()
         assertThat(velocityLimitParams).isNotNull
         assertThat(velocityLimitParams.filters())
@@ -31,9 +31,9 @@ class VelocityLimitParamsTest {
                     .build()
             )
         assertThat(velocityLimitParams.period())
-            .isEqualTo(VelocityLimitParams.Period.ofDouble(42.23))
+            .isEqualTo(VelocityLimitParams.Period.ofDouble(10.0))
         assertThat(velocityLimitParams.scope()).isEqualTo(VelocityLimitParams.Scope.CARD)
-        assertThat(velocityLimitParams.limitAmount()).isEqualTo(42.23)
-        assertThat(velocityLimitParams.limitCount()).isEqualTo(42.23)
+        assertThat(velocityLimitParams.limitAmount()).isEqualTo(10000.0)
+        assertThat(velocityLimitParams.limitCount()).isEqualTo(0.0)
     }
 }
