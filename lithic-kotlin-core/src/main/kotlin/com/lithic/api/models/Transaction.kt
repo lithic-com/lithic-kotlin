@@ -771,11 +771,13 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /** The aggregate settled amount in the cardholder billing currency. */
+            /**
+             * The estimated settled amount of the transaction in the cardholder billing currency.
+             */
             fun amount(): Long = amount.getRequired("amount")
 
             /**
-             * The conversion rate used to convert the merchant amount to the cardholder billing
+             * The exchange rate used to convert the merchant amount to the cardholder billing
              * amount.
              */
             fun conversionRate(): String = conversionRate.getRequired("conversion_rate")
@@ -787,11 +789,13 @@ private constructor(
              */
             fun currency(): Currency = currency.getRequired("currency")
 
-            /** The aggregate settled amount in the cardholder billing currency. */
+            /**
+             * The estimated settled amount of the transaction in the cardholder billing currency.
+             */
             @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
             /**
-             * The conversion rate used to convert the merchant amount to the cardholder billing
+             * The exchange rate used to convert the merchant amount to the cardholder billing
              * amount.
              */
             @JsonProperty("conversion_rate") @ExcludeMissing fun _conversionRate() = conversionRate
@@ -837,23 +841,29 @@ private constructor(
                     additionalProperties(cardholder.additionalProperties)
                 }
 
-                /** The aggregate settled amount in the cardholder billing currency. */
+                /**
+                 * The estimated settled amount of the transaction in the cardholder billing
+                 * currency.
+                 */
                 fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                /** The aggregate settled amount in the cardholder billing currency. */
+                /**
+                 * The estimated settled amount of the transaction in the cardholder billing
+                 * currency.
+                 */
                 @JsonProperty("amount")
                 @ExcludeMissing
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
                 /**
-                 * The conversion rate used to convert the merchant amount to the cardholder billing
+                 * The exchange rate used to convert the merchant amount to the cardholder billing
                  * amount.
                  */
                 fun conversionRate(conversionRate: String) =
                     conversionRate(JsonField.of(conversionRate))
 
                 /**
-                 * The conversion rate used to convert the merchant amount to the cardholder billing
+                 * The exchange rate used to convert the merchant amount to the cardholder billing
                  * amount.
                  */
                 @JsonProperty("conversion_rate")
@@ -931,10 +941,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /**
-             * The aggregate authorization amount of the transaction in the anticipated settlement
-             * currency.
-             */
+            /** The pending amount of the transaction in the anticipated settlement currency. */
             fun amount(): Long = amount.getRequired("amount")
 
             /**
@@ -944,10 +951,7 @@ private constructor(
              */
             fun currency(): Currency = currency.getRequired("currency")
 
-            /**
-             * The aggregate authorization amount of the transaction in the anticipated settlement
-             * currency.
-             */
+            /** The pending amount of the transaction in the anticipated settlement currency. */
             @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
             /**
@@ -988,16 +992,10 @@ private constructor(
                     additionalProperties(hold.additionalProperties)
                 }
 
-                /**
-                 * The aggregate authorization amount of the transaction in the anticipated
-                 * settlement currency.
-                 */
+                /** The pending amount of the transaction in the anticipated settlement currency. */
                 fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                /**
-                 * The aggregate authorization amount of the transaction in the anticipated
-                 * settlement currency.
-                 */
+                /** The pending amount of the transaction in the anticipated settlement currency. */
                 @JsonProperty("amount")
                 @ExcludeMissing
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
@@ -1070,7 +1068,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /** The aggregate settled amount in the merchant currency. */
+            /** The settled amount of the transaction in the merchant currency. */
             fun amount(): Long = amount.getRequired("amount")
 
             /**
@@ -1080,7 +1078,7 @@ private constructor(
              */
             fun currency(): Currency = currency.getRequired("currency")
 
-            /** The aggregate settled amount in the merchant currency. */
+            /** The settled amount of the transaction in the merchant currency. */
             @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
             /**
@@ -1121,10 +1119,10 @@ private constructor(
                     additionalProperties(merchant.additionalProperties)
                 }
 
-                /** The aggregate settled amount in the merchant currency. */
+                /** The settled amount of the transaction in the merchant currency. */
                 fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                /** The aggregate settled amount in the merchant currency. */
+                /** The settled amount of the transaction in the merchant currency. */
                 @JsonProperty("amount")
                 @ExcludeMissing
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
@@ -1197,7 +1195,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            /** The aggregate settled amount in the settlement currency. */
+            /** The settled amount of the transaction in the settlement currency. */
             fun amount(): Long = amount.getRequired("amount")
 
             /**
@@ -1207,7 +1205,7 @@ private constructor(
              */
             fun currency(): Currency = currency.getRequired("currency")
 
-            /** The aggregate settled amount in the settlement currency. */
+            /** The settled amount of the transaction in the settlement currency. */
             @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
             /**
@@ -1248,10 +1246,10 @@ private constructor(
                     additionalProperties(settlement.additionalProperties)
                 }
 
-                /** The aggregate settled amount in the settlement currency. */
+                /** The settled amount of the transaction in the settlement currency. */
                 fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                /** The aggregate settled amount in the settlement currency. */
+                /** The settled amount of the transaction in the settlement currency. */
                 @JsonProperty("amount")
                 @ExcludeMissing
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
@@ -4472,11 +4470,11 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /** The amount in the cardholder billing currency. */
+                /** Amount of the event in the cardholder billing currency. */
                 fun amount(): Long = amount.getRequired("amount")
 
                 /**
-                 * The conversion rate used to convert the merchant amount to the cardholder billing
+                 * Exchange rate used to convert the merchant amount to the cardholder billing
                  * amount.
                  */
                 fun conversionRate(): String = conversionRate.getRequired("conversion_rate")
@@ -4488,11 +4486,11 @@ private constructor(
                  */
                 fun currency(): Currency = currency.getRequired("currency")
 
-                /** The amount in the cardholder billing currency. */
+                /** Amount of the event in the cardholder billing currency. */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
                 /**
-                 * The conversion rate used to convert the merchant amount to the cardholder billing
+                 * Exchange rate used to convert the merchant amount to the cardholder billing
                  * amount.
                  */
                 @JsonProperty("conversion_rate")
@@ -4540,24 +4538,24 @@ private constructor(
                         additionalProperties(cardholder.additionalProperties)
                     }
 
-                    /** The amount in the cardholder billing currency. */
+                    /** Amount of the event in the cardholder billing currency. */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                    /** The amount in the cardholder billing currency. */
+                    /** Amount of the event in the cardholder billing currency. */
                     @JsonProperty("amount")
                     @ExcludeMissing
                     fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
                     /**
-                     * The conversion rate used to convert the merchant amount to the cardholder
-                     * billing amount.
+                     * Exchange rate used to convert the merchant amount to the cardholder billing
+                     * amount.
                      */
                     fun conversionRate(conversionRate: String) =
                         conversionRate(JsonField.of(conversionRate))
 
                     /**
-                     * The conversion rate used to convert the merchant amount to the cardholder
-                     * billing amount.
+                     * Exchange rate used to convert the merchant amount to the cardholder billing
+                     * amount.
                      */
                     @JsonProperty("conversion_rate")
                     @ExcludeMissing
@@ -4634,7 +4632,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /** The amount in the merchant currency. */
+                /** Amount of the event in the merchant currency. */
                 fun amount(): Long = amount.getRequired("amount")
 
                 /**
@@ -4644,7 +4642,7 @@ private constructor(
                  */
                 fun currency(): Currency = currency.getRequired("currency")
 
-                /** The amount in the merchant currency. */
+                /** Amount of the event in the merchant currency. */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
                 /**
@@ -4685,10 +4683,10 @@ private constructor(
                         additionalProperties(merchant.additionalProperties)
                     }
 
-                    /** The amount in the merchant currency. */
+                    /** Amount of the event in the merchant currency. */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                    /** The amount in the merchant currency. */
+                    /** Amount of the event in the merchant currency. */
                     @JsonProperty("amount")
                     @ExcludeMissing
                     fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
@@ -4762,10 +4760,13 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                /** Amount of the event, if it is financial, in the settlement currency. */
+                /**
+                 * Amount of the event, if it is financial, in the settlement currency.
+                 * Non-financial events do not contain this amount because they do not move funds.
+                 */
                 fun amount(): Long = amount.getRequired("amount")
 
-                /** Conversion rate used to convert the merchant amount to the settlement amount. */
+                /** Exchange rate used to convert the merchant amount to the settlement amount. */
                 fun conversionRate(): String = conversionRate.getRequired("conversion_rate")
 
                 /**
@@ -4775,10 +4776,13 @@ private constructor(
                  */
                 fun currency(): Currency = currency.getRequired("currency")
 
-                /** Amount of the event, if it is financial, in the settlement currency. */
+                /**
+                 * Amount of the event, if it is financial, in the settlement currency.
+                 * Non-financial events do not contain this amount because they do not move funds.
+                 */
                 @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-                /** Conversion rate used to convert the merchant amount to the settlement amount. */
+                /** Exchange rate used to convert the merchant amount to the settlement amount. */
                 @JsonProperty("conversion_rate")
                 @ExcludeMissing
                 fun _conversionRate() = conversionRate
@@ -4824,22 +4828,30 @@ private constructor(
                         additionalProperties(settlement.additionalProperties)
                     }
 
-                    /** Amount of the event, if it is financial, in the settlement currency. */
+                    /**
+                     * Amount of the event, if it is financial, in the settlement currency.
+                     * Non-financial events do not contain this amount because they do not move
+                     * funds.
+                     */
                     fun amount(amount: Long) = amount(JsonField.of(amount))
 
-                    /** Amount of the event, if it is financial, in the settlement currency. */
+                    /**
+                     * Amount of the event, if it is financial, in the settlement currency.
+                     * Non-financial events do not contain this amount because they do not move
+                     * funds.
+                     */
                     @JsonProperty("amount")
                     @ExcludeMissing
                     fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
                     /**
-                     * Conversion rate used to convert the merchant amount to the settlement amount.
+                     * Exchange rate used to convert the merchant amount to the settlement amount.
                      */
                     fun conversionRate(conversionRate: String) =
                         conversionRate(JsonField.of(conversionRate))
 
                     /**
-                     * Conversion rate used to convert the merchant amount to the settlement amount.
+                     * Exchange rate used to convert the merchant amount to the settlement amount.
                      */
                     @JsonProperty("conversion_rate")
                     @ExcludeMissing

@@ -144,6 +144,10 @@ constructor(
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
          *   successfully authorizes the card.
+         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
+         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
          */
         @JsonProperty("type") fun type(): Type? = type
 
@@ -328,6 +332,10 @@ constructor(
              * - `SINGLE_USE` - Card is closed upon first successful authorization.
              * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
              *   successfully authorizes the card.
+             * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+             *   instead.
+             * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use
+             *   VIRTUAL instead.
              */
             @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
@@ -595,6 +603,10 @@ constructor(
          * - `SINGLE_USE` - Card is closed upon first successful authorization.
          * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
          *   successfully authorizes the card.
+         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
+         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
+         *   instead.
          */
         fun type(type: Type) = apply { this.type = type }
 
@@ -899,6 +911,10 @@ constructor(
 
             val VIRTUAL = Type(JsonField.of("VIRTUAL"))
 
+            val UNLOCKED = Type(JsonField.of("UNLOCKED"))
+
+            val DIGITAL_WALLET = Type(JsonField.of("DIGITAL_WALLET"))
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -907,6 +923,8 @@ constructor(
             PHYSICAL,
             SINGLE_USE,
             VIRTUAL,
+            UNLOCKED,
+            DIGITAL_WALLET,
         }
 
         enum class Value {
@@ -914,6 +932,8 @@ constructor(
             PHYSICAL,
             SINGLE_USE,
             VIRTUAL,
+            UNLOCKED,
+            DIGITAL_WALLET,
             _UNKNOWN,
         }
 
@@ -923,6 +943,8 @@ constructor(
                 PHYSICAL -> Value.PHYSICAL
                 SINGLE_USE -> Value.SINGLE_USE
                 VIRTUAL -> Value.VIRTUAL
+                UNLOCKED -> Value.UNLOCKED
+                DIGITAL_WALLET -> Value.DIGITAL_WALLET
                 else -> Value._UNKNOWN
             }
 
@@ -932,6 +954,8 @@ constructor(
                 PHYSICAL -> Known.PHYSICAL
                 SINGLE_USE -> Known.SINGLE_USE
                 VIRTUAL -> Known.VIRTUAL
+                UNLOCKED -> Known.UNLOCKED
+                DIGITAL_WALLET -> Known.DIGITAL_WALLET
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 
