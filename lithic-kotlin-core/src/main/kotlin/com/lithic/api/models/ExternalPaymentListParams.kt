@@ -51,6 +51,10 @@ constructor(
 
     fun status(): TransactionStatus? = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -77,25 +81,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ExternalPaymentListParams && this.begin == other.begin && this.businessAccountToken == other.businessAccountToken && this.category == other.category && this.end == other.end && this.endingBefore == other.endingBefore && this.financialAccountToken == other.financialAccountToken && this.pageSize == other.pageSize && this.result == other.result && this.startingAfter == other.startingAfter && this.status == other.status && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ExternalPaymentListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -120,18 +105,18 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(externalPaymentListParams: ExternalPaymentListParams) = apply {
-            this.begin = externalPaymentListParams.begin
-            this.businessAccountToken = externalPaymentListParams.businessAccountToken
-            this.category = externalPaymentListParams.category
-            this.end = externalPaymentListParams.end
-            this.endingBefore = externalPaymentListParams.endingBefore
-            this.financialAccountToken = externalPaymentListParams.financialAccountToken
-            this.pageSize = externalPaymentListParams.pageSize
-            this.result = externalPaymentListParams.result
-            this.startingAfter = externalPaymentListParams.startingAfter
-            this.status = externalPaymentListParams.status
-            additionalHeaders(externalPaymentListParams.additionalHeaders)
-            additionalQueryParams(externalPaymentListParams.additionalQueryParams)
+            begin = externalPaymentListParams.begin
+            businessAccountToken = externalPaymentListParams.businessAccountToken
+            category = externalPaymentListParams.category
+            end = externalPaymentListParams.end
+            endingBefore = externalPaymentListParams.endingBefore
+            financialAccountToken = externalPaymentListParams.financialAccountToken
+            pageSize = externalPaymentListParams.pageSize
+            result = externalPaymentListParams.result
+            startingAfter = externalPaymentListParams.startingAfter
+            status = externalPaymentListParams.status
+            additionalHeaders = externalPaymentListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = externalPaymentListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -310,7 +295,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalPaymentCategory && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ExternalPaymentCategory && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -379,7 +364,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionResult && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is TransactionResult && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -436,7 +421,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionStatus && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is TransactionStatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -497,4 +482,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ExternalPaymentListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ExternalPaymentListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -38,6 +38,12 @@ constructor(
 
     fun workflow(): Workflow = workflow
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AccountHolderResubmitBody {
         return AccountHolderResubmitBody(
             individual,
@@ -153,42 +159,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderResubmitBody && this.individual == other.individual && this.tosTimestamp == other.tosTimestamp && this.workflow == other.workflow && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountHolderResubmitBody && individual == other.individual && tosTimestamp == other.tosTimestamp && workflow == other.workflow && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(individual, tosTimestamp, workflow, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(individual, tosTimestamp, workflow, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AccountHolderResubmitBody{individual=$individual, tosTimestamp=$tosTimestamp, workflow=$workflow, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AccountHolderResubmitParams && this.accountHolderToken == other.accountHolderToken && this.individual == other.individual && this.tosTimestamp == other.tosTimestamp && this.workflow == other.workflow && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountHolderToken, individual, tosTimestamp, workflow, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AccountHolderResubmitParams{accountHolderToken=$accountHolderToken, individual=$individual, tosTimestamp=$tosTimestamp, workflow=$workflow, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -209,13 +191,14 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountHolderResubmitParams: AccountHolderResubmitParams) = apply {
-            this.accountHolderToken = accountHolderResubmitParams.accountHolderToken
-            this.individual = accountHolderResubmitParams.individual
-            this.tosTimestamp = accountHolderResubmitParams.tosTimestamp
-            this.workflow = accountHolderResubmitParams.workflow
-            additionalHeaders(accountHolderResubmitParams.additionalHeaders)
-            additionalQueryParams(accountHolderResubmitParams.additionalQueryParams)
-            additionalBodyProperties(accountHolderResubmitParams.additionalBodyProperties)
+            accountHolderToken = accountHolderResubmitParams.accountHolderToken
+            individual = accountHolderResubmitParams.individual
+            tosTimestamp = accountHolderResubmitParams.tosTimestamp
+            workflow = accountHolderResubmitParams.workflow
+            additionalHeaders = accountHolderResubmitParams.additionalHeaders.toBuilder()
+            additionalQueryParams = accountHolderResubmitParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                accountHolderResubmitParams.additionalBodyProperties.toMutableMap()
         }
 
         fun accountHolderToken(accountHolderToken: String) = apply {
@@ -519,17 +502,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Individual && this.address == other.address && this.dob == other.dob && this.email == other.email && this.firstName == other.firstName && this.governmentId == other.governmentId && this.lastName == other.lastName && this.phoneNumber == other.phoneNumber && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Individual && address == other.address && dob == other.dob && email == other.email && firstName == other.firstName && governmentId == other.governmentId && lastName == other.lastName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(address, dob, email, firstName, governmentId, lastName, phoneNumber, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(address, dob, email, firstName, governmentId, lastName, phoneNumber, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Individual{address=$address, dob=$dob, email=$email, firstName=$firstName, governmentId=$governmentId, lastName=$lastName, phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
@@ -548,7 +528,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Workflow && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Workflow && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -585,4 +565,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AccountHolderResubmitParams && accountHolderToken == other.accountHolderToken && individual == other.individual && tosTimestamp == other.tosTimestamp && workflow == other.workflow && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, individual, tosTimestamp, workflow, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AccountHolderResubmitParams{accountHolderToken=$accountHolderToken, individual=$individual, tosTimestamp=$tosTimestamp, workflow=$workflow, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

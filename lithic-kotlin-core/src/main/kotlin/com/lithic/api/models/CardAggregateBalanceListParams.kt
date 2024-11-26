@@ -20,6 +20,10 @@ constructor(
 
     fun businessAccountToken(): String? = businessAccountToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -31,25 +35,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardAggregateBalanceListParams && this.accountToken == other.accountToken && this.businessAccountToken == other.businessAccountToken && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountToken, businessAccountToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CardAggregateBalanceListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -67,10 +52,10 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(cardAggregateBalanceListParams: CardAggregateBalanceListParams) = apply {
-            this.accountToken = cardAggregateBalanceListParams.accountToken
-            this.businessAccountToken = cardAggregateBalanceListParams.businessAccountToken
-            additionalHeaders(cardAggregateBalanceListParams.additionalHeaders)
-            additionalQueryParams(cardAggregateBalanceListParams.additionalQueryParams)
+            accountToken = cardAggregateBalanceListParams.accountToken
+            businessAccountToken = cardAggregateBalanceListParams.businessAccountToken
+            additionalHeaders = cardAggregateBalanceListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = cardAggregateBalanceListParams.additionalQueryParams.toBuilder()
         }
 
         /** Cardholder to retrieve aggregate balances for. */
@@ -187,4 +172,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardAggregateBalanceListParams && accountToken == other.accountToken && businessAccountToken == other.businessAccountToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, businessAccountToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CardAggregateBalanceListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

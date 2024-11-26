@@ -28,6 +28,12 @@ constructor(
 
     fun nickname(): String? = nickname
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): FinancialAccountUpdateBody {
         return FinancialAccountUpdateBody(nickname, additionalBodyProperties)
     }
@@ -100,42 +106,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountUpdateBody && this.nickname == other.nickname && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is FinancialAccountUpdateBody && nickname == other.nickname && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(nickname, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(nickname, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "FinancialAccountUpdateBody{nickname=$nickname, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is FinancialAccountUpdateParams && this.financialAccountToken == other.financialAccountToken && this.nickname == other.nickname && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(financialAccountToken, nickname, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "FinancialAccountUpdateParams{financialAccountToken=$financialAccountToken, nickname=$nickname, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -154,11 +136,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountUpdateParams: FinancialAccountUpdateParams) = apply {
-            this.financialAccountToken = financialAccountUpdateParams.financialAccountToken
-            this.nickname = financialAccountUpdateParams.nickname
-            additionalHeaders(financialAccountUpdateParams.additionalHeaders)
-            additionalQueryParams(financialAccountUpdateParams.additionalQueryParams)
-            additionalBodyProperties(financialAccountUpdateParams.additionalBodyProperties)
+            financialAccountToken = financialAccountUpdateParams.financialAccountToken
+            nickname = financialAccountUpdateParams.nickname
+            additionalHeaders = financialAccountUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = financialAccountUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                financialAccountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
@@ -298,4 +281,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is FinancialAccountUpdateParams && financialAccountToken == other.financialAccountToken && nickname == other.nickname && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, nickname, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "FinancialAccountUpdateParams{financialAccountToken=$financialAccountToken, nickname=$nickname, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

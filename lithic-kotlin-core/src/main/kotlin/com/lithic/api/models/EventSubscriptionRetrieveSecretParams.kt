@@ -17,6 +17,10 @@ constructor(
 
     fun eventSubscriptionToken(): String = eventSubscriptionToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,25 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventSubscriptionRetrieveSecretParams && this.eventSubscriptionToken == other.eventSubscriptionToken && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventSubscriptionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventSubscriptionRetrieveSecretParams{eventSubscriptionToken=$eventSubscriptionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -64,10 +49,10 @@ constructor(
         internal fun from(
             eventSubscriptionRetrieveSecretParams: EventSubscriptionRetrieveSecretParams
         ) = apply {
-            this.eventSubscriptionToken =
-                eventSubscriptionRetrieveSecretParams.eventSubscriptionToken
-            additionalHeaders(eventSubscriptionRetrieveSecretParams.additionalHeaders)
-            additionalQueryParams(eventSubscriptionRetrieveSecretParams.additionalQueryParams)
+            eventSubscriptionToken = eventSubscriptionRetrieveSecretParams.eventSubscriptionToken
+            additionalHeaders = eventSubscriptionRetrieveSecretParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                eventSubscriptionRetrieveSecretParams.additionalQueryParams.toBuilder()
         }
 
         fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
@@ -181,4 +166,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventSubscriptionRetrieveSecretParams && eventSubscriptionToken == other.eventSubscriptionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventSubscriptionToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventSubscriptionRetrieveSecretParams{eventSubscriptionToken=$eventSubscriptionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

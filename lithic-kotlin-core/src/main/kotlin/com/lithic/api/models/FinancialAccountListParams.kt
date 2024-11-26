@@ -28,6 +28,10 @@ constructor(
 
     fun type(): Type? = type
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -40,25 +44,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is FinancialAccountListParams && this.accountToken == other.accountToken && this.businessAccountToken == other.businessAccountToken && this.type == other.type && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountToken, businessAccountToken, type, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "FinancialAccountListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -77,11 +62,11 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(financialAccountListParams: FinancialAccountListParams) = apply {
-            this.accountToken = financialAccountListParams.accountToken
-            this.businessAccountToken = financialAccountListParams.businessAccountToken
-            this.type = financialAccountListParams.type
-            additionalHeaders(financialAccountListParams.additionalHeaders)
-            additionalQueryParams(financialAccountListParams.additionalQueryParams)
+            accountToken = financialAccountListParams.accountToken
+            businessAccountToken = financialAccountListParams.businessAccountToken
+            type = financialAccountListParams.type
+            additionalHeaders = financialAccountListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = financialAccountListParams.additionalQueryParams.toBuilder()
         }
 
         /** List financial accounts for a given account_token or business_account_token */
@@ -216,7 +201,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -265,4 +250,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is FinancialAccountListParams && accountToken == other.accountToken && businessAccountToken == other.businessAccountToken && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, businessAccountToken, type, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "FinancialAccountListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

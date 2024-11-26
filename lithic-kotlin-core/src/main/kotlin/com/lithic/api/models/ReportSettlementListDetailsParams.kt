@@ -27,6 +27,10 @@ constructor(
 
     fun startingAfter(): String? = startingAfter
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -44,25 +48,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReportSettlementListDetailsParams && this.reportDate == other.reportDate && this.endingBefore == other.endingBefore && this.pageSize == other.pageSize && this.startingAfter == other.startingAfter && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(reportDate, endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ReportSettlementListDetailsParams{reportDate=$reportDate, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -83,12 +68,13 @@ constructor(
 
         internal fun from(reportSettlementListDetailsParams: ReportSettlementListDetailsParams) =
             apply {
-                this.reportDate = reportSettlementListDetailsParams.reportDate
-                this.endingBefore = reportSettlementListDetailsParams.endingBefore
-                this.pageSize = reportSettlementListDetailsParams.pageSize
-                this.startingAfter = reportSettlementListDetailsParams.startingAfter
-                additionalHeaders(reportSettlementListDetailsParams.additionalHeaders)
-                additionalQueryParams(reportSettlementListDetailsParams.additionalQueryParams)
+                reportDate = reportSettlementListDetailsParams.reportDate
+                endingBefore = reportSettlementListDetailsParams.endingBefore
+                pageSize = reportSettlementListDetailsParams.pageSize
+                startingAfter = reportSettlementListDetailsParams.startingAfter
+                additionalHeaders = reportSettlementListDetailsParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    reportSettlementListDetailsParams.additionalQueryParams.toBuilder()
             }
 
         fun reportDate(reportDate: LocalDate) = apply { this.reportDate = reportDate }
@@ -216,4 +202,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReportSettlementListDetailsParams && reportDate == other.reportDate && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(reportDate, endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ReportSettlementListDetailsParams{reportDate=$reportDate, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

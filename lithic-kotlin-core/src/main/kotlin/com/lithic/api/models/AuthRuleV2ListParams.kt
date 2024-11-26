@@ -29,6 +29,10 @@ constructor(
 
     fun startingAfter(): String? = startingAfter
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -41,25 +45,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AuthRuleV2ListParams && this.accountToken == other.accountToken && this.cardToken == other.cardToken && this.endingBefore == other.endingBefore && this.pageSize == other.pageSize && this.startingAfter == other.startingAfter && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(accountToken, cardToken, endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AuthRuleV2ListParams{accountToken=$accountToken, cardToken=$cardToken, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -80,13 +65,13 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(authRuleV2ListParams: AuthRuleV2ListParams) = apply {
-            this.accountToken = authRuleV2ListParams.accountToken
-            this.cardToken = authRuleV2ListParams.cardToken
-            this.endingBefore = authRuleV2ListParams.endingBefore
-            this.pageSize = authRuleV2ListParams.pageSize
-            this.startingAfter = authRuleV2ListParams.startingAfter
-            additionalHeaders(authRuleV2ListParams.additionalHeaders)
-            additionalQueryParams(authRuleV2ListParams.additionalQueryParams)
+            accountToken = authRuleV2ListParams.accountToken
+            cardToken = authRuleV2ListParams.cardToken
+            endingBefore = authRuleV2ListParams.endingBefore
+            pageSize = authRuleV2ListParams.pageSize
+            startingAfter = authRuleV2ListParams.startingAfter
+            additionalHeaders = authRuleV2ListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = authRuleV2ListParams.additionalQueryParams.toBuilder()
         }
 
         /** Only return Authorization Rules that are bound to the provided account token. */
@@ -219,4 +204,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AuthRuleV2ListParams && accountToken == other.accountToken && cardToken == other.cardToken && endingBefore == other.endingBefore && pageSize == other.pageSize && startingAfter == other.startingAfter && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, cardToken, endingBefore, pageSize, startingAfter, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "AuthRuleV2ListParams{accountToken=$accountToken, cardToken=$cardToken, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -32,6 +32,12 @@ constructor(
 
     fun eventType(): EventType? = eventType
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): EventSubscriptionSendSimulatedExampleBody {
         return EventSubscriptionSendSimulatedExampleBody(eventType, additionalBodyProperties)
     }
@@ -111,42 +117,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventSubscriptionSendSimulatedExampleBody && this.eventType == other.eventType && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is EventSubscriptionSendSimulatedExampleBody && eventType == other.eventType && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(eventType, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(eventType, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "EventSubscriptionSendSimulatedExampleBody{eventType=$eventType, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventSubscriptionSendSimulatedExampleParams && this.eventSubscriptionToken == other.eventSubscriptionToken && this.eventType == other.eventType && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventSubscriptionToken, eventType, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventSubscriptionSendSimulatedExampleParams{eventSubscriptionToken=$eventSubscriptionToken, eventType=$eventType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -167,14 +149,15 @@ constructor(
         internal fun from(
             eventSubscriptionSendSimulatedExampleParams: EventSubscriptionSendSimulatedExampleParams
         ) = apply {
-            this.eventSubscriptionToken =
+            eventSubscriptionToken =
                 eventSubscriptionSendSimulatedExampleParams.eventSubscriptionToken
-            this.eventType = eventSubscriptionSendSimulatedExampleParams.eventType
-            additionalHeaders(eventSubscriptionSendSimulatedExampleParams.additionalHeaders)
-            additionalQueryParams(eventSubscriptionSendSimulatedExampleParams.additionalQueryParams)
-            additionalBodyProperties(
-                eventSubscriptionSendSimulatedExampleParams.additionalBodyProperties
-            )
+            eventType = eventSubscriptionSendSimulatedExampleParams.eventType
+            additionalHeaders =
+                eventSubscriptionSendSimulatedExampleParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                eventSubscriptionSendSimulatedExampleParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                eventSubscriptionSendSimulatedExampleParams.additionalBodyProperties.toMutableMap()
         }
 
         fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
@@ -329,7 +312,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is EventType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -618,4 +601,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventSubscriptionSendSimulatedExampleParams && eventSubscriptionToken == other.eventSubscriptionToken && eventType == other.eventType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventSubscriptionToken, eventType, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventSubscriptionSendSimulatedExampleParams{eventSubscriptionToken=$eventSubscriptionToken, eventType=$eventType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

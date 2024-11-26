@@ -18,6 +18,10 @@ constructor(
 
     fun reportDate(): LocalDate = reportDate
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -28,25 +32,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReportSettlementSummaryParams && this.reportDate == other.reportDate && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(reportDate, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ReportSettlementSummaryParams{reportDate=$reportDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -63,9 +48,9 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(reportSettlementSummaryParams: ReportSettlementSummaryParams) = apply {
-            this.reportDate = reportSettlementSummaryParams.reportDate
-            additionalHeaders(reportSettlementSummaryParams.additionalHeaders)
-            additionalQueryParams(reportSettlementSummaryParams.additionalQueryParams)
+            reportDate = reportSettlementSummaryParams.reportDate
+            additionalHeaders = reportSettlementSummaryParams.additionalHeaders.toBuilder()
+            additionalQueryParams = reportSettlementSummaryParams.additionalQueryParams.toBuilder()
         }
 
         fun reportDate(reportDate: LocalDate) = apply { this.reportDate = reportDate }
@@ -175,4 +160,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReportSettlementSummaryParams && reportDate == other.reportDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(reportDate, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "ReportSettlementSummaryParams{reportDate=$reportDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

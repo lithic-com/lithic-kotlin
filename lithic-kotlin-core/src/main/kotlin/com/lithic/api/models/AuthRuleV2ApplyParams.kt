@@ -46,6 +46,10 @@ constructor(
     fun applyAuthRuleRequestProgramLevel(): ApplyAuthRuleRequestProgramLevel? =
         applyAuthRuleRequestProgramLevel
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getBody(): AuthRuleV2ApplyBody {
         return AuthRuleV2ApplyBody(
             applyAuthRuleRequestAccountTokens,
@@ -121,15 +125,13 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleV2ApplyBody && this.applyAuthRuleRequestAccountTokens == other.applyAuthRuleRequestAccountTokens && this.applyAuthRuleRequestCardTokens == other.applyAuthRuleRequestCardTokens && this.applyAuthRuleRequestProgramLevel == other.applyAuthRuleRequestProgramLevel /* spotless:on */
+            return /* spotless:off */ other is AuthRuleV2ApplyBody && applyAuthRuleRequestAccountTokens == other.applyAuthRuleRequestAccountTokens && applyAuthRuleRequestCardTokens == other.applyAuthRuleRequestCardTokens && applyAuthRuleRequestProgramLevel == other.applyAuthRuleRequestProgramLevel /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel) /* spotless:on */
 
-        override fun toString(): String {
-            return when {
+        override fun toString(): String =
+            when {
                 applyAuthRuleRequestAccountTokens != null ->
                     "AuthRuleV2ApplyBody{applyAuthRuleRequestAccountTokens=$applyAuthRuleRequestAccountTokens}"
                 applyAuthRuleRequestCardTokens != null ->
@@ -139,7 +141,6 @@ constructor(
                 _json != null -> "AuthRuleV2ApplyBody{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid AuthRuleV2ApplyBody")
             }
-        }
 
         companion object {
 
@@ -221,25 +222,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AuthRuleV2ApplyParams && this.authRuleToken == other.authRuleToken && this.applyAuthRuleRequestAccountTokens == other.applyAuthRuleRequestAccountTokens && this.applyAuthRuleRequestCardTokens == other.applyAuthRuleRequestCardTokens && this.applyAuthRuleRequestProgramLevel == other.applyAuthRuleRequestProgramLevel && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(authRuleToken, applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AuthRuleV2ApplyParams{authRuleToken=$authRuleToken, applyAuthRuleRequestAccountTokens=$applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens=$applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel=$applyAuthRuleRequestProgramLevel, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -258,15 +240,14 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(authRuleV2ApplyParams: AuthRuleV2ApplyParams) = apply {
-            this.authRuleToken = authRuleV2ApplyParams.authRuleToken
-            this.applyAuthRuleRequestAccountTokens =
+            authRuleToken = authRuleV2ApplyParams.authRuleToken
+            applyAuthRuleRequestAccountTokens =
                 authRuleV2ApplyParams.applyAuthRuleRequestAccountTokens
-            this.applyAuthRuleRequestCardTokens =
-                authRuleV2ApplyParams.applyAuthRuleRequestCardTokens
-            this.applyAuthRuleRequestProgramLevel =
+            applyAuthRuleRequestCardTokens = authRuleV2ApplyParams.applyAuthRuleRequestCardTokens
+            applyAuthRuleRequestProgramLevel =
                 authRuleV2ApplyParams.applyAuthRuleRequestProgramLevel
-            additionalHeaders(authRuleV2ApplyParams.additionalHeaders)
-            additionalQueryParams(authRuleV2ApplyParams.additionalQueryParams)
+            additionalHeaders = authRuleV2ApplyParams.additionalHeaders.toBuilder()
+            additionalQueryParams = authRuleV2ApplyParams.additionalQueryParams.toBuilder()
         }
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
@@ -471,17 +452,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ApplyAuthRuleRequestAccountTokens && this.accountTokens == other.accountTokens && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ApplyAuthRuleRequestAccountTokens && accountTokens == other.accountTokens && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(accountTokens, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(accountTokens, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ApplyAuthRuleRequestAccountTokens{accountTokens=$accountTokens, additionalProperties=$additionalProperties}"
@@ -551,17 +529,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ApplyAuthRuleRequestCardTokens && this.cardTokens == other.cardTokens && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ApplyAuthRuleRequestCardTokens && cardTokens == other.cardTokens && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(cardTokens, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(cardTokens, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ApplyAuthRuleRequestCardTokens{cardTokens=$cardTokens, additionalProperties=$additionalProperties}"
@@ -630,19 +605,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ApplyAuthRuleRequestProgramLevel && this.programLevel == other.programLevel && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ApplyAuthRuleRequestProgramLevel && programLevel == other.programLevel && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(programLevel, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(programLevel, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ApplyAuthRuleRequestProgramLevel{programLevel=$programLevel, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AuthRuleV2ApplyParams && authRuleToken == other.authRuleToken && applyAuthRuleRequestAccountTokens == other.applyAuthRuleRequestAccountTokens && applyAuthRuleRequestCardTokens == other.applyAuthRuleRequestCardTokens && applyAuthRuleRequestProgramLevel == other.applyAuthRuleRequestProgramLevel && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "AuthRuleV2ApplyParams{authRuleToken=$authRuleToken, applyAuthRuleRequestAccountTokens=$applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens=$applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel=$applyAuthRuleRequestProgramLevel, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -32,6 +32,12 @@ constructor(
 
     fun url(): String? = url
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): ResponderEndpointCreateBody {
         return ResponderEndpointCreateBody(
             type,
@@ -115,42 +121,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ResponderEndpointCreateBody && this.type == other.type && this.url == other.url && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ResponderEndpointCreateBody && type == other.type && url == other.url && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(type, url, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(type, url, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ResponderEndpointCreateBody{type=$type, url=$url, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ResponderEndpointCreateParams && this.type == other.type && this.url == other.url && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(type, url, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ResponderEndpointCreateParams{type=$type, url=$url, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -169,11 +151,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(responderEndpointCreateParams: ResponderEndpointCreateParams) = apply {
-            this.type = responderEndpointCreateParams.type
-            this.url = responderEndpointCreateParams.url
-            additionalHeaders(responderEndpointCreateParams.additionalHeaders)
-            additionalQueryParams(responderEndpointCreateParams.additionalQueryParams)
-            additionalBodyProperties(responderEndpointCreateParams.additionalBodyProperties)
+            type = responderEndpointCreateParams.type
+            url = responderEndpointCreateParams.url
+            additionalHeaders = responderEndpointCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = responderEndpointCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                responderEndpointCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The type of the endpoint. */
@@ -325,7 +308,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -374,4 +357,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ResponderEndpointCreateParams && type == other.type && url == other.url && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(type, url, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ResponderEndpointCreateParams{type=$type, url=$url, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

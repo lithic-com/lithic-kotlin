@@ -42,6 +42,12 @@ constructor(
 
     fun reason(): Reason? = reason
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): DisputeUpdateBody {
         return DisputeUpdateBody(
             amount,
@@ -159,42 +165,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DisputeUpdateBody && this.amount == other.amount && this.customerFiledDate == other.customerFiledDate && this.customerNote == other.customerNote && this.reason == other.reason && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is DisputeUpdateBody && amount == other.amount && customerFiledDate == other.customerFiledDate && customerNote == other.customerNote && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(amount, customerFiledDate, customerNote, reason, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(amount, customerFiledDate, customerNote, reason, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "DisputeUpdateBody{amount=$amount, customerFiledDate=$customerFiledDate, customerNote=$customerNote, reason=$reason, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeUpdateParams && this.disputeToken == other.disputeToken && this.amount == other.amount && this.customerFiledDate == other.customerFiledDate && this.customerNote == other.customerNote && this.reason == other.reason && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(disputeToken, amount, customerFiledDate, customerNote, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "DisputeUpdateParams{disputeToken=$disputeToken, amount=$amount, customerFiledDate=$customerFiledDate, customerNote=$customerNote, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -216,14 +198,14 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(disputeUpdateParams: DisputeUpdateParams) = apply {
-            this.disputeToken = disputeUpdateParams.disputeToken
-            this.amount = disputeUpdateParams.amount
-            this.customerFiledDate = disputeUpdateParams.customerFiledDate
-            this.customerNote = disputeUpdateParams.customerNote
-            this.reason = disputeUpdateParams.reason
-            additionalHeaders(disputeUpdateParams.additionalHeaders)
-            additionalQueryParams(disputeUpdateParams.additionalQueryParams)
-            additionalBodyProperties(disputeUpdateParams.additionalBodyProperties)
+            disputeToken = disputeUpdateParams.disputeToken
+            amount = disputeUpdateParams.amount
+            customerFiledDate = disputeUpdateParams.customerFiledDate
+            customerNote = disputeUpdateParams.customerNote
+            reason = disputeUpdateParams.reason
+            additionalHeaders = disputeUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = disputeUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = disputeUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
@@ -388,7 +370,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Reason && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -505,4 +487,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeUpdateParams && disputeToken == other.disputeToken && amount == other.amount && customerFiledDate == other.customerFiledDate && customerNote == other.customerNote && reason == other.reason && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, amount, customerFiledDate, customerNote, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "DisputeUpdateParams{disputeToken=$disputeToken, amount=$amount, customerFiledDate=$customerFiledDate, customerNote=$customerNote, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -41,6 +41,12 @@ constructor(
 
     fun memo(): String? = memo
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): PaymentSimulateReceiptBody {
         return PaymentSimulateReceiptBody(
             token,
@@ -164,42 +170,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentSimulateReceiptBody && this.token == other.token && this.amount == other.amount && this.financialAccountToken == other.financialAccountToken && this.receiptType == other.receiptType && this.memo == other.memo && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PaymentSimulateReceiptBody && token == other.token && amount == other.amount && financialAccountToken == other.financialAccountToken && receiptType == other.receiptType && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(token, amount, financialAccountToken, receiptType, memo, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(token, amount, financialAccountToken, receiptType, memo, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "PaymentSimulateReceiptBody{token=$token, amount=$amount, financialAccountToken=$financialAccountToken, receiptType=$receiptType, memo=$memo, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentSimulateReceiptParams && this.token == other.token && this.amount == other.amount && this.financialAccountToken == other.financialAccountToken && this.receiptType == other.receiptType && this.memo == other.memo && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(token, amount, financialAccountToken, receiptType, memo, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "PaymentSimulateReceiptParams{token=$token, amount=$amount, financialAccountToken=$financialAccountToken, receiptType=$receiptType, memo=$memo, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -221,14 +203,15 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(paymentSimulateReceiptParams: PaymentSimulateReceiptParams) = apply {
-            this.token = paymentSimulateReceiptParams.token
-            this.amount = paymentSimulateReceiptParams.amount
-            this.financialAccountToken = paymentSimulateReceiptParams.financialAccountToken
-            this.receiptType = paymentSimulateReceiptParams.receiptType
-            this.memo = paymentSimulateReceiptParams.memo
-            additionalHeaders(paymentSimulateReceiptParams.additionalHeaders)
-            additionalQueryParams(paymentSimulateReceiptParams.additionalQueryParams)
-            additionalBodyProperties(paymentSimulateReceiptParams.additionalBodyProperties)
+            token = paymentSimulateReceiptParams.token
+            amount = paymentSimulateReceiptParams.amount
+            financialAccountToken = paymentSimulateReceiptParams.financialAccountToken
+            receiptType = paymentSimulateReceiptParams.receiptType
+            memo = paymentSimulateReceiptParams.memo
+            additionalHeaders = paymentSimulateReceiptParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentSimulateReceiptParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                paymentSimulateReceiptParams.additionalBodyProperties.toMutableMap()
         }
 
         /** Payment token */
@@ -396,7 +379,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReceiptType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ReceiptType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -439,4 +422,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentSimulateReceiptParams && token == other.token && amount == other.amount && financialAccountToken == other.financialAccountToken && receiptType == other.receiptType && memo == other.memo && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, amount, financialAccountToken, receiptType, memo, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "PaymentSimulateReceiptParams{token=$token, amount=$amount, financialAccountToken=$financialAccountToken, receiptType=$receiptType, memo=$memo, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -28,6 +28,12 @@ constructor(
 
     fun end(): OffsetDateTime? = end
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -53,27 +59,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventSubscriptionRecoverParams && this.eventSubscriptionToken == other.eventSubscriptionToken && this.begin == other.begin && this.end == other.end && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventSubscriptionToken, begin, end, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventSubscriptionRecoverParams{eventSubscriptionToken=$eventSubscriptionToken, begin=$begin, end=$end, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -92,12 +77,13 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventSubscriptionRecoverParams: EventSubscriptionRecoverParams) = apply {
-            this.eventSubscriptionToken = eventSubscriptionRecoverParams.eventSubscriptionToken
-            this.begin = eventSubscriptionRecoverParams.begin
-            this.end = eventSubscriptionRecoverParams.end
-            additionalHeaders(eventSubscriptionRecoverParams.additionalHeaders)
-            additionalQueryParams(eventSubscriptionRecoverParams.additionalQueryParams)
-            additionalBodyProperties(eventSubscriptionRecoverParams.additionalBodyProperties)
+            eventSubscriptionToken = eventSubscriptionRecoverParams.eventSubscriptionToken
+            begin = eventSubscriptionRecoverParams.begin
+            end = eventSubscriptionRecoverParams.end
+            additionalHeaders = eventSubscriptionRecoverParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventSubscriptionRecoverParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                eventSubscriptionRecoverParams.additionalBodyProperties.toMutableMap()
         }
 
         fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
@@ -248,4 +234,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventSubscriptionRecoverParams && eventSubscriptionToken == other.eventSubscriptionToken && begin == other.begin && end == other.end && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventSubscriptionToken, begin, end, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventSubscriptionRecoverParams{eventSubscriptionToken=$eventSubscriptionToken, begin=$begin, end=$end, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

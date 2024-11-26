@@ -20,6 +20,12 @@ constructor(
 
     fun disputeToken(): String = disputeToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -34,27 +40,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeDeleteParams && this.disputeToken == other.disputeToken && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(disputeToken, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "DisputeDeleteParams{disputeToken=$disputeToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -72,10 +57,10 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(disputeDeleteParams: DisputeDeleteParams) = apply {
-            this.disputeToken = disputeDeleteParams.disputeToken
-            additionalHeaders(disputeDeleteParams.additionalHeaders)
-            additionalQueryParams(disputeDeleteParams.additionalQueryParams)
-            additionalBodyProperties(disputeDeleteParams.additionalBodyProperties)
+            disputeToken = disputeDeleteParams.disputeToken
+            additionalHeaders = disputeDeleteParams.additionalHeaders.toBuilder()
+            additionalQueryParams = disputeDeleteParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = disputeDeleteParams.additionalBodyProperties.toMutableMap()
         }
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
@@ -208,4 +193,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeDeleteParams && disputeToken == other.disputeToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "DisputeDeleteParams{disputeToken=$disputeToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

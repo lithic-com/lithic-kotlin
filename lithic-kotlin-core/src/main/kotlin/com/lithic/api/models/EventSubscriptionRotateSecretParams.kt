@@ -20,6 +20,12 @@ constructor(
 
     fun eventSubscriptionToken(): String = eventSubscriptionToken
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -34,27 +40,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventSubscriptionRotateSecretParams && this.eventSubscriptionToken == other.eventSubscriptionToken && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventSubscriptionToken, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventSubscriptionRotateSecretParams{eventSubscriptionToken=$eventSubscriptionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -74,10 +59,12 @@ constructor(
         internal fun from(
             eventSubscriptionRotateSecretParams: EventSubscriptionRotateSecretParams
         ) = apply {
-            this.eventSubscriptionToken = eventSubscriptionRotateSecretParams.eventSubscriptionToken
-            additionalHeaders(eventSubscriptionRotateSecretParams.additionalHeaders)
-            additionalQueryParams(eventSubscriptionRotateSecretParams.additionalQueryParams)
-            additionalBodyProperties(eventSubscriptionRotateSecretParams.additionalBodyProperties)
+            eventSubscriptionToken = eventSubscriptionRotateSecretParams.eventSubscriptionToken
+            additionalHeaders = eventSubscriptionRotateSecretParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                eventSubscriptionRotateSecretParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                eventSubscriptionRotateSecretParams.additionalBodyProperties.toMutableMap()
         }
 
         fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
@@ -214,4 +201,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventSubscriptionRotateSecretParams && eventSubscriptionToken == other.eventSubscriptionToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventSubscriptionToken, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventSubscriptionRotateSecretParams{eventSubscriptionToken=$eventSubscriptionToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

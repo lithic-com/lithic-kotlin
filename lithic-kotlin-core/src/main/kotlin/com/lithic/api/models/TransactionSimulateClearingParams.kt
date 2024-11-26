@@ -28,6 +28,12 @@ constructor(
 
     fun amount(): Long? = amount
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): TransactionSimulateClearingBody {
         return TransactionSimulateClearingBody(
             token,
@@ -53,12 +59,15 @@ constructor(
         @JsonProperty("token") fun token(): String? = token
 
         /**
-         * Amount (in cents) to complete. Typically this will match the original authorization, but
-         * may be more or less.
+         * Amount (in cents) to clear. Typically this will match the amount in the original
+         * authorization, but can be higher or lower. The sign of this amount will automatically
+         * match the sign of the original authorization's amount. For example, entering 100 in this
+         * field will result in a -100 amount in the transaction, if the original authorization is a
+         * credit authorization.
          *
-         * If no amount is supplied to this endpoint, the amount of the transaction will be
-         * captured. Any transaction that has any amount completed at all do not have access to this
-         * behavior.
+         * If `amount` is not set, the full amount of the transaction will be cleared. Transactions
+         * that have already cleared, either partially or fully, cannot be cleared again using this
+         * endpoint.
          */
         @JsonProperty("amount") fun amount(): Long? = amount
 
@@ -90,12 +99,15 @@ constructor(
             @JsonProperty("token") fun token(token: String) = apply { this.token = token }
 
             /**
-             * Amount (in cents) to complete. Typically this will match the original authorization,
-             * but may be more or less.
+             * Amount (in cents) to clear. Typically this will match the amount in the original
+             * authorization, but can be higher or lower. The sign of this amount will automatically
+             * match the sign of the original authorization's amount. For example, entering 100 in
+             * this field will result in a -100 amount in the transaction, if the original
+             * authorization is a credit authorization.
              *
-             * If no amount is supplied to this endpoint, the amount of the transaction will be
-             * captured. Any transaction that has any amount completed at all do not have access to
-             * this behavior.
+             * If `amount` is not set, the full amount of the transaction will be cleared.
+             * Transactions that have already cleared, either partially or fully, cannot be cleared
+             * again using this endpoint.
              */
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
 
@@ -126,42 +138,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionSimulateClearingBody && this.token == other.token && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TransactionSimulateClearingBody && token == other.token && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(token, amount, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(token, amount, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "TransactionSimulateClearingBody{token=$token, amount=$amount, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TransactionSimulateClearingParams && this.token == other.token && this.amount == other.amount && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(token, amount, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "TransactionSimulateClearingParams{token=$token, amount=$amount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -181,23 +169,28 @@ constructor(
 
         internal fun from(transactionSimulateClearingParams: TransactionSimulateClearingParams) =
             apply {
-                this.token = transactionSimulateClearingParams.token
-                this.amount = transactionSimulateClearingParams.amount
-                additionalHeaders(transactionSimulateClearingParams.additionalHeaders)
-                additionalQueryParams(transactionSimulateClearingParams.additionalQueryParams)
-                additionalBodyProperties(transactionSimulateClearingParams.additionalBodyProperties)
+                token = transactionSimulateClearingParams.token
+                amount = transactionSimulateClearingParams.amount
+                additionalHeaders = transactionSimulateClearingParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    transactionSimulateClearingParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    transactionSimulateClearingParams.additionalBodyProperties.toMutableMap()
             }
 
         /** The transaction token returned from the /v1/simulate/authorize response. */
         fun token(token: String) = apply { this.token = token }
 
         /**
-         * Amount (in cents) to complete. Typically this will match the original authorization, but
-         * may be more or less.
+         * Amount (in cents) to clear. Typically this will match the amount in the original
+         * authorization, but can be higher or lower. The sign of this amount will automatically
+         * match the sign of the original authorization's amount. For example, entering 100 in this
+         * field will result in a -100 amount in the transaction, if the original authorization is a
+         * credit authorization.
          *
-         * If no amount is supplied to this endpoint, the amount of the transaction will be
-         * captured. Any transaction that has any amount completed at all do not have access to this
-         * behavior.
+         * If `amount` is not set, the full amount of the transaction will be cleared. Transactions
+         * that have already cleared, either partially or fully, cannot be cleared again using this
+         * endpoint.
          */
         fun amount(amount: Long) = apply { this.amount = amount }
 
@@ -330,4 +323,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TransactionSimulateClearingParams && token == other.token && amount == other.amount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(token, amount, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "TransactionSimulateClearingParams{token=$token, amount=$amount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

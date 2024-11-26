@@ -50,6 +50,12 @@ constructor(
 
     fun state(): State? = state
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CardUpdateBody {
         return CardUpdateBody(
             digitalCardArtToken,
@@ -274,42 +280,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CardUpdateBody && this.digitalCardArtToken == other.digitalCardArtToken && this.memo == other.memo && this.pin == other.pin && this.pinStatus == other.pinStatus && this.spendLimit == other.spendLimit && this.spendLimitDuration == other.spendLimitDuration && this.state == other.state && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CardUpdateBody && digitalCardArtToken == other.digitalCardArtToken && memo == other.memo && pin == other.pin && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(digitalCardArtToken, memo, pin, pinStatus, spendLimit, spendLimitDuration, state, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(digitalCardArtToken, memo, pin, pinStatus, spendLimit, spendLimitDuration, state, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "CardUpdateBody{digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardUpdateParams && this.cardToken == other.cardToken && this.digitalCardArtToken == other.digitalCardArtToken && this.memo == other.memo && this.pin == other.pin && this.pinStatus == other.pinStatus && this.spendLimit == other.spendLimit && this.spendLimitDuration == other.spendLimitDuration && this.state == other.state && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(cardToken, digitalCardArtToken, memo, pin, pinStatus, spendLimit, spendLimitDuration, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -334,17 +316,17 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardUpdateParams: CardUpdateParams) = apply {
-            this.cardToken = cardUpdateParams.cardToken
-            this.digitalCardArtToken = cardUpdateParams.digitalCardArtToken
-            this.memo = cardUpdateParams.memo
-            this.pin = cardUpdateParams.pin
-            this.pinStatus = cardUpdateParams.pinStatus
-            this.spendLimit = cardUpdateParams.spendLimit
-            this.spendLimitDuration = cardUpdateParams.spendLimitDuration
-            this.state = cardUpdateParams.state
-            additionalHeaders(cardUpdateParams.additionalHeaders)
-            additionalQueryParams(cardUpdateParams.additionalQueryParams)
-            additionalBodyProperties(cardUpdateParams.additionalBodyProperties)
+            cardToken = cardUpdateParams.cardToken
+            digitalCardArtToken = cardUpdateParams.digitalCardArtToken
+            memo = cardUpdateParams.memo
+            pin = cardUpdateParams.pin
+            pinStatus = cardUpdateParams.pinStatus
+            spendLimit = cardUpdateParams.spendLimit
+            spendLimitDuration = cardUpdateParams.spendLimitDuration
+            state = cardUpdateParams.state
+            additionalHeaders = cardUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = cardUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = cardUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
@@ -556,7 +538,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PinStatus && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is PinStatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -607,7 +589,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is State && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is State && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -656,4 +638,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardUpdateParams && cardToken == other.cardToken && digitalCardArtToken == other.digitalCardArtToken && memo == other.memo && pin == other.pin && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, digitalCardArtToken, memo, pin, pinStatus, spendLimit, spendLimitDuration, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
