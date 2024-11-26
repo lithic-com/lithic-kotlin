@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.73.0 (2024-11-26)
+
+Full Changelog: [v0.72.0...v0.73.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.72.0...v0.73.0)
+
+### Features
+
+* **api:** updates to Auth Rules numeric types, new Card Types and Authorization Rule Backtests ([#389](https://github.com/lithic-com/lithic-kotlin/issues/389)) ([ad9720c](https://github.com/lithic-com/lithic-kotlin/commit/ad9720cbef59f046845b46f6147449eff6995d54))
+* **client:** add logging when debug env is set ([#386](https://github.com/lithic-com/lithic-kotlin/issues/386)) ([848cc8c](https://github.com/lithic-com/lithic-kotlin/commit/848cc8c5ea5c2a67b6af37b45684caae10eb3fd9))
+* **client:** add methods for header params ([#382](https://github.com/lithic-com/lithic-kotlin/issues/382)) ([cb88b74](https://github.com/lithic-com/lithic-kotlin/commit/cb88b74d33461eb1eb169191e47c4b82f75d7838))
+* derive gpg release key's id via gpg itself ([#391](https://github.com/lithic-com/lithic-kotlin/issues/391)) ([735be99](https://github.com/lithic-com/lithic-kotlin/commit/735be991275da0eaeddc218d42d2cd70a6f39ea4))
+
+
+### Bug Fixes
+
+* **internal:** use correct example string for test ([#387](https://github.com/lithic-com/lithic-kotlin/issues/387)) ([24de3fd](https://github.com/lithic-com/lithic-kotlin/commit/24de3fd0ccfb94c3dda661e0c2e020f293c6bb44))
+
+
+### Chores
+
+* **api:** add backtest methods to AuthRules ([#390](https://github.com/lithic-com/lithic-kotlin/issues/390)) ([81b5bdf](https://github.com/lithic-com/lithic-kotlin/commit/81b5bdf0b7dcbf95505233d15d374166f6a1e5b1))
+* **deps:** bump jackson to 2.18.1 ([#381](https://github.com/lithic-com/lithic-kotlin/issues/381)) ([a6e3a9c](https://github.com/lithic-com/lithic-kotlin/commit/a6e3a9c60f33d49abc06d47b79deec8631dfa7b5))
+* **internal:** update example values ([#388](https://github.com/lithic-com/lithic-kotlin/issues/388)) ([8ef3c9f](https://github.com/lithic-com/lithic-kotlin/commit/8ef3c9f003fba27f9fccafd93559df4c0022791c))
+* publish to maven central portal ([#392](https://github.com/lithic-com/lithic-kotlin/issues/392)) ([42f8cf1](https://github.com/lithic-com/lithic-kotlin/commit/42f8cf1fac199b33aa31f6b3690dfe4c219071f1))
+
+
+### Styles
+
+* **internal:** move identity methods to bottom of error class ([#384](https://github.com/lithic-com/lithic-kotlin/issues/384)) ([4cc4ba8](https://github.com/lithic-com/lithic-kotlin/commit/4cc4ba86f322365d1a413f51fab918b5994d1b64))
+* **internal:** reduce verbosity of identity methods ([#383](https://github.com/lithic-com/lithic-kotlin/issues/383)) ([d859cb8](https://github.com/lithic-com/lithic-kotlin/commit/d859cb8b3808a1ef9fb8c2c206d1716db4699a67))
+* **internal:** reorder some params methods and improve consistency of implementations ([#385](https://github.com/lithic-com/lithic-kotlin/issues/385)) ([f5a82c3](https://github.com/lithic-com/lithic-kotlin/commit/f5a82c34060009292839e00385599a780e96e989))
+
+
+### Refactors
+
+* **internal:** split `closeWhenPhantomReachable` function ([#379](https://github.com/lithic-com/lithic-kotlin/issues/379)) ([d21293e](https://github.com/lithic-com/lithic-kotlin/commit/d21293e40fb33d605936cce269eb9e2cf5a042cb))
+
 ## 0.72.0 (2024-11-14)
 
 Full Changelog: [v0.71.0...v0.72.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.71.0...v0.72.0)
