@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.74.0 (2024-12-09)
+
+Full Changelog: [v0.73.0...v0.74.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.73.0...v0.74.0)
+
+### Features
+
+* **api:** adds EventRuleResult to Transaction Events ([#393](https://github.com/lithic-com/lithic-kotlin/issues/393)) ([ba514e8](https://github.com/lithic-com/lithic-kotlin/commit/ba514e86059eb8ded49746a701e80082245b1807))
+
 ## 0.73.0 (2024-11-26)
 
 Full Changelog: [v0.72.0...v0.73.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.72.0...v0.73.0)
