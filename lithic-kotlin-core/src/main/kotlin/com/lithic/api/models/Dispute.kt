@@ -708,35 +708,33 @@ private constructor(
 
         companion object {
 
-            val ATM_CASH_MISDISPENSE = Reason(JsonField.of("ATM_CASH_MISDISPENSE"))
+            val ATM_CASH_MISDISPENSE = of("ATM_CASH_MISDISPENSE")
 
-            val CANCELLED = Reason(JsonField.of("CANCELLED"))
+            val CANCELLED = of("CANCELLED")
 
-            val DUPLICATED = Reason(JsonField.of("DUPLICATED"))
+            val DUPLICATED = of("DUPLICATED")
 
-            val FRAUD_CARD_NOT_PRESENT = Reason(JsonField.of("FRAUD_CARD_NOT_PRESENT"))
+            val FRAUD_CARD_NOT_PRESENT = of("FRAUD_CARD_NOT_PRESENT")
 
-            val FRAUD_CARD_PRESENT = Reason(JsonField.of("FRAUD_CARD_PRESENT"))
+            val FRAUD_CARD_PRESENT = of("FRAUD_CARD_PRESENT")
 
-            val FRAUD_OTHER = Reason(JsonField.of("FRAUD_OTHER"))
+            val FRAUD_OTHER = of("FRAUD_OTHER")
 
-            val GOODS_SERVICES_NOT_AS_DESCRIBED =
-                Reason(JsonField.of("GOODS_SERVICES_NOT_AS_DESCRIBED"))
+            val GOODS_SERVICES_NOT_AS_DESCRIBED = of("GOODS_SERVICES_NOT_AS_DESCRIBED")
 
-            val GOODS_SERVICES_NOT_RECEIVED = Reason(JsonField.of("GOODS_SERVICES_NOT_RECEIVED"))
+            val GOODS_SERVICES_NOT_RECEIVED = of("GOODS_SERVICES_NOT_RECEIVED")
 
-            val INCORRECT_AMOUNT = Reason(JsonField.of("INCORRECT_AMOUNT"))
+            val INCORRECT_AMOUNT = of("INCORRECT_AMOUNT")
 
-            val MISSING_AUTH = Reason(JsonField.of("MISSING_AUTH"))
+            val MISSING_AUTH = of("MISSING_AUTH")
 
-            val OTHER = Reason(JsonField.of("OTHER"))
+            val OTHER = of("OTHER")
 
-            val PROCESSING_ERROR = Reason(JsonField.of("PROCESSING_ERROR"))
+            val PROCESSING_ERROR = of("PROCESSING_ERROR")
 
-            val RECURRING_TRANSACTION_NOT_CANCELLED =
-                Reason(JsonField.of("RECURRING_TRANSACTION_NOT_CANCELLED"))
+            val RECURRING_TRANSACTION_NOT_CANCELLED = of("RECURRING_TRANSACTION_NOT_CANCELLED")
 
-            val REFUND_NOT_PROCESSED = Reason(JsonField.of("REFUND_NOT_PROCESSED"))
+            val REFUND_NOT_PROCESSED = of("REFUND_NOT_PROCESSED")
 
             fun of(value: String) = Reason(JsonField.of(value))
         }
@@ -839,45 +837,39 @@ private constructor(
 
         companion object {
 
-            val CASE_LOST = ResolutionReason(JsonField.of("CASE_LOST"))
+            val CASE_LOST = of("CASE_LOST")
 
-            val NETWORK_REJECTED = ResolutionReason(JsonField.of("NETWORK_REJECTED"))
+            val NETWORK_REJECTED = of("NETWORK_REJECTED")
 
-            val NO_DISPUTE_RIGHTS_3DS = ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_3DS"))
+            val NO_DISPUTE_RIGHTS_3DS = of("NO_DISPUTE_RIGHTS_3DS")
 
-            val NO_DISPUTE_RIGHTS_BELOW_THRESHOLD =
-                ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_BELOW_THRESHOLD"))
+            val NO_DISPUTE_RIGHTS_BELOW_THRESHOLD = of("NO_DISPUTE_RIGHTS_BELOW_THRESHOLD")
 
-            val NO_DISPUTE_RIGHTS_CONTACTLESS =
-                ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_CONTACTLESS"))
+            val NO_DISPUTE_RIGHTS_CONTACTLESS = of("NO_DISPUTE_RIGHTS_CONTACTLESS")
 
-            val NO_DISPUTE_RIGHTS_HYBRID =
-                ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_HYBRID"))
+            val NO_DISPUTE_RIGHTS_HYBRID = of("NO_DISPUTE_RIGHTS_HYBRID")
 
-            val NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS =
-                ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS"))
+            val NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS = of("NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS")
 
-            val NO_DISPUTE_RIGHTS_OTHER = ResolutionReason(JsonField.of("NO_DISPUTE_RIGHTS_OTHER"))
+            val NO_DISPUTE_RIGHTS_OTHER = of("NO_DISPUTE_RIGHTS_OTHER")
 
-            val PAST_FILING_DATE = ResolutionReason(JsonField.of("PAST_FILING_DATE"))
+            val PAST_FILING_DATE = of("PAST_FILING_DATE")
 
-            val PREARBITRATION_REJECTED = ResolutionReason(JsonField.of("PREARBITRATION_REJECTED"))
+            val PREARBITRATION_REJECTED = of("PREARBITRATION_REJECTED")
 
-            val PROCESSOR_REJECTED_OTHER =
-                ResolutionReason(JsonField.of("PROCESSOR_REJECTED_OTHER"))
+            val PROCESSOR_REJECTED_OTHER = of("PROCESSOR_REJECTED_OTHER")
 
-            val REFUNDED = ResolutionReason(JsonField.of("REFUNDED"))
+            val REFUNDED = of("REFUNDED")
 
-            val REFUNDED_AFTER_CHARGEBACK =
-                ResolutionReason(JsonField.of("REFUNDED_AFTER_CHARGEBACK"))
+            val REFUNDED_AFTER_CHARGEBACK = of("REFUNDED_AFTER_CHARGEBACK")
 
-            val WITHDRAWN = ResolutionReason(JsonField.of("WITHDRAWN"))
+            val WITHDRAWN = of("WITHDRAWN")
 
-            val WON_ARBITRATION = ResolutionReason(JsonField.of("WON_ARBITRATION"))
+            val WON_ARBITRATION = of("WON_ARBITRATION")
 
-            val WON_FIRST_CHARGEBACK = ResolutionReason(JsonField.of("WON_FIRST_CHARGEBACK"))
+            val WON_FIRST_CHARGEBACK = of("WON_FIRST_CHARGEBACK")
 
-            val WON_PREARBITRATION = ResolutionReason(JsonField.of("WON_PREARBITRATION"))
+            val WON_PREARBITRATION = of("WON_PREARBITRATION")
 
             fun of(value: String) = ResolutionReason(JsonField.of(value))
         }
@@ -992,21 +984,21 @@ private constructor(
 
         companion object {
 
-            val ARBITRATION = Status(JsonField.of("ARBITRATION"))
+            val ARBITRATION = of("ARBITRATION")
 
-            val CASE_CLOSED = Status(JsonField.of("CASE_CLOSED"))
+            val CASE_CLOSED = of("CASE_CLOSED")
 
-            val CASE_WON = Status(JsonField.of("CASE_WON"))
+            val CASE_WON = of("CASE_WON")
 
-            val NEW = Status(JsonField.of("NEW"))
+            val NEW = of("NEW")
 
-            val PENDING_CUSTOMER = Status(JsonField.of("PENDING_CUSTOMER"))
+            val PENDING_CUSTOMER = of("PENDING_CUSTOMER")
 
-            val PREARBITRATION = Status(JsonField.of("PREARBITRATION"))
+            val PREARBITRATION = of("PREARBITRATION")
 
-            val REPRESENTMENT = Status(JsonField.of("REPRESENTMENT"))
+            val REPRESENTMENT = of("REPRESENTMENT")
 
-            val SUBMITTED = Status(JsonField.of("SUBMITTED"))
+            val SUBMITTED = of("SUBMITTED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

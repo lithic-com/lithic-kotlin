@@ -30,9 +30,9 @@ private constructor(
 
     companion object {
 
-        val APPROVE = ChallengeResult(JsonField.of("APPROVE"))
+        val APPROVE = of("APPROVE")
 
-        val DECLINE_BY_CUSTOMER = ChallengeResult(JsonField.of("DECLINE_BY_CUSTOMER"))
+        val DECLINE_BY_CUSTOMER = of("DECLINE_BY_CUSTOMER")
 
         fun of(value: String) = ChallengeResult(JsonField.of(value))
     }

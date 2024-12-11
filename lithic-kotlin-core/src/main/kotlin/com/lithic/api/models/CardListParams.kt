@@ -264,15 +264,15 @@ constructor(
 
         companion object {
 
-            val CLOSED = State(JsonField.of("CLOSED"))
+            val CLOSED = of("CLOSED")
 
-            val OPEN = State(JsonField.of("OPEN"))
+            val OPEN = of("OPEN")
 
-            val PAUSED = State(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
-            val PENDING_ACTIVATION = State(JsonField.of("PENDING_ACTIVATION"))
+            val PENDING_ACTIVATION = of("PENDING_ACTIVATION")
 
-            val PENDING_FULFILLMENT = State(JsonField.of("PENDING_FULFILLMENT"))
+            val PENDING_FULFILLMENT = of("PENDING_FULFILLMENT")
 
             fun of(value: String) = State(JsonField.of(value))
         }

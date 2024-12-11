@@ -307,13 +307,13 @@ private constructor(
 
         companion object {
 
-            val EXTERNAL_WIRE = ExternalPaymentCategory(JsonField.of("EXTERNAL_WIRE"))
+            val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
 
-            val EXTERNAL_ACH = ExternalPaymentCategory(JsonField.of("EXTERNAL_ACH"))
+            val EXTERNAL_ACH = of("EXTERNAL_ACH")
 
-            val EXTERNAL_CHECK = ExternalPaymentCategory(JsonField.of("EXTERNAL_CHECK"))
+            val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
-            val EXTERNAL_TRANSFER = ExternalPaymentCategory(JsonField.of("EXTERNAL_TRANSFER"))
+            val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
         }
@@ -556,7 +556,7 @@ private constructor(
 
             companion object {
 
-                val APPROVED = DetailedResults(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
                 fun of(value: String) = DetailedResults(JsonField.of(value))
             }
@@ -607,9 +607,9 @@ private constructor(
 
             companion object {
 
-                val APPROVED = TransactionResult(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
-                val DECLINED = TransactionResult(JsonField.of("DECLINED"))
+                val DECLINED = of("DECLINED")
 
                 fun of(value: String) = TransactionResult(JsonField.of(value))
             }
@@ -664,65 +664,45 @@ private constructor(
 
             companion object {
 
-                val EXTERNAL_WIRE_INITIATED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_WIRE_INITIATED"))
+                val EXTERNAL_WIRE_INITIATED = of("EXTERNAL_WIRE_INITIATED")
 
-                val EXTERNAL_WIRE_CANCELED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_WIRE_CANCELED"))
+                val EXTERNAL_WIRE_CANCELED = of("EXTERNAL_WIRE_CANCELED")
 
-                val EXTERNAL_WIRE_SETTLED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_WIRE_SETTLED"))
+                val EXTERNAL_WIRE_SETTLED = of("EXTERNAL_WIRE_SETTLED")
 
-                val EXTERNAL_WIRE_REVERSED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_WIRE_REVERSED"))
+                val EXTERNAL_WIRE_REVERSED = of("EXTERNAL_WIRE_REVERSED")
 
-                val EXTERNAL_WIRE_RELEASED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_WIRE_RELEASED"))
+                val EXTERNAL_WIRE_RELEASED = of("EXTERNAL_WIRE_RELEASED")
 
-                val EXTERNAL_ACH_INITIATED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_ACH_INITIATED"))
+                val EXTERNAL_ACH_INITIATED = of("EXTERNAL_ACH_INITIATED")
 
-                val EXTERNAL_ACH_CANCELED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_ACH_CANCELED"))
+                val EXTERNAL_ACH_CANCELED = of("EXTERNAL_ACH_CANCELED")
 
-                val EXTERNAL_ACH_SETTLED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_ACH_SETTLED"))
+                val EXTERNAL_ACH_SETTLED = of("EXTERNAL_ACH_SETTLED")
 
-                val EXTERNAL_ACH_REVERSED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_ACH_REVERSED"))
+                val EXTERNAL_ACH_REVERSED = of("EXTERNAL_ACH_REVERSED")
 
-                val EXTERNAL_ACH_RELEASED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_ACH_RELEASED"))
+                val EXTERNAL_ACH_RELEASED = of("EXTERNAL_ACH_RELEASED")
 
-                val EXTERNAL_TRANSFER_INITIATED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_TRANSFER_INITIATED"))
+                val EXTERNAL_TRANSFER_INITIATED = of("EXTERNAL_TRANSFER_INITIATED")
 
-                val EXTERNAL_TRANSFER_CANCELED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_TRANSFER_CANCELED"))
+                val EXTERNAL_TRANSFER_CANCELED = of("EXTERNAL_TRANSFER_CANCELED")
 
-                val EXTERNAL_TRANSFER_SETTLED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_TRANSFER_SETTLED"))
+                val EXTERNAL_TRANSFER_SETTLED = of("EXTERNAL_TRANSFER_SETTLED")
 
-                val EXTERNAL_TRANSFER_REVERSED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_TRANSFER_REVERSED"))
+                val EXTERNAL_TRANSFER_REVERSED = of("EXTERNAL_TRANSFER_REVERSED")
 
-                val EXTERNAL_TRANSFER_RELEASED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_TRANSFER_RELEASED"))
+                val EXTERNAL_TRANSFER_RELEASED = of("EXTERNAL_TRANSFER_RELEASED")
 
-                val EXTERNAL_CHECK_INITIATED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_CHECK_INITIATED"))
+                val EXTERNAL_CHECK_INITIATED = of("EXTERNAL_CHECK_INITIATED")
 
-                val EXTERNAL_CHECK_CANCELED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_CHECK_CANCELED"))
+                val EXTERNAL_CHECK_CANCELED = of("EXTERNAL_CHECK_CANCELED")
 
-                val EXTERNAL_CHECK_SETTLED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_CHECK_SETTLED"))
+                val EXTERNAL_CHECK_SETTLED = of("EXTERNAL_CHECK_SETTLED")
 
-                val EXTERNAL_CHECK_REVERSED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_CHECK_REVERSED"))
+                val EXTERNAL_CHECK_REVERSED = of("EXTERNAL_CHECK_REVERSED")
 
-                val EXTERNAL_CHECK_RELEASED =
-                    ExternalPaymentEventType(JsonField.of("EXTERNAL_CHECK_RELEASED"))
+                val EXTERNAL_CHECK_RELEASED = of("EXTERNAL_CHECK_RELEASED")
 
                 fun of(value: String) = ExternalPaymentEventType(JsonField.of(value))
             }
@@ -868,9 +848,9 @@ private constructor(
 
         companion object {
 
-            val DEPOSIT = ExternalPaymentDirection(JsonField.of("DEPOSIT"))
+            val DEPOSIT = of("DEPOSIT")
 
-            val WITHDRAWAL = ExternalPaymentDirection(JsonField.of("WITHDRAWAL"))
+            val WITHDRAWAL = of("WITHDRAWAL")
 
             fun of(value: String) = ExternalPaymentDirection(JsonField.of(value))
         }
@@ -925,9 +905,9 @@ private constructor(
 
         companion object {
 
-            val APPROVED = TransactionResult(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = TransactionResult(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = TransactionResult(JsonField.of(value))
         }
@@ -982,15 +962,15 @@ private constructor(
 
         companion object {
 
-            val PENDING = TransactionStatus(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val SETTLED = TransactionStatus(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val DECLINED = TransactionStatus(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REVERSED = TransactionStatus(JsonField.of("REVERSED"))
+            val REVERSED = of("REVERSED")
 
-            val CANCELED = TransactionStatus(JsonField.of("CANCELED"))
+            val CANCELED = of("CANCELED")
 
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }

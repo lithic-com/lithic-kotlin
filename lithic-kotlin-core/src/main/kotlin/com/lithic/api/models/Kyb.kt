@@ -940,9 +940,9 @@ private constructor(
 
         companion object {
 
-            val KYB_BASIC = Workflow(JsonField.of("KYB_BASIC"))
+            val KYB_BASIC = of("KYB_BASIC")
 
-            val KYB_BYO = Workflow(JsonField.of("KYB_BYO"))
+            val KYB_BYO = of("KYB_BYO")
 
             fun of(value: String) = Workflow(JsonField.of(value))
         }

@@ -270,15 +270,15 @@ private constructor(
 
         companion object {
 
-            val DELETED = UploadStatus(JsonField.of("DELETED"))
+            val DELETED = of("DELETED")
 
-            val ERROR = UploadStatus(JsonField.of("ERROR"))
+            val ERROR = of("ERROR")
 
-            val PENDING = UploadStatus(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val REJECTED = UploadStatus(JsonField.of("REJECTED"))
+            val REJECTED = of("REJECTED")
 
-            val UPLOADED = UploadStatus(JsonField.of("UPLOADED"))
+            val UPLOADED = of("UPLOADED")
 
             fun of(value: String) = UploadStatus(JsonField.of(value))
         }

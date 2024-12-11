@@ -276,21 +276,21 @@ constructor(
 
         companion object {
 
-            val ARBITRATION = Status(JsonField.of("ARBITRATION"))
+            val ARBITRATION = of("ARBITRATION")
 
-            val CASE_CLOSED = Status(JsonField.of("CASE_CLOSED"))
+            val CASE_CLOSED = of("CASE_CLOSED")
 
-            val CASE_WON = Status(JsonField.of("CASE_WON"))
+            val CASE_WON = of("CASE_WON")
 
-            val NEW = Status(JsonField.of("NEW"))
+            val NEW = of("NEW")
 
-            val PENDING_CUSTOMER = Status(JsonField.of("PENDING_CUSTOMER"))
+            val PENDING_CUSTOMER = of("PENDING_CUSTOMER")
 
-            val PREARBITRATION = Status(JsonField.of("PREARBITRATION"))
+            val PREARBITRATION = of("PREARBITRATION")
 
-            val REPRESENTMENT = Status(JsonField.of("REPRESENTMENT"))
+            val REPRESENTMENT = of("REPRESENTMENT")
 
-            val SUBMITTED = Status(JsonField.of("SUBMITTED"))
+            val SUBMITTED = of("SUBMITTED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

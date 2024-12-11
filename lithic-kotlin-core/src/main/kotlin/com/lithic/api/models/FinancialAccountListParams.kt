@@ -210,11 +210,11 @@ constructor(
 
         companion object {
 
-            val ISSUING = Type(JsonField.of("ISSUING"))
+            val ISSUING = of("ISSUING")
 
-            val OPERATING = Type(JsonField.of("OPERATING"))
+            val OPERATING = of("OPERATING")
 
-            val RESERVE = Type(JsonField.of("RESERVE"))
+            val RESERVE = of("RESERVE")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

@@ -411,13 +411,13 @@ constructor(
 
         companion object {
 
-            val UPLOADED = Status(JsonField.of("UPLOADED"))
+            val UPLOADED = of("UPLOADED")
 
-            val ACCEPTED = Status(JsonField.of("ACCEPTED"))
+            val ACCEPTED = of("ACCEPTED")
 
-            val REJECTED = Status(JsonField.of("REJECTED"))
+            val REJECTED = of("REJECTED")
 
-            val PARTIAL_APPROVAL = Status(JsonField.of("PARTIAL_APPROVAL"))
+            val PARTIAL_APPROVAL = of("PARTIAL_APPROVAL")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -480,35 +480,27 @@ constructor(
 
         companion object {
 
-            val DOCUMENT_MISSING_REQUIRED_DATA =
-                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_MISSING_REQUIRED_DATA"))
+            val DOCUMENT_MISSING_REQUIRED_DATA = of("DOCUMENT_MISSING_REQUIRED_DATA")
 
-            val DOCUMENT_UPLOAD_TOO_BLURRY =
-                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_UPLOAD_TOO_BLURRY"))
+            val DOCUMENT_UPLOAD_TOO_BLURRY = of("DOCUMENT_UPLOAD_TOO_BLURRY")
 
-            val FILE_SIZE_TOO_LARGE =
-                DocumentUploadStatusReasons(JsonField.of("FILE_SIZE_TOO_LARGE"))
+            val FILE_SIZE_TOO_LARGE = of("FILE_SIZE_TOO_LARGE")
 
-            val INVALID_DOCUMENT_TYPE =
-                DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_TYPE"))
+            val INVALID_DOCUMENT_TYPE = of("INVALID_DOCUMENT_TYPE")
 
-            val INVALID_DOCUMENT_UPLOAD =
-                DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_UPLOAD"))
+            val INVALID_DOCUMENT_UPLOAD = of("INVALID_DOCUMENT_UPLOAD")
 
-            val INVALID_ENTITY = DocumentUploadStatusReasons(JsonField.of("INVALID_ENTITY"))
+            val INVALID_ENTITY = of("INVALID_ENTITY")
 
-            val DOCUMENT_EXPIRED = DocumentUploadStatusReasons(JsonField.of("DOCUMENT_EXPIRED"))
+            val DOCUMENT_EXPIRED = of("DOCUMENT_EXPIRED")
 
-            val DOCUMENT_ISSUED_GREATER_THAN_30_DAYS =
-                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_ISSUED_GREATER_THAN_30_DAYS"))
+            val DOCUMENT_ISSUED_GREATER_THAN_30_DAYS = of("DOCUMENT_ISSUED_GREATER_THAN_30_DAYS")
 
-            val DOCUMENT_TYPE_NOT_SUPPORTED =
-                DocumentUploadStatusReasons(JsonField.of("DOCUMENT_TYPE_NOT_SUPPORTED"))
+            val DOCUMENT_TYPE_NOT_SUPPORTED = of("DOCUMENT_TYPE_NOT_SUPPORTED")
 
-            val UNKNOWN_FAILURE_REASON =
-                DocumentUploadStatusReasons(JsonField.of("UNKNOWN_FAILURE_REASON"))
+            val UNKNOWN_FAILURE_REASON = of("UNKNOWN_FAILURE_REASON")
 
-            val UNKNOWN_ERROR = DocumentUploadStatusReasons(JsonField.of("UNKNOWN_ERROR"))
+            val UNKNOWN_ERROR = of("UNKNOWN_ERROR")
 
             fun of(value: String) = DocumentUploadStatusReasons(JsonField.of(value))
         }

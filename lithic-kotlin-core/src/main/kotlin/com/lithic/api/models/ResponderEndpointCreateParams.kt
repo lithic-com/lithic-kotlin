@@ -317,11 +317,11 @@ constructor(
 
         companion object {
 
-            val AUTH_STREAM_ACCESS = Type(JsonField.of("AUTH_STREAM_ACCESS"))
+            val AUTH_STREAM_ACCESS = of("AUTH_STREAM_ACCESS")
 
-            val THREE_DS_DECISIONING = Type(JsonField.of("THREE_DS_DECISIONING"))
+            val THREE_DS_DECISIONING = of("THREE_DS_DECISIONING")
 
-            val TOKENIZATION_DECISIONING = Type(JsonField.of("TOKENIZATION_DECISIONING"))
+            val TOKENIZATION_DECISIONING = of("TOKENIZATION_DECISIONING")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

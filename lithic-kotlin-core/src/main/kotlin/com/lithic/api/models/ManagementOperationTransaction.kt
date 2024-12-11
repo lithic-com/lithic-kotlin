@@ -308,14 +308,13 @@ private constructor(
 
         companion object {
 
-            val MANAGEMENT_FEE = ManagementOperationCategory(JsonField.of("MANAGEMENT_FEE"))
+            val MANAGEMENT_FEE = of("MANAGEMENT_FEE")
 
-            val MANAGEMENT_DISPUTE = ManagementOperationCategory(JsonField.of("MANAGEMENT_DISPUTE"))
+            val MANAGEMENT_DISPUTE = of("MANAGEMENT_DISPUTE")
 
-            val MANAGEMENT_REWARD = ManagementOperationCategory(JsonField.of("MANAGEMENT_REWARD"))
+            val MANAGEMENT_REWARD = of("MANAGEMENT_REWARD")
 
-            val MANAGEMENT_ADJUSTMENT =
-                ManagementOperationCategory(JsonField.of("MANAGEMENT_ADJUSTMENT"))
+            val MANAGEMENT_ADJUSTMENT = of("MANAGEMENT_ADJUSTMENT")
 
             fun of(value: String) = ManagementOperationCategory(JsonField.of(value))
         }
@@ -379,9 +378,9 @@ private constructor(
 
         companion object {
 
-            val CREDIT = ManagementOperationDirection(JsonField.of("CREDIT"))
+            val CREDIT = of("CREDIT")
 
-            val DEBIT = ManagementOperationDirection(JsonField.of("DEBIT"))
+            val DEBIT = of("DEBIT")
 
             fun of(value: String) = ManagementOperationDirection(JsonField.of(value))
         }
@@ -632,7 +631,7 @@ private constructor(
 
             companion object {
 
-                val APPROVED = DetailedResults(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
                 fun of(value: String) = DetailedResults(JsonField.of(value))
             }
@@ -683,9 +682,9 @@ private constructor(
 
             companion object {
 
-                val APPROVED = TransactionResult(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
-                val DECLINED = TransactionResult(JsonField.of("DECLINED"))
+                val DECLINED = of("DECLINED")
 
                 fun of(value: String) = TransactionResult(JsonField.of(value))
             }
@@ -740,37 +739,29 @@ private constructor(
 
             companion object {
 
-                val CASH_BACK = ManagementOperationEventType(JsonField.of("CASH_BACK"))
+                val CASH_BACK = of("CASH_BACK")
 
-                val CURRENCY_CONVERSION =
-                    ManagementOperationEventType(JsonField.of("CURRENCY_CONVERSION"))
+                val CURRENCY_CONVERSION = of("CURRENCY_CONVERSION")
 
-                val INTEREST = ManagementOperationEventType(JsonField.of("INTEREST"))
+                val INTEREST = of("INTEREST")
 
-                val LATE_PAYMENT = ManagementOperationEventType(JsonField.of("LATE_PAYMENT"))
+                val LATE_PAYMENT = of("LATE_PAYMENT")
 
-                val BILLING_ERROR = ManagementOperationEventType(JsonField.of("BILLING_ERROR"))
+                val BILLING_ERROR = of("BILLING_ERROR")
 
-                val PROVISIONAL_CREDIT =
-                    ManagementOperationEventType(JsonField.of("PROVISIONAL_CREDIT"))
+                val PROVISIONAL_CREDIT = of("PROVISIONAL_CREDIT")
 
-                val CASH_BACK_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("CASH_BACK_REVERSAL"))
+                val CASH_BACK_REVERSAL = of("CASH_BACK_REVERSAL")
 
-                val CURRENCY_CONVERSION_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("CURRENCY_CONVERSION_REVERSAL"))
+                val CURRENCY_CONVERSION_REVERSAL = of("CURRENCY_CONVERSION_REVERSAL")
 
-                val INTEREST_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("INTEREST_REVERSAL"))
+                val INTEREST_REVERSAL = of("INTEREST_REVERSAL")
 
-                val LATE_PAYMENT_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("LATE_PAYMENT_REVERSAL"))
+                val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
 
-                val BILLING_ERROR_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("BILLING_ERROR_REVERSAL"))
+                val BILLING_ERROR_REVERSAL = of("BILLING_ERROR_REVERSAL")
 
-                val PROVISIONAL_CREDIT_REVERSAL =
-                    ManagementOperationEventType(JsonField.of("PROVISIONAL_CREDIT_REVERSAL"))
+                val PROVISIONAL_CREDIT_REVERSAL = of("PROVISIONAL_CREDIT_REVERSAL")
 
                 fun of(value: String) = ManagementOperationEventType(JsonField.of(value))
             }
@@ -886,9 +877,9 @@ private constructor(
 
         companion object {
 
-            val APPROVED = TransactionResult(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = TransactionResult(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = TransactionResult(JsonField.of(value))
         }
@@ -943,15 +934,15 @@ private constructor(
 
         companion object {
 
-            val PENDING = TransactionStatus(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val SETTLED = TransactionStatus(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val DECLINED = TransactionStatus(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REVERSED = TransactionStatus(JsonField.of("REVERSED"))
+            val REVERSED = of("REVERSED")
 
-            val CANCELED = TransactionStatus(JsonField.of("CANCELED"))
+            val CANCELED = of("CANCELED")
 
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }

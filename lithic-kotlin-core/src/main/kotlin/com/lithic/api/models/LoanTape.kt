@@ -754,11 +754,11 @@ private constructor(
 
             companion object {
 
-                val STANDARD = PeriodState(JsonField.of("STANDARD"))
+                val STANDARD = of("STANDARD")
 
-                val PROMO = PeriodState(JsonField.of("PROMO"))
+                val PROMO = of("PROMO")
 
-                val PENALTY = PeriodState(JsonField.of("PENALTY"))
+                val PENALTY = of("PENALTY")
 
                 fun of(value: String) = PeriodState(JsonField.of(value))
             }
@@ -1681,9 +1681,9 @@ private constructor(
 
             companion object {
 
-                val DAILY = InterestCalculationMethod(JsonField.of("DAILY"))
+                val DAILY = of("DAILY")
 
-                val AVERAGE_DAILY = InterestCalculationMethod(JsonField.of("AVERAGE_DAILY"))
+                val AVERAGE_DAILY = of("AVERAGE_DAILY")
 
                 fun of(value: String) = InterestCalculationMethod(JsonField.of(value))
             }

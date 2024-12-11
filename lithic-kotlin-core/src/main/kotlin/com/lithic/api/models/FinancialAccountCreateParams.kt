@@ -363,7 +363,7 @@ constructor(
 
         companion object {
 
-            val OPERATING = Type(JsonField.of("OPERATING"))
+            val OPERATING = of("OPERATING")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

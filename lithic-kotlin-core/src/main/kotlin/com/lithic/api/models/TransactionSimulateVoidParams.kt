@@ -359,9 +359,9 @@ constructor(
 
         companion object {
 
-            val AUTHORIZATION_EXPIRY = Type(JsonField.of("AUTHORIZATION_EXPIRY"))
+            val AUTHORIZATION_EXPIRY = of("AUTHORIZATION_EXPIRY")
 
-            val AUTHORIZATION_REVERSAL = Type(JsonField.of("AUTHORIZATION_REVERSAL"))
+            val AUTHORIZATION_REVERSAL = of("AUTHORIZATION_REVERSAL")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

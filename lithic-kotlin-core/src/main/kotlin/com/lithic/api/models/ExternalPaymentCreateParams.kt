@@ -456,13 +456,13 @@ constructor(
 
         companion object {
 
-            val EXTERNAL_WIRE = ExternalPaymentCategory(JsonField.of("EXTERNAL_WIRE"))
+            val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
 
-            val EXTERNAL_ACH = ExternalPaymentCategory(JsonField.of("EXTERNAL_ACH"))
+            val EXTERNAL_ACH = of("EXTERNAL_ACH")
 
-            val EXTERNAL_CHECK = ExternalPaymentCategory(JsonField.of("EXTERNAL_CHECK"))
+            val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
-            val EXTERNAL_TRANSFER = ExternalPaymentCategory(JsonField.of("EXTERNAL_TRANSFER"))
+            val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
         }
@@ -525,9 +525,9 @@ constructor(
 
         companion object {
 
-            val DEPOSIT = ExternalPaymentDirection(JsonField.of("DEPOSIT"))
+            val DEPOSIT = of("DEPOSIT")
 
-            val WITHDRAWAL = ExternalPaymentDirection(JsonField.of("WITHDRAWAL"))
+            val WITHDRAWAL = of("WITHDRAWAL")
 
             fun of(value: String) = ExternalPaymentDirection(JsonField.of(value))
         }
@@ -582,9 +582,9 @@ constructor(
 
         companion object {
 
-            val SETTLED = ExternalPaymentProgressTo(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val RELEASED = ExternalPaymentProgressTo(JsonField.of("RELEASED"))
+            val RELEASED = of("RELEASED")
 
             fun of(value: String) = ExternalPaymentProgressTo(JsonField.of(value))
         }

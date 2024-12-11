@@ -337,11 +337,9 @@ constructor(
 
         companion object {
 
-            val EMAIL_TO_CARDHOLDER_ADDRESS =
-                ActivationMethodType(JsonField.of("EMAIL_TO_CARDHOLDER_ADDRESS"))
+            val EMAIL_TO_CARDHOLDER_ADDRESS = of("EMAIL_TO_CARDHOLDER_ADDRESS")
 
-            val TEXT_TO_CARDHOLDER_NUMBER =
-                ActivationMethodType(JsonField.of("TEXT_TO_CARDHOLDER_NUMBER"))
+            val TEXT_TO_CARDHOLDER_NUMBER = of("TEXT_TO_CARDHOLDER_NUMBER")
 
             fun of(value: String) = ActivationMethodType(JsonField.of(value))
         }

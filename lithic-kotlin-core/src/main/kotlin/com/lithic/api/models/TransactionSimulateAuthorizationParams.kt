@@ -581,16 +581,15 @@ constructor(
 
         companion object {
 
-            val AUTHORIZATION = Status(JsonField.of("AUTHORIZATION"))
+            val AUTHORIZATION = of("AUTHORIZATION")
 
-            val BALANCE_INQUIRY = Status(JsonField.of("BALANCE_INQUIRY"))
+            val BALANCE_INQUIRY = of("BALANCE_INQUIRY")
 
-            val CREDIT_AUTHORIZATION = Status(JsonField.of("CREDIT_AUTHORIZATION"))
+            val CREDIT_AUTHORIZATION = of("CREDIT_AUTHORIZATION")
 
-            val FINANCIAL_AUTHORIZATION = Status(JsonField.of("FINANCIAL_AUTHORIZATION"))
+            val FINANCIAL_AUTHORIZATION = of("FINANCIAL_AUTHORIZATION")
 
-            val FINANCIAL_CREDIT_AUTHORIZATION =
-                Status(JsonField.of("FINANCIAL_CREDIT_AUTHORIZATION"))
+            val FINANCIAL_CREDIT_AUTHORIZATION = of("FINANCIAL_CREDIT_AUTHORIZATION")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

@@ -30,9 +30,9 @@ private constructor(
 
     companion object {
 
-        val DAY = VelocityLimitParamsPeriodWindow(JsonField.of("DAY"))
+        val DAY = of("DAY")
 
-        val MONTH = VelocityLimitParamsPeriodWindow(JsonField.of("MONTH"))
+        val MONTH = of("MONTH")
 
         fun of(value: String) = VelocityLimitParamsPeriodWindow(JsonField.of(value))
     }
