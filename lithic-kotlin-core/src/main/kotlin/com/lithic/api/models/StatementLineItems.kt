@@ -421,28 +421,27 @@ private constructor(
 
             companion object {
 
-                val ACH = TransactionCategory(JsonField.of("ACH"))
+                val ACH = of("ACH")
 
-                val BALANCE_OR_FUNDING = TransactionCategory(JsonField.of("BALANCE_OR_FUNDING"))
+                val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
-                val CARD = TransactionCategory(JsonField.of("CARD"))
+                val CARD = of("CARD")
 
-                val EXTERNAL_ACH = TransactionCategory(JsonField.of("EXTERNAL_ACH"))
+                val EXTERNAL_ACH = of("EXTERNAL_ACH")
 
-                val EXTERNAL_CHECK = TransactionCategory(JsonField.of("EXTERNAL_CHECK"))
+                val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
-                val EXTERNAL_TRANSFER = TransactionCategory(JsonField.of("EXTERNAL_TRANSFER"))
+                val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
-                val EXTERNAL_WIRE = TransactionCategory(JsonField.of("EXTERNAL_WIRE"))
+                val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
 
-                val MANAGEMENT_ADJUSTMENT =
-                    TransactionCategory(JsonField.of("MANAGEMENT_ADJUSTMENT"))
+                val MANAGEMENT_ADJUSTMENT = of("MANAGEMENT_ADJUSTMENT")
 
-                val MANAGEMENT_DISPUTE = TransactionCategory(JsonField.of("MANAGEMENT_DISPUTE"))
+                val MANAGEMENT_DISPUTE = of("MANAGEMENT_DISPUTE")
 
-                val MANAGEMENT_FEE = TransactionCategory(JsonField.of("MANAGEMENT_FEE"))
+                val MANAGEMENT_FEE = of("MANAGEMENT_FEE")
 
-                val MANAGEMENT_REWARD = TransactionCategory(JsonField.of("MANAGEMENT_REWARD"))
+                val MANAGEMENT_REWARD = of("MANAGEMENT_REWARD")
 
                 fun of(value: String) = TransactionCategory(JsonField.of(value))
             }
@@ -533,160 +532,125 @@ private constructor(
 
             companion object {
 
-                val ACH_ORIGINATION_CANCELLED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_CANCELLED"))
+                val ACH_ORIGINATION_CANCELLED = of("ACH_ORIGINATION_CANCELLED")
 
-                val ACH_ORIGINATION_INITIATED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_INITIATED"))
+                val ACH_ORIGINATION_INITIATED = of("ACH_ORIGINATION_INITIATED")
 
-                val ACH_ORIGINATION_PROCESSED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_PROCESSED"))
+                val ACH_ORIGINATION_PROCESSED = of("ACH_ORIGINATION_PROCESSED")
 
-                val ACH_ORIGINATION_RELEASED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_RELEASED"))
+                val ACH_ORIGINATION_RELEASED = of("ACH_ORIGINATION_RELEASED")
 
-                val ACH_ORIGINATION_REVIEWED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_REVIEWED"))
+                val ACH_ORIGINATION_REVIEWED = of("ACH_ORIGINATION_REVIEWED")
 
-                val ACH_ORIGINATION_SETTLED =
-                    FinancialEventType(JsonField.of("ACH_ORIGINATION_SETTLED"))
+                val ACH_ORIGINATION_SETTLED = of("ACH_ORIGINATION_SETTLED")
 
-                val ACH_RECEIPT_PROCESSED =
-                    FinancialEventType(JsonField.of("ACH_RECEIPT_PROCESSED"))
+                val ACH_RECEIPT_PROCESSED = of("ACH_RECEIPT_PROCESSED")
 
-                val ACH_RECEIPT_SETTLED = FinancialEventType(JsonField.of("ACH_RECEIPT_SETTLED"))
+                val ACH_RECEIPT_SETTLED = of("ACH_RECEIPT_SETTLED")
 
-                val ACH_RETURN_INITIATED = FinancialEventType(JsonField.of("ACH_RETURN_INITIATED"))
+                val ACH_RETURN_INITIATED = of("ACH_RETURN_INITIATED")
 
-                val ACH_RETURN_PROCESSED = FinancialEventType(JsonField.of("ACH_RETURN_PROCESSED"))
+                val ACH_RETURN_PROCESSED = of("ACH_RETURN_PROCESSED")
 
-                val AUTHORIZATION = FinancialEventType(JsonField.of("AUTHORIZATION"))
+                val AUTHORIZATION = of("AUTHORIZATION")
 
-                val AUTHORIZATION_ADVICE = FinancialEventType(JsonField.of("AUTHORIZATION_ADVICE"))
+                val AUTHORIZATION_ADVICE = of("AUTHORIZATION_ADVICE")
 
-                val AUTHORIZATION_EXPIRY = FinancialEventType(JsonField.of("AUTHORIZATION_EXPIRY"))
+                val AUTHORIZATION_EXPIRY = of("AUTHORIZATION_EXPIRY")
 
-                val AUTHORIZATION_REVERSAL =
-                    FinancialEventType(JsonField.of("AUTHORIZATION_REVERSAL"))
+                val AUTHORIZATION_REVERSAL = of("AUTHORIZATION_REVERSAL")
 
-                val BALANCE_INQUIRY = FinancialEventType(JsonField.of("BALANCE_INQUIRY"))
+                val BALANCE_INQUIRY = of("BALANCE_INQUIRY")
 
-                val BILLING_ERROR = FinancialEventType(JsonField.of("BILLING_ERROR"))
+                val BILLING_ERROR = of("BILLING_ERROR")
 
-                val BILLING_ERROR_REVERSAL =
-                    FinancialEventType(JsonField.of("BILLING_ERROR_REVERSAL"))
+                val BILLING_ERROR_REVERSAL = of("BILLING_ERROR_REVERSAL")
 
-                val CARD_TO_CARD = FinancialEventType(JsonField.of("CARD_TO_CARD"))
+                val CARD_TO_CARD = of("CARD_TO_CARD")
 
-                val CASH_BACK = FinancialEventType(JsonField.of("CASH_BACK"))
+                val CASH_BACK = of("CASH_BACK")
 
-                val CASH_BACK_REVERSAL = FinancialEventType(JsonField.of("CASH_BACK_REVERSAL"))
+                val CASH_BACK_REVERSAL = of("CASH_BACK_REVERSAL")
 
-                val CLEARING = FinancialEventType(JsonField.of("CLEARING"))
+                val CLEARING = of("CLEARING")
 
-                val CORRECTION_CREDIT = FinancialEventType(JsonField.of("CORRECTION_CREDIT"))
+                val CORRECTION_CREDIT = of("CORRECTION_CREDIT")
 
-                val CORRECTION_DEBIT = FinancialEventType(JsonField.of("CORRECTION_DEBIT"))
+                val CORRECTION_DEBIT = of("CORRECTION_DEBIT")
 
-                val CREDIT_AUTHORIZATION = FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION"))
+                val CREDIT_AUTHORIZATION = of("CREDIT_AUTHORIZATION")
 
-                val CREDIT_AUTHORIZATION_ADVICE =
-                    FinancialEventType(JsonField.of("CREDIT_AUTHORIZATION_ADVICE"))
+                val CREDIT_AUTHORIZATION_ADVICE = of("CREDIT_AUTHORIZATION_ADVICE")
 
-                val CURRENCY_CONVERSION = FinancialEventType(JsonField.of("CURRENCY_CONVERSION"))
+                val CURRENCY_CONVERSION = of("CURRENCY_CONVERSION")
 
-                val CURRENCY_CONVERSION_REVERSAL =
-                    FinancialEventType(JsonField.of("CURRENCY_CONVERSION_REVERSAL"))
+                val CURRENCY_CONVERSION_REVERSAL = of("CURRENCY_CONVERSION_REVERSAL")
 
-                val DISPUTE_WON = FinancialEventType(JsonField.of("DISPUTE_WON"))
+                val DISPUTE_WON = of("DISPUTE_WON")
 
-                val EXTERNAL_ACH_CANCELED =
-                    FinancialEventType(JsonField.of("EXTERNAL_ACH_CANCELED"))
+                val EXTERNAL_ACH_CANCELED = of("EXTERNAL_ACH_CANCELED")
 
-                val EXTERNAL_ACH_INITIATED =
-                    FinancialEventType(JsonField.of("EXTERNAL_ACH_INITIATED"))
+                val EXTERNAL_ACH_INITIATED = of("EXTERNAL_ACH_INITIATED")
 
-                val EXTERNAL_ACH_RELEASED =
-                    FinancialEventType(JsonField.of("EXTERNAL_ACH_RELEASED"))
+                val EXTERNAL_ACH_RELEASED = of("EXTERNAL_ACH_RELEASED")
 
-                val EXTERNAL_ACH_REVERSED =
-                    FinancialEventType(JsonField.of("EXTERNAL_ACH_REVERSED"))
+                val EXTERNAL_ACH_REVERSED = of("EXTERNAL_ACH_REVERSED")
 
-                val EXTERNAL_ACH_SETTLED = FinancialEventType(JsonField.of("EXTERNAL_ACH_SETTLED"))
+                val EXTERNAL_ACH_SETTLED = of("EXTERNAL_ACH_SETTLED")
 
-                val EXTERNAL_CHECK_CANCELED =
-                    FinancialEventType(JsonField.of("EXTERNAL_CHECK_CANCELED"))
+                val EXTERNAL_CHECK_CANCELED = of("EXTERNAL_CHECK_CANCELED")
 
-                val EXTERNAL_CHECK_INITIATED =
-                    FinancialEventType(JsonField.of("EXTERNAL_CHECK_INITIATED"))
+                val EXTERNAL_CHECK_INITIATED = of("EXTERNAL_CHECK_INITIATED")
 
-                val EXTERNAL_CHECK_RELEASED =
-                    FinancialEventType(JsonField.of("EXTERNAL_CHECK_RELEASED"))
+                val EXTERNAL_CHECK_RELEASED = of("EXTERNAL_CHECK_RELEASED")
 
-                val EXTERNAL_CHECK_REVERSED =
-                    FinancialEventType(JsonField.of("EXTERNAL_CHECK_REVERSED"))
+                val EXTERNAL_CHECK_REVERSED = of("EXTERNAL_CHECK_REVERSED")
 
-                val EXTERNAL_CHECK_SETTLED =
-                    FinancialEventType(JsonField.of("EXTERNAL_CHECK_SETTLED"))
+                val EXTERNAL_CHECK_SETTLED = of("EXTERNAL_CHECK_SETTLED")
 
-                val EXTERNAL_TRANSFER_CANCELED =
-                    FinancialEventType(JsonField.of("EXTERNAL_TRANSFER_CANCELED"))
+                val EXTERNAL_TRANSFER_CANCELED = of("EXTERNAL_TRANSFER_CANCELED")
 
-                val EXTERNAL_TRANSFER_INITIATED =
-                    FinancialEventType(JsonField.of("EXTERNAL_TRANSFER_INITIATED"))
+                val EXTERNAL_TRANSFER_INITIATED = of("EXTERNAL_TRANSFER_INITIATED")
 
-                val EXTERNAL_TRANSFER_RELEASED =
-                    FinancialEventType(JsonField.of("EXTERNAL_TRANSFER_RELEASED"))
+                val EXTERNAL_TRANSFER_RELEASED = of("EXTERNAL_TRANSFER_RELEASED")
 
-                val EXTERNAL_TRANSFER_REVERSED =
-                    FinancialEventType(JsonField.of("EXTERNAL_TRANSFER_REVERSED"))
+                val EXTERNAL_TRANSFER_REVERSED = of("EXTERNAL_TRANSFER_REVERSED")
 
-                val EXTERNAL_TRANSFER_SETTLED =
-                    FinancialEventType(JsonField.of("EXTERNAL_TRANSFER_SETTLED"))
+                val EXTERNAL_TRANSFER_SETTLED = of("EXTERNAL_TRANSFER_SETTLED")
 
-                val EXTERNAL_WIRE_CANCELED =
-                    FinancialEventType(JsonField.of("EXTERNAL_WIRE_CANCELED"))
+                val EXTERNAL_WIRE_CANCELED = of("EXTERNAL_WIRE_CANCELED")
 
-                val EXTERNAL_WIRE_INITIATED =
-                    FinancialEventType(JsonField.of("EXTERNAL_WIRE_INITIATED"))
+                val EXTERNAL_WIRE_INITIATED = of("EXTERNAL_WIRE_INITIATED")
 
-                val EXTERNAL_WIRE_RELEASED =
-                    FinancialEventType(JsonField.of("EXTERNAL_WIRE_RELEASED"))
+                val EXTERNAL_WIRE_RELEASED = of("EXTERNAL_WIRE_RELEASED")
 
-                val EXTERNAL_WIRE_REVERSED =
-                    FinancialEventType(JsonField.of("EXTERNAL_WIRE_REVERSED"))
+                val EXTERNAL_WIRE_REVERSED = of("EXTERNAL_WIRE_REVERSED")
 
-                val EXTERNAL_WIRE_SETTLED =
-                    FinancialEventType(JsonField.of("EXTERNAL_WIRE_SETTLED"))
+                val EXTERNAL_WIRE_SETTLED = of("EXTERNAL_WIRE_SETTLED")
 
-                val FINANCIAL_AUTHORIZATION =
-                    FinancialEventType(JsonField.of("FINANCIAL_AUTHORIZATION"))
+                val FINANCIAL_AUTHORIZATION = of("FINANCIAL_AUTHORIZATION")
 
-                val FINANCIAL_CREDIT_AUTHORIZATION =
-                    FinancialEventType(JsonField.of("FINANCIAL_CREDIT_AUTHORIZATION"))
+                val FINANCIAL_CREDIT_AUTHORIZATION = of("FINANCIAL_CREDIT_AUTHORIZATION")
 
-                val INTEREST = FinancialEventType(JsonField.of("INTEREST"))
+                val INTEREST = of("INTEREST")
 
-                val INTEREST_REVERSAL = FinancialEventType(JsonField.of("INTEREST_REVERSAL"))
+                val INTEREST_REVERSAL = of("INTEREST_REVERSAL")
 
-                val LATE_PAYMENT = FinancialEventType(JsonField.of("LATE_PAYMENT"))
+                val LATE_PAYMENT = of("LATE_PAYMENT")
 
-                val LATE_PAYMENT_REVERSAL =
-                    FinancialEventType(JsonField.of("LATE_PAYMENT_REVERSAL"))
+                val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
 
-                val PROVISIONAL_CREDIT = FinancialEventType(JsonField.of("PROVISIONAL_CREDIT"))
+                val PROVISIONAL_CREDIT = of("PROVISIONAL_CREDIT")
 
-                val PROVISIONAL_CREDIT_REVERSAL =
-                    FinancialEventType(JsonField.of("PROVISIONAL_CREDIT_REVERSAL"))
+                val PROVISIONAL_CREDIT_REVERSAL = of("PROVISIONAL_CREDIT_REVERSAL")
 
-                val RETURN = FinancialEventType(JsonField.of("RETURN"))
+                val RETURN = of("RETURN")
 
-                val RETURN_REVERSAL = FinancialEventType(JsonField.of("RETURN_REVERSAL"))
+                val RETURN_REVERSAL = of("RETURN_REVERSAL")
 
-                val TRANSFER = FinancialEventType(JsonField.of("TRANSFER"))
+                val TRANSFER = of("TRANSFER")
 
-                val TRANSFER_INSUFFICIENT_FUNDS =
-                    FinancialEventType(JsonField.of("TRANSFER_INSUFFICIENT_FUNDS"))
+                val TRANSFER_INSUFFICIENT_FUNDS = of("TRANSFER_INSUFFICIENT_FUNDS")
 
                 fun of(value: String) = FinancialEventType(JsonField.of(value))
             }

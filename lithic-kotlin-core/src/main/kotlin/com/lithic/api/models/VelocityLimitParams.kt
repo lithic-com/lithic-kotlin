@@ -505,9 +505,9 @@ private constructor(
 
         companion object {
 
-            val CARD = Scope(JsonField.of("CARD"))
+            val CARD = of("CARD")
 
-            val ACCOUNT = Scope(JsonField.of("ACCOUNT"))
+            val ACCOUNT = of("ACCOUNT")
 
             fun of(value: String) = Scope(JsonField.of(value))
         }

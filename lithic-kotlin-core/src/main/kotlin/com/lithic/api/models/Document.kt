@@ -204,43 +204,41 @@ private constructor(
 
         companion object {
 
-            val DRIVERS_LICENSE = DocumentType(JsonField.of("DRIVERS_LICENSE"))
+            val DRIVERS_LICENSE = of("DRIVERS_LICENSE")
 
-            val PASSPORT = DocumentType(JsonField.of("PASSPORT"))
+            val PASSPORT = of("PASSPORT")
 
-            val PASSPORT_CARD = DocumentType(JsonField.of("PASSPORT_CARD"))
+            val PASSPORT_CARD = of("PASSPORT_CARD")
 
-            val EIN_LETTER = DocumentType(JsonField.of("EIN_LETTER"))
+            val EIN_LETTER = of("EIN_LETTER")
 
-            val TAX_RETURN = DocumentType(JsonField.of("TAX_RETURN"))
+            val TAX_RETURN = of("TAX_RETURN")
 
-            val OPERATING_AGREEMENT = DocumentType(JsonField.of("OPERATING_AGREEMENT"))
+            val OPERATING_AGREEMENT = of("OPERATING_AGREEMENT")
 
-            val CERTIFICATE_OF_FORMATION = DocumentType(JsonField.of("CERTIFICATE_OF_FORMATION"))
+            val CERTIFICATE_OF_FORMATION = of("CERTIFICATE_OF_FORMATION")
 
-            val CERTIFICATE_OF_GOOD_STANDING =
-                DocumentType(JsonField.of("CERTIFICATE_OF_GOOD_STANDING"))
+            val CERTIFICATE_OF_GOOD_STANDING = of("CERTIFICATE_OF_GOOD_STANDING")
 
-            val ARTICLES_OF_INCORPORATION = DocumentType(JsonField.of("ARTICLES_OF_INCORPORATION"))
+            val ARTICLES_OF_INCORPORATION = of("ARTICLES_OF_INCORPORATION")
 
-            val ARTICLES_OF_ORGANIZATION = DocumentType(JsonField.of("ARTICLES_OF_ORGANIZATION"))
+            val ARTICLES_OF_ORGANIZATION = of("ARTICLES_OF_ORGANIZATION")
 
-            val BYLAWS = DocumentType(JsonField.of("BYLAWS"))
+            val BYLAWS = of("BYLAWS")
 
-            val GOVERNMENT_BUSINESS_LICENSE =
-                DocumentType(JsonField.of("GOVERNMENT_BUSINESS_LICENSE"))
+            val GOVERNMENT_BUSINESS_LICENSE = of("GOVERNMENT_BUSINESS_LICENSE")
 
-            val PARTNERSHIP_AGREEMENT = DocumentType(JsonField.of("PARTNERSHIP_AGREEMENT"))
+            val PARTNERSHIP_AGREEMENT = of("PARTNERSHIP_AGREEMENT")
 
-            val SS4_FORM = DocumentType(JsonField.of("SS4_FORM"))
+            val SS4_FORM = of("SS4_FORM")
 
-            val BANK_STATEMENT = DocumentType(JsonField.of("BANK_STATEMENT"))
+            val BANK_STATEMENT = of("BANK_STATEMENT")
 
-            val UTILITY_BILL_STATEMENT = DocumentType(JsonField.of("UTILITY_BILL_STATEMENT"))
+            val UTILITY_BILL_STATEMENT = of("UTILITY_BILL_STATEMENT")
 
-            val SSN_CARD = DocumentType(JsonField.of("SSN_CARD"))
+            val SSN_CARD = of("SSN_CARD")
 
-            val ITIN_LETTER = DocumentType(JsonField.of("ITIN_LETTER"))
+            val ITIN_LETTER = of("ITIN_LETTER")
 
             fun of(value: String) = DocumentType(JsonField.of(value))
         }
@@ -654,9 +652,9 @@ private constructor(
 
             companion object {
 
-                val FRONT = ImageType(JsonField.of("FRONT"))
+                val FRONT = of("FRONT")
 
-                val BACK = ImageType(JsonField.of("BACK"))
+                val BACK = of("BACK")
 
                 fun of(value: String) = ImageType(JsonField.of(value))
             }
@@ -711,15 +709,15 @@ private constructor(
 
             companion object {
 
-                val ACCEPTED = DocumentUploadStatus(JsonField.of("ACCEPTED"))
+                val ACCEPTED = of("ACCEPTED")
 
-                val REJECTED = DocumentUploadStatus(JsonField.of("REJECTED"))
+                val REJECTED = of("REJECTED")
 
-                val PENDING_UPLOAD = DocumentUploadStatus(JsonField.of("PENDING_UPLOAD"))
+                val PENDING_UPLOAD = of("PENDING_UPLOAD")
 
-                val UPLOADED = DocumentUploadStatus(JsonField.of("UPLOADED"))
+                val UPLOADED = of("UPLOADED")
 
-                val PARTIAL_APPROVAL = DocumentUploadStatus(JsonField.of("PARTIAL_APPROVAL"))
+                val PARTIAL_APPROVAL = of("PARTIAL_APPROVAL")
 
                 fun of(value: String) = DocumentUploadStatus(JsonField.of(value))
             }
@@ -786,37 +784,28 @@ private constructor(
 
             companion object {
 
-                val DOCUMENT_MISSING_REQUIRED_DATA =
-                    DocumentUploadStatusReasons(JsonField.of("DOCUMENT_MISSING_REQUIRED_DATA"))
+                val DOCUMENT_MISSING_REQUIRED_DATA = of("DOCUMENT_MISSING_REQUIRED_DATA")
 
-                val DOCUMENT_UPLOAD_TOO_BLURRY =
-                    DocumentUploadStatusReasons(JsonField.of("DOCUMENT_UPLOAD_TOO_BLURRY"))
+                val DOCUMENT_UPLOAD_TOO_BLURRY = of("DOCUMENT_UPLOAD_TOO_BLURRY")
 
-                val FILE_SIZE_TOO_LARGE =
-                    DocumentUploadStatusReasons(JsonField.of("FILE_SIZE_TOO_LARGE"))
+                val FILE_SIZE_TOO_LARGE = of("FILE_SIZE_TOO_LARGE")
 
-                val INVALID_DOCUMENT_TYPE =
-                    DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_TYPE"))
+                val INVALID_DOCUMENT_TYPE = of("INVALID_DOCUMENT_TYPE")
 
-                val INVALID_DOCUMENT_UPLOAD =
-                    DocumentUploadStatusReasons(JsonField.of("INVALID_DOCUMENT_UPLOAD"))
+                val INVALID_DOCUMENT_UPLOAD = of("INVALID_DOCUMENT_UPLOAD")
 
-                val INVALID_ENTITY = DocumentUploadStatusReasons(JsonField.of("INVALID_ENTITY"))
+                val INVALID_ENTITY = of("INVALID_ENTITY")
 
-                val DOCUMENT_EXPIRED = DocumentUploadStatusReasons(JsonField.of("DOCUMENT_EXPIRED"))
+                val DOCUMENT_EXPIRED = of("DOCUMENT_EXPIRED")
 
                 val DOCUMENT_ISSUED_GREATER_THAN_30_DAYS =
-                    DocumentUploadStatusReasons(
-                        JsonField.of("DOCUMENT_ISSUED_GREATER_THAN_30_DAYS")
-                    )
+                    of("DOCUMENT_ISSUED_GREATER_THAN_30_DAYS")
 
-                val DOCUMENT_TYPE_NOT_SUPPORTED =
-                    DocumentUploadStatusReasons(JsonField.of("DOCUMENT_TYPE_NOT_SUPPORTED"))
+                val DOCUMENT_TYPE_NOT_SUPPORTED = of("DOCUMENT_TYPE_NOT_SUPPORTED")
 
-                val UNKNOWN_FAILURE_REASON =
-                    DocumentUploadStatusReasons(JsonField.of("UNKNOWN_FAILURE_REASON"))
+                val UNKNOWN_FAILURE_REASON = of("UNKNOWN_FAILURE_REASON")
 
-                val UNKNOWN_ERROR = DocumentUploadStatusReasons(JsonField.of("UNKNOWN_ERROR"))
+                val UNKNOWN_ERROR = of("UNKNOWN_ERROR")
 
                 fun of(value: String) = DocumentUploadStatusReasons(JsonField.of(value))
             }

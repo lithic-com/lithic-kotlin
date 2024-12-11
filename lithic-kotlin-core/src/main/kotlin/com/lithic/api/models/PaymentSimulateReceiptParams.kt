@@ -388,9 +388,9 @@ constructor(
 
         companion object {
 
-            val RECEIPT_CREDIT = ReceiptType(JsonField.of("RECEIPT_CREDIT"))
+            val RECEIPT_CREDIT = of("RECEIPT_CREDIT")
 
-            val RECEIPT_DEBIT = ReceiptType(JsonField.of("RECEIPT_DEBIT"))
+            val RECEIPT_DEBIT = of("RECEIPT_DEBIT")
 
             fun of(value: String) = ReceiptType(JsonField.of(value))
         }

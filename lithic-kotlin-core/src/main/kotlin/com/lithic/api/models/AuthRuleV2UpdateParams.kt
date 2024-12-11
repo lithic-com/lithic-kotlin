@@ -324,7 +324,7 @@ constructor(
 
         companion object {
 
-            val INACTIVE = State(JsonField.of("INACTIVE"))
+            val INACTIVE = of("INACTIVE")
 
             fun of(value: String) = State(JsonField.of(value))
         }

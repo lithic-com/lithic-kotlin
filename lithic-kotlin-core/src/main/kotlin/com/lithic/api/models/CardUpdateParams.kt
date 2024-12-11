@@ -547,7 +547,7 @@ constructor(
 
         companion object {
 
-            val OK = PinStatus(JsonField.of("OK"))
+            val OK = of("OK")
 
             fun of(value: String) = PinStatus(JsonField.of(value))
         }
@@ -598,11 +598,11 @@ constructor(
 
         companion object {
 
-            val CLOSED = State(JsonField.of("CLOSED"))
+            val CLOSED = of("CLOSED")
 
-            val OPEN = State(JsonField.of("OPEN"))
+            val OPEN = of("OPEN")
 
-            val PAUSED = State(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
             fun of(value: String) = State(JsonField.of(value))
         }

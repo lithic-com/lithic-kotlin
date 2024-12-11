@@ -305,9 +305,9 @@ constructor(
 
         companion object {
 
-            val CHECKING = AccountType(JsonField.of("CHECKING"))
+            val CHECKING = of("CHECKING")
 
-            val SAVINGS = AccountType(JsonField.of("SAVINGS"))
+            val SAVINGS = of("SAVINGS")
 
             fun of(value: String) = AccountType(JsonField.of(value))
         }
@@ -362,11 +362,11 @@ constructor(
 
         companion object {
 
-            val ENABLED = AccountState(JsonField.of("ENABLED"))
+            val ENABLED = of("ENABLED")
 
-            val CLOSED = AccountState(JsonField.of("CLOSED"))
+            val CLOSED = of("CLOSED")
 
-            val PAUSED = AccountState(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
             fun of(value: String) = AccountState(JsonField.of(value))
         }
@@ -425,13 +425,13 @@ constructor(
 
         companion object {
 
-            val PENDING = VerificationState(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val ENABLED = VerificationState(JsonField.of("ENABLED"))
+            val ENABLED = of("ENABLED")
 
-            val FAILED_VERIFICATION = VerificationState(JsonField.of("FAILED_VERIFICATION"))
+            val FAILED_VERIFICATION = of("FAILED_VERIFICATION")
 
-            val INSUFFICIENT_FUNDS = VerificationState(JsonField.of("INSUFFICIENT_FUNDS"))
+            val INSUFFICIENT_FUNDS = of("INSUFFICIENT_FUNDS")
 
             fun of(value: String) = VerificationState(JsonField.of(value))
         }

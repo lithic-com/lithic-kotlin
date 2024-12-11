@@ -482,11 +482,11 @@ constructor(
 
         companion object {
 
-            val APPLE_PAY = DigitalWallet(JsonField.of("APPLE_PAY"))
+            val APPLE_PAY = of("APPLE_PAY")
 
-            val GOOGLE_PAY = DigitalWallet(JsonField.of("GOOGLE_PAY"))
+            val GOOGLE_PAY = of("GOOGLE_PAY")
 
-            val SAMSUNG_PAY = DigitalWallet(JsonField.of("SAMSUNG_PAY"))
+            val SAMSUNG_PAY = of("SAMSUNG_PAY")
 
             fun of(value: String) = DigitalWallet(JsonField.of(value))
         }

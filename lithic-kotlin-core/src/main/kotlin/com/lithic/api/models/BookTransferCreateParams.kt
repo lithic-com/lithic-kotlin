@@ -494,19 +494,19 @@ constructor(
 
         companion object {
 
-            val ADJUSTMENT = Category(JsonField.of("ADJUSTMENT"))
+            val ADJUSTMENT = of("ADJUSTMENT")
 
-            val BALANCE_OR_FUNDING = Category(JsonField.of("BALANCE_OR_FUNDING"))
+            val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
-            val DERECOGNITION = Category(JsonField.of("DERECOGNITION"))
+            val DERECOGNITION = of("DERECOGNITION")
 
-            val DISPUTE = Category(JsonField.of("DISPUTE"))
+            val DISPUTE = of("DISPUTE")
 
-            val FEE = Category(JsonField.of("FEE"))
+            val FEE = of("FEE")
 
-            val REWARD = Category(JsonField.of("REWARD"))
+            val REWARD = of("REWARD")
 
-            val TRANSFER = Category(JsonField.of("TRANSFER"))
+            val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Category(JsonField.of(value))
         }
@@ -581,69 +581,69 @@ constructor(
 
         companion object {
 
-            val ATM_WITHDRAWAL = Type(JsonField.of("ATM_WITHDRAWAL"))
+            val ATM_WITHDRAWAL = of("ATM_WITHDRAWAL")
 
-            val ATM_DECLINE = Type(JsonField.of("ATM_DECLINE"))
+            val ATM_DECLINE = of("ATM_DECLINE")
 
-            val INTERNATIONAL_ATM_WITHDRAWAL = Type(JsonField.of("INTERNATIONAL_ATM_WITHDRAWAL"))
+            val INTERNATIONAL_ATM_WITHDRAWAL = of("INTERNATIONAL_ATM_WITHDRAWAL")
 
-            val INACTIVITY = Type(JsonField.of("INACTIVITY"))
+            val INACTIVITY = of("INACTIVITY")
 
-            val STATEMENT = Type(JsonField.of("STATEMENT"))
+            val STATEMENT = of("STATEMENT")
 
-            val MONTHLY = Type(JsonField.of("MONTHLY"))
+            val MONTHLY = of("MONTHLY")
 
-            val QUARTERLY = Type(JsonField.of("QUARTERLY"))
+            val QUARTERLY = of("QUARTERLY")
 
-            val ANNUAL = Type(JsonField.of("ANNUAL"))
+            val ANNUAL = of("ANNUAL")
 
-            val CUSTOMER_SERVICE = Type(JsonField.of("CUSTOMER_SERVICE"))
+            val CUSTOMER_SERVICE = of("CUSTOMER_SERVICE")
 
-            val ACCOUNT_MAINTENANCE = Type(JsonField.of("ACCOUNT_MAINTENANCE"))
+            val ACCOUNT_MAINTENANCE = of("ACCOUNT_MAINTENANCE")
 
-            val ACCOUNT_ACTIVATION = Type(JsonField.of("ACCOUNT_ACTIVATION"))
+            val ACCOUNT_ACTIVATION = of("ACCOUNT_ACTIVATION")
 
-            val ACCOUNT_CLOSURE = Type(JsonField.of("ACCOUNT_CLOSURE"))
+            val ACCOUNT_CLOSURE = of("ACCOUNT_CLOSURE")
 
-            val CARD_REPLACEMENT = Type(JsonField.of("CARD_REPLACEMENT"))
+            val CARD_REPLACEMENT = of("CARD_REPLACEMENT")
 
-            val CARD_DELIVERY = Type(JsonField.of("CARD_DELIVERY"))
+            val CARD_DELIVERY = of("CARD_DELIVERY")
 
-            val CARD_CREATE = Type(JsonField.of("CARD_CREATE"))
+            val CARD_CREATE = of("CARD_CREATE")
 
-            val CURRENCY_CONVERSION = Type(JsonField.of("CURRENCY_CONVERSION"))
+            val CURRENCY_CONVERSION = of("CURRENCY_CONVERSION")
 
-            val INTEREST = Type(JsonField.of("INTEREST"))
+            val INTEREST = of("INTEREST")
 
-            val LATE_PAYMENT = Type(JsonField.of("LATE_PAYMENT"))
+            val LATE_PAYMENT = of("LATE_PAYMENT")
 
-            val BILL_PAYMENT = Type(JsonField.of("BILL_PAYMENT"))
+            val BILL_PAYMENT = of("BILL_PAYMENT")
 
-            val CASH_BACK = Type(JsonField.of("CASH_BACK"))
+            val CASH_BACK = of("CASH_BACK")
 
-            val ACCOUNT_TO_ACCOUNT = Type(JsonField.of("ACCOUNT_TO_ACCOUNT"))
+            val ACCOUNT_TO_ACCOUNT = of("ACCOUNT_TO_ACCOUNT")
 
-            val CARD_TO_CARD = Type(JsonField.of("CARD_TO_CARD"))
+            val CARD_TO_CARD = of("CARD_TO_CARD")
 
-            val DISBURSE = Type(JsonField.of("DISBURSE"))
+            val DISBURSE = of("DISBURSE")
 
-            val BILLING_ERROR = Type(JsonField.of("BILLING_ERROR"))
+            val BILLING_ERROR = of("BILLING_ERROR")
 
-            val LOSS_WRITE_OFF = Type(JsonField.of("LOSS_WRITE_OFF"))
+            val LOSS_WRITE_OFF = of("LOSS_WRITE_OFF")
 
-            val EXPIRED_CARD = Type(JsonField.of("EXPIRED_CARD"))
+            val EXPIRED_CARD = of("EXPIRED_CARD")
 
-            val EARLY_DERECOGNITION = Type(JsonField.of("EARLY_DERECOGNITION"))
+            val EARLY_DERECOGNITION = of("EARLY_DERECOGNITION")
 
-            val ESCHEATMENT = Type(JsonField.of("ESCHEATMENT"))
+            val ESCHEATMENT = of("ESCHEATMENT")
 
-            val INACTIVITY_FEE_DOWN = Type(JsonField.of("INACTIVITY_FEE_DOWN"))
+            val INACTIVITY_FEE_DOWN = of("INACTIVITY_FEE_DOWN")
 
-            val PROVISIONAL_CREDIT = Type(JsonField.of("PROVISIONAL_CREDIT"))
+            val PROVISIONAL_CREDIT = of("PROVISIONAL_CREDIT")
 
-            val DISPUTE_WON = Type(JsonField.of("DISPUTE_WON"))
+            val DISPUTE_WON = of("DISPUTE_WON")
 
-            val TRANSFER = Type(JsonField.of("TRANSFER"))
+            val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
