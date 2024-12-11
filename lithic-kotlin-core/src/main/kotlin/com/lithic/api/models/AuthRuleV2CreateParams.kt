@@ -939,23 +939,23 @@ constructor(
 
                         companion object {
 
-                            val MCC = Attribute(JsonField.of("MCC"))
+                            val MCC = of("MCC")
 
-                            val COUNTRY = Attribute(JsonField.of("COUNTRY"))
+                            val COUNTRY = of("COUNTRY")
 
-                            val CURRENCY = Attribute(JsonField.of("CURRENCY"))
+                            val CURRENCY = of("CURRENCY")
 
-                            val MERCHANT_ID = Attribute(JsonField.of("MERCHANT_ID"))
+                            val MERCHANT_ID = of("MERCHANT_ID")
 
-                            val DESCRIPTOR = Attribute(JsonField.of("DESCRIPTOR"))
+                            val DESCRIPTOR = of("DESCRIPTOR")
 
-                            val LIABILITY_SHIFT = Attribute(JsonField.of("LIABILITY_SHIFT"))
+                            val LIABILITY_SHIFT = of("LIABILITY_SHIFT")
 
-                            val PAN_ENTRY_MODE = Attribute(JsonField.of("PAN_ENTRY_MODE"))
+                            val PAN_ENTRY_MODE = of("PAN_ENTRY_MODE")
 
-                            val TRANSACTION_AMOUNT = Attribute(JsonField.of("TRANSACTION_AMOUNT"))
+                            val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
-                            val RISK_SCORE = Attribute(JsonField.of("RISK_SCORE"))
+                            val RISK_SCORE = of("RISK_SCORE")
 
                             fun of(value: String) = Attribute(JsonField.of(value))
                         }
@@ -1040,17 +1040,17 @@ constructor(
 
                         companion object {
 
-                            val IS_ONE_OF = Operation(JsonField.of("IS_ONE_OF"))
+                            val IS_ONE_OF = of("IS_ONE_OF")
 
-                            val IS_NOT_ONE_OF = Operation(JsonField.of("IS_NOT_ONE_OF"))
+                            val IS_NOT_ONE_OF = of("IS_NOT_ONE_OF")
 
-                            val MATCHES = Operation(JsonField.of("MATCHES"))
+                            val MATCHES = of("MATCHES")
 
-                            val DOES_NOT_MATCH = Operation(JsonField.of("DOES_NOT_MATCH"))
+                            val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
-                            val IS_GREATER_THAN = Operation(JsonField.of("IS_GREATER_THAN"))
+                            val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
-                            val IS_LESS_THAN = Operation(JsonField.of("IS_LESS_THAN"))
+                            val IS_LESS_THAN = of("IS_LESS_THAN")
 
                             fun of(value: String) = Operation(JsonField.of(value))
                         }
@@ -1288,9 +1288,9 @@ constructor(
 
             companion object {
 
-                val CONDITIONAL_BLOCK = AuthRuleType(JsonField.of("CONDITIONAL_BLOCK"))
+                val CONDITIONAL_BLOCK = of("CONDITIONAL_BLOCK")
 
-                val VELOCITY_LIMIT = AuthRuleType(JsonField.of("VELOCITY_LIMIT"))
+                val VELOCITY_LIMIT = of("VELOCITY_LIMIT")
 
                 fun of(value: String) = AuthRuleType(JsonField.of(value))
             }
@@ -1891,23 +1891,23 @@ constructor(
 
                         companion object {
 
-                            val MCC = Attribute(JsonField.of("MCC"))
+                            val MCC = of("MCC")
 
-                            val COUNTRY = Attribute(JsonField.of("COUNTRY"))
+                            val COUNTRY = of("COUNTRY")
 
-                            val CURRENCY = Attribute(JsonField.of("CURRENCY"))
+                            val CURRENCY = of("CURRENCY")
 
-                            val MERCHANT_ID = Attribute(JsonField.of("MERCHANT_ID"))
+                            val MERCHANT_ID = of("MERCHANT_ID")
 
-                            val DESCRIPTOR = Attribute(JsonField.of("DESCRIPTOR"))
+                            val DESCRIPTOR = of("DESCRIPTOR")
 
-                            val LIABILITY_SHIFT = Attribute(JsonField.of("LIABILITY_SHIFT"))
+                            val LIABILITY_SHIFT = of("LIABILITY_SHIFT")
 
-                            val PAN_ENTRY_MODE = Attribute(JsonField.of("PAN_ENTRY_MODE"))
+                            val PAN_ENTRY_MODE = of("PAN_ENTRY_MODE")
 
-                            val TRANSACTION_AMOUNT = Attribute(JsonField.of("TRANSACTION_AMOUNT"))
+                            val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
-                            val RISK_SCORE = Attribute(JsonField.of("RISK_SCORE"))
+                            val RISK_SCORE = of("RISK_SCORE")
 
                             fun of(value: String) = Attribute(JsonField.of(value))
                         }
@@ -1992,17 +1992,17 @@ constructor(
 
                         companion object {
 
-                            val IS_ONE_OF = Operation(JsonField.of("IS_ONE_OF"))
+                            val IS_ONE_OF = of("IS_ONE_OF")
 
-                            val IS_NOT_ONE_OF = Operation(JsonField.of("IS_NOT_ONE_OF"))
+                            val IS_NOT_ONE_OF = of("IS_NOT_ONE_OF")
 
-                            val MATCHES = Operation(JsonField.of("MATCHES"))
+                            val MATCHES = of("MATCHES")
 
-                            val DOES_NOT_MATCH = Operation(JsonField.of("DOES_NOT_MATCH"))
+                            val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
-                            val IS_GREATER_THAN = Operation(JsonField.of("IS_GREATER_THAN"))
+                            val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
-                            val IS_LESS_THAN = Operation(JsonField.of("IS_LESS_THAN"))
+                            val IS_LESS_THAN = of("IS_LESS_THAN")
 
                             fun of(value: String) = Operation(JsonField.of(value))
                         }
@@ -2240,9 +2240,9 @@ constructor(
 
             companion object {
 
-                val CONDITIONAL_BLOCK = AuthRuleType(JsonField.of("CONDITIONAL_BLOCK"))
+                val CONDITIONAL_BLOCK = of("CONDITIONAL_BLOCK")
 
-                val VELOCITY_LIMIT = AuthRuleType(JsonField.of("VELOCITY_LIMIT"))
+                val VELOCITY_LIMIT = of("VELOCITY_LIMIT")
 
                 fun of(value: String) = AuthRuleType(JsonField.of(value))
             }
@@ -2843,23 +2843,23 @@ constructor(
 
                         companion object {
 
-                            val MCC = Attribute(JsonField.of("MCC"))
+                            val MCC = of("MCC")
 
-                            val COUNTRY = Attribute(JsonField.of("COUNTRY"))
+                            val COUNTRY = of("COUNTRY")
 
-                            val CURRENCY = Attribute(JsonField.of("CURRENCY"))
+                            val CURRENCY = of("CURRENCY")
 
-                            val MERCHANT_ID = Attribute(JsonField.of("MERCHANT_ID"))
+                            val MERCHANT_ID = of("MERCHANT_ID")
 
-                            val DESCRIPTOR = Attribute(JsonField.of("DESCRIPTOR"))
+                            val DESCRIPTOR = of("DESCRIPTOR")
 
-                            val LIABILITY_SHIFT = Attribute(JsonField.of("LIABILITY_SHIFT"))
+                            val LIABILITY_SHIFT = of("LIABILITY_SHIFT")
 
-                            val PAN_ENTRY_MODE = Attribute(JsonField.of("PAN_ENTRY_MODE"))
+                            val PAN_ENTRY_MODE = of("PAN_ENTRY_MODE")
 
-                            val TRANSACTION_AMOUNT = Attribute(JsonField.of("TRANSACTION_AMOUNT"))
+                            val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
-                            val RISK_SCORE = Attribute(JsonField.of("RISK_SCORE"))
+                            val RISK_SCORE = of("RISK_SCORE")
 
                             fun of(value: String) = Attribute(JsonField.of(value))
                         }
@@ -2944,17 +2944,17 @@ constructor(
 
                         companion object {
 
-                            val IS_ONE_OF = Operation(JsonField.of("IS_ONE_OF"))
+                            val IS_ONE_OF = of("IS_ONE_OF")
 
-                            val IS_NOT_ONE_OF = Operation(JsonField.of("IS_NOT_ONE_OF"))
+                            val IS_NOT_ONE_OF = of("IS_NOT_ONE_OF")
 
-                            val MATCHES = Operation(JsonField.of("MATCHES"))
+                            val MATCHES = of("MATCHES")
 
-                            val DOES_NOT_MATCH = Operation(JsonField.of("DOES_NOT_MATCH"))
+                            val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
-                            val IS_GREATER_THAN = Operation(JsonField.of("IS_GREATER_THAN"))
+                            val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
-                            val IS_LESS_THAN = Operation(JsonField.of("IS_LESS_THAN"))
+                            val IS_LESS_THAN = of("IS_LESS_THAN")
 
                             fun of(value: String) = Operation(JsonField.of(value))
                         }
@@ -3192,9 +3192,9 @@ constructor(
 
             companion object {
 
-                val CONDITIONAL_BLOCK = AuthRuleType(JsonField.of("CONDITIONAL_BLOCK"))
+                val CONDITIONAL_BLOCK = of("CONDITIONAL_BLOCK")
 
-                val VELOCITY_LIMIT = AuthRuleType(JsonField.of("VELOCITY_LIMIT"))
+                val VELOCITY_LIMIT = of("VELOCITY_LIMIT")
 
                 fun of(value: String) = AuthRuleType(JsonField.of(value))
             }

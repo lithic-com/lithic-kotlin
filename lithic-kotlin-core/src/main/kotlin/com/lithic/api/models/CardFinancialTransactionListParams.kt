@@ -281,9 +281,9 @@ constructor(
 
         companion object {
 
-            val CARD = Category(JsonField.of("CARD"))
+            val CARD = of("CARD")
 
-            val TRANSFER = Category(JsonField.of("TRANSFER"))
+            val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Category(JsonField.of(value))
         }
@@ -338,9 +338,9 @@ constructor(
 
         companion object {
 
-            val APPROVED = Result(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = Result(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = Result(JsonField.of(value))
         }
@@ -395,17 +395,17 @@ constructor(
 
         companion object {
 
-            val DECLINED = Status(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val EXPIRED = Status(JsonField.of("EXPIRED"))
+            val EXPIRED = of("EXPIRED")
 
-            val PENDING = Status(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val RETURNED = Status(JsonField.of("RETURNED"))
+            val RETURNED = of("RETURNED")
 
-            val SETTLED = Status(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val VOIDED = Status(JsonField.of("VOIDED"))
+            val VOIDED = of("VOIDED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

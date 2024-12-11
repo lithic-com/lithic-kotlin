@@ -270,11 +270,11 @@ constructor(
 
         companion object {
 
-            val DIGITAL_WALLET = TokenizationChannel(JsonField.of("DIGITAL_WALLET"))
+            val DIGITAL_WALLET = of("DIGITAL_WALLET")
 
-            val MERCHANT = TokenizationChannel(JsonField.of("MERCHANT"))
+            val MERCHANT = of("MERCHANT")
 
-            val ALL = TokenizationChannel(JsonField.of("ALL"))
+            val ALL = of("ALL")
 
             fun of(value: String) = TokenizationChannel(JsonField.of(value))
         }

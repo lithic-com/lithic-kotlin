@@ -575,11 +575,11 @@ private constructor(
 
         companion object {
 
-            val CREDIT = AccountType(JsonField.of("CREDIT"))
+            val CREDIT = of("CREDIT")
 
-            val DEBIT = AccountType(JsonField.of("DEBIT"))
+            val DEBIT = of("DEBIT")
 
-            val NOT_APPLICABLE = AccountType(JsonField.of("NOT_APPLICABLE"))
+            val NOT_APPLICABLE = of("NOT_APPLICABLE")
 
             fun of(value: String) = AccountType(JsonField.of(value))
         }
@@ -638,9 +638,9 @@ private constructor(
 
         companion object {
 
-            val DECLINE = AuthenticationResult(JsonField.of("DECLINE"))
+            val DECLINE = of("DECLINE")
 
-            val SUCCESS = AuthenticationResult(JsonField.of("SUCCESS"))
+            val SUCCESS = of("SUCCESS")
 
             fun of(value: String) = AuthenticationResult(JsonField.of(value))
         }
@@ -695,11 +695,11 @@ private constructor(
 
         companion object {
 
-            val MATCH = CardExpiryCheck(JsonField.of("MATCH"))
+            val MATCH = of("MATCH")
 
-            val MISMATCH = CardExpiryCheck(JsonField.of("MISMATCH"))
+            val MISMATCH = of("MISMATCH")
 
-            val NOT_PRESENT = CardExpiryCheck(JsonField.of("NOT_PRESENT"))
+            val NOT_PRESENT = of("NOT_PRESENT")
 
             fun of(value: String) = CardExpiryCheck(JsonField.of(value))
         }
@@ -1272,11 +1272,11 @@ private constructor(
 
         companion object {
 
-            val APP_BASED = Channel(JsonField.of("APP_BASED"))
+            val APP_BASED = of("APP_BASED")
 
-            val BROWSER = Channel(JsonField.of("BROWSER"))
+            val BROWSER = of("BROWSER")
 
-            val THREE_DS_REQUESTOR_INITIATED = Channel(JsonField.of("THREE_DS_REQUESTOR_INITIATED"))
+            val THREE_DS_REQUESTOR_INITIATED = of("THREE_DS_REQUESTOR_INITIATED")
 
             fun of(value: String) = Channel(JsonField.of(value))
         }
@@ -1335,15 +1335,15 @@ private constructor(
 
         companion object {
 
-            val CUSTOMER_ENDPOINT = DecisionMadeBy(JsonField.of("CUSTOMER_ENDPOINT"))
+            val CUSTOMER_ENDPOINT = of("CUSTOMER_ENDPOINT")
 
-            val LITHIC_DEFAULT = DecisionMadeBy(JsonField.of("LITHIC_DEFAULT"))
+            val LITHIC_DEFAULT = of("LITHIC_DEFAULT")
 
-            val LITHIC_RULES = DecisionMadeBy(JsonField.of("LITHIC_RULES"))
+            val LITHIC_RULES = of("LITHIC_RULES")
 
-            val NETWORK = DecisionMadeBy(JsonField.of("NETWORK"))
+            val NETWORK = of("NETWORK")
 
-            val UNKNOWN = DecisionMadeBy(JsonField.of("UNKNOWN"))
+            val UNKNOWN = of("UNKNOWN")
 
             fun of(value: String) = DecisionMadeBy(JsonField.of(value))
         }
@@ -1998,14 +1998,13 @@ private constructor(
 
                 companion object {
 
-                    val ELECTRONIC_DELIVERY = DeliveryTimeFrame(JsonField.of("ELECTRONIC_DELIVERY"))
+                    val ELECTRONIC_DELIVERY = of("ELECTRONIC_DELIVERY")
 
-                    val OVERNIGHT_SHIPPING = DeliveryTimeFrame(JsonField.of("OVERNIGHT_SHIPPING"))
+                    val OVERNIGHT_SHIPPING = of("OVERNIGHT_SHIPPING")
 
-                    val SAME_DAY_SHIPPING = DeliveryTimeFrame(JsonField.of("SAME_DAY_SHIPPING"))
+                    val SAME_DAY_SHIPPING = of("SAME_DAY_SHIPPING")
 
-                    val TWO_DAY_OR_MORE_SHIPPING =
-                        DeliveryTimeFrame(JsonField.of("TWO_DAY_OR_MORE_SHIPPING"))
+                    val TWO_DAY_OR_MORE_SHIPPING = of("TWO_DAY_OR_MORE_SHIPPING")
 
                     fun of(value: String) = DeliveryTimeFrame(JsonField.of(value))
                 }
@@ -2069,10 +2068,9 @@ private constructor(
 
                 companion object {
 
-                    val FUTURE_AVAILABILITY = OrderAvailability(JsonField.of("FUTURE_AVAILABILITY"))
+                    val FUTURE_AVAILABILITY = of("FUTURE_AVAILABILITY")
 
-                    val MERCHANDISE_AVAILABLE =
-                        OrderAvailability(JsonField.of("MERCHANDISE_AVAILABLE"))
+                    val MERCHANDISE_AVAILABLE = of("MERCHANDISE_AVAILABLE")
 
                     fun of(value: String) = OrderAvailability(JsonField.of(value))
                 }
@@ -2128,9 +2126,9 @@ private constructor(
 
                 companion object {
 
-                    val FIRST_TIME_ORDERED = ReorderItems(JsonField.of("FIRST_TIME_ORDERED"))
+                    val FIRST_TIME_ORDERED = of("FIRST_TIME_ORDERED")
 
-                    val REORDERED = ReorderItems(JsonField.of("REORDERED"))
+                    val REORDERED = of("REORDERED")
 
                     fun of(value: String) = ReorderItems(JsonField.of(value))
                 }
@@ -2185,28 +2183,23 @@ private constructor(
 
                 companion object {
 
-                    val DIGITAL_GOODS = ShippingMethod(JsonField.of("DIGITAL_GOODS"))
+                    val DIGITAL_GOODS = of("DIGITAL_GOODS")
 
-                    val LOCKER_DELIVERY = ShippingMethod(JsonField.of("LOCKER_DELIVERY"))
+                    val LOCKER_DELIVERY = of("LOCKER_DELIVERY")
 
-                    val OTHER = ShippingMethod(JsonField.of("OTHER"))
+                    val OTHER = of("OTHER")
 
-                    val PICK_UP_AND_GO_DELIVERY =
-                        ShippingMethod(JsonField.of("PICK_UP_AND_GO_DELIVERY"))
+                    val PICK_UP_AND_GO_DELIVERY = of("PICK_UP_AND_GO_DELIVERY")
 
-                    val SHIP_TO_BILLING_ADDRESS =
-                        ShippingMethod(JsonField.of("SHIP_TO_BILLING_ADDRESS"))
+                    val SHIP_TO_BILLING_ADDRESS = of("SHIP_TO_BILLING_ADDRESS")
 
-                    val SHIP_TO_NON_BILLING_ADDRESS =
-                        ShippingMethod(JsonField.of("SHIP_TO_NON_BILLING_ADDRESS"))
+                    val SHIP_TO_NON_BILLING_ADDRESS = of("SHIP_TO_NON_BILLING_ADDRESS")
 
-                    val SHIP_TO_OTHER_VERIFIED_ADDRESS =
-                        ShippingMethod(JsonField.of("SHIP_TO_OTHER_VERIFIED_ADDRESS"))
+                    val SHIP_TO_OTHER_VERIFIED_ADDRESS = of("SHIP_TO_OTHER_VERIFIED_ADDRESS")
 
-                    val SHIP_TO_STORE = ShippingMethod(JsonField.of("SHIP_TO_STORE"))
+                    val SHIP_TO_STORE = of("SHIP_TO_STORE")
 
-                    val TRAVEL_AND_EVENT_TICKETS =
-                        ShippingMethod(JsonField.of("TRAVEL_AND_EVENT_TICKETS"))
+                    val TRAVEL_AND_EVENT_TICKETS = of("TRAVEL_AND_EVENT_TICKETS")
 
                     fun of(value: String) = ShippingMethod(JsonField.of(value))
                 }
@@ -2325,10 +2318,9 @@ private constructor(
 
         companion object {
 
-            val NON_PAYMENT_AUTHENTICATION =
-                MessageCategory(JsonField.of("NON_PAYMENT_AUTHENTICATION"))
+            val NON_PAYMENT_AUTHENTICATION = of("NON_PAYMENT_AUTHENTICATION")
 
-            val PAYMENT_AUTHENTICATION = MessageCategory(JsonField.of("PAYMENT_AUTHENTICATION"))
+            val PAYMENT_AUTHENTICATION = of("PAYMENT_AUTHENTICATION")
 
             fun of(value: String) = MessageCategory(JsonField.of(value))
         }
@@ -2512,9 +2504,9 @@ private constructor(
 
             companion object {
 
-                val LOW_RISK = NetworkDecision(JsonField.of("LOW_RISK"))
+                val LOW_RISK = of("LOW_RISK")
 
-                val NOT_LOW_RISK = NetworkDecision(JsonField.of("NOT_LOW_RISK"))
+                val NOT_LOW_RISK = of("NOT_LOW_RISK")
 
                 fun of(value: String) = NetworkDecision(JsonField.of(value))
             }
@@ -2725,28 +2717,25 @@ private constructor(
 
         companion object {
 
-            val ADD_CARD = AuthenticationRequestType(JsonField.of("ADD_CARD"))
+            val ADD_CARD = of("ADD_CARD")
 
-            val BILLING_AGREEMENT = AuthenticationRequestType(JsonField.of("BILLING_AGREEMENT"))
+            val BILLING_AGREEMENT = of("BILLING_AGREEMENT")
 
-            val DELAYED_SHIPMENT = AuthenticationRequestType(JsonField.of("DELAYED_SHIPMENT"))
+            val DELAYED_SHIPMENT = of("DELAYED_SHIPMENT")
 
-            val EMV_TOKEN_CARDHOLDER_VERIFICATION =
-                AuthenticationRequestType(JsonField.of("EMV_TOKEN_CARDHOLDER_VERIFICATION"))
+            val EMV_TOKEN_CARDHOLDER_VERIFICATION = of("EMV_TOKEN_CARDHOLDER_VERIFICATION")
 
-            val INSTALLMENT_TRANSACTION =
-                AuthenticationRequestType(JsonField.of("INSTALLMENT_TRANSACTION"))
+            val INSTALLMENT_TRANSACTION = of("INSTALLMENT_TRANSACTION")
 
-            val MAINTAIN_CARD = AuthenticationRequestType(JsonField.of("MAINTAIN_CARD"))
+            val MAINTAIN_CARD = of("MAINTAIN_CARD")
 
-            val PAYMENT_TRANSACTION = AuthenticationRequestType(JsonField.of("PAYMENT_TRANSACTION"))
+            val PAYMENT_TRANSACTION = of("PAYMENT_TRANSACTION")
 
-            val RECURRING_TRANSACTION =
-                AuthenticationRequestType(JsonField.of("RECURRING_TRANSACTION"))
+            val RECURRING_TRANSACTION = of("RECURRING_TRANSACTION")
 
-            val SPLIT_PAYMENT = AuthenticationRequestType(JsonField.of("SPLIT_PAYMENT"))
+            val SPLIT_PAYMENT = of("SPLIT_PAYMENT")
 
-            val SPLIT_SHIPMENT = AuthenticationRequestType(JsonField.of("SPLIT_SHIPMENT"))
+            val SPLIT_SHIPMENT = of("SPLIT_SHIPMENT")
 
             fun of(value: String) = AuthenticationRequestType(JsonField.of(value))
         }
@@ -3095,41 +3084,37 @@ private constructor(
 
         companion object {
 
-            val ACCOUNT_VERIFICATION = ThreeRiRequestType(JsonField.of("ACCOUNT_VERIFICATION"))
+            val ACCOUNT_VERIFICATION = of("ACCOUNT_VERIFICATION")
 
-            val ADD_CARD = ThreeRiRequestType(JsonField.of("ADD_CARD"))
+            val ADD_CARD = of("ADD_CARD")
 
-            val BILLING_AGREEMENT = ThreeRiRequestType(JsonField.of("BILLING_AGREEMENT"))
+            val BILLING_AGREEMENT = of("BILLING_AGREEMENT")
 
-            val CARD_SECURITY_CODE_STATUS_CHECK =
-                ThreeRiRequestType(JsonField.of("CARD_SECURITY_CODE_STATUS_CHECK"))
+            val CARD_SECURITY_CODE_STATUS_CHECK = of("CARD_SECURITY_CODE_STATUS_CHECK")
 
-            val DELAYED_SHIPMENT = ThreeRiRequestType(JsonField.of("DELAYED_SHIPMENT"))
+            val DELAYED_SHIPMENT = of("DELAYED_SHIPMENT")
 
-            val DEVICE_BINDING_STATUS_CHECK =
-                ThreeRiRequestType(JsonField.of("DEVICE_BINDING_STATUS_CHECK"))
+            val DEVICE_BINDING_STATUS_CHECK = of("DEVICE_BINDING_STATUS_CHECK")
 
-            val INSTALLMENT_TRANSACTION =
-                ThreeRiRequestType(JsonField.of("INSTALLMENT_TRANSACTION"))
+            val INSTALLMENT_TRANSACTION = of("INSTALLMENT_TRANSACTION")
 
-            val MAIL_ORDER = ThreeRiRequestType(JsonField.of("MAIL_ORDER"))
+            val MAIL_ORDER = of("MAIL_ORDER")
 
-            val MAINTAIN_CARD_INFO = ThreeRiRequestType(JsonField.of("MAINTAIN_CARD_INFO"))
+            val MAINTAIN_CARD_INFO = of("MAINTAIN_CARD_INFO")
 
-            val OTHER_PAYMENT = ThreeRiRequestType(JsonField.of("OTHER_PAYMENT"))
+            val OTHER_PAYMENT = of("OTHER_PAYMENT")
 
-            val RECURRING_TRANSACTION = ThreeRiRequestType(JsonField.of("RECURRING_TRANSACTION"))
+            val RECURRING_TRANSACTION = of("RECURRING_TRANSACTION")
 
-            val SPLIT_PAYMENT = ThreeRiRequestType(JsonField.of("SPLIT_PAYMENT"))
+            val SPLIT_PAYMENT = of("SPLIT_PAYMENT")
 
-            val SPLIT_SHIPMENT = ThreeRiRequestType(JsonField.of("SPLIT_SHIPMENT"))
+            val SPLIT_SHIPMENT = of("SPLIT_SHIPMENT")
 
-            val TELEPHONE_ORDER = ThreeRiRequestType(JsonField.of("TELEPHONE_ORDER"))
+            val TELEPHONE_ORDER = of("TELEPHONE_ORDER")
 
-            val TOP_UP = ThreeRiRequestType(JsonField.of("TOP_UP"))
+            val TOP_UP = of("TOP_UP")
 
-            val TRUST_LIST_STATUS_CHECK =
-                ThreeRiRequestType(JsonField.of("TRUST_LIST_STATUS_CHECK"))
+            val TRUST_LIST_STATUS_CHECK = of("TRUST_LIST_STATUS_CHECK")
 
             fun of(value: String) = ThreeRiRequestType(JsonField.of(value))
         }
@@ -3446,15 +3431,15 @@ private constructor(
 
             companion object {
 
-                val ACCOUNT_FUNDING = Type(JsonField.of("ACCOUNT_FUNDING"))
+                val ACCOUNT_FUNDING = of("ACCOUNT_FUNDING")
 
-                val CHECK_ACCEPTANCE = Type(JsonField.of("CHECK_ACCEPTANCE"))
+                val CHECK_ACCEPTANCE = of("CHECK_ACCEPTANCE")
 
-                val GOODS_SERVICE_PURCHASE = Type(JsonField.of("GOODS_SERVICE_PURCHASE"))
+                val GOODS_SERVICE_PURCHASE = of("GOODS_SERVICE_PURCHASE")
 
-                val PREPAID_ACTIVATION_AND_LOAD = Type(JsonField.of("PREPAID_ACTIVATION_AND_LOAD"))
+                val PREPAID_ACTIVATION_AND_LOAD = of("PREPAID_ACTIVATION_AND_LOAD")
 
-                val QUASI_CASH_TRANSACTION = Type(JsonField.of("QUASI_CASH_TRANSACTION"))
+                val QUASI_CASH_TRANSACTION = of("QUASI_CASH_TRANSACTION")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }

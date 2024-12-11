@@ -317,9 +317,9 @@ constructor(
 
         companion object {
 
-            val DELINQUENT = ChargedOffReason(JsonField.of("DELINQUENT"))
+            val DELINQUENT = of("DELINQUENT")
 
-            val FRAUD = ChargedOffReason(JsonField.of("FRAUD"))
+            val FRAUD = of("FRAUD")
 
             fun of(value: String) = ChargedOffReason(JsonField.of(value))
         }

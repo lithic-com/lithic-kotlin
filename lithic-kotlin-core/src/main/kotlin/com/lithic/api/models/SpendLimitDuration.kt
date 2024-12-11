@@ -30,13 +30,13 @@ private constructor(
 
     companion object {
 
-        val ANNUALLY = SpendLimitDuration(JsonField.of("ANNUALLY"))
+        val ANNUALLY = of("ANNUALLY")
 
-        val FOREVER = SpendLimitDuration(JsonField.of("FOREVER"))
+        val FOREVER = of("FOREVER")
 
-        val MONTHLY = SpendLimitDuration(JsonField.of("MONTHLY"))
+        val MONTHLY = of("MONTHLY")
 
-        val TRANSACTION = SpendLimitDuration(JsonField.of("TRANSACTION"))
+        val TRANSACTION = of("TRANSACTION")
 
         fun of(value: String) = SpendLimitDuration(JsonField.of(value))
     }

@@ -300,9 +300,9 @@ private constructor(
 
         companion object {
 
-            val AUTHORIZED_USER = KycExemptionType(JsonField.of("AUTHORIZED_USER"))
+            val AUTHORIZED_USER = of("AUTHORIZED_USER")
 
-            val PREPAID_CARD_USER = KycExemptionType(JsonField.of("PREPAID_CARD_USER"))
+            val PREPAID_CARD_USER = of("PREPAID_CARD_USER")
 
             fun of(value: String) = KycExemptionType(JsonField.of(value))
         }
@@ -357,7 +357,7 @@ private constructor(
 
         companion object {
 
-            val KYC_EXEMPT = Workflow(JsonField.of("KYC_EXEMPT"))
+            val KYC_EXEMPT = of("KYC_EXEMPT")
 
             fun of(value: String) = Workflow(JsonField.of(value))
         }

@@ -608,11 +608,11 @@ private constructor(
 
                 companion object {
 
-                    val TAX_INCLUDED = TaxExemptIndicator(JsonField.of("TAX_INCLUDED"))
+                    val TAX_INCLUDED = of("TAX_INCLUDED")
 
-                    val TAX_NOT_INCLUDED = TaxExemptIndicator(JsonField.of("TAX_NOT_INCLUDED"))
+                    val TAX_NOT_INCLUDED = of("TAX_NOT_INCLUDED")
 
-                    val NOT_SUPPORTED = TaxExemptIndicator(JsonField.of("NOT_SUPPORTED"))
+                    val NOT_SUPPORTED = of("NOT_SUPPORTED")
 
                     fun of(value: String) = TaxExemptIndicator(JsonField.of(value))
                 }
@@ -1164,311 +1164,281 @@ private constructor(
 
                 companion object {
 
-                    val UNKNOWN = FuelType(JsonField.of("UNKNOWN"))
+                    val UNKNOWN = of("UNKNOWN")
 
-                    val REGULAR = FuelType(JsonField.of("REGULAR"))
+                    val REGULAR = of("REGULAR")
 
-                    val MID_PLUS = FuelType(JsonField.of("MID_PLUS"))
+                    val MID_PLUS = of("MID_PLUS")
 
-                    val PREMIUM_SUPER = FuelType(JsonField.of("PREMIUM_SUPER"))
+                    val PREMIUM_SUPER = of("PREMIUM_SUPER")
 
-                    val MID_PLUS_2 = FuelType(JsonField.of("MID_PLUS_2"))
+                    val MID_PLUS_2 = of("MID_PLUS_2")
 
-                    val PREMIUM_SUPER_2 = FuelType(JsonField.of("PREMIUM_SUPER_2"))
+                    val PREMIUM_SUPER_2 = of("PREMIUM_SUPER_2")
 
-                    val ETHANOL_5_7_BLEND = FuelType(JsonField.of("ETHANOL_5_7_BLEND"))
+                    val ETHANOL_5_7_BLEND = of("ETHANOL_5_7_BLEND")
 
                     val MID_PLUS_ETHANOL_5_7_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_ETHANOL_5_7_PERCENT_BLEND"))
+                        of("MID_PLUS_ETHANOL_5_7_PERCENT_BLEND")
 
                     val PREMIUM_SUPER_ETHANOL_5_7_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_ETHANOL_5_7_PERCENT_BLEND"))
+                        of("PREMIUM_SUPER_ETHANOL_5_7_PERCENT_BLEND")
 
-                    val ETHANOL_7_7_PERCENT_BLEND =
-                        FuelType(JsonField.of("ETHANOL_7_7_PERCENT_BLEND"))
+                    val ETHANOL_7_7_PERCENT_BLEND = of("ETHANOL_7_7_PERCENT_BLEND")
 
                     val MID_PLUS_ETHANOL_7_7_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_ETHANOL_7_7_PERCENT_BLEND"))
+                        of("MID_PLUS_ETHANOL_7_7_PERCENT_BLEND")
 
-                    val GREEN_GASOLINE_REGULAR = FuelType(JsonField.of("GREEN_GASOLINE_REGULAR"))
+                    val GREEN_GASOLINE_REGULAR = of("GREEN_GASOLINE_REGULAR")
 
-                    val GREEN_GASOLINE_MID_PLUS = FuelType(JsonField.of("GREEN_GASOLINE_MID_PLUS"))
+                    val GREEN_GASOLINE_MID_PLUS = of("GREEN_GASOLINE_MID_PLUS")
 
-                    val GREEN_GASOLINE_PREMIUM_SUPER =
-                        FuelType(JsonField.of("GREEN_GASOLINE_PREMIUM_SUPER"))
+                    val GREEN_GASOLINE_PREMIUM_SUPER = of("GREEN_GASOLINE_PREMIUM_SUPER")
 
-                    val REGULAR_DIESEL_2 = FuelType(JsonField.of("REGULAR_DIESEL_2"))
+                    val REGULAR_DIESEL_2 = of("REGULAR_DIESEL_2")
 
-                    val PREMIUM_DIESEL_2 = FuelType(JsonField.of("PREMIUM_DIESEL_2"))
+                    val PREMIUM_DIESEL_2 = of("PREMIUM_DIESEL_2")
 
-                    val REGULAR_DIESEL_1 = FuelType(JsonField.of("REGULAR_DIESEL_1"))
+                    val REGULAR_DIESEL_1 = of("REGULAR_DIESEL_1")
 
-                    val COMPRESSED_NATURAL_GAS = FuelType(JsonField.of("COMPRESSED_NATURAL_GAS"))
+                    val COMPRESSED_NATURAL_GAS = of("COMPRESSED_NATURAL_GAS")
 
-                    val LIQUID_PROPANE_GAS = FuelType(JsonField.of("LIQUID_PROPANE_GAS"))
+                    val LIQUID_PROPANE_GAS = of("LIQUID_PROPANE_GAS")
 
-                    val LIQUID_NATURAL_GAS = FuelType(JsonField.of("LIQUID_NATURAL_GAS"))
+                    val LIQUID_NATURAL_GAS = of("LIQUID_NATURAL_GAS")
 
-                    val E_85 = FuelType(JsonField.of("E_85"))
+                    val E_85 = of("E_85")
 
-                    val REFORMULATED_1 = FuelType(JsonField.of("REFORMULATED_1"))
+                    val REFORMULATED_1 = of("REFORMULATED_1")
 
-                    val REFORMULATED_2 = FuelType(JsonField.of("REFORMULATED_2"))
+                    val REFORMULATED_2 = of("REFORMULATED_2")
 
-                    val REFORMULATED_3 = FuelType(JsonField.of("REFORMULATED_3"))
+                    val REFORMULATED_3 = of("REFORMULATED_3")
 
-                    val REFORMULATED_4 = FuelType(JsonField.of("REFORMULATED_4"))
+                    val REFORMULATED_4 = of("REFORMULATED_4")
 
-                    val REFORMULATED_5 = FuelType(JsonField.of("REFORMULATED_5"))
+                    val REFORMULATED_5 = of("REFORMULATED_5")
 
                     val DIESEL_OFF_ROAD_1_AND_2_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_OFF_ROAD_1_AND_2_NON_TAXABLE"))
+                        of("DIESEL_OFF_ROAD_1_AND_2_NON_TAXABLE")
 
-                    val DIESEL_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_OFF_ROAD_NON_TAXABLE"))
+                    val DIESEL_OFF_ROAD_NON_TAXABLE = of("DIESEL_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_OFF_ROAD_NON_TAXABLE")
 
-                    val UNDEFINED_FUEL = FuelType(JsonField.of("UNDEFINED_FUEL"))
+                    val UNDEFINED_FUEL = of("UNDEFINED_FUEL")
 
-                    val RACING_FUEL = FuelType(JsonField.of("RACING_FUEL"))
+                    val RACING_FUEL = of("RACING_FUEL")
 
-                    val MID_PLUS_2_10_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_2_10_PERCENT_BLEND"))
+                    val MID_PLUS_2_10_PERCENT_BLEND = of("MID_PLUS_2_10_PERCENT_BLEND")
 
-                    val PREMIUM_SUPER_2_10_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_2_10_PERCENT_BLEND"))
+                    val PREMIUM_SUPER_2_10_PERCENT_BLEND = of("PREMIUM_SUPER_2_10_PERCENT_BLEND")
 
                     val MID_PLUS_ETHANOL_2_15_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_ETHANOL_2_15_PERCENT_BLEND"))
+                        of("MID_PLUS_ETHANOL_2_15_PERCENT_BLEND")
 
                     val PREMIUM_SUPER_ETHANOL_2_15_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_ETHANOL_2_15_PERCENT_BLEND"))
+                        of("PREMIUM_SUPER_ETHANOL_2_15_PERCENT_BLEND")
 
                     val PREMIUM_SUPER_ETHANOL_7_7_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_ETHANOL_7_7_PERCENT_BLEND"))
+                        of("PREMIUM_SUPER_ETHANOL_7_7_PERCENT_BLEND")
 
-                    val REGULAR_ETHANOL_10_PERCENT_BLEND =
-                        FuelType(JsonField.of("REGULAR_ETHANOL_10_PERCENT_BLEND"))
+                    val REGULAR_ETHANOL_10_PERCENT_BLEND = of("REGULAR_ETHANOL_10_PERCENT_BLEND")
 
-                    val MID_PLUS_ETHANOL_10_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_ETHANOL_10_PERCENT_BLEND"))
+                    val MID_PLUS_ETHANOL_10_PERCENT_BLEND = of("MID_PLUS_ETHANOL_10_PERCENT_BLEND")
 
                     val PREMIUM_SUPER_ETHANOL_10_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_ETHANOL_10_PERCENT_BLEND"))
+                        of("PREMIUM_SUPER_ETHANOL_10_PERCENT_BLEND")
 
                     val B2_DIESEL_BLEND_2_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B2_DIESEL_BLEND_2_PERCENT_BIODIESEL"))
+                        of("B2_DIESEL_BLEND_2_PERCENT_BIODIESEL")
 
                     val B5_DIESEL_BLEND_5_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B5_DIESEL_BLEND_5_PERCENT_BIODIESEL"))
+                        of("B5_DIESEL_BLEND_5_PERCENT_BIODIESEL")
 
                     val B10_DIESEL_BLEND_10_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B10_DIESEL_BLEND_10_PERCENT_BIODIESEL"))
+                        of("B10_DIESEL_BLEND_10_PERCENT_BIODIESEL")
 
                     val B11_DIESEL_BLEND_11_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B11_DIESEL_BLEND_11_PERCENT_BIODIESEL"))
+                        of("B11_DIESEL_BLEND_11_PERCENT_BIODIESEL")
 
                     val B15_DIESEL_BLEND_15_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B15_DIESEL_BLEND_15_PERCENT_BIODIESEL"))
+                        of("B15_DIESEL_BLEND_15_PERCENT_BIODIESEL")
 
                     val B20_DIESEL_BLEND_20_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B20_DIESEL_BLEND_20_PERCENT_BIODIESEL"))
+                        of("B20_DIESEL_BLEND_20_PERCENT_BIODIESEL")
 
                     val B100_DIESEL_BLEND_100_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B100_DIESEL_BLEND_100_PERCENT_BIODIESEL"))
+                        of("B100_DIESEL_BLEND_100_PERCENT_BIODIESEL")
 
                     val B1_DIESEL_BLEND_1_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B1_DIESEL_BLEND_1_PERCENT_BIODIESEL"))
+                        of("B1_DIESEL_BLEND_1_PERCENT_BIODIESEL")
 
-                    val ADDITIZED_DIESEL_2 = FuelType(JsonField.of("ADDITIZED_DIESEL_2"))
+                    val ADDITIZED_DIESEL_2 = of("ADDITIZED_DIESEL_2")
 
-                    val ADDITIZED_DIESEL_3 = FuelType(JsonField.of("ADDITIZED_DIESEL_3"))
+                    val ADDITIZED_DIESEL_3 = of("ADDITIZED_DIESEL_3")
 
-                    val RENEWABLE_DIESEL_R95 = FuelType(JsonField.of("RENEWABLE_DIESEL_R95"))
+                    val RENEWABLE_DIESEL_R95 = of("RENEWABLE_DIESEL_R95")
 
                     val RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT =
-                        FuelType(JsonField.of("RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT"))
+                        of("RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT")
 
-                    val DIESEL_EXHAUST_FLUID = FuelType(JsonField.of("DIESEL_EXHAUST_FLUID"))
+                    val DIESEL_EXHAUST_FLUID = of("DIESEL_EXHAUST_FLUID")
 
-                    val PREMIUM_DIESEL_1 = FuelType(JsonField.of("PREMIUM_DIESEL_1"))
+                    val PREMIUM_DIESEL_1 = of("PREMIUM_DIESEL_1")
 
-                    val REGULAR_ETHANOL_15_PERCENT_BLEND =
-                        FuelType(JsonField.of("REGULAR_ETHANOL_15_PERCENT_BLEND"))
+                    val REGULAR_ETHANOL_15_PERCENT_BLEND = of("REGULAR_ETHANOL_15_PERCENT_BLEND")
 
-                    val MID_PLUS_ETHANOL_15_PERCENT_BLEND =
-                        FuelType(JsonField.of("MID_PLUS_ETHANOL_15_PERCENT_BLEND"))
+                    val MID_PLUS_ETHANOL_15_PERCENT_BLEND = of("MID_PLUS_ETHANOL_15_PERCENT_BLEND")
 
                     val PREMIUM_SUPER_ETHANOL_15_PERCENT_BLEND =
-                        FuelType(JsonField.of("PREMIUM_SUPER_ETHANOL_15_PERCENT_BLEND"))
+                        of("PREMIUM_SUPER_ETHANOL_15_PERCENT_BLEND")
 
                     val PREMIUM_DIESEL_BLEND_LESS_THAN_20_PERCENT_BIODIESEL =
-                        FuelType(
-                            JsonField.of("PREMIUM_DIESEL_BLEND_LESS_THAN_20_PERCENT_BIODIESEL")
-                        )
+                        of("PREMIUM_DIESEL_BLEND_LESS_THAN_20_PERCENT_BIODIESEL")
 
                     val PREMIUM_DIESEL_BLEND_GREATER_THAN_20_PERCENT_BIODIESEL =
-                        FuelType(
-                            JsonField.of("PREMIUM_DIESEL_BLEND_GREATER_THAN_20_PERCENT_BIODIESEL")
-                        )
+                        of("PREMIUM_DIESEL_BLEND_GREATER_THAN_20_PERCENT_BIODIESEL")
 
                     val B75_DIESEL_BLEND_75_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B75_DIESEL_BLEND_75_PERCENT_BIODIESEL"))
+                        of("B75_DIESEL_BLEND_75_PERCENT_BIODIESEL")
 
                     val B99_DIESEL_BLEND_99_PERCENT_BIODIESEL =
-                        FuelType(JsonField.of("B99_DIESEL_BLEND_99_PERCENT_BIODIESEL"))
+                        of("B99_DIESEL_BLEND_99_PERCENT_BIODIESEL")
 
-                    val MISCELLANEOUS_FUEL = FuelType(JsonField.of("MISCELLANEOUS_FUEL"))
+                    val MISCELLANEOUS_FUEL = of("MISCELLANEOUS_FUEL")
 
-                    val JET_FUEL = FuelType(JsonField.of("JET_FUEL"))
+                    val JET_FUEL = of("JET_FUEL")
 
-                    val AVIATION_FUEL_REGULAR = FuelType(JsonField.of("AVIATION_FUEL_REGULAR"))
+                    val AVIATION_FUEL_REGULAR = of("AVIATION_FUEL_REGULAR")
 
-                    val AVIATION_FUEL_PREMIUM = FuelType(JsonField.of("AVIATION_FUEL_PREMIUM"))
+                    val AVIATION_FUEL_PREMIUM = of("AVIATION_FUEL_PREMIUM")
 
-                    val AVIATION_FUEL_JP8 = FuelType(JsonField.of("AVIATION_FUEL_JP8"))
+                    val AVIATION_FUEL_JP8 = of("AVIATION_FUEL_JP8")
 
-                    val AVIATION_FUEL_4 = FuelType(JsonField.of("AVIATION_FUEL_4"))
+                    val AVIATION_FUEL_4 = of("AVIATION_FUEL_4")
 
-                    val AVIATION_FUEL_5 = FuelType(JsonField.of("AVIATION_FUEL_5"))
+                    val AVIATION_FUEL_5 = of("AVIATION_FUEL_5")
 
-                    val BIOJET_DIESEL = FuelType(JsonField.of("BIOJET_DIESEL"))
+                    val BIOJET_DIESEL = of("BIOJET_DIESEL")
 
-                    val AVIATION_BIOFUEL_GASOLINE =
-                        FuelType(JsonField.of("AVIATION_BIOFUEL_GASOLINE"))
+                    val AVIATION_BIOFUEL_GASOLINE = of("AVIATION_BIOFUEL_GASOLINE")
 
-                    val MISCELLANEOUS_AVIATION_FUEL =
-                        FuelType(JsonField.of("MISCELLANEOUS_AVIATION_FUEL"))
+                    val MISCELLANEOUS_AVIATION_FUEL = of("MISCELLANEOUS_AVIATION_FUEL")
 
-                    val MARINE_FUEL_1 = FuelType(JsonField.of("MARINE_FUEL_1"))
+                    val MARINE_FUEL_1 = of("MARINE_FUEL_1")
 
-                    val MARINE_FUEL_2 = FuelType(JsonField.of("MARINE_FUEL_2"))
+                    val MARINE_FUEL_2 = of("MARINE_FUEL_2")
 
-                    val MARINE_FUEL_3 = FuelType(JsonField.of("MARINE_FUEL_3"))
+                    val MARINE_FUEL_3 = of("MARINE_FUEL_3")
 
-                    val MARINE_FUEL_4 = FuelType(JsonField.of("MARINE_FUEL_4"))
+                    val MARINE_FUEL_4 = of("MARINE_FUEL_4")
 
-                    val MARINE_FUEL_5 = FuelType(JsonField.of("MARINE_FUEL_5"))
+                    val MARINE_FUEL_5 = of("MARINE_FUEL_5")
 
-                    val MARINE_OTHER = FuelType(JsonField.of("MARINE_OTHER"))
+                    val MARINE_OTHER = of("MARINE_OTHER")
 
-                    val MARINE_DIESEL = FuelType(JsonField.of("MARINE_DIESEL"))
+                    val MARINE_DIESEL = of("MARINE_DIESEL")
 
-                    val MISCELLANEOUS_MARINE_FUEL =
-                        FuelType(JsonField.of("MISCELLANEOUS_MARINE_FUEL"))
+                    val MISCELLANEOUS_MARINE_FUEL = of("MISCELLANEOUS_MARINE_FUEL")
 
-                    val KEROSENE_LOW_SULFUR = FuelType(JsonField.of("KEROSENE_LOW_SULFUR"))
+                    val KEROSENE_LOW_SULFUR = of("KEROSENE_LOW_SULFUR")
 
-                    val WHITE_GAS = FuelType(JsonField.of("WHITE_GAS"))
+                    val WHITE_GAS = of("WHITE_GAS")
 
-                    val HEATING_OIL = FuelType(JsonField.of("HEATING_OIL"))
+                    val HEATING_OIL = of("HEATING_OIL")
 
-                    val OTHER_FUEL_NON_TAXABLE = FuelType(JsonField.of("OTHER_FUEL_NON_TAXABLE"))
+                    val OTHER_FUEL_NON_TAXABLE = of("OTHER_FUEL_NON_TAXABLE")
 
-                    val KEROSENE_ULTRA_LOW_SULFUR =
-                        FuelType(JsonField.of("KEROSENE_ULTRA_LOW_SULFUR"))
+                    val KEROSENE_ULTRA_LOW_SULFUR = of("KEROSENE_ULTRA_LOW_SULFUR")
 
-                    val KEROSENE_LOW_SULFUR_NON_TAXABLE =
-                        FuelType(JsonField.of("KEROSENE_LOW_SULFUR_NON_TAXABLE"))
+                    val KEROSENE_LOW_SULFUR_NON_TAXABLE = of("KEROSENE_LOW_SULFUR_NON_TAXABLE")
 
                     val KEROSENE_ULTRA_LOW_SULFUR_NON_TAXABLE =
-                        FuelType(JsonField.of("KEROSENE_ULTRA_LOW_SULFUR_NON_TAXABLE"))
+                        of("KEROSENE_ULTRA_LOW_SULFUR_NON_TAXABLE")
 
-                    val EVC_1_LEVEL_1_CHARGE_110_V_15_AMP =
-                        FuelType(JsonField.of("EVC_1_LEVEL_1_CHARGE_110V_15_AMP"))
+                    val EVC_1_LEVEL_1_CHARGE_110_V_15_AMP = of("EVC_1_LEVEL_1_CHARGE_110V_15_AMP")
 
                     val EVC_2_LEVEL_2_CHARGE_240_V_15_40_AMP =
-                        FuelType(JsonField.of("EVC_2_LEVEL_2_CHARGE_240V_15_40_AMP"))
+                        of("EVC_2_LEVEL_2_CHARGE_240V_15_40_AMP")
 
                     val EVC_3_LEVEL_3_CHARGE_480_V_3_PHASE_CHARGE =
-                        FuelType(JsonField.of("EVC_3_LEVEL_3_CHARGE_480V_3_PHASE_CHARGE"))
+                        of("EVC_3_LEVEL_3_CHARGE_480V_3_PHASE_CHARGE")
 
                     val BIODIESEL_BLEND_2_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_2_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_2_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_5_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_5_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_5_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_10_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_10_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_10_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_11_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_11_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_11_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_15_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_15_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_15_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_20_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_20_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_20_PERCENT_OFF_ROAD_NON_TAXABLE")
 
-                    val DIESEL_1_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_1_OFF_ROAD_NON_TAXABLE"))
+                    val DIESEL_1_OFF_ROAD_NON_TAXABLE = of("DIESEL_1_OFF_ROAD_NON_TAXABLE")
 
-                    val DIESEL_2_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_2_OFF_ROAD_NON_TAXABLE"))
+                    val DIESEL_2_OFF_ROAD_NON_TAXABLE = of("DIESEL_2_OFF_ROAD_NON_TAXABLE")
 
                     val DIESEL_1_PREMIUM_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_1_PREMIUM_OFF_ROAD_NON_TAXABLE"))
+                        of("DIESEL_1_PREMIUM_OFF_ROAD_NON_TAXABLE")
 
                     val DIESEL_2_PREMIUM_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("DIESEL_2_PREMIUM_OFF_ROAD_NON_TAXABLE"))
+                        of("DIESEL_2_PREMIUM_OFF_ROAD_NON_TAXABLE")
 
-                    val ADDITIVE_DOSAGE = FuelType(JsonField.of("ADDITIVE_DOSAGE"))
+                    val ADDITIVE_DOSAGE = of("ADDITIVE_DOSAGE")
 
-                    val ETHANOL_BLENDS_E16_E84 = FuelType(JsonField.of("ETHANOL_BLENDS_E16_E84"))
+                    val ETHANOL_BLENDS_E16_E84 = of("ETHANOL_BLENDS_E16_E84")
 
-                    val LOW_OCTANE_UNL = FuelType(JsonField.of("LOW_OCTANE_UNL"))
+                    val LOW_OCTANE_UNL = of("LOW_OCTANE_UNL")
 
-                    val BLENDED_DIESEL_1_AND_2 = FuelType(JsonField.of("BLENDED_DIESEL_1_AND_2"))
+                    val BLENDED_DIESEL_1_AND_2 = of("BLENDED_DIESEL_1_AND_2")
 
-                    val OFF_ROAD_REGULAR_NON_TAXABLE =
-                        FuelType(JsonField.of("OFF_ROAD_REGULAR_NON_TAXABLE"))
+                    val OFF_ROAD_REGULAR_NON_TAXABLE = of("OFF_ROAD_REGULAR_NON_TAXABLE")
 
-                    val OFF_ROAD_MID_PLUS_NON_TAXABLE =
-                        FuelType(JsonField.of("OFF_ROAD_MID_PLUS_NON_TAXABLE"))
+                    val OFF_ROAD_MID_PLUS_NON_TAXABLE = of("OFF_ROAD_MID_PLUS_NON_TAXABLE")
 
                     val OFF_ROAD_PREMIUM_SUPER_NON_TAXABLE =
-                        FuelType(JsonField.of("OFF_ROAD_PREMIUM_SUPER_NON_TAXABLE"))
+                        of("OFF_ROAD_PREMIUM_SUPER_NON_TAXABLE")
 
-                    val OFF_ROAD_MID_PLUS_2_NON_TAXABLE =
-                        FuelType(JsonField.of("OFF_ROAD_MID_PLUS_2_NON_TAXABLE"))
+                    val OFF_ROAD_MID_PLUS_2_NON_TAXABLE = of("OFF_ROAD_MID_PLUS_2_NON_TAXABLE")
 
                     val OFF_ROAD_PREMIUM_SUPER_2_NON_TAXABLE =
-                        FuelType(JsonField.of("OFF_ROAD_PREMIUM_SUPER_2_NON_TAXABLE"))
+                        of("OFF_ROAD_PREMIUM_SUPER_2_NON_TAXABLE")
 
-                    val RECREATIONAL_FUEL_90_OCTANE =
-                        FuelType(JsonField.of("RECREATIONAL_FUEL_90_OCTANE"))
+                    val RECREATIONAL_FUEL_90_OCTANE = of("RECREATIONAL_FUEL_90_OCTANE")
 
-                    val HYDROGEN_H35 = FuelType(JsonField.of("HYDROGEN_H35"))
+                    val HYDROGEN_H35 = of("HYDROGEN_H35")
 
-                    val HYDROGEN_H70 = FuelType(JsonField.of("HYDROGEN_H70"))
+                    val HYDROGEN_H70 = of("HYDROGEN_H70")
 
                     val RENEWABLE_DIESEL_R95_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("RENEWABLE_DIESEL_R95_OFF_ROAD_NON_TAXABLE"))
+                        of("RENEWABLE_DIESEL_R95_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_1_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_1_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_1_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_75_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_75_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_75_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_99_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_99_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_99_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val BIODIESEL_BLEND_100_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(JsonField.of("BIODIESEL_BLEND_100_PERCENT_OFF_ROAD_NON_TAXABLE"))
+                        of("BIODIESEL_BLEND_100_PERCENT_OFF_ROAD_NON_TAXABLE")
 
                     val RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT_OFF_ROAD_NON_TAXABLE =
-                        FuelType(
-                            JsonField.of(
-                                "RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT_OFF_ROAD_NON_TAXABLE"
-                            )
-                        )
+                        of("RENEWABLE_DIESEL_BIODIESEL_6_20_PERCENT_OFF_ROAD_NON_TAXABLE")
 
-                    val MISCELLANEOUS_OTHER_FUEL =
-                        FuelType(JsonField.of("MISCELLANEOUS_OTHER_FUEL"))
+                    val MISCELLANEOUS_OTHER_FUEL = of("MISCELLANEOUS_OTHER_FUEL")
 
                     fun of(value: String) = FuelType(JsonField.of(value))
                 }
@@ -2067,19 +2037,19 @@ private constructor(
 
                 companion object {
 
-                    val GALLONS = FuelUnitOfMeasure(JsonField.of("GALLONS"))
+                    val GALLONS = of("GALLONS")
 
-                    val LITERS = FuelUnitOfMeasure(JsonField.of("LITERS"))
+                    val LITERS = of("LITERS")
 
-                    val POUNDS = FuelUnitOfMeasure(JsonField.of("POUNDS"))
+                    val POUNDS = of("POUNDS")
 
-                    val KILOGRAMS = FuelUnitOfMeasure(JsonField.of("KILOGRAMS"))
+                    val KILOGRAMS = of("KILOGRAMS")
 
-                    val IMPERIAL_GALLONS = FuelUnitOfMeasure(JsonField.of("IMPERIAL_GALLONS"))
+                    val IMPERIAL_GALLONS = of("IMPERIAL_GALLONS")
 
-                    val NOT_APPLICABLE = FuelUnitOfMeasure(JsonField.of("NOT_APPLICABLE"))
+                    val NOT_APPLICABLE = of("NOT_APPLICABLE")
 
-                    val UNKNOWN = FuelUnitOfMeasure(JsonField.of("UNKNOWN"))
+                    val UNKNOWN = of("UNKNOWN")
 
                     fun of(value: String) = FuelUnitOfMeasure(JsonField.of(value))
                 }
@@ -2173,15 +2143,15 @@ private constructor(
 
             companion object {
 
-                val UNKNOWN = ServiceType(JsonField.of("UNKNOWN"))
+                val UNKNOWN = of("UNKNOWN")
 
-                val UNDEFINED = ServiceType(JsonField.of("UNDEFINED"))
+                val UNDEFINED = of("UNDEFINED")
 
-                val SELF_SERVICE = ServiceType(JsonField.of("SELF_SERVICE"))
+                val SELF_SERVICE = of("SELF_SERVICE")
 
-                val FULL_SERVICE = ServiceType(JsonField.of("FULL_SERVICE"))
+                val FULL_SERVICE = of("FULL_SERVICE")
 
-                val NON_FUEL_ONLY = ServiceType(JsonField.of("NON_FUEL_ONLY"))
+                val NON_FUEL_ONLY = of("NON_FUEL_ONLY")
 
                 fun of(value: String) = ServiceType(JsonField.of(value))
             }

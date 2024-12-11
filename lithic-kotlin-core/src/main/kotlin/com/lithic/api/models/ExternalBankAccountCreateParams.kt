@@ -711,9 +711,9 @@ constructor(
 
             companion object {
 
-                val CHECKING = AccountType(JsonField.of("CHECKING"))
+                val CHECKING = of("CHECKING")
 
-                val SAVINGS = AccountType(JsonField.of("SAVINGS"))
+                val SAVINGS = of("SAVINGS")
 
                 fun of(value: String) = AccountType(JsonField.of(value))
             }
@@ -1207,9 +1207,9 @@ constructor(
 
             companion object {
 
-                val CHECKING = Type(JsonField.of("CHECKING"))
+                val CHECKING = of("CHECKING")
 
-                val SAVINGS = Type(JsonField.of("SAVINGS"))
+                val SAVINGS = of("SAVINGS")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }
@@ -1264,8 +1264,7 @@ constructor(
 
             companion object {
 
-                val EXTERNALLY_VERIFIED =
-                    ExternallyVerifiedVerificationMethod(JsonField.of("EXTERNALLY_VERIFIED"))
+                val EXTERNALLY_VERIFIED = of("EXTERNALLY_VERIFIED")
 
                 fun of(value: String) = ExternallyVerifiedVerificationMethod(JsonField.of(value))
             }

@@ -426,17 +426,17 @@ constructor(
 
         companion object {
 
-            val _2_DAY = ShippingMethod(JsonField.of("2-DAY"))
+            val _2_DAY = of("2-DAY")
 
-            val EXPEDITED = ShippingMethod(JsonField.of("EXPEDITED"))
+            val EXPEDITED = of("EXPEDITED")
 
-            val EXPRESS = ShippingMethod(JsonField.of("EXPRESS"))
+            val EXPRESS = of("EXPRESS")
 
-            val PRIORITY = ShippingMethod(JsonField.of("PRIORITY"))
+            val PRIORITY = of("PRIORITY")
 
-            val STANDARD = ShippingMethod(JsonField.of("STANDARD"))
+            val STANDARD = of("STANDARD")
 
-            val STANDARD_WITH_TRACKING = ShippingMethod(JsonField.of("STANDARD_WITH_TRACKING"))
+            val STANDARD_WITH_TRACKING = of("STANDARD_WITH_TRACKING")
 
             fun of(value: String) = ShippingMethod(JsonField.of(value))
         }

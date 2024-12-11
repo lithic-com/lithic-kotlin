@@ -398,101 +398,86 @@ constructor(
 
         companion object {
 
-            val ACCOUNT_HOLDER_CREATED = EventType(JsonField.of("account_holder.created"))
+            val ACCOUNT_HOLDER_CREATED = of("account_holder.created")
 
-            val ACCOUNT_HOLDER_UPDATED = EventType(JsonField.of("account_holder.updated"))
+            val ACCOUNT_HOLDER_UPDATED = of("account_holder.updated")
 
-            val ACCOUNT_HOLDER_VERIFICATION = EventType(JsonField.of("account_holder.verification"))
+            val ACCOUNT_HOLDER_VERIFICATION = of("account_holder.verification")
 
-            val AUTH_RULES_PERFORMANCE_REPORT_CREATED =
-                EventType(JsonField.of("auth_rules.performance_report.created"))
+            val AUTH_RULES_PERFORMANCE_REPORT_CREATED = of("auth_rules.performance_report.created")
 
-            val BALANCE_UPDATED = EventType(JsonField.of("balance.updated"))
+            val BALANCE_UPDATED = of("balance.updated")
 
-            val BOOK_TRANSFER_TRANSACTION_CREATED =
-                EventType(JsonField.of("book_transfer_transaction.created"))
+            val BOOK_TRANSFER_TRANSACTION_CREATED = of("book_transfer_transaction.created")
 
-            val CARD_CREATED = EventType(JsonField.of("card.created"))
+            val CARD_CREATED = of("card.created")
 
-            val CARD_RENEWED = EventType(JsonField.of("card.renewed"))
+            val CARD_RENEWED = of("card.renewed")
 
-            val CARD_REISSUED = EventType(JsonField.of("card.reissued"))
+            val CARD_REISSUED = of("card.reissued")
 
-            val CARD_SHIPPED = EventType(JsonField.of("card.shipped"))
+            val CARD_SHIPPED = of("card.shipped")
 
-            val CARD_TRANSACTION_UPDATED = EventType(JsonField.of("card_transaction.updated"))
+            val CARD_TRANSACTION_UPDATED = of("card_transaction.updated")
 
             val DIGITAL_WALLET_TOKENIZATION_APPROVAL_REQUEST =
-                EventType(JsonField.of("digital_wallet.tokenization_approval_request"))
+                of("digital_wallet.tokenization_approval_request")
 
-            val DIGITAL_WALLET_TOKENIZATION_RESULT =
-                EventType(JsonField.of("digital_wallet.tokenization_result"))
+            val DIGITAL_WALLET_TOKENIZATION_RESULT = of("digital_wallet.tokenization_result")
 
             val DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE =
-                EventType(
-                    JsonField.of("digital_wallet.tokenization_two_factor_authentication_code")
-                )
+                of("digital_wallet.tokenization_two_factor_authentication_code")
 
             val DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT =
-                EventType(
-                    JsonField.of("digital_wallet.tokenization_two_factor_authentication_code_sent")
-                )
+                of("digital_wallet.tokenization_two_factor_authentication_code_sent")
 
-            val DIGITAL_WALLET_TOKENIZATION_UPDATED =
-                EventType(JsonField.of("digital_wallet.tokenization_updated"))
+            val DIGITAL_WALLET_TOKENIZATION_UPDATED = of("digital_wallet.tokenization_updated")
 
-            val DISPUTE_UPDATED = EventType(JsonField.of("dispute.updated"))
+            val DISPUTE_UPDATED = of("dispute.updated")
 
-            val DISPUTE_EVIDENCE_UPLOAD_FAILED =
-                EventType(JsonField.of("dispute_evidence.upload_failed"))
+            val DISPUTE_EVIDENCE_UPLOAD_FAILED = of("dispute_evidence.upload_failed")
 
-            val EXTERNAL_BANK_ACCOUNT_CREATED =
-                EventType(JsonField.of("external_bank_account.created"))
+            val EXTERNAL_BANK_ACCOUNT_CREATED = of("external_bank_account.created")
 
-            val EXTERNAL_BANK_ACCOUNT_UPDATED =
-                EventType(JsonField.of("external_bank_account.updated"))
+            val EXTERNAL_BANK_ACCOUNT_UPDATED = of("external_bank_account.updated")
 
-            val EXTERNAL_PAYMENT_CREATED = EventType(JsonField.of("external_payment.created"))
+            val EXTERNAL_PAYMENT_CREATED = of("external_payment.created")
 
-            val EXTERNAL_PAYMENT_UPDATED = EventType(JsonField.of("external_payment.updated"))
+            val EXTERNAL_PAYMENT_UPDATED = of("external_payment.updated")
 
-            val FINANCIAL_ACCOUNT_CREATED = EventType(JsonField.of("financial_account.created"))
+            val FINANCIAL_ACCOUNT_CREATED = of("financial_account.created")
 
-            val FINANCIAL_ACCOUNT_UPDATED = EventType(JsonField.of("financial_account.updated"))
+            val FINANCIAL_ACCOUNT_UPDATED = of("financial_account.updated")
 
-            val LOAN_TAPE_CREATED = EventType(JsonField.of("loan_tape.created"))
+            val LOAN_TAPE_CREATED = of("loan_tape.created")
 
-            val LOAN_TAPE_UPDATED = EventType(JsonField.of("loan_tape.updated"))
+            val LOAN_TAPE_UPDATED = of("loan_tape.updated")
 
-            val MANAGEMENT_OPERATION_CREATED =
-                EventType(JsonField.of("management_operation.created"))
+            val MANAGEMENT_OPERATION_CREATED = of("management_operation.created")
 
-            val MANAGEMENT_OPERATION_UPDATED =
-                EventType(JsonField.of("management_operation.updated"))
+            val MANAGEMENT_OPERATION_UPDATED = of("management_operation.updated")
 
-            val PAYMENT_TRANSACTION_CREATED = EventType(JsonField.of("payment_transaction.created"))
+            val PAYMENT_TRANSACTION_CREATED = of("payment_transaction.created")
 
-            val PAYMENT_TRANSACTION_UPDATED = EventType(JsonField.of("payment_transaction.updated"))
+            val PAYMENT_TRANSACTION_UPDATED = of("payment_transaction.updated")
 
-            val SETTLEMENT_REPORT_UPDATED = EventType(JsonField.of("settlement_report.updated"))
+            val SETTLEMENT_REPORT_UPDATED = of("settlement_report.updated")
 
-            val STATEMENTS_CREATED = EventType(JsonField.of("statements.created"))
+            val STATEMENTS_CREATED = of("statements.created")
 
-            val THREE_DS_AUTHENTICATION_CREATED =
-                EventType(JsonField.of("three_ds_authentication.created"))
+            val THREE_DS_AUTHENTICATION_CREATED = of("three_ds_authentication.created")
 
-            val TOKENIZATION_APPROVAL_REQUEST =
-                EventType(JsonField.of("tokenization.approval_request"))
+            val TOKENIZATION_APPROVAL_REQUEST = of("tokenization.approval_request")
 
-            val TOKENIZATION_RESULT = EventType(JsonField.of("tokenization.result"))
+            val TOKENIZATION_RESULT = of("tokenization.result")
 
             val TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE =
-                EventType(JsonField.of("tokenization.two_factor_authentication_code"))
+                of("tokenization.two_factor_authentication_code")
 
             val TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT =
-                EventType(JsonField.of("tokenization.two_factor_authentication_code_sent"))
+                of("tokenization.two_factor_authentication_code_sent")
 
-            val TOKENIZATION_UPDATED = EventType(JsonField.of("tokenization.updated"))
+            val TOKENIZATION_UPDATED = of("tokenization.updated")
 
             fun of(value: String) = EventType(JsonField.of(value))
         }

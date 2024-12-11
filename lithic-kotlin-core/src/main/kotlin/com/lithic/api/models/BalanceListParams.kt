@@ -231,11 +231,11 @@ constructor(
 
         companion object {
 
-            val ISSUING = FinancialAccountType(JsonField.of("ISSUING"))
+            val ISSUING = of("ISSUING")
 
-            val OPERATING = FinancialAccountType(JsonField.of("OPERATING"))
+            val OPERATING = of("OPERATING")
 
-            val RESERVE = FinancialAccountType(JsonField.of("RESERVE"))
+            val RESERVE = of("RESERVE")
 
             fun of(value: String) = FinancialAccountType(JsonField.of(value))
         }

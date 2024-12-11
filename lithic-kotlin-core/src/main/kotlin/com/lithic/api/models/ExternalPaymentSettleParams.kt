@@ -356,9 +356,9 @@ constructor(
 
         companion object {
 
-            val SETTLED = ExternalPaymentProgressTo(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val RELEASED = ExternalPaymentProgressTo(JsonField.of("RELEASED"))
+            val RELEASED = of("RELEASED")
 
             fun of(value: String) = ExternalPaymentProgressTo(JsonField.of(value))
         }

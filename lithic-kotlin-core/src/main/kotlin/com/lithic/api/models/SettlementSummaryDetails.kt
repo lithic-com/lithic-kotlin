@@ -296,15 +296,15 @@ private constructor(
 
         companion object {
 
-            val INTERLINK = Network(JsonField.of("INTERLINK"))
+            val INTERLINK = of("INTERLINK")
 
-            val MAESTRO = Network(JsonField.of("MAESTRO"))
+            val MAESTRO = of("MAESTRO")
 
-            val MASTERCARD = Network(JsonField.of("MASTERCARD"))
+            val MASTERCARD = of("MASTERCARD")
 
-            val UNKNOWN = Network(JsonField.of("UNKNOWN"))
+            val UNKNOWN = of("UNKNOWN")
 
-            val VISA = Network(JsonField.of("VISA"))
+            val VISA = of("VISA")
 
             fun of(value: String) = Network(JsonField.of(value))
         }

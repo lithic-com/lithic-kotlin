@@ -304,13 +304,13 @@ constructor(
 
         companion object {
 
-            val EXTERNAL_WIRE = ExternalPaymentCategory(JsonField.of("EXTERNAL_WIRE"))
+            val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
 
-            val EXTERNAL_ACH = ExternalPaymentCategory(JsonField.of("EXTERNAL_ACH"))
+            val EXTERNAL_ACH = of("EXTERNAL_ACH")
 
-            val EXTERNAL_CHECK = ExternalPaymentCategory(JsonField.of("EXTERNAL_CHECK"))
+            val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
-            val EXTERNAL_TRANSFER = ExternalPaymentCategory(JsonField.of("EXTERNAL_TRANSFER"))
+            val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
         }
@@ -373,9 +373,9 @@ constructor(
 
         companion object {
 
-            val APPROVED = TransactionResult(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = TransactionResult(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = TransactionResult(JsonField.of(value))
         }
@@ -430,15 +430,15 @@ constructor(
 
         companion object {
 
-            val PENDING = TransactionStatus(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val SETTLED = TransactionStatus(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val DECLINED = TransactionStatus(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REVERSED = TransactionStatus(JsonField.of("REVERSED"))
+            val REVERSED = of("REVERSED")
 
-            val CANCELED = TransactionStatus(JsonField.of("CANCELED"))
+            val CANCELED = of("CANCELED")
 
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }

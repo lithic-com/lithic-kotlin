@@ -379,35 +379,33 @@ constructor(
 
         companion object {
 
-            val ATM_CASH_MISDISPENSE = Reason(JsonField.of("ATM_CASH_MISDISPENSE"))
+            val ATM_CASH_MISDISPENSE = of("ATM_CASH_MISDISPENSE")
 
-            val CANCELLED = Reason(JsonField.of("CANCELLED"))
+            val CANCELLED = of("CANCELLED")
 
-            val DUPLICATED = Reason(JsonField.of("DUPLICATED"))
+            val DUPLICATED = of("DUPLICATED")
 
-            val FRAUD_CARD_NOT_PRESENT = Reason(JsonField.of("FRAUD_CARD_NOT_PRESENT"))
+            val FRAUD_CARD_NOT_PRESENT = of("FRAUD_CARD_NOT_PRESENT")
 
-            val FRAUD_CARD_PRESENT = Reason(JsonField.of("FRAUD_CARD_PRESENT"))
+            val FRAUD_CARD_PRESENT = of("FRAUD_CARD_PRESENT")
 
-            val FRAUD_OTHER = Reason(JsonField.of("FRAUD_OTHER"))
+            val FRAUD_OTHER = of("FRAUD_OTHER")
 
-            val GOODS_SERVICES_NOT_AS_DESCRIBED =
-                Reason(JsonField.of("GOODS_SERVICES_NOT_AS_DESCRIBED"))
+            val GOODS_SERVICES_NOT_AS_DESCRIBED = of("GOODS_SERVICES_NOT_AS_DESCRIBED")
 
-            val GOODS_SERVICES_NOT_RECEIVED = Reason(JsonField.of("GOODS_SERVICES_NOT_RECEIVED"))
+            val GOODS_SERVICES_NOT_RECEIVED = of("GOODS_SERVICES_NOT_RECEIVED")
 
-            val INCORRECT_AMOUNT = Reason(JsonField.of("INCORRECT_AMOUNT"))
+            val INCORRECT_AMOUNT = of("INCORRECT_AMOUNT")
 
-            val MISSING_AUTH = Reason(JsonField.of("MISSING_AUTH"))
+            val MISSING_AUTH = of("MISSING_AUTH")
 
-            val OTHER = Reason(JsonField.of("OTHER"))
+            val OTHER = of("OTHER")
 
-            val PROCESSING_ERROR = Reason(JsonField.of("PROCESSING_ERROR"))
+            val PROCESSING_ERROR = of("PROCESSING_ERROR")
 
-            val RECURRING_TRANSACTION_NOT_CANCELLED =
-                Reason(JsonField.of("RECURRING_TRANSACTION_NOT_CANCELLED"))
+            val RECURRING_TRANSACTION_NOT_CANCELLED = of("RECURRING_TRANSACTION_NOT_CANCELLED")
 
-            val REFUND_NOT_PROCESSED = Reason(JsonField.of("REFUND_NOT_PROCESSED"))
+            val REFUND_NOT_PROCESSED = of("REFUND_NOT_PROCESSED")
 
             fun of(value: String) = Reason(JsonField.of(value))
         }
