@@ -537,7 +537,7 @@ constructor(
 
         companion object {
 
-            val KYC_ADVANCED = Workflow(JsonField.of("KYC_ADVANCED"))
+            val KYC_ADVANCED = of("KYC_ADVANCED")
 
             fun of(value: String) = Workflow(JsonField.of(value))
         }

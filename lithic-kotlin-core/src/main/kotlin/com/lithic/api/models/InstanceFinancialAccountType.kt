@@ -30,11 +30,11 @@ private constructor(
 
     companion object {
 
-        val ISSUING = InstanceFinancialAccountType(JsonField.of("ISSUING"))
+        val ISSUING = of("ISSUING")
 
-        val RESERVE = InstanceFinancialAccountType(JsonField.of("RESERVE"))
+        val RESERVE = of("RESERVE")
 
-        val OPERATING = InstanceFinancialAccountType(JsonField.of("OPERATING"))
+        val OPERATING = of("OPERATING")
 
         fun of(value: String) = InstanceFinancialAccountType(JsonField.of(value))
     }

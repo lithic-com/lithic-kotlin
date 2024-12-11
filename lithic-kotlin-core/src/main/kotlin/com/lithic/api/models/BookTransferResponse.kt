@@ -411,19 +411,19 @@ private constructor(
 
         companion object {
 
-            val ADJUSTMENT = Category(JsonField.of("ADJUSTMENT"))
+            val ADJUSTMENT = of("ADJUSTMENT")
 
-            val BALANCE_OR_FUNDING = Category(JsonField.of("BALANCE_OR_FUNDING"))
+            val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
-            val DERECOGNITION = Category(JsonField.of("DERECOGNITION"))
+            val DERECOGNITION = of("DERECOGNITION")
 
-            val DISPUTE = Category(JsonField.of("DISPUTE"))
+            val DISPUTE = of("DISPUTE")
 
-            val FEE = Category(JsonField.of("FEE"))
+            val FEE = of("FEE")
 
-            val REWARD = Category(JsonField.of("REWARD"))
+            val REWARD = of("REWARD")
 
-            val TRANSFER = Category(JsonField.of("TRANSFER"))
+            val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Category(JsonField.of(value))
         }
@@ -732,9 +732,9 @@ private constructor(
 
             companion object {
 
-                val APPROVED = DetailedResult(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
-                val FUNDS_INSUFFICIENT = DetailedResult(JsonField.of("FUNDS_INSUFFICIENT"))
+                val FUNDS_INSUFFICIENT = of("FUNDS_INSUFFICIENT")
 
                 fun of(value: String) = DetailedResult(JsonField.of(value))
             }
@@ -789,9 +789,9 @@ private constructor(
 
             companion object {
 
-                val APPROVED = Result(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
-                val DECLINED = Result(JsonField.of("DECLINED"))
+                val DECLINED = of("DECLINED")
 
                 fun of(value: String) = Result(JsonField.of(value))
             }
@@ -864,9 +864,9 @@ private constructor(
 
         companion object {
 
-            val APPROVED = Result(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = Result(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = Result(JsonField.of(value))
         }
@@ -921,11 +921,11 @@ private constructor(
 
         companion object {
 
-            val DECLINED = Status(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REVERSED = Status(JsonField.of("REVERSED"))
+            val REVERSED = of("REVERSED")
 
-            val SETTLED = Status(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

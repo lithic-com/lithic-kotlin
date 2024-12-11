@@ -903,17 +903,17 @@ constructor(
 
         companion object {
 
-            val MERCHANT_LOCKED = Type(JsonField.of("MERCHANT_LOCKED"))
+            val MERCHANT_LOCKED = of("MERCHANT_LOCKED")
 
-            val PHYSICAL = Type(JsonField.of("PHYSICAL"))
+            val PHYSICAL = of("PHYSICAL")
 
-            val SINGLE_USE = Type(JsonField.of("SINGLE_USE"))
+            val SINGLE_USE = of("SINGLE_USE")
 
-            val VIRTUAL = Type(JsonField.of("VIRTUAL"))
+            val VIRTUAL = of("VIRTUAL")
 
-            val UNLOCKED = Type(JsonField.of("UNLOCKED"))
+            val UNLOCKED = of("UNLOCKED")
 
-            val DIGITAL_WALLET = Type(JsonField.of("DIGITAL_WALLET"))
+            val DIGITAL_WALLET = of("DIGITAL_WALLET")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -984,17 +984,17 @@ constructor(
 
         companion object {
 
-            val _2_DAY = ShippingMethod(JsonField.of("2_DAY"))
+            val _2_DAY = of("2_DAY")
 
-            val EXPEDITED = ShippingMethod(JsonField.of("EXPEDITED"))
+            val EXPEDITED = of("EXPEDITED")
 
-            val EXPRESS = ShippingMethod(JsonField.of("EXPRESS"))
+            val EXPRESS = of("EXPRESS")
 
-            val PRIORITY = ShippingMethod(JsonField.of("PRIORITY"))
+            val PRIORITY = of("PRIORITY")
 
-            val STANDARD = ShippingMethod(JsonField.of("STANDARD"))
+            val STANDARD = of("STANDARD")
 
-            val STANDARD_WITH_TRACKING = ShippingMethod(JsonField.of("STANDARD_WITH_TRACKING"))
+            val STANDARD_WITH_TRACKING = of("STANDARD_WITH_TRACKING")
 
             fun of(value: String) = ShippingMethod(JsonField.of(value))
         }
@@ -1065,9 +1065,9 @@ constructor(
 
         companion object {
 
-            val OPEN = State(JsonField.of("OPEN"))
+            val OPEN = of("OPEN")
 
-            val PAUSED = State(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
             fun of(value: String) = State(JsonField.of(value))
         }

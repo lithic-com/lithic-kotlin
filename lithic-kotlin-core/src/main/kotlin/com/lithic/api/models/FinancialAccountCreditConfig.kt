@@ -257,9 +257,9 @@ private constructor(
 
         companion object {
 
-            val DELINQUENT = ChargedOffReason(JsonField.of("DELINQUENT"))
+            val DELINQUENT = of("DELINQUENT")
 
-            val FRAUD = ChargedOffReason(JsonField.of("FRAUD"))
+            val FRAUD = of("FRAUD")
 
             fun of(value: String) = ChargedOffReason(JsonField.of(value))
         }
@@ -314,13 +314,13 @@ private constructor(
 
         companion object {
 
-            val PENDING = FinancialAccountState(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val CURRENT = FinancialAccountState(JsonField.of("CURRENT"))
+            val CURRENT = of("CURRENT")
 
-            val DELINQUENT = FinancialAccountState(JsonField.of("DELINQUENT"))
+            val DELINQUENT = of("DELINQUENT")
 
-            val CHARGED_OFF = FinancialAccountState(JsonField.of("CHARGED_OFF"))
+            val CHARGED_OFF = of("CHARGED_OFF")
 
             fun of(value: String) = FinancialAccountState(JsonField.of(value))
         }

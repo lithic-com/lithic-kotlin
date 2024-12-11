@@ -270,13 +270,13 @@ private constructor(
 
         companion object {
 
-            val FAILED = Status(JsonField.of("FAILED"))
+            val FAILED = of("FAILED")
 
-            val PENDING = Status(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val SENDING = Status(JsonField.of("SENDING"))
+            val SENDING = of("SENDING")
 
-            val SUCCESS = Status(JsonField.of("SUCCESS"))
+            val SUCCESS = of("SUCCESS")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

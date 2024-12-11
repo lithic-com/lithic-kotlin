@@ -277,9 +277,9 @@ constructor(
 
         companion object {
 
-            val APPROVED = Result(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = Result(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
             fun of(value: String) = Result(JsonField.of(value))
         }

@@ -485,11 +485,11 @@ private constructor(
 
         companion object {
 
-            val KYC_ADVANCED = Workflow(JsonField.of("KYC_ADVANCED"))
+            val KYC_ADVANCED = of("KYC_ADVANCED")
 
-            val KYC_BASIC = Workflow(JsonField.of("KYC_BASIC"))
+            val KYC_BASIC = of("KYC_BASIC")
 
-            val KYC_BYO = Workflow(JsonField.of("KYC_BYO"))
+            val KYC_BYO = of("KYC_BYO")
 
             fun of(value: String) = Workflow(JsonField.of(value))
         }

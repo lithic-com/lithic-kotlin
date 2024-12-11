@@ -343,43 +343,41 @@ constructor(
 
         companion object {
 
-            val EIN_LETTER = DocumentType(JsonField.of("EIN_LETTER"))
+            val EIN_LETTER = of("EIN_LETTER")
 
-            val TAX_RETURN = DocumentType(JsonField.of("TAX_RETURN"))
+            val TAX_RETURN = of("TAX_RETURN")
 
-            val OPERATING_AGREEMENT = DocumentType(JsonField.of("OPERATING_AGREEMENT"))
+            val OPERATING_AGREEMENT = of("OPERATING_AGREEMENT")
 
-            val CERTIFICATE_OF_FORMATION = DocumentType(JsonField.of("CERTIFICATE_OF_FORMATION"))
+            val CERTIFICATE_OF_FORMATION = of("CERTIFICATE_OF_FORMATION")
 
-            val DRIVERS_LICENSE = DocumentType(JsonField.of("DRIVERS_LICENSE"))
+            val DRIVERS_LICENSE = of("DRIVERS_LICENSE")
 
-            val PASSPORT = DocumentType(JsonField.of("PASSPORT"))
+            val PASSPORT = of("PASSPORT")
 
-            val PASSPORT_CARD = DocumentType(JsonField.of("PASSPORT_CARD"))
+            val PASSPORT_CARD = of("PASSPORT_CARD")
 
-            val CERTIFICATE_OF_GOOD_STANDING =
-                DocumentType(JsonField.of("CERTIFICATE_OF_GOOD_STANDING"))
+            val CERTIFICATE_OF_GOOD_STANDING = of("CERTIFICATE_OF_GOOD_STANDING")
 
-            val ARTICLES_OF_INCORPORATION = DocumentType(JsonField.of("ARTICLES_OF_INCORPORATION"))
+            val ARTICLES_OF_INCORPORATION = of("ARTICLES_OF_INCORPORATION")
 
-            val ARTICLES_OF_ORGANIZATION = DocumentType(JsonField.of("ARTICLES_OF_ORGANIZATION"))
+            val ARTICLES_OF_ORGANIZATION = of("ARTICLES_OF_ORGANIZATION")
 
-            val BYLAWS = DocumentType(JsonField.of("BYLAWS"))
+            val BYLAWS = of("BYLAWS")
 
-            val GOVERNMENT_BUSINESS_LICENSE =
-                DocumentType(JsonField.of("GOVERNMENT_BUSINESS_LICENSE"))
+            val GOVERNMENT_BUSINESS_LICENSE = of("GOVERNMENT_BUSINESS_LICENSE")
 
-            val PARTNERSHIP_AGREEMENT = DocumentType(JsonField.of("PARTNERSHIP_AGREEMENT"))
+            val PARTNERSHIP_AGREEMENT = of("PARTNERSHIP_AGREEMENT")
 
-            val SS4_FORM = DocumentType(JsonField.of("SS4_FORM"))
+            val SS4_FORM = of("SS4_FORM")
 
-            val BANK_STATEMENT = DocumentType(JsonField.of("BANK_STATEMENT"))
+            val BANK_STATEMENT = of("BANK_STATEMENT")
 
-            val UTILITY_BILL_STATEMENT = DocumentType(JsonField.of("UTILITY_BILL_STATEMENT"))
+            val UTILITY_BILL_STATEMENT = of("UTILITY_BILL_STATEMENT")
 
-            val SSN_CARD = DocumentType(JsonField.of("SSN_CARD"))
+            val SSN_CARD = of("SSN_CARD")
 
-            val ITIN_LETTER = DocumentType(JsonField.of("ITIN_LETTER"))
+            val ITIN_LETTER = of("ITIN_LETTER")
 
             fun of(value: String) = DocumentType(JsonField.of(value))
         }

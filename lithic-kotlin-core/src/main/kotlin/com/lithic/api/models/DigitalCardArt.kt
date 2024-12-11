@@ -236,9 +236,9 @@ private constructor(
 
         companion object {
 
-            val MASTERCARD = Network(JsonField.of("MASTERCARD"))
+            val MASTERCARD = of("MASTERCARD")
 
-            val VISA = Network(JsonField.of("VISA"))
+            val VISA = of("VISA")
 
             fun of(value: String) = Network(JsonField.of(value))
         }

@@ -580,11 +580,11 @@ constructor(
 
         companion object {
 
-            val MATCH = CardExpiryCheck(JsonField.of("MATCH"))
+            val MATCH = of("MATCH")
 
-            val MISMATCH = CardExpiryCheck(JsonField.of("MISMATCH"))
+            val MISMATCH = of("MISMATCH")
 
-            val NOT_PRESENT = CardExpiryCheck(JsonField.of("NOT_PRESENT"))
+            val NOT_PRESENT = of("NOT_PRESENT")
 
             fun of(value: String) = CardExpiryCheck(JsonField.of(value))
         }

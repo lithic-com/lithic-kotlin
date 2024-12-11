@@ -345,19 +345,19 @@ private constructor(
 
         companion object {
 
-            val ACTIVE = Status(JsonField.of("ACTIVE"))
+            val ACTIVE = of("ACTIVE")
 
-            val DEACTIVATED = Status(JsonField.of("DEACTIVATED"))
+            val DEACTIVATED = of("DEACTIVATED")
 
-            val INACTIVE = Status(JsonField.of("INACTIVE"))
+            val INACTIVE = of("INACTIVE")
 
-            val PAUSED = Status(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
-            val PENDING_2_FA = Status(JsonField.of("PENDING_2FA"))
+            val PENDING_2_FA = of("PENDING_2FA")
 
-            val PENDING_ACTIVATION = Status(JsonField.of("PENDING_ACTIVATION"))
+            val PENDING_ACTIVATION = of("PENDING_ACTIVATION")
 
-            val UNKNOWN = Status(JsonField.of("UNKNOWN"))
+            val UNKNOWN = of("UNKNOWN")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -432,27 +432,27 @@ private constructor(
 
         companion object {
 
-            val AMAZON_ONE = TokenRequestorName(JsonField.of("AMAZON_ONE"))
+            val AMAZON_ONE = of("AMAZON_ONE")
 
-            val ANDROID_PAY = TokenRequestorName(JsonField.of("ANDROID_PAY"))
+            val ANDROID_PAY = of("ANDROID_PAY")
 
-            val APPLE_PAY = TokenRequestorName(JsonField.of("APPLE_PAY"))
+            val APPLE_PAY = of("APPLE_PAY")
 
-            val FACEBOOK = TokenRequestorName(JsonField.of("FACEBOOK"))
+            val FACEBOOK = of("FACEBOOK")
 
-            val FITBIT_PAY = TokenRequestorName(JsonField.of("FITBIT_PAY"))
+            val FITBIT_PAY = of("FITBIT_PAY")
 
-            val GARMIN_PAY = TokenRequestorName(JsonField.of("GARMIN_PAY"))
+            val GARMIN_PAY = of("GARMIN_PAY")
 
-            val MICROSOFT_PAY = TokenRequestorName(JsonField.of("MICROSOFT_PAY"))
+            val MICROSOFT_PAY = of("MICROSOFT_PAY")
 
-            val NETFLIX = TokenRequestorName(JsonField.of("NETFLIX"))
+            val NETFLIX = of("NETFLIX")
 
-            val SAMSUNG_PAY = TokenRequestorName(JsonField.of("SAMSUNG_PAY"))
+            val SAMSUNG_PAY = of("SAMSUNG_PAY")
 
-            val UNKNOWN = TokenRequestorName(JsonField.of("UNKNOWN"))
+            val UNKNOWN = of("UNKNOWN")
 
-            val VISA_CHECKOUT = TokenRequestorName(JsonField.of("VISA_CHECKOUT"))
+            val VISA_CHECKOUT = of("VISA_CHECKOUT")
 
             fun of(value: String) = TokenRequestorName(JsonField.of(value))
         }
@@ -543,9 +543,9 @@ private constructor(
 
         companion object {
 
-            val DIGITAL_WALLET = TokenizationChannel(JsonField.of("DIGITAL_WALLET"))
+            val DIGITAL_WALLET = of("DIGITAL_WALLET")
 
-            val MERCHANT = TokenizationChannel(JsonField.of("MERCHANT"))
+            val MERCHANT = of("MERCHANT")
 
             fun of(value: String) = TokenizationChannel(JsonField.of(value))
         }
@@ -732,28 +732,27 @@ private constructor(
 
             companion object {
 
-                val APPROVED = Result(JsonField.of("APPROVED"))
+                val APPROVED = of("APPROVED")
 
-                val DECLINED = Result(JsonField.of("DECLINED"))
+                val DECLINED = of("DECLINED")
 
-                val NOTIFICATION_DELIVERED = Result(JsonField.of("NOTIFICATION_DELIVERED"))
+                val NOTIFICATION_DELIVERED = of("NOTIFICATION_DELIVERED")
 
-                val REQUIRE_ADDITIONAL_AUTHENTICATION =
-                    Result(JsonField.of("REQUIRE_ADDITIONAL_AUTHENTICATION"))
+                val REQUIRE_ADDITIONAL_AUTHENTICATION = of("REQUIRE_ADDITIONAL_AUTHENTICATION")
 
-                val TOKEN_ACTIVATED = Result(JsonField.of("TOKEN_ACTIVATED"))
+                val TOKEN_ACTIVATED = of("TOKEN_ACTIVATED")
 
-                val TOKEN_CREATED = Result(JsonField.of("TOKEN_CREATED"))
+                val TOKEN_CREATED = of("TOKEN_CREATED")
 
-                val TOKEN_DEACTIVATED = Result(JsonField.of("TOKEN_DEACTIVATED"))
+                val TOKEN_DEACTIVATED = of("TOKEN_DEACTIVATED")
 
-                val TOKEN_INACTIVE = Result(JsonField.of("TOKEN_INACTIVE"))
+                val TOKEN_INACTIVE = of("TOKEN_INACTIVE")
 
-                val TOKEN_STATE_UNKNOWN = Result(JsonField.of("TOKEN_STATE_UNKNOWN"))
+                val TOKEN_STATE_UNKNOWN = of("TOKEN_STATE_UNKNOWN")
 
-                val TOKEN_SUSPENDED = Result(JsonField.of("TOKEN_SUSPENDED"))
+                val TOKEN_SUSPENDED = of("TOKEN_SUSPENDED")
 
-                val TOKEN_UPDATED = Result(JsonField.of("TOKEN_UPDATED"))
+                val TOKEN_UPDATED = of("TOKEN_UPDATED")
 
                 fun of(value: String) = Result(JsonField.of(value))
             }
@@ -844,16 +843,15 @@ private constructor(
 
             companion object {
 
-                val TOKENIZATION_2_FA = Type(JsonField.of("TOKENIZATION_2FA"))
+                val TOKENIZATION_2_FA = of("TOKENIZATION_2FA")
 
-                val TOKENIZATION_AUTHORIZATION = Type(JsonField.of("TOKENIZATION_AUTHORIZATION"))
+                val TOKENIZATION_AUTHORIZATION = of("TOKENIZATION_AUTHORIZATION")
 
-                val TOKENIZATION_DECISIONING = Type(JsonField.of("TOKENIZATION_DECISIONING"))
+                val TOKENIZATION_DECISIONING = of("TOKENIZATION_DECISIONING")
 
-                val TOKENIZATION_ELIGIBILITY_CHECK =
-                    Type(JsonField.of("TOKENIZATION_ELIGIBILITY_CHECK"))
+                val TOKENIZATION_ELIGIBILITY_CHECK = of("TOKENIZATION_ELIGIBILITY_CHECK")
 
-                val TOKENIZATION_UPDATED = Type(JsonField.of("TOKENIZATION_UPDATED"))
+                val TOKENIZATION_UPDATED = of("TOKENIZATION_UPDATED")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }

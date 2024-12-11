@@ -464,9 +464,9 @@ constructor(
 
         companion object {
 
-            val ACTIVE = State(JsonField.of("ACTIVE"))
+            val ACTIVE = of("ACTIVE")
 
-            val PAUSED = State(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
             fun of(value: String) = State(JsonField.of(value))
         }

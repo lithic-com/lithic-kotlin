@@ -366,25 +366,19 @@ constructor(
 
         companion object {
 
-            val ACH_ORIGINATION_REVIEWED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_REVIEWED"))
+            val ACH_ORIGINATION_REVIEWED = of("ACH_ORIGINATION_REVIEWED")
 
-            val ACH_ORIGINATION_RELEASED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_RELEASED"))
+            val ACH_ORIGINATION_RELEASED = of("ACH_ORIGINATION_RELEASED")
 
-            val ACH_ORIGINATION_PROCESSED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_PROCESSED"))
+            val ACH_ORIGINATION_PROCESSED = of("ACH_ORIGINATION_PROCESSED")
 
-            val ACH_ORIGINATION_SETTLED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_SETTLED"))
+            val ACH_ORIGINATION_SETTLED = of("ACH_ORIGINATION_SETTLED")
 
-            val ACH_RECEIPT_SETTLED = SupportedSimulationTypes(JsonField.of("ACH_RECEIPT_SETTLED"))
+            val ACH_RECEIPT_SETTLED = of("ACH_RECEIPT_SETTLED")
 
-            val ACH_RETURN_INITIATED =
-                SupportedSimulationTypes(JsonField.of("ACH_RETURN_INITIATED"))
+            val ACH_RETURN_INITIATED = of("ACH_RETURN_INITIATED")
 
-            val ACH_RETURN_PROCESSED =
-                SupportedSimulationTypes(JsonField.of("ACH_RETURN_PROCESSED"))
+            val ACH_RETURN_PROCESSED = of("ACH_RETURN_PROCESSED")
 
             fun of(value: String) = SupportedSimulationTypes(JsonField.of(value))
         }
@@ -459,16 +453,11 @@ constructor(
 
         companion object {
 
-            val PROGRAM_TRANSACTION_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(
-                    JsonField.of("PROGRAM_TRANSACTION_LIMIT_EXCEEDED")
-                )
+            val PROGRAM_TRANSACTION_LIMIT_EXCEEDED = of("PROGRAM_TRANSACTION_LIMIT_EXCEEDED")
 
-            val PROGRAM_DAILY_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(JsonField.of("PROGRAM_DAILY_LIMIT_EXCEEDED"))
+            val PROGRAM_DAILY_LIMIT_EXCEEDED = of("PROGRAM_DAILY_LIMIT_EXCEEDED")
 
-            val PROGRAM_MONTHLY_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(JsonField.of("PROGRAM_MONTHLY_LIMIT_EXCEEDED"))
+            val PROGRAM_MONTHLY_LIMIT_EXCEEDED = of("PROGRAM_MONTHLY_LIMIT_EXCEEDED")
 
             fun of(value: String) = SupportedSimulationDeclineReasons(JsonField.of(value))
         }

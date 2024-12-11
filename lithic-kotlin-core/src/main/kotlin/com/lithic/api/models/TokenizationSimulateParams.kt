@@ -487,13 +487,13 @@ constructor(
 
         companion object {
 
-            val APPLE_PAY = TokenizationSource(JsonField.of("APPLE_PAY"))
+            val APPLE_PAY = of("APPLE_PAY")
 
-            val GOOGLE = TokenizationSource(JsonField.of("GOOGLE"))
+            val GOOGLE = of("GOOGLE")
 
-            val SAMSUNG_PAY = TokenizationSource(JsonField.of("SAMSUNG_PAY"))
+            val SAMSUNG_PAY = of("SAMSUNG_PAY")
 
-            val MERCHANT = TokenizationSource(JsonField.of("MERCHANT"))
+            val MERCHANT = of("MERCHANT")
 
             fun of(value: String) = TokenizationSource(JsonField.of(value))
         }
@@ -556,12 +556,11 @@ constructor(
 
         companion object {
 
-            val APPROVED = WalletRecommendedDecision(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = WalletRecommendedDecision(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REQUIRE_ADDITIONAL_AUTHENTICATION =
-                WalletRecommendedDecision(JsonField.of("REQUIRE_ADDITIONAL_AUTHENTICATION"))
+            val REQUIRE_ADDITIONAL_AUTHENTICATION = of("REQUIRE_ADDITIONAL_AUTHENTICATION")
 
             fun of(value: String) = WalletRecommendedDecision(JsonField.of(value))
         }

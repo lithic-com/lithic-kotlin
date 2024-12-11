@@ -1216,9 +1216,9 @@ private constructor(
 
         companion object {
 
-            val AUTHORIZED_USER = ExemptionType(JsonField.of("AUTHORIZED_USER"))
+            val AUTHORIZED_USER = of("AUTHORIZED_USER")
 
-            val PREPAID_CARD_USER = ExemptionType(JsonField.of("PREPAID_CARD_USER"))
+            val PREPAID_CARD_USER = of("PREPAID_CARD_USER")
 
             fun of(value: String) = ExemptionType(JsonField.of(value))
         }
@@ -1273,15 +1273,15 @@ private constructor(
 
         companion object {
 
-            val ACCEPTED = Status(JsonField.of("ACCEPTED"))
+            val ACCEPTED = of("ACCEPTED")
 
-            val PENDING_REVIEW = Status(JsonField.of("PENDING_REVIEW"))
+            val PENDING_REVIEW = of("PENDING_REVIEW")
 
-            val PENDING_DOCUMENT = Status(JsonField.of("PENDING_DOCUMENT"))
+            val PENDING_DOCUMENT = of("PENDING_DOCUMENT")
 
-            val PENDING_RESUBMIT = Status(JsonField.of("PENDING_RESUBMIT"))
+            val PENDING_RESUBMIT = of("PENDING_RESUBMIT")
 
-            val REJECTED = Status(JsonField.of("REJECTED"))
+            val REJECTED = of("REJECTED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -1348,30 +1348,27 @@ private constructor(
 
         companion object {
 
-            val ADDRESS_VERIFICATION_FAILURE =
-                StatusReason(JsonField.of("ADDRESS_VERIFICATION_FAILURE"))
+            val ADDRESS_VERIFICATION_FAILURE = of("ADDRESS_VERIFICATION_FAILURE")
 
-            val AGE_THRESHOLD_FAILURE = StatusReason(JsonField.of("AGE_THRESHOLD_FAILURE"))
+            val AGE_THRESHOLD_FAILURE = of("AGE_THRESHOLD_FAILURE")
 
-            val COMPLETE_VERIFICATION_FAILURE =
-                StatusReason(JsonField.of("COMPLETE_VERIFICATION_FAILURE"))
+            val COMPLETE_VERIFICATION_FAILURE = of("COMPLETE_VERIFICATION_FAILURE")
 
-            val DOB_VERIFICATION_FAILURE = StatusReason(JsonField.of("DOB_VERIFICATION_FAILURE"))
+            val DOB_VERIFICATION_FAILURE = of("DOB_VERIFICATION_FAILURE")
 
-            val ID_VERIFICATION_FAILURE = StatusReason(JsonField.of("ID_VERIFICATION_FAILURE"))
+            val ID_VERIFICATION_FAILURE = of("ID_VERIFICATION_FAILURE")
 
-            val MAX_DOCUMENT_ATTEMPTS = StatusReason(JsonField.of("MAX_DOCUMENT_ATTEMPTS"))
+            val MAX_DOCUMENT_ATTEMPTS = of("MAX_DOCUMENT_ATTEMPTS")
 
-            val MAX_RESUBMISSION_ATTEMPTS = StatusReason(JsonField.of("MAX_RESUBMISSION_ATTEMPTS"))
+            val MAX_RESUBMISSION_ATTEMPTS = of("MAX_RESUBMISSION_ATTEMPTS")
 
-            val NAME_VERIFICATION_FAILURE = StatusReason(JsonField.of("NAME_VERIFICATION_FAILURE"))
+            val NAME_VERIFICATION_FAILURE = of("NAME_VERIFICATION_FAILURE")
 
-            val OTHER_VERIFICATION_FAILURE =
-                StatusReason(JsonField.of("OTHER_VERIFICATION_FAILURE"))
+            val OTHER_VERIFICATION_FAILURE = of("OTHER_VERIFICATION_FAILURE")
 
-            val RISK_THRESHOLD_FAILURE = StatusReason(JsonField.of("RISK_THRESHOLD_FAILURE"))
+            val RISK_THRESHOLD_FAILURE = of("RISK_THRESHOLD_FAILURE")
 
-            val WATCHLIST_ALERT_FAILURE = StatusReason(JsonField.of("WATCHLIST_ALERT_FAILURE"))
+            val WATCHLIST_ALERT_FAILURE = of("WATCHLIST_ALERT_FAILURE")
 
             fun of(value: String) = StatusReason(JsonField.of(value))
         }
@@ -1462,9 +1459,9 @@ private constructor(
 
         companion object {
 
-            val BUSINESS = UserType(JsonField.of("BUSINESS"))
+            val BUSINESS = of("BUSINESS")
 
-            val INDIVIDUAL = UserType(JsonField.of("INDIVIDUAL"))
+            val INDIVIDUAL = of("INDIVIDUAL")
 
             fun of(value: String) = UserType(JsonField.of(value))
         }
@@ -1683,15 +1680,15 @@ private constructor(
 
             companion object {
 
-                val ACCEPTED = Status(JsonField.of("ACCEPTED"))
+                val ACCEPTED = of("ACCEPTED")
 
-                val PENDING_REVIEW = Status(JsonField.of("PENDING_REVIEW"))
+                val PENDING_REVIEW = of("PENDING_REVIEW")
 
-                val PENDING_DOCUMENT = Status(JsonField.of("PENDING_DOCUMENT"))
+                val PENDING_DOCUMENT = of("PENDING_DOCUMENT")
 
-                val PENDING_RESUBMIT = Status(JsonField.of("PENDING_RESUBMIT"))
+                val PENDING_RESUBMIT = of("PENDING_RESUBMIT")
 
-                val REJECTED = Status(JsonField.of("REJECTED"))
+                val REJECTED = of("REJECTED")
 
                 fun of(value: String) = Status(JsonField.of(value))
             }
@@ -1758,33 +1755,27 @@ private constructor(
 
             companion object {
 
-                val ADDRESS_VERIFICATION_FAILURE =
-                    StatusReason(JsonField.of("ADDRESS_VERIFICATION_FAILURE"))
+                val ADDRESS_VERIFICATION_FAILURE = of("ADDRESS_VERIFICATION_FAILURE")
 
-                val AGE_THRESHOLD_FAILURE = StatusReason(JsonField.of("AGE_THRESHOLD_FAILURE"))
+                val AGE_THRESHOLD_FAILURE = of("AGE_THRESHOLD_FAILURE")
 
-                val COMPLETE_VERIFICATION_FAILURE =
-                    StatusReason(JsonField.of("COMPLETE_VERIFICATION_FAILURE"))
+                val COMPLETE_VERIFICATION_FAILURE = of("COMPLETE_VERIFICATION_FAILURE")
 
-                val DOB_VERIFICATION_FAILURE =
-                    StatusReason(JsonField.of("DOB_VERIFICATION_FAILURE"))
+                val DOB_VERIFICATION_FAILURE = of("DOB_VERIFICATION_FAILURE")
 
-                val ID_VERIFICATION_FAILURE = StatusReason(JsonField.of("ID_VERIFICATION_FAILURE"))
+                val ID_VERIFICATION_FAILURE = of("ID_VERIFICATION_FAILURE")
 
-                val MAX_DOCUMENT_ATTEMPTS = StatusReason(JsonField.of("MAX_DOCUMENT_ATTEMPTS"))
+                val MAX_DOCUMENT_ATTEMPTS = of("MAX_DOCUMENT_ATTEMPTS")
 
-                val MAX_RESUBMISSION_ATTEMPTS =
-                    StatusReason(JsonField.of("MAX_RESUBMISSION_ATTEMPTS"))
+                val MAX_RESUBMISSION_ATTEMPTS = of("MAX_RESUBMISSION_ATTEMPTS")
 
-                val NAME_VERIFICATION_FAILURE =
-                    StatusReason(JsonField.of("NAME_VERIFICATION_FAILURE"))
+                val NAME_VERIFICATION_FAILURE = of("NAME_VERIFICATION_FAILURE")
 
-                val OTHER_VERIFICATION_FAILURE =
-                    StatusReason(JsonField.of("OTHER_VERIFICATION_FAILURE"))
+                val OTHER_VERIFICATION_FAILURE = of("OTHER_VERIFICATION_FAILURE")
 
-                val RISK_THRESHOLD_FAILURE = StatusReason(JsonField.of("RISK_THRESHOLD_FAILURE"))
+                val RISK_THRESHOLD_FAILURE = of("RISK_THRESHOLD_FAILURE")
 
-                val WATCHLIST_ALERT_FAILURE = StatusReason(JsonField.of("WATCHLIST_ALERT_FAILURE"))
+                val WATCHLIST_ALERT_FAILURE = of("WATCHLIST_ALERT_FAILURE")
 
                 fun of(value: String) = StatusReason(JsonField.of(value))
             }

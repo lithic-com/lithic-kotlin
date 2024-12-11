@@ -470,9 +470,9 @@ constructor(
 
         companion object {
 
-            val ACH_NEXT_DAY = Method(JsonField.of("ACH_NEXT_DAY"))
+            val ACH_NEXT_DAY = of("ACH_NEXT_DAY")
 
-            val ACH_SAME_DAY = Method(JsonField.of("ACH_SAME_DAY"))
+            val ACH_SAME_DAY = of("ACH_SAME_DAY")
 
             fun of(value: String) = Method(JsonField.of(value))
         }
@@ -583,11 +583,11 @@ constructor(
 
             companion object {
 
-                val CCD = SecCode(JsonField.of("CCD"))
+                val CCD = of("CCD")
 
-                val PPD = SecCode(JsonField.of("PPD"))
+                val PPD = of("PPD")
 
-                val WEB = SecCode(JsonField.of("WEB"))
+                val WEB = of("WEB")
 
                 fun of(value: String) = SecCode(JsonField.of(value))
             }
@@ -664,9 +664,9 @@ constructor(
 
         companion object {
 
-            val COLLECTION = Type(JsonField.of("COLLECTION"))
+            val COLLECTION = of("COLLECTION")
 
-            val PAYMENT = Type(JsonField.of("PAYMENT"))
+            val PAYMENT = of("PAYMENT")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
