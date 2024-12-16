@@ -21,6 +21,7 @@ import java.util.Objects
 class AuthRuleV2UpdateParams
 constructor(
     private val authRuleToken: String,
+    private val name: String?,
     private val state: State?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -28,6 +29,8 @@ constructor(
 ) {
 
     fun authRuleToken(): String = authRuleToken
+
+    fun name(): String? = name
 
     fun state(): State? = state
 
@@ -38,7 +41,11 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     internal fun getBody(): AuthRuleV2UpdateBody {
-        return AuthRuleV2UpdateBody(state, additionalBodyProperties)
+        return AuthRuleV2UpdateBody(
+            name,
+            state,
+            additionalBodyProperties,
+        )
     }
 
     internal fun getHeaders(): Headers = additionalHeaders
@@ -56,9 +63,13 @@ constructor(
     @NoAutoDetect
     class AuthRuleV2UpdateBody
     internal constructor(
+        private val name: String?,
         private val state: State?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        /** Auth Rule Name */
+        @JsonProperty("name") fun name(): String? = name
 
         /**
          * The desired state of the Auth Rule.
@@ -82,13 +93,18 @@ constructor(
 
         class Builder {
 
+            private var name: String? = null
             private var state: State? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authRuleV2UpdateBody: AuthRuleV2UpdateBody) = apply {
+                this.name = authRuleV2UpdateBody.name
                 this.state = authRuleV2UpdateBody.state
                 additionalProperties(authRuleV2UpdateBody.additionalProperties)
             }
+
+            /** Auth Rule Name */
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /**
              * The desired state of the Auth Rule.
@@ -114,7 +130,11 @@ constructor(
             }
 
             fun build(): AuthRuleV2UpdateBody =
-                AuthRuleV2UpdateBody(state, additionalProperties.toImmutable())
+                AuthRuleV2UpdateBody(
+                    name,
+                    state,
+                    additionalProperties.toImmutable(),
+                )
         }
 
         override fun equals(other: Any?): Boolean {
@@ -122,17 +142,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleV2UpdateBody && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AuthRuleV2UpdateBody && name == other.name && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(state, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(name, state, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AuthRuleV2UpdateBody{state=$state, additionalProperties=$additionalProperties}"
+            "AuthRuleV2UpdateBody{name=$name, state=$state, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -146,6 +166,7 @@ constructor(
     class Builder {
 
         private var authRuleToken: String? = null
+        private var name: String? = null
         private var state: State? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
@@ -153,6 +174,7 @@ constructor(
 
         internal fun from(authRuleV2UpdateParams: AuthRuleV2UpdateParams) = apply {
             authRuleToken = authRuleV2UpdateParams.authRuleToken
+            name = authRuleV2UpdateParams.name
             state = authRuleV2UpdateParams.state
             additionalHeaders = authRuleV2UpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = authRuleV2UpdateParams.additionalQueryParams.toBuilder()
@@ -161,6 +183,9 @@ constructor(
         }
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
+
+        /** Auth Rule Name */
+        fun name(name: String) = apply { this.name = name }
 
         /**
          * The desired state of the Auth Rule.
@@ -294,6 +319,7 @@ constructor(
         fun build(): AuthRuleV2UpdateParams =
             AuthRuleV2UpdateParams(
                 checkNotNull(authRuleToken) { "`authRuleToken` is required but was not set" },
+                name,
                 state,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -357,11 +383,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2UpdateParams && authRuleToken == other.authRuleToken && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2UpdateParams && authRuleToken == other.authRuleToken && name == other.name && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, name, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
-        "AuthRuleV2UpdateParams{authRuleToken=$authRuleToken, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AuthRuleV2UpdateParams{authRuleToken=$authRuleToken, name=$name, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
