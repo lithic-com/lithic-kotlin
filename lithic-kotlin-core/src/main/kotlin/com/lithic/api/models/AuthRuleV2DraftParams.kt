@@ -544,6 +544,10 @@ constructor(
                  *   lowest risk and 999 representing the highest risk. For Visa transactions, where
                  *   the raw score has a range of 0-99, Lithic will normalize the score by
                  *   multiplying the raw score by 10x.
+                 * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                 *   trailing hour up and until the authorization.
+                 * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                 *   trailing 24 hours up and until the authorization.
                  */
                 fun attribute(): Attribute? = attribute.getNullable("attribute")
 
@@ -584,6 +588,10 @@ constructor(
                  *   lowest risk and 999 representing the highest risk. For Visa transactions, where
                  *   the raw score has a range of 0-99, Lithic will normalize the score by
                  *   multiplying the raw score by 10x.
+                 * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                 *   trailing hour up and until the authorization.
+                 * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                 *   trailing 24 hours up and until the authorization.
                  */
                 @JsonProperty("attribute") @ExcludeMissing fun _attribute() = attribute
 
@@ -658,6 +666,10 @@ constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -692,6 +704,10 @@ constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     @JsonProperty("attribute")
                     @ExcludeMissing
@@ -770,6 +786,10 @@ constructor(
 
                         val RISK_SCORE = of("RISK_SCORE")
 
+                        val CARD_TRANSACTION_COUNT_1_H = of("CARD_TRANSACTION_COUNT_1H")
+
+                        val CARD_TRANSACTION_COUNT_24_H = of("CARD_TRANSACTION_COUNT_24H")
+
                         fun of(value: String) = Attribute(JsonField.of(value))
                     }
 
@@ -783,6 +803,8 @@ constructor(
                         PAN_ENTRY_MODE,
                         TRANSACTION_AMOUNT,
                         RISK_SCORE,
+                        CARD_TRANSACTION_COUNT_1_H,
+                        CARD_TRANSACTION_COUNT_24_H,
                     }
 
                     enum class Value {
@@ -795,6 +817,8 @@ constructor(
                         PAN_ENTRY_MODE,
                         TRANSACTION_AMOUNT,
                         RISK_SCORE,
+                        CARD_TRANSACTION_COUNT_1_H,
+                        CARD_TRANSACTION_COUNT_24_H,
                         _UNKNOWN,
                     }
 
@@ -809,6 +833,8 @@ constructor(
                             PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                             TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
                             RISK_SCORE -> Value.RISK_SCORE
+                            CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
+                            CARD_TRANSACTION_COUNT_24_H -> Value.CARD_TRANSACTION_COUNT_24_H
                             else -> Value._UNKNOWN
                         }
 
@@ -823,6 +849,8 @@ constructor(
                             PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                             TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
                             RISK_SCORE -> Known.RISK_SCORE
+                            CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H
+                            CARD_TRANSACTION_COUNT_24_H -> Known.CARD_TRANSACTION_COUNT_24_H
                             else -> throw LithicInvalidDataException("Unknown Attribute: $value")
                         }
 
