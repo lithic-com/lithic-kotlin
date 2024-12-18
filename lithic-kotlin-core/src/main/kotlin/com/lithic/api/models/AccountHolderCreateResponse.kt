@@ -50,8 +50,6 @@ private constructor(
      * KYC and KYB evaluation states.
      *
      * Note:
-     * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-     *   workflow.
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
     fun status(): Status = status.getRequired("status")
@@ -60,8 +58,8 @@ private constructor(
     fun statusReasons(): List<StatusReasons> = statusReasons.getRequired("status_reasons")
 
     /**
-     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
-     * the account holder to be approved.
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
      */
     fun requiredDocuments(): List<RequiredDocument>? =
         requiredDocuments.getNullable("required_documents")
@@ -85,8 +83,6 @@ private constructor(
      * KYC and KYB evaluation states.
      *
      * Note:
-     * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-     *   workflow.
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
@@ -95,8 +91,8 @@ private constructor(
     @JsonProperty("status_reasons") @ExcludeMissing fun _statusReasons() = statusReasons
 
     /**
-     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
-     * the account holder to be approved.
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
      */
     @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
 
@@ -185,8 +181,6 @@ private constructor(
          * KYC and KYB evaluation states.
          *
          * Note:
-         * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-         *   workflow.
          * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
          */
         fun status(status: Status) = status(JsonField.of(status))
@@ -195,8 +189,6 @@ private constructor(
          * KYC and KYB evaluation states.
          *
          * Note:
-         * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-         *   workflow.
          * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
          */
         @JsonProperty("status")
@@ -215,15 +207,15 @@ private constructor(
         }
 
         /**
-         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
-         * for the account holder to be approved.
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
          */
         fun requiredDocuments(requiredDocuments: List<RequiredDocument>) =
             requiredDocuments(JsonField.of(requiredDocuments))
 
         /**
-         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
-         * for the account holder to be approved.
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
          */
         @JsonProperty("required_documents")
         @ExcludeMissing
