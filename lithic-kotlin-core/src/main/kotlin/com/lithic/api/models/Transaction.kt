@@ -4176,15 +4176,13 @@ private constructor(
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
          * card network and the event type.
-         *
-         * Now available in sandbox, and available in production on December 17th, 2024.
          */
         fun networkInfo(): NetworkInfo? = networkInfo.getNullable("network_info")
 
         fun detailedResults(): List<DetailedResult> =
             detailedResults.getRequired("detailed_results")
 
-        fun ruleResults(): List<RuleResult>? = ruleResults.getNullable("rule_results")
+        fun ruleResults(): List<RuleResult> = ruleResults.getRequired("rule_results")
 
         /** Indicates whether the transaction event is a credit or debit to the account. */
         fun effectivePolarity(): EffectivePolarity =
@@ -4213,8 +4211,6 @@ private constructor(
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
          * card network and the event type.
-         *
-         * Now available in sandbox, and available in production on December 17th, 2024.
          */
         @JsonProperty("network_info") @ExcludeMissing fun _networkInfo() = networkInfo
 
@@ -4246,7 +4242,7 @@ private constructor(
                 created()
                 networkInfo()?.validate()
                 detailedResults()
-                ruleResults()?.forEach { it.validate() }
+                ruleResults().forEach { it.validate() }
                 effectivePolarity()
                 result()
                 token()
@@ -4321,8 +4317,6 @@ private constructor(
              * lifecycle and can be used to locate a particular transaction, such as during
              * processing of disputes. Not all fields are available in all events, and the presence
              * of these fields is dependent on the card network and the event type.
-             *
-             * Now available in sandbox, and available in production on December 17th, 2024.
              */
             fun networkInfo(networkInfo: NetworkInfo) = networkInfo(JsonField.of(networkInfo))
 
@@ -4333,8 +4327,6 @@ private constructor(
              * lifecycle and can be used to locate a particular transaction, such as during
              * processing of disputes. Not all fields are available in all events, and the presence
              * of these fields is dependent on the card network and the event type.
-             *
-             * Now available in sandbox, and available in production on December 17th, 2024.
              */
             @JsonProperty("network_info")
             @ExcludeMissing
@@ -5432,318 +5424,6 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class DeclineResult
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
-
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                val ACCOUNT_STATE_TRANSACTION_FAIL = of("ACCOUNT_STATE_TRANSACTION_FAIL")
-
-                val APPROVED = of("APPROVED")
-
-                val BANK_CONNECTION_ERROR = of("BANK_CONNECTION_ERROR")
-
-                val BANK_NOT_VERIFIED = of("BANK_NOT_VERIFIED")
-
-                val CARD_CLOSED = of("CARD_CLOSED")
-
-                val CARD_PAUSED = of("CARD_PAUSED")
-
-                val DECLINED = of("DECLINED")
-
-                val FRAUD_ADVICE = of("FRAUD_ADVICE")
-
-                val IGNORED_TTL_EXPIRY = of("IGNORED_TTL_EXPIRY")
-
-                val INACTIVE_ACCOUNT = of("INACTIVE_ACCOUNT")
-
-                val INCORRECT_PIN = of("INCORRECT_PIN")
-
-                val INVALID_CARD_DETAILS = of("INVALID_CARD_DETAILS")
-
-                val INSUFFICIENT_FUNDS = of("INSUFFICIENT_FUNDS")
-
-                val INSUFFICIENT_FUNDS_PRELOAD = of("INSUFFICIENT_FUNDS_PRELOAD")
-
-                val INVALID_TRANSACTION = of("INVALID_TRANSACTION")
-
-                val MERCHANT_BLACKLIST = of("MERCHANT_BLACKLIST")
-
-                val ORIGINAL_NOT_FOUND = of("ORIGINAL_NOT_FOUND")
-
-                val PREVIOUSLY_COMPLETED = of("PREVIOUSLY_COMPLETED")
-
-                val SINGLE_USE_RECHARGED = of("SINGLE_USE_RECHARGED")
-
-                val SWITCH_INOPERATIVE_ADVICE = of("SWITCH_INOPERATIVE_ADVICE")
-
-                val UNAUTHORIZED_MERCHANT = of("UNAUTHORIZED_MERCHANT")
-
-                val UNKNOWN_HOST_TIMEOUT = of("UNKNOWN_HOST_TIMEOUT")
-
-                val USER_TRANSACTION_LIMIT = of("USER_TRANSACTION_LIMIT")
-
-                fun of(value: String) = DeclineResult(JsonField.of(value))
-            }
-
-            enum class Known {
-                ACCOUNT_STATE_TRANSACTION_FAIL,
-                APPROVED,
-                BANK_CONNECTION_ERROR,
-                BANK_NOT_VERIFIED,
-                CARD_CLOSED,
-                CARD_PAUSED,
-                DECLINED,
-                FRAUD_ADVICE,
-                IGNORED_TTL_EXPIRY,
-                INACTIVE_ACCOUNT,
-                INCORRECT_PIN,
-                INVALID_CARD_DETAILS,
-                INSUFFICIENT_FUNDS,
-                INSUFFICIENT_FUNDS_PRELOAD,
-                INVALID_TRANSACTION,
-                MERCHANT_BLACKLIST,
-                ORIGINAL_NOT_FOUND,
-                PREVIOUSLY_COMPLETED,
-                SINGLE_USE_RECHARGED,
-                SWITCH_INOPERATIVE_ADVICE,
-                UNAUTHORIZED_MERCHANT,
-                UNKNOWN_HOST_TIMEOUT,
-                USER_TRANSACTION_LIMIT,
-            }
-
-            enum class Value {
-                ACCOUNT_STATE_TRANSACTION_FAIL,
-                APPROVED,
-                BANK_CONNECTION_ERROR,
-                BANK_NOT_VERIFIED,
-                CARD_CLOSED,
-                CARD_PAUSED,
-                DECLINED,
-                FRAUD_ADVICE,
-                IGNORED_TTL_EXPIRY,
-                INACTIVE_ACCOUNT,
-                INCORRECT_PIN,
-                INVALID_CARD_DETAILS,
-                INSUFFICIENT_FUNDS,
-                INSUFFICIENT_FUNDS_PRELOAD,
-                INVALID_TRANSACTION,
-                MERCHANT_BLACKLIST,
-                ORIGINAL_NOT_FOUND,
-                PREVIOUSLY_COMPLETED,
-                SINGLE_USE_RECHARGED,
-                SWITCH_INOPERATIVE_ADVICE,
-                UNAUTHORIZED_MERCHANT,
-                UNKNOWN_HOST_TIMEOUT,
-                USER_TRANSACTION_LIMIT,
-                _UNKNOWN,
-            }
-
-            fun value(): Value =
-                when (this) {
-                    ACCOUNT_STATE_TRANSACTION_FAIL -> Value.ACCOUNT_STATE_TRANSACTION_FAIL
-                    APPROVED -> Value.APPROVED
-                    BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
-                    BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
-                    CARD_CLOSED -> Value.CARD_CLOSED
-                    CARD_PAUSED -> Value.CARD_PAUSED
-                    DECLINED -> Value.DECLINED
-                    FRAUD_ADVICE -> Value.FRAUD_ADVICE
-                    IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
-                    INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
-                    INCORRECT_PIN -> Value.INCORRECT_PIN
-                    INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
-                    INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
-                    INSUFFICIENT_FUNDS_PRELOAD -> Value.INSUFFICIENT_FUNDS_PRELOAD
-                    INVALID_TRANSACTION -> Value.INVALID_TRANSACTION
-                    MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
-                    ORIGINAL_NOT_FOUND -> Value.ORIGINAL_NOT_FOUND
-                    PREVIOUSLY_COMPLETED -> Value.PREVIOUSLY_COMPLETED
-                    SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
-                    SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
-                    UNAUTHORIZED_MERCHANT -> Value.UNAUTHORIZED_MERCHANT
-                    UNKNOWN_HOST_TIMEOUT -> Value.UNKNOWN_HOST_TIMEOUT
-                    USER_TRANSACTION_LIMIT -> Value.USER_TRANSACTION_LIMIT
-                    else -> Value._UNKNOWN
-                }
-
-            fun known(): Known =
-                when (this) {
-                    ACCOUNT_STATE_TRANSACTION_FAIL -> Known.ACCOUNT_STATE_TRANSACTION_FAIL
-                    APPROVED -> Known.APPROVED
-                    BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
-                    BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
-                    CARD_CLOSED -> Known.CARD_CLOSED
-                    CARD_PAUSED -> Known.CARD_PAUSED
-                    DECLINED -> Known.DECLINED
-                    FRAUD_ADVICE -> Known.FRAUD_ADVICE
-                    IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
-                    INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
-                    INCORRECT_PIN -> Known.INCORRECT_PIN
-                    INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
-                    INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
-                    INSUFFICIENT_FUNDS_PRELOAD -> Known.INSUFFICIENT_FUNDS_PRELOAD
-                    INVALID_TRANSACTION -> Known.INVALID_TRANSACTION
-                    MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
-                    ORIGINAL_NOT_FOUND -> Known.ORIGINAL_NOT_FOUND
-                    PREVIOUSLY_COMPLETED -> Known.PREVIOUSLY_COMPLETED
-                    SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
-                    SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
-                    UNAUTHORIZED_MERCHANT -> Known.UNAUTHORIZED_MERCHANT
-                    UNKNOWN_HOST_TIMEOUT -> Known.UNKNOWN_HOST_TIMEOUT
-                    USER_TRANSACTION_LIMIT -> Known.USER_TRANSACTION_LIMIT
-                    else -> throw LithicInvalidDataException("Unknown DeclineResult: $value")
-                }
-
-            fun asString(): String = _value().asStringOrThrow()
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is DeclineResult && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        class Type
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
-
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                val AUTHORIZATION = of("AUTHORIZATION")
-
-                val AUTHORIZATION_ADVICE = of("AUTHORIZATION_ADVICE")
-
-                val AUTHORIZATION_EXPIRY = of("AUTHORIZATION_EXPIRY")
-
-                val AUTHORIZATION_REVERSAL = of("AUTHORIZATION_REVERSAL")
-
-                val BALANCE_INQUIRY = of("BALANCE_INQUIRY")
-
-                val CLEARING = of("CLEARING")
-
-                val CORRECTION_CREDIT = of("CORRECTION_CREDIT")
-
-                val CORRECTION_DEBIT = of("CORRECTION_DEBIT")
-
-                val CREDIT_AUTHORIZATION = of("CREDIT_AUTHORIZATION")
-
-                val CREDIT_AUTHORIZATION_ADVICE = of("CREDIT_AUTHORIZATION_ADVICE")
-
-                val FINANCIAL_AUTHORIZATION = of("FINANCIAL_AUTHORIZATION")
-
-                val FINANCIAL_CREDIT_AUTHORIZATION = of("FINANCIAL_CREDIT_AUTHORIZATION")
-
-                val RETURN = of("RETURN")
-
-                val RETURN_REVERSAL = of("RETURN_REVERSAL")
-
-                fun of(value: String) = Type(JsonField.of(value))
-            }
-
-            enum class Known {
-                AUTHORIZATION,
-                AUTHORIZATION_ADVICE,
-                AUTHORIZATION_EXPIRY,
-                AUTHORIZATION_REVERSAL,
-                BALANCE_INQUIRY,
-                CLEARING,
-                CORRECTION_CREDIT,
-                CORRECTION_DEBIT,
-                CREDIT_AUTHORIZATION,
-                CREDIT_AUTHORIZATION_ADVICE,
-                FINANCIAL_AUTHORIZATION,
-                FINANCIAL_CREDIT_AUTHORIZATION,
-                RETURN,
-                RETURN_REVERSAL,
-            }
-
-            enum class Value {
-                AUTHORIZATION,
-                AUTHORIZATION_ADVICE,
-                AUTHORIZATION_EXPIRY,
-                AUTHORIZATION_REVERSAL,
-                BALANCE_INQUIRY,
-                CLEARING,
-                CORRECTION_CREDIT,
-                CORRECTION_DEBIT,
-                CREDIT_AUTHORIZATION,
-                CREDIT_AUTHORIZATION_ADVICE,
-                FINANCIAL_AUTHORIZATION,
-                FINANCIAL_CREDIT_AUTHORIZATION,
-                RETURN,
-                RETURN_REVERSAL,
-                _UNKNOWN,
-            }
-
-            fun value(): Value =
-                when (this) {
-                    AUTHORIZATION -> Value.AUTHORIZATION
-                    AUTHORIZATION_ADVICE -> Value.AUTHORIZATION_ADVICE
-                    AUTHORIZATION_EXPIRY -> Value.AUTHORIZATION_EXPIRY
-                    AUTHORIZATION_REVERSAL -> Value.AUTHORIZATION_REVERSAL
-                    BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
-                    CLEARING -> Value.CLEARING
-                    CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
-                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
-                    CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
-                    CREDIT_AUTHORIZATION_ADVICE -> Value.CREDIT_AUTHORIZATION_ADVICE
-                    FINANCIAL_AUTHORIZATION -> Value.FINANCIAL_AUTHORIZATION
-                    FINANCIAL_CREDIT_AUTHORIZATION -> Value.FINANCIAL_CREDIT_AUTHORIZATION
-                    RETURN -> Value.RETURN
-                    RETURN_REVERSAL -> Value.RETURN_REVERSAL
-                    else -> Value._UNKNOWN
-                }
-
-            fun known(): Known =
-                when (this) {
-                    AUTHORIZATION -> Known.AUTHORIZATION
-                    AUTHORIZATION_ADVICE -> Known.AUTHORIZATION_ADVICE
-                    AUTHORIZATION_EXPIRY -> Known.AUTHORIZATION_EXPIRY
-                    AUTHORIZATION_REVERSAL -> Known.AUTHORIZATION_REVERSAL
-                    BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
-                    CLEARING -> Known.CLEARING
-                    CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
-                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
-                    CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION
-                    CREDIT_AUTHORIZATION_ADVICE -> Known.CREDIT_AUTHORIZATION_ADVICE
-                    FINANCIAL_AUTHORIZATION -> Known.FINANCIAL_AUTHORIZATION
-                    FINANCIAL_CREDIT_AUTHORIZATION -> Known.FINANCIAL_CREDIT_AUTHORIZATION
-                    RETURN -> Known.RETURN
-                    RETURN_REVERSAL -> Known.RETURN_REVERSAL
-                    else -> throw LithicInvalidDataException("Unknown Type: $value")
-                }
-
-            fun asString(): String = _value().asStringOrThrow()
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
         /**
          * Information provided by the card network in each event. This includes common identifiers
          * shared between you, Lithic, the card network and in some cases the acquirer. These
@@ -5751,8 +5431,6 @@ private constructor(
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
          * card network and the event type.
-         *
-         * Now available in sandbox, and available in production on December 17th, 2024.
          */
         @JsonDeserialize(builder = NetworkInfo.Builder::class)
         @NoAutoDetect
@@ -6249,7 +5927,189 @@ private constructor(
                 "NetworkInfo{acquirer=$acquirer, mastercard=$mastercard, visa=$visa, additionalProperties=$additionalProperties}"
         }
 
-        /** Available in production on December 17th, 2024. */
+        class DeclineResult
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val ACCOUNT_STATE_TRANSACTION_FAIL = of("ACCOUNT_STATE_TRANSACTION_FAIL")
+
+                val APPROVED = of("APPROVED")
+
+                val BANK_CONNECTION_ERROR = of("BANK_CONNECTION_ERROR")
+
+                val BANK_NOT_VERIFIED = of("BANK_NOT_VERIFIED")
+
+                val CARD_CLOSED = of("CARD_CLOSED")
+
+                val CARD_PAUSED = of("CARD_PAUSED")
+
+                val DECLINED = of("DECLINED")
+
+                val FRAUD_ADVICE = of("FRAUD_ADVICE")
+
+                val IGNORED_TTL_EXPIRY = of("IGNORED_TTL_EXPIRY")
+
+                val INACTIVE_ACCOUNT = of("INACTIVE_ACCOUNT")
+
+                val INCORRECT_PIN = of("INCORRECT_PIN")
+
+                val INVALID_CARD_DETAILS = of("INVALID_CARD_DETAILS")
+
+                val INSUFFICIENT_FUNDS = of("INSUFFICIENT_FUNDS")
+
+                val INSUFFICIENT_FUNDS_PRELOAD = of("INSUFFICIENT_FUNDS_PRELOAD")
+
+                val INVALID_TRANSACTION = of("INVALID_TRANSACTION")
+
+                val MERCHANT_BLACKLIST = of("MERCHANT_BLACKLIST")
+
+                val ORIGINAL_NOT_FOUND = of("ORIGINAL_NOT_FOUND")
+
+                val PREVIOUSLY_COMPLETED = of("PREVIOUSLY_COMPLETED")
+
+                val SINGLE_USE_RECHARGED = of("SINGLE_USE_RECHARGED")
+
+                val SWITCH_INOPERATIVE_ADVICE = of("SWITCH_INOPERATIVE_ADVICE")
+
+                val UNAUTHORIZED_MERCHANT = of("UNAUTHORIZED_MERCHANT")
+
+                val UNKNOWN_HOST_TIMEOUT = of("UNKNOWN_HOST_TIMEOUT")
+
+                val USER_TRANSACTION_LIMIT = of("USER_TRANSACTION_LIMIT")
+
+                fun of(value: String) = DeclineResult(JsonField.of(value))
+            }
+
+            enum class Known {
+                ACCOUNT_STATE_TRANSACTION_FAIL,
+                APPROVED,
+                BANK_CONNECTION_ERROR,
+                BANK_NOT_VERIFIED,
+                CARD_CLOSED,
+                CARD_PAUSED,
+                DECLINED,
+                FRAUD_ADVICE,
+                IGNORED_TTL_EXPIRY,
+                INACTIVE_ACCOUNT,
+                INCORRECT_PIN,
+                INVALID_CARD_DETAILS,
+                INSUFFICIENT_FUNDS,
+                INSUFFICIENT_FUNDS_PRELOAD,
+                INVALID_TRANSACTION,
+                MERCHANT_BLACKLIST,
+                ORIGINAL_NOT_FOUND,
+                PREVIOUSLY_COMPLETED,
+                SINGLE_USE_RECHARGED,
+                SWITCH_INOPERATIVE_ADVICE,
+                UNAUTHORIZED_MERCHANT,
+                UNKNOWN_HOST_TIMEOUT,
+                USER_TRANSACTION_LIMIT,
+            }
+
+            enum class Value {
+                ACCOUNT_STATE_TRANSACTION_FAIL,
+                APPROVED,
+                BANK_CONNECTION_ERROR,
+                BANK_NOT_VERIFIED,
+                CARD_CLOSED,
+                CARD_PAUSED,
+                DECLINED,
+                FRAUD_ADVICE,
+                IGNORED_TTL_EXPIRY,
+                INACTIVE_ACCOUNT,
+                INCORRECT_PIN,
+                INVALID_CARD_DETAILS,
+                INSUFFICIENT_FUNDS,
+                INSUFFICIENT_FUNDS_PRELOAD,
+                INVALID_TRANSACTION,
+                MERCHANT_BLACKLIST,
+                ORIGINAL_NOT_FOUND,
+                PREVIOUSLY_COMPLETED,
+                SINGLE_USE_RECHARGED,
+                SWITCH_INOPERATIVE_ADVICE,
+                UNAUTHORIZED_MERCHANT,
+                UNKNOWN_HOST_TIMEOUT,
+                USER_TRANSACTION_LIMIT,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    ACCOUNT_STATE_TRANSACTION_FAIL -> Value.ACCOUNT_STATE_TRANSACTION_FAIL
+                    APPROVED -> Value.APPROVED
+                    BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
+                    BANK_NOT_VERIFIED -> Value.BANK_NOT_VERIFIED
+                    CARD_CLOSED -> Value.CARD_CLOSED
+                    CARD_PAUSED -> Value.CARD_PAUSED
+                    DECLINED -> Value.DECLINED
+                    FRAUD_ADVICE -> Value.FRAUD_ADVICE
+                    IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
+                    INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
+                    INCORRECT_PIN -> Value.INCORRECT_PIN
+                    INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
+                    INSUFFICIENT_FUNDS -> Value.INSUFFICIENT_FUNDS
+                    INSUFFICIENT_FUNDS_PRELOAD -> Value.INSUFFICIENT_FUNDS_PRELOAD
+                    INVALID_TRANSACTION -> Value.INVALID_TRANSACTION
+                    MERCHANT_BLACKLIST -> Value.MERCHANT_BLACKLIST
+                    ORIGINAL_NOT_FOUND -> Value.ORIGINAL_NOT_FOUND
+                    PREVIOUSLY_COMPLETED -> Value.PREVIOUSLY_COMPLETED
+                    SINGLE_USE_RECHARGED -> Value.SINGLE_USE_RECHARGED
+                    SWITCH_INOPERATIVE_ADVICE -> Value.SWITCH_INOPERATIVE_ADVICE
+                    UNAUTHORIZED_MERCHANT -> Value.UNAUTHORIZED_MERCHANT
+                    UNKNOWN_HOST_TIMEOUT -> Value.UNKNOWN_HOST_TIMEOUT
+                    USER_TRANSACTION_LIMIT -> Value.USER_TRANSACTION_LIMIT
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    ACCOUNT_STATE_TRANSACTION_FAIL -> Known.ACCOUNT_STATE_TRANSACTION_FAIL
+                    APPROVED -> Known.APPROVED
+                    BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
+                    BANK_NOT_VERIFIED -> Known.BANK_NOT_VERIFIED
+                    CARD_CLOSED -> Known.CARD_CLOSED
+                    CARD_PAUSED -> Known.CARD_PAUSED
+                    DECLINED -> Known.DECLINED
+                    FRAUD_ADVICE -> Known.FRAUD_ADVICE
+                    IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
+                    INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
+                    INCORRECT_PIN -> Known.INCORRECT_PIN
+                    INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
+                    INSUFFICIENT_FUNDS -> Known.INSUFFICIENT_FUNDS
+                    INSUFFICIENT_FUNDS_PRELOAD -> Known.INSUFFICIENT_FUNDS_PRELOAD
+                    INVALID_TRANSACTION -> Known.INVALID_TRANSACTION
+                    MERCHANT_BLACKLIST -> Known.MERCHANT_BLACKLIST
+                    ORIGINAL_NOT_FOUND -> Known.ORIGINAL_NOT_FOUND
+                    PREVIOUSLY_COMPLETED -> Known.PREVIOUSLY_COMPLETED
+                    SINGLE_USE_RECHARGED -> Known.SINGLE_USE_RECHARGED
+                    SWITCH_INOPERATIVE_ADVICE -> Known.SWITCH_INOPERATIVE_ADVICE
+                    UNAUTHORIZED_MERCHANT -> Known.UNAUTHORIZED_MERCHANT
+                    UNKNOWN_HOST_TIMEOUT -> Known.UNKNOWN_HOST_TIMEOUT
+                    USER_TRANSACTION_LIMIT -> Known.USER_TRANSACTION_LIMIT
+                    else -> throw LithicInvalidDataException("Unknown DeclineResult: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is DeclineResult && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
         @JsonDeserialize(builder = RuleResult.Builder::class)
         @NoAutoDetect
         class RuleResult
@@ -6271,6 +6131,7 @@ private constructor(
              */
             fun authRuleToken(): String? = authRuleToken.getNullable("auth_rule_token")
 
+            /** The detailed_result associated with this rule's decline. */
             fun result(): DetailedResult = result.getRequired("result")
 
             /** The name for the rule, if any was configured. */
@@ -6287,6 +6148,7 @@ private constructor(
              */
             @JsonProperty("auth_rule_token") @ExcludeMissing fun _authRuleToken() = authRuleToken
 
+            /** The detailed_result associated with this rule's decline. */
             @JsonProperty("result") @ExcludeMissing fun _result() = result
 
             /** The name for the rule, if any was configured. */
@@ -6353,8 +6215,10 @@ private constructor(
                     this.authRuleToken = authRuleToken
                 }
 
+                /** The detailed_result associated with this rule's decline. */
                 fun result(result: DetailedResult) = result(JsonField.of(result))
 
+                /** The detailed_result associated with this rule's decline. */
                 @JsonProperty("result")
                 @ExcludeMissing
                 fun result(result: JsonField<DetailedResult>) = apply { this.result = result }
@@ -6799,6 +6663,135 @@ private constructor(
 
             override fun toString() =
                 "RuleResult{authRuleToken=$authRuleToken, result=$result, name=$name, explanation=$explanation, additionalProperties=$additionalProperties}"
+        }
+
+        class Type
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val AUTHORIZATION = of("AUTHORIZATION")
+
+                val AUTHORIZATION_ADVICE = of("AUTHORIZATION_ADVICE")
+
+                val AUTHORIZATION_EXPIRY = of("AUTHORIZATION_EXPIRY")
+
+                val AUTHORIZATION_REVERSAL = of("AUTHORIZATION_REVERSAL")
+
+                val BALANCE_INQUIRY = of("BALANCE_INQUIRY")
+
+                val CLEARING = of("CLEARING")
+
+                val CORRECTION_CREDIT = of("CORRECTION_CREDIT")
+
+                val CORRECTION_DEBIT = of("CORRECTION_DEBIT")
+
+                val CREDIT_AUTHORIZATION = of("CREDIT_AUTHORIZATION")
+
+                val CREDIT_AUTHORIZATION_ADVICE = of("CREDIT_AUTHORIZATION_ADVICE")
+
+                val FINANCIAL_AUTHORIZATION = of("FINANCIAL_AUTHORIZATION")
+
+                val FINANCIAL_CREDIT_AUTHORIZATION = of("FINANCIAL_CREDIT_AUTHORIZATION")
+
+                val RETURN = of("RETURN")
+
+                val RETURN_REVERSAL = of("RETURN_REVERSAL")
+
+                fun of(value: String) = Type(JsonField.of(value))
+            }
+
+            enum class Known {
+                AUTHORIZATION,
+                AUTHORIZATION_ADVICE,
+                AUTHORIZATION_EXPIRY,
+                AUTHORIZATION_REVERSAL,
+                BALANCE_INQUIRY,
+                CLEARING,
+                CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
+                CREDIT_AUTHORIZATION,
+                CREDIT_AUTHORIZATION_ADVICE,
+                FINANCIAL_AUTHORIZATION,
+                FINANCIAL_CREDIT_AUTHORIZATION,
+                RETURN,
+                RETURN_REVERSAL,
+            }
+
+            enum class Value {
+                AUTHORIZATION,
+                AUTHORIZATION_ADVICE,
+                AUTHORIZATION_EXPIRY,
+                AUTHORIZATION_REVERSAL,
+                BALANCE_INQUIRY,
+                CLEARING,
+                CORRECTION_CREDIT,
+                CORRECTION_DEBIT,
+                CREDIT_AUTHORIZATION,
+                CREDIT_AUTHORIZATION_ADVICE,
+                FINANCIAL_AUTHORIZATION,
+                FINANCIAL_CREDIT_AUTHORIZATION,
+                RETURN,
+                RETURN_REVERSAL,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    AUTHORIZATION -> Value.AUTHORIZATION
+                    AUTHORIZATION_ADVICE -> Value.AUTHORIZATION_ADVICE
+                    AUTHORIZATION_EXPIRY -> Value.AUTHORIZATION_EXPIRY
+                    AUTHORIZATION_REVERSAL -> Value.AUTHORIZATION_REVERSAL
+                    BALANCE_INQUIRY -> Value.BALANCE_INQUIRY
+                    CLEARING -> Value.CLEARING
+                    CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
+                    CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
+                    CREDIT_AUTHORIZATION_ADVICE -> Value.CREDIT_AUTHORIZATION_ADVICE
+                    FINANCIAL_AUTHORIZATION -> Value.FINANCIAL_AUTHORIZATION
+                    FINANCIAL_CREDIT_AUTHORIZATION -> Value.FINANCIAL_CREDIT_AUTHORIZATION
+                    RETURN -> Value.RETURN
+                    RETURN_REVERSAL -> Value.RETURN_REVERSAL
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    AUTHORIZATION -> Known.AUTHORIZATION
+                    AUTHORIZATION_ADVICE -> Known.AUTHORIZATION_ADVICE
+                    AUTHORIZATION_EXPIRY -> Known.AUTHORIZATION_EXPIRY
+                    AUTHORIZATION_REVERSAL -> Known.AUTHORIZATION_REVERSAL
+                    BALANCE_INQUIRY -> Known.BALANCE_INQUIRY
+                    CLEARING -> Known.CLEARING
+                    CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
+                    CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
+                    CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION
+                    CREDIT_AUTHORIZATION_ADVICE -> Known.CREDIT_AUTHORIZATION_ADVICE
+                    FINANCIAL_AUTHORIZATION -> Known.FINANCIAL_AUTHORIZATION
+                    FINANCIAL_CREDIT_AUTHORIZATION -> Known.FINANCIAL_CREDIT_AUTHORIZATION
+                    RETURN -> Known.RETURN
+                    RETURN_REVERSAL -> Known.RETURN_REVERSAL
+                    else -> throw LithicInvalidDataException("Unknown Type: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {
