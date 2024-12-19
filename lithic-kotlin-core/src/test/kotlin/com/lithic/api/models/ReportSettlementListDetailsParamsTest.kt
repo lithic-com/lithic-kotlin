@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.http.QueryParams
-import com.lithic.api.models.*
 import java.time.LocalDate
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +12,7 @@ class ReportSettlementListDetailsParamsTest {
     @Test
     fun createReportSettlementListDetailsParams() {
         ReportSettlementListDetailsParams.builder()
-            .reportDate(LocalDate.parse("2019-12-27"))
+            .reportDate(LocalDate.parse("2023-09-01"))
             .endingBefore("ending_before")
             .pageSize(1L)
             .startingAfter("starting_after")
@@ -24,7 +23,7 @@ class ReportSettlementListDetailsParamsTest {
     fun getQueryParams() {
         val params =
             ReportSettlementListDetailsParams.builder()
-                .reportDate(LocalDate.parse("2019-12-27"))
+                .reportDate(LocalDate.parse("2023-09-01"))
                 .endingBefore("ending_before")
                 .pageSize(1L)
                 .startingAfter("starting_after")
@@ -40,7 +39,7 @@ class ReportSettlementListDetailsParamsTest {
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             ReportSettlementListDetailsParams.builder()
-                .reportDate(LocalDate.parse("2019-12-27"))
+                .reportDate(LocalDate.parse("2023-09-01"))
                 .build()
         val expected = QueryParams.builder()
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
@@ -50,11 +49,11 @@ class ReportSettlementListDetailsParamsTest {
     fun getPathParam() {
         val params =
             ReportSettlementListDetailsParams.builder()
-                .reportDate(LocalDate.parse("2019-12-27"))
+                .reportDate(LocalDate.parse("2023-09-01"))
                 .build()
         assertThat(params).isNotNull
         // path param "reportDate"
-        assertThat(params.getPathParam(0)).isEqualTo("2019-12-27")
+        assertThat(params.getPathParam(0)).isEqualTo("2023-09-01")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

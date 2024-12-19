@@ -21,7 +21,7 @@ class ShippingAddressTest {
                 .address2("Unit 25A")
                 .email("johnny@appleseed.com")
                 .line2Text("The Bluth Company")
-                .phoneNumber("+12124007676")
+                .phoneNumber("+15555555555")
                 .build()
         assertThat(shippingAddress).isNotNull
         assertThat(shippingAddress.address1()).isEqualTo("5 Broad Street")
@@ -34,6 +34,6 @@ class ShippingAddressTest {
         assertThat(shippingAddress.address2()).isEqualTo("Unit 25A")
         assertThat(shippingAddress.email()).isEqualTo("johnny@appleseed.com")
         assertThat(shippingAddress.line2Text()).isEqualTo("The Bluth Company")
-        assertThat(shippingAddress.phoneNumber()).isEqualTo("+12124007676")
+        assertThat(shippingAddress.phoneNumber()).isEqualTo("+15555555555")
     }
 }

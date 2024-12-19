@@ -5,13 +5,11 @@ package com.lithic.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
@@ -262,35 +260,23 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ARBITRATION = Status(JsonField.of("ARBITRATION"))
+            val ARBITRATION = of("ARBITRATION")
 
-            val CASE_CLOSED = Status(JsonField.of("CASE_CLOSED"))
+            val CASE_CLOSED = of("CASE_CLOSED")
 
-            val CASE_WON = Status(JsonField.of("CASE_WON"))
+            val CASE_WON = of("CASE_WON")
 
-            val NEW = Status(JsonField.of("NEW"))
+            val NEW = of("NEW")
 
-            val PENDING_CUSTOMER = Status(JsonField.of("PENDING_CUSTOMER"))
+            val PENDING_CUSTOMER = of("PENDING_CUSTOMER")
 
-            val PREARBITRATION = Status(JsonField.of("PREARBITRATION"))
+            val PREARBITRATION = of("PREARBITRATION")
 
-            val REPRESENTMENT = Status(JsonField.of("REPRESENTMENT"))
+            val REPRESENTMENT = of("REPRESENTMENT")
 
-            val SUBMITTED = Status(JsonField.of("SUBMITTED"))
+            val SUBMITTED = of("SUBMITTED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -345,6 +331,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

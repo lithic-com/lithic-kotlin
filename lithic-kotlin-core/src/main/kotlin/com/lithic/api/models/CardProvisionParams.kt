@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class CardProvisionParams
@@ -468,25 +467,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is DigitalWallet && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val APPLE_PAY = DigitalWallet(JsonField.of("APPLE_PAY"))
+            val APPLE_PAY = of("APPLE_PAY")
 
-            val GOOGLE_PAY = DigitalWallet(JsonField.of("GOOGLE_PAY"))
+            val GOOGLE_PAY = of("GOOGLE_PAY")
 
-            val SAMSUNG_PAY = DigitalWallet(JsonField.of("SAMSUNG_PAY"))
+            val SAMSUNG_PAY = of("SAMSUNG_PAY")
 
             fun of(value: String) = DigitalWallet(JsonField.of(value))
         }
@@ -521,6 +508,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is DigitalWallet && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

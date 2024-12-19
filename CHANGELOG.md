@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.74.0 (2024-12-19)
+
+Full Changelog: [v0.73.0...v0.74.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.73.0...v0.74.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** removes AccountHolder `resubmit` endpoint and `KYC_ADVANCED` workflow ([#405](https://github.com/lithic-com/lithic-kotlin/issues/405))
+
+### Features
+
+* **api:** adds EventRuleResult to Transaction Events ([#393](https://github.com/lithic-com/lithic-kotlin/issues/393)) ([ba514e8](https://github.com/lithic-com/lithic-kotlin/commit/ba514e86059eb8ded49746a701e80082245b1807))
+* **api:** removes AccountHolder `resubmit` endpoint and `KYC_ADVANCED` workflow ([#405](https://github.com/lithic-com/lithic-kotlin/issues/405)) ([e8203a1](https://github.com/lithic-com/lithic-kotlin/commit/e8203a156077e99f725e3a1f4dbbb316447436db))
+
+
+### Chores
+
+* **api:** new ConvertPhysical endpoint to convert a virtual card to a physical card ([#404](https://github.com/lithic-com/lithic-kotlin/issues/404)) ([e48a2a7](https://github.com/lithic-com/lithic-kotlin/commit/e48a2a747480f0e66cfbef55e8da857ae046a2bf))
+* **docs:** fix unused import ([#409](https://github.com/lithic-com/lithic-kotlin/issues/409)) ([42e65a0](https://github.com/lithic-com/lithic-kotlin/commit/42e65a0360ffa80ab9bf74759a03afd9550a9b32))
+* **docs:** update readme ([#407](https://github.com/lithic-com/lithic-kotlin/issues/407)) ([e3d68a6](https://github.com/lithic-com/lithic-kotlin/commit/e3d68a62b1878d95070fbf3c6a91079476e9a2d0))
+* **internal:** remove unused and expand used wildcard imports ([#401](https://github.com/lithic-com/lithic-kotlin/issues/401)) ([6a3a4b4](https://github.com/lithic-com/lithic-kotlin/commit/6a3a4b4d99da8f89bd9d36f742c6acdb4328bd18))
+* **internal:** remove unused and expand used wildcard imports ([#403](https://github.com/lithic-com/lithic-kotlin/issues/403)) ([646cd0a](https://github.com/lithic-com/lithic-kotlin/commit/646cd0a437ae051dc613aa1d1155f03e6308c0e3))
+* **internal:** remove unused imports ([#398](https://github.com/lithic-com/lithic-kotlin/issues/398)) ([743d7ca](https://github.com/lithic-com/lithic-kotlin/commit/743d7cab12b35957d0e4801f0c1512d355942e26))
+* **test:** remove unused imports ([#399](https://github.com/lithic-com/lithic-kotlin/issues/399)) ([8cd6e20](https://github.com/lithic-com/lithic-kotlin/commit/8cd6e2077a70ee006842c3b896e43e308f4adae2))
+* **test:** use `JsonValue` instead of `JsonString` ([#400](https://github.com/lithic-com/lithic-kotlin/issues/400)) ([e57643e](https://github.com/lithic-com/lithic-kotlin/commit/e57643e1c20260239a58ab8a6ceea11bfd53222a))
+* update example values in tests and docs ([#395](https://github.com/lithic-com/lithic-kotlin/issues/395)) ([3324a94](https://github.com/lithic-com/lithic-kotlin/commit/3324a940b95c795a4cca9dcb5410838abf41eacd))
+* update parameter examples in tests and docs ([#406](https://github.com/lithic-com/lithic-kotlin/issues/406)) ([12b741c](https://github.com/lithic-com/lithic-kotlin/commit/12b741c5aa7d0ba0945c6824ca718e19de78eb57))
+
+
+### Styles
+
+* **internal:** make enum value definitions less verbose ([#396](https://github.com/lithic-com/lithic-kotlin/issues/396)) ([bfbee37](https://github.com/lithic-com/lithic-kotlin/commit/bfbee3793f8da4bade2ce84c78e3ac2373b84d91))
+* **internal:** move enum identity methods to bottom of class ([#397](https://github.com/lithic-com/lithic-kotlin/issues/397)) ([c5cabdd](https://github.com/lithic-com/lithic-kotlin/commit/c5cabdde4180aaa357cb7a55aa8a9b9dbf75ba16))
+
 ## 0.73.0 (2024-11-26)
 
 Full Changelog: [v0.72.0...v0.73.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.72.0...v0.73.0)

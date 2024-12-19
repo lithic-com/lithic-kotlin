@@ -4,8 +4,22 @@ package com.lithic.api.services.blocking
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.*
+import com.lithic.api.models.CardConvertPhysicalParams
+import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.CardEmbedParams
+import com.lithic.api.models.CardGetEmbedHtmlParams
+import com.lithic.api.models.CardGetEmbedUrlParams
 import com.lithic.api.models.CardListParams
+import com.lithic.api.models.CardProvisionParams
+import com.lithic.api.models.CardReissueParams
+import com.lithic.api.models.CardRenewParams
+import com.lithic.api.models.CardRetrieveParams
+import com.lithic.api.models.CardRetrieveSpendLimitsParams
+import com.lithic.api.models.CardSearchByPanParams
+import com.lithic.api.models.CardUpdateParams
+import com.lithic.api.models.Carrier
+import com.lithic.api.models.ShippingAddress
+import com.lithic.api.models.SpendLimitDuration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -48,11 +62,11 @@ class CardServiceTest {
                             .address2("Unit 25A")
                             .email("johnny@appleseed.com")
                             .line2Text("The Bluth Company")
-                            .phoneNumber("+12124007676")
+                            .phoneNumber("+15555555555")
                             .build()
                     )
                     .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                    .spendLimit(0L)
+                    .spendLimit(1000L)
                     .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                     .state(CardCreateParams.State.OPEN)
                     .build()
@@ -92,10 +106,10 @@ class CardServiceTest {
                 CardUpdateParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .memo("New Card")
+                    .memo("Updated Name")
                     .pin("pin")
                     .pinStatus(CardUpdateParams.PinStatus.OK)
-                    .spendLimit(0L)
+                    .spendLimit(100L)
                     .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                     .state(CardUpdateParams.State.CLOSED)
                     .build()
@@ -115,6 +129,44 @@ class CardServiceTest {
         val response = cardService.list(CardListParams.builder().build())
         println(response)
         response.data().forEach { it.validate() }
+    }
+
+    @Test
+    fun callConvertPhysical() {
+        val client =
+            LithicOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My Lithic API Key")
+                .build()
+        val cardService = client.cards()
+        val card =
+            cardService.convertPhysical(
+                CardConvertPhysicalParams.builder()
+                    .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .shippingAddress(
+                        ShippingAddress.builder()
+                            .address1("5 Broad Street")
+                            .city("NEW YORK")
+                            .country("USA")
+                            .firstName("Janet")
+                            .lastName("Yellen")
+                            .postalCode("10001")
+                            .state("NY")
+                            .address2("Unit 5A")
+                            .email("johnny@appleseed.com")
+                            .line2Text("The Bluth Company")
+                            .phoneNumber("+15555555555")
+                            .build()
+                    )
+                    .carrier(
+                        Carrier.builder().qrCodeUrl("https://lithic.com/activate-card/1").build()
+                    )
+                    .productId("100")
+                    .shippingMethod(CardConvertPhysicalParams.ShippingMethod._2_DAY)
+                    .build()
+            )
+        println(card)
+        card.validate()
     }
 
     @Test
@@ -169,21 +221,23 @@ class CardServiceTest {
             cardService.reissue(
                 CardReissueParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .carrier(Carrier.builder().qrCodeUrl("qr_code_url").build())
-                    .productId("product_id")
+                    .carrier(
+                        Carrier.builder().qrCodeUrl("https://lithic.com/activate-card/1").build()
+                    )
+                    .productId("100")
                     .shippingAddress(
                         ShippingAddress.builder()
                             .address1("5 Broad Street")
                             .city("NEW YORK")
                             .country("USA")
-                            .firstName("Michael")
-                            .lastName("Bluth")
-                            .postalCode("10001-1809")
+                            .firstName("Janet")
+                            .lastName("Yellen")
+                            .postalCode("10001")
                             .state("NY")
-                            .address2("Unit 25A")
+                            .address2("Unit 5A")
                             .email("johnny@appleseed.com")
                             .line2Text("The Bluth Company")
-                            .phoneNumber("+12124007676")
+                            .phoneNumber("+15555555555")
                             .build()
                     )
                     .shippingMethod(CardReissueParams.ShippingMethod._2_DAY)
@@ -210,20 +264,22 @@ class CardServiceTest {
                             .address1("5 Broad Street")
                             .city("NEW YORK")
                             .country("USA")
-                            .firstName("Michael")
-                            .lastName("Bluth")
-                            .postalCode("10001-1809")
+                            .firstName("Janet")
+                            .lastName("Yellen")
+                            .postalCode("10001")
                             .state("NY")
-                            .address2("Unit 25A")
+                            .address2("Unit 5A")
                             .email("johnny@appleseed.com")
                             .line2Text("The Bluth Company")
-                            .phoneNumber("+12124007676")
+                            .phoneNumber("+15555555555")
                             .build()
                     )
-                    .carrier(Carrier.builder().qrCodeUrl("qr_code_url").build())
+                    .carrier(
+                        Carrier.builder().qrCodeUrl("https://lithic.com/activate-card/1").build()
+                    )
                     .expMonth("06")
                     .expYear("2027")
-                    .productId("product_id")
+                    .productId("100")
                     .shippingMethod(CardRenewParams.ShippingMethod._2_DAY)
                     .build()
             )

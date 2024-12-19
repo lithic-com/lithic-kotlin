@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.time.LocalDate
 import java.util.Objects
 
@@ -342,23 +341,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ExternalPaymentProgressTo && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val SETTLED = ExternalPaymentProgressTo(JsonField.of("SETTLED"))
+            val SETTLED = of("SETTLED")
 
-            val RELEASED = ExternalPaymentProgressTo(JsonField.of("RELEASED"))
+            val RELEASED = of("RELEASED")
 
             fun of(value: String) = ExternalPaymentProgressTo(JsonField.of(value))
         }
@@ -390,6 +377,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ExternalPaymentProgressTo && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

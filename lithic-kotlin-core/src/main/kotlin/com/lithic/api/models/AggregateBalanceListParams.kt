@@ -5,12 +5,10 @@ package com.lithic.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class AggregateBalanceListParams
@@ -176,25 +174,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is FinancialAccountType && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ISSUING = FinancialAccountType(JsonField.of("ISSUING"))
+            val ISSUING = of("ISSUING")
 
-            val OPERATING = FinancialAccountType(JsonField.of("OPERATING"))
+            val OPERATING = of("OPERATING")
 
-            val RESERVE = FinancialAccountType(JsonField.of("RESERVE"))
+            val RESERVE = of("RESERVE")
 
             fun of(value: String) = FinancialAccountType(JsonField.of(value))
         }
@@ -229,6 +215,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is FinancialAccountType && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

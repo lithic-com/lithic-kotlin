@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class CardCreateParams
@@ -195,8 +194,8 @@ constructor(
         @JsonProperty("memo") fun memo(): String? = memo
 
         /**
-         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+         * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
         @JsonProperty("pin") fun pin(): String? = pin
 
@@ -218,8 +217,9 @@ constructor(
         fun replacementAccountToken(): String? = replacementAccountToken
 
         /**
-         * Only applicable to cards of type `PHYSICAL`. Globally unique identifier for the card that
-         * this physical card will replace.
+         * Globally unique identifier for the card that this card will replace. If the card type is
+         * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
+         * will be replaced by a `VIRTUAL` card.
          */
         @JsonProperty("replacement_for") fun replacementFor(): String? = replacementFor
 
@@ -392,9 +392,8 @@ constructor(
             @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
 
             /**
-             * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
-             * `VIRTUAL`. See
-             * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+             * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`.
+             * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
             @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
 
@@ -419,8 +418,9 @@ constructor(
             }
 
             /**
-             * Only applicable to cards of type `PHYSICAL`. Globally unique identifier for the card
-             * that this physical card will replace.
+             * Globally unique identifier for the card that this card will replace. If the card type
+             * is `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL`
+             * it will be replaced by a `VIRTUAL` card.
              */
             @JsonProperty("replacement_for")
             fun replacementFor(replacementFor: String) = apply {
@@ -657,8 +657,8 @@ constructor(
         fun memo(memo: String) = apply { this.memo = memo }
 
         /**
-         * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
-         * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+         * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
+         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
         fun pin(pin: String) = apply { this.pin = pin }
 
@@ -681,8 +681,9 @@ constructor(
         }
 
         /**
-         * Only applicable to cards of type `PHYSICAL`. Globally unique identifier for the card that
-         * this physical card will replace.
+         * Globally unique identifier for the card that this card will replace. If the card type is
+         * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
+         * will be replaced by a `VIRTUAL` card.
          */
         fun replacementFor(replacementFor: String) = apply { this.replacementFor = replacementFor }
 
@@ -889,31 +890,19 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val MERCHANT_LOCKED = Type(JsonField.of("MERCHANT_LOCKED"))
+            val MERCHANT_LOCKED = of("MERCHANT_LOCKED")
 
-            val PHYSICAL = Type(JsonField.of("PHYSICAL"))
+            val PHYSICAL = of("PHYSICAL")
 
-            val SINGLE_USE = Type(JsonField.of("SINGLE_USE"))
+            val SINGLE_USE = of("SINGLE_USE")
 
-            val VIRTUAL = Type(JsonField.of("VIRTUAL"))
+            val VIRTUAL = of("VIRTUAL")
 
-            val UNLOCKED = Type(JsonField.of("UNLOCKED"))
+            val UNLOCKED = of("UNLOCKED")
 
-            val DIGITAL_WALLET = Type(JsonField.of("DIGITAL_WALLET"))
+            val DIGITAL_WALLET = of("DIGITAL_WALLET")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -960,6 +949,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class ShippingMethod
@@ -970,31 +971,19 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ShippingMethod && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val _2_DAY = ShippingMethod(JsonField.of("2_DAY"))
+            val _2_DAY = of("2_DAY")
 
-            val EXPEDITED = ShippingMethod(JsonField.of("EXPEDITED"))
+            val EXPEDITED = of("EXPEDITED")
 
-            val EXPRESS = ShippingMethod(JsonField.of("EXPRESS"))
+            val EXPRESS = of("EXPRESS")
 
-            val PRIORITY = ShippingMethod(JsonField.of("PRIORITY"))
+            val PRIORITY = of("PRIORITY")
 
-            val STANDARD = ShippingMethod(JsonField.of("STANDARD"))
+            val STANDARD = of("STANDARD")
 
-            val STANDARD_WITH_TRACKING = ShippingMethod(JsonField.of("STANDARD_WITH_TRACKING"))
+            val STANDARD_WITH_TRACKING = of("STANDARD_WITH_TRACKING")
 
             fun of(value: String) = ShippingMethod(JsonField.of(value))
         }
@@ -1041,6 +1030,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ShippingMethod && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class State
@@ -1051,23 +1052,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is State && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val OPEN = State(JsonField.of("OPEN"))
+            val OPEN = of("OPEN")
 
-            val PAUSED = State(JsonField.of("PAUSED"))
+            val PAUSED = of("PAUSED")
 
             fun of(value: String) = State(JsonField.of(value))
         }
@@ -1098,6 +1087,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is State && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

@@ -50,8 +50,6 @@ private constructor(
      * KYC and KYB evaluation states.
      *
      * Note:
-     * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-     *   workflow.
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
     fun status(): Status = status.getRequired("status")
@@ -60,8 +58,8 @@ private constructor(
     fun statusReasons(): List<StatusReasons> = statusReasons.getRequired("status_reasons")
 
     /**
-     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
-     * the account holder to be approved.
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
      */
     fun requiredDocuments(): List<RequiredDocument>? =
         requiredDocuments.getNullable("required_documents")
@@ -85,8 +83,6 @@ private constructor(
      * KYC and KYB evaluation states.
      *
      * Note:
-     * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-     *   workflow.
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
@@ -95,8 +91,8 @@ private constructor(
     @JsonProperty("status_reasons") @ExcludeMissing fun _statusReasons() = statusReasons
 
     /**
-     * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required for
-     * the account holder to be approved.
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
      */
     @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
 
@@ -185,8 +181,6 @@ private constructor(
          * KYC and KYB evaluation states.
          *
          * Note:
-         * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-         *   workflow.
          * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
          */
         fun status(status: Status) = status(JsonField.of(status))
@@ -195,8 +189,6 @@ private constructor(
          * KYC and KYB evaluation states.
          *
          * Note:
-         * - `PENDING_RESUBMIT` and `PENDING_DOCUMENT` are only applicable for the `KYC_ADVANCED`
-         *   workflow.
          * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
          */
         @JsonProperty("status")
@@ -215,15 +207,15 @@ private constructor(
         }
 
         /**
-         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
-         * for the account holder to be approved.
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
          */
         fun requiredDocuments(requiredDocuments: List<RequiredDocument>) =
             requiredDocuments(JsonField.of(requiredDocuments))
 
         /**
-         * Only present for "KYB_BASIC" and "KYC_ADVANCED" workflows. A list of documents required
-         * for the account holder to be approved.
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
          */
         @JsonProperty("required_documents")
         @ExcludeMissing
@@ -274,29 +266,17 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ACCEPTED = Status(JsonField.of("ACCEPTED"))
+            val ACCEPTED = of("ACCEPTED")
 
-            val PENDING_REVIEW = Status(JsonField.of("PENDING_REVIEW"))
+            val PENDING_REVIEW = of("PENDING_REVIEW")
 
-            val PENDING_DOCUMENT = Status(JsonField.of("PENDING_DOCUMENT"))
+            val PENDING_DOCUMENT = of("PENDING_DOCUMENT")
 
-            val PENDING_RESUBMIT = Status(JsonField.of("PENDING_RESUBMIT"))
+            val PENDING_RESUBMIT = of("PENDING_RESUBMIT")
 
-            val REJECTED = Status(JsonField.of("REJECTED"))
+            val REJECTED = of("REJECTED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -339,6 +319,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class StatusReasons
@@ -349,83 +341,67 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is StatusReasons && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ADDRESS_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("ADDRESS_VERIFICATION_FAILURE"))
+            val ADDRESS_VERIFICATION_FAILURE = of("ADDRESS_VERIFICATION_FAILURE")
 
-            val AGE_THRESHOLD_FAILURE = StatusReasons(JsonField.of("AGE_THRESHOLD_FAILURE"))
+            val AGE_THRESHOLD_FAILURE = of("AGE_THRESHOLD_FAILURE")
 
-            val COMPLETE_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("COMPLETE_VERIFICATION_FAILURE"))
+            val COMPLETE_VERIFICATION_FAILURE = of("COMPLETE_VERIFICATION_FAILURE")
 
-            val DOB_VERIFICATION_FAILURE = StatusReasons(JsonField.of("DOB_VERIFICATION_FAILURE"))
+            val DOB_VERIFICATION_FAILURE = of("DOB_VERIFICATION_FAILURE")
 
-            val ID_VERIFICATION_FAILURE = StatusReasons(JsonField.of("ID_VERIFICATION_FAILURE"))
+            val ID_VERIFICATION_FAILURE = of("ID_VERIFICATION_FAILURE")
 
-            val MAX_DOCUMENT_ATTEMPTS = StatusReasons(JsonField.of("MAX_DOCUMENT_ATTEMPTS"))
+            val MAX_DOCUMENT_ATTEMPTS = of("MAX_DOCUMENT_ATTEMPTS")
 
-            val MAX_RESUBMISSION_ATTEMPTS = StatusReasons(JsonField.of("MAX_RESUBMISSION_ATTEMPTS"))
+            val MAX_RESUBMISSION_ATTEMPTS = of("MAX_RESUBMISSION_ATTEMPTS")
 
-            val NAME_VERIFICATION_FAILURE = StatusReasons(JsonField.of("NAME_VERIFICATION_FAILURE"))
+            val NAME_VERIFICATION_FAILURE = of("NAME_VERIFICATION_FAILURE")
 
-            val OTHER_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("OTHER_VERIFICATION_FAILURE"))
+            val OTHER_VERIFICATION_FAILURE = of("OTHER_VERIFICATION_FAILURE")
 
-            val RISK_THRESHOLD_FAILURE = StatusReasons(JsonField.of("RISK_THRESHOLD_FAILURE"))
+            val RISK_THRESHOLD_FAILURE = of("RISK_THRESHOLD_FAILURE")
 
-            val WATCHLIST_ALERT_FAILURE = StatusReasons(JsonField.of("WATCHLIST_ALERT_FAILURE"))
+            val WATCHLIST_ALERT_FAILURE = of("WATCHLIST_ALERT_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_ID_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_ID_VERIFICATION_FAILURE"))
+                of("PRIMARY_BUSINESS_ENTITY_ID_VERIFICATION_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_ADDRESS_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_ADDRESS_VERIFICATION_FAILURE"))
+                of("PRIMARY_BUSINESS_ENTITY_ADDRESS_VERIFICATION_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_NAME_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_NAME_VERIFICATION_FAILURE"))
+                of("PRIMARY_BUSINESS_ENTITY_NAME_VERIFICATION_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_BUSINESS_OFFICERS_NOT_MATCHED =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_BUSINESS_OFFICERS_NOT_MATCHED"))
+                of("PRIMARY_BUSINESS_ENTITY_BUSINESS_OFFICERS_NOT_MATCHED")
 
             val PRIMARY_BUSINESS_ENTITY_SOS_FILING_INACTIVE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_SOS_FILING_INACTIVE"))
+                of("PRIMARY_BUSINESS_ENTITY_SOS_FILING_INACTIVE")
 
             val PRIMARY_BUSINESS_ENTITY_SOS_NOT_MATCHED =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_SOS_NOT_MATCHED"))
+                of("PRIMARY_BUSINESS_ENTITY_SOS_NOT_MATCHED")
 
-            val PRIMARY_BUSINESS_ENTITY_CMRA_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_CMRA_FAILURE"))
+            val PRIMARY_BUSINESS_ENTITY_CMRA_FAILURE = of("PRIMARY_BUSINESS_ENTITY_CMRA_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_WATCHLIST_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_WATCHLIST_FAILURE"))
+                of("PRIMARY_BUSINESS_ENTITY_WATCHLIST_FAILURE")
 
             val PRIMARY_BUSINESS_ENTITY_REGISTERED_AGENT_FAILURE =
-                StatusReasons(JsonField.of("PRIMARY_BUSINESS_ENTITY_REGISTERED_AGENT_FAILURE"))
+                of("PRIMARY_BUSINESS_ENTITY_REGISTERED_AGENT_FAILURE")
 
             val CONTROL_PERSON_BLOCKLIST_ALERT_FAILURE =
-                StatusReasons(JsonField.of("CONTROL_PERSON_BLOCKLIST_ALERT_FAILURE"))
+                of("CONTROL_PERSON_BLOCKLIST_ALERT_FAILURE")
 
             val CONTROL_PERSON_ID_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("CONTROL_PERSON_ID_VERIFICATION_FAILURE"))
+                of("CONTROL_PERSON_ID_VERIFICATION_FAILURE")
 
             val CONTROL_PERSON_DOB_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("CONTROL_PERSON_DOB_VERIFICATION_FAILURE"))
+                of("CONTROL_PERSON_DOB_VERIFICATION_FAILURE")
 
             val CONTROL_PERSON_NAME_VERIFICATION_FAILURE =
-                StatusReasons(JsonField.of("CONTROL_PERSON_NAME_VERIFICATION_FAILURE"))
+                of("CONTROL_PERSON_NAME_VERIFICATION_FAILURE")
 
             fun of(value: String) = StatusReasons(JsonField.of(value))
         }
@@ -568,6 +544,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is StatusReasons && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

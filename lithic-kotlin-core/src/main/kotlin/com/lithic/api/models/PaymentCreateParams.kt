@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class PaymentCreateParams
@@ -456,23 +455,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Method && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ACH_NEXT_DAY = Method(JsonField.of("ACH_NEXT_DAY"))
+            val ACH_NEXT_DAY = of("ACH_NEXT_DAY")
 
-            val ACH_SAME_DAY = Method(JsonField.of("ACH_SAME_DAY"))
+            val ACH_SAME_DAY = of("ACH_SAME_DAY")
 
             fun of(value: String) = Method(JsonField.of(value))
         }
@@ -503,6 +490,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Method && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     @JsonDeserialize(builder = PaymentMethodRequestAttributes.Builder::class)
@@ -569,25 +568,13 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is SecCode && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val CCD = SecCode(JsonField.of("CCD"))
+                val CCD = of("CCD")
 
-                val PPD = SecCode(JsonField.of("PPD"))
+                val PPD = of("PPD")
 
-                val WEB = SecCode(JsonField.of("WEB"))
+                val WEB = of("WEB")
 
                 fun of(value: String) = SecCode(JsonField.of(value))
             }
@@ -622,6 +609,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is SecCode && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {
@@ -650,23 +649,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val COLLECTION = Type(JsonField.of("COLLECTION"))
+            val COLLECTION = of("COLLECTION")
 
-            val PAYMENT = Type(JsonField.of("PAYMENT"))
+            val PAYMENT = of("PAYMENT")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -697,6 +684,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

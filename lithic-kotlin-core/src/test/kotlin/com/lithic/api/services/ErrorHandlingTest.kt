@@ -4,17 +4,15 @@ package com.lithic.api.services
 
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.github.tomakehurst.wiremock.client.WireMock.anyUrl
-import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.post
-import com.github.tomakehurst.wiremock.client.WireMock.put
 import com.github.tomakehurst.wiremock.client.WireMock.status
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.core.JsonString
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.jsonMapper
 import com.lithic.api.errors.BadRequestException
@@ -27,7 +25,11 @@ import com.lithic.api.errors.RateLimitException
 import com.lithic.api.errors.UnauthorizedException
 import com.lithic.api.errors.UnexpectedStatusCodeException
 import com.lithic.api.errors.UnprocessableEntityException
-import com.lithic.api.models.*
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.Carrier
+import com.lithic.api.models.ShippingAddress
+import com.lithic.api.models.SpendLimitDuration
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -41,7 +43,7 @@ class ErrorHandlingTest {
     private val JSON_MAPPER: JsonMapper = jsonMapper()
 
     private val LITHIC_ERROR: LithicError =
-        LithicError.builder().putAdditionalProperty("key", JsonString.of("value")).build()
+        LithicError.builder().putAdditionalProperty("key", JsonValue.from("value")).build()
 
     private lateinit var client: LithicClient
 
@@ -83,11 +85,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -162,11 +164,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -210,11 +212,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -258,11 +260,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -306,11 +308,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -354,11 +356,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -406,11 +408,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -454,11 +456,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -502,11 +504,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -555,11 +557,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -602,11 +604,11 @@ class ErrorHandlingTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()

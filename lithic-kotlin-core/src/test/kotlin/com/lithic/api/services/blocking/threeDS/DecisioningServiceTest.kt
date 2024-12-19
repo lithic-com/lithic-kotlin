@@ -4,7 +4,12 @@ package com.lithic.api.services.blocking.threeDS
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.*
+import com.lithic.api.models.ChallengeResult
+import com.lithic.api.models.ThreeDSDecisioningChallengeResponseParams
+import com.lithic.api.models.ThreeDSDecisioningRetrieveSecretParams
+import com.lithic.api.models.ThreeDSDecisioningRotateSecretParams
+import com.lithic.api.models.ThreeDSDecisioningSimulateChallengeParams
+import com.lithic.api.models.ThreeDSDecisioningSimulateChallengeResponseParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -65,7 +70,7 @@ class DecisioningServiceTest {
         val decisioningSimulateChallengeResponse =
             decisioningService.simulateChallenge(
                 ThreeDSDecisioningSimulateChallengeParams.builder()
-                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .token("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
                     .build()
             )
         println(decisioningSimulateChallengeResponse)

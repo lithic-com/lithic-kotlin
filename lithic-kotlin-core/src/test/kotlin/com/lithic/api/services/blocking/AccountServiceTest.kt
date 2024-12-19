@@ -4,8 +4,10 @@ package com.lithic.api.services.blocking
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.*
 import com.lithic.api.models.AccountListParams
+import com.lithic.api.models.AccountRetrieveParams
+import com.lithic.api.models.AccountRetrieveSpendLimitsParams
+import com.lithic.api.models.AccountUpdateParams
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -44,7 +46,7 @@ class AccountServiceTest {
             accountService.update(
                 AccountUpdateParams.builder()
                     .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .dailySpendLimit(0L)
+                    .dailySpendLimit(1000L)
                     .lifetimeSpendLimit(0L)
                     .monthlySpendLimit(0L)
                     .state(AccountUpdateParams.State.ACTIVE)

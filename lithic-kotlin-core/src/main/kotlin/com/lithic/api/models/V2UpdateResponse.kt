@@ -34,10 +34,12 @@ private constructor(
     private val state: JsonField<AuthRuleState>,
     private val programLevel: JsonField<Boolean>,
     private val cardTokens: JsonField<List<String>>,
+    private val excludedCardTokens: JsonField<List<String>>,
     private val accountTokens: JsonField<List<String>>,
     private val type: JsonField<AuthRuleType>,
     private val currentVersion: JsonField<CurrentVersion>,
     private val draftVersion: JsonField<DraftVersion>,
+    private val name: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -55,6 +57,9 @@ private constructor(
     /** Card tokens to which the Auth Rule applies. */
     fun cardTokens(): List<String> = cardTokens.getRequired("card_tokens")
 
+    /** Card tokens to which the Auth Rule does not apply. */
+    fun excludedCardTokens(): List<String>? = excludedCardTokens.getNullable("excluded_card_tokens")
+
     /** Account tokens to which the Auth Rule applies. */
     fun accountTokens(): List<String> = accountTokens.getRequired("account_tokens")
 
@@ -64,6 +69,9 @@ private constructor(
     fun currentVersion(): CurrentVersion? = currentVersion.getNullable("current_version")
 
     fun draftVersion(): DraftVersion? = draftVersion.getNullable("draft_version")
+
+    /** Auth Rule Name */
+    fun name(): String? = name.getNullable("name")
 
     /** Auth Rule Token */
     @JsonProperty("token") @ExcludeMissing fun _token() = token
@@ -77,6 +85,11 @@ private constructor(
     /** Card tokens to which the Auth Rule applies. */
     @JsonProperty("card_tokens") @ExcludeMissing fun _cardTokens() = cardTokens
 
+    /** Card tokens to which the Auth Rule does not apply. */
+    @JsonProperty("excluded_card_tokens")
+    @ExcludeMissing
+    fun _excludedCardTokens() = excludedCardTokens
+
     /** Account tokens to which the Auth Rule applies. */
     @JsonProperty("account_tokens") @ExcludeMissing fun _accountTokens() = accountTokens
 
@@ -86,6 +99,9 @@ private constructor(
     @JsonProperty("current_version") @ExcludeMissing fun _currentVersion() = currentVersion
 
     @JsonProperty("draft_version") @ExcludeMissing fun _draftVersion() = draftVersion
+
+    /** Auth Rule Name */
+    @JsonProperty("name") @ExcludeMissing fun _name() = name
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -97,10 +113,12 @@ private constructor(
             state()
             programLevel()
             cardTokens()
+            excludedCardTokens()
             accountTokens()
             type()
             currentVersion()?.validate()
             draftVersion()?.validate()
+            name()
             validated = true
         }
     }
@@ -118,10 +136,12 @@ private constructor(
         private var state: JsonField<AuthRuleState> = JsonMissing.of()
         private var programLevel: JsonField<Boolean> = JsonMissing.of()
         private var cardTokens: JsonField<List<String>> = JsonMissing.of()
+        private var excludedCardTokens: JsonField<List<String>> = JsonMissing.of()
         private var accountTokens: JsonField<List<String>> = JsonMissing.of()
         private var type: JsonField<AuthRuleType> = JsonMissing.of()
         private var currentVersion: JsonField<CurrentVersion> = JsonMissing.of()
         private var draftVersion: JsonField<DraftVersion> = JsonMissing.of()
+        private var name: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(v2UpdateResponse: V2UpdateResponse) = apply {
@@ -129,10 +149,12 @@ private constructor(
             this.state = v2UpdateResponse.state
             this.programLevel = v2UpdateResponse.programLevel
             this.cardTokens = v2UpdateResponse.cardTokens
+            this.excludedCardTokens = v2UpdateResponse.excludedCardTokens
             this.accountTokens = v2UpdateResponse.accountTokens
             this.type = v2UpdateResponse.type
             this.currentVersion = v2UpdateResponse.currentVersion
             this.draftVersion = v2UpdateResponse.draftVersion
+            this.name = v2UpdateResponse.name
             additionalProperties(v2UpdateResponse.additionalProperties)
         }
 
@@ -170,6 +192,17 @@ private constructor(
         @ExcludeMissing
         fun cardTokens(cardTokens: JsonField<List<String>>) = apply { this.cardTokens = cardTokens }
 
+        /** Card tokens to which the Auth Rule does not apply. */
+        fun excludedCardTokens(excludedCardTokens: List<String>) =
+            excludedCardTokens(JsonField.of(excludedCardTokens))
+
+        /** Card tokens to which the Auth Rule does not apply. */
+        @JsonProperty("excluded_card_tokens")
+        @ExcludeMissing
+        fun excludedCardTokens(excludedCardTokens: JsonField<List<String>>) = apply {
+            this.excludedCardTokens = excludedCardTokens
+        }
+
         /** Account tokens to which the Auth Rule applies. */
         fun accountTokens(accountTokens: List<String>) = accountTokens(JsonField.of(accountTokens))
 
@@ -205,6 +238,14 @@ private constructor(
             this.draftVersion = draftVersion
         }
 
+        /** Auth Rule Name */
+        fun name(name: String) = name(JsonField.of(name))
+
+        /** Auth Rule Name */
+        @JsonProperty("name")
+        @ExcludeMissing
+        fun name(name: JsonField<String>) = apply { this.name = name }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -225,10 +266,12 @@ private constructor(
                 state,
                 programLevel,
                 cardTokens.map { it.toImmutable() },
+                excludedCardTokens.map { it.toImmutable() },
                 accountTokens.map { it.toImmutable() },
                 type,
                 currentVersion,
                 draftVersion,
+                name,
                 additionalProperties.toImmutable(),
             )
     }
@@ -578,6 +621,10 @@ private constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     fun attribute(): Attribute? = attribute.getNullable("attribute")
 
@@ -618,6 +665,10 @@ private constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     @JsonProperty("attribute") @ExcludeMissing fun _attribute() = attribute
 
@@ -694,6 +745,10 @@ private constructor(
                          *   representing the lowest risk and 999 representing the highest risk. For
                          *   Visa transactions, where the raw score has a range of 0-99, Lithic will
                          *   normalize the score by multiplying the raw score by 10x.
+                         * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in
+                         *   the trailing hour up and until the authorization.
+                         * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
+                         *   the trailing 24 hours up and until the authorization.
                          */
                         fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -729,6 +784,10 @@ private constructor(
                          *   representing the lowest risk and 999 representing the highest risk. For
                          *   Visa transactions, where the raw score has a range of 0-99, Lithic will
                          *   normalize the score by multiplying the raw score by 10x.
+                         * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in
+                         *   the trailing hour up and until the authorization.
+                         * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
+                         *   the trailing 24 hours up and until the authorization.
                          */
                         @JsonProperty("attribute")
                         @ExcludeMissing
@@ -787,37 +846,29 @@ private constructor(
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
 
-                        override fun equals(other: Any?): Boolean {
-                            if (this === other) {
-                                return true
-                            }
-
-                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
-                        }
-
-                        override fun hashCode() = value.hashCode()
-
-                        override fun toString() = value.toString()
-
                         companion object {
 
-                            val MCC = Attribute(JsonField.of("MCC"))
+                            val MCC = of("MCC")
 
-                            val COUNTRY = Attribute(JsonField.of("COUNTRY"))
+                            val COUNTRY = of("COUNTRY")
 
-                            val CURRENCY = Attribute(JsonField.of("CURRENCY"))
+                            val CURRENCY = of("CURRENCY")
 
-                            val MERCHANT_ID = Attribute(JsonField.of("MERCHANT_ID"))
+                            val MERCHANT_ID = of("MERCHANT_ID")
 
-                            val DESCRIPTOR = Attribute(JsonField.of("DESCRIPTOR"))
+                            val DESCRIPTOR = of("DESCRIPTOR")
 
-                            val LIABILITY_SHIFT = Attribute(JsonField.of("LIABILITY_SHIFT"))
+                            val LIABILITY_SHIFT = of("LIABILITY_SHIFT")
 
-                            val PAN_ENTRY_MODE = Attribute(JsonField.of("PAN_ENTRY_MODE"))
+                            val PAN_ENTRY_MODE = of("PAN_ENTRY_MODE")
 
-                            val TRANSACTION_AMOUNT = Attribute(JsonField.of("TRANSACTION_AMOUNT"))
+                            val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
-                            val RISK_SCORE = Attribute(JsonField.of("RISK_SCORE"))
+                            val RISK_SCORE = of("RISK_SCORE")
+
+                            val CARD_TRANSACTION_COUNT_1_H = of("CARD_TRANSACTION_COUNT_1H")
+
+                            val CARD_TRANSACTION_COUNT_24_H = of("CARD_TRANSACTION_COUNT_24H")
 
                             fun of(value: String) = Attribute(JsonField.of(value))
                         }
@@ -832,6 +883,8 @@ private constructor(
                             PAN_ENTRY_MODE,
                             TRANSACTION_AMOUNT,
                             RISK_SCORE,
+                            CARD_TRANSACTION_COUNT_1_H,
+                            CARD_TRANSACTION_COUNT_24_H,
                         }
 
                         enum class Value {
@@ -844,6 +897,8 @@ private constructor(
                             PAN_ENTRY_MODE,
                             TRANSACTION_AMOUNT,
                             RISK_SCORE,
+                            CARD_TRANSACTION_COUNT_1_H,
+                            CARD_TRANSACTION_COUNT_24_H,
                             _UNKNOWN,
                         }
 
@@ -858,6 +913,8 @@ private constructor(
                                 PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                                 TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
                                 RISK_SCORE -> Value.RISK_SCORE
+                                CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
+                                CARD_TRANSACTION_COUNT_24_H -> Value.CARD_TRANSACTION_COUNT_24_H
                                 else -> Value._UNKNOWN
                             }
 
@@ -872,11 +929,25 @@ private constructor(
                                 PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                                 TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
                                 RISK_SCORE -> Known.RISK_SCORE
+                                CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H
+                                CARD_TRANSACTION_COUNT_24_H -> Known.CARD_TRANSACTION_COUNT_24_H
                                 else ->
                                     throw LithicInvalidDataException("Unknown Attribute: $value")
                             }
 
                         fun asString(): String = _value().asStringOrThrow()
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
                     }
 
                     class Operation
@@ -888,31 +959,19 @@ private constructor(
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
 
-                        override fun equals(other: Any?): Boolean {
-                            if (this === other) {
-                                return true
-                            }
-
-                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
-                        }
-
-                        override fun hashCode() = value.hashCode()
-
-                        override fun toString() = value.toString()
-
                         companion object {
 
-                            val IS_ONE_OF = Operation(JsonField.of("IS_ONE_OF"))
+                            val IS_ONE_OF = of("IS_ONE_OF")
 
-                            val IS_NOT_ONE_OF = Operation(JsonField.of("IS_NOT_ONE_OF"))
+                            val IS_NOT_ONE_OF = of("IS_NOT_ONE_OF")
 
-                            val MATCHES = Operation(JsonField.of("MATCHES"))
+                            val MATCHES = of("MATCHES")
 
-                            val DOES_NOT_MATCH = Operation(JsonField.of("DOES_NOT_MATCH"))
+                            val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
-                            val IS_GREATER_THAN = Operation(JsonField.of("IS_GREATER_THAN"))
+                            val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
-                            val IS_LESS_THAN = Operation(JsonField.of("IS_LESS_THAN"))
+                            val IS_LESS_THAN = of("IS_LESS_THAN")
 
                             fun of(value: String) = Operation(JsonField.of(value))
                         }
@@ -960,6 +1019,18 @@ private constructor(
                             }
 
                         fun asString(): String = _value().asStringOrThrow()
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
                     }
 
                     @JsonDeserialize(using = Value.Deserializer::class)
@@ -1491,6 +1562,10 @@ private constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     fun attribute(): Attribute? = attribute.getNullable("attribute")
 
@@ -1531,6 +1606,10 @@ private constructor(
                      *   the lowest risk and 999 representing the highest risk. For Visa
                      *   transactions, where the raw score has a range of 0-99, Lithic will
                      *   normalize the score by multiplying the raw score by 10x.
+                     * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in the
+                     *   trailing hour up and until the authorization.
+                     * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
+                     *   trailing 24 hours up and until the authorization.
                      */
                     @JsonProperty("attribute") @ExcludeMissing fun _attribute() = attribute
 
@@ -1607,6 +1686,10 @@ private constructor(
                          *   representing the lowest risk and 999 representing the highest risk. For
                          *   Visa transactions, where the raw score has a range of 0-99, Lithic will
                          *   normalize the score by multiplying the raw score by 10x.
+                         * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in
+                         *   the trailing hour up and until the authorization.
+                         * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
+                         *   the trailing 24 hours up and until the authorization.
                          */
                         fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -1642,6 +1725,10 @@ private constructor(
                          *   representing the lowest risk and 999 representing the highest risk. For
                          *   Visa transactions, where the raw score has a range of 0-99, Lithic will
                          *   normalize the score by multiplying the raw score by 10x.
+                         * - `CARD_TRANSACTION_COUNT_1H`: The number of transactions on the card in
+                         *   the trailing hour up and until the authorization.
+                         * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
+                         *   the trailing 24 hours up and until the authorization.
                          */
                         @JsonProperty("attribute")
                         @ExcludeMissing
@@ -1700,37 +1787,29 @@ private constructor(
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
 
-                        override fun equals(other: Any?): Boolean {
-                            if (this === other) {
-                                return true
-                            }
-
-                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
-                        }
-
-                        override fun hashCode() = value.hashCode()
-
-                        override fun toString() = value.toString()
-
                         companion object {
 
-                            val MCC = Attribute(JsonField.of("MCC"))
+                            val MCC = of("MCC")
 
-                            val COUNTRY = Attribute(JsonField.of("COUNTRY"))
+                            val COUNTRY = of("COUNTRY")
 
-                            val CURRENCY = Attribute(JsonField.of("CURRENCY"))
+                            val CURRENCY = of("CURRENCY")
 
-                            val MERCHANT_ID = Attribute(JsonField.of("MERCHANT_ID"))
+                            val MERCHANT_ID = of("MERCHANT_ID")
 
-                            val DESCRIPTOR = Attribute(JsonField.of("DESCRIPTOR"))
+                            val DESCRIPTOR = of("DESCRIPTOR")
 
-                            val LIABILITY_SHIFT = Attribute(JsonField.of("LIABILITY_SHIFT"))
+                            val LIABILITY_SHIFT = of("LIABILITY_SHIFT")
 
-                            val PAN_ENTRY_MODE = Attribute(JsonField.of("PAN_ENTRY_MODE"))
+                            val PAN_ENTRY_MODE = of("PAN_ENTRY_MODE")
 
-                            val TRANSACTION_AMOUNT = Attribute(JsonField.of("TRANSACTION_AMOUNT"))
+                            val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
-                            val RISK_SCORE = Attribute(JsonField.of("RISK_SCORE"))
+                            val RISK_SCORE = of("RISK_SCORE")
+
+                            val CARD_TRANSACTION_COUNT_1_H = of("CARD_TRANSACTION_COUNT_1H")
+
+                            val CARD_TRANSACTION_COUNT_24_H = of("CARD_TRANSACTION_COUNT_24H")
 
                             fun of(value: String) = Attribute(JsonField.of(value))
                         }
@@ -1745,6 +1824,8 @@ private constructor(
                             PAN_ENTRY_MODE,
                             TRANSACTION_AMOUNT,
                             RISK_SCORE,
+                            CARD_TRANSACTION_COUNT_1_H,
+                            CARD_TRANSACTION_COUNT_24_H,
                         }
 
                         enum class Value {
@@ -1757,6 +1838,8 @@ private constructor(
                             PAN_ENTRY_MODE,
                             TRANSACTION_AMOUNT,
                             RISK_SCORE,
+                            CARD_TRANSACTION_COUNT_1_H,
+                            CARD_TRANSACTION_COUNT_24_H,
                             _UNKNOWN,
                         }
 
@@ -1771,6 +1854,8 @@ private constructor(
                                 PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                                 TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
                                 RISK_SCORE -> Value.RISK_SCORE
+                                CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
+                                CARD_TRANSACTION_COUNT_24_H -> Value.CARD_TRANSACTION_COUNT_24_H
                                 else -> Value._UNKNOWN
                             }
 
@@ -1785,11 +1870,25 @@ private constructor(
                                 PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                                 TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
                                 RISK_SCORE -> Known.RISK_SCORE
+                                CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H
+                                CARD_TRANSACTION_COUNT_24_H -> Known.CARD_TRANSACTION_COUNT_24_H
                                 else ->
                                     throw LithicInvalidDataException("Unknown Attribute: $value")
                             }
 
                         fun asString(): String = _value().asStringOrThrow()
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
                     }
 
                     class Operation
@@ -1801,31 +1900,19 @@ private constructor(
                         @com.fasterxml.jackson.annotation.JsonValue
                         fun _value(): JsonField<String> = value
 
-                        override fun equals(other: Any?): Boolean {
-                            if (this === other) {
-                                return true
-                            }
-
-                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
-                        }
-
-                        override fun hashCode() = value.hashCode()
-
-                        override fun toString() = value.toString()
-
                         companion object {
 
-                            val IS_ONE_OF = Operation(JsonField.of("IS_ONE_OF"))
+                            val IS_ONE_OF = of("IS_ONE_OF")
 
-                            val IS_NOT_ONE_OF = Operation(JsonField.of("IS_NOT_ONE_OF"))
+                            val IS_NOT_ONE_OF = of("IS_NOT_ONE_OF")
 
-                            val MATCHES = Operation(JsonField.of("MATCHES"))
+                            val MATCHES = of("MATCHES")
 
-                            val DOES_NOT_MATCH = Operation(JsonField.of("DOES_NOT_MATCH"))
+                            val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
-                            val IS_GREATER_THAN = Operation(JsonField.of("IS_GREATER_THAN"))
+                            val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
-                            val IS_LESS_THAN = Operation(JsonField.of("IS_LESS_THAN"))
+                            val IS_LESS_THAN = of("IS_LESS_THAN")
 
                             fun of(value: String) = Operation(JsonField.of(value))
                         }
@@ -1873,6 +1960,18 @@ private constructor(
                             }
 
                         fun asString(): String = _value().asStringOrThrow()
+
+                        override fun equals(other: Any?): Boolean {
+                            if (this === other) {
+                                return true
+                            }
+
+                            return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
+                        }
+
+                        override fun hashCode() = value.hashCode()
+
+                        override fun toString() = value.toString()
                     }
 
                     @JsonDeserialize(using = Value.Deserializer::class)
@@ -2067,23 +2166,11 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is AuthRuleState && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ACTIVE = AuthRuleState(JsonField.of("ACTIVE"))
+            val ACTIVE = of("ACTIVE")
 
-            val INACTIVE = AuthRuleState(JsonField.of("INACTIVE"))
+            val INACTIVE = of("INACTIVE")
 
             fun of(value: String) = AuthRuleState(JsonField.of(value))
         }
@@ -2114,6 +2201,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AuthRuleState && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class AuthRuleType
@@ -2124,23 +2223,11 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val CONDITIONAL_BLOCK = AuthRuleType(JsonField.of("CONDITIONAL_BLOCK"))
+            val CONDITIONAL_BLOCK = of("CONDITIONAL_BLOCK")
 
-            val VELOCITY_LIMIT = AuthRuleType(JsonField.of("VELOCITY_LIMIT"))
+            val VELOCITY_LIMIT = of("VELOCITY_LIMIT")
 
             fun of(value: String) = AuthRuleType(JsonField.of(value))
         }
@@ -2171,6 +2258,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -2178,15 +2277,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is V2UpdateResponse && token == other.token && state == other.state && programLevel == other.programLevel && cardTokens == other.cardTokens && accountTokens == other.accountTokens && type == other.type && currentVersion == other.currentVersion && draftVersion == other.draftVersion && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is V2UpdateResponse && token == other.token && state == other.state && programLevel == other.programLevel && cardTokens == other.cardTokens && excludedCardTokens == other.excludedCardTokens && accountTokens == other.accountTokens && type == other.type && currentVersion == other.currentVersion && draftVersion == other.draftVersion && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, state, programLevel, cardTokens, accountTokens, type, currentVersion, draftVersion, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, state, programLevel, cardTokens, excludedCardTokens, accountTokens, type, currentVersion, draftVersion, name, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "V2UpdateResponse{token=$token, state=$state, programLevel=$programLevel, cardTokens=$cardTokens, accountTokens=$accountTokens, type=$type, currentVersion=$currentVersion, draftVersion=$draftVersion, additionalProperties=$additionalProperties}"
+        "V2UpdateResponse{token=$token, state=$state, programLevel=$programLevel, cardTokens=$cardTokens, excludedCardTokens=$excludedCardTokens, accountTokens=$accountTokens, type=$type, currentVersion=$currentVersion, draftVersion=$draftVersion, name=$name, additionalProperties=$additionalProperties}"
 }

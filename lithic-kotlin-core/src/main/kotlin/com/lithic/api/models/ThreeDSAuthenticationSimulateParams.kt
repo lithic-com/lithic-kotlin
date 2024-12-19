@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class ThreeDSAuthenticationSimulateParams
@@ -566,25 +565,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is CardExpiryCheck && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val MATCH = CardExpiryCheck(JsonField.of("MATCH"))
+            val MATCH = of("MATCH")
 
-            val MISMATCH = CardExpiryCheck(JsonField.of("MISMATCH"))
+            val MISMATCH = of("MISMATCH")
 
-            val NOT_PRESENT = CardExpiryCheck(JsonField.of("NOT_PRESENT"))
+            val NOT_PRESENT = of("NOT_PRESENT")
 
             fun of(value: String) = CardExpiryCheck(JsonField.of(value))
         }
@@ -619,6 +606,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CardExpiryCheck && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {
