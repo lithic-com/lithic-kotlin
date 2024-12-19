@@ -42,7 +42,7 @@ Use `LithicOkHttpClient.builder()` to configure the client. At a minimum you nee
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .apiKey("My Lithic API Key")
     .build()
 ```
@@ -53,10 +53,10 @@ Alternately, set the environment with `LITHIC_API_KEY` or `LITHIC_WEBHOOK_SECRET
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-val client = LithicOkHttpClient.fromEnv()
+val client: LithicClient = LithicOkHttpClient.fromEnv()
 
 // Note: you can also call fromEnv() from the client builder, for example if you need to set additional properties
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
     // ... set properties on the builder
     .build()
@@ -79,10 +79,10 @@ To create a new card, first use the `CardCreateParams` builder to specify attrib
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
 
-val params = CardCreateParams.builder()
+val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
     .build()
-val card = client.cards().create(params)
+val card: Card = client.cards().create(params)
 ```
 
 ### Example: listing resources
@@ -93,7 +93,7 @@ The Lithic API provides a `list` method to get a paginated list of cards. You ca
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardListPage
 
-val page = client.cards().list()
+val page: CardListPage = client.cards().list()
 for (card: Card in page.data()) {
     print(card)
 }
@@ -106,7 +106,7 @@ import com.lithic.api.models.CardListPage
 import com.lithic.api.models.CardListParams
 import java.time.OffsetDateTime
 
-val params = CardListParams.builder()
+val params: CardListParams = CardListParams.builder()
     .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     .begin(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
     .end(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -115,15 +115,15 @@ val params = CardListParams.builder()
     .startingAfter("starting_after")
     .state(CardListParams.State.CLOSED)
     .build()
-val page1 = client.cards().list(params)
+val page1: CardListPage = client.cards().list(params)
 
 // Using the `from` method of the builder you can reuse previous params values:
-val page2 = client.cards().list(CardListParams.builder()
+val page2: CardListPage = client.cards().list(CardListParams.builder()
     .from(params)
     .build())
 
 // Or easily get params for the next page by using the helper `getNextPageParams`:
-val page3 = client.cards().list(params.getNextPageParams(page2))
+val page3: CardListPage = client.cards().list(params.getNextPageParams(page2))
 ```
 
 See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
@@ -144,7 +144,7 @@ Sometimes, the API may support other properties that are not yet supported in th
 import com.lithic.api.core.JsonValue
 import com.lithic.api.models.CardCreateParams
 
-val params = CardCreateParams.builder()
+val params: CardCreateParams = CardCreateParams.builder()
     // ... normal properties
     .putAdditionalProperty("secret_param", JsonValue.from("4242"))
     .build()
@@ -159,7 +159,7 @@ When receiving a response, the Lithic Kotlin SDK will deserialize it into instan
 ```kotlin
 import com.lithic.api.models.Card
 
-val card = client.cards().create().validate()
+val card: Card = client.cards().create().validate()
 ```
 
 ### Response properties as JSON
@@ -170,7 +170,7 @@ In rare cases, you may want to access the underlying JSON value for a response p
 import com.lithic.api.core.JsonField
 import java.util.Optional
 
-val field = responseObj._field
+val field: JsonField = responseObj._field
 
 if (field.isMissing()) {
   // Value was not specified in the JSON response
@@ -182,7 +182,7 @@ if (field.isMissing()) {
 
   // If the value given by the API did not match the shape that the SDK expects
   // you can deserialise into a custom type
-  val myObj = responseObj._field.asUnknown()?.convert(MyClass.class)
+  val myObj: MyClass = responseObj._field.asUnknown()?.convert(MyClass.class)
 }
 ```
 
@@ -193,7 +193,7 @@ Sometimes, the server response may include additional properties that are not ye
 ```kotlin
 import com.lithic.api.core.JsonValue
 
-val secret = address._additionalProperties().get("secret_field")
+val secret: JsonValue = address._additionalProperties().get("secret_field")
 ```
 
 ---
@@ -280,7 +280,7 @@ Requests that experience certain errors are automatically retried 2 times by def
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
     .maxRetries(4)
     .build()
@@ -295,7 +295,7 @@ import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 import java.time.Duration
 
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
     .timeout(Duration.ofSeconds(30))
     .build()
@@ -311,7 +311,7 @@ import com.lithic.api.client.okhttp.LithicOkHttpClient
 import java.net.InetSocketAddress
 import java.net.Proxy
 
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
     .proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("example.com", 8080)))
     .build()
@@ -325,7 +325,7 @@ Requests are made to the production environment by default. You can connect to o
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-val client = LithicOkHttpClient.builder()
+val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
     .sandbox()
     .build()
