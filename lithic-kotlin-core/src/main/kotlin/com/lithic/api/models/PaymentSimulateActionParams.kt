@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class PaymentSimulateActionParams
@@ -352,39 +351,21 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is SupportedSimulationTypes && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val ACH_ORIGINATION_REVIEWED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_REVIEWED"))
+            val ACH_ORIGINATION_REVIEWED = of("ACH_ORIGINATION_REVIEWED")
 
-            val ACH_ORIGINATION_RELEASED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_RELEASED"))
+            val ACH_ORIGINATION_RELEASED = of("ACH_ORIGINATION_RELEASED")
 
-            val ACH_ORIGINATION_PROCESSED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_PROCESSED"))
+            val ACH_ORIGINATION_PROCESSED = of("ACH_ORIGINATION_PROCESSED")
 
-            val ACH_ORIGINATION_SETTLED =
-                SupportedSimulationTypes(JsonField.of("ACH_ORIGINATION_SETTLED"))
+            val ACH_ORIGINATION_SETTLED = of("ACH_ORIGINATION_SETTLED")
 
-            val ACH_RECEIPT_SETTLED = SupportedSimulationTypes(JsonField.of("ACH_RECEIPT_SETTLED"))
+            val ACH_RECEIPT_SETTLED = of("ACH_RECEIPT_SETTLED")
 
-            val ACH_RETURN_INITIATED =
-                SupportedSimulationTypes(JsonField.of("ACH_RETURN_INITIATED"))
+            val ACH_RETURN_INITIATED = of("ACH_RETURN_INITIATED")
 
-            val ACH_RETURN_PROCESSED =
-                SupportedSimulationTypes(JsonField.of("ACH_RETURN_PROCESSED"))
+            val ACH_RETURN_PROCESSED = of("ACH_RETURN_PROCESSED")
 
             fun of(value: String) = SupportedSimulationTypes(JsonField.of(value))
         }
@@ -435,6 +416,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is SupportedSimulationTypes && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class SupportedSimulationDeclineReasons
@@ -445,30 +438,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is SupportedSimulationDeclineReasons && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val PROGRAM_TRANSACTION_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(
-                    JsonField.of("PROGRAM_TRANSACTION_LIMIT_EXCEEDED")
-                )
+            val PROGRAM_TRANSACTION_LIMIT_EXCEEDED = of("PROGRAM_TRANSACTION_LIMIT_EXCEEDED")
 
-            val PROGRAM_DAILY_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(JsonField.of("PROGRAM_DAILY_LIMIT_EXCEEDED"))
+            val PROGRAM_DAILY_LIMIT_EXCEEDED = of("PROGRAM_DAILY_LIMIT_EXCEEDED")
 
-            val PROGRAM_MONTHLY_LIMIT_EXCEEDED =
-                SupportedSimulationDeclineReasons(JsonField.of("PROGRAM_MONTHLY_LIMIT_EXCEEDED"))
+            val PROGRAM_MONTHLY_LIMIT_EXCEEDED = of("PROGRAM_MONTHLY_LIMIT_EXCEEDED")
 
             fun of(value: String) = SupportedSimulationDeclineReasons(JsonField.of(value))
         }
@@ -506,6 +482,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is SupportedSimulationDeclineReasons && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

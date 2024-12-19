@@ -2,7 +2,6 @@
 
 package com.lithic.api.models
 
-import com.lithic.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,7 +10,7 @@ class TransactionEventEnhancedCommercialDataRetrieveParamsTest {
     @Test
     fun createTransactionEventEnhancedCommercialDataRetrieveParams() {
         TransactionEventEnhancedCommercialDataRetrieveParams.builder()
-            .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .eventToken("00000000-0000-0000-0000-000000000000")
             .build()
     }
 
@@ -19,11 +18,11 @@ class TransactionEventEnhancedCommercialDataRetrieveParamsTest {
     fun getPathParam() {
         val params =
             TransactionEventEnhancedCommercialDataRetrieveParams.builder()
-                .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .eventToken("00000000-0000-0000-0000-000000000000")
                 .build()
         assertThat(params).isNotNull
         // path param "eventToken"
-        assertThat(params.getPathParam(0)).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(params.getPathParam(0)).isEqualTo("00000000-0000-0000-0000-000000000000")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

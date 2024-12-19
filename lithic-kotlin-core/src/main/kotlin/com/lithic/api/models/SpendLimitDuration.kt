@@ -5,7 +5,6 @@ package com.lithic.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
-import com.lithic.api.core.JsonValue
 import com.lithic.api.errors.LithicInvalidDataException
 
 class SpendLimitDuration
@@ -16,27 +15,15 @@ private constructor(
 
     @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SpendLimitDuration && value == other.value /* spotless:on */
-    }
-
-    override fun hashCode() = value.hashCode()
-
-    override fun toString() = value.toString()
-
     companion object {
 
-        val ANNUALLY = SpendLimitDuration(JsonField.of("ANNUALLY"))
+        val ANNUALLY = of("ANNUALLY")
 
-        val FOREVER = SpendLimitDuration(JsonField.of("FOREVER"))
+        val FOREVER = of("FOREVER")
 
-        val MONTHLY = SpendLimitDuration(JsonField.of("MONTHLY"))
+        val MONTHLY = of("MONTHLY")
 
-        val TRANSACTION = SpendLimitDuration(JsonField.of("TRANSACTION"))
+        val TRANSACTION = of("TRANSACTION")
 
         fun of(value: String) = SpendLimitDuration(JsonField.of(value))
     }
@@ -75,4 +62,16 @@ private constructor(
         }
 
     fun asString(): String = _value().asStringOrThrow()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SpendLimitDuration && value == other.value /* spotless:on */
+    }
+
+    override fun hashCode() = value.hashCode()
+
+    override fun toString() = value.toString()
 }

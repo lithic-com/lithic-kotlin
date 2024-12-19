@@ -256,29 +256,17 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is UploadStatus && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val DELETED = UploadStatus(JsonField.of("DELETED"))
+            val DELETED = of("DELETED")
 
-            val ERROR = UploadStatus(JsonField.of("ERROR"))
+            val ERROR = of("ERROR")
 
-            val PENDING = UploadStatus(JsonField.of("PENDING"))
+            val PENDING = of("PENDING")
 
-            val REJECTED = UploadStatus(JsonField.of("REJECTED"))
+            val REJECTED = of("REJECTED")
 
-            val UPLOADED = UploadStatus(JsonField.of("UPLOADED"))
+            val UPLOADED = of("UPLOADED")
 
             fun of(value: String) = UploadStatus(JsonField.of(value))
         }
@@ -321,6 +309,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is UploadStatus && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

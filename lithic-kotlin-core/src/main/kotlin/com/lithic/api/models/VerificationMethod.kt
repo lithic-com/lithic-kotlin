@@ -5,7 +5,6 @@ package com.lithic.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
-import com.lithic.api.core.JsonValue
 import com.lithic.api.errors.LithicInvalidDataException
 
 class VerificationMethod
@@ -16,29 +15,17 @@ private constructor(
 
     @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is VerificationMethod && value == other.value /* spotless:on */
-    }
-
-    override fun hashCode() = value.hashCode()
-
-    override fun toString() = value.toString()
-
     companion object {
 
-        val MANUAL = VerificationMethod(JsonField.of("MANUAL"))
+        val MANUAL = of("MANUAL")
 
-        val MICRO_DEPOSIT = VerificationMethod(JsonField.of("MICRO_DEPOSIT"))
+        val MICRO_DEPOSIT = of("MICRO_DEPOSIT")
 
-        val PLAID = VerificationMethod(JsonField.of("PLAID"))
+        val PLAID = of("PLAID")
 
-        val PRENOTE = VerificationMethod(JsonField.of("PRENOTE"))
+        val PRENOTE = of("PRENOTE")
 
-        val EXTERNALLY_VERIFIED = VerificationMethod(JsonField.of("EXTERNALLY_VERIFIED"))
+        val EXTERNALLY_VERIFIED = of("EXTERNALLY_VERIFIED")
 
         fun of(value: String) = VerificationMethod(JsonField.of(value))
     }
@@ -81,4 +68,16 @@ private constructor(
         }
 
     fun asString(): String = _value().asStringOrThrow()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is VerificationMethod && value == other.value /* spotless:on */
+    }
+
+    override fun hashCode() = value.hashCode()
+
+    override fun toString() = value.toString()
 }

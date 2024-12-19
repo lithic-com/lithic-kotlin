@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class TokenizationSimulateParams
@@ -473,27 +472,15 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is TokenizationSource && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val APPLE_PAY = TokenizationSource(JsonField.of("APPLE_PAY"))
+            val APPLE_PAY = of("APPLE_PAY")
 
-            val GOOGLE = TokenizationSource(JsonField.of("GOOGLE"))
+            val GOOGLE = of("GOOGLE")
 
-            val SAMSUNG_PAY = TokenizationSource(JsonField.of("SAMSUNG_PAY"))
+            val SAMSUNG_PAY = of("SAMSUNG_PAY")
 
-            val MERCHANT = TokenizationSource(JsonField.of("MERCHANT"))
+            val MERCHANT = of("MERCHANT")
 
             fun of(value: String) = TokenizationSource(JsonField.of(value))
         }
@@ -532,6 +519,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is TokenizationSource && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class WalletRecommendedDecision
@@ -542,26 +541,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is WalletRecommendedDecision && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val APPROVED = WalletRecommendedDecision(JsonField.of("APPROVED"))
+            val APPROVED = of("APPROVED")
 
-            val DECLINED = WalletRecommendedDecision(JsonField.of("DECLINED"))
+            val DECLINED = of("DECLINED")
 
-            val REQUIRE_ADDITIONAL_AUTHENTICATION =
-                WalletRecommendedDecision(JsonField.of("REQUIRE_ADDITIONAL_AUTHENTICATION"))
+            val REQUIRE_ADDITIONAL_AUTHENTICATION = of("REQUIRE_ADDITIONAL_AUTHENTICATION")
 
             fun of(value: String) = WalletRecommendedDecision(JsonField.of(value))
         }
@@ -597,6 +583,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is WalletRecommendedDecision && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

@@ -2,7 +2,6 @@
 
 package com.lithic.api.models
 
-import com.lithic.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +11,7 @@ class AccountUpdateParamsTest {
     fun createAccountUpdateParams() {
         AccountUpdateParams.builder()
             .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-            .dailySpendLimit(0L)
+            .dailySpendLimit(1000L)
             .lifetimeSpendLimit(0L)
             .monthlySpendLimit(0L)
             .state(AccountUpdateParams.State.ACTIVE)
@@ -34,7 +33,7 @@ class AccountUpdateParamsTest {
         val params =
             AccountUpdateParams.builder()
                 .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .dailySpendLimit(0L)
+                .dailySpendLimit(1000L)
                 .lifetimeSpendLimit(0L)
                 .monthlySpendLimit(0L)
                 .state(AccountUpdateParams.State.ACTIVE)
@@ -51,7 +50,7 @@ class AccountUpdateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.dailySpendLimit()).isEqualTo(0L)
+        assertThat(body.dailySpendLimit()).isEqualTo(1000L)
         assertThat(body.lifetimeSpendLimit()).isEqualTo(0L)
         assertThat(body.monthlySpendLimit()).isEqualTo(0L)
         assertThat(body.state()).isEqualTo(AccountUpdateParams.State.ACTIVE)

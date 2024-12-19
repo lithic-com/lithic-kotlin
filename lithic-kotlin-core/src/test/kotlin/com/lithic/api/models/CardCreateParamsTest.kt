@@ -2,7 +2,6 @@
 
 package com.lithic.api.models
 
-import com.lithic.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -35,11 +34,11 @@ class CardCreateParamsTest {
                     .address2("Unit 25A")
                     .email("johnny@appleseed.com")
                     .line2Text("The Bluth Company")
-                    .phoneNumber("+12124007676")
+                    .phoneNumber("+15555555555")
                     .build()
             )
             .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-            .spendLimit(0L)
+            .spendLimit(1000L)
             .spendLimitDuration(SpendLimitDuration.ANNUALLY)
             .state(CardCreateParams.State.OPEN)
             .build()
@@ -73,11 +72,11 @@ class CardCreateParamsTest {
                         .address2("Unit 25A")
                         .email("johnny@appleseed.com")
                         .line2Text("The Bluth Company")
-                        .phoneNumber("+12124007676")
+                        .phoneNumber("+15555555555")
                         .build()
                 )
                 .shippingMethod(CardCreateParams.ShippingMethod._2_DAY)
-                .spendLimit(0L)
+                .spendLimit(1000L)
                 .spendLimitDuration(SpendLimitDuration.ANNUALLY)
                 .state(CardCreateParams.State.OPEN)
                 .build()
@@ -108,11 +107,11 @@ class CardCreateParamsTest {
                     .address2("Unit 25A")
                     .email("johnny@appleseed.com")
                     .line2Text("The Bluth Company")
-                    .phoneNumber("+12124007676")
+                    .phoneNumber("+15555555555")
                     .build()
             )
         assertThat(body.shippingMethod()).isEqualTo(CardCreateParams.ShippingMethod._2_DAY)
-        assertThat(body.spendLimit()).isEqualTo(0L)
+        assertThat(body.spendLimit()).isEqualTo(1000L)
         assertThat(body.spendLimitDuration()).isEqualTo(SpendLimitDuration.ANNUALLY)
         assertThat(body.state()).isEqualTo(CardCreateParams.State.OPEN)
     }

@@ -4,8 +4,15 @@ package com.lithic.api.services.blocking
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.*
+import com.lithic.api.models.TokenizationActivateParams
+import com.lithic.api.models.TokenizationDeactivateParams
 import com.lithic.api.models.TokenizationListParams
+import com.lithic.api.models.TokenizationPauseParams
+import com.lithic.api.models.TokenizationResendActivationCodeParams
+import com.lithic.api.models.TokenizationRetrieveParams
+import com.lithic.api.models.TokenizationSimulateParams
+import com.lithic.api.models.TokenizationUnpauseParams
+import com.lithic.api.models.TokenizationUpdateDigitalCardArtParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -119,11 +126,11 @@ class TokenizationServiceTest {
             tokenizationService.simulate(
                 TokenizationSimulateParams.builder()
                     .cvv("776")
-                    .expirationDate("xxxxx")
+                    .expirationDate("08/29")
                     .pan("4111111289144142")
                     .tokenizationSource(TokenizationSimulateParams.TokenizationSource.APPLE_PAY)
-                    .accountScore(0L)
-                    .deviceScore(0L)
+                    .accountScore(5L)
+                    .deviceScore(5L)
                     .entity("entity")
                     .walletRecommendedDecision(
                         TokenizationSimulateParams.WalletRecommendedDecision.APPROVED

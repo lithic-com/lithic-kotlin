@@ -16,7 +16,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.util.Objects
 
 class CardReissueParams
@@ -412,31 +411,19 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ShippingMethod && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val _2_DAY = ShippingMethod(JsonField.of("2-DAY"))
+            val _2_DAY = of("2-DAY")
 
-            val EXPEDITED = ShippingMethod(JsonField.of("EXPEDITED"))
+            val EXPEDITED = of("EXPEDITED")
 
-            val EXPRESS = ShippingMethod(JsonField.of("EXPRESS"))
+            val EXPRESS = of("EXPRESS")
 
-            val PRIORITY = ShippingMethod(JsonField.of("PRIORITY"))
+            val PRIORITY = of("PRIORITY")
 
-            val STANDARD = ShippingMethod(JsonField.of("STANDARD"))
+            val STANDARD = of("STANDARD")
 
-            val STANDARD_WITH_TRACKING = ShippingMethod(JsonField.of("STANDARD_WITH_TRACKING"))
+            val STANDARD_WITH_TRACKING = of("STANDARD_WITH_TRACKING")
 
             fun of(value: String) = ShippingMethod(JsonField.of(value))
         }
@@ -483,6 +470,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ShippingMethod && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

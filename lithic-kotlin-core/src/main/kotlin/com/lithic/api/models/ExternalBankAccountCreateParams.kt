@@ -25,7 +25,6 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
-import com.lithic.api.models.*
 import java.time.LocalDate
 import java.util.Objects
 
@@ -697,23 +696,11 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val CHECKING = AccountType(JsonField.of("CHECKING"))
+                val CHECKING = of("CHECKING")
 
-                val SAVINGS = AccountType(JsonField.of("SAVINGS"))
+                val SAVINGS = of("SAVINGS")
 
                 fun of(value: String) = AccountType(JsonField.of(value))
             }
@@ -744,6 +731,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1193,23 +1192,11 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val CHECKING = Type(JsonField.of("CHECKING"))
+                val CHECKING = of("CHECKING")
 
-                val SAVINGS = Type(JsonField.of("SAVINGS"))
+                val SAVINGS = of("SAVINGS")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }
@@ -1240,6 +1227,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class ExternallyVerifiedVerificationMethod
@@ -1250,22 +1249,9 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is ExternallyVerifiedVerificationMethod && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val EXTERNALLY_VERIFIED =
-                    ExternallyVerifiedVerificationMethod(JsonField.of("EXTERNALLY_VERIFIED"))
+                val EXTERNALLY_VERIFIED = of("EXTERNALLY_VERIFIED")
 
                 fun of(value: String) = ExternallyVerifiedVerificationMethod(JsonField.of(value))
             }
@@ -1295,6 +1281,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ExternallyVerifiedVerificationMethod && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {
