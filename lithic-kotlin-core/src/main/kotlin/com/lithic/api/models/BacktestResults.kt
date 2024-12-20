@@ -4,25 +4,32 @@ package com.lithic.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = BacktestResults.Builder::class)
 @NoAutoDetect
 class BacktestResults
+@JsonCreator
 private constructor(
-    private val backtestToken: JsonField<String>,
-    private val simulationParameters: JsonField<SimulationParameters>,
-    private val results: JsonField<Results>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("backtest_token")
+    @ExcludeMissing
+    private val backtestToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("simulation_parameters")
+    @ExcludeMissing
+    private val simulationParameters: JsonField<SimulationParameters> = JsonMissing.of(),
+    @JsonProperty("results")
+    @ExcludeMissing
+    private val results: JsonField<Results> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Auth Rule Backtest Token */
@@ -82,8 +89,6 @@ private constructor(
         fun backtestToken(backtestToken: String) = backtestToken(JsonField.of(backtestToken))
 
         /** Auth Rule Backtest Token */
-        @JsonProperty("backtest_token")
-        @ExcludeMissing
         fun backtestToken(backtestToken: JsonField<String>) = apply {
             this.backtestToken = backtestToken
         }
@@ -91,16 +96,12 @@ private constructor(
         fun simulationParameters(simulationParameters: SimulationParameters) =
             simulationParameters(JsonField.of(simulationParameters))
 
-        @JsonProperty("simulation_parameters")
-        @ExcludeMissing
         fun simulationParameters(simulationParameters: JsonField<SimulationParameters>) = apply {
             this.simulationParameters = simulationParameters
         }
 
         fun results(results: Results) = results(JsonField.of(results))
 
-        @JsonProperty("results")
-        @ExcludeMissing
         fun results(results: JsonField<Results>) = apply { this.results = results }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -108,7 +109,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -132,13 +132,18 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = Results.Builder::class)
     @NoAutoDetect
     class Results
+    @JsonCreator
     private constructor(
-        private val currentVersion: JsonField<RuleStats>,
-        private val draftVersion: JsonField<RuleStats>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("current_version")
+        @ExcludeMissing
+        private val currentVersion: JsonField<RuleStats> = JsonMissing.of(),
+        @JsonProperty("draft_version")
+        @ExcludeMissing
+        private val draftVersion: JsonField<RuleStats> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun currentVersion(): RuleStats? = currentVersion.getNullable("current_version")
@@ -185,16 +190,12 @@ private constructor(
             fun currentVersion(currentVersion: RuleStats) =
                 currentVersion(JsonField.of(currentVersion))
 
-            @JsonProperty("current_version")
-            @ExcludeMissing
             fun currentVersion(currentVersion: JsonField<RuleStats>) = apply {
                 this.currentVersion = currentVersion
             }
 
             fun draftVersion(draftVersion: RuleStats) = draftVersion(JsonField.of(draftVersion))
 
-            @JsonProperty("draft_version")
-            @ExcludeMissing
             fun draftVersion(draftVersion: JsonField<RuleStats>) = apply {
                 this.draftVersion = draftVersion
             }
@@ -204,7 +205,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -227,15 +227,24 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = RuleStats.Builder::class)
         @NoAutoDetect
         class RuleStats
+        @JsonCreator
         private constructor(
-            private val version: JsonField<Long>,
-            private val approved: JsonField<Long>,
-            private val declined: JsonField<Long>,
-            private val examples: JsonField<List<Example>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("version")
+            @ExcludeMissing
+            private val version: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("approved")
+            @ExcludeMissing
+            private val approved: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("declined")
+            @ExcludeMissing
+            private val declined: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("examples")
+            @ExcludeMissing
+            private val examples: JsonField<List<Example>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /**
@@ -331,8 +340,6 @@ private constructor(
                  * The version of the rule, this is incremented whenever the rule's parameters
                  * change.
                  */
-                @JsonProperty("version")
-                @ExcludeMissing
                 fun version(version: JsonField<Long>) = apply { this.version = version }
 
                 /**
@@ -347,8 +354,6 @@ private constructor(
                  * backtest period, or the number of transactions that would have been approved if
                  * the rule was evaluated in shadow mode.
                  */
-                @JsonProperty("approved")
-                @ExcludeMissing
                 fun approved(approved: JsonField<Long>) = apply { this.approved = approved }
 
                 /**
@@ -363,8 +368,6 @@ private constructor(
                  * backtest period, or the number of transactions that would have been declined if
                  * the rule was evaluated in shadow mode.
                  */
-                @JsonProperty("declined")
-                @ExcludeMissing
                 fun declined(declined: JsonField<Long>) = apply { this.declined = declined }
 
                 /**
@@ -375,8 +378,6 @@ private constructor(
                 /**
                  * Example authorization request events that would have been approved or declined.
                  */
-                @JsonProperty("examples")
-                @ExcludeMissing
                 fun examples(examples: JsonField<List<Example>>) = apply {
                     this.examples = examples
                 }
@@ -386,7 +387,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -414,14 +414,21 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Example.Builder::class)
             @NoAutoDetect
             class Example
+            @JsonCreator
             private constructor(
-                private val eventToken: JsonField<String>,
-                private val timestamp: JsonField<OffsetDateTime>,
-                private val approved: JsonField<Boolean>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("event_token")
+                @ExcludeMissing
+                private val eventToken: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("timestamp")
+                @ExcludeMissing
+                private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
+                @JsonProperty("approved")
+                @ExcludeMissing
+                private val approved: JsonField<Boolean> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** The authorization request event token. */
@@ -482,8 +489,6 @@ private constructor(
                     fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
 
                     /** The authorization request event token. */
-                    @JsonProperty("event_token")
-                    @ExcludeMissing
                     fun eventToken(eventToken: JsonField<String>) = apply {
                         this.eventToken = eventToken
                     }
@@ -492,8 +497,6 @@ private constructor(
                     fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
 
                     /** The timestamp of the authorization request event. */
-                    @JsonProperty("timestamp")
-                    @ExcludeMissing
                     fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
                         this.timestamp = timestamp
                     }
@@ -502,8 +505,6 @@ private constructor(
                     fun approved(approved: Boolean) = approved(JsonField.of(approved))
 
                     /** Whether the rule would have approved the authorization request. */
-                    @JsonProperty("approved")
-                    @ExcludeMissing
                     fun approved(approved: JsonField<Boolean>) = apply { this.approved = approved }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -511,7 +512,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -592,14 +592,21 @@ private constructor(
             "Results{currentVersion=$currentVersion, draftVersion=$draftVersion, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = SimulationParameters.Builder::class)
     @NoAutoDetect
     class SimulationParameters
+    @JsonCreator
     private constructor(
-        private val authRuleToken: JsonField<String>,
-        private val start: JsonField<OffsetDateTime>,
-        private val end: JsonField<OffsetDateTime>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("auth_rule_token")
+        @ExcludeMissing
+        private val authRuleToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("start")
+        @ExcludeMissing
+        private val start: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("end")
+        @ExcludeMissing
+        private val end: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Auth Rule Token */
@@ -660,8 +667,6 @@ private constructor(
             fun authRuleToken(authRuleToken: String) = authRuleToken(JsonField.of(authRuleToken))
 
             /** Auth Rule Token */
-            @JsonProperty("auth_rule_token")
-            @ExcludeMissing
             fun authRuleToken(authRuleToken: JsonField<String>) = apply {
                 this.authRuleToken = authRuleToken
             }
@@ -670,16 +675,12 @@ private constructor(
             fun start(start: OffsetDateTime) = start(JsonField.of(start))
 
             /** The start time of the simulation. */
-            @JsonProperty("start")
-            @ExcludeMissing
             fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
 
             /** The end time of the simulation. */
             fun end(end: OffsetDateTime) = end(JsonField.of(end))
 
             /** The end time of the simulation. */
-            @JsonProperty("end")
-            @ExcludeMissing
             fun end(end: JsonField<OffsetDateTime>) = apply { this.end = end }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -687,7 +688,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
