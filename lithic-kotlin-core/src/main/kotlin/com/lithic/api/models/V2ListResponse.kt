@@ -22,25 +22,42 @@ import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.getOrThrow
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
-@JsonDeserialize(builder = V2ListResponse.Builder::class)
 @NoAutoDetect
 class V2ListResponse
+@JsonCreator
 private constructor(
-    private val token: JsonField<String>,
-    private val state: JsonField<AuthRuleState>,
-    private val programLevel: JsonField<Boolean>,
-    private val cardTokens: JsonField<List<String>>,
-    private val excludedCardTokens: JsonField<List<String>>,
-    private val accountTokens: JsonField<List<String>>,
-    private val type: JsonField<AuthRuleType>,
-    private val currentVersion: JsonField<CurrentVersion>,
-    private val draftVersion: JsonField<DraftVersion>,
-    private val name: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("state")
+    @ExcludeMissing
+    private val state: JsonField<AuthRuleState> = JsonMissing.of(),
+    @JsonProperty("program_level")
+    @ExcludeMissing
+    private val programLevel: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("card_tokens")
+    @ExcludeMissing
+    private val cardTokens: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("excluded_card_tokens")
+    @ExcludeMissing
+    private val excludedCardTokens: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("account_tokens")
+    @ExcludeMissing
+    private val accountTokens: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("type")
+    @ExcludeMissing
+    private val type: JsonField<AuthRuleType> = JsonMissing.of(),
+    @JsonProperty("current_version")
+    @ExcludeMissing
+    private val currentVersion: JsonField<CurrentVersion> = JsonMissing.of(),
+    @JsonProperty("draft_version")
+    @ExcludeMissing
+    private val draftVersion: JsonField<DraftVersion> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Auth Rule Token */
@@ -162,24 +179,18 @@ private constructor(
         fun token(token: String) = token(JsonField.of(token))
 
         /** Auth Rule Token */
-        @JsonProperty("token")
-        @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** The state of the Auth Rule */
         fun state(state: AuthRuleState) = state(JsonField.of(state))
 
         /** The state of the Auth Rule */
-        @JsonProperty("state")
-        @ExcludeMissing
         fun state(state: JsonField<AuthRuleState>) = apply { this.state = state }
 
         /** Whether the Auth Rule applies to all authorizations on the card program. */
         fun programLevel(programLevel: Boolean) = programLevel(JsonField.of(programLevel))
 
         /** Whether the Auth Rule applies to all authorizations on the card program. */
-        @JsonProperty("program_level")
-        @ExcludeMissing
         fun programLevel(programLevel: JsonField<Boolean>) = apply {
             this.programLevel = programLevel
         }
@@ -188,8 +199,6 @@ private constructor(
         fun cardTokens(cardTokens: List<String>) = cardTokens(JsonField.of(cardTokens))
 
         /** Card tokens to which the Auth Rule applies. */
-        @JsonProperty("card_tokens")
-        @ExcludeMissing
         fun cardTokens(cardTokens: JsonField<List<String>>) = apply { this.cardTokens = cardTokens }
 
         /** Card tokens to which the Auth Rule does not apply. */
@@ -197,8 +206,6 @@ private constructor(
             excludedCardTokens(JsonField.of(excludedCardTokens))
 
         /** Card tokens to which the Auth Rule does not apply. */
-        @JsonProperty("excluded_card_tokens")
-        @ExcludeMissing
         fun excludedCardTokens(excludedCardTokens: JsonField<List<String>>) = apply {
             this.excludedCardTokens = excludedCardTokens
         }
@@ -207,8 +214,6 @@ private constructor(
         fun accountTokens(accountTokens: List<String>) = accountTokens(JsonField.of(accountTokens))
 
         /** Account tokens to which the Auth Rule applies. */
-        @JsonProperty("account_tokens")
-        @ExcludeMissing
         fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
             this.accountTokens = accountTokens
         }
@@ -217,23 +222,17 @@ private constructor(
         fun type(type: AuthRuleType) = type(JsonField.of(type))
 
         /** The type of Auth Rule */
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<AuthRuleType>) = apply { this.type = type }
 
         fun currentVersion(currentVersion: CurrentVersion) =
             currentVersion(JsonField.of(currentVersion))
 
-        @JsonProperty("current_version")
-        @ExcludeMissing
         fun currentVersion(currentVersion: JsonField<CurrentVersion>) = apply {
             this.currentVersion = currentVersion
         }
 
         fun draftVersion(draftVersion: DraftVersion) = draftVersion(JsonField.of(draftVersion))
 
-        @JsonProperty("draft_version")
-        @ExcludeMissing
         fun draftVersion(draftVersion: JsonField<DraftVersion>) = apply {
             this.draftVersion = draftVersion
         }
@@ -242,8 +241,6 @@ private constructor(
         fun name(name: String) = name(JsonField.of(name))
 
         /** Auth Rule Name */
-        @JsonProperty("name")
-        @ExcludeMissing
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -251,7 +248,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -282,13 +278,18 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = CurrentVersion.Builder::class)
     @NoAutoDetect
     class CurrentVersion
+    @JsonCreator
     private constructor(
-        private val parameters: JsonField<Parameters>,
-        private val version: JsonField<Long>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("parameters")
+        @ExcludeMissing
+        private val parameters: JsonField<Parameters> = JsonMissing.of(),
+        @JsonProperty("version")
+        @ExcludeMissing
+        private val version: JsonField<Long> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Parameters for the current version of the Auth Rule */
@@ -340,8 +341,6 @@ private constructor(
             fun parameters(parameters: Parameters) = parameters(JsonField.of(parameters))
 
             /** Parameters for the current version of the Auth Rule */
-            @JsonProperty("parameters")
-            @ExcludeMissing
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
@@ -354,8 +353,6 @@ private constructor(
             /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
              */
-            @JsonProperty("version")
-            @ExcludeMissing
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -363,7 +360,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -516,12 +512,15 @@ private constructor(
                 }
             }
 
-            @JsonDeserialize(builder = ConditionalBlockParameters.Builder::class)
             @NoAutoDetect
             class ConditionalBlockParameters
+            @JsonCreator
             private constructor(
-                private val conditions: JsonField<List<Condition>>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("conditions")
+                @ExcludeMissing
+                private val conditions: JsonField<List<Condition>> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun conditions(): List<Condition> = conditions.getRequired("conditions")
@@ -563,8 +562,6 @@ private constructor(
                     fun conditions(conditions: List<Condition>) =
                         conditions(JsonField.of(conditions))
 
-                    @JsonProperty("conditions")
-                    @ExcludeMissing
                     fun conditions(conditions: JsonField<List<Condition>>) = apply {
                         this.conditions = conditions
                     }
@@ -574,7 +571,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -599,14 +595,21 @@ private constructor(
                         )
                 }
 
-                @JsonDeserialize(builder = Condition.Builder::class)
                 @NoAutoDetect
                 class Condition
+                @JsonCreator
                 private constructor(
-                    private val attribute: JsonField<Attribute>,
-                    private val operation: JsonField<Operation>,
-                    private val value: JsonField<Value>,
-                    private val additionalProperties: Map<String, JsonValue>,
+                    @JsonProperty("attribute")
+                    @ExcludeMissing
+                    private val attribute: JsonField<Attribute> = JsonMissing.of(),
+                    @JsonProperty("operation")
+                    @ExcludeMissing
+                    private val operation: JsonField<Operation> = JsonMissing.of(),
+                    @JsonProperty("value")
+                    @ExcludeMissing
+                    private val value: JsonField<Value> = JsonMissing.of(),
+                    @JsonAnySetter
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
                 ) {
 
                     /**
@@ -810,8 +813,6 @@ private constructor(
                          * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
                          *   the trailing 24 hours up and until the authorization.
                          */
-                        @JsonProperty("attribute")
-                        @ExcludeMissing
                         fun attribute(attribute: JsonField<Attribute>) = apply {
                             this.attribute = attribute
                         }
@@ -820,8 +821,6 @@ private constructor(
                         fun operation(operation: Operation) = operation(JsonField.of(operation))
 
                         /** The operation to apply to the attribute */
-                        @JsonProperty("operation")
-                        @ExcludeMissing
                         fun operation(operation: JsonField<Operation>) = apply {
                             this.operation = operation
                         }
@@ -830,8 +829,6 @@ private constructor(
                         fun value(value: Value) = value(JsonField.of(value))
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                        @JsonProperty("value")
-                        @ExcludeMissing
                         fun value(value: JsonField<Value>) = apply { this.value = value }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -840,7 +837,6 @@ private constructor(
                                 putAllAdditionalProperties(additionalProperties)
                             }
 
-                        @JsonAnySetter
                         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                             additionalProperties.put(key, value)
                         }
@@ -1246,13 +1242,18 @@ private constructor(
             "CurrentVersion{parameters=$parameters, version=$version, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = DraftVersion.Builder::class)
     @NoAutoDetect
     class DraftVersion
+    @JsonCreator
     private constructor(
-        private val parameters: JsonField<Parameters>,
-        private val version: JsonField<Long>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("parameters")
+        @ExcludeMissing
+        private val parameters: JsonField<Parameters> = JsonMissing.of(),
+        @JsonProperty("version")
+        @ExcludeMissing
+        private val version: JsonField<Long> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Parameters for the current version of the Auth Rule */
@@ -1304,8 +1305,6 @@ private constructor(
             fun parameters(parameters: Parameters) = parameters(JsonField.of(parameters))
 
             /** Parameters for the current version of the Auth Rule */
-            @JsonProperty("parameters")
-            @ExcludeMissing
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
@@ -1318,8 +1317,6 @@ private constructor(
             /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
              */
-            @JsonProperty("version")
-            @ExcludeMissing
             fun version(version: JsonField<Long>) = apply { this.version = version }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1327,7 +1324,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1480,12 +1476,15 @@ private constructor(
                 }
             }
 
-            @JsonDeserialize(builder = ConditionalBlockParameters.Builder::class)
             @NoAutoDetect
             class ConditionalBlockParameters
+            @JsonCreator
             private constructor(
-                private val conditions: JsonField<List<Condition>>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("conditions")
+                @ExcludeMissing
+                private val conditions: JsonField<List<Condition>> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun conditions(): List<Condition> = conditions.getRequired("conditions")
@@ -1527,8 +1526,6 @@ private constructor(
                     fun conditions(conditions: List<Condition>) =
                         conditions(JsonField.of(conditions))
 
-                    @JsonProperty("conditions")
-                    @ExcludeMissing
                     fun conditions(conditions: JsonField<List<Condition>>) = apply {
                         this.conditions = conditions
                     }
@@ -1538,7 +1535,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -1563,14 +1559,21 @@ private constructor(
                         )
                 }
 
-                @JsonDeserialize(builder = Condition.Builder::class)
                 @NoAutoDetect
                 class Condition
+                @JsonCreator
                 private constructor(
-                    private val attribute: JsonField<Attribute>,
-                    private val operation: JsonField<Operation>,
-                    private val value: JsonField<Value>,
-                    private val additionalProperties: Map<String, JsonValue>,
+                    @JsonProperty("attribute")
+                    @ExcludeMissing
+                    private val attribute: JsonField<Attribute> = JsonMissing.of(),
+                    @JsonProperty("operation")
+                    @ExcludeMissing
+                    private val operation: JsonField<Operation> = JsonMissing.of(),
+                    @JsonProperty("value")
+                    @ExcludeMissing
+                    private val value: JsonField<Value> = JsonMissing.of(),
+                    @JsonAnySetter
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
                 ) {
 
                     /**
@@ -1774,8 +1777,6 @@ private constructor(
                          * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
                          *   the trailing 24 hours up and until the authorization.
                          */
-                        @JsonProperty("attribute")
-                        @ExcludeMissing
                         fun attribute(attribute: JsonField<Attribute>) = apply {
                             this.attribute = attribute
                         }
@@ -1784,8 +1785,6 @@ private constructor(
                         fun operation(operation: Operation) = operation(JsonField.of(operation))
 
                         /** The operation to apply to the attribute */
-                        @JsonProperty("operation")
-                        @ExcludeMissing
                         fun operation(operation: JsonField<Operation>) = apply {
                             this.operation = operation
                         }
@@ -1794,8 +1793,6 @@ private constructor(
                         fun value(value: Value) = value(JsonField.of(value))
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                        @JsonProperty("value")
-                        @ExcludeMissing
                         fun value(value: JsonField<Value>) = apply { this.value = value }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -1804,7 +1801,6 @@ private constructor(
                                 putAllAdditionalProperties(additionalProperties)
                             }
 
-                        @JsonAnySetter
                         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                             additionalProperties.put(key, value)
                         }

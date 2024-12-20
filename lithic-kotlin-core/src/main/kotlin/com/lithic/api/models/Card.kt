@@ -6,46 +6,80 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = Card.Builder::class)
 @NoAutoDetect
 class Card
+@JsonCreator
 private constructor(
-    private val accountToken: JsonField<String>,
-    private val authRuleTokens: JsonField<List<String>>,
-    private val cardProgramToken: JsonField<String>,
-    private val replacementFor: JsonField<String>,
-    private val cardholderCurrency: JsonField<String>,
-    private val created: JsonField<OffsetDateTime>,
-    private val cvv: JsonField<String>,
-    private val digitalCardArtToken: JsonField<String>,
-    private val expMonth: JsonField<String>,
-    private val expYear: JsonField<String>,
-    private val funding: JsonField<FundingAccount>,
-    private val hostname: JsonField<String>,
-    private val lastFour: JsonField<String>,
-    private val memo: JsonField<String>,
-    private val pan: JsonField<String>,
-    private val pendingCommands: JsonField<List<String>>,
-    private val pinStatus: JsonField<PinStatus>,
-    private val productId: JsonField<String>,
-    private val spendLimit: JsonField<Long>,
-    private val spendLimitDuration: JsonField<SpendLimitDuration>,
-    private val state: JsonField<State>,
-    private val token: JsonField<String>,
-    private val type: JsonField<Type>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("account_token")
+    @ExcludeMissing
+    private val accountToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("auth_rule_tokens")
+    @ExcludeMissing
+    private val authRuleTokens: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("card_program_token")
+    @ExcludeMissing
+    private val cardProgramToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("replacement_for")
+    @ExcludeMissing
+    private val replacementFor: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("cardholder_currency")
+    @ExcludeMissing
+    private val cardholderCurrency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created")
+    @ExcludeMissing
+    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("cvv") @ExcludeMissing private val cvv: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("digital_card_art_token")
+    @ExcludeMissing
+    private val digitalCardArtToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("exp_month")
+    @ExcludeMissing
+    private val expMonth: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("exp_year")
+    @ExcludeMissing
+    private val expYear: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("funding")
+    @ExcludeMissing
+    private val funding: JsonField<FundingAccount> = JsonMissing.of(),
+    @JsonProperty("hostname")
+    @ExcludeMissing
+    private val hostname: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("last_four")
+    @ExcludeMissing
+    private val lastFour: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("memo") @ExcludeMissing private val memo: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("pan") @ExcludeMissing private val pan: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("pending_commands")
+    @ExcludeMissing
+    private val pendingCommands: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("pin_status")
+    @ExcludeMissing
+    private val pinStatus: JsonField<PinStatus> = JsonMissing.of(),
+    @JsonProperty("product_id")
+    @ExcludeMissing
+    private val productId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("spend_limit")
+    @ExcludeMissing
+    private val spendLimit: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("spend_limit_duration")
+    @ExcludeMissing
+    private val spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of(),
+    @JsonProperty("state") @ExcludeMissing private val state: JsonField<State> = JsonMissing.of(),
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Globally unique identifier for the account to which the card belongs. */
@@ -431,8 +465,6 @@ private constructor(
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
 
         /** Globally unique identifier for the account to which the card belongs. */
-        @JsonProperty("account_token")
-        @ExcludeMissing
         fun accountToken(accountToken: JsonField<String>) = apply {
             this.accountToken = accountToken
         }
@@ -452,8 +484,6 @@ private constructor(
          * from the schema in a future release. Use the `/auth_rules` endpoints to fetch Auth Rule
          * information instead.
          */
-        @JsonProperty("auth_rule_tokens")
-        @ExcludeMissing
         fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
             this.authRuleTokens = authRuleTokens
         }
@@ -463,8 +493,6 @@ private constructor(
             cardProgramToken(JsonField.of(cardProgramToken))
 
         /** Globally unique identifier for the card program on which the card exists. */
-        @JsonProperty("card_program_token")
-        @ExcludeMissing
         fun cardProgramToken(cardProgramToken: JsonField<String>) = apply {
             this.cardProgramToken = cardProgramToken
         }
@@ -479,8 +507,6 @@ private constructor(
          * If the card is a replacement for another card, the globally unique identifier for the
          * card that was replaced.
          */
-        @JsonProperty("replacement_for")
-        @ExcludeMissing
         fun replacementFor(replacementFor: JsonField<String>) = apply {
             this.replacementFor = replacementFor
         }
@@ -490,8 +516,6 @@ private constructor(
             cardholderCurrency(JsonField.of(cardholderCurrency))
 
         /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
-        @JsonProperty("cardholder_currency")
-        @ExcludeMissing
         fun cardholderCurrency(cardholderCurrency: JsonField<String>) = apply {
             this.cardholderCurrency = cardholderCurrency
         }
@@ -500,16 +524,12 @@ private constructor(
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
         /** An RFC 3339 timestamp for when the card was created. UTC time zone. */
-        @JsonProperty("created")
-        @ExcludeMissing
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Three digit cvv printed on the back of the card. */
         fun cvv(cvv: String) = cvv(JsonField.of(cvv))
 
         /** Three digit cvv printed on the back of the card. */
-        @JsonProperty("cvv")
-        @ExcludeMissing
         fun cvv(cvv: JsonField<String>) = apply { this.cvv = cvv }
 
         /**
@@ -527,8 +547,6 @@ private constructor(
          * use. See
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
-        @JsonProperty("digital_card_art_token")
-        @ExcludeMissing
         fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
             this.digitalCardArtToken = digitalCardArtToken
         }
@@ -537,48 +555,36 @@ private constructor(
         fun expMonth(expMonth: String) = expMonth(JsonField.of(expMonth))
 
         /** Two digit (MM) expiry month. */
-        @JsonProperty("exp_month")
-        @ExcludeMissing
         fun expMonth(expMonth: JsonField<String>) = apply { this.expMonth = expMonth }
 
         /** Four digit (yyyy) expiry year. */
         fun expYear(expYear: String) = expYear(JsonField.of(expYear))
 
         /** Four digit (yyyy) expiry year. */
-        @JsonProperty("exp_year")
-        @ExcludeMissing
         fun expYear(expYear: JsonField<String>) = apply { this.expYear = expYear }
 
         /** Deprecated: Funding account for the card. */
         fun funding(funding: FundingAccount) = funding(JsonField.of(funding))
 
         /** Deprecated: Funding account for the card. */
-        @JsonProperty("funding")
-        @ExcludeMissing
         fun funding(funding: JsonField<FundingAccount>) = apply { this.funding = funding }
 
         /** Hostname of card’s locked merchant (will be empty if not applicable). */
         fun hostname(hostname: String) = hostname(JsonField.of(hostname))
 
         /** Hostname of card’s locked merchant (will be empty if not applicable). */
-        @JsonProperty("hostname")
-        @ExcludeMissing
         fun hostname(hostname: JsonField<String>) = apply { this.hostname = hostname }
 
         /** Last four digits of the card number. */
         fun lastFour(lastFour: String) = lastFour(JsonField.of(lastFour))
 
         /** Last four digits of the card number. */
-        @JsonProperty("last_four")
-        @ExcludeMissing
         fun lastFour(lastFour: JsonField<String>) = apply { this.lastFour = lastFour }
 
         /** Friendly name to identify the card. */
         fun memo(memo: String) = memo(JsonField.of(memo))
 
         /** Friendly name to identify the card. */
-        @JsonProperty("memo")
-        @ExcludeMissing
         fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
         /**
@@ -593,8 +599,6 @@ private constructor(
          * have PAN returned as a field in production. Please contact
          * [support@lithic.com](mailto:support@lithic.com) for questions.
          */
-        @JsonProperty("pan")
-        @ExcludeMissing
         fun pan(pan: JsonField<String>) = apply { this.pan = pan }
 
         /**
@@ -610,8 +614,6 @@ private constructor(
          * terminal. Possible commands are: CHANGE_PIN, UNBLOCK_PIN. Applicable only to cards issued
          * in markets supporting offline PINs.
          */
-        @JsonProperty("pending_commands")
-        @ExcludeMissing
         fun pendingCommands(pendingCommands: JsonField<List<String>>) = apply {
             this.pendingCommands = pendingCommands
         }
@@ -626,8 +628,6 @@ private constructor(
          * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
          * attempts).
          */
-        @JsonProperty("pin_status")
-        @ExcludeMissing
         fun pinStatus(pinStatus: JsonField<PinStatus>) = apply { this.pinStatus = pinStatus }
 
         /**
@@ -642,8 +642,6 @@ private constructor(
          * use. Specifies the configuration (i.e., physical card art) that the card should be
          * manufactured with.
          */
-        @JsonProperty("product_id")
-        @ExcludeMissing
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
         /**
@@ -656,8 +654,6 @@ private constructor(
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
          * limit will be declined.
          */
-        @JsonProperty("spend_limit")
-        @ExcludeMissing
         fun spendLimit(spendLimit: JsonField<Long>) = apply { this.spendLimit = spendLimit }
 
         /**
@@ -687,8 +683,6 @@ private constructor(
          * - `TRANSACTION` - Card will authorize multiple transactions if each individual
          *   transaction is under the spend limit.
          */
-        @JsonProperty("spend_limit_duration")
-        @ExcludeMissing
         fun spendLimitDuration(spendLimitDuration: JsonField<SpendLimitDuration>) = apply {
             this.spendLimitDuration = spendLimitDuration
         }
@@ -733,16 +727,12 @@ private constructor(
          * In sandbox, the same daily batch fulfillment occurs, but no cards are actually
          * manufactured.
          */
-        @JsonProperty("state")
-        @ExcludeMissing
         fun state(state: JsonField<State>) = apply { this.state = state }
 
         /** Globally unique identifier. */
         fun token(token: String) = token(JsonField.of(token))
 
         /** Globally unique identifier. */
-        @JsonProperty("token")
-        @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
@@ -777,8 +767,6 @@ private constructor(
          * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
          *   instead.
          */
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -786,7 +774,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -831,18 +818,31 @@ private constructor(
     }
 
     /** Deprecated: Funding account for the card. */
-    @JsonDeserialize(builder = FundingAccount.Builder::class)
     @NoAutoDetect
     class FundingAccount
+    @JsonCreator
     private constructor(
-        private val accountName: JsonField<String>,
-        private val created: JsonField<OffsetDateTime>,
-        private val lastFour: JsonField<String>,
-        private val nickname: JsonField<String>,
-        private val state: JsonField<State>,
-        private val token: JsonField<String>,
-        private val type: JsonField<Type>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("account_name")
+        @ExcludeMissing
+        private val accountName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created")
+        @ExcludeMissing
+        private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("last_four")
+        @ExcludeMissing
+        private val lastFour: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("nickname")
+        @ExcludeMissing
+        private val nickname: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("state")
+        @ExcludeMissing
+        private val state: JsonField<State> = JsonMissing.of(),
+        @JsonProperty("token")
+        @ExcludeMissing
+        private val token: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Account name identifying the funding source. This may be `null`. */
@@ -975,8 +975,6 @@ private constructor(
             fun accountName(accountName: String) = accountName(JsonField.of(accountName))
 
             /** Account name identifying the funding source. This may be `null`. */
-            @JsonProperty("account_name")
-            @ExcludeMissing
             fun accountName(accountName: JsonField<String>) = apply {
                 this.accountName = accountName
             }
@@ -991,8 +989,6 @@ private constructor(
              * An RFC 3339 string representing when this funding source was added to the Lithic
              * account. This may be `null`. UTC time zone.
              */
-            @JsonProperty("created")
-            @ExcludeMissing
             fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
             /**
@@ -1005,16 +1001,12 @@ private constructor(
              * The last 4 digits of the account (e.g. bank account, debit card) associated with this
              * FundingAccount. This may be null.
              */
-            @JsonProperty("last_four")
-            @ExcludeMissing
             fun lastFour(lastFour: JsonField<String>) = apply { this.lastFour = lastFour }
 
             /** The nickname given to the `FundingAccount` or `null` if it has no nickname. */
             fun nickname(nickname: String) = nickname(JsonField.of(nickname))
 
             /** The nickname given to the `FundingAccount` or `null` if it has no nickname. */
-            @JsonProperty("nickname")
-            @ExcludeMissing
             fun nickname(nickname: JsonField<String>) = apply { this.nickname = nickname }
 
             /**
@@ -1039,16 +1031,12 @@ private constructor(
              *   verification.
              * - `DELETED` - The founding account has been deleted.
              */
-            @JsonProperty("state")
-            @ExcludeMissing
             fun state(state: JsonField<State>) = apply { this.state = state }
 
             /** A globally unique identifier for this FundingAccount. */
             fun token(token: String) = token(JsonField.of(token))
 
             /** A globally unique identifier for this FundingAccount. */
-            @JsonProperty("token")
-            @ExcludeMissing
             fun token(token: JsonField<String>) = apply { this.token = token }
 
             /**
@@ -1063,8 +1051,6 @@ private constructor(
              * - `DEPOSITORY_CHECKING` - Bank checking account.
              * - `DEPOSITORY_SAVINGS` - Bank savings account.
              */
-            @JsonProperty("type")
-            @ExcludeMissing
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1072,7 +1058,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
