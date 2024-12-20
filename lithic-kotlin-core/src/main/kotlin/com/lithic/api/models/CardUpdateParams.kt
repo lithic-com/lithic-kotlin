@@ -172,14 +172,14 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardUpdateBody: CardUpdateBody) = apply {
-                this.digitalCardArtToken = cardUpdateBody.digitalCardArtToken
-                this.memo = cardUpdateBody.memo
-                this.pin = cardUpdateBody.pin
-                this.pinStatus = cardUpdateBody.pinStatus
-                this.spendLimit = cardUpdateBody.spendLimit
-                this.spendLimitDuration = cardUpdateBody.spendLimitDuration
-                this.state = cardUpdateBody.state
-                additionalProperties(cardUpdateBody.additionalProperties)
+                digitalCardArtToken = cardUpdateBody.digitalCardArtToken
+                memo = cardUpdateBody.memo
+                pin = cardUpdateBody.pin
+                pinStatus = cardUpdateBody.pinStatus
+                spendLimit = cardUpdateBody.spendLimit
+                spendLimitDuration = cardUpdateBody.spendLimitDuration
+                state = cardUpdateBody.state
+                additionalProperties = cardUpdateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -189,26 +189,26 @@ constructor(
              * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
              */
             @JsonProperty("digital_card_art_token")
-            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+            fun digitalCardArtToken(digitalCardArtToken: String?) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
             }
 
             /** Friendly name to identify the card. */
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             /**
              * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
              * `VIRTUAL`. Changing PIN also resets PIN status to `OK`. See
              * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
-            @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
+            @JsonProperty("pin") fun pin(pin: String?) = apply { this.pin = pin }
 
             /**
              * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
              * attempts). Can only be set to `OK` to unblock a card.
              */
             @JsonProperty("pin_status")
-            fun pinStatus(pinStatus: PinStatus) = apply { this.pinStatus = pinStatus }
+            fun pinStatus(pinStatus: PinStatus?) = apply { this.pinStatus = pinStatus }
 
             /**
              * Amount (in cents) to limit approved authorizations. Transaction requests above the
@@ -217,7 +217,7 @@ constructor(
              * will result in declined transactions due to checks against the card limit.
              */
             @JsonProperty("spend_limit")
-            fun spendLimit(spendLimit: Long) = apply { this.spendLimit = spendLimit }
+            fun spendLimit(spendLimit: Long?) = apply { this.spendLimit = spendLimit }
 
             /**
              * Spend limit duration values:
@@ -233,7 +233,7 @@ constructor(
              *   transaction is under the spend limit.
              */
             @JsonProperty("spend_limit_duration")
-            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
+            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration?) = apply {
                 this.spendLimitDuration = spendLimitDuration
             }
 
@@ -245,20 +245,26 @@ constructor(
              *   parameters).
              * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
              */
-            @JsonProperty("state") fun state(state: State) = apply { this.state = state }
+            @JsonProperty("state") fun state(state: State?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardUpdateBody =

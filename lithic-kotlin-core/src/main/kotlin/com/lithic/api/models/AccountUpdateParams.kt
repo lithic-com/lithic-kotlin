@@ -137,12 +137,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountUpdateBody: AccountUpdateBody) = apply {
-                this.dailySpendLimit = accountUpdateBody.dailySpendLimit
-                this.lifetimeSpendLimit = accountUpdateBody.lifetimeSpendLimit
-                this.monthlySpendLimit = accountUpdateBody.monthlySpendLimit
-                this.state = accountUpdateBody.state
-                this.verificationAddress = accountUpdateBody.verificationAddress
-                additionalProperties(accountUpdateBody.additionalProperties)
+                dailySpendLimit = accountUpdateBody.dailySpendLimit
+                lifetimeSpendLimit = accountUpdateBody.lifetimeSpendLimit
+                monthlySpendLimit = accountUpdateBody.monthlySpendLimit
+                state = accountUpdateBody.state
+                verificationAddress = accountUpdateBody.verificationAddress
+                additionalProperties = accountUpdateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -150,7 +150,7 @@ constructor(
              * limit is set to $1,250.
              */
             @JsonProperty("daily_spend_limit")
-            fun dailySpendLimit(dailySpendLimit: Long) = apply {
+            fun dailySpendLimit(dailySpendLimit: Long?) = apply {
                 this.dailySpendLimit = dailySpendLimit
             }
 
@@ -163,7 +163,7 @@ constructor(
              * from the daily spend limit and the monthly spend limit.
              */
             @JsonProperty("lifetime_spend_limit")
-            fun lifetimeSpendLimit(lifetimeSpendLimit: Long) = apply {
+            fun lifetimeSpendLimit(lifetimeSpendLimit: Long?) = apply {
                 this.lifetimeSpendLimit = lifetimeSpendLimit
             }
 
@@ -172,12 +172,12 @@ constructor(
              * limit is set to $5,000.
              */
             @JsonProperty("monthly_spend_limit")
-            fun monthlySpendLimit(monthlySpendLimit: Long) = apply {
+            fun monthlySpendLimit(monthlySpendLimit: Long?) = apply {
                 this.monthlySpendLimit = monthlySpendLimit
             }
 
             /** Account states. */
-            @JsonProperty("state") fun state(state: State) = apply { this.state = state }
+            @JsonProperty("state") fun state(state: State?) = apply { this.state = state }
 
             /**
              * Address used during Address Verification Service (AVS) checks during transactions if
@@ -186,22 +186,28 @@ constructor(
              * future release.
              */
             @JsonProperty("verification_address")
-            fun verificationAddress(verificationAddress: VerificationAddress) = apply {
+            fun verificationAddress(verificationAddress: VerificationAddress?) = apply {
                 this.verificationAddress = verificationAddress
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountUpdateBody =
@@ -550,42 +556,49 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(verificationAddress: VerificationAddress) = apply {
-                this.address1 = verificationAddress.address1
-                this.address2 = verificationAddress.address2
-                this.city = verificationAddress.city
-                this.country = verificationAddress.country
-                this.postalCode = verificationAddress.postalCode
-                this.state = verificationAddress.state
-                additionalProperties(verificationAddress.additionalProperties)
+                address1 = verificationAddress.address1
+                address2 = verificationAddress.address2
+                city = verificationAddress.city
+                country = verificationAddress.country
+                postalCode = verificationAddress.postalCode
+                state = verificationAddress.state
+                additionalProperties = verificationAddress.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("address1")
-            fun address1(address1: String) = apply { this.address1 = address1 }
+            fun address1(address1: String?) = apply { this.address1 = address1 }
 
             @JsonProperty("address2")
-            fun address2(address2: String) = apply { this.address2 = address2 }
+            fun address2(address2: String?) = apply { this.address2 = address2 }
 
-            @JsonProperty("city") fun city(city: String) = apply { this.city = city }
+            @JsonProperty("city") fun city(city: String?) = apply { this.city = city }
 
-            @JsonProperty("country") fun country(country: String) = apply { this.country = country }
+            @JsonProperty("country")
+            fun country(country: String?) = apply { this.country = country }
 
             @JsonProperty("postal_code")
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            @JsonProperty("state") fun state(state: String) = apply { this.state = state }
+            @JsonProperty("state") fun state(state: String?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): VerificationAddress =

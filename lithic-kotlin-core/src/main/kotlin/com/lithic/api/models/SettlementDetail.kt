@@ -46,8 +46,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     fun accountToken(): String = accountToken.getRequired("account_token")
 
@@ -203,6 +201,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): SettlementDetail = apply {
         if (!validated) {
             accountToken()
@@ -263,28 +263,28 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(settlementDetail: SettlementDetail) = apply {
-            this.accountToken = settlementDetail.accountToken
-            this.cardProgramToken = settlementDetail.cardProgramToken
-            this.cardToken = settlementDetail.cardToken
-            this.created = settlementDetail.created
-            this.currency = settlementDetail.currency
-            this.disputesGrossAmount = settlementDetail.disputesGrossAmount
-            this.eventTokens = settlementDetail.eventTokens
-            this.feeDescription = settlementDetail.feeDescription
-            this.institution = settlementDetail.institution
-            this.interchangeFeeExtendedPrecision = settlementDetail.interchangeFeeExtendedPrecision
-            this.interchangeGrossAmount = settlementDetail.interchangeGrossAmount
-            this.network = settlementDetail.network
-            this.otherFeesDetails = settlementDetail.otherFeesDetails
-            this.otherFeesGrossAmount = settlementDetail.otherFeesGrossAmount
-            this.reportDate = settlementDetail.reportDate
-            this.settlementDate = settlementDetail.settlementDate
-            this.token = settlementDetail.token
-            this.transactionToken = settlementDetail.transactionToken
-            this.transactionsGrossAmount = settlementDetail.transactionsGrossAmount
-            this.type = settlementDetail.type
-            this.updated = settlementDetail.updated
-            additionalProperties(settlementDetail.additionalProperties)
+            accountToken = settlementDetail.accountToken
+            cardProgramToken = settlementDetail.cardProgramToken
+            cardToken = settlementDetail.cardToken
+            created = settlementDetail.created
+            currency = settlementDetail.currency
+            disputesGrossAmount = settlementDetail.disputesGrossAmount
+            eventTokens = settlementDetail.eventTokens
+            feeDescription = settlementDetail.feeDescription
+            institution = settlementDetail.institution
+            interchangeFeeExtendedPrecision = settlementDetail.interchangeFeeExtendedPrecision
+            interchangeGrossAmount = settlementDetail.interchangeGrossAmount
+            network = settlementDetail.network
+            otherFeesDetails = settlementDetail.otherFeesDetails
+            otherFeesGrossAmount = settlementDetail.otherFeesGrossAmount
+            reportDate = settlementDetail.reportDate
+            settlementDate = settlementDetail.settlementDate
+            token = settlementDetail.token
+            transactionToken = settlementDetail.transactionToken
+            transactionsGrossAmount = settlementDetail.transactionsGrossAmount
+            type = settlementDetail.type
+            updated = settlementDetail.updated
+            additionalProperties = settlementDetail.additionalProperties.toMutableMap()
         }
 
         /**
@@ -514,16 +514,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): SettlementDetail =
@@ -637,8 +643,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         fun isa(): Long? = isa.getNullable("ISA")
 
         @JsonProperty("ISA") @ExcludeMissing fun _isa() = isa
@@ -646,6 +650,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): OtherFeesDetails = apply {
             if (!validated) {
@@ -667,8 +673,8 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(otherFeesDetails: OtherFeesDetails) = apply {
-                this.isa = otherFeesDetails.isa
-                additionalProperties(otherFeesDetails.additionalProperties)
+                isa = otherFeesDetails.isa
+                additionalProperties = otherFeesDetails.additionalProperties.toMutableMap()
             }
 
             fun isa(isa: Long) = isa(JsonField.of(isa))
@@ -679,16 +685,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): OtherFeesDetails =

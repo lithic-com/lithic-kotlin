@@ -113,7 +113,7 @@ constructor(
     @NoAutoDetect
     class CardCreateBody
     internal constructor(
-        private val type: Type?,
+        private val type: Type,
         private val accountToken: String?,
         private val cardProgramToken: String?,
         private val carrier: Carrier?,
@@ -148,7 +148,7 @@ constructor(
          * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
          *   instead.
          */
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /**
          * Globally unique identifier for the account that the card will be associated with.
@@ -301,24 +301,24 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardCreateBody: CardCreateBody) = apply {
-                this.type = cardCreateBody.type
-                this.accountToken = cardCreateBody.accountToken
-                this.cardProgramToken = cardCreateBody.cardProgramToken
-                this.carrier = cardCreateBody.carrier
-                this.digitalCardArtToken = cardCreateBody.digitalCardArtToken
-                this.expMonth = cardCreateBody.expMonth
-                this.expYear = cardCreateBody.expYear
-                this.memo = cardCreateBody.memo
-                this.pin = cardCreateBody.pin
-                this.productId = cardCreateBody.productId
-                this.replacementAccountToken = cardCreateBody.replacementAccountToken
-                this.replacementFor = cardCreateBody.replacementFor
-                this.shippingAddress = cardCreateBody.shippingAddress
-                this.shippingMethod = cardCreateBody.shippingMethod
-                this.spendLimit = cardCreateBody.spendLimit
-                this.spendLimitDuration = cardCreateBody.spendLimitDuration
-                this.state = cardCreateBody.state
-                additionalProperties(cardCreateBody.additionalProperties)
+                type = cardCreateBody.type
+                accountToken = cardCreateBody.accountToken
+                cardProgramToken = cardCreateBody.cardProgramToken
+                carrier = cardCreateBody.carrier
+                digitalCardArtToken = cardCreateBody.digitalCardArtToken
+                expMonth = cardCreateBody.expMonth
+                expYear = cardCreateBody.expYear
+                memo = cardCreateBody.memo
+                pin = cardCreateBody.pin
+                productId = cardCreateBody.productId
+                replacementAccountToken = cardCreateBody.replacementAccountToken
+                replacementFor = cardCreateBody.replacementFor
+                shippingAddress = cardCreateBody.shippingAddress
+                shippingMethod = cardCreateBody.shippingMethod
+                spendLimit = cardCreateBody.spendLimit
+                spendLimitDuration = cardCreateBody.spendLimitDuration
+                state = cardCreateBody.state
+                additionalProperties = cardCreateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -346,7 +346,7 @@ constructor(
              * [Managing Your Program](doc:managing-your-program) for more information.
              */
             @JsonProperty("account_token")
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
             /**
              * For card programs with more than one BIN range. This must be configured with Lithic
@@ -356,12 +356,12 @@ constructor(
              * creating cards on specific card programs.
              */
             @JsonProperty("card_program_token")
-            fun cardProgramToken(cardProgramToken: String) = apply {
+            fun cardProgramToken(cardProgramToken: String?) = apply {
                 this.cardProgramToken = cardProgramToken
             }
 
             @JsonProperty("carrier")
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -370,7 +370,7 @@ constructor(
              * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
              */
             @JsonProperty("digital_card_art_token")
-            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+            fun digitalCardArtToken(digitalCardArtToken: String?) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
             }
 
@@ -379,23 +379,23 @@ constructor(
              * expiration date will be generated.
              */
             @JsonProperty("exp_month")
-            fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: String?) = apply { this.expMonth = expMonth }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date will be generated.
              */
             @JsonProperty("exp_year")
-            fun expYear(expYear: String) = apply { this.expYear = expYear }
+            fun expYear(expYear: String?) = apply { this.expYear = expYear }
 
             /** Friendly name to identify the card. */
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             /**
              * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`.
              * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
-            @JsonProperty("pin") fun pin(pin: String) = apply { this.pin = pin }
+            @JsonProperty("pin") fun pin(pin: String?) = apply { this.pin = pin }
 
             /**
              * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
@@ -403,7 +403,7 @@ constructor(
              * should be manufactured with.
              */
             @JsonProperty("product_id")
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /**
              * Restricted field limited to select use cases. Lithic will reach out directly if this
@@ -413,7 +413,7 @@ constructor(
              * account will be inferred from the card being replaced.
              */
             @JsonProperty("replacement_account_token")
-            fun replacementAccountToken(replacementAccountToken: String) = apply {
+            fun replacementAccountToken(replacementAccountToken: String?) = apply {
                 this.replacementAccountToken = replacementAccountToken
             }
 
@@ -423,12 +423,12 @@ constructor(
              * it will be replaced by a `VIRTUAL` card.
              */
             @JsonProperty("replacement_for")
-            fun replacementFor(replacementFor: String) = apply {
+            fun replacementFor(replacementFor: String?) = apply {
                 this.replacementFor = replacementFor
             }
 
             @JsonProperty("shipping_address")
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -445,7 +445,7 @@ constructor(
              *   tracking
              */
             @JsonProperty("shipping_method")
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -456,7 +456,7 @@ constructor(
              * will result in declined transactions due to checks against the card limit.
              */
             @JsonProperty("spend_limit")
-            fun spendLimit(spendLimit: Long) = apply { this.spendLimit = spendLimit }
+            fun spendLimit(spendLimit: Long?) = apply { this.spendLimit = spendLimit }
 
             /**
              * Spend limit duration values:
@@ -472,7 +472,7 @@ constructor(
              *   transaction is under the spend limit.
              */
             @JsonProperty("spend_limit_duration")
-            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
+            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration?) = apply {
                 this.spendLimitDuration = spendLimitDuration
             }
 
@@ -482,20 +482,26 @@ constructor(
              *   parameters).
              * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
              */
-            @JsonProperty("state") fun state(state: State) = apply { this.state = state }
+            @JsonProperty("state") fun state(state: State?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardCreateBody =

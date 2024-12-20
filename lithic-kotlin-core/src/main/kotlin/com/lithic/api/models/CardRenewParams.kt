@@ -79,7 +79,7 @@ constructor(
     @NoAutoDetect
     class CardRenewBody
     internal constructor(
-        private val shippingAddress: ShippingAddress?,
+        private val shippingAddress: ShippingAddress,
         private val carrier: Carrier?,
         private val expMonth: String?,
         private val expYear: String?,
@@ -89,7 +89,7 @@ constructor(
     ) {
 
         /** The shipping address this card will be sent to. */
-        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
+        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress = shippingAddress
 
         /** If omitted, the previous carrier will be used. */
         @JsonProperty("carrier") fun carrier(): Carrier? = carrier
@@ -148,13 +148,13 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardRenewBody: CardRenewBody) = apply {
-                this.shippingAddress = cardRenewBody.shippingAddress
-                this.carrier = cardRenewBody.carrier
-                this.expMonth = cardRenewBody.expMonth
-                this.expYear = cardRenewBody.expYear
-                this.productId = cardRenewBody.productId
-                this.shippingMethod = cardRenewBody.shippingMethod
-                additionalProperties(cardRenewBody.additionalProperties)
+                shippingAddress = cardRenewBody.shippingAddress
+                carrier = cardRenewBody.carrier
+                expMonth = cardRenewBody.expMonth
+                expYear = cardRenewBody.expYear
+                productId = cardRenewBody.productId
+                shippingMethod = cardRenewBody.shippingMethod
+                additionalProperties = cardRenewBody.additionalProperties.toMutableMap()
             }
 
             /** The shipping address this card will be sent to. */
@@ -165,21 +165,21 @@ constructor(
 
             /** If omitted, the previous carrier will be used. */
             @JsonProperty("carrier")
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
             @JsonProperty("exp_month")
-            fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: String?) = apply { this.expMonth = expMonth }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
             @JsonProperty("exp_year")
-            fun expYear(expYear: String) = apply { this.expYear = expYear }
+            fun expYear(expYear: String?) = apply { this.expYear = expYear }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
@@ -187,7 +187,7 @@ constructor(
              * configured with Lithic before use.
              */
             @JsonProperty("product_id")
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /**
              * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -202,22 +202,28 @@ constructor(
              *   tracking
              */
             @JsonProperty("shipping_method")
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardRenewBody =

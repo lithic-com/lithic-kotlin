@@ -76,25 +76,31 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(bookTransferReverseBody: BookTransferReverseBody) = apply {
-                this.memo = bookTransferReverseBody.memo
-                additionalProperties(bookTransferReverseBody.additionalProperties)
+                memo = bookTransferReverseBody.memo
+                additionalProperties = bookTransferReverseBody.additionalProperties.toMutableMap()
             }
 
             /** Optional descriptor for the reversal. */
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): BookTransferReverseBody =

@@ -82,26 +82,33 @@ constructor(
             internal fun from(
                 eventSubscriptionSendSimulatedExampleBody: EventSubscriptionSendSimulatedExampleBody
             ) = apply {
-                this.eventType = eventSubscriptionSendSimulatedExampleBody.eventType
-                additionalProperties(eventSubscriptionSendSimulatedExampleBody.additionalProperties)
+                eventType = eventSubscriptionSendSimulatedExampleBody.eventType
+                additionalProperties =
+                    eventSubscriptionSendSimulatedExampleBody.additionalProperties.toMutableMap()
             }
 
             /** Event type to send example message for. */
             @JsonProperty("event_type")
-            fun eventType(eventType: EventType) = apply { this.eventType = eventType }
+            fun eventType(eventType: EventType?) = apply { this.eventType = eventType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): EventSubscriptionSendSimulatedExampleBody =

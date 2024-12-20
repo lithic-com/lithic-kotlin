@@ -39,8 +39,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun token(): String = token.getRequired("token")
 
     fun result(): TransactionResult = result.getRequired("result")
@@ -100,6 +98,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): ManagementOperationTransaction = apply {
         if (!validated) {
             token()
@@ -144,20 +144,21 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(managementOperationTransaction: ManagementOperationTransaction) = apply {
-            this.token = managementOperationTransaction.token
-            this.result = managementOperationTransaction.result
-            this.category = managementOperationTransaction.category
-            this.status = managementOperationTransaction.status
-            this.settledAmount = managementOperationTransaction.settledAmount
-            this.pendingAmount = managementOperationTransaction.pendingAmount
-            this.currency = managementOperationTransaction.currency
-            this.events = managementOperationTransaction.events
-            this.created = managementOperationTransaction.created
-            this.updated = managementOperationTransaction.updated
-            this.userDefinedId = managementOperationTransaction.userDefinedId
-            this.financialAccountToken = managementOperationTransaction.financialAccountToken
-            this.direction = managementOperationTransaction.direction
-            additionalProperties(managementOperationTransaction.additionalProperties)
+            token = managementOperationTransaction.token
+            result = managementOperationTransaction.result
+            category = managementOperationTransaction.category
+            status = managementOperationTransaction.status
+            settledAmount = managementOperationTransaction.settledAmount
+            pendingAmount = managementOperationTransaction.pendingAmount
+            currency = managementOperationTransaction.currency
+            events = managementOperationTransaction.events
+            created = managementOperationTransaction.created
+            updated = managementOperationTransaction.updated
+            userDefinedId = managementOperationTransaction.userDefinedId
+            financialAccountToken = managementOperationTransaction.financialAccountToken
+            direction = managementOperationTransaction.direction
+            additionalProperties =
+                managementOperationTransaction.additionalProperties.toMutableMap()
         }
 
         fun token(token: String) = token(JsonField.of(token))
@@ -255,16 +256,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ManagementOperationTransaction =
@@ -430,8 +437,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         fun amount(): Long = amount.getRequired("amount")
 
         fun type(): ManagementOperationEventType = type.getRequired("type")
@@ -473,6 +478,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): ManagementOperationEvent = apply {
             if (!validated) {
                 amount()
@@ -509,16 +516,16 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(managementOperationEvent: ManagementOperationEvent) = apply {
-                this.amount = managementOperationEvent.amount
-                this.type = managementOperationEvent.type
-                this.subtype = managementOperationEvent.subtype
-                this.result = managementOperationEvent.result
-                this.detailedResults = managementOperationEvent.detailedResults
-                this.created = managementOperationEvent.created
-                this.token = managementOperationEvent.token
-                this.memo = managementOperationEvent.memo
-                this.effectiveDate = managementOperationEvent.effectiveDate
-                additionalProperties(managementOperationEvent.additionalProperties)
+                amount = managementOperationEvent.amount
+                type = managementOperationEvent.type
+                subtype = managementOperationEvent.subtype
+                result = managementOperationEvent.result
+                detailedResults = managementOperationEvent.detailedResults
+                created = managementOperationEvent.created
+                token = managementOperationEvent.token
+                memo = managementOperationEvent.memo
+                effectiveDate = managementOperationEvent.effectiveDate
+                additionalProperties = managementOperationEvent.additionalProperties.toMutableMap()
             }
 
             fun amount(amount: Long) = amount(JsonField.of(amount))
@@ -582,16 +589,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ManagementOperationEvent =

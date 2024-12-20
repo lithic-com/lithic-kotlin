@@ -89,29 +89,36 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authRuleV2BacktestCreateBody: AuthRuleV2BacktestCreateBody) = apply {
-                this.end = authRuleV2BacktestCreateBody.end
-                this.start = authRuleV2BacktestCreateBody.start
-                additionalProperties(authRuleV2BacktestCreateBody.additionalProperties)
+                end = authRuleV2BacktestCreateBody.end
+                start = authRuleV2BacktestCreateBody.start
+                additionalProperties =
+                    authRuleV2BacktestCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The end time of the backtest. */
-            @JsonProperty("end") fun end(end: OffsetDateTime) = apply { this.end = end }
+            @JsonProperty("end") fun end(end: OffsetDateTime?) = apply { this.end = end }
 
             /** The start time of the backtest. */
-            @JsonProperty("start") fun start(start: OffsetDateTime) = apply { this.start = start }
+            @JsonProperty("start") fun start(start: OffsetDateTime?) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AuthRuleV2BacktestCreateBody =

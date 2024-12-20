@@ -98,13 +98,13 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authRuleV2UpdateBody: AuthRuleV2UpdateBody) = apply {
-                this.name = authRuleV2UpdateBody.name
-                this.state = authRuleV2UpdateBody.state
-                additionalProperties(authRuleV2UpdateBody.additionalProperties)
+                name = authRuleV2UpdateBody.name
+                state = authRuleV2UpdateBody.state
+                additionalProperties = authRuleV2UpdateBody.additionalProperties.toMutableMap()
             }
 
             /** Auth Rule Name */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            @JsonProperty("name") fun name(name: String?) = apply { this.name = name }
 
             /**
              * The desired state of the Auth Rule.
@@ -113,20 +113,26 @@ constructor(
              * time. If you need to (re-)activate an Auth Rule the /promote endpoint should be used
              * to promote a draft to the currently active version.
              */
-            @JsonProperty("state") fun state(state: State) = apply { this.state = state }
+            @JsonProperty("state") fun state(state: State?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AuthRuleV2UpdateBody =
