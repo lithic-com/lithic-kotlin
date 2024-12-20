@@ -48,6 +48,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /**
      * A globally unique identifier for this record of an external bank account association. If a
      * program links an external bank account to more than one end-user or to both the program and
@@ -229,8 +231,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): ExternalBankAccountRetryMicroDepositsResponse = apply {
         if (!validated) {
             token()
@@ -296,33 +296,33 @@ private constructor(
             externalBankAccountRetryMicroDepositsResponse:
                 ExternalBankAccountRetryMicroDepositsResponse
         ) = apply {
-            token = externalBankAccountRetryMicroDepositsResponse.token
-            owner = externalBankAccountRetryMicroDepositsResponse.owner
-            routingNumber = externalBankAccountRetryMicroDepositsResponse.routingNumber
-            lastFour = externalBankAccountRetryMicroDepositsResponse.lastFour
-            name = externalBankAccountRetryMicroDepositsResponse.name
-            currency = externalBankAccountRetryMicroDepositsResponse.currency
-            country = externalBankAccountRetryMicroDepositsResponse.country
-            accountToken = externalBankAccountRetryMicroDepositsResponse.accountToken
-            created = externalBankAccountRetryMicroDepositsResponse.created
-            companyId = externalBankAccountRetryMicroDepositsResponse.companyId
-            dob = externalBankAccountRetryMicroDepositsResponse.dob
-            doingBusinessAs = externalBankAccountRetryMicroDepositsResponse.doingBusinessAs
-            userDefinedId = externalBankAccountRetryMicroDepositsResponse.userDefinedId
-            verificationFailedReason =
+            this.token = externalBankAccountRetryMicroDepositsResponse.token
+            this.owner = externalBankAccountRetryMicroDepositsResponse.owner
+            this.routingNumber = externalBankAccountRetryMicroDepositsResponse.routingNumber
+            this.lastFour = externalBankAccountRetryMicroDepositsResponse.lastFour
+            this.name = externalBankAccountRetryMicroDepositsResponse.name
+            this.currency = externalBankAccountRetryMicroDepositsResponse.currency
+            this.country = externalBankAccountRetryMicroDepositsResponse.country
+            this.accountToken = externalBankAccountRetryMicroDepositsResponse.accountToken
+            this.created = externalBankAccountRetryMicroDepositsResponse.created
+            this.companyId = externalBankAccountRetryMicroDepositsResponse.companyId
+            this.dob = externalBankAccountRetryMicroDepositsResponse.dob
+            this.doingBusinessAs = externalBankAccountRetryMicroDepositsResponse.doingBusinessAs
+            this.userDefinedId = externalBankAccountRetryMicroDepositsResponse.userDefinedId
+            this.verificationFailedReason =
                 externalBankAccountRetryMicroDepositsResponse.verificationFailedReason
-            verificationAttempts =
+            this.verificationAttempts =
                 externalBankAccountRetryMicroDepositsResponse.verificationAttempts
-            financialAccountToken =
+            this.financialAccountToken =
                 externalBankAccountRetryMicroDepositsResponse.financialAccountToken
-            type = externalBankAccountRetryMicroDepositsResponse.type
-            verificationMethod = externalBankAccountRetryMicroDepositsResponse.verificationMethod
-            ownerType = externalBankAccountRetryMicroDepositsResponse.ownerType
-            state = externalBankAccountRetryMicroDepositsResponse.state
-            verificationState = externalBankAccountRetryMicroDepositsResponse.verificationState
-            address = externalBankAccountRetryMicroDepositsResponse.address
-            additionalProperties =
-                externalBankAccountRetryMicroDepositsResponse.additionalProperties.toMutableMap()
+            this.type = externalBankAccountRetryMicroDepositsResponse.type
+            this.verificationMethod =
+                externalBankAccountRetryMicroDepositsResponse.verificationMethod
+            this.ownerType = externalBankAccountRetryMicroDepositsResponse.ownerType
+            this.state = externalBankAccountRetryMicroDepositsResponse.state
+            this.verificationState = externalBankAccountRetryMicroDepositsResponse.verificationState
+            this.address = externalBankAccountRetryMicroDepositsResponse.address
+            additionalProperties(externalBankAccountRetryMicroDepositsResponse.additionalProperties)
         }
 
         /**
@@ -571,22 +571,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ExternalBankAccountRetryMicroDepositsResponse =

@@ -23,6 +23,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /**
      * Globally unique identifier for the 3DS authentication. This token is sent as part of the
      * initial 3DS Decisioning Request and as part of the 3DS Challenge Event in the
@@ -47,8 +49,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): ChallengeResponse = apply {
         if (!validated) {
             token()
@@ -71,9 +71,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(challengeResponse: ChallengeResponse) = apply {
-            token = challengeResponse.token
+            this.token = challengeResponse.token
             this.challengeResponse = challengeResponse.challengeResponse
-            additionalProperties = challengeResponse.additionalProperties.toMutableMap()
+            additionalProperties(challengeResponse.additionalProperties)
         }
 
         /**
@@ -105,22 +105,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ChallengeResponse =

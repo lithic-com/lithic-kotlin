@@ -36,6 +36,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Funds available for spend in the currency's smallest unit (e.g., cents for USD) */
     fun availableAmount(): Long = availableAmount.getRequired("available_amount")
 
@@ -129,8 +131,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): AggregateBalance = apply {
         if (!validated) {
             availableAmount()
@@ -169,17 +169,17 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(aggregateBalance: AggregateBalance) = apply {
-            availableAmount = aggregateBalance.availableAmount
-            created = aggregateBalance.created
-            currency = aggregateBalance.currency
-            financialAccountType = aggregateBalance.financialAccountType
-            lastFinancialAccountToken = aggregateBalance.lastFinancialAccountToken
-            lastTransactionEventToken = aggregateBalance.lastTransactionEventToken
-            lastTransactionToken = aggregateBalance.lastTransactionToken
-            pendingAmount = aggregateBalance.pendingAmount
-            totalAmount = aggregateBalance.totalAmount
-            updated = aggregateBalance.updated
-            additionalProperties = aggregateBalance.additionalProperties.toMutableMap()
+            this.availableAmount = aggregateBalance.availableAmount
+            this.created = aggregateBalance.created
+            this.currency = aggregateBalance.currency
+            this.financialAccountType = aggregateBalance.financialAccountType
+            this.lastFinancialAccountToken = aggregateBalance.lastFinancialAccountToken
+            this.lastTransactionEventToken = aggregateBalance.lastTransactionEventToken
+            this.lastTransactionToken = aggregateBalance.lastTransactionToken
+            this.pendingAmount = aggregateBalance.pendingAmount
+            this.totalAmount = aggregateBalance.totalAmount
+            this.updated = aggregateBalance.updated
+            additionalProperties(aggregateBalance.additionalProperties)
         }
 
         /** Funds available for spend in the currency's smallest unit (e.g., cents for USD) */
@@ -298,22 +298,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): AggregateBalance =

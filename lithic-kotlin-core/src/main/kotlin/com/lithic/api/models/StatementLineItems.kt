@@ -28,6 +28,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     fun data(): List<StatementLineItemResponse> = data.getRequired("data")
 
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
@@ -39,8 +41,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): StatementLineItems = apply {
         if (!validated) {
@@ -64,9 +64,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(statementLineItems: StatementLineItems) = apply {
-            data = statementLineItems.data
-            hasMore = statementLineItems.hasMore
-            additionalProperties = statementLineItems.additionalProperties.toMutableMap()
+            this.data = statementLineItems.data
+            this.hasMore = statementLineItems.hasMore
+            additionalProperties(statementLineItems.additionalProperties)
         }
 
         fun data(data: List<StatementLineItemResponse>) = data(JsonField.of(data))
@@ -83,22 +83,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): StatementLineItems =
@@ -127,6 +121,8 @@ private constructor(
         private val created: JsonField<OffsetDateTime>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        private var validated: Boolean = false
 
         /** Globally unique identifier for a Statement Line Item */
         fun token(): String = token.getRequired("token")
@@ -207,8 +203,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): StatementLineItemResponse = apply {
             if (!validated) {
                 token()
@@ -251,20 +245,20 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(statementLineItemResponse: StatementLineItemResponse) = apply {
-                token = statementLineItemResponse.token
-                financialAccountToken = statementLineItemResponse.financialAccountToken
-                cardToken = statementLineItemResponse.cardToken
-                financialTransactionToken = statementLineItemResponse.financialTransactionToken
-                financialTransactionEventToken =
+                this.token = statementLineItemResponse.token
+                this.financialAccountToken = statementLineItemResponse.financialAccountToken
+                this.cardToken = statementLineItemResponse.cardToken
+                this.financialTransactionToken = statementLineItemResponse.financialTransactionToken
+                this.financialTransactionEventToken =
                     statementLineItemResponse.financialTransactionEventToken
-                category = statementLineItemResponse.category
-                eventType = statementLineItemResponse.eventType
-                effectiveDate = statementLineItemResponse.effectiveDate
-                descriptor = statementLineItemResponse.descriptor
-                amount = statementLineItemResponse.amount
-                currency = statementLineItemResponse.currency
-                created = statementLineItemResponse.created
-                additionalProperties = statementLineItemResponse.additionalProperties.toMutableMap()
+                this.category = statementLineItemResponse.category
+                this.eventType = statementLineItemResponse.eventType
+                this.effectiveDate = statementLineItemResponse.effectiveDate
+                this.descriptor = statementLineItemResponse.descriptor
+                this.amount = statementLineItemResponse.amount
+                this.currency = statementLineItemResponse.currency
+                this.created = statementLineItemResponse.created
+                additionalProperties(statementLineItemResponse.additionalProperties)
             }
 
             /** Globally unique identifier for a Statement Line Item */
@@ -375,22 +369,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): StatementLineItemResponse =

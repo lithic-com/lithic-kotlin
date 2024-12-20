@@ -87,9 +87,9 @@ constructor(
             internal fun from(
                 tokenizationResendActivationCodeBody: TokenizationResendActivationCodeBody
             ) = apply {
-                activationMethodType = tokenizationResendActivationCodeBody.activationMethodType
-                additionalProperties =
-                    tokenizationResendActivationCodeBody.additionalProperties.toMutableMap()
+                this.activationMethodType =
+                    tokenizationResendActivationCodeBody.activationMethodType
+                additionalProperties(tokenizationResendActivationCodeBody.additionalProperties)
             }
 
             /**
@@ -98,28 +98,22 @@ constructor(
              * "EMAIL_TO_CARDHOLDER_ADDRESS"
              */
             @JsonProperty("activation_method_type")
-            fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
+            fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
                 this.activationMethodType = activationMethodType
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TokenizationResendActivationCodeBody =

@@ -22,6 +22,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /**
      * A unique token to reference this transaction with later calls to void or clear the
      * authorization.
@@ -37,8 +39,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): AuthenticationSimulateResponse = apply {
         if (!validated) {
@@ -60,9 +60,8 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authenticationSimulateResponse: AuthenticationSimulateResponse) = apply {
-            token = authenticationSimulateResponse.token
-            additionalProperties =
-                authenticationSimulateResponse.additionalProperties.toMutableMap()
+            this.token = authenticationSimulateResponse.token
+            additionalProperties(authenticationSimulateResponse.additionalProperties)
         }
 
         /**
@@ -81,22 +80,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): AuthenticationSimulateResponse =

@@ -45,6 +45,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Amount under dispute. May be different from the original transaction amount. */
     fun amount(): Long = amount.getRequired("amount")
 
@@ -272,8 +274,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): Dispute = apply {
         if (!validated) {
             amount()
@@ -330,26 +330,26 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(dispute: Dispute) = apply {
-            amount = dispute.amount
-            arbitrationDate = dispute.arbitrationDate
-            created = dispute.created
-            customerFiledDate = dispute.customerFiledDate
-            customerNote = dispute.customerNote
-            networkClaimIds = dispute.networkClaimIds
-            networkFiledDate = dispute.networkFiledDate
-            networkReasonCode = dispute.networkReasonCode
-            prearbitrationDate = dispute.prearbitrationDate
-            primaryClaimId = dispute.primaryClaimId
-            reason = dispute.reason
-            representmentDate = dispute.representmentDate
-            resolutionAmount = dispute.resolutionAmount
-            resolutionDate = dispute.resolutionDate
-            resolutionNote = dispute.resolutionNote
-            resolutionReason = dispute.resolutionReason
-            status = dispute.status
-            token = dispute.token
-            transactionToken = dispute.transactionToken
-            additionalProperties = dispute.additionalProperties.toMutableMap()
+            this.amount = dispute.amount
+            this.arbitrationDate = dispute.arbitrationDate
+            this.created = dispute.created
+            this.customerFiledDate = dispute.customerFiledDate
+            this.customerNote = dispute.customerNote
+            this.networkClaimIds = dispute.networkClaimIds
+            this.networkFiledDate = dispute.networkFiledDate
+            this.networkReasonCode = dispute.networkReasonCode
+            this.prearbitrationDate = dispute.prearbitrationDate
+            this.primaryClaimId = dispute.primaryClaimId
+            this.reason = dispute.reason
+            this.representmentDate = dispute.representmentDate
+            this.resolutionAmount = dispute.resolutionAmount
+            this.resolutionDate = dispute.resolutionDate
+            this.resolutionNote = dispute.resolutionNote
+            this.resolutionReason = dispute.resolutionReason
+            this.status = dispute.status
+            this.token = dispute.token
+            this.transactionToken = dispute.transactionToken
+            additionalProperties(dispute.additionalProperties)
         }
 
         /** Amount under dispute. May be different from the original transaction amount. */
@@ -649,22 +649,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Dispute =

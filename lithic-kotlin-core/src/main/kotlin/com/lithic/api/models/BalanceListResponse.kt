@@ -36,6 +36,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Funds available for spend in the currency's smallest unit (e.g., cents for USD) */
     fun availableAmount(): Long = availableAmount.getRequired("available_amount")
 
@@ -123,8 +125,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): BalanceListResponse = apply {
         if (!validated) {
             availableAmount()
@@ -163,17 +163,17 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(balanceListResponse: BalanceListResponse) = apply {
-            availableAmount = balanceListResponse.availableAmount
-            created = balanceListResponse.created
-            currency = balanceListResponse.currency
-            token = balanceListResponse.token
-            type = balanceListResponse.type
-            lastTransactionEventToken = balanceListResponse.lastTransactionEventToken
-            lastTransactionToken = balanceListResponse.lastTransactionToken
-            pendingAmount = balanceListResponse.pendingAmount
-            totalAmount = balanceListResponse.totalAmount
-            updated = balanceListResponse.updated
-            additionalProperties = balanceListResponse.additionalProperties.toMutableMap()
+            this.availableAmount = balanceListResponse.availableAmount
+            this.created = balanceListResponse.created
+            this.currency = balanceListResponse.currency
+            this.token = balanceListResponse.token
+            this.type = balanceListResponse.type
+            this.lastTransactionEventToken = balanceListResponse.lastTransactionEventToken
+            this.lastTransactionToken = balanceListResponse.lastTransactionToken
+            this.pendingAmount = balanceListResponse.pendingAmount
+            this.totalAmount = balanceListResponse.totalAmount
+            this.updated = balanceListResponse.updated
+            additionalProperties(balanceListResponse.additionalProperties)
         }
 
         /** Funds available for spend in the currency's smallest unit (e.g., cents for USD) */
@@ -290,22 +290,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): BalanceListResponse =

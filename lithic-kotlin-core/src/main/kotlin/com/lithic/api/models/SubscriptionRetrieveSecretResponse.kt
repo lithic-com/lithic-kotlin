@@ -22,6 +22,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** The secret for the event subscription. */
     fun secret(): String? = secret.getNullable("secret")
 
@@ -31,8 +33,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): SubscriptionRetrieveSecretResponse = apply {
         if (!validated) {
@@ -55,9 +55,8 @@ private constructor(
 
         internal fun from(subscriptionRetrieveSecretResponse: SubscriptionRetrieveSecretResponse) =
             apply {
-                secret = subscriptionRetrieveSecretResponse.secret
-                additionalProperties =
-                    subscriptionRetrieveSecretResponse.additionalProperties.toMutableMap()
+                this.secret = subscriptionRetrieveSecretResponse.secret
+                additionalProperties(subscriptionRetrieveSecretResponse.additionalProperties)
             }
 
         /** The secret for the event subscription. */
@@ -70,22 +69,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): SubscriptionRetrieveSecretResponse =

@@ -30,6 +30,7 @@ import com.lithic.api.services.blocking.TokenizationDecisioningService
 import com.lithic.api.services.blocking.TokenizationService
 import com.lithic.api.services.blocking.TransactionService
 import com.lithic.api.services.blocking.TransferService
+import com.lithic.api.services.blocking.WebhookService
 
 interface LithicClient {
 
@@ -64,6 +65,8 @@ interface LithicClient {
     fun transactions(): TransactionService
 
     fun responderEndpoints(): ResponderEndpointService
+
+    fun webhooks(): WebhookService
 
     fun externalBankAccounts(): ExternalBankAccountService
 

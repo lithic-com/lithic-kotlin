@@ -63,16 +63,16 @@ constructor(
     @NoAutoDetect
     class AccountHolderUploadDocumentBody
     internal constructor(
-        private val documentType: DocumentType,
-        private val entityToken: String,
+        private val documentType: DocumentType?,
+        private val entityToken: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The type of document to upload */
-        @JsonProperty("document_type") fun documentType(): DocumentType = documentType
+        @JsonProperty("document_type") fun documentType(): DocumentType? = documentType
 
         /** Globally unique identifier for the entity. */
-        @JsonProperty("entity_token") fun entityToken(): String = entityToken
+        @JsonProperty("entity_token") fun entityToken(): String? = entityToken
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -93,10 +93,9 @@ constructor(
 
             internal fun from(accountHolderUploadDocumentBody: AccountHolderUploadDocumentBody) =
                 apply {
-                    documentType = accountHolderUploadDocumentBody.documentType
-                    entityToken = accountHolderUploadDocumentBody.entityToken
-                    additionalProperties =
-                        accountHolderUploadDocumentBody.additionalProperties.toMutableMap()
+                    this.documentType = accountHolderUploadDocumentBody.documentType
+                    this.entityToken = accountHolderUploadDocumentBody.entityToken
+                    additionalProperties(accountHolderUploadDocumentBody.additionalProperties)
                 }
 
             /** The type of document to upload */
@@ -111,22 +110,16 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountHolderUploadDocumentBody =

@@ -36,6 +36,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** The account token associated with the card being tokenized. */
     fun accountToken(): String = accountToken.getRequired("account_token")
 
@@ -124,8 +126,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): Tokenization = apply {
         if (!validated) {
             accountToken()
@@ -166,18 +166,18 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(tokenization: Tokenization) = apply {
-            accountToken = tokenization.accountToken
-            cardToken = tokenization.cardToken
-            createdAt = tokenization.createdAt
-            digitalCardArtToken = tokenization.digitalCardArtToken
-            events = tokenization.events
-            status = tokenization.status
-            token = tokenization.token
-            tokenRequestorName = tokenization.tokenRequestorName
-            tokenUniqueReference = tokenization.tokenUniqueReference
-            tokenizationChannel = tokenization.tokenizationChannel
-            updatedAt = tokenization.updatedAt
-            additionalProperties = tokenization.additionalProperties.toMutableMap()
+            this.accountToken = tokenization.accountToken
+            this.cardToken = tokenization.cardToken
+            this.createdAt = tokenization.createdAt
+            this.digitalCardArtToken = tokenization.digitalCardArtToken
+            this.events = tokenization.events
+            this.status = tokenization.status
+            this.token = tokenization.token
+            this.tokenRequestorName = tokenization.tokenRequestorName
+            this.tokenUniqueReference = tokenization.tokenUniqueReference
+            this.tokenizationChannel = tokenization.tokenizationChannel
+            this.updatedAt = tokenization.updatedAt
+            additionalProperties(tokenization.additionalProperties)
         }
 
         /** The account token associated with the card being tokenized. */
@@ -294,22 +294,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Tokenization =
@@ -595,6 +589,8 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
+        private var validated: Boolean = false
+
         /** Date and time when the tokenization event first occurred. UTC time zone. */
         fun createdAt(): OffsetDateTime? = createdAt.getNullable("created_at")
 
@@ -623,8 +619,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): TokenizationEvent = apply {
             if (!validated) {
                 createdAt()
@@ -651,11 +645,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(tokenizationEvent: TokenizationEvent) = apply {
-                createdAt = tokenizationEvent.createdAt
-                result = tokenizationEvent.result
-                token = tokenizationEvent.token
-                type = tokenizationEvent.type
-                additionalProperties = tokenizationEvent.additionalProperties.toMutableMap()
+                this.createdAt = tokenizationEvent.createdAt
+                this.result = tokenizationEvent.result
+                this.token = tokenizationEvent.token
+                this.type = tokenizationEvent.type
+                additionalProperties(tokenizationEvent.additionalProperties)
             }
 
             /** Date and time when the tokenization event first occurred. UTC time zone. */
@@ -694,22 +688,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TokenizationEvent =

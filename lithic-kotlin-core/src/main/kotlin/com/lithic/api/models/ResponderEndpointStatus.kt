@@ -23,6 +23,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** True if the instance has an endpoint enrolled. */
     fun enrolled(): Boolean? = enrolled.getNullable("enrolled")
 
@@ -38,8 +40,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): ResponderEndpointStatus = apply {
         if (!validated) {
@@ -63,9 +63,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(responderEndpointStatus: ResponderEndpointStatus) = apply {
-            enrolled = responderEndpointStatus.enrolled
-            url = responderEndpointStatus.url
-            additionalProperties = responderEndpointStatus.additionalProperties.toMutableMap()
+            this.enrolled = responderEndpointStatus.enrolled
+            this.url = responderEndpointStatus.url
+            additionalProperties(responderEndpointStatus.additionalProperties)
         }
 
         /** True if the instance has an endpoint enrolled. */
@@ -86,22 +86,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ResponderEndpointStatus =

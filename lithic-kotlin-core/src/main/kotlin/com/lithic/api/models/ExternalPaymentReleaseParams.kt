@@ -60,12 +60,12 @@ constructor(
     @NoAutoDetect
     class ExternalPaymentReleaseBody
     internal constructor(
-        private val effectiveDate: LocalDate,
+        private val effectiveDate: LocalDate?,
         private val memo: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate = effectiveDate
+        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
 
         @JsonProperty("memo") fun memo(): String? = memo
 
@@ -87,10 +87,9 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(externalPaymentReleaseBody: ExternalPaymentReleaseBody) = apply {
-                effectiveDate = externalPaymentReleaseBody.effectiveDate
-                memo = externalPaymentReleaseBody.memo
-                additionalProperties =
-                    externalPaymentReleaseBody.additionalProperties.toMutableMap()
+                this.effectiveDate = externalPaymentReleaseBody.effectiveDate
+                this.memo = externalPaymentReleaseBody.memo
+                additionalProperties(externalPaymentReleaseBody.additionalProperties)
             }
 
             @JsonProperty("effective_date")
@@ -98,26 +97,20 @@ constructor(
                 this.effectiveDate = effectiveDate
             }
 
-            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalPaymentReleaseBody =

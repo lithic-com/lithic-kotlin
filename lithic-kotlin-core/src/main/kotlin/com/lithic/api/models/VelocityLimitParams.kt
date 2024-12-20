@@ -38,6 +38,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     fun scope(): Scope = scope.getRequired("scope")
 
     /**
@@ -90,8 +92,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): VelocityLimitParams = apply {
         if (!validated) {
             scope()
@@ -120,12 +120,12 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(velocityLimitParams: VelocityLimitParams) = apply {
-            scope = velocityLimitParams.scope
-            period = velocityLimitParams.period
-            filters = velocityLimitParams.filters
-            limitAmount = velocityLimitParams.limitAmount
-            limitCount = velocityLimitParams.limitCount
-            additionalProperties = velocityLimitParams.additionalProperties.toMutableMap()
+            this.scope = velocityLimitParams.scope
+            this.period = velocityLimitParams.period
+            this.filters = velocityLimitParams.filters
+            this.limitAmount = velocityLimitParams.limitAmount
+            this.limitCount = velocityLimitParams.limitCount
+            additionalProperties(velocityLimitParams.additionalProperties)
         }
 
         fun scope(scope: Scope) = scope(JsonField.of(scope))
@@ -190,22 +190,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): VelocityLimitParams =
@@ -227,6 +221,8 @@ private constructor(
         private val includeCountries: JsonField<List<String>>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        private var validated: Boolean = false
 
         /**
          * Merchant Category Codes to include in the velocity calculation. Transactions not matching
@@ -258,8 +254,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): Filters = apply {
             if (!validated) {
                 includeMccs()
@@ -282,9 +276,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(filters: Filters) = apply {
-                includeMccs = filters.includeMccs
-                includeCountries = filters.includeCountries
-                additionalProperties = filters.additionalProperties.toMutableMap()
+                this.includeMccs = filters.includeMccs
+                this.includeCountries = filters.includeCountries
+                additionalProperties(filters.additionalProperties)
             }
 
             /**
@@ -322,22 +316,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Filters =

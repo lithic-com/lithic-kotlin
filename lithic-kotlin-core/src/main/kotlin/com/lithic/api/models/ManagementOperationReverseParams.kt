@@ -60,12 +60,12 @@ constructor(
     @NoAutoDetect
     class ManagementOperationReverseBody
     internal constructor(
-        private val effectiveDate: LocalDate,
+        private val effectiveDate: LocalDate?,
         private val memo: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate = effectiveDate
+        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
 
         @JsonProperty("memo") fun memo(): String? = memo
 
@@ -88,10 +88,9 @@ constructor(
 
             internal fun from(managementOperationReverseBody: ManagementOperationReverseBody) =
                 apply {
-                    effectiveDate = managementOperationReverseBody.effectiveDate
-                    memo = managementOperationReverseBody.memo
-                    additionalProperties =
-                        managementOperationReverseBody.additionalProperties.toMutableMap()
+                    this.effectiveDate = managementOperationReverseBody.effectiveDate
+                    this.memo = managementOperationReverseBody.memo
+                    additionalProperties(managementOperationReverseBody.additionalProperties)
                 }
 
             @JsonProperty("effective_date")
@@ -99,26 +98,20 @@ constructor(
                 this.effectiveDate = effectiveDate
             }
 
-            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ManagementOperationReverseBody =

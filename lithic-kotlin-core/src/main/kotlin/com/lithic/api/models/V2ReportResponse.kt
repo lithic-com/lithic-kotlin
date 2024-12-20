@@ -22,6 +22,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     fun reportToken(): String? = reportToken.getNullable("report_token")
 
     @JsonProperty("report_token") @ExcludeMissing fun _reportToken() = reportToken
@@ -29,8 +31,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): V2ReportResponse = apply {
         if (!validated) {
@@ -52,8 +52,8 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(v2ReportResponse: V2ReportResponse) = apply {
-            reportToken = v2ReportResponse.reportToken
-            additionalProperties = v2ReportResponse.additionalProperties.toMutableMap()
+            this.reportToken = v2ReportResponse.reportToken
+            additionalProperties(v2ReportResponse.additionalProperties)
         }
 
         fun reportToken(reportToken: String) = reportToken(JsonField.of(reportToken))
@@ -64,22 +64,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): V2ReportResponse =

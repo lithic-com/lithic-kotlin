@@ -47,6 +47,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Globally unique identifier for a statement */
     fun token(): String = token.getRequired("token")
 
@@ -185,8 +187,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): Statement = apply {
         if (!validated) {
             token()
@@ -247,28 +247,28 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(statement: Statement) = apply {
-            token = statement.token
-            financialAccountToken = statement.financialAccountToken
-            statementStartDate = statement.statementStartDate
-            statementEndDate = statement.statementEndDate
-            nextStatementEndDate = statement.nextStatementEndDate
-            paymentDueDate = statement.paymentDueDate
-            nextPaymentDueDate = statement.nextPaymentDueDate
-            daysInBillingCycle = statement.daysInBillingCycle
-            creditLimit = statement.creditLimit
-            availableCredit = statement.availableCredit
-            startingBalance = statement.startingBalance
-            endingBalance = statement.endingBalance
-            periodTotals = statement.periodTotals
-            ytdTotals = statement.ytdTotals
-            created = statement.created
-            updated = statement.updated
-            creditProductToken = statement.creditProductToken
-            accountStanding = statement.accountStanding
-            amountDue = statement.amountDue
-            interestDetails = statement.interestDetails
-            statementType = statement.statementType
-            additionalProperties = statement.additionalProperties.toMutableMap()
+            this.token = statement.token
+            this.financialAccountToken = statement.financialAccountToken
+            this.statementStartDate = statement.statementStartDate
+            this.statementEndDate = statement.statementEndDate
+            this.nextStatementEndDate = statement.nextStatementEndDate
+            this.paymentDueDate = statement.paymentDueDate
+            this.nextPaymentDueDate = statement.nextPaymentDueDate
+            this.daysInBillingCycle = statement.daysInBillingCycle
+            this.creditLimit = statement.creditLimit
+            this.availableCredit = statement.availableCredit
+            this.startingBalance = statement.startingBalance
+            this.endingBalance = statement.endingBalance
+            this.periodTotals = statement.periodTotals
+            this.ytdTotals = statement.ytdTotals
+            this.created = statement.created
+            this.updated = statement.updated
+            this.creditProductToken = statement.creditProductToken
+            this.accountStanding = statement.accountStanding
+            this.amountDue = statement.amountDue
+            this.interestDetails = statement.interestDetails
+            this.statementType = statement.statementType
+            additionalProperties(statement.additionalProperties)
         }
 
         /** Globally unique identifier for a statement */
@@ -474,22 +474,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Statement =
@@ -532,6 +526,8 @@ private constructor(
         private val hasGrace: JsonField<Boolean>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        private var validated: Boolean = false
 
         fun periodState(): PeriodState = periodState.getRequired("period_state")
 
@@ -586,8 +582,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): AccountStanding = apply {
             if (!validated) {
                 periodState()
@@ -620,14 +614,15 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountStanding: AccountStanding) = apply {
-                periodState = accountStanding.periodState
-                periodNumber = accountStanding.periodNumber
-                consecutiveMinimumPaymentsMade = accountStanding.consecutiveMinimumPaymentsMade
-                consecutiveMinimumPaymentsMissed = accountStanding.consecutiveMinimumPaymentsMissed
-                consecutiveFullPaymentsMade = accountStanding.consecutiveFullPaymentsMade
-                daysPastDue = accountStanding.daysPastDue
-                hasGrace = accountStanding.hasGrace
-                additionalProperties = accountStanding.additionalProperties.toMutableMap()
+                this.periodState = accountStanding.periodState
+                this.periodNumber = accountStanding.periodNumber
+                this.consecutiveMinimumPaymentsMade = accountStanding.consecutiveMinimumPaymentsMade
+                this.consecutiveMinimumPaymentsMissed =
+                    accountStanding.consecutiveMinimumPaymentsMissed
+                this.consecutiveFullPaymentsMade = accountStanding.consecutiveFullPaymentsMade
+                this.daysPastDue = accountStanding.daysPastDue
+                this.hasGrace = accountStanding.hasGrace
+                additionalProperties(accountStanding.additionalProperties)
             }
 
             fun periodState(periodState: PeriodState) = periodState(JsonField.of(periodState))
@@ -700,22 +695,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountStanding =
@@ -821,6 +810,8 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
+        private var validated: Boolean = false
+
         /**
          * Payment due at the end of the billing period in cents. Negative amount indicates
          * something is owed. If the amount owed is positive there was a net credit. If
@@ -847,8 +838,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): AmountDue = apply {
             if (!validated) {
                 amount()
@@ -871,9 +860,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(amountDue: AmountDue) = apply {
-                amount = amountDue.amount
-                pastDue = amountDue.pastDue
-                additionalProperties = amountDue.additionalProperties.toMutableMap()
+                this.amount = amountDue.amount
+                this.pastDue = amountDue.pastDue
+                additionalProperties(amountDue.additionalProperties)
             }
 
             /**
@@ -904,22 +893,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AmountDue =
@@ -961,6 +944,8 @@ private constructor(
         private val balanceTransfers: JsonField<Long>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        private var validated: Boolean = false
 
         /** Any funds transfers which affective the balance in cents */
         fun payments(): Long = payments.getRequired("payments")
@@ -1014,8 +999,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): StatementTotals = apply {
             if (!validated) {
                 payments()
@@ -1048,14 +1031,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(statementTotals: StatementTotals) = apply {
-                payments = statementTotals.payments
-                purchases = statementTotals.purchases
-                fees = statementTotals.fees
-                credits = statementTotals.credits
-                interest = statementTotals.interest
-                cashAdvances = statementTotals.cashAdvances
-                balanceTransfers = statementTotals.balanceTransfers
-                additionalProperties = statementTotals.additionalProperties.toMutableMap()
+                this.payments = statementTotals.payments
+                this.purchases = statementTotals.purchases
+                this.fees = statementTotals.fees
+                this.credits = statementTotals.credits
+                this.interest = statementTotals.interest
+                this.cashAdvances = statementTotals.cashAdvances
+                this.balanceTransfers = statementTotals.balanceTransfers
+                additionalProperties(statementTotals.additionalProperties)
             }
 
             /** Any funds transfers which affective the balance in cents */
@@ -1127,22 +1110,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): StatementTotals =
@@ -1247,6 +1224,8 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
+        private var validated: Boolean = false
+
         fun primeRate(): String? = primeRate.getNullable("prime_rate")
 
         fun interestCalculationMethod(): InterestCalculationMethod =
@@ -1294,8 +1273,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): InterestDetails = apply {
             if (!validated) {
                 primeRate()
@@ -1329,14 +1306,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(interestDetails: InterestDetails) = apply {
-                primeRate = interestDetails.primeRate
-                interestCalculationMethod = interestDetails.interestCalculationMethod
-                effectiveApr = interestDetails.effectiveApr
-                interestForPeriod = interestDetails.interestForPeriod
-                dailyBalanceAmounts = interestDetails.dailyBalanceAmounts
-                minimumInterestCharged = interestDetails.minimumInterestCharged
-                actualInterestCharged = interestDetails.actualInterestCharged
-                additionalProperties = interestDetails.additionalProperties.toMutableMap()
+                this.primeRate = interestDetails.primeRate
+                this.interestCalculationMethod = interestDetails.interestCalculationMethod
+                this.effectiveApr = interestDetails.effectiveApr
+                this.interestForPeriod = interestDetails.interestForPeriod
+                this.dailyBalanceAmounts = interestDetails.dailyBalanceAmounts
+                this.minimumInterestCharged = interestDetails.minimumInterestCharged
+                this.actualInterestCharged = interestDetails.actualInterestCharged
+                additionalProperties(interestDetails.additionalProperties)
             }
 
             fun primeRate(primeRate: String) = primeRate(JsonField.of(primeRate))
@@ -1401,22 +1378,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InterestDetails =
@@ -1442,6 +1413,8 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
+            private var validated: Boolean = false
+
             fun purchases(): String = purchases.getRequired("purchases")
 
             fun cashAdvances(): String = cashAdvances.getRequired("cash_advances")
@@ -1459,8 +1432,6 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
 
             fun validate(): CategoryDetails = apply {
                 if (!validated) {
@@ -1486,10 +1457,10 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(categoryDetails: CategoryDetails) = apply {
-                    purchases = categoryDetails.purchases
-                    cashAdvances = categoryDetails.cashAdvances
-                    balanceTransfers = categoryDetails.balanceTransfers
-                    additionalProperties = categoryDetails.additionalProperties.toMutableMap()
+                    this.purchases = categoryDetails.purchases
+                    this.cashAdvances = categoryDetails.cashAdvances
+                    this.balanceTransfers = categoryDetails.balanceTransfers
+                    additionalProperties(categoryDetails.additionalProperties)
                 }
 
                 fun purchases(purchases: String) = purchases(JsonField.of(purchases))
@@ -1517,26 +1488,18 @@ private constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
+                    this.additionalProperties.putAll(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
+                    this.additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
 
                 fun build(): CategoryDetails =
                     CategoryDetails(

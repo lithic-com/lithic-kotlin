@@ -109,10 +109,10 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountHolderUpdateBody: AccountHolderUpdateBody) = apply {
-                businessAccountToken = accountHolderUpdateBody.businessAccountToken
-                email = accountHolderUpdateBody.email
-                phoneNumber = accountHolderUpdateBody.phoneNumber
-                additionalProperties = accountHolderUpdateBody.additionalProperties.toMutableMap()
+                this.businessAccountToken = accountHolderUpdateBody.businessAccountToken
+                this.email = accountHolderUpdateBody.email
+                this.phoneNumber = accountHolderUpdateBody.phoneNumber
+                additionalProperties(accountHolderUpdateBody.additionalProperties)
             }
 
             /**
@@ -121,7 +121,7 @@ constructor(
              * the AUTHORIZED_USER in this field.
              */
             @JsonProperty("business_account_token")
-            fun businessAccountToken(businessAccountToken: String?) = apply {
+            fun businessAccountToken(businessAccountToken: String) = apply {
                 this.businessAccountToken = businessAccountToken
             }
 
@@ -129,7 +129,7 @@ constructor(
              * Account holder's email address. The primary purpose of this field is for cardholder
              * identification and verification during the digital wallet tokenization process.
              */
-            @JsonProperty("email") fun email(email: String?) = apply { this.email = email }
+            @JsonProperty("email") fun email(email: String) = apply { this.email = email }
 
             /**
              * Account holder's phone number, entered in E.164 format. The primary purpose of this
@@ -137,26 +137,20 @@ constructor(
              * tokenization process.
              */
             @JsonProperty("phone_number")
-            fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
+            fun phoneNumber(phoneNumber: String) = apply { this.phoneNumber = phoneNumber }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountHolderUpdateBody =

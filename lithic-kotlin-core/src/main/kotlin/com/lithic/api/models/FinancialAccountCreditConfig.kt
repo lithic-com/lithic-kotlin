@@ -32,6 +32,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Globally unique identifier for the account */
     fun accountToken(): String = accountToken.getRequired("account_token")
 
@@ -86,8 +88,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): FinancialAccountCreditConfig = apply {
         if (!validated) {
             accountToken()
@@ -122,15 +122,15 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountCreditConfig: FinancialAccountCreditConfig) = apply {
-            accountToken = financialAccountCreditConfig.accountToken
-            creditLimit = financialAccountCreditConfig.creditLimit
-            externalBankAccountToken = financialAccountCreditConfig.externalBankAccountToken
-            creditProductToken = financialAccountCreditConfig.creditProductToken
-            tier = financialAccountCreditConfig.tier
-            financialAccountState = financialAccountCreditConfig.financialAccountState
-            isSpendBlocked = financialAccountCreditConfig.isSpendBlocked
-            chargedOffReason = financialAccountCreditConfig.chargedOffReason
-            additionalProperties = financialAccountCreditConfig.additionalProperties.toMutableMap()
+            this.accountToken = financialAccountCreditConfig.accountToken
+            this.creditLimit = financialAccountCreditConfig.creditLimit
+            this.externalBankAccountToken = financialAccountCreditConfig.externalBankAccountToken
+            this.creditProductToken = financialAccountCreditConfig.creditProductToken
+            this.tier = financialAccountCreditConfig.tier
+            this.financialAccountState = financialAccountCreditConfig.financialAccountState
+            this.isSpendBlocked = financialAccountCreditConfig.isSpendBlocked
+            this.chargedOffReason = financialAccountCreditConfig.chargedOffReason
+            additionalProperties(financialAccountCreditConfig.additionalProperties)
         }
 
         /** Globally unique identifier for the account */
@@ -209,22 +209,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): FinancialAccountCreditConfig =

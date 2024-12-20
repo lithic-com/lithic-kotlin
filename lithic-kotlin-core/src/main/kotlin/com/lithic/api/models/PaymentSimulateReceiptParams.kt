@@ -65,26 +65,26 @@ constructor(
     @NoAutoDetect
     class PaymentSimulateReceiptBody
     internal constructor(
-        private val token: String,
-        private val amount: Long,
-        private val financialAccountToken: String,
-        private val receiptType: ReceiptType,
+        private val token: String?,
+        private val amount: Long?,
+        private val financialAccountToken: String?,
+        private val receiptType: ReceiptType?,
         private val memo: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Payment token */
-        @JsonProperty("token") fun token(): String = token
+        @JsonProperty("token") fun token(): String? = token
 
         /** Amount */
-        @JsonProperty("amount") fun amount(): Long = amount
+        @JsonProperty("amount") fun amount(): Long? = amount
 
         /** Financial Account Token */
         @JsonProperty("financial_account_token")
-        fun financialAccountToken(): String = financialAccountToken
+        fun financialAccountToken(): String? = financialAccountToken
 
         /** Receipt Type */
-        @JsonProperty("receipt_type") fun receiptType(): ReceiptType = receiptType
+        @JsonProperty("receipt_type") fun receiptType(): ReceiptType? = receiptType
 
         /** Memo */
         @JsonProperty("memo") fun memo(): String? = memo
@@ -110,13 +110,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentSimulateReceiptBody: PaymentSimulateReceiptBody) = apply {
-                token = paymentSimulateReceiptBody.token
-                amount = paymentSimulateReceiptBody.amount
-                financialAccountToken = paymentSimulateReceiptBody.financialAccountToken
-                receiptType = paymentSimulateReceiptBody.receiptType
-                memo = paymentSimulateReceiptBody.memo
-                additionalProperties =
-                    paymentSimulateReceiptBody.additionalProperties.toMutableMap()
+                this.token = paymentSimulateReceiptBody.token
+                this.amount = paymentSimulateReceiptBody.amount
+                this.financialAccountToken = paymentSimulateReceiptBody.financialAccountToken
+                this.receiptType = paymentSimulateReceiptBody.receiptType
+                this.memo = paymentSimulateReceiptBody.memo
+                additionalProperties(paymentSimulateReceiptBody.additionalProperties)
             }
 
             /** Payment token */
@@ -136,26 +135,20 @@ constructor(
             fun receiptType(receiptType: ReceiptType) = apply { this.receiptType = receiptType }
 
             /** Memo */
-            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentSimulateReceiptBody =

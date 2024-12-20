@@ -24,6 +24,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Globally unique identifier for an entity. */
     fun entityToken(): String = entityToken.getRequired("entity_token")
 
@@ -54,8 +56,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): RequiredDocument = apply {
         if (!validated) {
             entityToken()
@@ -80,10 +80,10 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(requiredDocument: RequiredDocument) = apply {
-            entityToken = requiredDocument.entityToken
-            validDocuments = requiredDocument.validDocuments
-            statusReasons = requiredDocument.statusReasons
-            additionalProperties = requiredDocument.additionalProperties.toMutableMap()
+            this.entityToken = requiredDocument.entityToken
+            this.validDocuments = requiredDocument.validDocuments
+            this.statusReasons = requiredDocument.statusReasons
+            additionalProperties(requiredDocument.additionalProperties)
         }
 
         /** Globally unique identifier for an entity. */
@@ -129,22 +129,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): RequiredDocument =

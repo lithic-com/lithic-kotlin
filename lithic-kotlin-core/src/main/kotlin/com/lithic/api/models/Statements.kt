@@ -23,6 +23,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     fun data(): List<Statement> = data.getRequired("data")
 
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
@@ -34,8 +36,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): Statements = apply {
         if (!validated) {
@@ -59,9 +59,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(statements: Statements) = apply {
-            data = statements.data
-            hasMore = statements.hasMore
-            additionalProperties = statements.additionalProperties.toMutableMap()
+            this.data = statements.data
+            this.hasMore = statements.hasMore
+            additionalProperties(statements.additionalProperties)
         }
 
         fun data(data: List<Statement>) = data(JsonField.of(data))
@@ -78,22 +78,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Statements =

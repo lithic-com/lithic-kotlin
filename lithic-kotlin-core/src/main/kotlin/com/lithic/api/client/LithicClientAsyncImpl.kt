@@ -64,6 +64,8 @@ import com.lithic.api.services.async.TransactionServiceAsync
 import com.lithic.api.services.async.TransactionServiceAsyncImpl
 import com.lithic.api.services.async.TransferServiceAsync
 import com.lithic.api.services.async.TransferServiceAsyncImpl
+import com.lithic.api.services.async.WebhookServiceAsync
+import com.lithic.api.services.async.WebhookServiceAsyncImpl
 
 class LithicClientAsyncImpl
 constructor(
@@ -141,6 +143,8 @@ constructor(
         ResponderEndpointServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
+
     private val externalBankAccounts: ExternalBankAccountServiceAsync by lazy {
         ExternalBankAccountServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -213,6 +217,8 @@ constructor(
     override fun transactions(): TransactionServiceAsync = transactions
 
     override fun responderEndpoints(): ResponderEndpointServiceAsync = responderEndpoints
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
 

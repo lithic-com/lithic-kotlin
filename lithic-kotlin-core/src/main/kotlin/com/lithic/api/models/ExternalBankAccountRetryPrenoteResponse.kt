@@ -48,6 +48,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /**
      * A globally unique identifier for this record of an external bank account association. If a
      * program links an external bank account to more than one end-user or to both the program and
@@ -229,8 +231,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): ExternalBankAccountRetryPrenoteResponse = apply {
         if (!validated) {
             token()
@@ -295,31 +295,31 @@ private constructor(
         internal fun from(
             externalBankAccountRetryPrenoteResponse: ExternalBankAccountRetryPrenoteResponse
         ) = apply {
-            token = externalBankAccountRetryPrenoteResponse.token
-            owner = externalBankAccountRetryPrenoteResponse.owner
-            routingNumber = externalBankAccountRetryPrenoteResponse.routingNumber
-            lastFour = externalBankAccountRetryPrenoteResponse.lastFour
-            name = externalBankAccountRetryPrenoteResponse.name
-            currency = externalBankAccountRetryPrenoteResponse.currency
-            country = externalBankAccountRetryPrenoteResponse.country
-            accountToken = externalBankAccountRetryPrenoteResponse.accountToken
-            created = externalBankAccountRetryPrenoteResponse.created
-            companyId = externalBankAccountRetryPrenoteResponse.companyId
-            dob = externalBankAccountRetryPrenoteResponse.dob
-            doingBusinessAs = externalBankAccountRetryPrenoteResponse.doingBusinessAs
-            userDefinedId = externalBankAccountRetryPrenoteResponse.userDefinedId
-            verificationFailedReason =
+            this.token = externalBankAccountRetryPrenoteResponse.token
+            this.owner = externalBankAccountRetryPrenoteResponse.owner
+            this.routingNumber = externalBankAccountRetryPrenoteResponse.routingNumber
+            this.lastFour = externalBankAccountRetryPrenoteResponse.lastFour
+            this.name = externalBankAccountRetryPrenoteResponse.name
+            this.currency = externalBankAccountRetryPrenoteResponse.currency
+            this.country = externalBankAccountRetryPrenoteResponse.country
+            this.accountToken = externalBankAccountRetryPrenoteResponse.accountToken
+            this.created = externalBankAccountRetryPrenoteResponse.created
+            this.companyId = externalBankAccountRetryPrenoteResponse.companyId
+            this.dob = externalBankAccountRetryPrenoteResponse.dob
+            this.doingBusinessAs = externalBankAccountRetryPrenoteResponse.doingBusinessAs
+            this.userDefinedId = externalBankAccountRetryPrenoteResponse.userDefinedId
+            this.verificationFailedReason =
                 externalBankAccountRetryPrenoteResponse.verificationFailedReason
-            verificationAttempts = externalBankAccountRetryPrenoteResponse.verificationAttempts
-            financialAccountToken = externalBankAccountRetryPrenoteResponse.financialAccountToken
-            type = externalBankAccountRetryPrenoteResponse.type
-            verificationMethod = externalBankAccountRetryPrenoteResponse.verificationMethod
-            ownerType = externalBankAccountRetryPrenoteResponse.ownerType
-            state = externalBankAccountRetryPrenoteResponse.state
-            verificationState = externalBankAccountRetryPrenoteResponse.verificationState
-            address = externalBankAccountRetryPrenoteResponse.address
-            additionalProperties =
-                externalBankAccountRetryPrenoteResponse.additionalProperties.toMutableMap()
+            this.verificationAttempts = externalBankAccountRetryPrenoteResponse.verificationAttempts
+            this.financialAccountToken =
+                externalBankAccountRetryPrenoteResponse.financialAccountToken
+            this.type = externalBankAccountRetryPrenoteResponse.type
+            this.verificationMethod = externalBankAccountRetryPrenoteResponse.verificationMethod
+            this.ownerType = externalBankAccountRetryPrenoteResponse.ownerType
+            this.state = externalBankAccountRetryPrenoteResponse.state
+            this.verificationState = externalBankAccountRetryPrenoteResponse.verificationState
+            this.address = externalBankAccountRetryPrenoteResponse.address
+            additionalProperties(externalBankAccountRetryPrenoteResponse.additionalProperties)
         }
 
         /**
@@ -568,22 +568,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): ExternalBankAccountRetryPrenoteResponse =

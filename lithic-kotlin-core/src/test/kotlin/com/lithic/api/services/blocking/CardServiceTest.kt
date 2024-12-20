@@ -7,6 +7,8 @@ import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.models.CardConvertPhysicalParams
 import com.lithic.api.models.CardCreateParams
 import com.lithic.api.models.CardEmbedParams
+import com.lithic.api.models.CardGetEmbedHtmlParams
+import com.lithic.api.models.CardGetEmbedUrlParams
 import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardReissueParams
@@ -315,5 +317,35 @@ class CardServiceTest {
             cardService.searchByPan(CardSearchByPanParams.builder().pan("4111111289144142").build())
         println(card)
         card.validate()
+    }
+
+    @Test
+    fun callGetEmbedHtml() {
+        val client =
+            LithicOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("test-api-key")
+                .webhookSecret("string")
+                .build()
+        val cardService = client.cards()
+        val cardEmbedResponse =
+            cardService.getEmbedHtml(CardGetEmbedHtmlParams.builder().token("foo").build())
+        println(cardEmbedResponse)
+        assertThat(cardEmbedResponse).contains("<html>")
+    }
+
+    @Test
+    fun callGetEmbedUrl() {
+        val client =
+            LithicOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("test-api-key")
+                .webhookSecret("string")
+                .build()
+        val cardService = client.cards()
+        val cardEmbedUrl =
+            cardService.getEmbedUrl(CardGetEmbedUrlParams.builder().token("foo").build())
+        println(cardEmbedUrl)
+        assertThat(cardEmbedUrl).contains("hmac")
     }
 }

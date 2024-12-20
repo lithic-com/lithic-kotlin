@@ -61,8 +61,8 @@ constructor(
     @NoAutoDetect
     class AccountHolderSimulateEnrollmentDocumentReviewBody
     internal constructor(
-        private val documentUploadToken: String,
-        private val status: Status,
+        private val documentUploadToken: String?,
+        private val status: Status?,
         private val acceptedEntityStatusReasons: List<String>?,
         private val statusReason: DocumentUploadStatusReasons?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -70,10 +70,10 @@ constructor(
 
         /** The account holder document upload which to perform the simulation upon. */
         @JsonProperty("document_upload_token")
-        fun documentUploadToken(): String = documentUploadToken
+        fun documentUploadToken(): String? = documentUploadToken
 
         /** An account holder document's upload status for use within the simulation. */
-        @JsonProperty("status") fun status(): Status = status
+        @JsonProperty("status") fun status(): Status? = status
 
         /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
         @JsonProperty("accepted_entity_status_reasons")
@@ -109,16 +109,15 @@ constructor(
                 accountHolderSimulateEnrollmentDocumentReviewBody:
                     AccountHolderSimulateEnrollmentDocumentReviewBody
             ) = apply {
-                documentUploadToken =
+                this.documentUploadToken =
                     accountHolderSimulateEnrollmentDocumentReviewBody.documentUploadToken
-                status = accountHolderSimulateEnrollmentDocumentReviewBody.status
-                acceptedEntityStatusReasons =
+                this.status = accountHolderSimulateEnrollmentDocumentReviewBody.status
+                this.acceptedEntityStatusReasons =
                     accountHolderSimulateEnrollmentDocumentReviewBody.acceptedEntityStatusReasons
-                        ?.toMutableList()
-                statusReason = accountHolderSimulateEnrollmentDocumentReviewBody.statusReason
-                additionalProperties =
+                this.statusReason = accountHolderSimulateEnrollmentDocumentReviewBody.statusReason
+                additionalProperties(
                     accountHolderSimulateEnrollmentDocumentReviewBody.additionalProperties
-                        .toMutableMap()
+                )
             }
 
             /** The account holder document upload which to perform the simulation upon. */
@@ -132,7 +131,7 @@ constructor(
 
             /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
             @JsonProperty("accepted_entity_status_reasons")
-            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>?) = apply {
+            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
                 this.acceptedEntityStatusReasons = acceptedEntityStatusReasons
             }
 
@@ -141,28 +140,22 @@ constructor(
              * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
              */
             @JsonProperty("status_reason")
-            fun statusReason(statusReason: DocumentUploadStatusReasons?) = apply {
+            fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
                 this.statusReason = statusReason
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountHolderSimulateEnrollmentDocumentReviewBody =

@@ -71,7 +71,7 @@ constructor(
     @NoAutoDetect
     class CardConvertPhysicalBody
     internal constructor(
-        private val shippingAddress: ShippingAddress,
+        private val shippingAddress: ShippingAddress?,
         private val carrier: Carrier?,
         private val productId: String?,
         private val shippingMethod: ShippingMethod?,
@@ -79,7 +79,7 @@ constructor(
     ) {
 
         /** The shipping address this card will be sent to. */
-        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress = shippingAddress
+        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
 
         /** If omitted, the previous carrier will be used. */
         @JsonProperty("carrier") fun carrier(): Carrier? = carrier
@@ -124,11 +124,11 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardConvertPhysicalBody: CardConvertPhysicalBody) = apply {
-                shippingAddress = cardConvertPhysicalBody.shippingAddress
-                carrier = cardConvertPhysicalBody.carrier
-                productId = cardConvertPhysicalBody.productId
-                shippingMethod = cardConvertPhysicalBody.shippingMethod
-                additionalProperties = cardConvertPhysicalBody.additionalProperties.toMutableMap()
+                this.shippingAddress = cardConvertPhysicalBody.shippingAddress
+                this.carrier = cardConvertPhysicalBody.carrier
+                this.productId = cardConvertPhysicalBody.productId
+                this.shippingMethod = cardConvertPhysicalBody.shippingMethod
+                additionalProperties(cardConvertPhysicalBody.additionalProperties)
             }
 
             /** The shipping address this card will be sent to. */
@@ -139,7 +139,7 @@ constructor(
 
             /** If omitted, the previous carrier will be used. */
             @JsonProperty("carrier")
-            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
@@ -147,7 +147,7 @@ constructor(
              * configured with Lithic before use.
              */
             @JsonProperty("product_id")
-            fun productId(productId: String?) = apply { this.productId = productId }
+            fun productId(productId: String) = apply { this.productId = productId }
 
             /**
              * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -162,28 +162,22 @@ constructor(
              *   tracking
              */
             @JsonProperty("shipping_method")
-            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
                 this.shippingMethod = shippingMethod
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardConvertPhysicalBody =

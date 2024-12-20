@@ -29,6 +29,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** A user provided id that can be used to link an account holder with an external system */
     fun externalId(): String? = externalId.getNullable("external_id")
 
@@ -83,8 +85,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): Kyc = apply {
         if (!validated) {
             externalId()
@@ -113,12 +113,12 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(kyc: Kyc) = apply {
-            externalId = kyc.externalId
-            individual = kyc.individual
-            kycPassedTimestamp = kyc.kycPassedTimestamp
-            tosTimestamp = kyc.tosTimestamp
-            workflow = kyc.workflow
-            additionalProperties = kyc.additionalProperties.toMutableMap()
+            this.externalId = kyc.externalId
+            this.individual = kyc.individual
+            this.kycPassedTimestamp = kyc.kycPassedTimestamp
+            this.tosTimestamp = kyc.tosTimestamp
+            this.workflow = kyc.workflow
+            additionalProperties(kyc.additionalProperties)
         }
 
         /** A user provided id that can be used to link an account holder with an external system */
@@ -186,22 +186,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Kyc =
@@ -229,6 +223,8 @@ private constructor(
         private val phoneNumber: JsonField<String>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
+
+        private var validated: Boolean = false
 
         /**
          * Individual's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
@@ -298,8 +294,6 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-        private var validated: Boolean = false
-
         fun validate(): Individual = apply {
             if (!validated) {
                 address().validate()
@@ -332,14 +326,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(individual: Individual) = apply {
-                address = individual.address
-                dob = individual.dob
-                email = individual.email
-                firstName = individual.firstName
-                governmentId = individual.governmentId
-                lastName = individual.lastName
-                phoneNumber = individual.phoneNumber
-                additionalProperties = individual.additionalProperties.toMutableMap()
+                this.address = individual.address
+                this.dob = individual.dob
+                this.email = individual.email
+                this.firstName = individual.firstName
+                this.governmentId = individual.governmentId
+                this.lastName = individual.lastName
+                this.phoneNumber = individual.phoneNumber
+                additionalProperties(individual.additionalProperties)
             }
 
             /**
@@ -426,22 +420,16 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Individual =

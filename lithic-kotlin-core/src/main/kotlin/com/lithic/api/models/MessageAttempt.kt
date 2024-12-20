@@ -34,6 +34,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /**
      * An RFC 3339 timestamp for when the event was created. UTC time zone.
      *
@@ -97,8 +99,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): MessageAttempt = apply {
         if (!validated) {
             created()
@@ -133,15 +133,15 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(messageAttempt: MessageAttempt) = apply {
-            created = messageAttempt.created
-            eventSubscriptionToken = messageAttempt.eventSubscriptionToken
-            eventToken = messageAttempt.eventToken
-            response = messageAttempt.response
-            responseStatusCode = messageAttempt.responseStatusCode
-            status = messageAttempt.status
-            token = messageAttempt.token
-            url = messageAttempt.url
-            additionalProperties = messageAttempt.additionalProperties.toMutableMap()
+            this.created = messageAttempt.created
+            this.eventSubscriptionToken = messageAttempt.eventSubscriptionToken
+            this.eventToken = messageAttempt.eventToken
+            this.response = messageAttempt.response
+            this.responseStatusCode = messageAttempt.responseStatusCode
+            this.status = messageAttempt.status
+            this.token = messageAttempt.token
+            this.url = messageAttempt.url
+            additionalProperties(messageAttempt.additionalProperties)
         }
 
         /**
@@ -222,22 +222,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): MessageAttempt =

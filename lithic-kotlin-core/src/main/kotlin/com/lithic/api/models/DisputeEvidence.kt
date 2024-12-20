@@ -33,6 +33,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Timestamp of when dispute evidence was created. */
     fun created(): OffsetDateTime = created.getRequired("created")
 
@@ -97,8 +99,6 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    private var validated: Boolean = false
-
     fun validate(): DisputeEvidence = apply {
         if (!validated) {
             created()
@@ -131,14 +131,14 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(disputeEvidence: DisputeEvidence) = apply {
-            created = disputeEvidence.created
-            disputeToken = disputeEvidence.disputeToken
-            downloadUrl = disputeEvidence.downloadUrl
-            filename = disputeEvidence.filename
-            token = disputeEvidence.token
-            uploadStatus = disputeEvidence.uploadStatus
-            uploadUrl = disputeEvidence.uploadUrl
-            additionalProperties = disputeEvidence.additionalProperties.toMutableMap()
+            this.created = disputeEvidence.created
+            this.disputeToken = disputeEvidence.disputeToken
+            this.downloadUrl = disputeEvidence.downloadUrl
+            this.filename = disputeEvidence.filename
+            this.token = disputeEvidence.token
+            this.uploadStatus = disputeEvidence.uploadStatus
+            this.uploadUrl = disputeEvidence.uploadUrl
+            additionalProperties(disputeEvidence.additionalProperties)
         }
 
         /** Timestamp of when dispute evidence was created. */
@@ -223,22 +223,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): DisputeEvidence =

@@ -52,11 +52,11 @@ constructor(
     @NoAutoDetect
     class ExternalBankAccountMicroDepositCreateBody
     internal constructor(
-        private val microDeposits: List<Long>,
+        private val microDeposits: List<Long>?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("micro_deposits") fun microDeposits(): List<Long> = microDeposits
+        @JsonProperty("micro_deposits") fun microDeposits(): List<Long>? = microDeposits
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -77,10 +77,8 @@ constructor(
             internal fun from(
                 externalBankAccountMicroDepositCreateBody: ExternalBankAccountMicroDepositCreateBody
             ) = apply {
-                microDeposits =
-                    externalBankAccountMicroDepositCreateBody.microDeposits.toMutableList()
-                additionalProperties =
-                    externalBankAccountMicroDepositCreateBody.additionalProperties.toMutableMap()
+                this.microDeposits = externalBankAccountMicroDepositCreateBody.microDeposits
+                additionalProperties(externalBankAccountMicroDepositCreateBody.additionalProperties)
             }
 
             @JsonProperty("micro_deposits")
@@ -90,22 +88,16 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalBankAccountMicroDepositCreateBody =

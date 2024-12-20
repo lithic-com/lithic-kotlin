@@ -57,14 +57,14 @@ constructor(
     @NoAutoDetect
     class TransactionSimulateVoidBody
     internal constructor(
-        private val token: String,
+        private val token: String?,
         private val amount: Long?,
         private val type: Type?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The transaction token returned from the /v1/simulate/authorize response. */
-        @JsonProperty("token") fun token(): String = token
+        @JsonProperty("token") fun token(): String? = token
 
         /**
          * Amount (in cents) to void. Typically this will match the amount in the original
@@ -98,11 +98,10 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transactionSimulateVoidBody: TransactionSimulateVoidBody) = apply {
-                token = transactionSimulateVoidBody.token
-                amount = transactionSimulateVoidBody.amount
-                type = transactionSimulateVoidBody.type
-                additionalProperties =
-                    transactionSimulateVoidBody.additionalProperties.toMutableMap()
+                this.token = transactionSimulateVoidBody.token
+                this.amount = transactionSimulateVoidBody.amount
+                this.type = transactionSimulateVoidBody.type
+                additionalProperties(transactionSimulateVoidBody.additionalProperties)
             }
 
             /** The transaction token returned from the /v1/simulate/authorize response. */
@@ -112,7 +111,7 @@ constructor(
              * Amount (in cents) to void. Typically this will match the amount in the original
              * authorization, but can be less.
              */
-            @JsonProperty("amount") fun amount(amount: Long?) = apply { this.amount = amount }
+            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
 
             /**
              * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
@@ -120,26 +119,20 @@ constructor(
              *   Lithic.
              * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
              */
-            @JsonProperty("type") fun type(type: Type?) = apply { this.type = type }
+            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TransactionSimulateVoidBody =

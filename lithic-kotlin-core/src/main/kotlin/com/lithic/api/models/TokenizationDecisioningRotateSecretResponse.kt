@@ -22,6 +22,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** The new Tokenization Decisioning HMAC secret */
     fun secret(): String? = secret.getNullable("secret")
 
@@ -31,8 +33,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): TokenizationDecisioningRotateSecretResponse = apply {
         if (!validated) {
@@ -56,9 +56,8 @@ private constructor(
         internal fun from(
             tokenizationDecisioningRotateSecretResponse: TokenizationDecisioningRotateSecretResponse
         ) = apply {
-            secret = tokenizationDecisioningRotateSecretResponse.secret
-            additionalProperties =
-                tokenizationDecisioningRotateSecretResponse.additionalProperties.toMutableMap()
+            this.secret = tokenizationDecisioningRotateSecretResponse.secret
+            additionalProperties(tokenizationDecisioningRotateSecretResponse.additionalProperties)
         }
 
         /** The new Tokenization Decisioning HMAC secret */
@@ -71,22 +70,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): TokenizationDecisioningRotateSecretResponse =

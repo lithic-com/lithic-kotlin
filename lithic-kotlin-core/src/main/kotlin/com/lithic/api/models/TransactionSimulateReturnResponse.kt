@@ -23,6 +23,8 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
+    private var validated: Boolean = false
+
     /** Debugging request ID to share with Lithic Support team. */
     fun debuggingRequestId(): String? = debuggingRequestId.getNullable("debugging_request_id")
 
@@ -40,8 +42,6 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
 
     fun validate(): TransactionSimulateReturnResponse = apply {
         if (!validated) {
@@ -66,10 +66,9 @@ private constructor(
 
         internal fun from(transactionSimulateReturnResponse: TransactionSimulateReturnResponse) =
             apply {
-                debuggingRequestId = transactionSimulateReturnResponse.debuggingRequestId
-                token = transactionSimulateReturnResponse.token
-                additionalProperties =
-                    transactionSimulateReturnResponse.additionalProperties.toMutableMap()
+                this.debuggingRequestId = transactionSimulateReturnResponse.debuggingRequestId
+                this.token = transactionSimulateReturnResponse.token
+                additionalProperties(transactionSimulateReturnResponse.additionalProperties)
             }
 
         /** Debugging request ID to share with Lithic Support team. */
@@ -93,22 +92,16 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            putAllAdditionalProperties(additionalProperties)
+            this.additionalProperties.putAll(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            additionalProperties.put(key, value)
+            this.additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
-        }
-
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): TransactionSimulateReturnResponse =

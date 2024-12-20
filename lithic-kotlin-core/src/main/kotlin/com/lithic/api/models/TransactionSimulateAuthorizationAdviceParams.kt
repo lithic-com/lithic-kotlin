@@ -49,19 +49,19 @@ constructor(
     @NoAutoDetect
     class TransactionSimulateAuthorizationAdviceBody
     internal constructor(
-        private val token: String,
-        private val amount: Long,
+        private val token: String?,
+        private val amount: Long?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The transaction token returned from the /v1/simulate/authorize. response. */
-        @JsonProperty("token") fun token(): String = token
+        @JsonProperty("token") fun token(): String? = token
 
         /**
          * Amount (in cents) to authorize. This amount will override the transaction's amount that
          * was originally set by /v1/simulate/authorize.
          */
-        @JsonProperty("amount") fun amount(): Long = amount
+        @JsonProperty("amount") fun amount(): Long? = amount
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -84,10 +84,11 @@ constructor(
                 transactionSimulateAuthorizationAdviceBody:
                     TransactionSimulateAuthorizationAdviceBody
             ) = apply {
-                token = transactionSimulateAuthorizationAdviceBody.token
-                amount = transactionSimulateAuthorizationAdviceBody.amount
-                additionalProperties =
-                    transactionSimulateAuthorizationAdviceBody.additionalProperties.toMutableMap()
+                this.token = transactionSimulateAuthorizationAdviceBody.token
+                this.amount = transactionSimulateAuthorizationAdviceBody.amount
+                additionalProperties(
+                    transactionSimulateAuthorizationAdviceBody.additionalProperties
+                )
             }
 
             /** The transaction token returned from the /v1/simulate/authorize. response. */
@@ -101,22 +102,16 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
+                this.additionalProperties.putAll(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
+                this.additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TransactionSimulateAuthorizationAdviceBody =
