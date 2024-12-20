@@ -81,28 +81,35 @@ constructor(
             internal fun from(
                 externalBankAccountRetryMicroDepositsBody: ExternalBankAccountRetryMicroDepositsBody
             ) = apply {
-                this.financialAccountToken =
+                financialAccountToken =
                     externalBankAccountRetryMicroDepositsBody.financialAccountToken
-                additionalProperties(externalBankAccountRetryMicroDepositsBody.additionalProperties)
+                additionalProperties =
+                    externalBankAccountRetryMicroDepositsBody.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("financial_account_token")
-            fun financialAccountToken(financialAccountToken: String) = apply {
+            fun financialAccountToken(financialAccountToken: String?) = apply {
                 this.financialAccountToken = financialAccountToken
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalBankAccountRetryMicroDepositsBody =
