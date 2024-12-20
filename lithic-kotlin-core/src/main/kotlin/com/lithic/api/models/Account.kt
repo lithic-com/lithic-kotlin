@@ -6,31 +6,43 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = Account.Builder::class)
 @NoAutoDetect
 class Account
+@JsonCreator
 private constructor(
-    private val accountHolder: JsonField<AccountHolder>,
-    private val authRuleTokens: JsonField<List<String>>,
-    private val cardholderCurrency: JsonField<String>,
-    private val spendLimit: JsonField<SpendLimit>,
-    private val state: JsonField<State>,
-    private val token: JsonField<String>,
-    private val verificationAddress: JsonField<VerificationAddress>,
-    private val created: JsonField<OffsetDateTime>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("account_holder")
+    @ExcludeMissing
+    private val accountHolder: JsonField<AccountHolder> = JsonMissing.of(),
+    @JsonProperty("auth_rule_tokens")
+    @ExcludeMissing
+    private val authRuleTokens: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("cardholder_currency")
+    @ExcludeMissing
+    private val cardholderCurrency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("spend_limit")
+    @ExcludeMissing
+    private val spendLimit: JsonField<SpendLimit> = JsonMissing.of(),
+    @JsonProperty("state") @ExcludeMissing private val state: JsonField<State> = JsonMissing.of(),
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("verification_address")
+    @ExcludeMissing
+    private val verificationAddress: JsonField<VerificationAddress> = JsonMissing.of(),
+    @JsonProperty("created")
+    @ExcludeMissing
+    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun accountHolder(): AccountHolder? = accountHolder.getNullable("account_holder")
@@ -185,8 +197,6 @@ private constructor(
 
         fun accountHolder(accountHolder: AccountHolder) = accountHolder(JsonField.of(accountHolder))
 
-        @JsonProperty("account_holder")
-        @ExcludeMissing
         fun accountHolder(accountHolder: JsonField<AccountHolder>) = apply {
             this.accountHolder = accountHolder
         }
@@ -206,8 +216,6 @@ private constructor(
          * be removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch
          * Auth Rule information instead.
          */
-        @JsonProperty("auth_rule_tokens")
-        @ExcludeMissing
         fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
             this.authRuleTokens = authRuleTokens
         }
@@ -217,8 +225,6 @@ private constructor(
             cardholderCurrency(JsonField.of(cardholderCurrency))
 
         /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
-        @JsonProperty("cardholder_currency")
-        @ExcludeMissing
         fun cardholderCurrency(cardholderCurrency: JsonField<String>) = apply {
             this.cardholderCurrency = cardholderCurrency
         }
@@ -237,8 +243,6 @@ private constructor(
          * their transaction volume has surpassed the value in the applicable time limit (rolling).
          * A lifetime limit of 0 indicates that the lifetime limit feature is disabled.
          */
-        @JsonProperty("spend_limit")
-        @ExcludeMissing
         fun spendLimit(spendLimit: JsonField<SpendLimit>) = apply { this.spendLimit = spendLimit }
 
         /**
@@ -265,8 +269,6 @@ private constructor(
          *   Please contact [support@lithic.com](mailto:support@lithic.com) if you believe this was
          *   in error.
          */
-        @JsonProperty("state")
-        @ExcludeMissing
         fun state(state: JsonField<State>) = apply { this.state = state }
 
         /**
@@ -279,15 +281,11 @@ private constructor(
          * Globally unique identifier for the account. This is the same as the account_token
          * returned by the enroll endpoint. If using this parameter, do not include pagination.
          */
-        @JsonProperty("token")
-        @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         fun verificationAddress(verificationAddress: VerificationAddress) =
             verificationAddress(JsonField.of(verificationAddress))
 
-        @JsonProperty("verification_address")
-        @ExcludeMissing
         fun verificationAddress(verificationAddress: JsonField<VerificationAddress>) = apply {
             this.verificationAddress = verificationAddress
         }
@@ -302,8 +300,6 @@ private constructor(
          * Timestamp of when the account was created. For accounts created before 2023-05-11, this
          * field will be null.
          */
-        @JsonProperty("created")
-        @ExcludeMissing
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -311,7 +307,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -346,14 +341,21 @@ private constructor(
      * transaction volume has surpassed the value in the applicable time limit (rolling). A lifetime
      * limit of 0 indicates that the lifetime limit feature is disabled.
      */
-    @JsonDeserialize(builder = SpendLimit.Builder::class)
     @NoAutoDetect
     class SpendLimit
+    @JsonCreator
     private constructor(
-        private val daily: JsonField<Long>,
-        private val lifetime: JsonField<Long>,
-        private val monthly: JsonField<Long>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("daily")
+        @ExcludeMissing
+        private val daily: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("lifetime")
+        @ExcludeMissing
+        private val lifetime: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("monthly")
+        @ExcludeMissing
+        private val monthly: JsonField<Long> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Daily spend limit (in cents). */
@@ -414,24 +416,18 @@ private constructor(
             fun daily(daily: Long) = daily(JsonField.of(daily))
 
             /** Daily spend limit (in cents). */
-            @JsonProperty("daily")
-            @ExcludeMissing
             fun daily(daily: JsonField<Long>) = apply { this.daily = daily }
 
             /** Total spend limit over account lifetime (in cents). */
             fun lifetime(lifetime: Long) = lifetime(JsonField.of(lifetime))
 
             /** Total spend limit over account lifetime (in cents). */
-            @JsonProperty("lifetime")
-            @ExcludeMissing
             fun lifetime(lifetime: JsonField<Long>) = apply { this.lifetime = lifetime }
 
             /** Monthly spend limit (in cents). */
             fun monthly(monthly: Long) = monthly(JsonField.of(monthly))
 
             /** Monthly spend limit (in cents). */
-            @JsonProperty("monthly")
-            @ExcludeMissing
             fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -439,7 +435,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -544,15 +539,24 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = AccountHolder.Builder::class)
     @NoAutoDetect
     class AccountHolder
+    @JsonCreator
     private constructor(
-        private val businessAccountToken: JsonField<String>,
-        private val email: JsonField<String>,
-        private val phoneNumber: JsonField<String>,
-        private val token: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("business_account_token")
+        @ExcludeMissing
+        private val businessAccountToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("email")
+        @ExcludeMissing
+        private val email: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("phone_number")
+        @ExcludeMissing
+        private val phoneNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("token")
+        @ExcludeMissing
+        private val token: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -642,8 +646,6 @@ private constructor(
              * users of businesses. Account_token of the enrolled business associated with an
              * enrolled AUTHORIZED_USER individual.
              */
-            @JsonProperty("business_account_token")
-            @ExcludeMissing
             fun businessAccountToken(businessAccountToken: JsonField<String>) = apply {
                 this.businessAccountToken = businessAccountToken
             }
@@ -652,16 +654,12 @@ private constructor(
             fun email(email: String) = email(JsonField.of(email))
 
             /** Email address. */
-            @JsonProperty("email")
-            @ExcludeMissing
             fun email(email: JsonField<String>) = apply { this.email = email }
 
             /** Phone number of the individual. */
             fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
 
             /** Phone number of the individual. */
-            @JsonProperty("phone_number")
-            @ExcludeMissing
             fun phoneNumber(phoneNumber: JsonField<String>) = apply {
                 this.phoneNumber = phoneNumber
             }
@@ -670,8 +668,6 @@ private constructor(
             fun token(token: String) = token(JsonField.of(token))
 
             /** Globally unique identifier for the account holder. */
-            @JsonProperty("token")
-            @ExcludeMissing
             fun token(token: JsonField<String>) = apply { this.token = token }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -679,7 +675,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -722,17 +717,30 @@ private constructor(
             "AccountHolder{businessAccountToken=$businessAccountToken, email=$email, phoneNumber=$phoneNumber, token=$token, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = VerificationAddress.Builder::class)
     @NoAutoDetect
     class VerificationAddress
+    @JsonCreator
     private constructor(
-        private val address1: JsonField<String>,
-        private val address2: JsonField<String>,
-        private val city: JsonField<String>,
-        private val country: JsonField<String>,
-        private val postalCode: JsonField<String>,
-        private val state: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("address1")
+        @ExcludeMissing
+        private val address1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("address2")
+        @ExcludeMissing
+        private val address2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("city")
+        @ExcludeMissing
+        private val city: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        private val postalCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("state")
+        @ExcludeMissing
+        private val state: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Valid deliverable address (no PO boxes). */
@@ -832,32 +840,24 @@ private constructor(
             fun address1(address1: String) = address1(JsonField.of(address1))
 
             /** Valid deliverable address (no PO boxes). */
-            @JsonProperty("address1")
-            @ExcludeMissing
             fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
             /** Unit or apartment number (if applicable). */
             fun address2(address2: String) = address2(JsonField.of(address2))
 
             /** Unit or apartment number (if applicable). */
-            @JsonProperty("address2")
-            @ExcludeMissing
             fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
             /** City name. */
             fun city(city: String) = city(JsonField.of(city))
 
             /** City name. */
-            @JsonProperty("city")
-            @ExcludeMissing
             fun city(city: JsonField<String>) = apply { this.city = city }
 
             /** Country name. Only USA is currently supported. */
             fun country(country: String) = country(JsonField.of(country))
 
             /** Country name. Only USA is currently supported. */
-            @JsonProperty("country")
-            @ExcludeMissing
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
@@ -872,8 +872,6 @@ private constructor(
              * as a five-digit postal code or nine-digit postal code (ZIP+4) using the format
              * 12345-1234.
              */
-            @JsonProperty("postal_code")
-            @ExcludeMissing
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             /**
@@ -886,8 +884,6 @@ private constructor(
              * Valid state code. Only USA state codes are currently supported, entered in uppercase
              * ISO 3166-2 two-character format.
              */
-            @JsonProperty("state")
-            @ExcludeMissing
             fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -895,7 +891,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
