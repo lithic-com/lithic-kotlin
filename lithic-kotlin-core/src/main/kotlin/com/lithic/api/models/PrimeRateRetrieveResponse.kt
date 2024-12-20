@@ -24,8 +24,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /** List of prime rates */
     fun data(): List<InterestRate> = data.getRequired("data")
 
@@ -41,6 +39,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): PrimeRateRetrieveResponse = apply {
         if (!validated) {
@@ -64,9 +64,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(primeRateRetrieveResponse: PrimeRateRetrieveResponse) = apply {
-            this.data = primeRateRetrieveResponse.data
-            this.hasMore = primeRateRetrieveResponse.hasMore
-            additionalProperties(primeRateRetrieveResponse.additionalProperties)
+            data = primeRateRetrieveResponse.data
+            hasMore = primeRateRetrieveResponse.hasMore
+            additionalProperties = primeRateRetrieveResponse.additionalProperties.toMutableMap()
         }
 
         /** List of prime rates */
@@ -87,16 +87,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): PrimeRateRetrieveResponse =
@@ -116,8 +122,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** Date the rate goes into effect */
         fun effectiveDate(): LocalDate = effectiveDate.getRequired("effective_date")
 
@@ -133,6 +137,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): InterestRate = apply {
             if (!validated) {
@@ -156,9 +162,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(interestRate: InterestRate) = apply {
-                this.effectiveDate = interestRate.effectiveDate
-                this.rate = interestRate.rate
-                additionalProperties(interestRate.additionalProperties)
+                effectiveDate = interestRate.effectiveDate
+                rate = interestRate.rate
+                additionalProperties = interestRate.additionalProperties.toMutableMap()
             }
 
             /** Date the rate goes into effect */
@@ -181,16 +187,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InterestRate =

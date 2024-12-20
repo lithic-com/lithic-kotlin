@@ -124,16 +124,16 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardReissueBody: CardReissueBody) = apply {
-                this.carrier = cardReissueBody.carrier
-                this.productId = cardReissueBody.productId
-                this.shippingAddress = cardReissueBody.shippingAddress
-                this.shippingMethod = cardReissueBody.shippingMethod
-                additionalProperties(cardReissueBody.additionalProperties)
+                carrier = cardReissueBody.carrier
+                productId = cardReissueBody.productId
+                shippingAddress = cardReissueBody.shippingAddress
+                shippingMethod = cardReissueBody.shippingMethod
+                additionalProperties = cardReissueBody.additionalProperties.toMutableMap()
             }
 
             /** If omitted, the previous carrier will be used. */
             @JsonProperty("carrier")
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
@@ -141,11 +141,11 @@ constructor(
              * configured with Lithic before use.
              */
             @JsonProperty("product_id")
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /** If omitted, the previous shipping address will be used. */
             @JsonProperty("shipping_address")
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -162,22 +162,28 @@ constructor(
              *   tracking
              */
             @JsonProperty("shipping_method")
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardReissueBody =

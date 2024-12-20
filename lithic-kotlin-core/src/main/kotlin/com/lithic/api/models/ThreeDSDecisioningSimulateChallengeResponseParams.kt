@@ -49,8 +49,8 @@ constructor(
     @NoAutoDetect
     class ThreeDSDecisioningSimulateChallengeResponseBody
     internal constructor(
-        private val token: String?,
-        private val challengeResponse: ChallengeResult?,
+        private val token: String,
+        private val challengeResponse: ChallengeResult,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -59,11 +59,11 @@ constructor(
          * initial 3DS Decisioning Request and as part of the 3DS Challenge Event in the
          * [ThreeDSAuthentication](#/components/schemas/ThreeDSAuthentication) object
          */
-        @JsonProperty("token") fun token(): String? = token
+        @JsonProperty("token") fun token(): String = token
 
         /** Whether the Cardholder has Approved or Declined the issued Challenge */
         @JsonProperty("challenge_response")
-        fun challengeResponse(): ChallengeResult? = challengeResponse
+        fun challengeResponse(): ChallengeResult = challengeResponse
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -86,12 +86,12 @@ constructor(
                 threeDSDecisioningSimulateChallengeResponseBody:
                     ThreeDSDecisioningSimulateChallengeResponseBody
             ) = apply {
-                this.token = threeDSDecisioningSimulateChallengeResponseBody.token
-                this.challengeResponse =
+                token = threeDSDecisioningSimulateChallengeResponseBody.token
+                challengeResponse =
                     threeDSDecisioningSimulateChallengeResponseBody.challengeResponse
-                additionalProperties(
+                additionalProperties =
                     threeDSDecisioningSimulateChallengeResponseBody.additionalProperties
-                )
+                        .toMutableMap()
             }
 
             /**
@@ -109,16 +109,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ThreeDSDecisioningSimulateChallengeResponseBody =

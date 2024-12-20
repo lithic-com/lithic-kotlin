@@ -86,12 +86,12 @@ constructor(
     @NoAutoDetect
     class ManagementOperationCreateBody
     internal constructor(
-        private val amount: Long?,
-        private val category: ManagementOperationCategory?,
-        private val direction: ManagementOperationDirection?,
-        private val effectiveDate: LocalDate?,
-        private val eventType: ManagementOperationEventType?,
-        private val financialAccountToken: String?,
+        private val amount: Long,
+        private val category: ManagementOperationCategory,
+        private val direction: ManagementOperationDirection,
+        private val effectiveDate: LocalDate,
+        private val eventType: ManagementOperationEventType,
+        private val financialAccountToken: String,
         private val token: String?,
         private val memo: String?,
         private val subtype: String?,
@@ -99,18 +99,18 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
-        @JsonProperty("category") fun category(): ManagementOperationCategory? = category
+        @JsonProperty("category") fun category(): ManagementOperationCategory = category
 
-        @JsonProperty("direction") fun direction(): ManagementOperationDirection? = direction
+        @JsonProperty("direction") fun direction(): ManagementOperationDirection = direction
 
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
+        @JsonProperty("effective_date") fun effectiveDate(): LocalDate = effectiveDate
 
-        @JsonProperty("event_type") fun eventType(): ManagementOperationEventType? = eventType
+        @JsonProperty("event_type") fun eventType(): ManagementOperationEventType = eventType
 
         @JsonProperty("financial_account_token")
-        fun financialAccountToken(): String? = financialAccountToken
+        fun financialAccountToken(): String = financialAccountToken
 
         @JsonProperty("token") fun token(): String? = token
 
@@ -147,17 +147,18 @@ constructor(
 
             internal fun from(managementOperationCreateBody: ManagementOperationCreateBody) =
                 apply {
-                    this.amount = managementOperationCreateBody.amount
-                    this.category = managementOperationCreateBody.category
-                    this.direction = managementOperationCreateBody.direction
-                    this.effectiveDate = managementOperationCreateBody.effectiveDate
-                    this.eventType = managementOperationCreateBody.eventType
-                    this.financialAccountToken = managementOperationCreateBody.financialAccountToken
-                    this.token = managementOperationCreateBody.token
-                    this.memo = managementOperationCreateBody.memo
-                    this.subtype = managementOperationCreateBody.subtype
-                    this.userDefinedId = managementOperationCreateBody.userDefinedId
-                    additionalProperties(managementOperationCreateBody.additionalProperties)
+                    amount = managementOperationCreateBody.amount
+                    category = managementOperationCreateBody.category
+                    direction = managementOperationCreateBody.direction
+                    effectiveDate = managementOperationCreateBody.effectiveDate
+                    eventType = managementOperationCreateBody.eventType
+                    financialAccountToken = managementOperationCreateBody.financialAccountToken
+                    token = managementOperationCreateBody.token
+                    memo = managementOperationCreateBody.memo
+                    subtype = managementOperationCreateBody.subtype
+                    userDefinedId = managementOperationCreateBody.userDefinedId
+                    additionalProperties =
+                        managementOperationCreateBody.additionalProperties.toMutableMap()
                 }
 
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
@@ -185,27 +186,34 @@ constructor(
                 this.financialAccountToken = financialAccountToken
             }
 
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
+            @JsonProperty("token") fun token(token: String?) = apply { this.token = token }
 
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
-            @JsonProperty("subtype") fun subtype(subtype: String) = apply { this.subtype = subtype }
+            @JsonProperty("subtype")
+            fun subtype(subtype: String?) = apply { this.subtype = subtype }
 
             @JsonProperty("user_defined_id")
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ManagementOperationCreateBody =

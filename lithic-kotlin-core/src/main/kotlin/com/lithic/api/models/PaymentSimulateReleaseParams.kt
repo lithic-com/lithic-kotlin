@@ -42,12 +42,12 @@ constructor(
     @NoAutoDetect
     class PaymentSimulateReleaseBody
     internal constructor(
-        private val paymentToken: String?,
+        private val paymentToken: String,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Payment Token */
-        @JsonProperty("payment_token") fun paymentToken(): String? = paymentToken
+        @JsonProperty("payment_token") fun paymentToken(): String = paymentToken
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -66,8 +66,9 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentSimulateReleaseBody: PaymentSimulateReleaseBody) = apply {
-                this.paymentToken = paymentSimulateReleaseBody.paymentToken
-                additionalProperties(paymentSimulateReleaseBody.additionalProperties)
+                paymentToken = paymentSimulateReleaseBody.paymentToken
+                additionalProperties =
+                    paymentSimulateReleaseBody.additionalProperties.toMutableMap()
             }
 
             /** Payment Token */
@@ -76,16 +77,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentSimulateReleaseBody =

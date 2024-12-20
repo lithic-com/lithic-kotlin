@@ -71,28 +71,35 @@ constructor(
             internal fun from(
                 threeDSDecisioningSimulateChallengeBody: ThreeDSDecisioningSimulateChallengeBody
             ) = apply {
-                this.token = threeDSDecisioningSimulateChallengeBody.token
-                additionalProperties(threeDSDecisioningSimulateChallengeBody.additionalProperties)
+                token = threeDSDecisioningSimulateChallengeBody.token
+                additionalProperties =
+                    threeDSDecisioningSimulateChallengeBody.additionalProperties.toMutableMap()
             }
 
             /**
              * A unique token returned as part of a /v1/three_ds_authentication/simulate call that
              * responded with a CHALLENGE_REQUESTED status.
              */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
+            @JsonProperty("token") fun token(token: String?) = apply { this.token = token }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ThreeDSDecisioningSimulateChallengeBody =
