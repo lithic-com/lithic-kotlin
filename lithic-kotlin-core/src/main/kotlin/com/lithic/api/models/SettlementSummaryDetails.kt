@@ -32,8 +32,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /** ISO 4217 alpha 3 code. */
     fun currency(): String? = currency.getNullable("currency")
 
@@ -106,6 +104,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): SettlementSummaryDetails = apply {
         if (!validated) {
             currency()
@@ -140,15 +140,15 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(settlementSummaryDetails: SettlementSummaryDetails) = apply {
-            this.currency = settlementSummaryDetails.currency
-            this.disputesGrossAmount = settlementSummaryDetails.disputesGrossAmount
-            this.institution = settlementSummaryDetails.institution
-            this.interchangeGrossAmount = settlementSummaryDetails.interchangeGrossAmount
-            this.network = settlementSummaryDetails.network
-            this.otherFeesGrossAmount = settlementSummaryDetails.otherFeesGrossAmount
-            this.settledNetAmount = settlementSummaryDetails.settledNetAmount
-            this.transactionsGrossAmount = settlementSummaryDetails.transactionsGrossAmount
-            additionalProperties(settlementSummaryDetails.additionalProperties)
+            currency = settlementSummaryDetails.currency
+            disputesGrossAmount = settlementSummaryDetails.disputesGrossAmount
+            institution = settlementSummaryDetails.institution
+            interchangeGrossAmount = settlementSummaryDetails.interchangeGrossAmount
+            network = settlementSummaryDetails.network
+            otherFeesGrossAmount = settlementSummaryDetails.otherFeesGrossAmount
+            settledNetAmount = settlementSummaryDetails.settledNetAmount
+            transactionsGrossAmount = settlementSummaryDetails.transactionsGrossAmount
+            additionalProperties = settlementSummaryDetails.additionalProperties.toMutableMap()
         }
 
         /** ISO 4217 alpha 3 code. */
@@ -248,16 +248,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): SettlementSummaryDetails =

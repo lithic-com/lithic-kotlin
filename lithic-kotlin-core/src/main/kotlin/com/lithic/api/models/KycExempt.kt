@@ -33,8 +33,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /**
      * KYC Exempt user's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
      * APO/FPO are acceptable.
@@ -109,6 +107,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): KycExempt = apply {
         if (!validated) {
             address().validate()
@@ -145,16 +145,16 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(kycExempt: KycExempt) = apply {
-            this.address = kycExempt.address
-            this.businessAccountToken = kycExempt.businessAccountToken
-            this.email = kycExempt.email
-            this.externalId = kycExempt.externalId
-            this.firstName = kycExempt.firstName
-            this.kycExemptionType = kycExempt.kycExemptionType
-            this.lastName = kycExempt.lastName
-            this.phoneNumber = kycExempt.phoneNumber
-            this.workflow = kycExempt.workflow
-            additionalProperties(kycExempt.additionalProperties)
+            address = kycExempt.address
+            businessAccountToken = kycExempt.businessAccountToken
+            email = kycExempt.email
+            externalId = kycExempt.externalId
+            firstName = kycExempt.firstName
+            kycExemptionType = kycExempt.kycExemptionType
+            lastName = kycExempt.lastName
+            phoneNumber = kycExempt.phoneNumber
+            workflow = kycExempt.workflow
+            additionalProperties = kycExempt.additionalProperties.toMutableMap()
         }
 
         /**
@@ -251,16 +251,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): KycExempt =

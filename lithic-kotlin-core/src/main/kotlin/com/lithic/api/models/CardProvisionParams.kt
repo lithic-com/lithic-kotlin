@@ -146,13 +146,13 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardProvisionBody: CardProvisionBody) = apply {
-                this.certificate = cardProvisionBody.certificate
-                this.clientDeviceId = cardProvisionBody.clientDeviceId
-                this.clientWalletAccountId = cardProvisionBody.clientWalletAccountId
-                this.digitalWallet = cardProvisionBody.digitalWallet
-                this.nonce = cardProvisionBody.nonce
-                this.nonceSignature = cardProvisionBody.nonceSignature
-                additionalProperties(cardProvisionBody.additionalProperties)
+                certificate = cardProvisionBody.certificate
+                clientDeviceId = cardProvisionBody.clientDeviceId
+                clientWalletAccountId = cardProvisionBody.clientWalletAccountId
+                digitalWallet = cardProvisionBody.digitalWallet
+                nonce = cardProvisionBody.nonce
+                nonceSignature = cardProvisionBody.nonceSignature
+                additionalProperties = cardProvisionBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -162,14 +162,14 @@ constructor(
              * Provided by the device's wallet.
              */
             @JsonProperty("certificate")
-            fun certificate(certificate: String) = apply { this.certificate = certificate }
+            fun certificate(certificate: String?) = apply { this.certificate = certificate }
 
             /**
              * Only applicable if `digital_wallet` is `GOOGLE_PAY` or `SAMSUNG_PAY` and the card is
              * on the Visa network. Stable device identification set by the wallet provider.
              */
             @JsonProperty("client_device_id")
-            fun clientDeviceId(clientDeviceId: String) = apply {
+            fun clientDeviceId(clientDeviceId: String?) = apply {
                 this.clientDeviceId = clientDeviceId
             }
 
@@ -178,13 +178,13 @@ constructor(
              * on the Visa network. Consumer ID that identifies the wallet account holder entity.
              */
             @JsonProperty("client_wallet_account_id")
-            fun clientWalletAccountId(clientWalletAccountId: String) = apply {
+            fun clientWalletAccountId(clientWalletAccountId: String?) = apply {
                 this.clientWalletAccountId = clientWalletAccountId
             }
 
             /** Name of digital wallet provider. */
             @JsonProperty("digital_wallet")
-            fun digitalWallet(digitalWallet: DigitalWallet) = apply {
+            fun digitalWallet(digitalWallet: DigitalWallet?) = apply {
                 this.digitalWallet = digitalWallet
             }
 
@@ -193,7 +193,7 @@ constructor(
              * `activationData` in the response. Base64 cryptographic nonce provided by the device's
              * wallet.
              */
-            @JsonProperty("nonce") fun nonce(nonce: String) = apply { this.nonce = nonce }
+            @JsonProperty("nonce") fun nonce(nonce: String?) = apply { this.nonce = nonce }
 
             /**
              * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only
@@ -201,22 +201,28 @@ constructor(
              * wallet.
              */
             @JsonProperty("nonce_signature")
-            fun nonceSignature(nonceSignature: String) = apply {
+            fun nonceSignature(nonceSignature: String?) = apply {
                 this.nonceSignature = nonceSignature
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CardProvisionBody =

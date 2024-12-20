@@ -108,46 +108,52 @@ constructor(
                 financialAccountCreditConfigurationUpdateBody:
                     FinancialAccountCreditConfigurationUpdateBody
             ) = apply {
-                this.creditLimit = financialAccountCreditConfigurationUpdateBody.creditLimit
-                this.creditProductToken =
+                creditLimit = financialAccountCreditConfigurationUpdateBody.creditLimit
+                creditProductToken =
                     financialAccountCreditConfigurationUpdateBody.creditProductToken
-                this.externalBankAccountToken =
+                externalBankAccountToken =
                     financialAccountCreditConfigurationUpdateBody.externalBankAccountToken
-                this.tier = financialAccountCreditConfigurationUpdateBody.tier
-                additionalProperties(
+                tier = financialAccountCreditConfigurationUpdateBody.tier
+                additionalProperties =
                     financialAccountCreditConfigurationUpdateBody.additionalProperties
-                )
+                        .toMutableMap()
             }
 
             @JsonProperty("credit_limit")
-            fun creditLimit(creditLimit: Long) = apply { this.creditLimit = creditLimit }
+            fun creditLimit(creditLimit: Long?) = apply { this.creditLimit = creditLimit }
 
             /** Globally unique identifier for the credit product */
             @JsonProperty("credit_product_token")
-            fun creditProductToken(creditProductToken: String) = apply {
+            fun creditProductToken(creditProductToken: String?) = apply {
                 this.creditProductToken = creditProductToken
             }
 
             @JsonProperty("external_bank_account_token")
-            fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+            fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
                 this.externalBankAccountToken = externalBankAccountToken
             }
 
             /** Tier to assign to a financial account */
-            @JsonProperty("tier") fun tier(tier: String) = apply { this.tier = tier }
+            @JsonProperty("tier") fun tier(tier: String?) = apply { this.tier = tier }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): FinancialAccountCreditConfigurationUpdateBody =

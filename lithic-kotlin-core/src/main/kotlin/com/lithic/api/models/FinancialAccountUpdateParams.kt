@@ -75,25 +75,32 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(financialAccountUpdateBody: FinancialAccountUpdateBody) = apply {
-                this.nickname = financialAccountUpdateBody.nickname
-                additionalProperties(financialAccountUpdateBody.additionalProperties)
+                nickname = financialAccountUpdateBody.nickname
+                additionalProperties =
+                    financialAccountUpdateBody.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("nickname")
-            fun nickname(nickname: String) = apply { this.nickname = nickname }
+            fun nickname(nickname: String?) = apply { this.nickname = nickname }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): FinancialAccountUpdateBody =

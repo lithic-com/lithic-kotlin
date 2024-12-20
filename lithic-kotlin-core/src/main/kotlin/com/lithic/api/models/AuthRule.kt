@@ -33,8 +33,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /**
      * Array of account_token(s) identifying the accounts that the Auth Rule applies to. Note that
      * only this field or `card_tokens` can be provided for a given Auth Rule.
@@ -113,6 +111,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): AuthRule = apply {
         if (!validated) {
             accountTokens()
@@ -149,16 +149,16 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authRule: AuthRule) = apply {
-            this.accountTokens = authRule.accountTokens
-            this.allowedCountries = authRule.allowedCountries
-            this.allowedMcc = authRule.allowedMcc
-            this.blockedCountries = authRule.blockedCountries
-            this.blockedMcc = authRule.blockedMcc
-            this.cardTokens = authRule.cardTokens
-            this.programLevel = authRule.programLevel
-            this.state = authRule.state
-            this.token = authRule.token
-            additionalProperties(authRule.additionalProperties)
+            accountTokens = authRule.accountTokens
+            allowedCountries = authRule.allowedCountries
+            allowedMcc = authRule.allowedMcc
+            blockedCountries = authRule.blockedCountries
+            blockedMcc = authRule.blockedMcc
+            cardTokens = authRule.cardTokens
+            programLevel = authRule.programLevel
+            state = authRule.state
+            token = authRule.token
+            additionalProperties = authRule.additionalProperties.toMutableMap()
         }
 
         /**
@@ -265,16 +265,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): AuthRule =

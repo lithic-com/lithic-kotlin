@@ -112,41 +112,47 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(disputeUpdateBody: DisputeUpdateBody) = apply {
-                this.amount = disputeUpdateBody.amount
-                this.customerFiledDate = disputeUpdateBody.customerFiledDate
-                this.customerNote = disputeUpdateBody.customerNote
-                this.reason = disputeUpdateBody.reason
-                additionalProperties(disputeUpdateBody.additionalProperties)
+                amount = disputeUpdateBody.amount
+                customerFiledDate = disputeUpdateBody.customerFiledDate
+                customerNote = disputeUpdateBody.customerNote
+                reason = disputeUpdateBody.reason
+                additionalProperties = disputeUpdateBody.additionalProperties.toMutableMap()
             }
 
             /** Amount to dispute */
-            @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
+            @JsonProperty("amount") fun amount(amount: Long?) = apply { this.amount = amount }
 
             /** Date the customer filed the dispute */
             @JsonProperty("customer_filed_date")
-            fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
+            fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
                 this.customerFiledDate = customerFiledDate
             }
 
             /** Customer description of dispute */
             @JsonProperty("customer_note")
-            fun customerNote(customerNote: String) = apply { this.customerNote = customerNote }
+            fun customerNote(customerNote: String?) = apply { this.customerNote = customerNote }
 
             /** Reason for dispute */
-            @JsonProperty("reason") fun reason(reason: Reason) = apply { this.reason = reason }
+            @JsonProperty("reason") fun reason(reason: Reason?) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): DisputeUpdateBody =

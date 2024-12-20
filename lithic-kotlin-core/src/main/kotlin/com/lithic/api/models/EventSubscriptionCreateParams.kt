@@ -61,7 +61,7 @@ constructor(
     @NoAutoDetect
     class EventSubscriptionCreateBody
     internal constructor(
-        private val url: String?,
+        private val url: String,
         private val description: String?,
         private val disabled: Boolean?,
         private val eventTypes: List<EventType>?,
@@ -69,7 +69,7 @@ constructor(
     ) {
 
         /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
-        @JsonProperty("url") fun url(): String? = url
+        @JsonProperty("url") fun url(): String = url
 
         /** Event subscription description. */
         @JsonProperty("description") fun description(): String? = description
@@ -103,11 +103,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventSubscriptionCreateBody: EventSubscriptionCreateBody) = apply {
-                this.url = eventSubscriptionCreateBody.url
-                this.description = eventSubscriptionCreateBody.description
-                this.disabled = eventSubscriptionCreateBody.disabled
-                this.eventTypes = eventSubscriptionCreateBody.eventTypes
-                additionalProperties(eventSubscriptionCreateBody.additionalProperties)
+                url = eventSubscriptionCreateBody.url
+                description = eventSubscriptionCreateBody.description
+                disabled = eventSubscriptionCreateBody.disabled
+                eventTypes = eventSubscriptionCreateBody.eventTypes?.toMutableList()
+                additionalProperties =
+                    eventSubscriptionCreateBody.additionalProperties.toMutableMap()
             }
 
             /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
@@ -115,31 +116,37 @@ constructor(
 
             /** Event subscription description. */
             @JsonProperty("description")
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /** Whether the event subscription is active (false) or inactive (true). */
             @JsonProperty("disabled")
-            fun disabled(disabled: Boolean) = apply { this.disabled = disabled }
+            fun disabled(disabled: Boolean?) = apply { this.disabled = disabled }
 
             /**
              * Indicates types of events that will be sent to this subscription. If left blank, all
              * types will be sent.
              */
             @JsonProperty("event_types")
-            fun eventTypes(eventTypes: List<EventType>) = apply { this.eventTypes = eventTypes }
+            fun eventTypes(eventTypes: List<EventType>?) = apply { this.eventTypes = eventTypes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): EventSubscriptionCreateBody =

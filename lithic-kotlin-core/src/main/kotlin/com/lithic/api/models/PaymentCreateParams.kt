@@ -81,32 +81,32 @@ constructor(
     @NoAutoDetect
     class PaymentCreateBody
     internal constructor(
-        private val amount: Long?,
-        private val externalBankAccountToken: String?,
-        private val financialAccountToken: String?,
-        private val method: Method?,
-        private val methodAttributes: PaymentMethodRequestAttributes?,
-        private val type: Type?,
+        private val amount: Long,
+        private val externalBankAccountToken: String,
+        private val financialAccountToken: String,
+        private val method: Method,
+        private val methodAttributes: PaymentMethodRequestAttributes,
+        private val type: Type,
         private val token: String?,
         private val memo: String?,
         private val userDefinedId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         @JsonProperty("external_bank_account_token")
-        fun externalBankAccountToken(): String? = externalBankAccountToken
+        fun externalBankAccountToken(): String = externalBankAccountToken
 
         @JsonProperty("financial_account_token")
-        fun financialAccountToken(): String? = financialAccountToken
+        fun financialAccountToken(): String = financialAccountToken
 
-        @JsonProperty("method") fun method(): Method? = method
+        @JsonProperty("method") fun method(): Method = method
 
         @JsonProperty("method_attributes")
-        fun methodAttributes(): PaymentMethodRequestAttributes? = methodAttributes
+        fun methodAttributes(): PaymentMethodRequestAttributes = methodAttributes
 
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /**
          * Customer-provided token that will serve as an idempotency token. This token will become
@@ -143,16 +143,16 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentCreateBody: PaymentCreateBody) = apply {
-                this.amount = paymentCreateBody.amount
-                this.externalBankAccountToken = paymentCreateBody.externalBankAccountToken
-                this.financialAccountToken = paymentCreateBody.financialAccountToken
-                this.method = paymentCreateBody.method
-                this.methodAttributes = paymentCreateBody.methodAttributes
-                this.type = paymentCreateBody.type
-                this.token = paymentCreateBody.token
-                this.memo = paymentCreateBody.memo
-                this.userDefinedId = paymentCreateBody.userDefinedId
-                additionalProperties(paymentCreateBody.additionalProperties)
+                amount = paymentCreateBody.amount
+                externalBankAccountToken = paymentCreateBody.externalBankAccountToken
+                financialAccountToken = paymentCreateBody.financialAccountToken
+                method = paymentCreateBody.method
+                methodAttributes = paymentCreateBody.methodAttributes
+                type = paymentCreateBody.type
+                token = paymentCreateBody.token
+                memo = paymentCreateBody.memo
+                userDefinedId = paymentCreateBody.userDefinedId
+                additionalProperties = paymentCreateBody.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("amount") fun amount(amount: Long) = apply { this.amount = amount }
@@ -180,25 +180,31 @@ constructor(
              * Customer-provided token that will serve as an idempotency token. This token will
              * become the transaction token.
              */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
+            @JsonProperty("token") fun token(token: String?) = apply { this.token = token }
 
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             @JsonProperty("user_defined_id")
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentCreateBody =
@@ -508,11 +514,11 @@ constructor(
     @NoAutoDetect
     class PaymentMethodRequestAttributes
     private constructor(
-        private val secCode: SecCode?,
+        private val secCode: SecCode,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("sec_code") fun secCode(): SecCode? = secCode
+        @JsonProperty("sec_code") fun secCode(): SecCode = secCode
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -532,8 +538,9 @@ constructor(
 
             internal fun from(paymentMethodRequestAttributes: PaymentMethodRequestAttributes) =
                 apply {
-                    this.secCode = paymentMethodRequestAttributes.secCode
-                    additionalProperties(paymentMethodRequestAttributes.additionalProperties)
+                    secCode = paymentMethodRequestAttributes.secCode
+                    additionalProperties =
+                        paymentMethodRequestAttributes.additionalProperties.toMutableMap()
                 }
 
             @JsonProperty("sec_code")
@@ -541,16 +548,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PaymentMethodRequestAttributes =

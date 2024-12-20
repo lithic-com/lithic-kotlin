@@ -61,9 +61,9 @@ constructor(
     @NoAutoDetect
     class TransferCreateBody
     internal constructor(
-        private val amount: Long?,
-        private val from: String?,
-        private val to: String?,
+        private val amount: Long,
+        private val from: String,
+        private val to: String,
         private val token: String?,
         private val memo: String?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -73,19 +73,19 @@ constructor(
          * Amount to be transferred in the currency’s smallest unit (e.g., cents for USD). This
          * should always be a positive value.
          */
-        @JsonProperty("amount") fun amount(): Long? = amount
+        @JsonProperty("amount") fun amount(): Long = amount
 
         /**
          * Globally unique identifier for the financial account or card that will send the funds.
          * Accepted type dependent on the program's use case.
          */
-        @JsonProperty("from") fun from(): String? = from
+        @JsonProperty("from") fun from(): String = from
 
         /**
          * Globally unique identifier for the financial account or card that will receive the funds.
          * Accepted type dependent on the program's use case.
          */
-        @JsonProperty("to") fun to(): String? = to
+        @JsonProperty("to") fun to(): String = to
 
         /**
          * Customer-provided token that will serve as an idempotency token. This token will become
@@ -117,12 +117,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transferCreateBody: TransferCreateBody) = apply {
-                this.amount = transferCreateBody.amount
-                this.from = transferCreateBody.from
-                this.to = transferCreateBody.to
-                this.token = transferCreateBody.token
-                this.memo = transferCreateBody.memo
-                additionalProperties(transferCreateBody.additionalProperties)
+                amount = transferCreateBody.amount
+                from = transferCreateBody.from
+                to = transferCreateBody.to
+                token = transferCreateBody.token
+                memo = transferCreateBody.memo
+                additionalProperties = transferCreateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -147,23 +147,29 @@ constructor(
              * Customer-provided token that will serve as an idempotency token. This token will
              * become the transaction token.
              */
-            @JsonProperty("token") fun token(token: String) = apply { this.token = token }
+            @JsonProperty("token") fun token(token: String?) = apply { this.token = token }
 
             /** Optional descriptor for the transfer. */
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TransferCreateBody =
