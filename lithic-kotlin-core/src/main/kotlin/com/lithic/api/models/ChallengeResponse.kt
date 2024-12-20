@@ -4,23 +4,26 @@ package com.lithic.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = ChallengeResponse.Builder::class)
 @NoAutoDetect
 class ChallengeResponse
+@JsonCreator
 private constructor(
-    private val token: JsonField<String>,
-    private val challengeResponse: JsonField<ChallengeResult>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("challenge_response")
+    @ExcludeMissing
+    private val challengeResponse: JsonField<ChallengeResult> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /**
@@ -88,8 +91,6 @@ private constructor(
          * initial 3DS Decisioning Request and as part of the 3DS Challenge Event in the
          * [ThreeDSAuthentication](#/components/schemas/ThreeDSAuthentication) object
          */
-        @JsonProperty("token")
-        @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Whether the Cardholder has Approved or Declined the issued Challenge */
@@ -97,8 +98,6 @@ private constructor(
             challengeResponse(JsonField.of(challengeResponse))
 
         /** Whether the Cardholder has Approved or Declined the issued Challenge */
-        @JsonProperty("challenge_response")
-        @ExcludeMissing
         fun challengeResponse(challengeResponse: JsonField<ChallengeResult>) = apply {
             this.challengeResponse = challengeResponse
         }
@@ -108,7 +107,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

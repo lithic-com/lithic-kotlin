@@ -4,13 +4,14 @@ package com.lithic.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
@@ -48,12 +49,13 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = FinancialAccountUpdateBody.Builder::class)
     @NoAutoDetect
     class FinancialAccountUpdateBody
+    @JsonCreator
     internal constructor(
-        private val nickname: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("nickname") private val nickname: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("nickname") fun nickname(): String? = nickname
@@ -80,7 +82,6 @@ constructor(
                     financialAccountUpdateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("nickname")
             fun nickname(nickname: String?) = apply { this.nickname = nickname }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -88,7 +89,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

@@ -6,43 +6,77 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
 /** Dispute. */
-@JsonDeserialize(builder = Dispute.Builder::class)
 @NoAutoDetect
 class Dispute
+@JsonCreator
 private constructor(
-    private val amount: JsonField<Long>,
-    private val arbitrationDate: JsonField<OffsetDateTime>,
-    private val created: JsonField<OffsetDateTime>,
-    private val customerFiledDate: JsonField<OffsetDateTime>,
-    private val customerNote: JsonField<String>,
-    private val networkClaimIds: JsonField<List<String>>,
-    private val networkFiledDate: JsonField<OffsetDateTime>,
-    private val networkReasonCode: JsonField<String>,
-    private val prearbitrationDate: JsonField<OffsetDateTime>,
-    private val primaryClaimId: JsonField<String>,
-    private val reason: JsonField<Reason>,
-    private val representmentDate: JsonField<OffsetDateTime>,
-    private val resolutionAmount: JsonField<Long>,
-    private val resolutionDate: JsonField<OffsetDateTime>,
-    private val resolutionNote: JsonField<String>,
-    private val resolutionReason: JsonField<ResolutionReason>,
-    private val status: JsonField<Status>,
-    private val token: JsonField<String>,
-    private val transactionToken: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("arbitration_date")
+    @ExcludeMissing
+    private val arbitrationDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("created")
+    @ExcludeMissing
+    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("customer_filed_date")
+    @ExcludeMissing
+    private val customerFiledDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("customer_note")
+    @ExcludeMissing
+    private val customerNote: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("network_claim_ids")
+    @ExcludeMissing
+    private val networkClaimIds: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("network_filed_date")
+    @ExcludeMissing
+    private val networkFiledDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("network_reason_code")
+    @ExcludeMissing
+    private val networkReasonCode: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("prearbitration_date")
+    @ExcludeMissing
+    private val prearbitrationDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("primary_claim_id")
+    @ExcludeMissing
+    private val primaryClaimId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("reason")
+    @ExcludeMissing
+    private val reason: JsonField<Reason> = JsonMissing.of(),
+    @JsonProperty("representment_date")
+    @ExcludeMissing
+    private val representmentDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("resolution_amount")
+    @ExcludeMissing
+    private val resolutionAmount: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("resolution_date")
+    @ExcludeMissing
+    private val resolutionDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("resolution_note")
+    @ExcludeMissing
+    private val resolutionNote: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("resolution_reason")
+    @ExcludeMissing
+    private val resolutionReason: JsonField<ResolutionReason> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("transaction_token")
+    @ExcludeMissing
+    private val transactionToken: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Amount under dispute. May be different from the original transaction amount. */
@@ -356,8 +390,6 @@ private constructor(
         fun amount(amount: Long) = amount(JsonField.of(amount))
 
         /** Amount under dispute. May be different from the original transaction amount. */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /** Date dispute entered arbitration. */
@@ -365,8 +397,6 @@ private constructor(
             arbitrationDate(JsonField.of(arbitrationDate))
 
         /** Date dispute entered arbitration. */
-        @JsonProperty("arbitration_date")
-        @ExcludeMissing
         fun arbitrationDate(arbitrationDate: JsonField<OffsetDateTime>) = apply {
             this.arbitrationDate = arbitrationDate
         }
@@ -375,8 +405,6 @@ private constructor(
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
         /** Timestamp of when first Dispute was reported. */
-        @JsonProperty("created")
-        @ExcludeMissing
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Date that the dispute was filed by the customer making the dispute. */
@@ -384,8 +412,6 @@ private constructor(
             customerFiledDate(JsonField.of(customerFiledDate))
 
         /** Date that the dispute was filed by the customer making the dispute. */
-        @JsonProperty("customer_filed_date")
-        @ExcludeMissing
         fun customerFiledDate(customerFiledDate: JsonField<OffsetDateTime>) = apply {
             this.customerFiledDate = customerFiledDate
         }
@@ -394,8 +420,6 @@ private constructor(
         fun customerNote(customerNote: String) = customerNote(JsonField.of(customerNote))
 
         /** End customer description of the reason for the dispute. */
-        @JsonProperty("customer_note")
-        @ExcludeMissing
         fun customerNote(customerNote: JsonField<String>) = apply {
             this.customerNote = customerNote
         }
@@ -405,8 +429,6 @@ private constructor(
             networkClaimIds(JsonField.of(networkClaimIds))
 
         /** Unique identifiers for the dispute from the network. */
-        @JsonProperty("network_claim_ids")
-        @ExcludeMissing
         fun networkClaimIds(networkClaimIds: JsonField<List<String>>) = apply {
             this.networkClaimIds = networkClaimIds
         }
@@ -416,8 +438,6 @@ private constructor(
             networkFiledDate(JsonField.of(networkFiledDate))
 
         /** Date that the dispute was submitted to the network. */
-        @JsonProperty("network_filed_date")
-        @ExcludeMissing
         fun networkFiledDate(networkFiledDate: JsonField<OffsetDateTime>) = apply {
             this.networkFiledDate = networkFiledDate
         }
@@ -427,8 +447,6 @@ private constructor(
             networkReasonCode(JsonField.of(networkReasonCode))
 
         /** Network reason code used to file the dispute. */
-        @JsonProperty("network_reason_code")
-        @ExcludeMissing
         fun networkReasonCode(networkReasonCode: JsonField<String>) = apply {
             this.networkReasonCode = networkReasonCode
         }
@@ -438,8 +456,6 @@ private constructor(
             prearbitrationDate(JsonField.of(prearbitrationDate))
 
         /** Date dispute entered pre-arbitration. */
-        @JsonProperty("prearbitration_date")
-        @ExcludeMissing
         fun prearbitrationDate(prearbitrationDate: JsonField<OffsetDateTime>) = apply {
             this.prearbitrationDate = prearbitrationDate
         }
@@ -454,8 +470,6 @@ private constructor(
          * Unique identifier for the dispute from the network. If there are multiple, this will be
          * the first claim id set by the network
          */
-        @JsonProperty("primary_claim_id")
-        @ExcludeMissing
         fun primaryClaimId(primaryClaimId: JsonField<String>) = apply {
             this.primaryClaimId = primaryClaimId
         }
@@ -498,8 +512,6 @@ private constructor(
          * - `REFUND_NOT_PROCESSED`: The refund was not processed.
          * - `RECURRING_TRANSACTION_NOT_CANCELLED`: The recurring transaction was not cancelled.
          */
-        @JsonProperty("reason")
-        @ExcludeMissing
         fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
         /** Date the representment was received. */
@@ -507,8 +519,6 @@ private constructor(
             representmentDate(JsonField.of(representmentDate))
 
         /** Date the representment was received. */
-        @JsonProperty("representment_date")
-        @ExcludeMissing
         fun representmentDate(representmentDate: JsonField<OffsetDateTime>) = apply {
             this.representmentDate = representmentDate
         }
@@ -518,8 +528,6 @@ private constructor(
             resolutionAmount(JsonField.of(resolutionAmount))
 
         /** Resolution amount net of network fees. */
-        @JsonProperty("resolution_amount")
-        @ExcludeMissing
         fun resolutionAmount(resolutionAmount: JsonField<Long>) = apply {
             this.resolutionAmount = resolutionAmount
         }
@@ -529,8 +537,6 @@ private constructor(
             resolutionDate(JsonField.of(resolutionDate))
 
         /** Date that the dispute was resolved. */
-        @JsonProperty("resolution_date")
-        @ExcludeMissing
         fun resolutionDate(resolutionDate: JsonField<OffsetDateTime>) = apply {
             this.resolutionDate = resolutionDate
         }
@@ -539,8 +545,6 @@ private constructor(
         fun resolutionNote(resolutionNote: String) = resolutionNote(JsonField.of(resolutionNote))
 
         /** Note by Dispute team on the case resolution. */
-        @JsonProperty("resolution_note")
-        @ExcludeMissing
         fun resolutionNote(resolutionNote: JsonField<String>) = apply {
             this.resolutionNote = resolutionNote
         }
@@ -588,8 +592,6 @@ private constructor(
          * - `WON_FIRST_CHARGEBACK`: Won first chargeback.
          * - `WON_PREARBITRATION`: Won prearbitration.
          */
-        @JsonProperty("resolution_reason")
-        @ExcludeMissing
         fun resolutionReason(resolutionReason: JsonField<ResolutionReason>) = apply {
             this.resolutionReason = resolutionReason
         }
@@ -618,16 +620,12 @@ private constructor(
          * - `CASE_WON` - Case was won and credit will be issued.
          * - `CASE_CLOSED` - Case was lost or withdrawn.
          */
-        @JsonProperty("status")
-        @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /** Globally unique identifier. */
         fun token(token: String) = token(JsonField.of(token))
 
         /** Globally unique identifier. */
-        @JsonProperty("token")
-        @ExcludeMissing
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
@@ -641,8 +639,6 @@ private constructor(
          * The transaction that is being disputed. A transaction can only be disputed once but may
          * have multiple dispute cases.
          */
-        @JsonProperty("transaction_token")
-        @ExcludeMissing
         fun transactionToken(transactionToken: JsonField<String>) = apply {
             this.transactionToken = transactionToken
         }
@@ -652,7 +648,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
