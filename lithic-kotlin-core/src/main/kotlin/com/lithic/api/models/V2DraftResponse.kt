@@ -382,6 +382,7 @@ private constructor(
                 )
         }
 
+        /** Parameters for the current version of the Auth Rule */
         @JsonDeserialize(using = Parameters.Deserializer::class)
         @JsonSerialize(using = Parameters.Serializer::class)
         class Parameters
@@ -1058,6 +1059,7 @@ private constructor(
                         override fun toString() = value.toString()
                     }
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     @JsonDeserialize(using = Value.Deserializer::class)
                     @JsonSerialize(using = Value.Serializer::class)
                     class Value
@@ -1083,10 +1085,11 @@ private constructor(
 
                         fun isStrings(): Boolean = strings != null
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun asString(): String = string.getOrThrow("string")
-
+                        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
                         fun asLong(): Long = long.getOrThrow("long")
-
+                        /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
                         fun asStrings(): List<String> = strings.getOrThrow("strings")
 
                         fun _json(): JsonValue? = _json
@@ -1130,10 +1133,15 @@ private constructor(
 
                         companion object {
 
+                            /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                             fun ofString(string: String) = Value(string = string)
 
+                            /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
                             fun ofLong(long: Long) = Value(long = long)
 
+                            /**
+                             * An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF`
+                             */
                             fun ofStrings(strings: List<String>) = Value(strings = strings)
                         }
 
@@ -1346,6 +1354,7 @@ private constructor(
                 )
         }
 
+        /** Parameters for the current version of the Auth Rule */
         @JsonDeserialize(using = Parameters.Deserializer::class)
         @JsonSerialize(using = Parameters.Serializer::class)
         class Parameters
@@ -2022,6 +2031,7 @@ private constructor(
                         override fun toString() = value.toString()
                     }
 
+                    /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     @JsonDeserialize(using = Value.Deserializer::class)
                     @JsonSerialize(using = Value.Serializer::class)
                     class Value
@@ -2047,10 +2057,11 @@ private constructor(
 
                         fun isStrings(): Boolean = strings != null
 
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun asString(): String = string.getOrThrow("string")
-
+                        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
                         fun asLong(): Long = long.getOrThrow("long")
-
+                        /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
                         fun asStrings(): List<String> = strings.getOrThrow("strings")
 
                         fun _json(): JsonValue? = _json
@@ -2094,10 +2105,15 @@ private constructor(
 
                         companion object {
 
+                            /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                             fun ofString(string: String) = Value(string = string)
 
+                            /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
                             fun ofLong(long: Long) = Value(long = long)
 
+                            /**
+                             * An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF`
+                             */
                             fun ofStrings(strings: List<String>) = Value(strings = strings)
                         }
 
