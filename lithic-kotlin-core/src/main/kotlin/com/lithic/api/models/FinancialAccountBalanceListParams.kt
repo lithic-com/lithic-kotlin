@@ -20,8 +20,13 @@ constructor(
 
     fun financialAccountToken(): String = financialAccountToken
 
+    /** UTC date of the balance to retrieve. Defaults to latest available balance */
     fun balanceDate(): OffsetDateTime? = balanceDate
 
+    /**
+     * Balance after a given financial event occured. For example, passing the event_token of a $5
+     * CARD_CLEARING financial event will return a balance decreased by $5
+     */
     fun lastTransactionEventToken(): String? = lastTransactionEventToken
 
     fun _additionalHeaders(): Headers = additionalHeaders

@@ -20,34 +20,30 @@ import java.util.Objects
 
 class AccountHolderSimulateEnrollmentReviewParams
 constructor(
-    private val accountHolderToken: String?,
-    private val status: Status?,
-    private val statusReasons: List<StatusReason>?,
+    private val body: AccountHolderSimulateEnrollmentReviewBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun accountHolderToken(): String? = accountHolderToken
+    /** The account holder which to perform the simulation upon. */
+    fun accountHolderToken(): String? = body.accountHolderToken()
 
-    fun status(): Status? = status
+    /** An account holder's status for use within the simulation. */
+    fun status(): Status? = body.status()
 
-    fun statusReasons(): List<StatusReason>? = statusReasons
+    /**
+     * Status reason that will be associated with the simulated account holder status. Only required
+     * for a `REJECTED` status.
+     */
+    fun statusReasons(): List<StatusReason>? = body.statusReasons()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AccountHolderSimulateEnrollmentReviewBody {
-        return AccountHolderSimulateEnrollmentReviewBody(
-            accountHolderToken,
-            status,
-            statusReasons,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AccountHolderSimulateEnrollmentReviewBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -91,7 +87,7 @@ constructor(
 
             private var accountHolderToken: String? = null
             private var status: Status? = null
-            private var statusReasons: List<StatusReason>? = null
+            private var statusReasons: MutableList<StatusReason>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -106,19 +102,27 @@ constructor(
             }
 
             /** The account holder which to perform the simulation upon. */
-            fun accountHolderToken(accountHolderToken: String?) = apply {
+            fun accountHolderToken(accountHolderToken: String) = apply {
                 this.accountHolderToken = accountHolderToken
             }
 
             /** An account holder's status for use within the simulation. */
-            fun status(status: Status?) = apply { this.status = status }
+            fun status(status: Status) = apply { this.status = status }
 
             /**
              * Status reason that will be associated with the simulated account holder status. Only
              * required for a `REJECTED` status.
              */
-            fun statusReasons(statusReasons: List<StatusReason>?) = apply {
-                this.statusReasons = statusReasons
+            fun statusReasons(statusReasons: List<StatusReason>) = apply {
+                this.statusReasons = statusReasons.toMutableList()
+            }
+
+            /**
+             * Status reason that will be associated with the simulated account holder status. Only
+             * required for a `REJECTED` status.
+             */
+            fun addStatusReason(statusReason: StatusReason) = apply {
+                statusReasons = (statusReasons ?: mutableListOf()).apply { add(statusReason) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -177,44 +181,35 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var accountHolderToken: String? = null
-        private var status: Status? = null
-        private var statusReasons: MutableList<StatusReason> = mutableListOf()
+        private var body: AccountHolderSimulateEnrollmentReviewBody.Builder =
+            AccountHolderSimulateEnrollmentReviewBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             accountHolderSimulateEnrollmentReviewParams: AccountHolderSimulateEnrollmentReviewParams
         ) = apply {
-            accountHolderToken = accountHolderSimulateEnrollmentReviewParams.accountHolderToken
-            status = accountHolderSimulateEnrollmentReviewParams.status
-            statusReasons =
-                accountHolderSimulateEnrollmentReviewParams.statusReasons?.toMutableList()
-                    ?: mutableListOf()
+            body = accountHolderSimulateEnrollmentReviewParams.body.toBuilder()
             additionalHeaders =
                 accountHolderSimulateEnrollmentReviewParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 accountHolderSimulateEnrollmentReviewParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                accountHolderSimulateEnrollmentReviewParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The account holder which to perform the simulation upon. */
         fun accountHolderToken(accountHolderToken: String) = apply {
-            this.accountHolderToken = accountHolderToken
+            body.accountHolderToken(accountHolderToken)
         }
 
         /** An account holder's status for use within the simulation. */
-        fun status(status: Status) = apply { this.status = status }
+        fun status(status: Status) = apply { body.status(status) }
 
         /**
          * Status reason that will be associated with the simulated account holder status. Only
          * required for a `REJECTED` status.
          */
         fun statusReasons(statusReasons: List<StatusReason>) = apply {
-            this.statusReasons.clear()
-            this.statusReasons.addAll(statusReasons)
+            body.statusReasons(statusReasons)
         }
 
         /**
@@ -222,7 +217,7 @@ constructor(
          * required for a `REJECTED` status.
          */
         fun addStatusReason(statusReason: StatusReason) = apply {
-            this.statusReasons.add(statusReason)
+            body.addStatusReason(statusReason)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -324,35 +319,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AccountHolderSimulateEnrollmentReviewParams =
             AccountHolderSimulateEnrollmentReviewParams(
-                accountHolderToken,
-                status,
-                statusReasons.toImmutable().ifEmpty { null },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -613,11 +602,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderSimulateEnrollmentReviewParams && accountHolderToken == other.accountHolderToken && status == other.status && statusReasons == other.statusReasons && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AccountHolderSimulateEnrollmentReviewParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, status, statusReasons, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AccountHolderSimulateEnrollmentReviewParams{accountHolderToken=$accountHolderToken, status=$status, statusReasons=$statusReasons, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AccountHolderSimulateEnrollmentReviewParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

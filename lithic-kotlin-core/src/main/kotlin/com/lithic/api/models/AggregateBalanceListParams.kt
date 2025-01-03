@@ -18,6 +18,7 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** Get the aggregate balance for a given Financial Account type. */
     fun financialAccountType(): FinancialAccountType? = financialAccountType
 
     fun _additionalHeaders(): Headers = additionalHeaders

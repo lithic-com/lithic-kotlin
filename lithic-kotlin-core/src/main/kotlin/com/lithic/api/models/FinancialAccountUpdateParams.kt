@@ -18,25 +18,22 @@ import java.util.Objects
 class FinancialAccountUpdateParams
 constructor(
     private val financialAccountToken: String,
-    private val nickname: String?,
+    private val body: FinancialAccountUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun financialAccountToken(): String = financialAccountToken
 
-    fun nickname(): String? = nickname
+    fun nickname(): String? = body.nickname()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): FinancialAccountUpdateBody {
-        return FinancialAccountUpdateBody(nickname, additionalBodyProperties)
-    }
+    internal fun getBody(): FinancialAccountUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -82,7 +79,7 @@ constructor(
                     financialAccountUpdateBody.additionalProperties.toMutableMap()
             }
 
-            fun nickname(nickname: String?) = apply { this.nickname = nickname }
+            fun nickname(nickname: String) = apply { this.nickname = nickname }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -136,25 +133,22 @@ constructor(
     class Builder {
 
         private var financialAccountToken: String? = null
-        private var nickname: String? = null
+        private var body: FinancialAccountUpdateBody.Builder = FinancialAccountUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountUpdateParams: FinancialAccountUpdateParams) = apply {
             financialAccountToken = financialAccountUpdateParams.financialAccountToken
-            nickname = financialAccountUpdateParams.nickname
+            body = financialAccountUpdateParams.body.toBuilder()
             additionalHeaders = financialAccountUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = financialAccountUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                financialAccountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
             this.financialAccountToken = financialAccountToken
         }
 
-        fun nickname(nickname: String) = apply { this.nickname = nickname }
+        fun nickname(nickname: String) = apply { body.nickname(nickname) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -255,25 +249,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): FinancialAccountUpdateParams =
@@ -281,10 +272,9 @@ constructor(
                 checkNotNull(financialAccountToken) {
                     "`financialAccountToken` is required but was not set"
                 },
-                nickname,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -293,11 +283,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialAccountUpdateParams && financialAccountToken == other.financialAccountToken && nickname == other.nickname && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is FinancialAccountUpdateParams && financialAccountToken == other.financialAccountToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, nickname, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "FinancialAccountUpdateParams{financialAccountToken=$financialAccountToken, nickname=$nickname, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "FinancialAccountUpdateParams{financialAccountToken=$financialAccountToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

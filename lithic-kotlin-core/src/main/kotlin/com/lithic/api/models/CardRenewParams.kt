@@ -21,48 +21,57 @@ import java.util.Objects
 class CardRenewParams
 constructor(
     private val cardToken: String,
-    private val shippingAddress: ShippingAddress,
-    private val carrier: Carrier?,
-    private val expMonth: String?,
-    private val expYear: String?,
-    private val productId: String?,
-    private val shippingMethod: ShippingMethod?,
+    private val body: CardRenewBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun cardToken(): String = cardToken
 
-    fun shippingAddress(): ShippingAddress = shippingAddress
+    /** The shipping address this card will be sent to. */
+    fun shippingAddress(): ShippingAddress = body.shippingAddress()
 
-    fun carrier(): Carrier? = carrier
+    /** If omitted, the previous carrier will be used. */
+    fun carrier(): Carrier? = body.carrier()
 
-    fun expMonth(): String? = expMonth
+    /**
+     * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an expiration
+     * date six years in the future will be generated.
+     */
+    fun expMonth(): String? = body.expMonth()
 
-    fun expYear(): String? = expYear
+    /**
+     * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
+     * expiration date six years in the future will be generated.
+     */
+    fun expYear(): String? = body.expYear()
 
-    fun productId(): String? = productId
+    /**
+     * Specifies the configuration (e.g. physical card art) that the card should be manufactured
+     * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
+     * before use.
+     */
+    fun productId(): String? = body.productId()
 
-    fun shippingMethod(): ShippingMethod? = shippingMethod
+    /**
+     * Shipping method for the card. Use of options besides `STANDARD` require additional
+     * permissions.
+     * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+     * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
+     * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+     * - `2_DAY` - FedEx 2-day shipping, with tracking
+     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     */
+    fun shippingMethod(): ShippingMethod? = body.shippingMethod()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CardRenewBody {
-        return CardRenewBody(
-            shippingAddress,
-            carrier,
-            expMonth,
-            expYear,
-            productId,
-            shippingMethod,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CardRenewBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -164,26 +173,26 @@ constructor(
             }
 
             /** If omitted, the previous carrier will be used. */
-            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
 
             /**
              * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
-            fun expMonth(expMonth: String?) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
-            fun expYear(expYear: String?) = apply { this.expYear = expYear }
+            fun expYear(expYear: String) = apply { this.expYear = expYear }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
              * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
              * configured with Lithic before use.
              */
-            fun productId(productId: String?) = apply { this.productId = productId }
+            fun productId(productId: String) = apply { this.productId = productId }
 
             /**
              * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -197,7 +206,7 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -263,57 +272,45 @@ constructor(
     class Builder {
 
         private var cardToken: String? = null
-        private var shippingAddress: ShippingAddress? = null
-        private var carrier: Carrier? = null
-        private var expMonth: String? = null
-        private var expYear: String? = null
-        private var productId: String? = null
-        private var shippingMethod: ShippingMethod? = null
+        private var body: CardRenewBody.Builder = CardRenewBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardRenewParams: CardRenewParams) = apply {
             cardToken = cardRenewParams.cardToken
-            shippingAddress = cardRenewParams.shippingAddress
-            carrier = cardRenewParams.carrier
-            expMonth = cardRenewParams.expMonth
-            expYear = cardRenewParams.expYear
-            productId = cardRenewParams.productId
-            shippingMethod = cardRenewParams.shippingMethod
+            body = cardRenewParams.body.toBuilder()
             additionalHeaders = cardRenewParams.additionalHeaders.toBuilder()
             additionalQueryParams = cardRenewParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = cardRenewParams.additionalBodyProperties.toMutableMap()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /** The shipping address this card will be sent to. */
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
-            this.shippingAddress = shippingAddress
+            body.shippingAddress(shippingAddress)
         }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
 
         /**
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date six years in the future will be generated.
          */
-        fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
+        fun expMonth(expMonth: String) = apply { body.expMonth(expMonth) }
 
         /**
          * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date six years in the future will be generated.
          */
-        fun expYear(expYear: String) = apply { this.expYear = expYear }
+        fun expYear(expYear: String) = apply { body.expYear(expYear) }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String) = apply { this.productId = productId }
+        fun productId(productId: String) = apply { body.productId(productId) }
 
         /**
          * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -327,7 +324,7 @@ constructor(
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
         fun shippingMethod(shippingMethod: ShippingMethod) = apply {
-            this.shippingMethod = shippingMethod
+            body.shippingMethod(shippingMethod)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -429,39 +426,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CardRenewParams =
             CardRenewParams(
                 checkNotNull(cardToken) { "`cardToken` is required but was not set" },
-                checkNotNull(shippingAddress) { "`shippingAddress` is required but was not set" },
-                carrier,
-                expMonth,
-                expYear,
-                productId,
-                shippingMethod,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -551,11 +539,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardRenewParams && cardToken == other.cardToken && shippingAddress == other.shippingAddress && carrier == other.carrier && expMonth == other.expMonth && expYear == other.expYear && productId == other.productId && shippingMethod == other.shippingMethod && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CardRenewParams && cardToken == other.cardToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, shippingAddress, carrier, expMonth, expYear, productId, shippingMethod, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CardRenewParams{cardToken=$cardToken, shippingAddress=$shippingAddress, carrier=$carrier, expMonth=$expMonth, expYear=$expYear, productId=$productId, shippingMethod=$shippingMethod, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CardRenewParams{cardToken=$cardToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
