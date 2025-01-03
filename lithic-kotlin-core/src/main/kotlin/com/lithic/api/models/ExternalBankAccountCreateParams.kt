@@ -31,35 +31,26 @@ import java.util.Objects
 
 class ExternalBankAccountCreateParams
 constructor(
-    private val bankVerifiedCreateBankAccountApiRequest: BankVerifiedCreateBankAccountApiRequest?,
-    private val plaidCreateBankAccountApiRequest: PlaidCreateBankAccountApiRequest?,
-    private val externallyVerifiedCreateBankAccountApiRequest:
-        ExternallyVerifiedCreateBankAccountApiRequest?,
+    private val body: ExternalBankAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) {
 
     fun bankVerifiedCreateBankAccountApiRequest(): BankVerifiedCreateBankAccountApiRequest? =
-        bankVerifiedCreateBankAccountApiRequest
+        body.bankVerifiedCreateBankAccountApiRequest()
 
     fun plaidCreateBankAccountApiRequest(): PlaidCreateBankAccountApiRequest? =
-        plaidCreateBankAccountApiRequest
+        body.plaidCreateBankAccountApiRequest()
 
     fun externallyVerifiedCreateBankAccountApiRequest():
         ExternallyVerifiedCreateBankAccountApiRequest? =
-        externallyVerifiedCreateBankAccountApiRequest
+        body.externallyVerifiedCreateBankAccountApiRequest()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): ExternalBankAccountCreateBody {
-        return ExternalBankAccountCreateBody(
-            bankVerifiedCreateBankAccountApiRequest,
-            plaidCreateBankAccountApiRequest,
-            externallyVerifiedCreateBankAccountApiRequest,
-        )
-    }
+    internal fun getBody(): ExternalBankAccountCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -268,24 +259,13 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var bankVerifiedCreateBankAccountApiRequest:
-            BankVerifiedCreateBankAccountApiRequest? =
-            null
-        private var plaidCreateBankAccountApiRequest: PlaidCreateBankAccountApiRequest? = null
-        private var externallyVerifiedCreateBankAccountApiRequest:
-            ExternallyVerifiedCreateBankAccountApiRequest? =
-            null
+        private var body: ExternalBankAccountCreateBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(externalBankAccountCreateParams: ExternalBankAccountCreateParams) =
             apply {
-                bankVerifiedCreateBankAccountApiRequest =
-                    externalBankAccountCreateParams.bankVerifiedCreateBankAccountApiRequest
-                plaidCreateBankAccountApiRequest =
-                    externalBankAccountCreateParams.plaidCreateBankAccountApiRequest
-                externallyVerifiedCreateBankAccountApiRequest =
-                    externalBankAccountCreateParams.externallyVerifiedCreateBankAccountApiRequest
+                body = externalBankAccountCreateParams.body
                 additionalHeaders = externalBankAccountCreateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     externalBankAccountCreateParams.additionalQueryParams.toBuilder()
@@ -294,27 +274,29 @@ constructor(
         fun forBankVerifiedCreateBankAccountApiRequest(
             bankVerifiedCreateBankAccountApiRequest: BankVerifiedCreateBankAccountApiRequest
         ) = apply {
-            this.bankVerifiedCreateBankAccountApiRequest = bankVerifiedCreateBankAccountApiRequest
-            this.plaidCreateBankAccountApiRequest = null
-            this.externallyVerifiedCreateBankAccountApiRequest = null
+            body =
+                ExternalBankAccountCreateBody.ofBankVerifiedCreateBankAccountApiRequest(
+                    bankVerifiedCreateBankAccountApiRequest
+                )
         }
 
         fun forPlaidCreateBankAccountApiRequest(
             plaidCreateBankAccountApiRequest: PlaidCreateBankAccountApiRequest
         ) = apply {
-            this.bankVerifiedCreateBankAccountApiRequest = null
-            this.plaidCreateBankAccountApiRequest = plaidCreateBankAccountApiRequest
-            this.externallyVerifiedCreateBankAccountApiRequest = null
+            body =
+                ExternalBankAccountCreateBody.ofPlaidCreateBankAccountApiRequest(
+                    plaidCreateBankAccountApiRequest
+                )
         }
 
         fun forExternallyVerifiedCreateBankAccountApiRequest(
             externallyVerifiedCreateBankAccountApiRequest:
                 ExternallyVerifiedCreateBankAccountApiRequest
         ) = apply {
-            this.bankVerifiedCreateBankAccountApiRequest = null
-            this.plaidCreateBankAccountApiRequest = null
-            this.externallyVerifiedCreateBankAccountApiRequest =
-                externallyVerifiedCreateBankAccountApiRequest
+            body =
+                ExternalBankAccountCreateBody.ofExternallyVerifiedCreateBankAccountApiRequest(
+                    externallyVerifiedCreateBankAccountApiRequest
+                )
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -417,9 +399,7 @@ constructor(
 
         fun build(): ExternalBankAccountCreateParams =
             ExternalBankAccountCreateParams(
-                bankVerifiedCreateBankAccountApiRequest,
-                plaidCreateBankAccountApiRequest,
-                externallyVerifiedCreateBankAccountApiRequest,
+                body ?: ExternalBankAccountCreateBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -589,21 +569,21 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String?) = apply { this.companyId = companyId }
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String?) = apply {
+            fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate?) = apply { this.dob = dob }
+            fun dob(dob: LocalDate) = apply { this.dob = dob }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
 
             /** Account Type */
             fun type(type: AccountType) = apply { this.type = type }
@@ -615,7 +595,7 @@ constructor(
             fun accountNumber(accountNumber: String) = apply { this.accountNumber = accountNumber }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The country that the bank account is located in using ISO 3166-1. We will only accept
@@ -626,12 +606,12 @@ constructor(
             /** currency of the external account 3-digit alphabetic ISO 4217 code */
             fun currency(currency: String) = apply { this.currency = currency }
 
-            fun verificationEnforcement(verificationEnforcement: Boolean?) = apply {
+            fun verificationEnforcement(verificationEnforcement: Boolean) = apply {
                 this.verificationEnforcement = verificationEnforcement
             }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
 
             /** The financial account token of the operating account to fund the micro deposits */
             fun financialAccountToken(financialAccountToken: String) = apply {
@@ -867,21 +847,21 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String?) = apply { this.companyId = companyId }
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String?) = apply {
+            fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate?) = apply { this.dob = dob }
+            fun dob(dob: LocalDate) = apply { this.dob = dob }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
 
             fun processorToken(processorToken: String) = apply {
                 this.processorToken = processorToken
@@ -1095,21 +1075,21 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String?) = apply { this.companyId = companyId }
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String?) = apply {
+            fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate?) = apply { this.dob = dob }
+            fun dob(dob: LocalDate) = apply { this.dob = dob }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
 
             /** Account Type */
             fun type(type: Type) = apply { this.type = type }
@@ -1121,7 +1101,7 @@ constructor(
             fun accountNumber(accountNumber: String) = apply { this.accountNumber = accountNumber }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The country that the bank account is located in using ISO 3166-1. We will only accept
@@ -1133,7 +1113,7 @@ constructor(
             fun currency(currency: String) = apply { this.currency = currency }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1311,11 +1291,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalBankAccountCreateParams && bankVerifiedCreateBankAccountApiRequest == other.bankVerifiedCreateBankAccountApiRequest && plaidCreateBankAccountApiRequest == other.plaidCreateBankAccountApiRequest && externallyVerifiedCreateBankAccountApiRequest == other.externallyVerifiedCreateBankAccountApiRequest && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is ExternalBankAccountCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(bankVerifiedCreateBankAccountApiRequest, plaidCreateBankAccountApiRequest, externallyVerifiedCreateBankAccountApiRequest, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExternalBankAccountCreateParams{bankVerifiedCreateBankAccountApiRequest=$bankVerifiedCreateBankAccountApiRequest, plaidCreateBankAccountApiRequest=$plaidCreateBankAccountApiRequest, externallyVerifiedCreateBankAccountApiRequest=$externallyVerifiedCreateBankAccountApiRequest, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "ExternalBankAccountCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

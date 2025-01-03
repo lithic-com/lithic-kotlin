@@ -23,12 +23,16 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** List balances for all financial accounts of a given account_token. */
     fun accountToken(): String? = accountToken
 
+    /** UTC date and time of the balances to retrieve. Defaults to latest available balances */
     fun balanceDate(): OffsetDateTime? = balanceDate
 
+    /** List balances for all financial accounts of a given business_account_token. */
     fun businessAccountToken(): String? = businessAccountToken
 
+    /** List balances for a given Financial Account type. */
     fun financialAccountType(): FinancialAccountType? = financialAccountType
 
     fun _additionalHeaders(): Headers = additionalHeaders

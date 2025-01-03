@@ -20,38 +20,31 @@ import java.util.Objects
 
 class ThreeDSAuthenticationSimulateParams
 constructor(
-    private val merchant: Merchant,
-    private val pan: String,
-    private val transaction: Transaction,
-    private val cardExpiryCheck: CardExpiryCheck?,
+    private val body: ThreeDSAuthenticationSimulateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun merchant(): Merchant = merchant
+    fun merchant(): Merchant = body.merchant()
 
-    fun pan(): String = pan
+    /** Sixteen digit card number. */
+    fun pan(): String = body.pan()
 
-    fun transaction(): Transaction = transaction
+    fun transaction(): Transaction = body.transaction()
 
-    fun cardExpiryCheck(): CardExpiryCheck? = cardExpiryCheck
+    /**
+     * When set will use the following values as part of the Simulated Authentication. When not set
+     * defaults to MATCH
+     */
+    fun cardExpiryCheck(): CardExpiryCheck? = body.cardExpiryCheck()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): ThreeDSAuthenticationSimulateBody {
-        return ThreeDSAuthenticationSimulateBody(
-            merchant,
-            pan,
-            transaction,
-            cardExpiryCheck,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): ThreeDSAuthenticationSimulateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -123,7 +116,7 @@ constructor(
              * When set will use the following values as part of the Simulated Authentication. When
              * not set defaults to MATCH
              */
-            fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck?) = apply {
+            fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
                 this.cardExpiryCheck = cardExpiryCheck
             }
 
@@ -184,41 +177,33 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var merchant: Merchant? = null
-        private var pan: String? = null
-        private var transaction: Transaction? = null
-        private var cardExpiryCheck: CardExpiryCheck? = null
+        private var body: ThreeDSAuthenticationSimulateBody.Builder =
+            ThreeDSAuthenticationSimulateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             threeDSAuthenticationSimulateParams: ThreeDSAuthenticationSimulateParams
         ) = apply {
-            merchant = threeDSAuthenticationSimulateParams.merchant
-            pan = threeDSAuthenticationSimulateParams.pan
-            transaction = threeDSAuthenticationSimulateParams.transaction
-            cardExpiryCheck = threeDSAuthenticationSimulateParams.cardExpiryCheck
+            body = threeDSAuthenticationSimulateParams.body.toBuilder()
             additionalHeaders = threeDSAuthenticationSimulateParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 threeDSAuthenticationSimulateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                threeDSAuthenticationSimulateParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun merchant(merchant: Merchant) = apply { this.merchant = merchant }
+        fun merchant(merchant: Merchant) = apply { body.merchant(merchant) }
 
         /** Sixteen digit card number. */
-        fun pan(pan: String) = apply { this.pan = pan }
+        fun pan(pan: String) = apply { body.pan(pan) }
 
-        fun transaction(transaction: Transaction) = apply { this.transaction = transaction }
+        fun transaction(transaction: Transaction) = apply { body.transaction(transaction) }
 
         /**
          * When set will use the following values as part of the Simulated Authentication. When not
          * set defaults to MATCH
          */
         fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
-            this.cardExpiryCheck = cardExpiryCheck
+            body.cardExpiryCheck(cardExpiryCheck)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -320,36 +305,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ThreeDSAuthenticationSimulateParams =
             ThreeDSAuthenticationSimulateParams(
-                checkNotNull(merchant) { "`merchant` is required but was not set" },
-                checkNotNull(pan) { "`pan` is required but was not set" },
-                checkNotNull(transaction) { "`transaction` is required but was not set" },
-                cardExpiryCheck,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -640,11 +618,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && merchant == other.merchant && pan == other.pan && transaction == other.transaction && cardExpiryCheck == other.cardExpiryCheck && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ThreeDSAuthenticationSimulateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(merchant, pan, transaction, cardExpiryCheck, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ThreeDSAuthenticationSimulateParams{merchant=$merchant, pan=$pan, transaction=$transaction, cardExpiryCheck=$cardExpiryCheck, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ThreeDSAuthenticationSimulateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
