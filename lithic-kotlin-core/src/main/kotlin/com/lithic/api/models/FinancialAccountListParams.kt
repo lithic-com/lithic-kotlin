@@ -20,10 +20,13 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** List financial accounts for a given account_token or business_account_token */
     fun accountToken(): String? = accountToken
 
+    /** List financial accounts for a given business_account_token */
     fun businessAccountToken(): String? = businessAccountToken
 
+    /** List financial accounts of a given type */
     fun type(): Type? = type
 
     fun _additionalHeaders(): Headers = additionalHeaders

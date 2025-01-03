@@ -26,20 +26,37 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** Filters for tokenizations associated with a specific account. */
     fun accountToken(): String? = accountToken
 
+    /** Filter for tokenizations created after this date. */
     fun begin(): LocalDate? = begin
 
+    /** Filters for tokenizations associated with a specific card. */
     fun cardToken(): String? = cardToken
 
+    /** Filter for tokenizations created before this date. */
     fun end(): LocalDate? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
+    /**
+     * Filter for tokenizations by tokenization channel. If this is not specified, only
+     * DIGITAL_WALLET tokenizations will be returned.
+     */
     fun tokenizationChannel(): TokenizationChannel? = tokenizationChannel
 
     fun _additionalHeaders(): Headers = additionalHeaders

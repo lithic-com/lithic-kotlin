@@ -21,44 +21,52 @@ import java.util.Objects
 class AccountUpdateParams
 constructor(
     private val accountToken: String,
-    private val dailySpendLimit: Long?,
-    private val lifetimeSpendLimit: Long?,
-    private val monthlySpendLimit: Long?,
-    private val state: State?,
-    private val verificationAddress: VerificationAddress?,
+    private val body: AccountUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun accountToken(): String = accountToken
 
-    fun dailySpendLimit(): Long? = dailySpendLimit
+    /**
+     * Amount (in cents) for the account's daily spend limit. By default the daily spend limit is
+     * set to $1,250.
+     */
+    fun dailySpendLimit(): Long? = body.dailySpendLimit()
 
-    fun lifetimeSpendLimit(): Long? = lifetimeSpendLimit
+    /**
+     * Amount (in cents) for the account's lifetime spend limit. Once this limit is reached, no
+     * transactions will be accepted on any card created for this account until the limit is
+     * updated. Note that a spend limit of 0 is effectively no limit, and should only be used to
+     * reset or remove a prior limit. Only a limit of 1 or above will result in declined
+     * transactions due to checks against the account limit. This behavior differs from the daily
+     * spend limit and the monthly spend limit.
+     */
+    fun lifetimeSpendLimit(): Long? = body.lifetimeSpendLimit()
 
-    fun monthlySpendLimit(): Long? = monthlySpendLimit
+    /**
+     * Amount (in cents) for the account's monthly spend limit. By default the monthly spend limit
+     * is set to $5,000.
+     */
+    fun monthlySpendLimit(): Long? = body.monthlySpendLimit()
 
-    fun state(): State? = state
+    /** Account states. */
+    fun state(): State? = body.state()
 
-    fun verificationAddress(): VerificationAddress? = verificationAddress
+    /**
+     * Address used during Address Verification Service (AVS) checks during transactions if enabled
+     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
+     * Authorization Rules. The field will be removed from the schema in a future release.
+     */
+    fun verificationAddress(): VerificationAddress? = body.verificationAddress()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AccountUpdateBody {
-        return AccountUpdateBody(
-            dailySpendLimit,
-            lifetimeSpendLimit,
-            monthlySpendLimit,
-            state,
-            verificationAddress,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AccountUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -150,7 +158,7 @@ constructor(
              * Amount (in cents) for the account's daily spend limit. By default the daily spend
              * limit is set to $1,250.
              */
-            fun dailySpendLimit(dailySpendLimit: Long?) = apply {
+            fun dailySpendLimit(dailySpendLimit: Long) = apply {
                 this.dailySpendLimit = dailySpendLimit
             }
 
@@ -162,7 +170,7 @@ constructor(
              * declined transactions due to checks against the account limit. This behavior differs
              * from the daily spend limit and the monthly spend limit.
              */
-            fun lifetimeSpendLimit(lifetimeSpendLimit: Long?) = apply {
+            fun lifetimeSpendLimit(lifetimeSpendLimit: Long) = apply {
                 this.lifetimeSpendLimit = lifetimeSpendLimit
             }
 
@@ -170,12 +178,12 @@ constructor(
              * Amount (in cents) for the account's monthly spend limit. By default the monthly spend
              * limit is set to $5,000.
              */
-            fun monthlySpendLimit(monthlySpendLimit: Long?) = apply {
+            fun monthlySpendLimit(monthlySpendLimit: Long) = apply {
                 this.monthlySpendLimit = monthlySpendLimit
             }
 
             /** Account states. */
-            fun state(state: State?) = apply { this.state = state }
+            fun state(state: State) = apply { this.state = state }
 
             /**
              * Address used during Address Verification Service (AVS) checks during transactions if
@@ -183,7 +191,7 @@ constructor(
              * supported by Authorization Rules. The field will be removed from the schema in a
              * future release.
              */
-            fun verificationAddress(verificationAddress: VerificationAddress?) = apply {
+            fun verificationAddress(verificationAddress: VerificationAddress) = apply {
                 this.verificationAddress = verificationAddress
             }
 
@@ -246,25 +254,15 @@ constructor(
     class Builder {
 
         private var accountToken: String? = null
-        private var dailySpendLimit: Long? = null
-        private var lifetimeSpendLimit: Long? = null
-        private var monthlySpendLimit: Long? = null
-        private var state: State? = null
-        private var verificationAddress: VerificationAddress? = null
+        private var body: AccountUpdateBody.Builder = AccountUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountUpdateParams: AccountUpdateParams) = apply {
             accountToken = accountUpdateParams.accountToken
-            dailySpendLimit = accountUpdateParams.dailySpendLimit
-            lifetimeSpendLimit = accountUpdateParams.lifetimeSpendLimit
-            monthlySpendLimit = accountUpdateParams.monthlySpendLimit
-            state = accountUpdateParams.state
-            verificationAddress = accountUpdateParams.verificationAddress
+            body = accountUpdateParams.body.toBuilder()
             additionalHeaders = accountUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = accountUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = accountUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
@@ -273,9 +271,7 @@ constructor(
          * Amount (in cents) for the account's daily spend limit. By default the daily spend limit
          * is set to $1,250.
          */
-        fun dailySpendLimit(dailySpendLimit: Long) = apply {
-            this.dailySpendLimit = dailySpendLimit
-        }
+        fun dailySpendLimit(dailySpendLimit: Long) = apply { body.dailySpendLimit(dailySpendLimit) }
 
         /**
          * Amount (in cents) for the account's lifetime spend limit. Once this limit is reached, no
@@ -286,7 +282,7 @@ constructor(
          * daily spend limit and the monthly spend limit.
          */
         fun lifetimeSpendLimit(lifetimeSpendLimit: Long) = apply {
-            this.lifetimeSpendLimit = lifetimeSpendLimit
+            body.lifetimeSpendLimit(lifetimeSpendLimit)
         }
 
         /**
@@ -294,11 +290,11 @@ constructor(
          * limit is set to $5,000.
          */
         fun monthlySpendLimit(monthlySpendLimit: Long) = apply {
-            this.monthlySpendLimit = monthlySpendLimit
+            body.monthlySpendLimit(monthlySpendLimit)
         }
 
         /** Account states. */
-        fun state(state: State) = apply { this.state = state }
+        fun state(state: State) = apply { body.state(state) }
 
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
@@ -306,7 +302,7 @@ constructor(
          * Authorization Rules. The field will be removed from the schema in a future release.
          */
         fun verificationAddress(verificationAddress: VerificationAddress) = apply {
-            this.verificationAddress = verificationAddress
+            body.verificationAddress(verificationAddress)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -408,38 +404,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AccountUpdateParams =
             AccountUpdateParams(
                 checkNotNull(accountToken) { "`accountToken` is required but was not set" },
-                dailySpendLimit,
-                lifetimeSpendLimit,
-                monthlySpendLimit,
-                state,
-                verificationAddress,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -562,17 +550,17 @@ constructor(
                 additionalProperties = verificationAddress.additionalProperties.toMutableMap()
             }
 
-            fun address1(address1: String?) = apply { this.address1 = address1 }
+            fun address1(address1: String) = apply { this.address1 = address1 }
 
-            fun address2(address2: String?) = apply { this.address2 = address2 }
+            fun address2(address2: String) = apply { this.address2 = address2 }
 
-            fun city(city: String?) = apply { this.city = city }
+            fun city(city: String) = apply { this.city = city }
 
-            fun country(country: String?) = apply { this.country = country }
+            fun country(country: String) = apply { this.country = country }
 
-            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
-            fun state(state: String?) = apply { this.state = state }
+            fun state(state: String) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -628,11 +616,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountUpdateParams && accountToken == other.accountToken && dailySpendLimit == other.dailySpendLimit && lifetimeSpendLimit == other.lifetimeSpendLimit && monthlySpendLimit == other.monthlySpendLimit && state == other.state && verificationAddress == other.verificationAddress && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AccountUpdateParams && accountToken == other.accountToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, dailySpendLimit, lifetimeSpendLimit, monthlySpendLimit, state, verificationAddress, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AccountUpdateParams{accountToken=$accountToken, dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, verificationAddress=$verificationAddress, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AccountUpdateParams{accountToken=$accountToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

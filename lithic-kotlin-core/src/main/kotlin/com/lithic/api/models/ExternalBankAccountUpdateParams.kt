@@ -19,56 +19,47 @@ import java.util.Objects
 class ExternalBankAccountUpdateParams
 constructor(
     private val externalBankAccountToken: String,
-    private val address: ExternalBankAccountAddress?,
-    private val companyId: String?,
-    private val dob: LocalDate?,
-    private val doingBusinessAs: String?,
-    private val name: String?,
-    private val owner: String?,
-    private val ownerType: OwnerType?,
-    private val userDefinedId: String?,
+    private val body: ExternalBankAccountUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun externalBankAccountToken(): String = externalBankAccountToken
 
-    fun address(): ExternalBankAccountAddress? = address
+    /** Address */
+    fun address(): ExternalBankAccountAddress? = body.address()
 
-    fun companyId(): String? = companyId
+    /** Optional field that helps identify bank accounts in receipts */
+    fun companyId(): String? = body.companyId()
 
-    fun dob(): LocalDate? = dob
+    /** Date of Birth of the Individual that owns the external bank account */
+    fun dob(): LocalDate? = body.dob()
 
-    fun doingBusinessAs(): String? = doingBusinessAs
+    /** Doing Business As */
+    fun doingBusinessAs(): String? = body.doingBusinessAs()
 
-    fun name(): String? = name
+    /** The nickname for this External Bank Account */
+    fun name(): String? = body.name()
 
-    fun owner(): String? = owner
+    /**
+     * Legal Name of the business or individual who owns the external account. This will appear in
+     * statements
+     */
+    fun owner(): String? = body.owner()
 
-    fun ownerType(): OwnerType? = ownerType
+    /** Owner Type */
+    fun ownerType(): OwnerType? = body.ownerType()
 
-    fun userDefinedId(): String? = userDefinedId
+    /** User Defined ID */
+    fun userDefinedId(): String? = body.userDefinedId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): ExternalBankAccountUpdateBody {
-        return ExternalBankAccountUpdateBody(
-            address,
-            companyId,
-            dob,
-            doingBusinessAs,
-            name,
-            owner,
-            ownerType,
-            userDefinedId,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): ExternalBankAccountUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -162,33 +153,33 @@ constructor(
                 }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String?) = apply { this.companyId = companyId }
+            fun companyId(companyId: String) = apply { this.companyId = companyId }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate?) = apply { this.dob = dob }
+            fun dob(dob: LocalDate) = apply { this.dob = dob }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String?) = apply {
+            fun doingBusinessAs(doingBusinessAs: String) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * Legal Name of the business or individual who owns the external account. This will
              * appear in statements
              */
-            fun owner(owner: String?) = apply { this.owner = owner }
+            fun owner(owner: String) = apply { this.owner = owner }
 
             /** Owner Type */
-            fun ownerType(ownerType: OwnerType?) = apply { this.ownerType = ownerType }
+            fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -252,34 +243,18 @@ constructor(
     class Builder {
 
         private var externalBankAccountToken: String? = null
-        private var address: ExternalBankAccountAddress? = null
-        private var companyId: String? = null
-        private var dob: LocalDate? = null
-        private var doingBusinessAs: String? = null
-        private var name: String? = null
-        private var owner: String? = null
-        private var ownerType: OwnerType? = null
-        private var userDefinedId: String? = null
+        private var body: ExternalBankAccountUpdateBody.Builder =
+            ExternalBankAccountUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(externalBankAccountUpdateParams: ExternalBankAccountUpdateParams) =
             apply {
                 externalBankAccountToken = externalBankAccountUpdateParams.externalBankAccountToken
-                address = externalBankAccountUpdateParams.address
-                companyId = externalBankAccountUpdateParams.companyId
-                dob = externalBankAccountUpdateParams.dob
-                doingBusinessAs = externalBankAccountUpdateParams.doingBusinessAs
-                name = externalBankAccountUpdateParams.name
-                owner = externalBankAccountUpdateParams.owner
-                ownerType = externalBankAccountUpdateParams.ownerType
-                userDefinedId = externalBankAccountUpdateParams.userDefinedId
+                body = externalBankAccountUpdateParams.body.toBuilder()
                 additionalHeaders = externalBankAccountUpdateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     externalBankAccountUpdateParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    externalBankAccountUpdateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun externalBankAccountToken(externalBankAccountToken: String) = apply {
@@ -287,33 +262,33 @@ constructor(
         }
 
         /** Address */
-        fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
+        fun address(address: ExternalBankAccountAddress) = apply { body.address(address) }
 
         /** Optional field that helps identify bank accounts in receipts */
-        fun companyId(companyId: String) = apply { this.companyId = companyId }
+        fun companyId(companyId: String) = apply { body.companyId(companyId) }
 
         /** Date of Birth of the Individual that owns the external bank account */
-        fun dob(dob: LocalDate) = apply { this.dob = dob }
+        fun dob(dob: LocalDate) = apply { body.dob(dob) }
 
         /** Doing Business As */
         fun doingBusinessAs(doingBusinessAs: String) = apply {
-            this.doingBusinessAs = doingBusinessAs
+            body.doingBusinessAs(doingBusinessAs)
         }
 
         /** The nickname for this External Bank Account */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /**
          * Legal Name of the business or individual who owns the external account. This will appear
          * in statements
          */
-        fun owner(owner: String) = apply { this.owner = owner }
+        fun owner(owner: String) = apply { body.owner(owner) }
 
         /** Owner Type */
-        fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
+        fun ownerType(ownerType: OwnerType) = apply { body.ownerType(ownerType) }
 
         /** User Defined ID */
-        fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -414,25 +389,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ExternalBankAccountUpdateParams =
@@ -440,17 +412,9 @@ constructor(
                 checkNotNull(externalBankAccountToken) {
                     "`externalBankAccountToken` is required but was not set"
                 },
-                address,
-                companyId,
-                dob,
-                doingBusinessAs,
-                name,
-                owner,
-                ownerType,
-                userDefinedId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -459,11 +423,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalBankAccountUpdateParams && externalBankAccountToken == other.externalBankAccountToken && address == other.address && companyId == other.companyId && dob == other.dob && doingBusinessAs == other.doingBusinessAs && name == other.name && owner == other.owner && ownerType == other.ownerType && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ExternalBankAccountUpdateParams && externalBankAccountToken == other.externalBankAccountToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalBankAccountToken, address, companyId, dob, doingBusinessAs, name, owner, ownerType, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalBankAccountToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExternalBankAccountUpdateParams{externalBankAccountToken=$externalBankAccountToken, address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalBankAccountUpdateParams{externalBankAccountToken=$externalBankAccountToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

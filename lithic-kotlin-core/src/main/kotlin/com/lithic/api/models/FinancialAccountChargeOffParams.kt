@@ -21,25 +21,23 @@ import java.util.Objects
 class FinancialAccountChargeOffParams
 constructor(
     private val financialAccountToken: String,
-    private val reason: ChargedOffReason,
+    private val body: FinancialAccountChargeOffBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun financialAccountToken(): String = financialAccountToken
 
-    fun reason(): ChargedOffReason = reason
+    /** Reason for the financial account being marked as Charged Off */
+    fun reason(): ChargedOffReason = body.reason()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): FinancialAccountChargeOffBody {
-        return FinancialAccountChargeOffBody(reason, additionalBodyProperties)
-    }
+    internal fun getBody(): FinancialAccountChargeOffBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -145,20 +143,18 @@ constructor(
     class Builder {
 
         private var financialAccountToken: String? = null
-        private var reason: ChargedOffReason? = null
+        private var body: FinancialAccountChargeOffBody.Builder =
+            FinancialAccountChargeOffBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountChargeOffParams: FinancialAccountChargeOffParams) =
             apply {
                 financialAccountToken = financialAccountChargeOffParams.financialAccountToken
-                reason = financialAccountChargeOffParams.reason
+                body = financialAccountChargeOffParams.body.toBuilder()
                 additionalHeaders = financialAccountChargeOffParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     financialAccountChargeOffParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    financialAccountChargeOffParams.additionalBodyProperties.toMutableMap()
             }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
@@ -166,7 +162,7 @@ constructor(
         }
 
         /** Reason for the financial account being marked as Charged Off */
-        fun reason(reason: ChargedOffReason) = apply { this.reason = reason }
+        fun reason(reason: ChargedOffReason) = apply { body.reason(reason) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -267,25 +263,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): FinancialAccountChargeOffParams =
@@ -293,10 +286,9 @@ constructor(
                 checkNotNull(financialAccountToken) {
                     "`financialAccountToken` is required but was not set"
                 },
-                checkNotNull(reason) { "`reason` is required but was not set" },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -362,11 +354,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialAccountChargeOffParams && financialAccountToken == other.financialAccountToken && reason == other.reason && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is FinancialAccountChargeOffParams && financialAccountToken == other.financialAccountToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "FinancialAccountChargeOffParams{financialAccountToken=$financialAccountToken, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "FinancialAccountChargeOffParams{financialAccountToken=$financialAccountToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

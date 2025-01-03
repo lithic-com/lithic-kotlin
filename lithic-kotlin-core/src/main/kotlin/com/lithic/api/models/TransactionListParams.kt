@@ -27,20 +27,43 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** Filters for transactions associated with a specific account. */
     fun accountToken(): String? = accountToken
 
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
     fun begin(): OffsetDateTime? = begin
 
+    /** Filters for transactions associated with a specific card. */
     fun cardToken(): String? = cardToken
 
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
     fun end(): OffsetDateTime? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
+    /**
+     * Filters for transactions using transaction result field. Can filter by `APPROVED`, and
+     * `DECLINED`.
+     */
     fun result(): Result? = result
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
     fun _additionalHeaders(): Headers = additionalHeaders

@@ -21,42 +21,33 @@ import java.util.Objects
 
 class DisputeCreateParams
 constructor(
-    private val amount: Long,
-    private val reason: Reason,
-    private val transactionToken: String,
-    private val customerFiledDate: OffsetDateTime?,
-    private val customerNote: String?,
+    private val body: DisputeCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long = amount
+    /** Amount to dispute */
+    fun amount(): Long = body.amount()
 
-    fun reason(): Reason = reason
+    /** Reason for dispute */
+    fun reason(): Reason = body.reason()
 
-    fun transactionToken(): String = transactionToken
+    /** Transaction to dispute */
+    fun transactionToken(): String = body.transactionToken()
 
-    fun customerFiledDate(): OffsetDateTime? = customerFiledDate
+    /** Date the customer filed the dispute */
+    fun customerFiledDate(): OffsetDateTime? = body.customerFiledDate()
 
-    fun customerNote(): String? = customerNote
+    /** Customer description of dispute */
+    fun customerNote(): String? = body.customerNote()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): DisputeCreateBody {
-        return DisputeCreateBody(
-            amount,
-            reason,
-            transactionToken,
-            customerFiledDate,
-            customerNote,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): DisputeCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -132,12 +123,12 @@ constructor(
             }
 
             /** Date the customer filed the dispute */
-            fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
+            fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
                 this.customerFiledDate = customerFiledDate
             }
 
             /** Customer description of dispute */
-            fun customerNote(customerNote: String?) = apply { this.customerNote = customerNote }
+            fun customerNote(customerNote: String) = apply { this.customerNote = customerNote }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -199,44 +190,34 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
-        private var reason: Reason? = null
-        private var transactionToken: String? = null
-        private var customerFiledDate: OffsetDateTime? = null
-        private var customerNote: String? = null
+        private var body: DisputeCreateBody.Builder = DisputeCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(disputeCreateParams: DisputeCreateParams) = apply {
-            amount = disputeCreateParams.amount
-            reason = disputeCreateParams.reason
-            transactionToken = disputeCreateParams.transactionToken
-            customerFiledDate = disputeCreateParams.customerFiledDate
-            customerNote = disputeCreateParams.customerNote
+            body = disputeCreateParams.body.toBuilder()
             additionalHeaders = disputeCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = disputeCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = disputeCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** Amount to dispute */
-        fun amount(amount: Long) = apply { this.amount = amount }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
         /** Reason for dispute */
-        fun reason(reason: Reason) = apply { this.reason = reason }
+        fun reason(reason: Reason) = apply { body.reason(reason) }
 
         /** Transaction to dispute */
         fun transactionToken(transactionToken: String) = apply {
-            this.transactionToken = transactionToken
+            body.transactionToken(transactionToken)
         }
 
         /** Date the customer filed the dispute */
         fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
-            this.customerFiledDate = customerFiledDate
+            body.customerFiledDate(customerFiledDate)
         }
 
         /** Customer description of dispute */
-        fun customerNote(customerNote: String) = apply { this.customerNote = customerNote }
+        fun customerNote(customerNote: String) = apply { body.customerNote(customerNote) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -337,37 +318,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): DisputeCreateParams =
             DisputeCreateParams(
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(reason) { "`reason` is required but was not set" },
-                checkNotNull(transactionToken) { "`transactionToken` is required but was not set" },
-                customerFiledDate,
-                customerNote,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -505,11 +478,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is DisputeCreateParams && amount == other.amount && reason == other.reason && transactionToken == other.transactionToken && customerFiledDate == other.customerFiledDate && customerNote == other.customerNote && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is DisputeCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, reason, transactionToken, customerFiledDate, customerNote, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "DisputeCreateParams{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "DisputeCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

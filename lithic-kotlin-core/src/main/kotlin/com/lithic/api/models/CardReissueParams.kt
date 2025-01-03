@@ -21,40 +21,45 @@ import java.util.Objects
 class CardReissueParams
 constructor(
     private val cardToken: String,
-    private val carrier: Carrier?,
-    private val productId: String?,
-    private val shippingAddress: ShippingAddress?,
-    private val shippingMethod: ShippingMethod?,
+    private val body: CardReissueBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun cardToken(): String = cardToken
 
-    fun carrier(): Carrier? = carrier
+    /** If omitted, the previous carrier will be used. */
+    fun carrier(): Carrier? = body.carrier()
 
-    fun productId(): String? = productId
+    /**
+     * Specifies the configuration (e.g. physical card art) that the card should be manufactured
+     * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
+     * before use.
+     */
+    fun productId(): String? = body.productId()
 
-    fun shippingAddress(): ShippingAddress? = shippingAddress
+    /** If omitted, the previous shipping address will be used. */
+    fun shippingAddress(): ShippingAddress? = body.shippingAddress()
 
-    fun shippingMethod(): ShippingMethod? = shippingMethod
+    /**
+     * Shipping method for the card. Use of options besides `STANDARD` require additional
+     * permissions.
+     * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+     * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
+     * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+     * - `2_DAY` - FedEx 2-day shipping, with tracking
+     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     */
+    fun shippingMethod(): ShippingMethod? = body.shippingMethod()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CardReissueBody {
-        return CardReissueBody(
-            carrier,
-            productId,
-            shippingAddress,
-            shippingMethod,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CardReissueBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -133,17 +138,17 @@ constructor(
             }
 
             /** If omitted, the previous carrier will be used. */
-            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
              * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
              * configured with Lithic before use.
              */
-            fun productId(productId: String?) = apply { this.productId = productId }
+            fun productId(productId: String) = apply { this.productId = productId }
 
             /** If omitted, the previous shipping address will be used. */
-            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -159,7 +164,7 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -221,40 +226,32 @@ constructor(
     class Builder {
 
         private var cardToken: String? = null
-        private var carrier: Carrier? = null
-        private var productId: String? = null
-        private var shippingAddress: ShippingAddress? = null
-        private var shippingMethod: ShippingMethod? = null
+        private var body: CardReissueBody.Builder = CardReissueBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardReissueParams: CardReissueParams) = apply {
             cardToken = cardReissueParams.cardToken
-            carrier = cardReissueParams.carrier
-            productId = cardReissueParams.productId
-            shippingAddress = cardReissueParams.shippingAddress
-            shippingMethod = cardReissueParams.shippingMethod
+            body = cardReissueParams.body.toBuilder()
             additionalHeaders = cardReissueParams.additionalHeaders.toBuilder()
             additionalQueryParams = cardReissueParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = cardReissueParams.additionalBodyProperties.toMutableMap()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String) = apply { this.productId = productId }
+        fun productId(productId: String) = apply { body.productId(productId) }
 
         /** If omitted, the previous shipping address will be used. */
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
-            this.shippingAddress = shippingAddress
+            body.shippingAddress(shippingAddress)
         }
 
         /**
@@ -269,7 +266,7 @@ constructor(
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
         fun shippingMethod(shippingMethod: ShippingMethod) = apply {
-            this.shippingMethod = shippingMethod
+            body.shippingMethod(shippingMethod)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -371,37 +368,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CardReissueParams =
             CardReissueParams(
                 checkNotNull(cardToken) { "`cardToken` is required but was not set" },
-                carrier,
-                productId,
-                shippingAddress,
-                shippingMethod,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -491,11 +481,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardReissueParams && cardToken == other.cardToken && carrier == other.carrier && productId == other.productId && shippingAddress == other.shippingAddress && shippingMethod == other.shippingMethod && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CardReissueParams && cardToken == other.cardToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, carrier, productId, shippingAddress, shippingMethod, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CardReissueParams{cardToken=$cardToken, carrier=$carrier, productId=$productId, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CardReissueParams{cardToken=$cardToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

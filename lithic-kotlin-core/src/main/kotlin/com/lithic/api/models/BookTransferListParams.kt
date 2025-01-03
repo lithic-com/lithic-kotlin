@@ -32,24 +32,48 @@ constructor(
 
     fun accountToken(): String? = accountToken
 
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
     fun begin(): OffsetDateTime? = begin
 
     fun businessAccountToken(): String? = businessAccountToken
 
+    /** Book Transfer category to be returned. */
     fun category(): Category? = category
 
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
     fun end(): OffsetDateTime? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /**
+     * Globally unique identifier for the financial account or card that will send the funds.
+     * Accepted type dependent on the program's use case.
+     */
     fun financialAccountToken(): String? = financialAccountToken
 
+    /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
+    /** Book transfer result to be returned. */
     fun result(): Result? = result
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
+    /** Book transfer status to be returned. */
     fun status(): Status? = status
 
     fun _additionalHeaders(): Headers = additionalHeaders

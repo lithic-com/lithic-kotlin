@@ -21,25 +21,27 @@ import java.util.Objects
 class TokenizationResendActivationCodeParams
 constructor(
     private val tokenizationToken: String,
-    private val activationMethodType: ActivationMethodType?,
+    private val body: TokenizationResendActivationCodeBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun tokenizationToken(): String = tokenizationToken
 
-    fun activationMethodType(): ActivationMethodType? = activationMethodType
+    /**
+     * The communication method that the user has selected to use to receive the authentication
+     * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
+     * "EMAIL_TO_CARDHOLDER_ADDRESS"
+     */
+    fun activationMethodType(): ActivationMethodType? = body.activationMethodType()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): TokenizationResendActivationCodeBody {
-        return TokenizationResendActivationCodeBody(activationMethodType, additionalBodyProperties)
-    }
+    internal fun getBody(): TokenizationResendActivationCodeBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -99,7 +101,7 @@ constructor(
              * authentication code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
              * "EMAIL_TO_CARDHOLDER_ADDRESS"
              */
-            fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
+            fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
                 this.activationMethodType = activationMethodType
             }
 
@@ -158,21 +160,19 @@ constructor(
     class Builder {
 
         private var tokenizationToken: String? = null
-        private var activationMethodType: ActivationMethodType? = null
+        private var body: TokenizationResendActivationCodeBody.Builder =
+            TokenizationResendActivationCodeBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             tokenizationResendActivationCodeParams: TokenizationResendActivationCodeParams
         ) = apply {
             tokenizationToken = tokenizationResendActivationCodeParams.tokenizationToken
-            activationMethodType = tokenizationResendActivationCodeParams.activationMethodType
+            body = tokenizationResendActivationCodeParams.body.toBuilder()
             additionalHeaders = tokenizationResendActivationCodeParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 tokenizationResendActivationCodeParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                tokenizationResendActivationCodeParams.additionalBodyProperties.toMutableMap()
         }
 
         fun tokenizationToken(tokenizationToken: String) = apply {
@@ -185,7 +185,7 @@ constructor(
          * "EMAIL_TO_CARDHOLDER_ADDRESS"
          */
         fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
-            this.activationMethodType = activationMethodType
+            body.activationMethodType(activationMethodType)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -287,25 +287,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): TokenizationResendActivationCodeParams =
@@ -313,10 +310,9 @@ constructor(
                 checkNotNull(tokenizationToken) {
                     "`tokenizationToken` is required but was not set"
                 },
-                activationMethodType,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -382,11 +378,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is TokenizationResendActivationCodeParams && tokenizationToken == other.tokenizationToken && activationMethodType == other.activationMethodType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is TokenizationResendActivationCodeParams && tokenizationToken == other.tokenizationToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(tokenizationToken, activationMethodType, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(tokenizationToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "TokenizationResendActivationCodeParams{tokenizationToken=$tokenizationToken, activationMethodType=$activationMethodType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "TokenizationResendActivationCodeParams{tokenizationToken=$tokenizationToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

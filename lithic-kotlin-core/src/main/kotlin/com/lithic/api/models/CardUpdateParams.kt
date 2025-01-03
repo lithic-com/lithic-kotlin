@@ -21,52 +21,73 @@ import java.util.Objects
 class CardUpdateParams
 constructor(
     private val cardToken: String,
-    private val digitalCardArtToken: String?,
-    private val memo: String?,
-    private val pin: String?,
-    private val pinStatus: PinStatus?,
-    private val spendLimit: Long?,
-    private val spendLimitDuration: SpendLimitDuration?,
-    private val state: State?,
+    private val body: CardUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun cardToken(): String = cardToken
 
-    fun digitalCardArtToken(): String? = digitalCardArtToken
+    /**
+     * Specifies the digital card art to be displayed in the user’s digital wallet after
+     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
+     * See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     */
+    fun digitalCardArtToken(): String? = body.digitalCardArtToken()
 
-    fun memo(): String? = memo
+    /** Friendly name to identify the card. */
+    fun memo(): String? = body.memo()
 
-    fun pin(): String? = pin
+    /**
+     * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
+     * Changing PIN also resets PIN status to `OK`. See
+     * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+     */
+    fun pin(): String? = body.pin()
 
-    fun pinStatus(): PinStatus? = pinStatus
+    /**
+     * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect attempts).
+     * Can only be set to `OK` to unblock a card.
+     */
+    fun pinStatus(): PinStatus? = body.pinStatus()
 
-    fun spendLimit(): Long? = spendLimit
+    /**
+     * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
+     * limit will be declined. Note that a spend limit of 0 is effectively no limit, and should only
+     * be used to reset or remove a prior limit. Only a limit of 1 or above will result in declined
+     * transactions due to checks against the card limit.
+     */
+    fun spendLimit(): Long? = body.spendLimit()
 
-    fun spendLimitDuration(): SpendLimitDuration? = spendLimitDuration
+    /**
+     * Spend limit duration values:
+     * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
+     * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
+     * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
+     *   support recurring monthly payments, which can occur on different day every month, the time
+     *   window we consider for monthly velocity starts 6 days after the current calendar date one
+     *   month prior.
+     * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
+     *   under the spend limit.
+     */
+    fun spendLimitDuration(): SpendLimitDuration? = body.spendLimitDuration()
 
-    fun state(): State? = state
+    /**
+     * Card state values:
+     * - `CLOSED` - Card will no longer approve authorizations. Closing a card cannot be undone.
+     * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
+     * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+     */
+    fun state(): State? = body.state()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CardUpdateBody {
-        return CardUpdateBody(
-            digitalCardArtToken,
-            memo,
-            pin,
-            pinStatus,
-            spendLimit,
-            spendLimitDuration,
-            state,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CardUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -189,25 +210,25 @@ constructor(
              * use. See
              * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
              */
-            fun digitalCardArtToken(digitalCardArtToken: String?) = apply {
+            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
             }
 
             /** Friendly name to identify the card. */
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String) = apply { this.memo = memo }
 
             /**
              * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and
              * `VIRTUAL`. Changing PIN also resets PIN status to `OK`. See
              * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
-            fun pin(pin: String?) = apply { this.pin = pin }
+            fun pin(pin: String) = apply { this.pin = pin }
 
             /**
              * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
              * attempts). Can only be set to `OK` to unblock a card.
              */
-            fun pinStatus(pinStatus: PinStatus?) = apply { this.pinStatus = pinStatus }
+            fun pinStatus(pinStatus: PinStatus) = apply { this.pinStatus = pinStatus }
 
             /**
              * Amount (in cents) to limit approved authorizations. Transaction requests above the
@@ -215,7 +236,7 @@ constructor(
              * and should only be used to reset or remove a prior limit. Only a limit of 1 or above
              * will result in declined transactions due to checks against the card limit.
              */
-            fun spendLimit(spendLimit: Long?) = apply { this.spendLimit = spendLimit }
+            fun spendLimit(spendLimit: Long) = apply { this.spendLimit = spendLimit }
 
             /**
              * Spend limit duration values:
@@ -230,7 +251,7 @@ constructor(
              * - `TRANSACTION` - Card will authorize multiple transactions if each individual
              *   transaction is under the spend limit.
              */
-            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration?) = apply {
+            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
                 this.spendLimitDuration = spendLimitDuration
             }
 
@@ -242,7 +263,7 @@ constructor(
              *   parameters).
              * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
              */
-            fun state(state: State?) = apply { this.state = state }
+            fun state(state: State) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -305,29 +326,15 @@ constructor(
     class Builder {
 
         private var cardToken: String? = null
-        private var digitalCardArtToken: String? = null
-        private var memo: String? = null
-        private var pin: String? = null
-        private var pinStatus: PinStatus? = null
-        private var spendLimit: Long? = null
-        private var spendLimitDuration: SpendLimitDuration? = null
-        private var state: State? = null
+        private var body: CardUpdateBody.Builder = CardUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardUpdateParams: CardUpdateParams) = apply {
             cardToken = cardUpdateParams.cardToken
-            digitalCardArtToken = cardUpdateParams.digitalCardArtToken
-            memo = cardUpdateParams.memo
-            pin = cardUpdateParams.pin
-            pinStatus = cardUpdateParams.pinStatus
-            spendLimit = cardUpdateParams.spendLimit
-            spendLimitDuration = cardUpdateParams.spendLimitDuration
-            state = cardUpdateParams.state
+            body = cardUpdateParams.body.toBuilder()
             additionalHeaders = cardUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = cardUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = cardUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
@@ -339,24 +346,24 @@ constructor(
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
         fun digitalCardArtToken(digitalCardArtToken: String) = apply {
-            this.digitalCardArtToken = digitalCardArtToken
+            body.digitalCardArtToken(digitalCardArtToken)
         }
 
         /** Friendly name to identify the card. */
-        fun memo(memo: String) = apply { this.memo = memo }
+        fun memo(memo: String) = apply { body.memo(memo) }
 
         /**
          * Encrypted PIN block (in base64). Only applies to cards of type `PHYSICAL` and `VIRTUAL`.
          * Changing PIN also resets PIN status to `OK`. See
          * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
-        fun pin(pin: String) = apply { this.pin = pin }
+        fun pin(pin: String) = apply { body.pin(pin) }
 
         /**
          * Indicates if a card is blocked due a PIN status issue (e.g. excessive incorrect
          * attempts). Can only be set to `OK` to unblock a card.
          */
-        fun pinStatus(pinStatus: PinStatus) = apply { this.pinStatus = pinStatus }
+        fun pinStatus(pinStatus: PinStatus) = apply { body.pinStatus(pinStatus) }
 
         /**
          * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
@@ -364,7 +371,7 @@ constructor(
          * only be used to reset or remove a prior limit. Only a limit of 1 or above will result in
          * declined transactions due to checks against the card limit.
          */
-        fun spendLimit(spendLimit: Long) = apply { this.spendLimit = spendLimit }
+        fun spendLimit(spendLimit: Long) = apply { body.spendLimit(spendLimit) }
 
         /**
          * Spend limit duration values:
@@ -379,7 +386,7 @@ constructor(
          *   transaction is under the spend limit.
          */
         fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
-            this.spendLimitDuration = spendLimitDuration
+            body.spendLimitDuration(spendLimitDuration)
         }
 
         /**
@@ -388,7 +395,7 @@ constructor(
          * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          */
-        fun state(state: State) = apply { this.state = state }
+        fun state(state: State) = apply { body.state(state) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -489,40 +496,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CardUpdateParams =
             CardUpdateParams(
                 checkNotNull(cardToken) { "`cardToken` is required but was not set" },
-                digitalCardArtToken,
-                memo,
-                pin,
-                pinStatus,
-                spendLimit,
-                spendLimitDuration,
-                state,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -645,11 +642,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardUpdateParams && cardToken == other.cardToken && digitalCardArtToken == other.digitalCardArtToken && memo == other.memo && pin == other.pin && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CardUpdateParams && cardToken == other.cardToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, digitalCardArtToken, memo, pin, pinStatus, spendLimit, spendLimitDuration, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CardUpdateParams{cardToken=$cardToken, digitalCardArtToken=$digitalCardArtToken, memo=$memo, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CardUpdateParams{cardToken=$cardToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

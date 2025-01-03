@@ -21,32 +21,32 @@ import java.util.Objects
 class AuthRuleV2UpdateParams
 constructor(
     private val authRuleToken: String,
-    private val name: String?,
-    private val state: State?,
+    private val body: AuthRuleV2UpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun authRuleToken(): String = authRuleToken
 
-    fun name(): String? = name
+    /** Auth Rule Name */
+    fun name(): String? = body.name()
 
-    fun state(): State? = state
+    /**
+     * The desired state of the Auth Rule.
+     *
+     * Note that only deactivating an Auth Rule through this endpoint is supported at this time. If
+     * you need to (re-)activate an Auth Rule the /promote endpoint should be used to promote a
+     * draft to the currently active version.
+     */
+    fun state(): State? = body.state()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AuthRuleV2UpdateBody {
-        return AuthRuleV2UpdateBody(
-            name,
-            state,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AuthRuleV2UpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -105,7 +105,7 @@ constructor(
             }
 
             /** Auth Rule Name */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The desired state of the Auth Rule.
@@ -114,7 +114,7 @@ constructor(
              * time. If you need to (re-)activate an Auth Rule the /promote endpoint should be used
              * to promote a draft to the currently active version.
              */
-            fun state(state: State?) = apply { this.state = state }
+            fun state(state: State) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -172,26 +172,21 @@ constructor(
     class Builder {
 
         private var authRuleToken: String? = null
-        private var name: String? = null
-        private var state: State? = null
+        private var body: AuthRuleV2UpdateBody.Builder = AuthRuleV2UpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authRuleV2UpdateParams: AuthRuleV2UpdateParams) = apply {
             authRuleToken = authRuleV2UpdateParams.authRuleToken
-            name = authRuleV2UpdateParams.name
-            state = authRuleV2UpdateParams.state
+            body = authRuleV2UpdateParams.body.toBuilder()
             additionalHeaders = authRuleV2UpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = authRuleV2UpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                authRuleV2UpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** Auth Rule Name */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /**
          * The desired state of the Auth Rule.
@@ -200,7 +195,7 @@ constructor(
          * If you need to (re-)activate an Auth Rule the /promote endpoint should be used to promote
          * a draft to the currently active version.
          */
-        fun state(state: State) = apply { this.state = state }
+        fun state(state: State) = apply { body.state(state) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -301,35 +296,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AuthRuleV2UpdateParams =
             AuthRuleV2UpdateParams(
                 checkNotNull(authRuleToken) { "`authRuleToken` is required but was not set" },
-                name,
-                state,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -389,11 +379,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2UpdateParams && authRuleToken == other.authRuleToken && name == other.name && state == other.state && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2UpdateParams && authRuleToken == other.authRuleToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, name, state, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AuthRuleV2UpdateParams{authRuleToken=$authRuleToken, name=$name, state=$state, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AuthRuleV2UpdateParams{authRuleToken=$authRuleToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
