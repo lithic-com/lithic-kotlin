@@ -19,32 +19,26 @@ import java.util.Objects
 class AuthRuleV2BacktestCreateParams
 constructor(
     private val authRuleToken: String,
-    private val end: OffsetDateTime?,
-    private val start: OffsetDateTime?,
+    private val body: AuthRuleV2BacktestCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun authRuleToken(): String = authRuleToken
 
-    fun end(): OffsetDateTime? = end
+    /** The end time of the backtest. */
+    fun end(): OffsetDateTime? = body.end()
 
-    fun start(): OffsetDateTime? = start
+    /** The start time of the backtest. */
+    fun start(): OffsetDateTime? = body.start()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AuthRuleV2BacktestCreateBody {
-        return AuthRuleV2BacktestCreateBody(
-            end,
-            start,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AuthRuleV2BacktestCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -98,10 +92,10 @@ constructor(
             }
 
             /** The end time of the backtest. */
-            fun end(end: OffsetDateTime?) = apply { this.end = end }
+            fun end(end: OffsetDateTime) = apply { this.end = end }
 
             /** The start time of the backtest. */
-            fun start(start: OffsetDateTime?) = apply { this.start = start }
+            fun start(start: OffsetDateTime) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -159,29 +153,25 @@ constructor(
     class Builder {
 
         private var authRuleToken: String? = null
-        private var end: OffsetDateTime? = null
-        private var start: OffsetDateTime? = null
+        private var body: AuthRuleV2BacktestCreateBody.Builder =
+            AuthRuleV2BacktestCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authRuleV2BacktestCreateParams: AuthRuleV2BacktestCreateParams) = apply {
             authRuleToken = authRuleV2BacktestCreateParams.authRuleToken
-            end = authRuleV2BacktestCreateParams.end
-            start = authRuleV2BacktestCreateParams.start
+            body = authRuleV2BacktestCreateParams.body.toBuilder()
             additionalHeaders = authRuleV2BacktestCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = authRuleV2BacktestCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                authRuleV2BacktestCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** The end time of the backtest. */
-        fun end(end: OffsetDateTime) = apply { this.end = end }
+        fun end(end: OffsetDateTime) = apply { body.end(end) }
 
         /** The start time of the backtest. */
-        fun start(start: OffsetDateTime) = apply { this.start = start }
+        fun start(start: OffsetDateTime) = apply { body.start(start) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -282,35 +272,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AuthRuleV2BacktestCreateParams =
             AuthRuleV2BacktestCreateParams(
                 checkNotNull(authRuleToken) { "`authRuleToken` is required but was not set" },
-                end,
-                start,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -319,11 +304,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2BacktestCreateParams && authRuleToken == other.authRuleToken && end == other.end && start == other.start && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2BacktestCreateParams && authRuleToken == other.authRuleToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, end, start, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AuthRuleV2BacktestCreateParams{authRuleToken=$authRuleToken, end=$end, start=$start, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AuthRuleV2BacktestCreateParams{authRuleToken=$authRuleToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

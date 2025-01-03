@@ -26,26 +26,58 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
     fun begin(): OffsetDateTime? = begin
 
+    /** Email address of the account holder. The query must be an exact match, case insensitive. */
     fun email(): String? = email
 
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
     fun end(): OffsetDateTime? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /** If applicable, represents the external_id associated with the account_holder. */
     fun externalId(): String? = externalId
 
+    /**
+     * (Individual Account Holders only) The first name of the account holder. The query is case
+     * insensitive and supports partial matches.
+     */
     fun firstName(): String? = firstName
 
+    /**
+     * (Individual Account Holders only) The last name of the account holder. The query is case
+     * insensitive and supports partial matches.
+     */
     fun lastName(): String? = lastName
 
+    /**
+     * (Business Account Holders only) The legal business name of the account holder. The query is
+     * case insensitive and supports partial matches.
+     */
     fun legalBusinessName(): String? = legalBusinessName
 
+    /** The number of account_holders to limit the response to. */
     fun limit(): Long? = limit
 
+    /** Phone number of the account holder. The query must be an exact match. */
     fun phoneNumber(): String? = phoneNumber
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
     fun _additionalHeaders(): Headers = additionalHeaders

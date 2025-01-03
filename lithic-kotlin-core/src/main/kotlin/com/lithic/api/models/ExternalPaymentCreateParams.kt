@@ -21,58 +21,36 @@ import java.util.Objects
 
 class ExternalPaymentCreateParams
 constructor(
-    private val amount: Long,
-    private val category: ExternalPaymentCategory,
-    private val effectiveDate: LocalDate,
-    private val financialAccountToken: String,
-    private val paymentType: ExternalPaymentDirection,
-    private val token: String?,
-    private val memo: String?,
-    private val progressTo: ExternalPaymentProgressTo?,
-    private val userDefinedId: String?,
+    private val body: ExternalPaymentCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): Long = amount
+    fun amount(): Long = body.amount()
 
-    fun category(): ExternalPaymentCategory = category
+    fun category(): ExternalPaymentCategory = body.category()
 
-    fun effectiveDate(): LocalDate = effectiveDate
+    fun effectiveDate(): LocalDate = body.effectiveDate()
 
-    fun financialAccountToken(): String = financialAccountToken
+    fun financialAccountToken(): String = body.financialAccountToken()
 
-    fun paymentType(): ExternalPaymentDirection = paymentType
+    fun paymentType(): ExternalPaymentDirection = body.paymentType()
 
-    fun token(): String? = token
+    fun token(): String? = body.token()
 
-    fun memo(): String? = memo
+    fun memo(): String? = body.memo()
 
-    fun progressTo(): ExternalPaymentProgressTo? = progressTo
+    fun progressTo(): ExternalPaymentProgressTo? = body.progressTo()
 
-    fun userDefinedId(): String? = userDefinedId
+    fun userDefinedId(): String? = body.userDefinedId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): ExternalPaymentCreateBody {
-        return ExternalPaymentCreateBody(
-            amount,
-            category,
-            effectiveDate,
-            financialAccountToken,
-            paymentType,
-            token,
-            memo,
-            progressTo,
-            userDefinedId,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): ExternalPaymentCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -167,15 +145,15 @@ constructor(
                 this.paymentType = paymentType
             }
 
-            fun token(token: String?) = apply { this.token = token }
+            fun token(token: String) = apply { this.token = token }
 
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String) = apply { this.memo = memo }
 
-            fun progressTo(progressTo: ExternalPaymentProgressTo?) = apply {
+            fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
                 this.progressTo = progressTo
             }
 
-            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -241,58 +219,39 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: Long? = null
-        private var category: ExternalPaymentCategory? = null
-        private var effectiveDate: LocalDate? = null
-        private var financialAccountToken: String? = null
-        private var paymentType: ExternalPaymentDirection? = null
-        private var token: String? = null
-        private var memo: String? = null
-        private var progressTo: ExternalPaymentProgressTo? = null
-        private var userDefinedId: String? = null
+        private var body: ExternalPaymentCreateBody.Builder = ExternalPaymentCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(externalPaymentCreateParams: ExternalPaymentCreateParams) = apply {
-            amount = externalPaymentCreateParams.amount
-            category = externalPaymentCreateParams.category
-            effectiveDate = externalPaymentCreateParams.effectiveDate
-            financialAccountToken = externalPaymentCreateParams.financialAccountToken
-            paymentType = externalPaymentCreateParams.paymentType
-            token = externalPaymentCreateParams.token
-            memo = externalPaymentCreateParams.memo
-            progressTo = externalPaymentCreateParams.progressTo
-            userDefinedId = externalPaymentCreateParams.userDefinedId
+            body = externalPaymentCreateParams.body.toBuilder()
             additionalHeaders = externalPaymentCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = externalPaymentCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                externalPaymentCreateParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun amount(amount: Long) = apply { this.amount = amount }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
-        fun category(category: ExternalPaymentCategory) = apply { this.category = category }
+        fun category(category: ExternalPaymentCategory) = apply { body.category(category) }
 
-        fun effectiveDate(effectiveDate: LocalDate) = apply { this.effectiveDate = effectiveDate }
+        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
         fun financialAccountToken(financialAccountToken: String) = apply {
-            this.financialAccountToken = financialAccountToken
+            body.financialAccountToken(financialAccountToken)
         }
 
         fun paymentType(paymentType: ExternalPaymentDirection) = apply {
-            this.paymentType = paymentType
+            body.paymentType(paymentType)
         }
 
-        fun token(token: String) = apply { this.token = token }
+        fun token(token: String) = apply { body.token(token) }
 
-        fun memo(memo: String) = apply { this.memo = memo }
+        fun memo(memo: String) = apply { body.memo(memo) }
 
         fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
-            this.progressTo = progressTo
+            body.progressTo(progressTo)
         }
 
-        fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -393,43 +352,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ExternalPaymentCreateParams =
             ExternalPaymentCreateParams(
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(category) { "`category` is required but was not set" },
-                checkNotNull(effectiveDate) { "`effectiveDate` is required but was not set" },
-                checkNotNull(financialAccountToken) {
-                    "`financialAccountToken` is required but was not set"
-                },
-                checkNotNull(paymentType) { "`paymentType` is required but was not set" },
-                token,
-                memo,
-                progressTo,
-                userDefinedId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -622,11 +567,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalPaymentCreateParams && amount == other.amount && category == other.category && effectiveDate == other.effectiveDate && financialAccountToken == other.financialAccountToken && paymentType == other.paymentType && token == other.token && memo == other.memo && progressTo == other.progressTo && userDefinedId == other.userDefinedId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ExternalPaymentCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, category, effectiveDate, financialAccountToken, paymentType, token, memo, progressTo, userDefinedId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ExternalPaymentCreateParams{amount=$amount, category=$category, effectiveDate=$effectiveDate, financialAccountToken=$financialAccountToken, paymentType=$paymentType, token=$token, memo=$memo, progressTo=$progressTo, userDefinedId=$userDefinedId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ExternalPaymentCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

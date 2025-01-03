@@ -29,9 +29,7 @@ import java.util.Objects
 class AuthRuleV2ApplyParams
 constructor(
     private val authRuleToken: String,
-    private val applyAuthRuleRequestAccountTokens: ApplyAuthRuleRequestAccountTokens?,
-    private val applyAuthRuleRequestCardTokens: ApplyAuthRuleRequestCardTokens?,
-    private val applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel?,
+    private val body: AuthRuleV2ApplyBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) {
@@ -39,25 +37,19 @@ constructor(
     fun authRuleToken(): String = authRuleToken
 
     fun applyAuthRuleRequestAccountTokens(): ApplyAuthRuleRequestAccountTokens? =
-        applyAuthRuleRequestAccountTokens
+        body.applyAuthRuleRequestAccountTokens()
 
     fun applyAuthRuleRequestCardTokens(): ApplyAuthRuleRequestCardTokens? =
-        applyAuthRuleRequestCardTokens
+        body.applyAuthRuleRequestCardTokens()
 
     fun applyAuthRuleRequestProgramLevel(): ApplyAuthRuleRequestProgramLevel? =
-        applyAuthRuleRequestProgramLevel
+        body.applyAuthRuleRequestProgramLevel()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): AuthRuleV2ApplyBody {
-        return AuthRuleV2ApplyBody(
-            applyAuthRuleRequestAccountTokens,
-            applyAuthRuleRequestCardTokens,
-            applyAuthRuleRequestProgramLevel,
-        )
-    }
+    internal fun getBody(): AuthRuleV2ApplyBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -234,19 +226,13 @@ constructor(
     class Builder {
 
         private var authRuleToken: String? = null
-        private var applyAuthRuleRequestAccountTokens: ApplyAuthRuleRequestAccountTokens? = null
-        private var applyAuthRuleRequestCardTokens: ApplyAuthRuleRequestCardTokens? = null
-        private var applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel? = null
+        private var body: AuthRuleV2ApplyBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(authRuleV2ApplyParams: AuthRuleV2ApplyParams) = apply {
             authRuleToken = authRuleV2ApplyParams.authRuleToken
-            applyAuthRuleRequestAccountTokens =
-                authRuleV2ApplyParams.applyAuthRuleRequestAccountTokens
-            applyAuthRuleRequestCardTokens = authRuleV2ApplyParams.applyAuthRuleRequestCardTokens
-            applyAuthRuleRequestProgramLevel =
-                authRuleV2ApplyParams.applyAuthRuleRequestProgramLevel
+            body = authRuleV2ApplyParams.body
             additionalHeaders = authRuleV2ApplyParams.additionalHeaders.toBuilder()
             additionalQueryParams = authRuleV2ApplyParams.additionalQueryParams.toBuilder()
         }
@@ -256,25 +242,26 @@ constructor(
         fun forApplyAuthRuleRequestAccountTokens(
             applyAuthRuleRequestAccountTokens: ApplyAuthRuleRequestAccountTokens
         ) = apply {
-            this.applyAuthRuleRequestAccountTokens = applyAuthRuleRequestAccountTokens
-            this.applyAuthRuleRequestCardTokens = null
-            this.applyAuthRuleRequestProgramLevel = null
+            body =
+                AuthRuleV2ApplyBody.ofApplyAuthRuleRequestAccountTokens(
+                    applyAuthRuleRequestAccountTokens
+                )
         }
 
         fun forApplyAuthRuleRequestCardTokens(
             applyAuthRuleRequestCardTokens: ApplyAuthRuleRequestCardTokens
         ) = apply {
-            this.applyAuthRuleRequestAccountTokens = null
-            this.applyAuthRuleRequestCardTokens = applyAuthRuleRequestCardTokens
-            this.applyAuthRuleRequestProgramLevel = null
+            body =
+                AuthRuleV2ApplyBody.ofApplyAuthRuleRequestCardTokens(applyAuthRuleRequestCardTokens)
         }
 
         fun forApplyAuthRuleRequestProgramLevel(
             applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel
         ) = apply {
-            this.applyAuthRuleRequestAccountTokens = null
-            this.applyAuthRuleRequestCardTokens = null
-            this.applyAuthRuleRequestProgramLevel = applyAuthRuleRequestProgramLevel
+            body =
+                AuthRuleV2ApplyBody.ofApplyAuthRuleRequestProgramLevel(
+                    applyAuthRuleRequestProgramLevel
+                )
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -378,9 +365,7 @@ constructor(
         fun build(): AuthRuleV2ApplyParams =
             AuthRuleV2ApplyParams(
                 checkNotNull(authRuleToken) { "`authRuleToken` is required but was not set" },
-                applyAuthRuleRequestAccountTokens,
-                applyAuthRuleRequestCardTokens,
-                applyAuthRuleRequestProgramLevel,
+                body ?: AuthRuleV2ApplyBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -411,7 +396,7 @@ constructor(
 
         class Builder {
 
-            private var accountTokens: List<String>? = null
+            private var accountTokens: MutableList<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -424,7 +409,12 @@ constructor(
 
             /** Account tokens to which the Auth Rule applies. */
             fun accountTokens(accountTokens: List<String>) = apply {
-                this.accountTokens = accountTokens
+                this.accountTokens = accountTokens.toMutableList()
+            }
+
+            /** Account tokens to which the Auth Rule applies. */
+            fun addAccountToken(accountToken: String) = apply {
+                accountTokens = (accountTokens ?: mutableListOf()).apply { add(accountToken) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -497,7 +487,7 @@ constructor(
 
         class Builder {
 
-            private var cardTokens: List<String>? = null
+            private var cardTokens: MutableList<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(applyAuthRuleRequestCardTokens: ApplyAuthRuleRequestCardTokens) =
@@ -508,7 +498,14 @@ constructor(
                 }
 
             /** Card tokens to which the Auth Rule applies. */
-            fun cardTokens(cardTokens: List<String>) = apply { this.cardTokens = cardTokens }
+            fun cardTokens(cardTokens: List<String>) = apply {
+                this.cardTokens = cardTokens.toMutableList()
+            }
+
+            /** Card tokens to which the Auth Rule applies. */
+            fun addCardToken(cardToken: String) = apply {
+                cardTokens = (cardTokens ?: mutableListOf()).apply { add(cardToken) }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -586,7 +583,7 @@ constructor(
         class Builder {
 
             private var programLevel: Boolean? = null
-            private var excludedCardTokens: List<String>? = null
+            private var excludedCardTokens: MutableList<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel) =
@@ -602,8 +599,14 @@ constructor(
             fun programLevel(programLevel: Boolean) = apply { this.programLevel = programLevel }
 
             /** Card tokens to which the Auth Rule does not apply. */
-            fun excludedCardTokens(excludedCardTokens: List<String>?) = apply {
-                this.excludedCardTokens = excludedCardTokens
+            fun excludedCardTokens(excludedCardTokens: List<String>) = apply {
+                this.excludedCardTokens = excludedCardTokens.toMutableList()
+            }
+
+            /** Card tokens to which the Auth Rule does not apply. */
+            fun addExcludedCardToken(excludedCardToken: String) = apply {
+                excludedCardTokens =
+                    (excludedCardTokens ?: mutableListOf()).apply { add(excludedCardToken) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -656,11 +659,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2ApplyParams && authRuleToken == other.authRuleToken && applyAuthRuleRequestAccountTokens == other.applyAuthRuleRequestAccountTokens && applyAuthRuleRequestCardTokens == other.applyAuthRuleRequestCardTokens && applyAuthRuleRequestProgramLevel == other.applyAuthRuleRequestProgramLevel && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2ApplyParams && authRuleToken == other.authRuleToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AuthRuleV2ApplyParams{authRuleToken=$authRuleToken, applyAuthRuleRequestAccountTokens=$applyAuthRuleRequestAccountTokens, applyAuthRuleRequestCardTokens=$applyAuthRuleRequestCardTokens, applyAuthRuleRequestProgramLevel=$applyAuthRuleRequestProgramLevel, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "AuthRuleV2ApplyParams{authRuleToken=$authRuleToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

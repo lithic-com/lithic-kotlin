@@ -18,25 +18,23 @@ import java.util.Objects
 class DisputeInitiateEvidenceUploadParams
 constructor(
     private val disputeToken: String,
-    private val filename: String?,
+    private val body: DisputeInitiateEvidenceUploadBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun disputeToken(): String = disputeToken
 
-    fun filename(): String? = filename
+    /** Filename of the evidence. */
+    fun filename(): String? = body.filename()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): DisputeInitiateEvidenceUploadBody {
-        return DisputeInitiateEvidenceUploadBody(filename, additionalBodyProperties)
-    }
+    internal fun getBody(): DisputeInitiateEvidenceUploadBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -86,7 +84,7 @@ constructor(
             }
 
             /** Filename of the evidence. */
-            fun filename(filename: String?) = apply { this.filename = filename }
+            fun filename(filename: String) = apply { this.filename = filename }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -140,27 +138,25 @@ constructor(
     class Builder {
 
         private var disputeToken: String? = null
-        private var filename: String? = null
+        private var body: DisputeInitiateEvidenceUploadBody.Builder =
+            DisputeInitiateEvidenceUploadBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             disputeInitiateEvidenceUploadParams: DisputeInitiateEvidenceUploadParams
         ) = apply {
             disputeToken = disputeInitiateEvidenceUploadParams.disputeToken
-            filename = disputeInitiateEvidenceUploadParams.filename
+            body = disputeInitiateEvidenceUploadParams.body.toBuilder()
             additionalHeaders = disputeInitiateEvidenceUploadParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 disputeInitiateEvidenceUploadParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                disputeInitiateEvidenceUploadParams.additionalBodyProperties.toMutableMap()
         }
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
 
         /** Filename of the evidence. */
-        fun filename(filename: String) = apply { this.filename = filename }
+        fun filename(filename: String) = apply { body.filename(filename) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -261,34 +257,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): DisputeInitiateEvidenceUploadParams =
             DisputeInitiateEvidenceUploadParams(
                 checkNotNull(disputeToken) { "`disputeToken` is required but was not set" },
-                filename,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -297,11 +289,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is DisputeInitiateEvidenceUploadParams && disputeToken == other.disputeToken && filename == other.filename && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is DisputeInitiateEvidenceUploadParams && disputeToken == other.disputeToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, filename, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputeToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "DisputeInitiateEvidenceUploadParams{disputeToken=$disputeToken, filename=$filename, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "DisputeInitiateEvidenceUploadParams{disputeToken=$disputeToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

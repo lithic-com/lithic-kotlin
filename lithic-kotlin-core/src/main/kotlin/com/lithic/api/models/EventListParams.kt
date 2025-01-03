@@ -27,18 +27,37 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
     fun begin(): OffsetDateTime? = begin
 
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
     fun end(): OffsetDateTime? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /** Event types to filter events by. */
     fun eventTypes(): List<EventType>? = eventTypes
 
+    /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
+    /** Whether to include the event payload content in the response. */
     fun withContent(): Boolean? = withContent
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -79,7 +98,7 @@ constructor(
         private var begin: OffsetDateTime? = null
         private var end: OffsetDateTime? = null
         private var endingBefore: String? = null
-        private var eventTypes: MutableList<EventType> = mutableListOf()
+        private var eventTypes: MutableList<EventType>? = null
         private var pageSize: Long? = null
         private var startingAfter: String? = null
         private var withContent: Boolean? = null
@@ -90,7 +109,7 @@ constructor(
             begin = eventListParams.begin
             end = eventListParams.end
             endingBefore = eventListParams.endingBefore
-            eventTypes = eventListParams.eventTypes?.toMutableList() ?: mutableListOf()
+            eventTypes = eventListParams.eventTypes?.toMutableList()
             pageSize = eventListParams.pageSize
             startingAfter = eventListParams.startingAfter
             withContent = eventListParams.withContent
@@ -118,12 +137,13 @@ constructor(
 
         /** Event types to filter events by. */
         fun eventTypes(eventTypes: List<EventType>) = apply {
-            this.eventTypes.clear()
-            this.eventTypes.addAll(eventTypes)
+            this.eventTypes = eventTypes.toMutableList()
         }
 
         /** Event types to filter events by. */
-        fun addEventType(eventType: EventType) = apply { this.eventTypes.add(eventType) }
+        fun addEventType(eventType: EventType) = apply {
+            eventTypes = (eventTypes ?: mutableListOf()).apply { add(eventType) }
+        }
 
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
@@ -240,7 +260,7 @@ constructor(
                 begin,
                 end,
                 endingBefore,
-                eventTypes.toImmutable().ifEmpty { null },
+                eventTypes?.toImmutable(),
                 pageSize,
                 startingAfter,
                 withContent,

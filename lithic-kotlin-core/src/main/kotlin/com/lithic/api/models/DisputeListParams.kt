@@ -27,18 +27,37 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
     fun begin(): OffsetDateTime? = begin
 
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
     fun end(): OffsetDateTime? = end
 
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
     fun endingBefore(): String? = endingBefore
 
+    /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
     fun startingAfter(): String? = startingAfter
 
+    /** List disputes of a specific status. */
     fun status(): Status? = status
 
+    /** Transaction tokens to filter by. */
     fun transactionTokens(): List<String>? = transactionTokens
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -82,7 +101,7 @@ constructor(
         private var pageSize: Long? = null
         private var startingAfter: String? = null
         private var status: Status? = null
-        private var transactionTokens: MutableList<String> = mutableListOf()
+        private var transactionTokens: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -93,8 +112,7 @@ constructor(
             pageSize = disputeListParams.pageSize
             startingAfter = disputeListParams.startingAfter
             status = disputeListParams.status
-            transactionTokens =
-                disputeListParams.transactionTokens?.toMutableList() ?: mutableListOf()
+            transactionTokens = disputeListParams.transactionTokens?.toMutableList()
             additionalHeaders = disputeListParams.additionalHeaders.toBuilder()
             additionalQueryParams = disputeListParams.additionalQueryParams.toBuilder()
         }
@@ -131,13 +149,13 @@ constructor(
 
         /** Transaction tokens to filter by. */
         fun transactionTokens(transactionTokens: List<String>) = apply {
-            this.transactionTokens.clear()
-            this.transactionTokens.addAll(transactionTokens)
+            this.transactionTokens = transactionTokens.toMutableList()
         }
 
         /** Transaction tokens to filter by. */
         fun addTransactionToken(transactionToken: String) = apply {
-            this.transactionTokens.add(transactionToken)
+            transactionTokens =
+                (transactionTokens ?: mutableListOf()).apply { add(transactionToken) }
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -246,7 +264,7 @@ constructor(
                 pageSize,
                 startingAfter,
                 status,
-                transactionTokens.toImmutable().ifEmpty { null },
+                transactionTokens?.toImmutable(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )

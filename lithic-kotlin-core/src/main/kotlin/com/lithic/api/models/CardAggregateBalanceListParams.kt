@@ -15,8 +15,10 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /** Cardholder to retrieve aggregate balances for. */
     fun accountToken(): String? = accountToken
 
+    /** Business to retrieve aggregate balances for. */
     fun businessAccountToken(): String? = businessAccountToken
 
     fun _additionalHeaders(): Headers = additionalHeaders

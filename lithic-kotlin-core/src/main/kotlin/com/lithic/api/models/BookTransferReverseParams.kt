@@ -18,25 +18,23 @@ import java.util.Objects
 class BookTransferReverseParams
 constructor(
     private val bookTransferToken: String,
-    private val memo: String?,
+    private val body: BookTransferReverseBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun bookTransferToken(): String = bookTransferToken
 
-    fun memo(): String? = memo
+    /** Optional descriptor for the reversal. */
+    fun memo(): String? = body.memo()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): BookTransferReverseBody {
-        return BookTransferReverseBody(memo, additionalBodyProperties)
-    }
+    internal fun getBody(): BookTransferReverseBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -83,7 +81,7 @@ constructor(
             }
 
             /** Optional descriptor for the reversal. */
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -137,18 +135,15 @@ constructor(
     class Builder {
 
         private var bookTransferToken: String? = null
-        private var memo: String? = null
+        private var body: BookTransferReverseBody.Builder = BookTransferReverseBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(bookTransferReverseParams: BookTransferReverseParams) = apply {
             bookTransferToken = bookTransferReverseParams.bookTransferToken
-            memo = bookTransferReverseParams.memo
+            body = bookTransferReverseParams.body.toBuilder()
             additionalHeaders = bookTransferReverseParams.additionalHeaders.toBuilder()
             additionalQueryParams = bookTransferReverseParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                bookTransferReverseParams.additionalBodyProperties.toMutableMap()
         }
 
         fun bookTransferToken(bookTransferToken: String) = apply {
@@ -156,7 +151,7 @@ constructor(
         }
 
         /** Optional descriptor for the reversal. */
-        fun memo(memo: String) = apply { this.memo = memo }
+        fun memo(memo: String) = apply { body.memo(memo) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -257,25 +252,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): BookTransferReverseParams =
@@ -283,10 +275,9 @@ constructor(
                 checkNotNull(bookTransferToken) {
                     "`bookTransferToken` is required but was not set"
                 },
-                memo,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -295,11 +286,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is BookTransferReverseParams && bookTransferToken == other.bookTransferToken && memo == other.memo && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is BookTransferReverseParams && bookTransferToken == other.bookTransferToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(bookTransferToken, memo, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(bookTransferToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BookTransferReverseParams{bookTransferToken=$bookTransferToken, memo=$memo, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "BookTransferReverseParams{bookTransferToken=$bookTransferToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
