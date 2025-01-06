@@ -94,7 +94,7 @@ constructor(
             }
 
             /** Parameters for the current version of the Auth Rule */
-            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters?) = apply { this.parameters = parameters }
 
             fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
                 apply {
@@ -172,7 +172,7 @@ constructor(
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** Parameters for the current version of the Auth Rule */
-        fun parameters(parameters: Parameters) = apply { body.parameters(parameters) }
+        fun parameters(parameters: Parameters?) = apply { body.parameters(parameters) }
 
         fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) = apply {
             body.parameters(conditionalBlockParameters)
@@ -607,13 +607,13 @@ constructor(
                      * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
                      *   trailing 24 hours up and until the authorization.
                      */
-                    fun attribute(attribute: Attribute) = apply { this.attribute = attribute }
+                    fun attribute(attribute: Attribute?) = apply { this.attribute = attribute }
 
                     /** The operation to apply to the attribute */
-                    fun operation(operation: Operation) = apply { this.operation = operation }
+                    fun operation(operation: Operation?) = apply { this.operation = operation }
 
                     /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                    fun value(value: Value) = apply { this.value = value }
+                    fun value(value: Value?) = apply { this.value = value }
 
                     /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                     fun value(string: String) = apply { this.value = Value.ofString(string) }

@@ -119,18 +119,18 @@ constructor(
             additionalQueryParams = externalBankAccountListParams.additionalQueryParams.toBuilder()
         }
 
-        fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
-        fun accountTypes(accountTypes: List<AccountType>) = apply {
-            this.accountTypes = accountTypes.toMutableList()
+        fun accountTypes(accountTypes: List<AccountType>?) = apply {
+            this.accountTypes = accountTypes?.toMutableList()
         }
 
         fun addAccountType(accountType: AccountType) = apply {
             accountTypes = (accountTypes ?: mutableListOf()).apply { add(accountType) }
         }
 
-        fun countries(countries: List<String>) = apply {
-            this.countries = countries.toMutableList()
+        fun countries(countries: List<String>?) = apply {
+            this.countries = countries?.toMutableList()
         }
 
         fun addCountry(country: String) = apply {
@@ -141,10 +141,10 @@ constructor(
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
-        fun ownerTypes(ownerTypes: List<OwnerType>) = apply {
-            this.ownerTypes = ownerTypes.toMutableList()
+        fun ownerTypes(ownerTypes: List<OwnerType>?) = apply {
+            this.ownerTypes = ownerTypes?.toMutableList()
         }
 
         fun addOwnerType(ownerType: OwnerType) = apply {
@@ -152,22 +152,25 @@ constructor(
         }
 
         /** Page size (for pagination). */
-        fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+
+        /** Page size (for pagination). */
+        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
-        fun states(states: List<AccountState>) = apply { this.states = states.toMutableList() }
+        fun states(states: List<AccountState>?) = apply { this.states = states?.toMutableList() }
 
         fun addState(state: AccountState) = apply {
             states = (states ?: mutableListOf()).apply { add(state) }
         }
 
-        fun verificationStates(verificationStates: List<VerificationState>) = apply {
-            this.verificationStates = verificationStates.toMutableList()
+        fun verificationStates(verificationStates: List<VerificationState>?) = apply {
+            this.verificationStates = verificationStates?.toMutableList()
         }
 
         fun addVerificationState(verificationState: VerificationState) = apply {

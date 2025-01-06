@@ -127,8 +127,8 @@ constructor(
             fun status(status: Status) = apply { this.status = status }
 
             /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
-            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
-                this.acceptedEntityStatusReasons = acceptedEntityStatusReasons.toMutableList()
+            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>?) = apply {
+                this.acceptedEntityStatusReasons = acceptedEntityStatusReasons?.toMutableList()
             }
 
             /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
@@ -143,7 +143,7 @@ constructor(
              * Status reason that will be associated with the simulated account holder status. Only
              * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
              */
-            fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
+            fun statusReason(statusReason: DocumentUploadStatusReasons?) = apply {
                 this.statusReason = statusReason
             }
 
@@ -232,7 +232,7 @@ constructor(
         fun status(status: Status) = apply { body.status(status) }
 
         /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
-        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
+        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>?) = apply {
             body.acceptedEntityStatusReasons(acceptedEntityStatusReasons)
         }
 
@@ -245,7 +245,7 @@ constructor(
          * Status reason that will be associated with the simulated account holder status. Only
          * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
          */
-        fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
+        fun statusReason(statusReason: DocumentUploadStatusReasons?) = apply {
             body.statusReason(statusReason)
         }
 

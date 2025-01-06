@@ -126,7 +126,7 @@ constructor(
              * users of businesses. Pass the account_token of the enrolled business associated with
              * the AUTHORIZED_USER in this field.
              */
-            fun businessAccountToken(businessAccountToken: String) = apply {
+            fun businessAccountToken(businessAccountToken: String?) = apply {
                 this.businessAccountToken = businessAccountToken
             }
 
@@ -134,14 +134,14 @@ constructor(
              * Account holder's email address. The primary purpose of this field is for cardholder
              * identification and verification during the digital wallet tokenization process.
              */
-            fun email(email: String) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
 
             /**
              * Account holder's phone number, entered in E.164 format. The primary purpose of this
              * field is for cardholder identification and verification during the digital wallet
              * tokenization process.
              */
-            fun phoneNumber(phoneNumber: String) = apply { this.phoneNumber = phoneNumber }
+            fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -220,7 +220,7 @@ constructor(
          * businesses. Pass the account_token of the enrolled business associated with the
          * AUTHORIZED_USER in this field.
          */
-        fun businessAccountToken(businessAccountToken: String) = apply {
+        fun businessAccountToken(businessAccountToken: String?) = apply {
             body.businessAccountToken(businessAccountToken)
         }
 
@@ -228,14 +228,14 @@ constructor(
          * Account holder's email address. The primary purpose of this field is for cardholder
          * identification and verification during the digital wallet tokenization process.
          */
-        fun email(email: String) = apply { body.email(email) }
+        fun email(email: String?) = apply { body.email(email) }
 
         /**
          * Account holder's phone number, entered in E.164 format. The primary purpose of this field
          * is for cardholder identification and verification during the digital wallet tokenization
          * process.
          */
-        fun phoneNumber(phoneNumber: String) = apply { body.phoneNumber(phoneNumber) }
+        fun phoneNumber(phoneNumber: String?) = apply { body.phoneNumber(phoneNumber) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

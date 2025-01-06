@@ -403,7 +403,7 @@ constructor(
              * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
              * [Managing Your Program](doc:managing-your-program) for more information.
              */
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
             /**
              * For card programs with more than one BIN range. This must be configured with Lithic
@@ -412,11 +412,11 @@ constructor(
              * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
              * creating cards on specific card programs.
              */
-            fun cardProgramToken(cardProgramToken: String) = apply {
+            fun cardProgramToken(cardProgramToken: String?) = apply {
                 this.cardProgramToken = cardProgramToken
             }
 
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -424,7 +424,7 @@ constructor(
              * use. See
              * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
              */
-            fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+            fun digitalCardArtToken(digitalCardArtToken: String?) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
             }
 
@@ -432,29 +432,29 @@ constructor(
              * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date will be generated.
              */
-            fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: String?) = apply { this.expMonth = expMonth }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date will be generated.
              */
-            fun expYear(expYear: String) = apply { this.expYear = expYear }
+            fun expYear(expYear: String?) = apply { this.expYear = expYear }
 
             /** Friendly name to identify the card. */
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
             /**
              * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`.
              * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
              */
-            fun pin(pin: String) = apply { this.pin = pin }
+            fun pin(pin: String?) = apply { this.pin = pin }
 
             /**
              * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
              * before use. Specifies the configuration (i.e., physical card art) that the card
              * should be manufactured with.
              */
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /**
              * Restricted field limited to select use cases. Lithic will reach out directly if this
@@ -463,7 +463,7 @@ constructor(
              * `replacement_for` is specified and this field is omitted, the replacement card's
              * account will be inferred from the card being replaced.
              */
-            fun replacementAccountToken(replacementAccountToken: String) = apply {
+            fun replacementAccountToken(replacementAccountToken: String?) = apply {
                 this.replacementAccountToken = replacementAccountToken
             }
 
@@ -472,11 +472,11 @@ constructor(
              * is `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL`
              * it will be replaced by a `VIRTUAL` card.
              */
-            fun replacementFor(replacementFor: String) = apply {
+            fun replacementFor(replacementFor: String?) = apply {
                 this.replacementFor = replacementFor
             }
 
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -492,7 +492,7 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -502,7 +502,15 @@ constructor(
              * and should only be used to reset or remove a prior limit. Only a limit of 1 or above
              * will result in declined transactions due to checks against the card limit.
              */
-            fun spendLimit(spendLimit: Long) = apply { this.spendLimit = spendLimit }
+            fun spendLimit(spendLimit: Long?) = apply { this.spendLimit = spendLimit }
+
+            /**
+             * Amount (in cents) to limit approved authorizations. Transaction requests above the
+             * spend limit will be declined. Note that a spend limit of 0 is effectively no limit,
+             * and should only be used to reset or remove a prior limit. Only a limit of 1 or above
+             * will result in declined transactions due to checks against the card limit.
+             */
+            fun spendLimit(spendLimit: Long) = spendLimit(spendLimit as Long?)
 
             /**
              * Spend limit duration values:
@@ -517,7 +525,7 @@ constructor(
              * - `TRANSACTION` - Card will authorize multiple transactions if each individual
              *   transaction is under the spend limit.
              */
-            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
+            fun spendLimitDuration(spendLimitDuration: SpendLimitDuration?) = apply {
                 this.spendLimitDuration = spendLimitDuration
             }
 
@@ -527,7 +535,7 @@ constructor(
              *   parameters).
              * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
              */
-            fun state(state: State) = apply { this.state = state }
+            fun state(state: State?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -632,7 +640,7 @@ constructor(
          * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
          * [Managing Your Program](doc:managing-your-program) for more information.
          */
-        fun accountToken(accountToken: String) = apply { body.accountToken(accountToken) }
+        fun accountToken(accountToken: String?) = apply { body.accountToken(accountToken) }
 
         /**
          * For card programs with more than one BIN range. This must be configured with Lithic
@@ -641,11 +649,11 @@ constructor(
          * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
          * creating cards on specific card programs.
          */
-        fun cardProgramToken(cardProgramToken: String) = apply {
+        fun cardProgramToken(cardProgramToken: String?) = apply {
             body.cardProgramToken(cardProgramToken)
         }
 
-        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier?) = apply { body.carrier(carrier) }
 
         /**
          * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -653,7 +661,7 @@ constructor(
          * use. See
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
-        fun digitalCardArtToken(digitalCardArtToken: String) = apply {
+        fun digitalCardArtToken(digitalCardArtToken: String?) = apply {
             body.digitalCardArtToken(digitalCardArtToken)
         }
 
@@ -661,29 +669,29 @@ constructor(
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
          */
-        fun expMonth(expMonth: String) = apply { body.expMonth(expMonth) }
+        fun expMonth(expMonth: String?) = apply { body.expMonth(expMonth) }
 
         /**
          * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
          */
-        fun expYear(expYear: String) = apply { body.expYear(expYear) }
+        fun expYear(expYear: String?) = apply { body.expYear(expYear) }
 
         /** Friendly name to identify the card. */
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply { body.memo(memo) }
 
         /**
          * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
          * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
-        fun pin(pin: String) = apply { body.pin(pin) }
+        fun pin(pin: String?) = apply { body.pin(pin) }
 
         /**
          * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
          * use. Specifies the configuration (i.e., physical card art) that the card should be
          * manufactured with.
          */
-        fun productId(productId: String) = apply { body.productId(productId) }
+        fun productId(productId: String?) = apply { body.productId(productId) }
 
         /**
          * Restricted field limited to select use cases. Lithic will reach out directly if this
@@ -692,7 +700,7 @@ constructor(
          * is specified and this field is omitted, the replacement card's account will be inferred
          * from the card being replaced.
          */
-        fun replacementAccountToken(replacementAccountToken: String) = apply {
+        fun replacementAccountToken(replacementAccountToken: String?) = apply {
             body.replacementAccountToken(replacementAccountToken)
         }
 
@@ -701,9 +709,9 @@ constructor(
          * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
          * will be replaced by a `VIRTUAL` card.
          */
-        fun replacementFor(replacementFor: String) = apply { body.replacementFor(replacementFor) }
+        fun replacementFor(replacementFor: String?) = apply { body.replacementFor(replacementFor) }
 
-        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+        fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
             body.shippingAddress(shippingAddress)
         }
 
@@ -718,7 +726,7 @@ constructor(
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
-        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+        fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
             body.shippingMethod(shippingMethod)
         }
 
@@ -728,7 +736,15 @@ constructor(
          * only be used to reset or remove a prior limit. Only a limit of 1 or above will result in
          * declined transactions due to checks against the card limit.
          */
-        fun spendLimit(spendLimit: Long) = apply { body.spendLimit(spendLimit) }
+        fun spendLimit(spendLimit: Long?) = apply { body.spendLimit(spendLimit) }
+
+        /**
+         * Amount (in cents) to limit approved authorizations. Transaction requests above the spend
+         * limit will be declined. Note that a spend limit of 0 is effectively no limit, and should
+         * only be used to reset or remove a prior limit. Only a limit of 1 or above will result in
+         * declined transactions due to checks against the card limit.
+         */
+        fun spendLimit(spendLimit: Long) = spendLimit(spendLimit as Long?)
 
         /**
          * Spend limit duration values:
@@ -742,7 +758,7 @@ constructor(
          * - `TRANSACTION` - Card will authorize multiple transactions if each individual
          *   transaction is under the spend limit.
          */
-        fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) = apply {
+        fun spendLimitDuration(spendLimitDuration: SpendLimitDuration?) = apply {
             body.spendLimitDuration(spendLimitDuration)
         }
 
@@ -751,7 +767,7 @@ constructor(
          * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          */
-        fun state(state: State) = apply { body.state(state) }
+        fun state(state: State?) = apply { body.state(state) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

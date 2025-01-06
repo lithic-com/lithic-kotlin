@@ -111,19 +111,21 @@ constructor(
                         .toMutableMap()
             }
 
-            fun creditLimit(creditLimit: Long) = apply { this.creditLimit = creditLimit }
+            fun creditLimit(creditLimit: Long?) = apply { this.creditLimit = creditLimit }
+
+            fun creditLimit(creditLimit: Long) = creditLimit(creditLimit as Long?)
 
             /** Globally unique identifier for the credit product */
-            fun creditProductToken(creditProductToken: String) = apply {
+            fun creditProductToken(creditProductToken: String?) = apply {
                 this.creditProductToken = creditProductToken
             }
 
-            fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+            fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
                 this.externalBankAccountToken = externalBankAccountToken
             }
 
             /** Tier to assign to a financial account */
-            fun tier(tier: String) = apply { this.tier = tier }
+            fun tier(tier: String?) = apply { this.tier = tier }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -205,19 +207,21 @@ constructor(
             this.financialAccountToken = financialAccountToken
         }
 
-        fun creditLimit(creditLimit: Long) = apply { body.creditLimit(creditLimit) }
+        fun creditLimit(creditLimit: Long?) = apply { body.creditLimit(creditLimit) }
+
+        fun creditLimit(creditLimit: Long) = creditLimit(creditLimit as Long?)
 
         /** Globally unique identifier for the credit product */
-        fun creditProductToken(creditProductToken: String) = apply {
+        fun creditProductToken(creditProductToken: String?) = apply {
             body.creditProductToken(creditProductToken)
         }
 
-        fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+        fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
             body.externalBankAccountToken(externalBankAccountToken)
         }
 
         /** Tier to assign to a financial account */
-        fun tier(tier: String) = apply { body.tier(tier) }
+        fun tier(tier: String?) = apply { body.tier(tier) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

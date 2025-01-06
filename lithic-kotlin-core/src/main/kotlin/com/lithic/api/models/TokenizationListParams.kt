@@ -116,37 +116,40 @@ constructor(
         }
 
         /** Filters for tokenizations associated with a specific account. */
-        fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
         /** Filter for tokenizations created after this date. */
-        fun begin(begin: LocalDate) = apply { this.begin = begin }
+        fun begin(begin: LocalDate?) = apply { this.begin = begin }
 
         /** Filters for tokenizations associated with a specific card. */
-        fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         /** Filter for tokenizations created before this date. */
-        fun end(end: LocalDate) = apply { this.end = end }
+        fun end(end: LocalDate?) = apply { this.end = end }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String) = apply { this.endingBefore = endingBefore }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
         /** Page size (for pagination). */
-        fun pageSize(pageSize: Long) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+
+        /** Page size (for pagination). */
+        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String) = apply { this.startingAfter = startingAfter }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         /**
          * Filter for tokenizations by tokenization channel. If this is not specified, only
          * DIGITAL_WALLET tokenizations will be returned.
          */
-        fun tokenizationChannel(tokenizationChannel: TokenizationChannel) = apply {
+        fun tokenizationChannel(tokenizationChannel: TokenizationChannel?) = apply {
             this.tokenizationChannel = tokenizationChannel
         }
 

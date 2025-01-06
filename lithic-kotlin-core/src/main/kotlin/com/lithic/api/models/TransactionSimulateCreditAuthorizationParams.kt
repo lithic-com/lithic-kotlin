@@ -144,10 +144,10 @@ constructor(
              * listed in ISO 18245. Supported merchant category codes can be found
              * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
              */
-            fun mcc(mcc: String) = apply { this.mcc = mcc }
+            fun mcc(mcc: String?) = apply { this.mcc = mcc }
 
             /** Unique identifier to identify the payment card acceptor. */
-            fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+            fun merchantAcceptorId(merchantAcceptorId: String?) = apply {
                 this.merchantAcceptorId = merchantAcceptorId
             }
 
@@ -243,10 +243,10 @@ constructor(
          * ISO 18245. Supported merchant category codes can be found
          * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
          */
-        fun mcc(mcc: String) = apply { body.mcc(mcc) }
+        fun mcc(mcc: String?) = apply { body.mcc(mcc) }
 
         /** Unique identifier to identify the payment card acceptor. */
-        fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+        fun merchantAcceptorId(merchantAcceptorId: String?) = apply {
             body.merchantAcceptorId(merchantAcceptorId)
         }
 

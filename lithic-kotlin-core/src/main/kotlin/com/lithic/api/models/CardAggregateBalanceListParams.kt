@@ -60,10 +60,10 @@ constructor(
         }
 
         /** Cardholder to retrieve aggregate balances for. */
-        fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
         /** Business to retrieve aggregate balances for. */
-        fun businessAccountToken(businessAccountToken: String) = apply {
+        fun businessAccountToken(businessAccountToken: String?) = apply {
             this.businessAccountToken = businessAccountToken
         }
 

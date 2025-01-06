@@ -126,7 +126,7 @@ constructor(
             fun receiptType(receiptType: ReceiptType) = apply { this.receiptType = receiptType }
 
             /** Memo */
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -213,7 +213,7 @@ constructor(
         fun receiptType(receiptType: ReceiptType) = apply { body.receiptType(receiptType) }
 
         /** Memo */
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply { body.memo(memo) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
