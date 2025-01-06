@@ -22,6 +22,7 @@ import java.util.Objects
 class Tokenization
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("account_token")
     @ExcludeMissing
     private val accountToken: JsonField<String> = JsonMissing.of(),
@@ -31,16 +32,9 @@ private constructor(
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("digital_card_art_token")
-    @ExcludeMissing
-    private val digitalCardArtToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("events")
-    @ExcludeMissing
-    private val events: JsonField<List<TokenizationEvent>> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("token_requestor_name")
     @ExcludeMissing
     private val tokenRequestorName: JsonField<TokenRequestorName> = JsonMissing.of(),
@@ -53,8 +47,17 @@ private constructor(
     @JsonProperty("updated_at")
     @ExcludeMissing
     private val updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("digital_card_art_token")
+    @ExcludeMissing
+    private val digitalCardArtToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("events")
+    @ExcludeMissing
+    private val events: JsonField<List<TokenizationEvent>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** Globally unique identifier for a Tokenization */
+    fun token(): String = token.getRequired("token")
 
     /** The account token associated with the card being tokenized. */
     fun accountToken(): String = accountToken.getRequired("account_token")
@@ -65,21 +68,8 @@ private constructor(
     /** Date and time when the tokenization first occurred. UTC time zone. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /**
-     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
-     * This will be null if the tokenization was created without an associated digital card art. See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
-     */
-    fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
-
-    /** A list of events related to the tokenization. */
-    fun events(): List<TokenizationEvent>? = events.getNullable("events")
-
     /** The status of the tokenization request */
     fun status(): Status = status.getRequired("status")
-
-    /** Globally unique identifier for a Tokenization */
-    fun token(): String = token.getRequired("token")
 
     /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
     fun tokenRequestorName(): TokenRequestorName =
@@ -95,6 +85,19 @@ private constructor(
     /** Latest date and time when the tokenization was updated. UTC time zone. */
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
+    /**
+     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+     * This will be null if the tokenization was created without an associated digital card art. See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     */
+    fun digitalCardArtToken(): String? = digitalCardArtToken.getNullable("digital_card_art_token")
+
+    /** A list of events related to the tokenization. */
+    fun events(): List<TokenizationEvent>? = events.getNullable("events")
+
+    /** Globally unique identifier for a Tokenization */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
+
     /** The account token associated with the card being tokenized. */
     @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
 
@@ -104,23 +107,8 @@ private constructor(
     /** Date and time when the tokenization first occurred. UTC time zone. */
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-    /**
-     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
-     * This will be null if the tokenization was created without an associated digital card art. See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
-     */
-    @JsonProperty("digital_card_art_token")
-    @ExcludeMissing
-    fun _digitalCardArtToken() = digitalCardArtToken
-
-    /** A list of events related to the tokenization. */
-    @JsonProperty("events") @ExcludeMissing fun _events() = events
-
     /** The status of the tokenization request */
     @JsonProperty("status") @ExcludeMissing fun _status() = status
-
-    /** Globally unique identifier for a Tokenization */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
     @JsonProperty("token_requestor_name")
@@ -140,6 +128,18 @@ private constructor(
     /** Latest date and time when the tokenization was updated. UTC time zone. */
     @JsonProperty("updated_at") @ExcludeMissing fun _updatedAt() = updatedAt
 
+    /**
+     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+     * This will be null if the tokenization was created without an associated digital card art. See
+     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     */
+    @JsonProperty("digital_card_art_token")
+    @ExcludeMissing
+    fun _digitalCardArtToken() = digitalCardArtToken
+
+    /** A list of events related to the tokenization. */
+    @JsonProperty("events") @ExcludeMissing fun _events() = events
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -148,17 +148,17 @@ private constructor(
 
     fun validate(): Tokenization = apply {
         if (!validated) {
+            token()
             accountToken()
             cardToken()
             createdAt()
-            digitalCardArtToken()
-            events()?.forEach { it.validate() }
             status()
-            token()
             tokenRequestorName()
             tokenUniqueReference()
             tokenizationChannel()
             updatedAt()
+            digitalCardArtToken()
+            events()?.forEach { it.validate() }
             validated = true
         }
     }
@@ -172,33 +172,39 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
-        private var events: JsonField<List<TokenizationEvent>> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var tokenRequestorName: JsonField<TokenRequestorName> = JsonMissing.of()
         private var tokenUniqueReference: JsonField<String> = JsonMissing.of()
         private var tokenizationChannel: JsonField<TokenizationChannel> = JsonMissing.of()
         private var updatedAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
+        private var events: JsonField<List<TokenizationEvent>> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(tokenization: Tokenization) = apply {
+            token = tokenization.token
             accountToken = tokenization.accountToken
             cardToken = tokenization.cardToken
             createdAt = tokenization.createdAt
-            digitalCardArtToken = tokenization.digitalCardArtToken
-            events = tokenization.events
             status = tokenization.status
-            token = tokenization.token
             tokenRequestorName = tokenization.tokenRequestorName
             tokenUniqueReference = tokenization.tokenUniqueReference
             tokenizationChannel = tokenization.tokenizationChannel
             updatedAt = tokenization.updatedAt
+            digitalCardArtToken = tokenization.digitalCardArtToken
+            events = tokenization.events
             additionalProperties = tokenization.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier for a Tokenization */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for a Tokenization */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** The account token associated with the card being tokenized. */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -220,42 +226,11 @@ private constructor(
         /** Date and time when the tokenization first occurred. UTC time zone. */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        /**
-         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
-         * This will be null if the tokenization was created without an associated digital card art.
-         * See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
-         */
-        fun digitalCardArtToken(digitalCardArtToken: String) =
-            digitalCardArtToken(JsonField.of(digitalCardArtToken))
-
-        /**
-         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
-         * This will be null if the tokenization was created without an associated digital card art.
-         * See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
-         */
-        fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
-            this.digitalCardArtToken = digitalCardArtToken
-        }
-
-        /** A list of events related to the tokenization. */
-        fun events(events: List<TokenizationEvent>) = events(JsonField.of(events))
-
-        /** A list of events related to the tokenization. */
-        fun events(events: JsonField<List<TokenizationEvent>>) = apply { this.events = events }
-
         /** The status of the tokenization request */
         fun status(status: Status) = status(JsonField.of(status))
 
         /** The status of the tokenization request */
         fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        /** Globally unique identifier for a Tokenization */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for a Tokenization */
-        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
         fun tokenRequestorName(tokenRequestorName: TokenRequestorName) =
@@ -290,6 +265,31 @@ private constructor(
         /** Latest date and time when the tokenization was updated. UTC time zone. */
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
+        /**
+         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+         * This will be null if the tokenization was created without an associated digital card art.
+         * See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         */
+        fun digitalCardArtToken(digitalCardArtToken: String) =
+            digitalCardArtToken(JsonField.of(digitalCardArtToken))
+
+        /**
+         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+         * This will be null if the tokenization was created without an associated digital card art.
+         * See
+         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         */
+        fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
+            this.digitalCardArtToken = digitalCardArtToken
+        }
+
+        /** A list of events related to the tokenization. */
+        fun events(events: List<TokenizationEvent>) = events(JsonField.of(events))
+
+        /** A list of events related to the tokenization. */
+        fun events(events: JsonField<List<TokenizationEvent>>) = apply { this.events = events }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -311,17 +311,17 @@ private constructor(
 
         fun build(): Tokenization =
             Tokenization(
+                token,
                 accountToken,
                 cardToken,
                 createdAt,
-                digitalCardArtToken,
-                events.map { it.toImmutable() },
                 status,
-                token,
                 tokenRequestorName,
                 tokenUniqueReference,
                 tokenizationChannel,
                 updatedAt,
+                digitalCardArtToken,
+                events.map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -585,19 +585,22 @@ private constructor(
     class TokenizationEvent
     @JsonCreator
     private constructor(
+        @JsonProperty("token")
+        @ExcludeMissing
+        private val token: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("result")
         @ExcludeMissing
         private val result: JsonField<Result> = JsonMissing.of(),
-        @JsonProperty("token")
-        @ExcludeMissing
-        private val token: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        /** Globally unique identifier for a Tokenization Event */
+        fun token(): String? = token.getNullable("token")
 
         /** Date and time when the tokenization event first occurred. UTC time zone. */
         fun createdAt(): OffsetDateTime? = createdAt.getNullable("created_at")
@@ -605,20 +608,17 @@ private constructor(
         /** Enum representing the result of the tokenization event */
         fun result(): Result? = result.getNullable("result")
 
-        /** Globally unique identifier for a Tokenization Event */
-        fun token(): String? = token.getNullable("token")
-
         /** Enum representing the type of tokenization event that occurred */
         fun type(): Type? = type.getNullable("type")
+
+        /** Globally unique identifier for a Tokenization Event */
+        @JsonProperty("token") @ExcludeMissing fun _token() = token
 
         /** Date and time when the tokenization event first occurred. UTC time zone. */
         @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
         /** Enum representing the result of the tokenization event */
         @JsonProperty("result") @ExcludeMissing fun _result() = result
-
-        /** Globally unique identifier for a Tokenization Event */
-        @JsonProperty("token") @ExcludeMissing fun _token() = token
 
         /** Enum representing the type of tokenization event that occurred */
         @JsonProperty("type") @ExcludeMissing fun _type() = type
@@ -631,9 +631,9 @@ private constructor(
 
         fun validate(): TokenizationEvent = apply {
             if (!validated) {
+                token()
                 createdAt()
                 result()
-                token()
                 type()
                 validated = true
             }
@@ -648,19 +648,25 @@ private constructor(
 
         class Builder {
 
+            private var token: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
             private var result: JsonField<Result> = JsonMissing.of()
-            private var token: JsonField<String> = JsonMissing.of()
             private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(tokenizationEvent: TokenizationEvent) = apply {
+                token = tokenizationEvent.token
                 createdAt = tokenizationEvent.createdAt
                 result = tokenizationEvent.result
-                token = tokenizationEvent.token
                 type = tokenizationEvent.type
                 additionalProperties = tokenizationEvent.additionalProperties.toMutableMap()
             }
+
+            /** Globally unique identifier for a Tokenization Event */
+            fun token(token: String) = token(JsonField.of(token))
+
+            /** Globally unique identifier for a Tokenization Event */
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Date and time when the tokenization event first occurred. UTC time zone. */
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -675,12 +681,6 @@ private constructor(
 
             /** Enum representing the result of the tokenization event */
             fun result(result: JsonField<Result>) = apply { this.result = result }
-
-            /** Globally unique identifier for a Tokenization Event */
-            fun token(token: String) = token(JsonField.of(token))
-
-            /** Globally unique identifier for a Tokenization Event */
-            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Enum representing the type of tokenization event that occurred */
             fun type(type: Type) = type(JsonField.of(type))
@@ -709,9 +709,9 @@ private constructor(
 
             fun build(): TokenizationEvent =
                 TokenizationEvent(
+                    token,
                     createdAt,
                     result,
-                    token,
                     type,
                     additionalProperties.toImmutable(),
                 )
@@ -908,17 +908,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TokenizationEvent && createdAt == other.createdAt && result == other.result && token == other.token && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TokenizationEvent && token == other.token && createdAt == other.createdAt && result == other.result && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(createdAt, result, token, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(token, createdAt, result, type, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TokenizationEvent{createdAt=$createdAt, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
+            "TokenizationEvent{token=$token, createdAt=$createdAt, result=$result, type=$type, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -926,15 +926,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Tokenization && accountToken == other.accountToken && cardToken == other.cardToken && createdAt == other.createdAt && digitalCardArtToken == other.digitalCardArtToken && events == other.events && status == other.status && token == other.token && tokenRequestorName == other.tokenRequestorName && tokenUniqueReference == other.tokenUniqueReference && tokenizationChannel == other.tokenizationChannel && updatedAt == other.updatedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Tokenization && token == other.token && accountToken == other.accountToken && cardToken == other.cardToken && createdAt == other.createdAt && status == other.status && tokenRequestorName == other.tokenRequestorName && tokenUniqueReference == other.tokenUniqueReference && tokenizationChannel == other.tokenizationChannel && updatedAt == other.updatedAt && digitalCardArtToken == other.digitalCardArtToken && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, cardToken, createdAt, digitalCardArtToken, events, status, token, tokenRequestorName, tokenUniqueReference, tokenizationChannel, updatedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardToken, createdAt, status, tokenRequestorName, tokenUniqueReference, tokenizationChannel, updatedAt, digitalCardArtToken, events, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Tokenization{accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, digitalCardArtToken=$digitalCardArtToken, events=$events, status=$status, token=$token, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, additionalProperties=$additionalProperties}"
+        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, additionalProperties=$additionalProperties}"
 }

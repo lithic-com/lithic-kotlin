@@ -23,31 +23,31 @@ private constructor(
     @JsonProperty("backtest_token")
     @ExcludeMissing
     private val backtestToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("simulation_parameters")
-    @ExcludeMissing
-    private val simulationParameters: JsonField<SimulationParameters> = JsonMissing.of(),
     @JsonProperty("results")
     @ExcludeMissing
     private val results: JsonField<Results> = JsonMissing.of(),
+    @JsonProperty("simulation_parameters")
+    @ExcludeMissing
+    private val simulationParameters: JsonField<SimulationParameters> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Auth Rule Backtest Token */
     fun backtestToken(): String = backtestToken.getRequired("backtest_token")
 
+    fun results(): Results = results.getRequired("results")
+
     fun simulationParameters(): SimulationParameters =
         simulationParameters.getRequired("simulation_parameters")
-
-    fun results(): Results = results.getRequired("results")
 
     /** Auth Rule Backtest Token */
     @JsonProperty("backtest_token") @ExcludeMissing fun _backtestToken() = backtestToken
 
+    @JsonProperty("results") @ExcludeMissing fun _results() = results
+
     @JsonProperty("simulation_parameters")
     @ExcludeMissing
     fun _simulationParameters() = simulationParameters
-
-    @JsonProperty("results") @ExcludeMissing fun _results() = results
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -58,8 +58,8 @@ private constructor(
     fun validate(): BacktestResults = apply {
         if (!validated) {
             backtestToken()
-            simulationParameters().validate()
             results().validate()
+            simulationParameters().validate()
             validated = true
         }
     }
@@ -74,14 +74,14 @@ private constructor(
     class Builder {
 
         private var backtestToken: JsonField<String> = JsonMissing.of()
-        private var simulationParameters: JsonField<SimulationParameters> = JsonMissing.of()
         private var results: JsonField<Results> = JsonMissing.of()
+        private var simulationParameters: JsonField<SimulationParameters> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(backtestResults: BacktestResults) = apply {
             backtestToken = backtestResults.backtestToken
-            simulationParameters = backtestResults.simulationParameters
             results = backtestResults.results
+            simulationParameters = backtestResults.simulationParameters
             additionalProperties = backtestResults.additionalProperties.toMutableMap()
         }
 
@@ -93,16 +93,16 @@ private constructor(
             this.backtestToken = backtestToken
         }
 
+        fun results(results: Results) = results(JsonField.of(results))
+
+        fun results(results: JsonField<Results>) = apply { this.results = results }
+
         fun simulationParameters(simulationParameters: SimulationParameters) =
             simulationParameters(JsonField.of(simulationParameters))
 
         fun simulationParameters(simulationParameters: JsonField<SimulationParameters>) = apply {
             this.simulationParameters = simulationParameters
         }
-
-        fun results(results: Results) = results(JsonField.of(results))
-
-        fun results(results: JsonField<Results>) = apply { this.results = results }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -126,8 +126,8 @@ private constructor(
         fun build(): BacktestResults =
             BacktestResults(
                 backtestToken,
-                simulationParameters,
                 results,
+                simulationParameters,
                 additionalProperties.toImmutable(),
             )
     }
@@ -231,9 +231,6 @@ private constructor(
         class RuleStats
         @JsonCreator
         private constructor(
-            @JsonProperty("version")
-            @ExcludeMissing
-            private val version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("approved")
             @ExcludeMissing
             private val approved: JsonField<Long> = JsonMissing.of(),
@@ -243,14 +240,12 @@ private constructor(
             @JsonProperty("examples")
             @ExcludeMissing
             private val examples: JsonField<List<Example>> = JsonMissing.of(),
+            @JsonProperty("version")
+            @ExcludeMissing
+            private val version: JsonField<Long> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            /**
-             * The version of the rule, this is incremented whenever the rule's parameters change.
-             */
-            fun version(): Long? = version.getNullable("version")
 
             /**
              * The total number of historical transactions approved by this rule during the backtest
@@ -272,7 +267,7 @@ private constructor(
             /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
              */
-            @JsonProperty("version") @ExcludeMissing fun _version() = version
+            fun version(): Long? = version.getNullable("version")
 
             /**
              * The total number of historical transactions approved by this rule during the backtest
@@ -291,6 +286,11 @@ private constructor(
             /** Example authorization request events that would have been approved or declined. */
             @JsonProperty("examples") @ExcludeMissing fun _examples() = examples
 
+            /**
+             * The version of the rule, this is incremented whenever the rule's parameters change.
+             */
+            @JsonProperty("version") @ExcludeMissing fun _version() = version
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -299,10 +299,10 @@ private constructor(
 
             fun validate(): RuleStats = apply {
                 if (!validated) {
-                    version()
                     approved()
                     declined()
                     examples()?.forEach { it.validate() }
+                    version()
                     validated = true
                 }
             }
@@ -316,31 +316,19 @@ private constructor(
 
             class Builder {
 
-                private var version: JsonField<Long> = JsonMissing.of()
                 private var approved: JsonField<Long> = JsonMissing.of()
                 private var declined: JsonField<Long> = JsonMissing.of()
                 private var examples: JsonField<List<Example>> = JsonMissing.of()
+                private var version: JsonField<Long> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(ruleStats: RuleStats) = apply {
-                    version = ruleStats.version
                     approved = ruleStats.approved
                     declined = ruleStats.declined
                     examples = ruleStats.examples
+                    version = ruleStats.version
                     additionalProperties = ruleStats.additionalProperties.toMutableMap()
                 }
-
-                /**
-                 * The version of the rule, this is incremented whenever the rule's parameters
-                 * change.
-                 */
-                fun version(version: Long) = version(JsonField.of(version))
-
-                /**
-                 * The version of the rule, this is incremented whenever the rule's parameters
-                 * change.
-                 */
-                fun version(version: JsonField<Long>) = apply { this.version = version }
 
                 /**
                  * The total number of historical transactions approved by this rule during the
@@ -382,6 +370,18 @@ private constructor(
                     this.examples = examples
                 }
 
+                /**
+                 * The version of the rule, this is incremented whenever the rule's parameters
+                 * change.
+                 */
+                fun version(version: Long) = version(JsonField.of(version))
+
+                /**
+                 * The version of the rule, this is incremented whenever the rule's parameters
+                 * change.
+                 */
+                fun version(version: JsonField<Long>) = apply { this.version = version }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -406,10 +406,10 @@ private constructor(
 
                 fun build(): RuleStats =
                     RuleStats(
-                        version,
                         approved,
                         declined,
                         examples.map { it.toImmutable() },
+                        version,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -418,18 +418,21 @@ private constructor(
             class Example
             @JsonCreator
             private constructor(
+                @JsonProperty("approved")
+                @ExcludeMissing
+                private val approved: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("event_token")
                 @ExcludeMissing
                 private val eventToken: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("timestamp")
                 @ExcludeMissing
                 private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
-                @JsonProperty("approved")
-                @ExcludeMissing
-                private val approved: JsonField<Boolean> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
+
+                /** Whether the rule would have approved the authorization request. */
+                fun approved(): Boolean? = approved.getNullable("approved")
 
                 /** The authorization request event token. */
                 fun eventToken(): String? = eventToken.getNullable("event_token")
@@ -438,16 +441,13 @@ private constructor(
                 fun timestamp(): OffsetDateTime? = timestamp.getNullable("timestamp")
 
                 /** Whether the rule would have approved the authorization request. */
-                fun approved(): Boolean? = approved.getNullable("approved")
+                @JsonProperty("approved") @ExcludeMissing fun _approved() = approved
 
                 /** The authorization request event token. */
                 @JsonProperty("event_token") @ExcludeMissing fun _eventToken() = eventToken
 
                 /** The timestamp of the authorization request event. */
                 @JsonProperty("timestamp") @ExcludeMissing fun _timestamp() = timestamp
-
-                /** Whether the rule would have approved the authorization request. */
-                @JsonProperty("approved") @ExcludeMissing fun _approved() = approved
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -457,9 +457,9 @@ private constructor(
 
                 fun validate(): Example = apply {
                     if (!validated) {
+                        approved()
                         eventToken()
                         timestamp()
-                        approved()
                         validated = true
                     }
                 }
@@ -473,17 +473,23 @@ private constructor(
 
                 class Builder {
 
+                    private var approved: JsonField<Boolean> = JsonMissing.of()
                     private var eventToken: JsonField<String> = JsonMissing.of()
                     private var timestamp: JsonField<OffsetDateTime> = JsonMissing.of()
-                    private var approved: JsonField<Boolean> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(example: Example) = apply {
+                        approved = example.approved
                         eventToken = example.eventToken
                         timestamp = example.timestamp
-                        approved = example.approved
                         additionalProperties = example.additionalProperties.toMutableMap()
                     }
+
+                    /** Whether the rule would have approved the authorization request. */
+                    fun approved(approved: Boolean) = approved(JsonField.of(approved))
+
+                    /** Whether the rule would have approved the authorization request. */
+                    fun approved(approved: JsonField<Boolean>) = apply { this.approved = approved }
 
                     /** The authorization request event token. */
                     fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
@@ -500,12 +506,6 @@ private constructor(
                     fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
                         this.timestamp = timestamp
                     }
-
-                    /** Whether the rule would have approved the authorization request. */
-                    fun approved(approved: Boolean) = approved(JsonField.of(approved))
-
-                    /** Whether the rule would have approved the authorization request. */
-                    fun approved(approved: JsonField<Boolean>) = apply { this.approved = approved }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -531,9 +531,9 @@ private constructor(
 
                     fun build(): Example =
                         Example(
+                            approved,
                             eventToken,
                             timestamp,
-                            approved,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -543,17 +543,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Example && eventToken == other.eventToken && timestamp == other.timestamp && approved == other.approved && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Example && approved == other.approved && eventToken == other.eventToken && timestamp == other.timestamp && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(eventToken, timestamp, approved, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(approved, eventToken, timestamp, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Example{eventToken=$eventToken, timestamp=$timestamp, approved=$approved, additionalProperties=$additionalProperties}"
+                    "Example{approved=$approved, eventToken=$eventToken, timestamp=$timestamp, additionalProperties=$additionalProperties}"
             }
 
             override fun equals(other: Any?): Boolean {
@@ -561,17 +561,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is RuleStats && version == other.version && approved == other.approved && declined == other.declined && examples == other.examples && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is RuleStats && approved == other.approved && declined == other.declined && examples == other.examples && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(version, approved, declined, examples, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(approved, declined, examples, version, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "RuleStats{version=$version, approved=$approved, declined=$declined, examples=$examples, additionalProperties=$additionalProperties}"
+                "RuleStats{approved=$approved, declined=$declined, examples=$examples, version=$version, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -599,12 +599,12 @@ private constructor(
         @JsonProperty("auth_rule_token")
         @ExcludeMissing
         private val authRuleToken: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start")
-        @ExcludeMissing
-        private val start: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("end")
         @ExcludeMissing
         private val end: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("start")
+        @ExcludeMissing
+        private val start: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -612,20 +612,20 @@ private constructor(
         /** Auth Rule Token */
         fun authRuleToken(): String? = authRuleToken.getNullable("auth_rule_token")
 
-        /** The start time of the simulation. */
-        fun start(): OffsetDateTime? = start.getNullable("start")
-
         /** The end time of the simulation. */
         fun end(): OffsetDateTime? = end.getNullable("end")
+
+        /** The start time of the simulation. */
+        fun start(): OffsetDateTime? = start.getNullable("start")
 
         /** Auth Rule Token */
         @JsonProperty("auth_rule_token") @ExcludeMissing fun _authRuleToken() = authRuleToken
 
-        /** The start time of the simulation. */
-        @JsonProperty("start") @ExcludeMissing fun _start() = start
-
         /** The end time of the simulation. */
         @JsonProperty("end") @ExcludeMissing fun _end() = end
+
+        /** The start time of the simulation. */
+        @JsonProperty("start") @ExcludeMissing fun _start() = start
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -636,8 +636,8 @@ private constructor(
         fun validate(): SimulationParameters = apply {
             if (!validated) {
                 authRuleToken()
-                start()
                 end()
+                start()
                 validated = true
             }
         }
@@ -652,14 +652,14 @@ private constructor(
         class Builder {
 
             private var authRuleToken: JsonField<String> = JsonMissing.of()
-            private var start: JsonField<OffsetDateTime> = JsonMissing.of()
             private var end: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var start: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(simulationParameters: SimulationParameters) = apply {
                 authRuleToken = simulationParameters.authRuleToken
-                start = simulationParameters.start
                 end = simulationParameters.end
+                start = simulationParameters.start
                 additionalProperties = simulationParameters.additionalProperties.toMutableMap()
             }
 
@@ -671,17 +671,17 @@ private constructor(
                 this.authRuleToken = authRuleToken
             }
 
-            /** The start time of the simulation. */
-            fun start(start: OffsetDateTime) = start(JsonField.of(start))
-
-            /** The start time of the simulation. */
-            fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
-
             /** The end time of the simulation. */
             fun end(end: OffsetDateTime) = end(JsonField.of(end))
 
             /** The end time of the simulation. */
             fun end(end: JsonField<OffsetDateTime>) = apply { this.end = end }
+
+            /** The start time of the simulation. */
+            fun start(start: OffsetDateTime) = start(JsonField.of(start))
+
+            /** The start time of the simulation. */
+            fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -705,8 +705,8 @@ private constructor(
             fun build(): SimulationParameters =
                 SimulationParameters(
                     authRuleToken,
-                    start,
                     end,
+                    start,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -716,17 +716,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SimulationParameters && authRuleToken == other.authRuleToken && start == other.start && end == other.end && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SimulationParameters && authRuleToken == other.authRuleToken && end == other.end && start == other.start && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(authRuleToken, start, end, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(authRuleToken, end, start, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SimulationParameters{authRuleToken=$authRuleToken, start=$start, end=$end, additionalProperties=$additionalProperties}"
+            "SimulationParameters{authRuleToken=$authRuleToken, end=$end, start=$start, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -734,15 +734,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BacktestResults && backtestToken == other.backtestToken && simulationParameters == other.simulationParameters && results == other.results && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BacktestResults && backtestToken == other.backtestToken && results == other.results && simulationParameters == other.simulationParameters && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(backtestToken, simulationParameters, results, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(backtestToken, results, simulationParameters, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BacktestResults{backtestToken=$backtestToken, simulationParameters=$simulationParameters, results=$results, additionalProperties=$additionalProperties}"
+        "BacktestResults{backtestToken=$backtestToken, results=$results, simulationParameters=$simulationParameters, additionalProperties=$additionalProperties}"
 }
