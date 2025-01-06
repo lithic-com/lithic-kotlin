@@ -138,17 +138,17 @@ constructor(
             }
 
             /** If omitted, the previous carrier will be used. */
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
              * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
              * configured with Lithic before use.
              */
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /** If omitted, the previous shipping address will be used. */
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -164,7 +164,7 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -240,17 +240,17 @@ constructor(
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier?) = apply { body.carrier(carrier) }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String) = apply { body.productId(productId) }
+        fun productId(productId: String?) = apply { body.productId(productId) }
 
         /** If omitted, the previous shipping address will be used. */
-        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+        fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
             body.shippingAddress(shippingAddress)
         }
 
@@ -265,7 +265,7 @@ constructor(
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
-        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+        fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
             body.shippingMethod(shippingMethod)
         }
 

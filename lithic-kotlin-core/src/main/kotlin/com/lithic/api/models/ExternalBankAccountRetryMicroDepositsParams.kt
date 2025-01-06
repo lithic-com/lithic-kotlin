@@ -83,7 +83,7 @@ constructor(
                     externalBankAccountRetryMicroDepositsBody.additionalProperties.toMutableMap()
             }
 
-            fun financialAccountToken(financialAccountToken: String) = apply {
+            fun financialAccountToken(financialAccountToken: String?) = apply {
                 this.financialAccountToken = financialAccountToken
             }
 
@@ -163,7 +163,7 @@ constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
-        fun financialAccountToken(financialAccountToken: String) = apply {
+        fun financialAccountToken(financialAccountToken: String?) = apply {
             body.financialAccountToken(financialAccountToken)
         }
 

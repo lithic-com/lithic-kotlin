@@ -121,17 +121,20 @@ constructor(
             fun url(url: String) = apply { this.url = url }
 
             /** Event subscription description. */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /** Whether the event subscription is active (false) or inactive (true). */
-            fun disabled(disabled: Boolean) = apply { this.disabled = disabled }
+            fun disabled(disabled: Boolean?) = apply { this.disabled = disabled }
+
+            /** Whether the event subscription is active (false) or inactive (true). */
+            fun disabled(disabled: Boolean) = disabled(disabled as Boolean?)
 
             /**
              * Indicates types of events that will be sent to this subscription. If left blank, all
              * types will be sent.
              */
-            fun eventTypes(eventTypes: List<EventType>) = apply {
-                this.eventTypes = eventTypes.toMutableList()
+            fun eventTypes(eventTypes: List<EventType>?) = apply {
+                this.eventTypes = eventTypes?.toMutableList()
             }
 
             /**
@@ -220,16 +223,19 @@ constructor(
         fun url(url: String) = apply { body.url(url) }
 
         /** Event subscription description. */
-        fun description(description: String) = apply { body.description(description) }
+        fun description(description: String?) = apply { body.description(description) }
 
         /** Whether the event subscription is active (false) or inactive (true). */
-        fun disabled(disabled: Boolean) = apply { body.disabled(disabled) }
+        fun disabled(disabled: Boolean?) = apply { body.disabled(disabled) }
+
+        /** Whether the event subscription is active (false) or inactive (true). */
+        fun disabled(disabled: Boolean) = disabled(disabled as Boolean?)
 
         /**
          * Indicates types of events that will be sent to this subscription. If left blank, all
          * types will be sent.
          */
-        fun eventTypes(eventTypes: List<EventType>) = apply { body.eventTypes(eventTypes) }
+        fun eventTypes(eventTypes: List<EventType>?) = apply { body.eventTypes(eventTypes) }
 
         /**
          * Indicates types of events that will be sent to this subscription. If left blank, all

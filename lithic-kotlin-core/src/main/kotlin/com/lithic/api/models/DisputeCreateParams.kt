@@ -123,12 +123,12 @@ constructor(
             }
 
             /** Date the customer filed the dispute */
-            fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
+            fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
                 this.customerFiledDate = customerFiledDate
             }
 
             /** Customer description of dispute */
-            fun customerNote(customerNote: String) = apply { this.customerNote = customerNote }
+            fun customerNote(customerNote: String?) = apply { this.customerNote = customerNote }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -212,12 +212,12 @@ constructor(
         }
 
         /** Date the customer filed the dispute */
-        fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
+        fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
             body.customerFiledDate(customerFiledDate)
         }
 
         /** Customer description of dispute */
-        fun customerNote(customerNote: String) = apply { body.customerNote(customerNote) }
+        fun customerNote(customerNote: String?) = apply { body.customerNote(customerNote) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

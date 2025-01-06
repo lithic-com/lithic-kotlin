@@ -83,7 +83,7 @@ constructor(
             fun paymentToken(paymentToken: String) = apply { this.paymentToken = paymentToken }
 
             /** Return Reason Code */
-            fun returnReasonCode(returnReasonCode: String) = apply {
+            fun returnReasonCode(returnReasonCode: String?) = apply {
                 this.returnReasonCode = returnReasonCode
             }
 
@@ -156,7 +156,7 @@ constructor(
         fun paymentToken(paymentToken: String) = apply { body.paymentToken(paymentToken) }
 
         /** Return Reason Code */
-        fun returnReasonCode(returnReasonCode: String) = apply {
+        fun returnReasonCode(returnReasonCode: String?) = apply {
             body.returnReasonCode(returnReasonCode)
         }
 

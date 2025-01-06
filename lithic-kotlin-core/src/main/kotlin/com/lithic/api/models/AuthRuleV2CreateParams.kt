@@ -437,10 +437,10 @@ constructor(
             }
 
             /** Auth Rule Name */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /** Parameters for the current version of the Auth Rule */
-            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters?) = apply { this.parameters = parameters }
 
             fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
                 apply {
@@ -453,7 +453,7 @@ constructor(
             }
 
             /** The type of Auth Rule */
-            fun type(type: AuthRuleType) = apply { this.type = type }
+            fun type(type: AuthRuleType?) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -789,13 +789,13 @@ constructor(
                          * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
                          *   the trailing 24 hours up and until the authorization.
                          */
-                        fun attribute(attribute: Attribute) = apply { this.attribute = attribute }
+                        fun attribute(attribute: Attribute?) = apply { this.attribute = attribute }
 
                         /** The operation to apply to the attribute */
-                        fun operation(operation: Operation) = apply { this.operation = operation }
+                        fun operation(operation: Operation?) = apply { this.operation = operation }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                        fun value(value: Value) = apply { this.value = value }
+                        fun value(value: Value?) = apply { this.value = value }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(string: String) = apply { this.value = Value.ofString(string) }
@@ -1336,10 +1336,10 @@ constructor(
             }
 
             /** Auth Rule Name */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /** Parameters for the current version of the Auth Rule */
-            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters?) = apply { this.parameters = parameters }
 
             fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
                 apply {
@@ -1352,7 +1352,7 @@ constructor(
             }
 
             /** The type of Auth Rule */
-            fun type(type: AuthRuleType) = apply { this.type = type }
+            fun type(type: AuthRuleType?) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1688,13 +1688,13 @@ constructor(
                          * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
                          *   the trailing 24 hours up and until the authorization.
                          */
-                        fun attribute(attribute: Attribute) = apply { this.attribute = attribute }
+                        fun attribute(attribute: Attribute?) = apply { this.attribute = attribute }
 
                         /** The operation to apply to the attribute */
-                        fun operation(operation: Operation) = apply { this.operation = operation }
+                        fun operation(operation: Operation?) = apply { this.operation = operation }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                        fun value(value: Value) = apply { this.value = value }
+                        fun value(value: Value?) = apply { this.value = value }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(string: String) = apply { this.value = Value.ofString(string) }
@@ -2237,8 +2237,8 @@ constructor(
             fun programLevel(programLevel: Boolean) = apply { this.programLevel = programLevel }
 
             /** Card tokens to which the Auth Rule does not apply. */
-            fun excludedCardTokens(excludedCardTokens: List<String>) = apply {
-                this.excludedCardTokens = excludedCardTokens.toMutableList()
+            fun excludedCardTokens(excludedCardTokens: List<String>?) = apply {
+                this.excludedCardTokens = excludedCardTokens?.toMutableList()
             }
 
             /** Card tokens to which the Auth Rule does not apply. */
@@ -2248,10 +2248,10 @@ constructor(
             }
 
             /** Auth Rule Name */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /** Parameters for the current version of the Auth Rule */
-            fun parameters(parameters: Parameters) = apply { this.parameters = parameters }
+            fun parameters(parameters: Parameters?) = apply { this.parameters = parameters }
 
             fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
                 apply {
@@ -2264,7 +2264,7 @@ constructor(
             }
 
             /** The type of Auth Rule */
-            fun type(type: AuthRuleType) = apply { this.type = type }
+            fun type(type: AuthRuleType?) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2600,13 +2600,13 @@ constructor(
                          * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in
                          *   the trailing 24 hours up and until the authorization.
                          */
-                        fun attribute(attribute: Attribute) = apply { this.attribute = attribute }
+                        fun attribute(attribute: Attribute?) = apply { this.attribute = attribute }
 
                         /** The operation to apply to the attribute */
-                        fun operation(operation: Operation) = apply { this.operation = operation }
+                        fun operation(operation: Operation?) = apply { this.operation = operation }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                        fun value(value: Value) = apply { this.value = value }
+                        fun value(value: Value?) = apply { this.value = value }
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(string: String) = apply { this.value = Value.ofString(string) }

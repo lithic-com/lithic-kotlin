@@ -177,22 +177,34 @@ constructor(
              * The account score (1-5) that represents how the Digital Wallet's view on how
              * reputable an end user's account is.
              */
-            fun accountScore(accountScore: Long) = apply { this.accountScore = accountScore }
+            fun accountScore(accountScore: Long?) = apply { this.accountScore = accountScore }
+
+            /**
+             * The account score (1-5) that represents how the Digital Wallet's view on how
+             * reputable an end user's account is.
+             */
+            fun accountScore(accountScore: Long) = accountScore(accountScore as Long?)
 
             /**
              * The device score (1-5) that represents how the Digital Wallet's view on how reputable
              * an end user's device is.
              */
-            fun deviceScore(deviceScore: Long) = apply { this.deviceScore = deviceScore }
+            fun deviceScore(deviceScore: Long?) = apply { this.deviceScore = deviceScore }
+
+            /**
+             * The device score (1-5) that represents how the Digital Wallet's view on how reputable
+             * an end user's device is.
+             */
+            fun deviceScore(deviceScore: Long) = deviceScore(deviceScore as Long?)
 
             /**
              * Optional field to specify the token requestor name for a merchant token simulation.
              * Ignored when tokenization_source is not MERCHANT.
              */
-            fun entity(entity: String) = apply { this.entity = entity }
+            fun entity(entity: String?) = apply { this.entity = entity }
 
             /** The decision that the Digital Wallet's recommend */
-            fun walletRecommendedDecision(walletRecommendedDecision: WalletRecommendedDecision) =
+            fun walletRecommendedDecision(walletRecommendedDecision: WalletRecommendedDecision?) =
                 apply {
                     this.walletRecommendedDecision = walletRecommendedDecision
                 }
@@ -288,22 +300,34 @@ constructor(
          * The account score (1-5) that represents how the Digital Wallet's view on how reputable an
          * end user's account is.
          */
-        fun accountScore(accountScore: Long) = apply { body.accountScore(accountScore) }
+        fun accountScore(accountScore: Long?) = apply { body.accountScore(accountScore) }
+
+        /**
+         * The account score (1-5) that represents how the Digital Wallet's view on how reputable an
+         * end user's account is.
+         */
+        fun accountScore(accountScore: Long) = accountScore(accountScore as Long?)
 
         /**
          * The device score (1-5) that represents how the Digital Wallet's view on how reputable an
          * end user's device is.
          */
-        fun deviceScore(deviceScore: Long) = apply { body.deviceScore(deviceScore) }
+        fun deviceScore(deviceScore: Long?) = apply { body.deviceScore(deviceScore) }
+
+        /**
+         * The device score (1-5) that represents how the Digital Wallet's view on how reputable an
+         * end user's device is.
+         */
+        fun deviceScore(deviceScore: Long) = deviceScore(deviceScore as Long?)
 
         /**
          * Optional field to specify the token requestor name for a merchant token simulation.
          * Ignored when tokenization_source is not MERCHANT.
          */
-        fun entity(entity: String) = apply { body.entity(entity) }
+        fun entity(entity: String?) = apply { body.entity(entity) }
 
         /** The decision that the Digital Wallet's recommend */
-        fun walletRecommendedDecision(walletRecommendedDecision: WalletRecommendedDecision) =
+        fun walletRecommendedDecision(walletRecommendedDecision: WalletRecommendedDecision?) =
             apply {
                 body.walletRecommendedDecision(walletRecommendedDecision)
             }
