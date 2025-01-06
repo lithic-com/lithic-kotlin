@@ -19,6 +19,7 @@ import java.util.Objects
 class AccountHolderUpdateResponse
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("business_account_token")
     @ExcludeMissing
     private val businessAccountToken: JsonField<String> = JsonMissing.of(),
@@ -26,9 +27,11 @@ private constructor(
     @JsonProperty("phone_number")
     @ExcludeMissing
     private val phoneNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** The token for the account holder that was updated */
+    fun token(): String? = token.getNullable("token")
 
     /**
      * Only applicable for customers using the KYC-Exempt workflow to enroll businesses with
@@ -44,7 +47,7 @@ private constructor(
     fun phoneNumber(): String? = phoneNumber.getNullable("phone_number")
 
     /** The token for the account holder that was updated */
-    fun token(): String? = token.getNullable("token")
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /**
      * Only applicable for customers using the KYC-Exempt workflow to enroll businesses with
@@ -61,9 +64,6 @@ private constructor(
     /** The newly updated phone_number for the account holder */
     @JsonProperty("phone_number") @ExcludeMissing fun _phoneNumber() = phoneNumber
 
-    /** The token for the account holder that was updated */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -72,10 +72,10 @@ private constructor(
 
     fun validate(): AccountHolderUpdateResponse = apply {
         if (!validated) {
+            token()
             businessAccountToken()
             email()
             phoneNumber()
-            token()
             validated = true
         }
     }
@@ -89,19 +89,25 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var businessAccountToken: JsonField<String> = JsonMissing.of()
         private var email: JsonField<String> = JsonMissing.of()
         private var phoneNumber: JsonField<String> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountHolderUpdateResponse: AccountHolderUpdateResponse) = apply {
+            token = accountHolderUpdateResponse.token
             businessAccountToken = accountHolderUpdateResponse.businessAccountToken
             email = accountHolderUpdateResponse.email
             phoneNumber = accountHolderUpdateResponse.phoneNumber
-            token = accountHolderUpdateResponse.token
             additionalProperties = accountHolderUpdateResponse.additionalProperties.toMutableMap()
         }
+
+        /** The token for the account holder that was updated */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** The token for the account holder that was updated */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * Only applicable for customers using the KYC-Exempt workflow to enroll businesses with
@@ -132,12 +138,6 @@ private constructor(
         /** The newly updated phone_number for the account holder */
         fun phoneNumber(phoneNumber: JsonField<String>) = apply { this.phoneNumber = phoneNumber }
 
-        /** The token for the account holder that was updated */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** The token for the account holder that was updated */
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -159,10 +159,10 @@ private constructor(
 
         fun build(): AccountHolderUpdateResponse =
             AccountHolderUpdateResponse(
+                token,
                 businessAccountToken,
                 email,
                 phoneNumber,
-                token,
                 additionalProperties.toImmutable(),
             )
     }
@@ -172,15 +172,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderUpdateResponse && businessAccountToken == other.businessAccountToken && email == other.email && phoneNumber == other.phoneNumber && token == other.token && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AccountHolderUpdateResponse && token == other.token && businessAccountToken == other.businessAccountToken && email == other.email && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(businessAccountToken, email, phoneNumber, token, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, businessAccountToken, email, phoneNumber, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountHolderUpdateResponse{businessAccountToken=$businessAccountToken, email=$email, phoneNumber=$phoneNumber, token=$token, additionalProperties=$additionalProperties}"
+        "AccountHolderUpdateResponse{token=$token, businessAccountToken=$businessAccountToken, email=$email, phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
 }

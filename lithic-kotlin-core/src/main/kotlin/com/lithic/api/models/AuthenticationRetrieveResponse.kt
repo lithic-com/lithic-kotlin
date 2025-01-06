@@ -22,22 +22,13 @@ import java.util.Objects
 class AuthenticationRetrieveResponse
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("account_type")
     @ExcludeMissing
     private val accountType: JsonField<AccountType> = JsonMissing.of(),
-    @JsonProperty("additional_data")
-    @ExcludeMissing
-    private val additionalData: JsonField<AdditionalData> = JsonMissing.of(),
-    @JsonProperty("app") @ExcludeMissing private val app: JsonField<App> = JsonMissing.of(),
-    @JsonProperty("authentication_request_type")
-    @ExcludeMissing
-    private val authenticationRequestType: JsonField<AuthenticationRequestType> = JsonMissing.of(),
     @JsonProperty("authentication_result")
     @ExcludeMissing
     private val authenticationResult: JsonField<AuthenticationResult> = JsonMissing.of(),
-    @JsonProperty("browser")
-    @ExcludeMissing
-    private val browser: JsonField<Browser> = JsonMissing.of(),
     @JsonProperty("card_expiry_check")
     @ExcludeMissing
     private val cardExpiryCheck: JsonField<CardExpiryCheck> = JsonMissing.of(),
@@ -62,15 +53,27 @@ private constructor(
     @JsonProperty("message_category")
     @ExcludeMissing
     private val messageCategory: JsonField<MessageCategory> = JsonMissing.of(),
+    @JsonProperty("additional_data")
+    @ExcludeMissing
+    private val additionalData: JsonField<AdditionalData> = JsonMissing.of(),
+    @JsonProperty("app") @ExcludeMissing private val app: JsonField<App> = JsonMissing.of(),
+    @JsonProperty("authentication_request_type")
+    @ExcludeMissing
+    private val authenticationRequestType: JsonField<AuthenticationRequestType> = JsonMissing.of(),
+    @JsonProperty("browser")
+    @ExcludeMissing
+    private val browser: JsonField<Browser> = JsonMissing.of(),
     @JsonProperty("three_ri_request_type")
     @ExcludeMissing
     private val threeRiRequestType: JsonField<ThreeRiRequestType> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("transaction")
     @ExcludeMissing
     private val transaction: JsonField<Transaction> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** Globally unique identifier for the 3DS authentication. */
+    fun token(): String = token.getRequired("token")
 
     /**
      * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
@@ -78,36 +81,9 @@ private constructor(
      */
     fun accountType(): AccountType? = accountType.getNullable("account_type")
 
-    /**
-     * Object containing additional data about the 3DS request that is beyond the EMV 3DS standard
-     * spec (e.g., specific fields that only certain card networks send but are not required across
-     * all 3DS requests).
-     */
-    fun additionalData(): AdditionalData? = additionalData.getNullable("additional_data")
-
-    /**
-     * Object containing data about the app used in the e-commerce transaction. Present if the
-     * channel is 'APP_BASED'.
-     */
-    fun app(): App? = app.getNullable("app")
-
-    /**
-     * Type of authentication request - i.e., the type of transaction or interaction is causing the
-     * merchant to request an authentication. Maps to EMV 3DS field
-     * threeDSRequestorAuthenticationInd.
-     */
-    fun authenticationRequestType(): AuthenticationRequestType? =
-        authenticationRequestType.getNullable("authentication_request_type")
-
     /** Indicates the outcome of the 3DS authentication process. */
     fun authenticationResult(): AuthenticationResult? =
         authenticationResult.getNullable("authentication_result")
-
-    /**
-     * Object containing data about the browser used in the e-commerce transaction. Present if the
-     * channel is 'BROWSER'.
-     */
-    fun browser(): Browser? = browser.getNullable("browser")
 
     /**
      * Indicates whether the expiration date provided by the cardholder during checkout matches
@@ -140,6 +116,33 @@ private constructor(
     fun messageCategory(): MessageCategory = messageCategory.getRequired("message_category")
 
     /**
+     * Object containing additional data about the 3DS request that is beyond the EMV 3DS standard
+     * spec (e.g., specific fields that only certain card networks send but are not required across
+     * all 3DS requests).
+     */
+    fun additionalData(): AdditionalData? = additionalData.getNullable("additional_data")
+
+    /**
+     * Object containing data about the app used in the e-commerce transaction. Present if the
+     * channel is 'APP_BASED'.
+     */
+    fun app(): App? = app.getNullable("app")
+
+    /**
+     * Type of authentication request - i.e., the type of transaction or interaction is causing the
+     * merchant to request an authentication. Maps to EMV 3DS field
+     * threeDSRequestorAuthenticationInd.
+     */
+    fun authenticationRequestType(): AuthenticationRequestType? =
+        authenticationRequestType.getNullable("authentication_request_type")
+
+    /**
+     * Object containing data about the browser used in the e-commerce transaction. Present if the
+     * channel is 'BROWSER'.
+     */
+    fun browser(): Browser? = browser.getNullable("browser")
+
+    /**
      * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
      * the initiation of the merchant rather than the cardholder. The most common example of this is
      * where a merchant is authenticating before billing for a recurring transaction such as a pay
@@ -148,14 +151,14 @@ private constructor(
     fun threeRiRequestType(): ThreeRiRequestType? =
         threeRiRequestType.getNullable("three_ri_request_type")
 
-    /** Globally unique identifier for the 3DS authentication. */
-    fun token(): String = token.getRequired("token")
-
     /**
      * Object containing data about the e-commerce transaction for which the merchant is requesting
      * authentication.
      */
     fun transaction(): Transaction? = transaction.getNullable("transaction")
+
+    /** Globally unique identifier for the 3DS authentication. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /**
      * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
@@ -163,38 +166,10 @@ private constructor(
      */
     @JsonProperty("account_type") @ExcludeMissing fun _accountType() = accountType
 
-    /**
-     * Object containing additional data about the 3DS request that is beyond the EMV 3DS standard
-     * spec (e.g., specific fields that only certain card networks send but are not required across
-     * all 3DS requests).
-     */
-    @JsonProperty("additional_data") @ExcludeMissing fun _additionalData() = additionalData
-
-    /**
-     * Object containing data about the app used in the e-commerce transaction. Present if the
-     * channel is 'APP_BASED'.
-     */
-    @JsonProperty("app") @ExcludeMissing fun _app() = app
-
-    /**
-     * Type of authentication request - i.e., the type of transaction or interaction is causing the
-     * merchant to request an authentication. Maps to EMV 3DS field
-     * threeDSRequestorAuthenticationInd.
-     */
-    @JsonProperty("authentication_request_type")
-    @ExcludeMissing
-    fun _authenticationRequestType() = authenticationRequestType
-
     /** Indicates the outcome of the 3DS authentication process. */
     @JsonProperty("authentication_result")
     @ExcludeMissing
     fun _authenticationResult() = authenticationResult
-
-    /**
-     * Object containing data about the browser used in the e-commerce transaction. Present if the
-     * channel is 'BROWSER'.
-     */
-    @JsonProperty("browser") @ExcludeMissing fun _browser() = browser
 
     /**
      * Indicates whether the expiration date provided by the cardholder during checkout matches
@@ -227,6 +202,34 @@ private constructor(
     @JsonProperty("message_category") @ExcludeMissing fun _messageCategory() = messageCategory
 
     /**
+     * Object containing additional data about the 3DS request that is beyond the EMV 3DS standard
+     * spec (e.g., specific fields that only certain card networks send but are not required across
+     * all 3DS requests).
+     */
+    @JsonProperty("additional_data") @ExcludeMissing fun _additionalData() = additionalData
+
+    /**
+     * Object containing data about the app used in the e-commerce transaction. Present if the
+     * channel is 'APP_BASED'.
+     */
+    @JsonProperty("app") @ExcludeMissing fun _app() = app
+
+    /**
+     * Type of authentication request - i.e., the type of transaction or interaction is causing the
+     * merchant to request an authentication. Maps to EMV 3DS field
+     * threeDSRequestorAuthenticationInd.
+     */
+    @JsonProperty("authentication_request_type")
+    @ExcludeMissing
+    fun _authenticationRequestType() = authenticationRequestType
+
+    /**
+     * Object containing data about the browser used in the e-commerce transaction. Present if the
+     * channel is 'BROWSER'.
+     */
+    @JsonProperty("browser") @ExcludeMissing fun _browser() = browser
+
+    /**
      * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
      * the initiation of the merchant rather than the cardholder. The most common example of this is
      * where a merchant is authenticating before billing for a recurring transaction such as a pay
@@ -235,9 +238,6 @@ private constructor(
     @JsonProperty("three_ri_request_type")
     @ExcludeMissing
     fun _threeRiRequestType() = threeRiRequestType
-
-    /** Globally unique identifier for the 3DS authentication. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /**
      * Object containing data about the e-commerce transaction for which the merchant is requesting
@@ -253,12 +253,9 @@ private constructor(
 
     fun validate(): AuthenticationRetrieveResponse = apply {
         if (!validated) {
+            token()
             accountType()
-            additionalData()?.validate()
-            app()?.validate()
-            authenticationRequestType()
             authenticationResult()
-            browser()?.validate()
             cardExpiryCheck()
             cardToken()
             cardholder().validate()
@@ -267,8 +264,11 @@ private constructor(
             decisionMadeBy()
             merchant().validate()
             messageCategory()
+            additionalData()?.validate()
+            app()?.validate()
+            authenticationRequestType()
+            browser()?.validate()
             threeRiRequestType()
-            token()
             transaction()?.validate()
             validated = true
         }
@@ -283,13 +283,9 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var accountType: JsonField<AccountType> = JsonMissing.of()
-        private var additionalData: JsonField<AdditionalData> = JsonMissing.of()
-        private var app: JsonField<App> = JsonMissing.of()
-        private var authenticationRequestType: JsonField<AuthenticationRequestType> =
-            JsonMissing.of()
         private var authenticationResult: JsonField<AuthenticationResult> = JsonMissing.of()
-        private var browser: JsonField<Browser> = JsonMissing.of()
         private var cardExpiryCheck: JsonField<CardExpiryCheck> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
         private var cardholder: JsonField<Cardholder> = JsonMissing.of()
@@ -298,18 +294,19 @@ private constructor(
         private var decisionMadeBy: JsonField<DecisionMadeBy> = JsonMissing.of()
         private var merchant: JsonField<Merchant> = JsonMissing.of()
         private var messageCategory: JsonField<MessageCategory> = JsonMissing.of()
+        private var additionalData: JsonField<AdditionalData> = JsonMissing.of()
+        private var app: JsonField<App> = JsonMissing.of()
+        private var authenticationRequestType: JsonField<AuthenticationRequestType> =
+            JsonMissing.of()
+        private var browser: JsonField<Browser> = JsonMissing.of()
         private var threeRiRequestType: JsonField<ThreeRiRequestType> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var transaction: JsonField<Transaction> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(authenticationRetrieveResponse: AuthenticationRetrieveResponse) = apply {
+            token = authenticationRetrieveResponse.token
             accountType = authenticationRetrieveResponse.accountType
-            additionalData = authenticationRetrieveResponse.additionalData
-            app = authenticationRetrieveResponse.app
-            authenticationRequestType = authenticationRetrieveResponse.authenticationRequestType
             authenticationResult = authenticationRetrieveResponse.authenticationResult
-            browser = authenticationRetrieveResponse.browser
             cardExpiryCheck = authenticationRetrieveResponse.cardExpiryCheck
             cardToken = authenticationRetrieveResponse.cardToken
             cardholder = authenticationRetrieveResponse.cardholder
@@ -318,12 +315,21 @@ private constructor(
             decisionMadeBy = authenticationRetrieveResponse.decisionMadeBy
             merchant = authenticationRetrieveResponse.merchant
             messageCategory = authenticationRetrieveResponse.messageCategory
+            additionalData = authenticationRetrieveResponse.additionalData
+            app = authenticationRetrieveResponse.app
+            authenticationRequestType = authenticationRetrieveResponse.authenticationRequestType
+            browser = authenticationRetrieveResponse.browser
             threeRiRequestType = authenticationRetrieveResponse.threeRiRequestType
-            token = authenticationRetrieveResponse.token
             transaction = authenticationRetrieveResponse.transaction
             additionalProperties =
                 authenticationRetrieveResponse.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier for the 3DS authentication. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for the 3DS authentication. */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
@@ -339,52 +345,6 @@ private constructor(
             this.accountType = accountType
         }
 
-        /**
-         * Object containing additional data about the 3DS request that is beyond the EMV 3DS
-         * standard spec (e.g., specific fields that only certain card networks send but are not
-         * required across all 3DS requests).
-         */
-        fun additionalData(additionalData: AdditionalData) =
-            additionalData(JsonField.of(additionalData))
-
-        /**
-         * Object containing additional data about the 3DS request that is beyond the EMV 3DS
-         * standard spec (e.g., specific fields that only certain card networks send but are not
-         * required across all 3DS requests).
-         */
-        fun additionalData(additionalData: JsonField<AdditionalData>) = apply {
-            this.additionalData = additionalData
-        }
-
-        /**
-         * Object containing data about the app used in the e-commerce transaction. Present if the
-         * channel is 'APP_BASED'.
-         */
-        fun app(app: App) = app(JsonField.of(app))
-
-        /**
-         * Object containing data about the app used in the e-commerce transaction. Present if the
-         * channel is 'APP_BASED'.
-         */
-        fun app(app: JsonField<App>) = apply { this.app = app }
-
-        /**
-         * Type of authentication request - i.e., the type of transaction or interaction is causing
-         * the merchant to request an authentication. Maps to EMV 3DS field
-         * threeDSRequestorAuthenticationInd.
-         */
-        fun authenticationRequestType(authenticationRequestType: AuthenticationRequestType) =
-            authenticationRequestType(JsonField.of(authenticationRequestType))
-
-        /**
-         * Type of authentication request - i.e., the type of transaction or interaction is causing
-         * the merchant to request an authentication. Maps to EMV 3DS field
-         * threeDSRequestorAuthenticationInd.
-         */
-        fun authenticationRequestType(
-            authenticationRequestType: JsonField<AuthenticationRequestType>
-        ) = apply { this.authenticationRequestType = authenticationRequestType }
-
         /** Indicates the outcome of the 3DS authentication process. */
         fun authenticationResult(authenticationResult: AuthenticationResult) =
             authenticationResult(JsonField.of(authenticationResult))
@@ -393,18 +353,6 @@ private constructor(
         fun authenticationResult(authenticationResult: JsonField<AuthenticationResult>) = apply {
             this.authenticationResult = authenticationResult
         }
-
-        /**
-         * Object containing data about the browser used in the e-commerce transaction. Present if
-         * the channel is 'BROWSER'.
-         */
-        fun browser(browser: Browser) = browser(JsonField.of(browser))
-
-        /**
-         * Object containing data about the browser used in the e-commerce transaction. Present if
-         * the channel is 'BROWSER'.
-         */
-        fun browser(browser: JsonField<Browser>) = apply { this.browser = browser }
 
         /**
          * Indicates whether the expiration date provided by the cardholder during checkout matches
@@ -476,6 +424,64 @@ private constructor(
         }
 
         /**
+         * Object containing additional data about the 3DS request that is beyond the EMV 3DS
+         * standard spec (e.g., specific fields that only certain card networks send but are not
+         * required across all 3DS requests).
+         */
+        fun additionalData(additionalData: AdditionalData) =
+            additionalData(JsonField.of(additionalData))
+
+        /**
+         * Object containing additional data about the 3DS request that is beyond the EMV 3DS
+         * standard spec (e.g., specific fields that only certain card networks send but are not
+         * required across all 3DS requests).
+         */
+        fun additionalData(additionalData: JsonField<AdditionalData>) = apply {
+            this.additionalData = additionalData
+        }
+
+        /**
+         * Object containing data about the app used in the e-commerce transaction. Present if the
+         * channel is 'APP_BASED'.
+         */
+        fun app(app: App) = app(JsonField.of(app))
+
+        /**
+         * Object containing data about the app used in the e-commerce transaction. Present if the
+         * channel is 'APP_BASED'.
+         */
+        fun app(app: JsonField<App>) = apply { this.app = app }
+
+        /**
+         * Type of authentication request - i.e., the type of transaction or interaction is causing
+         * the merchant to request an authentication. Maps to EMV 3DS field
+         * threeDSRequestorAuthenticationInd.
+         */
+        fun authenticationRequestType(authenticationRequestType: AuthenticationRequestType) =
+            authenticationRequestType(JsonField.of(authenticationRequestType))
+
+        /**
+         * Type of authentication request - i.e., the type of transaction or interaction is causing
+         * the merchant to request an authentication. Maps to EMV 3DS field
+         * threeDSRequestorAuthenticationInd.
+         */
+        fun authenticationRequestType(
+            authenticationRequestType: JsonField<AuthenticationRequestType>
+        ) = apply { this.authenticationRequestType = authenticationRequestType }
+
+        /**
+         * Object containing data about the browser used in the e-commerce transaction. Present if
+         * the channel is 'BROWSER'.
+         */
+        fun browser(browser: Browser) = browser(JsonField.of(browser))
+
+        /**
+         * Object containing data about the browser used in the e-commerce transaction. Present if
+         * the channel is 'BROWSER'.
+         */
+        fun browser(browser: JsonField<Browser>) = apply { this.browser = browser }
+
+        /**
          * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place
          * at the initiation of the merchant rather than the cardholder. The most common example of
          * this is where a merchant is authenticating before billing for a recurring transaction
@@ -493,12 +499,6 @@ private constructor(
         fun threeRiRequestType(threeRiRequestType: JsonField<ThreeRiRequestType>) = apply {
             this.threeRiRequestType = threeRiRequestType
         }
-
-        /** Globally unique identifier for the 3DS authentication. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for the 3DS authentication. */
-        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * Object containing data about the e-commerce transaction for which the merchant is
@@ -535,12 +535,9 @@ private constructor(
 
         fun build(): AuthenticationRetrieveResponse =
             AuthenticationRetrieveResponse(
+                token,
                 accountType,
-                additionalData,
-                app,
-                authenticationRequestType,
                 authenticationResult,
-                browser,
                 cardExpiryCheck,
                 cardToken,
                 cardholder,
@@ -549,8 +546,11 @@ private constructor(
                 decisionMadeBy,
                 merchant,
                 messageCategory,
+                additionalData,
+                app,
+                authenticationRequestType,
+                browser,
                 threeRiRequestType,
-                token,
                 transaction,
                 additionalProperties.toImmutable(),
             )
@@ -1410,10 +1410,10 @@ private constructor(
     class Merchant
     @JsonCreator
     private constructor(
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("country")
         @ExcludeMissing
         private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("mcc") @ExcludeMissing private val mcc: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name")
         @ExcludeMissing
@@ -1426,16 +1426,16 @@ private constructor(
     ) {
 
         /**
-         * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
-         * merchantCountryCode.
-         */
-        fun country(): String = country.getRequired("country")
-
-        /**
          * Merchant identifier as assigned by the acquirer. Maps to EMV 3DS field
          * acquirerMerchantId.
          */
         fun id(): String = id.getRequired("id")
+
+        /**
+         * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
+         * merchantCountryCode.
+         */
+        fun country(): String = country.getRequired("country")
 
         /**
          * Merchant category code assigned to the merchant that describes its business activity
@@ -1453,16 +1453,16 @@ private constructor(
         fun riskIndicator(): RiskIndicator = riskIndicator.getRequired("risk_indicator")
 
         /**
-         * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
-         * merchantCountryCode.
-         */
-        @JsonProperty("country") @ExcludeMissing fun _country() = country
-
-        /**
          * Merchant identifier as assigned by the acquirer. Maps to EMV 3DS field
          * acquirerMerchantId.
          */
         @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+        /**
+         * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
+         * merchantCountryCode.
+         */
+        @JsonProperty("country") @ExcludeMissing fun _country() = country
 
         /**
          * Merchant category code assigned to the merchant that describes its business activity
@@ -1487,8 +1487,8 @@ private constructor(
 
         fun validate(): Merchant = apply {
             if (!validated) {
-                country()
                 id()
+                country()
                 mcc()
                 name()
                 riskIndicator().validate()
@@ -1505,33 +1505,21 @@ private constructor(
 
         class Builder {
 
-            private var country: JsonField<String> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
+            private var country: JsonField<String> = JsonMissing.of()
             private var mcc: JsonField<String> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
             private var riskIndicator: JsonField<RiskIndicator> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(merchant: Merchant) = apply {
-                country = merchant.country
                 id = merchant.id
+                country = merchant.country
                 mcc = merchant.mcc
                 name = merchant.name
                 riskIndicator = merchant.riskIndicator
                 additionalProperties = merchant.additionalProperties.toMutableMap()
             }
-
-            /**
-             * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
-             * merchantCountryCode.
-             */
-            fun country(country: String) = country(JsonField.of(country))
-
-            /**
-             * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
-             * merchantCountryCode.
-             */
-            fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
              * Merchant identifier as assigned by the acquirer. Maps to EMV 3DS field
@@ -1544,6 +1532,18 @@ private constructor(
              * acquirerMerchantId.
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
+
+            /**
+             * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
+             * merchantCountryCode.
+             */
+            fun country(country: String) = country(JsonField.of(country))
+
+            /**
+             * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
+             * merchantCountryCode.
+             */
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
              * Merchant category code assigned to the merchant that describes its business activity
@@ -1599,8 +1599,8 @@ private constructor(
 
             fun build(): Merchant =
                 Merchant(
-                    country,
                     id,
+                    country,
                     mcc,
                     name,
                     riskIndicator,
@@ -2310,17 +2310,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Merchant && country == other.country && id == other.id && mcc == other.mcc && name == other.name && riskIndicator == other.riskIndicator && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Merchant && id == other.id && country == other.country && mcc == other.mcc && name == other.name && riskIndicator == other.riskIndicator && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(country, id, mcc, name, riskIndicator, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, country, mcc, name, riskIndicator, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Merchant{country=$country, id=$id, mcc=$mcc, name=$name, riskIndicator=$riskIndicator, additionalProperties=$additionalProperties}"
+            "Merchant{id=$id, country=$country, mcc=$mcc, name=$name, riskIndicator=$riskIndicator, additionalProperties=$additionalProperties}"
     }
 
     class MessageCategory
@@ -3552,15 +3552,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthenticationRetrieveResponse && accountType == other.accountType && additionalData == other.additionalData && app == other.app && authenticationRequestType == other.authenticationRequestType && authenticationResult == other.authenticationResult && browser == other.browser && cardExpiryCheck == other.cardExpiryCheck && cardToken == other.cardToken && cardholder == other.cardholder && channel == other.channel && created == other.created && decisionMadeBy == other.decisionMadeBy && merchant == other.merchant && messageCategory == other.messageCategory && threeRiRequestType == other.threeRiRequestType && token == other.token && transaction == other.transaction && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AuthenticationRetrieveResponse && token == other.token && accountType == other.accountType && authenticationResult == other.authenticationResult && cardExpiryCheck == other.cardExpiryCheck && cardToken == other.cardToken && cardholder == other.cardholder && channel == other.channel && created == other.created && decisionMadeBy == other.decisionMadeBy && merchant == other.merchant && messageCategory == other.messageCategory && additionalData == other.additionalData && app == other.app && authenticationRequestType == other.authenticationRequestType && browser == other.browser && threeRiRequestType == other.threeRiRequestType && transaction == other.transaction && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountType, additionalData, app, authenticationRequestType, authenticationResult, browser, cardExpiryCheck, cardToken, cardholder, channel, created, decisionMadeBy, merchant, messageCategory, threeRiRequestType, token, transaction, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountType, authenticationResult, cardExpiryCheck, cardToken, cardholder, channel, created, decisionMadeBy, merchant, messageCategory, additionalData, app, authenticationRequestType, browser, threeRiRequestType, transaction, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AuthenticationRetrieveResponse{accountType=$accountType, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, authenticationResult=$authenticationResult, browser=$browser, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, decisionMadeBy=$decisionMadeBy, merchant=$merchant, messageCategory=$messageCategory, threeRiRequestType=$threeRiRequestType, token=$token, transaction=$transaction, additionalProperties=$additionalProperties}"
+        "AuthenticationRetrieveResponse{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, decisionMadeBy=$decisionMadeBy, merchant=$merchant, messageCategory=$messageCategory, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, threeRiRequestType=$threeRiRequestType, transaction=$transaction, additionalProperties=$additionalProperties}"
 }
