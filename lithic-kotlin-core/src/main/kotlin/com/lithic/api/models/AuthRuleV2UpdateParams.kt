@@ -105,7 +105,7 @@ constructor(
             }
 
             /** Auth Rule Name */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /**
              * The desired state of the Auth Rule.
@@ -114,7 +114,7 @@ constructor(
              * time. If you need to (re-)activate an Auth Rule the /promote endpoint should be used
              * to promote a draft to the currently active version.
              */
-            fun state(state: State) = apply { this.state = state }
+            fun state(state: State?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -186,7 +186,7 @@ constructor(
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** Auth Rule Name */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
 
         /**
          * The desired state of the Auth Rule.
@@ -195,7 +195,7 @@ constructor(
          * If you need to (re-)activate an Auth Rule the /promote endpoint should be used to promote
          * a draft to the currently active version.
          */
-        fun state(state: State) = apply { body.state(state) }
+        fun state(state: State?) = apply { body.state(state) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

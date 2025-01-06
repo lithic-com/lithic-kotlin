@@ -240,10 +240,10 @@ constructor(
              * listed in ISO 18245. Supported merchant category codes can be found
              * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
              */
-            fun mcc(mcc: String) = apply { this.mcc = mcc }
+            fun mcc(mcc: String?) = apply { this.mcc = mcc }
 
             /** Unique identifier to identify the payment card acceptor. */
-            fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+            fun merchantAcceptorId(merchantAcceptorId: String?) = apply {
                 this.merchantAcceptorId = merchantAcceptorId
             }
 
@@ -251,15 +251,21 @@ constructor(
              * Amount of the transaction to be simulated in currency specified in merchant_currency,
              * including any acquirer fees.
              */
-            fun merchantAmount(merchantAmount: Long) = apply {
+            fun merchantAmount(merchantAmount: Long?) = apply {
                 this.merchantAmount = merchantAmount
             }
+
+            /**
+             * Amount of the transaction to be simulated in currency specified in merchant_currency,
+             * including any acquirer fees.
+             */
+            fun merchantAmount(merchantAmount: Long) = merchantAmount(merchantAmount as Long?)
 
             /**
              * 3-digit alphabetic ISO 4217 currency code. Note: Simulator only accepts USD, GBP, EUR
              * and defaults to GBP if another ISO 4217 code is provided
              */
-            fun merchantCurrency(merchantCurrency: String) = apply {
+            fun merchantCurrency(merchantCurrency: String?) = apply {
                 this.merchantCurrency = merchantCurrency
             }
 
@@ -268,12 +274,20 @@ constructor(
              * approval is when part of a transaction is approved and another payment must be used
              * for the remainder.
              */
-            fun partialApprovalCapable(partialApprovalCapable: Boolean) = apply {
+            fun partialApprovalCapable(partialApprovalCapable: Boolean?) = apply {
                 this.partialApprovalCapable = partialApprovalCapable
             }
 
+            /**
+             * Set to true if the terminal is capable of partial approval otherwise false. Partial
+             * approval is when part of a transaction is approved and another payment must be used
+             * for the remainder.
+             */
+            fun partialApprovalCapable(partialApprovalCapable: Boolean) =
+                partialApprovalCapable(partialApprovalCapable as Boolean?)
+
             /** Simulate entering a PIN. If omitted, PIN check will not be performed. */
-            fun pin(pin: String) = apply { this.pin = pin }
+            fun pin(pin: String?) = apply { this.pin = pin }
 
             /**
              * Type of event to simulate.
@@ -291,7 +305,7 @@ constructor(
              *   credit funds immediately, and no subsequent clearing is required to settle the
              *   transaction.
              */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status?) = apply { this.status = status }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -389,10 +403,10 @@ constructor(
          * ISO 18245. Supported merchant category codes can be found
          * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
          */
-        fun mcc(mcc: String) = apply { body.mcc(mcc) }
+        fun mcc(mcc: String?) = apply { body.mcc(mcc) }
 
         /** Unique identifier to identify the payment card acceptor. */
-        fun merchantAcceptorId(merchantAcceptorId: String) = apply {
+        fun merchantAcceptorId(merchantAcceptorId: String?) = apply {
             body.merchantAcceptorId(merchantAcceptorId)
         }
 
@@ -400,13 +414,19 @@ constructor(
          * Amount of the transaction to be simulated in currency specified in merchant_currency,
          * including any acquirer fees.
          */
-        fun merchantAmount(merchantAmount: Long) = apply { body.merchantAmount(merchantAmount) }
+        fun merchantAmount(merchantAmount: Long?) = apply { body.merchantAmount(merchantAmount) }
+
+        /**
+         * Amount of the transaction to be simulated in currency specified in merchant_currency,
+         * including any acquirer fees.
+         */
+        fun merchantAmount(merchantAmount: Long) = merchantAmount(merchantAmount as Long?)
 
         /**
          * 3-digit alphabetic ISO 4217 currency code. Note: Simulator only accepts USD, GBP, EUR and
          * defaults to GBP if another ISO 4217 code is provided
          */
-        fun merchantCurrency(merchantCurrency: String) = apply {
+        fun merchantCurrency(merchantCurrency: String?) = apply {
             body.merchantCurrency(merchantCurrency)
         }
 
@@ -415,12 +435,20 @@ constructor(
          * approval is when part of a transaction is approved and another payment must be used for
          * the remainder.
          */
-        fun partialApprovalCapable(partialApprovalCapable: Boolean) = apply {
+        fun partialApprovalCapable(partialApprovalCapable: Boolean?) = apply {
             body.partialApprovalCapable(partialApprovalCapable)
         }
 
+        /**
+         * Set to true if the terminal is capable of partial approval otherwise false. Partial
+         * approval is when part of a transaction is approved and another payment must be used for
+         * the remainder.
+         */
+        fun partialApprovalCapable(partialApprovalCapable: Boolean) =
+            partialApprovalCapable(partialApprovalCapable as Boolean?)
+
         /** Simulate entering a PIN. If omitted, PIN check will not be performed. */
-        fun pin(pin: String) = apply { body.pin(pin) }
+        fun pin(pin: String?) = apply { body.pin(pin) }
 
         /**
          * Type of event to simulate.
@@ -436,7 +464,7 @@ constructor(
          * - `FINANCIAL_CREDIT_AUTHORIZATION` is a single message request from a merchant to credit
          *   funds immediately, and no subsequent clearing is required to settle the transaction.
          */
-        fun status(status: Status) = apply { body.status(status) }
+        fun status(status: Status?) = apply { body.status(status) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

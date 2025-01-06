@@ -113,18 +113,21 @@ constructor(
             }
 
             /** Amount to dispute */
-            fun amount(amount: Long) = apply { this.amount = amount }
+            fun amount(amount: Long?) = apply { this.amount = amount }
+
+            /** Amount to dispute */
+            fun amount(amount: Long) = amount(amount as Long?)
 
             /** Date the customer filed the dispute */
-            fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
+            fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
                 this.customerFiledDate = customerFiledDate
             }
 
             /** Customer description of dispute */
-            fun customerNote(customerNote: String) = apply { this.customerNote = customerNote }
+            fun customerNote(customerNote: String?) = apply { this.customerNote = customerNote }
 
             /** Reason for dispute */
-            fun reason(reason: Reason) = apply { this.reason = reason }
+            fun reason(reason: Reason?) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -198,18 +201,21 @@ constructor(
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
 
         /** Amount to dispute */
-        fun amount(amount: Long) = apply { body.amount(amount) }
+        fun amount(amount: Long?) = apply { body.amount(amount) }
+
+        /** Amount to dispute */
+        fun amount(amount: Long) = amount(amount as Long?)
 
         /** Date the customer filed the dispute */
-        fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
+        fun customerFiledDate(customerFiledDate: OffsetDateTime?) = apply {
             body.customerFiledDate(customerFiledDate)
         }
 
         /** Customer description of dispute */
-        fun customerNote(customerNote: String) = apply { body.customerNote(customerNote) }
+        fun customerNote(customerNote: String?) = apply { body.customerNote(customerNote) }
 
         /** Reason for dispute */
-        fun reason(reason: Reason) = apply { body.reason(reason) }
+        fun reason(reason: Reason?) = apply { body.reason(reason) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

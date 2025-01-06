@@ -79,7 +79,7 @@ constructor(
                     financialAccountUpdateBody.additionalProperties.toMutableMap()
             }
 
-            fun nickname(nickname: String) = apply { this.nickname = nickname }
+            fun nickname(nickname: String?) = apply { this.nickname = nickname }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -148,7 +148,7 @@ constructor(
             this.financialAccountToken = financialAccountToken
         }
 
-        fun nickname(nickname: String) = apply { body.nickname(nickname) }
+        fun nickname(nickname: String?) = apply { body.nickname(nickname) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

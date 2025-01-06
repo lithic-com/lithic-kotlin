@@ -145,15 +145,15 @@ constructor(
                 this.paymentType = paymentType
             }
 
-            fun token(token: String) = apply { this.token = token }
+            fun token(token: String?) = apply { this.token = token }
 
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
-            fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
+            fun progressTo(progressTo: ExternalPaymentProgressTo?) = apply {
                 this.progressTo = progressTo
             }
 
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -243,15 +243,15 @@ constructor(
             body.paymentType(paymentType)
         }
 
-        fun token(token: String) = apply { body.token(token) }
+        fun token(token: String?) = apply { body.token(token) }
 
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply { body.memo(memo) }
 
-        fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
+        fun progressTo(progressTo: ExternalPaymentProgressTo?) = apply {
             body.progressTo(progressTo)
         }
 
-        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
+        fun userDefinedId(userDefinedId: String?) = apply { body.userDefinedId(userDefinedId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

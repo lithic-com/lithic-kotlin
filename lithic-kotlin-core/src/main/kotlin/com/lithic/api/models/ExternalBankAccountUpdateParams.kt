@@ -153,33 +153,33 @@ constructor(
                 }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String) = apply { this.companyId = companyId }
+            fun companyId(companyId: String?) = apply { this.companyId = companyId }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate) = apply { this.dob = dob }
+            fun dob(dob: LocalDate?) = apply { this.dob = dob }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String) = apply {
+            fun doingBusinessAs(doingBusinessAs: String?) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /**
              * Legal Name of the business or individual who owns the external account. This will
              * appear in statements
              */
-            fun owner(owner: String) = apply { this.owner = owner }
+            fun owner(owner: String?) = apply { this.owner = owner }
 
             /** Owner Type */
-            fun ownerType(ownerType: OwnerType) = apply { this.ownerType = ownerType }
+            fun ownerType(ownerType: OwnerType?) = apply { this.ownerType = ownerType }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -262,33 +262,33 @@ constructor(
         }
 
         /** Address */
-        fun address(address: ExternalBankAccountAddress) = apply { body.address(address) }
+        fun address(address: ExternalBankAccountAddress?) = apply { body.address(address) }
 
         /** Optional field that helps identify bank accounts in receipts */
-        fun companyId(companyId: String) = apply { body.companyId(companyId) }
+        fun companyId(companyId: String?) = apply { body.companyId(companyId) }
 
         /** Date of Birth of the Individual that owns the external bank account */
-        fun dob(dob: LocalDate) = apply { body.dob(dob) }
+        fun dob(dob: LocalDate?) = apply { body.dob(dob) }
 
         /** Doing Business As */
-        fun doingBusinessAs(doingBusinessAs: String) = apply {
+        fun doingBusinessAs(doingBusinessAs: String?) = apply {
             body.doingBusinessAs(doingBusinessAs)
         }
 
         /** The nickname for this External Bank Account */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
 
         /**
          * Legal Name of the business or individual who owns the external account. This will appear
          * in statements
          */
-        fun owner(owner: String) = apply { body.owner(owner) }
+        fun owner(owner: String?) = apply { body.owner(owner) }
 
         /** Owner Type */
-        fun ownerType(ownerType: OwnerType) = apply { body.ownerType(ownerType) }
+        fun ownerType(ownerType: OwnerType?) = apply { body.ownerType(ownerType) }
 
         /** User Defined ID */
-        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
+        fun userDefinedId(userDefinedId: String?) = apply { body.userDefinedId(userDefinedId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

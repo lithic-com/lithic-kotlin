@@ -57,7 +57,7 @@ constructor(
         }
 
         /** Get the aggregate balance for a given Financial Account type. */
-        fun financialAccountType(financialAccountType: FinancialAccountType) = apply {
+        fun financialAccountType(financialAccountType: FinancialAccountType?) = apply {
             this.financialAccountType = financialAccountType
         }
 

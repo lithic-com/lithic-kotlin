@@ -109,12 +109,12 @@ constructor(
             }
 
             /** Decline reason */
-            fun declineReason(declineReason: SupportedSimulationDeclineReasons) = apply {
+            fun declineReason(declineReason: SupportedSimulationDeclineReasons?) = apply {
                 this.declineReason = declineReason
             }
 
             /** Return Reason Code */
-            fun returnReasonCode(returnReasonCode: String) = apply {
+            fun returnReasonCode(returnReasonCode: String?) = apply {
                 this.returnReasonCode = returnReasonCode
             }
 
@@ -192,12 +192,12 @@ constructor(
         fun eventType(eventType: SupportedSimulationTypes) = apply { body.eventType(eventType) }
 
         /** Decline reason */
-        fun declineReason(declineReason: SupportedSimulationDeclineReasons) = apply {
+        fun declineReason(declineReason: SupportedSimulationDeclineReasons?) = apply {
             body.declineReason(declineReason)
         }
 
         /** Return Reason Code */
-        fun returnReasonCode(returnReasonCode: String) = apply {
+        fun returnReasonCode(returnReasonCode: String?) = apply {
             body.returnReasonCode(returnReasonCode)
         }
 
