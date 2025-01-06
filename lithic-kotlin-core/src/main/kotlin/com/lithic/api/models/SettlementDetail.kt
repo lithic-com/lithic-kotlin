@@ -22,6 +22,7 @@ import java.util.Objects
 class SettlementDetail
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("account_token")
     @ExcludeMissing
     private val accountToken: JsonField<String> = JsonMissing.of(),
@@ -43,9 +44,6 @@ private constructor(
     @JsonProperty("event_tokens")
     @ExcludeMissing
     private val eventTokens: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("fee_description")
-    @ExcludeMissing
-    private val feeDescription: JsonField<String> = JsonMissing.of(),
     @JsonProperty("institution")
     @ExcludeMissing
     private val institution: JsonField<String> = JsonMissing.of(),
@@ -70,7 +68,6 @@ private constructor(
     @JsonProperty("settlement_date")
     @ExcludeMissing
     private val settlementDate: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("transaction_token")
     @ExcludeMissing
     private val transactionToken: JsonField<String> = JsonMissing.of(),
@@ -81,8 +78,14 @@ private constructor(
     @JsonProperty("updated")
     @ExcludeMissing
     private val updated: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("fee_description")
+    @ExcludeMissing
+    private val feeDescription: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** Globally unique identifier denoting the Settlement Detail. */
+    fun token(): String = token.getRequired("token")
 
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     fun accountToken(): String = accountToken.getRequired("account_token")
@@ -107,9 +110,6 @@ private constructor(
 
     /** Globally unique identifiers denoting the Events associated with this settlement. */
     fun eventTokens(): List<String> = eventTokens.getRequired("event_tokens")
-
-    /** Network's description of a fee, only present on records with type `FEE`. */
-    fun feeDescription(): String? = feeDescription.getNullable("fee_description")
 
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     fun institution(): String = institution.getRequired("institution")
@@ -137,9 +137,6 @@ private constructor(
     /** Date of when money movement is triggered for the transaction. */
     fun settlementDate(): String = settlementDate.getRequired("settlement_date")
 
-    /** Globally unique identifier denoting the Settlement Detail. */
-    fun token(): String = token.getRequired("token")
-
     /** Globally unique identifier denoting the associated Transaction object. */
     fun transactionToken(): String = transactionToken.getRequired("transaction_token")
 
@@ -155,6 +152,12 @@ private constructor(
 
     /** Date and time when the transaction first occurred. UTC time zone. */
     fun updated(): OffsetDateTime = updated.getRequired("updated")
+
+    /** Network's description of a fee, only present on records with type `FEE`. */
+    fun feeDescription(): String? = feeDescription.getNullable("fee_description")
+
+    /** Globally unique identifier denoting the Settlement Detail. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
@@ -181,9 +184,6 @@ private constructor(
 
     /** Globally unique identifiers denoting the Events associated with this settlement. */
     @JsonProperty("event_tokens") @ExcludeMissing fun _eventTokens() = eventTokens
-
-    /** Network's description of a fee, only present on records with type `FEE`. */
-    @JsonProperty("fee_description") @ExcludeMissing fun _feeDescription() = feeDescription
 
     /** The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa). */
     @JsonProperty("institution") @ExcludeMissing fun _institution() = institution
@@ -215,9 +215,6 @@ private constructor(
     /** Date of when money movement is triggered for the transaction. */
     @JsonProperty("settlement_date") @ExcludeMissing fun _settlementDate() = settlementDate
 
-    /** Globally unique identifier denoting the Settlement Detail. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     /** Globally unique identifier denoting the associated Transaction object. */
     @JsonProperty("transaction_token") @ExcludeMissing fun _transactionToken() = transactionToken
 
@@ -235,6 +232,9 @@ private constructor(
     /** Date and time when the transaction first occurred. UTC time zone. */
     @JsonProperty("updated") @ExcludeMissing fun _updated() = updated
 
+    /** Network's description of a fee, only present on records with type `FEE`. */
+    @JsonProperty("fee_description") @ExcludeMissing fun _feeDescription() = feeDescription
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -243,6 +243,7 @@ private constructor(
 
     fun validate(): SettlementDetail = apply {
         if (!validated) {
+            token()
             accountToken()
             cardProgramToken()
             cardToken()
@@ -250,7 +251,6 @@ private constructor(
             currency()
             disputesGrossAmount()
             eventTokens()
-            feeDescription()
             institution()
             interchangeFeeExtendedPrecision()
             interchangeGrossAmount()
@@ -259,11 +259,11 @@ private constructor(
             otherFeesGrossAmount()
             reportDate()
             settlementDate()
-            token()
             transactionToken()
             transactionsGrossAmount()
             type()
             updated()
+            feeDescription()
             validated = true
         }
     }
@@ -277,6 +277,7 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
         private var cardProgramToken: JsonField<String> = JsonMissing.of()
         private var cardToken: JsonField<String> = JsonMissing.of()
@@ -284,7 +285,6 @@ private constructor(
         private var currency: JsonField<String> = JsonMissing.of()
         private var disputesGrossAmount: JsonField<Long> = JsonMissing.of()
         private var eventTokens: JsonField<List<String>> = JsonMissing.of()
-        private var feeDescription: JsonField<String> = JsonMissing.of()
         private var institution: JsonField<String> = JsonMissing.of()
         private var interchangeFeeExtendedPrecision: JsonField<Long> = JsonMissing.of()
         private var interchangeGrossAmount: JsonField<Long> = JsonMissing.of()
@@ -293,14 +293,15 @@ private constructor(
         private var otherFeesGrossAmount: JsonField<Long> = JsonMissing.of()
         private var reportDate: JsonField<String> = JsonMissing.of()
         private var settlementDate: JsonField<String> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var transactionToken: JsonField<String> = JsonMissing.of()
         private var transactionsGrossAmount: JsonField<Long> = JsonMissing.of()
         private var type: JsonField<Type> = JsonMissing.of()
         private var updated: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var feeDescription: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(settlementDetail: SettlementDetail) = apply {
+            token = settlementDetail.token
             accountToken = settlementDetail.accountToken
             cardProgramToken = settlementDetail.cardProgramToken
             cardToken = settlementDetail.cardToken
@@ -308,7 +309,6 @@ private constructor(
             currency = settlementDetail.currency
             disputesGrossAmount = settlementDetail.disputesGrossAmount
             eventTokens = settlementDetail.eventTokens
-            feeDescription = settlementDetail.feeDescription
             institution = settlementDetail.institution
             interchangeFeeExtendedPrecision = settlementDetail.interchangeFeeExtendedPrecision
             interchangeGrossAmount = settlementDetail.interchangeGrossAmount
@@ -317,13 +317,19 @@ private constructor(
             otherFeesGrossAmount = settlementDetail.otherFeesGrossAmount
             reportDate = settlementDetail.reportDate
             settlementDate = settlementDetail.settlementDate
-            token = settlementDetail.token
             transactionToken = settlementDetail.transactionToken
             transactionsGrossAmount = settlementDetail.transactionsGrossAmount
             type = settlementDetail.type
             updated = settlementDetail.updated
+            feeDescription = settlementDetail.feeDescription
             additionalProperties = settlementDetail.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier denoting the Settlement Detail. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier denoting the Settlement Detail. */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa).
@@ -389,14 +395,6 @@ private constructor(
         /** Globally unique identifiers denoting the Events associated with this settlement. */
         fun eventTokens(eventTokens: JsonField<List<String>>) = apply {
             this.eventTokens = eventTokens
-        }
-
-        /** Network's description of a fee, only present on records with type `FEE`. */
-        fun feeDescription(feeDescription: String) = feeDescription(JsonField.of(feeDescription))
-
-        /** Network's description of a fee, only present on records with type `FEE`. */
-        fun feeDescription(feeDescription: JsonField<String>) = apply {
-            this.feeDescription = feeDescription
         }
 
         /**
@@ -466,12 +464,6 @@ private constructor(
             this.settlementDate = settlementDate
         }
 
-        /** Globally unique identifier denoting the Settlement Detail. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier denoting the Settlement Detail. */
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
         /** Globally unique identifier denoting the associated Transaction object. */
         fun transactionToken(transactionToken: String) =
             transactionToken(JsonField.of(transactionToken))
@@ -508,6 +500,14 @@ private constructor(
         /** Date and time when the transaction first occurred. UTC time zone. */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
+        /** Network's description of a fee, only present on records with type `FEE`. */
+        fun feeDescription(feeDescription: String) = feeDescription(JsonField.of(feeDescription))
+
+        /** Network's description of a fee, only present on records with type `FEE`. */
+        fun feeDescription(feeDescription: JsonField<String>) = apply {
+            this.feeDescription = feeDescription
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -529,6 +529,7 @@ private constructor(
 
         fun build(): SettlementDetail =
             SettlementDetail(
+                token,
                 accountToken,
                 cardProgramToken,
                 cardToken,
@@ -536,7 +537,6 @@ private constructor(
                 currency,
                 disputesGrossAmount,
                 eventTokens.map { it.toImmutable() },
-                feeDescription,
                 institution,
                 interchangeFeeExtendedPrecision,
                 interchangeGrossAmount,
@@ -545,11 +545,11 @@ private constructor(
                 otherFeesGrossAmount,
                 reportDate,
                 settlementDate,
-                token,
                 transactionToken,
                 transactionsGrossAmount,
                 type,
                 updated,
+                feeDescription,
                 additionalProperties.toImmutable(),
             )
     }
@@ -822,15 +822,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SettlementDetail && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && cardToken == other.cardToken && created == other.created && currency == other.currency && disputesGrossAmount == other.disputesGrossAmount && eventTokens == other.eventTokens && feeDescription == other.feeDescription && institution == other.institution && interchangeFeeExtendedPrecision == other.interchangeFeeExtendedPrecision && interchangeGrossAmount == other.interchangeGrossAmount && network == other.network && otherFeesDetails == other.otherFeesDetails && otherFeesGrossAmount == other.otherFeesGrossAmount && reportDate == other.reportDate && settlementDate == other.settlementDate && token == other.token && transactionToken == other.transactionToken && transactionsGrossAmount == other.transactionsGrossAmount && type == other.type && updated == other.updated && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is SettlementDetail && token == other.token && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && cardToken == other.cardToken && created == other.created && currency == other.currency && disputesGrossAmount == other.disputesGrossAmount && eventTokens == other.eventTokens && institution == other.institution && interchangeFeeExtendedPrecision == other.interchangeFeeExtendedPrecision && interchangeGrossAmount == other.interchangeGrossAmount && network == other.network && otherFeesDetails == other.otherFeesDetails && otherFeesGrossAmount == other.otherFeesGrossAmount && reportDate == other.reportDate && settlementDate == other.settlementDate && transactionToken == other.transactionToken && transactionsGrossAmount == other.transactionsGrossAmount && type == other.type && updated == other.updated && feeDescription == other.feeDescription && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, cardProgramToken, cardToken, created, currency, disputesGrossAmount, eventTokens, feeDescription, institution, interchangeFeeExtendedPrecision, interchangeGrossAmount, network, otherFeesDetails, otherFeesGrossAmount, reportDate, settlementDate, token, transactionToken, transactionsGrossAmount, type, updated, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardProgramToken, cardToken, created, currency, disputesGrossAmount, eventTokens, institution, interchangeFeeExtendedPrecision, interchangeGrossAmount, network, otherFeesDetails, otherFeesGrossAmount, reportDate, settlementDate, transactionToken, transactionsGrossAmount, type, updated, feeDescription, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "SettlementDetail{accountToken=$accountToken, cardProgramToken=$cardProgramToken, cardToken=$cardToken, created=$created, currency=$currency, disputesGrossAmount=$disputesGrossAmount, eventTokens=$eventTokens, feeDescription=$feeDescription, institution=$institution, interchangeFeeExtendedPrecision=$interchangeFeeExtendedPrecision, interchangeGrossAmount=$interchangeGrossAmount, network=$network, otherFeesDetails=$otherFeesDetails, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settlementDate=$settlementDate, token=$token, transactionToken=$transactionToken, transactionsGrossAmount=$transactionsGrossAmount, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
+        "SettlementDetail{token=$token, accountToken=$accountToken, cardProgramToken=$cardProgramToken, cardToken=$cardToken, created=$created, currency=$currency, disputesGrossAmount=$disputesGrossAmount, eventTokens=$eventTokens, institution=$institution, interchangeFeeExtendedPrecision=$interchangeFeeExtendedPrecision, interchangeGrossAmount=$interchangeGrossAmount, network=$network, otherFeesDetails=$otherFeesDetails, otherFeesGrossAmount=$otherFeesGrossAmount, reportDate=$reportDate, settlementDate=$settlementDate, transactionToken=$transactionToken, transactionsGrossAmount=$transactionsGrossAmount, type=$type, updated=$updated, feeDescription=$feeDescription, additionalProperties=$additionalProperties}"
 }

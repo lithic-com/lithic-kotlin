@@ -22,43 +22,43 @@ private constructor(
     @JsonProperty("address1")
     @ExcludeMissing
     private val address1: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("address2")
-    @ExcludeMissing
-    private val address2: JsonField<String> = JsonMissing.of(),
     @JsonProperty("city") @ExcludeMissing private val city: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("state") @ExcludeMissing private val state: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("postal_code")
-    @ExcludeMissing
-    private val postalCode: JsonField<String> = JsonMissing.of(),
     @JsonProperty("country")
     @ExcludeMissing
     private val country: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("postal_code")
+    @ExcludeMissing
+    private val postalCode: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("state") @ExcludeMissing private val state: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("address2")
+    @ExcludeMissing
+    private val address2: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun address1(): String = address1.getRequired("address1")
 
-    fun address2(): String? = address2.getNullable("address2")
-
     fun city(): String = city.getRequired("city")
-
-    fun state(): String = state.getRequired("state")
-
-    fun postalCode(): String = postalCode.getRequired("postal_code")
 
     fun country(): String = country.getRequired("country")
 
-    @JsonProperty("address1") @ExcludeMissing fun _address1() = address1
+    fun postalCode(): String = postalCode.getRequired("postal_code")
 
-    @JsonProperty("address2") @ExcludeMissing fun _address2() = address2
+    fun state(): String = state.getRequired("state")
+
+    fun address2(): String? = address2.getNullable("address2")
+
+    @JsonProperty("address1") @ExcludeMissing fun _address1() = address1
 
     @JsonProperty("city") @ExcludeMissing fun _city() = city
 
-    @JsonProperty("state") @ExcludeMissing fun _state() = state
+    @JsonProperty("country") @ExcludeMissing fun _country() = country
 
     @JsonProperty("postal_code") @ExcludeMissing fun _postalCode() = postalCode
 
-    @JsonProperty("country") @ExcludeMissing fun _country() = country
+    @JsonProperty("state") @ExcludeMissing fun _state() = state
+
+    @JsonProperty("address2") @ExcludeMissing fun _address2() = address2
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -69,11 +69,11 @@ private constructor(
     fun validate(): ExternalBankAccountAddress = apply {
         if (!validated) {
             address1()
-            address2()
             city()
-            state()
-            postalCode()
             country()
+            postalCode()
+            state()
+            address2()
             validated = true
         }
     }
@@ -88,20 +88,20 @@ private constructor(
     class Builder {
 
         private var address1: JsonField<String> = JsonMissing.of()
-        private var address2: JsonField<String> = JsonMissing.of()
         private var city: JsonField<String> = JsonMissing.of()
-        private var state: JsonField<String> = JsonMissing.of()
-        private var postalCode: JsonField<String> = JsonMissing.of()
         private var country: JsonField<String> = JsonMissing.of()
+        private var postalCode: JsonField<String> = JsonMissing.of()
+        private var state: JsonField<String> = JsonMissing.of()
+        private var address2: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(externalBankAccountAddress: ExternalBankAccountAddress) = apply {
             address1 = externalBankAccountAddress.address1
-            address2 = externalBankAccountAddress.address2
             city = externalBankAccountAddress.city
-            state = externalBankAccountAddress.state
-            postalCode = externalBankAccountAddress.postalCode
             country = externalBankAccountAddress.country
+            postalCode = externalBankAccountAddress.postalCode
+            state = externalBankAccountAddress.state
+            address2 = externalBankAccountAddress.address2
             additionalProperties = externalBankAccountAddress.additionalProperties.toMutableMap()
         }
 
@@ -109,25 +109,25 @@ private constructor(
 
         fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
-        fun address2(address2: String) = address2(JsonField.of(address2))
-
-        fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
-
         fun city(city: String) = city(JsonField.of(city))
 
         fun city(city: JsonField<String>) = apply { this.city = city }
 
-        fun state(state: String) = state(JsonField.of(state))
+        fun country(country: String) = country(JsonField.of(country))
 
-        fun state(state: JsonField<String>) = apply { this.state = state }
+        fun country(country: JsonField<String>) = apply { this.country = country }
 
         fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
         fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-        fun country(country: String) = country(JsonField.of(country))
+        fun state(state: String) = state(JsonField.of(state))
 
-        fun country(country: JsonField<String>) = apply { this.country = country }
+        fun state(state: JsonField<String>) = apply { this.state = state }
+
+        fun address2(address2: String) = address2(JsonField.of(address2))
+
+        fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -151,11 +151,11 @@ private constructor(
         fun build(): ExternalBankAccountAddress =
             ExternalBankAccountAddress(
                 address1,
-                address2,
                 city,
-                state,
-                postalCode,
                 country,
+                postalCode,
+                state,
+                address2,
                 additionalProperties.toImmutable(),
             )
     }
@@ -165,15 +165,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalBankAccountAddress && address1 == other.address1 && address2 == other.address2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is ExternalBankAccountAddress && address1 == other.address1 && city == other.city && country == other.country && postalCode == other.postalCode && state == other.state && address2 == other.address2 && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(address1, address2, city, state, postalCode, country, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(address1, city, country, postalCode, state, address2, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ExternalBankAccountAddress{address1=$address1, address2=$address2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+        "ExternalBankAccountAddress{address1=$address1, city=$city, country=$country, postalCode=$postalCode, state=$state, address2=$address2, additionalProperties=$additionalProperties}"
 }

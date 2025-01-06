@@ -24,41 +24,41 @@ private constructor(
     @JsonProperty("account_token")
     @ExcludeMissing
     private val accountToken: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("charged_off_reason")
+    @ExcludeMissing
+    private val chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of(),
     @JsonProperty("credit_limit")
     @ExcludeMissing
     private val creditLimit: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("external_bank_account_token")
-    @ExcludeMissing
-    private val externalBankAccountToken: JsonField<String> = JsonMissing.of(),
     @JsonProperty("credit_product_token")
     @ExcludeMissing
     private val creditProductToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("tier") @ExcludeMissing private val tier: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("external_bank_account_token")
+    @ExcludeMissing
+    private val externalBankAccountToken: JsonField<String> = JsonMissing.of(),
     @JsonProperty("financial_account_state")
     @ExcludeMissing
     private val financialAccountState: JsonField<FinancialAccountState> = JsonMissing.of(),
     @JsonProperty("is_spend_blocked")
     @ExcludeMissing
     private val isSpendBlocked: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("charged_off_reason")
-    @ExcludeMissing
-    private val chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of(),
+    @JsonProperty("tier") @ExcludeMissing private val tier: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Globally unique identifier for the account */
     fun accountToken(): String = accountToken.getRequired("account_token")
 
-    fun creditLimit(): Long? = creditLimit.getNullable("credit_limit")
+    /** Reason for the financial account being marked as Charged Off */
+    fun chargedOffReason(): ChargedOffReason? = chargedOffReason.getNullable("charged_off_reason")
 
-    fun externalBankAccountToken(): String? =
-        externalBankAccountToken.getNullable("external_bank_account_token")
+    fun creditLimit(): Long? = creditLimit.getNullable("credit_limit")
 
     /** Globally unique identifier for the credit product */
     fun creditProductToken(): String? = creditProductToken.getNullable("credit_product_token")
 
-    /** Tier assigned to the financial account */
-    fun tier(): String? = tier.getNullable("tier")
+    fun externalBankAccountToken(): String? =
+        externalBankAccountToken.getNullable("external_bank_account_token")
 
     /** State of the financial account */
     fun financialAccountState(): FinancialAccountState =
@@ -66,25 +66,25 @@ private constructor(
 
     fun isSpendBlocked(): Boolean = isSpendBlocked.getRequired("is_spend_blocked")
 
-    /** Reason for the financial account being marked as Charged Off */
-    fun chargedOffReason(): ChargedOffReason? = chargedOffReason.getNullable("charged_off_reason")
+    /** Tier assigned to the financial account */
+    fun tier(): String? = tier.getNullable("tier")
 
     /** Globally unique identifier for the account */
     @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
 
-    @JsonProperty("credit_limit") @ExcludeMissing fun _creditLimit() = creditLimit
+    /** Reason for the financial account being marked as Charged Off */
+    @JsonProperty("charged_off_reason") @ExcludeMissing fun _chargedOffReason() = chargedOffReason
 
-    @JsonProperty("external_bank_account_token")
-    @ExcludeMissing
-    fun _externalBankAccountToken() = externalBankAccountToken
+    @JsonProperty("credit_limit") @ExcludeMissing fun _creditLimit() = creditLimit
 
     /** Globally unique identifier for the credit product */
     @JsonProperty("credit_product_token")
     @ExcludeMissing
     fun _creditProductToken() = creditProductToken
 
-    /** Tier assigned to the financial account */
-    @JsonProperty("tier") @ExcludeMissing fun _tier() = tier
+    @JsonProperty("external_bank_account_token")
+    @ExcludeMissing
+    fun _externalBankAccountToken() = externalBankAccountToken
 
     /** State of the financial account */
     @JsonProperty("financial_account_state")
@@ -93,8 +93,8 @@ private constructor(
 
     @JsonProperty("is_spend_blocked") @ExcludeMissing fun _isSpendBlocked() = isSpendBlocked
 
-    /** Reason for the financial account being marked as Charged Off */
-    @JsonProperty("charged_off_reason") @ExcludeMissing fun _chargedOffReason() = chargedOffReason
+    /** Tier assigned to the financial account */
+    @JsonProperty("tier") @ExcludeMissing fun _tier() = tier
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -105,13 +105,13 @@ private constructor(
     fun validate(): FinancialAccountCreditConfig = apply {
         if (!validated) {
             accountToken()
+            chargedOffReason()
             creditLimit()
-            externalBankAccountToken()
             creditProductToken()
-            tier()
+            externalBankAccountToken()
             financialAccountState()
             isSpendBlocked()
-            chargedOffReason()
+            tier()
             validated = true
         }
     }
@@ -126,24 +126,24 @@ private constructor(
     class Builder {
 
         private var accountToken: JsonField<String> = JsonMissing.of()
+        private var chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of()
         private var creditLimit: JsonField<Long> = JsonMissing.of()
-        private var externalBankAccountToken: JsonField<String> = JsonMissing.of()
         private var creditProductToken: JsonField<String> = JsonMissing.of()
-        private var tier: JsonField<String> = JsonMissing.of()
+        private var externalBankAccountToken: JsonField<String> = JsonMissing.of()
         private var financialAccountState: JsonField<FinancialAccountState> = JsonMissing.of()
         private var isSpendBlocked: JsonField<Boolean> = JsonMissing.of()
-        private var chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of()
+        private var tier: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountCreditConfig: FinancialAccountCreditConfig) = apply {
             accountToken = financialAccountCreditConfig.accountToken
+            chargedOffReason = financialAccountCreditConfig.chargedOffReason
             creditLimit = financialAccountCreditConfig.creditLimit
-            externalBankAccountToken = financialAccountCreditConfig.externalBankAccountToken
             creditProductToken = financialAccountCreditConfig.creditProductToken
-            tier = financialAccountCreditConfig.tier
+            externalBankAccountToken = financialAccountCreditConfig.externalBankAccountToken
             financialAccountState = financialAccountCreditConfig.financialAccountState
             isSpendBlocked = financialAccountCreditConfig.isSpendBlocked
-            chargedOffReason = financialAccountCreditConfig.chargedOffReason
+            tier = financialAccountCreditConfig.tier
             additionalProperties = financialAccountCreditConfig.additionalProperties.toMutableMap()
         }
 
@@ -155,16 +155,18 @@ private constructor(
             this.accountToken = accountToken
         }
 
+        /** Reason for the financial account being marked as Charged Off */
+        fun chargedOffReason(chargedOffReason: ChargedOffReason) =
+            chargedOffReason(JsonField.of(chargedOffReason))
+
+        /** Reason for the financial account being marked as Charged Off */
+        fun chargedOffReason(chargedOffReason: JsonField<ChargedOffReason>) = apply {
+            this.chargedOffReason = chargedOffReason
+        }
+
         fun creditLimit(creditLimit: Long) = creditLimit(JsonField.of(creditLimit))
 
         fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
-
-        fun externalBankAccountToken(externalBankAccountToken: String) =
-            externalBankAccountToken(JsonField.of(externalBankAccountToken))
-
-        fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
-            this.externalBankAccountToken = externalBankAccountToken
-        }
 
         /** Globally unique identifier for the credit product */
         fun creditProductToken(creditProductToken: String) =
@@ -175,11 +177,12 @@ private constructor(
             this.creditProductToken = creditProductToken
         }
 
-        /** Tier assigned to the financial account */
-        fun tier(tier: String) = tier(JsonField.of(tier))
+        fun externalBankAccountToken(externalBankAccountToken: String) =
+            externalBankAccountToken(JsonField.of(externalBankAccountToken))
 
-        /** Tier assigned to the financial account */
-        fun tier(tier: JsonField<String>) = apply { this.tier = tier }
+        fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
+            this.externalBankAccountToken = externalBankAccountToken
+        }
 
         /** State of the financial account */
         fun financialAccountState(financialAccountState: FinancialAccountState) =
@@ -196,14 +199,11 @@ private constructor(
             this.isSpendBlocked = isSpendBlocked
         }
 
-        /** Reason for the financial account being marked as Charged Off */
-        fun chargedOffReason(chargedOffReason: ChargedOffReason) =
-            chargedOffReason(JsonField.of(chargedOffReason))
+        /** Tier assigned to the financial account */
+        fun tier(tier: String) = tier(JsonField.of(tier))
 
-        /** Reason for the financial account being marked as Charged Off */
-        fun chargedOffReason(chargedOffReason: JsonField<ChargedOffReason>) = apply {
-            this.chargedOffReason = chargedOffReason
-        }
+        /** Tier assigned to the financial account */
+        fun tier(tier: JsonField<String>) = apply { this.tier = tier }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -227,13 +227,13 @@ private constructor(
         fun build(): FinancialAccountCreditConfig =
             FinancialAccountCreditConfig(
                 accountToken,
+                chargedOffReason,
                 creditLimit,
-                externalBankAccountToken,
                 creditProductToken,
-                tier,
+                externalBankAccountToken,
                 financialAccountState,
                 isSpendBlocked,
-                chargedOffReason,
+                tier,
                 additionalProperties.toImmutable(),
             )
     }
@@ -369,15 +369,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialAccountCreditConfig && accountToken == other.accountToken && creditLimit == other.creditLimit && externalBankAccountToken == other.externalBankAccountToken && creditProductToken == other.creditProductToken && tier == other.tier && financialAccountState == other.financialAccountState && isSpendBlocked == other.isSpendBlocked && chargedOffReason == other.chargedOffReason && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is FinancialAccountCreditConfig && accountToken == other.accountToken && chargedOffReason == other.chargedOffReason && creditLimit == other.creditLimit && creditProductToken == other.creditProductToken && externalBankAccountToken == other.externalBankAccountToken && financialAccountState == other.financialAccountState && isSpendBlocked == other.isSpendBlocked && tier == other.tier && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, creditLimit, externalBankAccountToken, creditProductToken, tier, financialAccountState, isSpendBlocked, chargedOffReason, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(accountToken, chargedOffReason, creditLimit, creditProductToken, externalBankAccountToken, financialAccountState, isSpendBlocked, tier, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FinancialAccountCreditConfig{accountToken=$accountToken, creditLimit=$creditLimit, externalBankAccountToken=$externalBankAccountToken, creditProductToken=$creditProductToken, tier=$tier, financialAccountState=$financialAccountState, isSpendBlocked=$isSpendBlocked, chargedOffReason=$chargedOffReason, additionalProperties=$additionalProperties}"
+        "FinancialAccountCreditConfig{accountToken=$accountToken, chargedOffReason=$chargedOffReason, creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, financialAccountState=$financialAccountState, isSpendBlocked=$isSpendBlocked, tier=$tier, additionalProperties=$additionalProperties}"
 }
