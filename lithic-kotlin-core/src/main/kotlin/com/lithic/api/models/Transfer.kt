@@ -22,6 +22,7 @@ import java.util.Objects
 class Transfer
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("category")
     @ExcludeMissing
     private val category: JsonField<Category> = JsonMissing.of(),
@@ -55,12 +56,14 @@ private constructor(
     @JsonProperty("to_balance")
     @ExcludeMissing
     private val toBalance: JsonField<List<Balance>> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("updated")
     @ExcludeMissing
     private val updated: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** Globally unique identifier for the transfer event. */
+    fun token(): String? = token.getNullable("token")
 
     /**
      * Status types:
@@ -115,11 +118,11 @@ private constructor(
     /** The updated balance of the receiving financial account. */
     fun toBalance(): List<Balance>? = toBalance.getNullable("to_balance")
 
-    /** Globally unique identifier for the transfer event. */
-    fun token(): String? = token.getNullable("token")
-
     /** Date and time when the financial transaction was last updated. UTC time zone. */
     fun updated(): OffsetDateTime? = updated.getNullable("updated")
+
+    /** Globally unique identifier for the transfer event. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /**
      * Status types:
@@ -174,9 +177,6 @@ private constructor(
     /** The updated balance of the receiving financial account. */
     @JsonProperty("to_balance") @ExcludeMissing fun _toBalance() = toBalance
 
-    /** Globally unique identifier for the transfer event. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     /** Date and time when the financial transaction was last updated. UTC time zone. */
     @JsonProperty("updated") @ExcludeMissing fun _updated() = updated
 
@@ -188,6 +188,7 @@ private constructor(
 
     fun validate(): Transfer = apply {
         if (!validated) {
+            token()
             category()
             created()
             currency()
@@ -199,7 +200,6 @@ private constructor(
             settledAmount()
             status()
             toBalance()?.forEach { it.validate() }
-            token()
             updated()
             validated = true
         }
@@ -214,6 +214,7 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var category: JsonField<Category> = JsonMissing.of()
         private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
@@ -225,11 +226,11 @@ private constructor(
         private var settledAmount: JsonField<Long> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var toBalance: JsonField<List<Balance>> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var updated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(transfer: Transfer) = apply {
+            token = transfer.token
             category = transfer.category
             created = transfer.created
             currency = transfer.currency
@@ -241,10 +242,15 @@ private constructor(
             settledAmount = transfer.settledAmount
             status = transfer.status
             toBalance = transfer.toBalance
-            token = transfer.token
             updated = transfer.updated
             additionalProperties = transfer.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier for the transfer event. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for the transfer event. */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * Status types:
@@ -362,12 +368,6 @@ private constructor(
         /** The updated balance of the receiving financial account. */
         fun toBalance(toBalance: JsonField<List<Balance>>) = apply { this.toBalance = toBalance }
 
-        /** Globally unique identifier for the transfer event. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for the transfer event. */
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
         /** Date and time when the financial transaction was last updated. UTC time zone. */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
 
@@ -395,6 +395,7 @@ private constructor(
 
         fun build(): Transfer =
             Transfer(
+                token,
                 category,
                 created,
                 currency,
@@ -406,7 +407,6 @@ private constructor(
                 settledAmount,
                 status,
                 toBalance.map { it.toImmutable() },
-                token,
                 updated,
                 additionalProperties.toImmutable(),
             )
@@ -467,6 +467,9 @@ private constructor(
     class FinancialEvent
     @JsonCreator
     private constructor(
+        @JsonProperty("token")
+        @ExcludeMissing
+        private val token: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Long> = JsonMissing.of(),
@@ -476,15 +479,15 @@ private constructor(
         @JsonProperty("result")
         @ExcludeMissing
         private val result: JsonField<Result> = JsonMissing.of(),
-        @JsonProperty("token")
-        @ExcludeMissing
-        private val token: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type")
         @ExcludeMissing
         private val type: JsonField<FinancialEventType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        /** Globally unique identifier. */
+        fun token(): String? = token.getNullable("token")
 
         /**
          * Amount of the financial event that has been settled in the currency's smallest unit
@@ -501,10 +504,10 @@ private constructor(
          */
         fun result(): Result? = result.getNullable("result")
 
-        /** Globally unique identifier. */
-        fun token(): String? = token.getNullable("token")
-
         fun type(): FinancialEventType? = type.getNullable("type")
+
+        /** Globally unique identifier. */
+        @JsonProperty("token") @ExcludeMissing fun _token() = token
 
         /**
          * Amount of the financial event that has been settled in the currency's smallest unit
@@ -521,9 +524,6 @@ private constructor(
          */
         @JsonProperty("result") @ExcludeMissing fun _result() = result
 
-        /** Globally unique identifier. */
-        @JsonProperty("token") @ExcludeMissing fun _token() = token
-
         @JsonProperty("type") @ExcludeMissing fun _type() = type
 
         @JsonAnyGetter
@@ -534,10 +534,10 @@ private constructor(
 
         fun validate(): FinancialEvent = apply {
             if (!validated) {
+                token()
                 amount()
                 created()
                 result()
-                token()
                 type()
                 validated = true
             }
@@ -552,21 +552,27 @@ private constructor(
 
         class Builder {
 
+            private var token: JsonField<String> = JsonMissing.of()
             private var amount: JsonField<Long> = JsonMissing.of()
             private var created: JsonField<OffsetDateTime> = JsonMissing.of()
             private var result: JsonField<Result> = JsonMissing.of()
-            private var token: JsonField<String> = JsonMissing.of()
             private var type: JsonField<FinancialEventType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(financialEvent: FinancialEvent) = apply {
+                token = financialEvent.token
                 amount = financialEvent.amount
                 created = financialEvent.created
                 result = financialEvent.result
-                token = financialEvent.token
                 type = financialEvent.type
                 additionalProperties = financialEvent.additionalProperties.toMutableMap()
             }
+
+            /** Globally unique identifier. */
+            fun token(token: String) = token(JsonField.of(token))
+
+            /** Globally unique identifier. */
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /**
              * Amount of the financial event that has been settled in the currency's smallest unit
@@ -598,12 +604,6 @@ private constructor(
              */
             fun result(result: JsonField<Result>) = apply { this.result = result }
 
-            /** Globally unique identifier. */
-            fun token(token: String) = token(JsonField.of(token))
-
-            /** Globally unique identifier. */
-            fun token(token: JsonField<String>) = apply { this.token = token }
-
             fun type(type: FinancialEventType) = type(JsonField.of(type))
 
             fun type(type: JsonField<FinancialEventType>) = apply { this.type = type }
@@ -629,10 +629,10 @@ private constructor(
 
             fun build(): FinancialEvent =
                 FinancialEvent(
+                    token,
                     amount,
                     created,
                     result,
-                    token,
                     type,
                     additionalProperties.toImmutable(),
                 )
@@ -1117,17 +1117,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialEvent && amount == other.amount && created == other.created && result == other.result && token == other.token && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is FinancialEvent && token == other.token && amount == other.amount && created == other.created && result == other.result && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, created, result, token, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(token, amount, created, result, type, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FinancialEvent{amount=$amount, created=$created, result=$result, token=$token, type=$type, additionalProperties=$additionalProperties}"
+            "FinancialEvent{token=$token, amount=$amount, created=$created, result=$result, type=$type, additionalProperties=$additionalProperties}"
     }
 
     class Result
@@ -1267,15 +1267,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Transfer && category == other.category && created == other.created && currency == other.currency && descriptor == other.descriptor && events == other.events && fromBalance == other.fromBalance && pendingAmount == other.pendingAmount && result == other.result && settledAmount == other.settledAmount && status == other.status && toBalance == other.toBalance && token == other.token && updated == other.updated && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Transfer && token == other.token && category == other.category && created == other.created && currency == other.currency && descriptor == other.descriptor && events == other.events && fromBalance == other.fromBalance && pendingAmount == other.pendingAmount && result == other.result && settledAmount == other.settledAmount && status == other.status && toBalance == other.toBalance && updated == other.updated && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(category, created, currency, descriptor, events, fromBalance, pendingAmount, result, settledAmount, status, toBalance, token, updated, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, category, created, currency, descriptor, events, fromBalance, pendingAmount, result, settledAmount, status, toBalance, updated, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Transfer{category=$category, created=$created, currency=$currency, descriptor=$descriptor, events=$events, fromBalance=$fromBalance, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, status=$status, toBalance=$toBalance, token=$token, updated=$updated, additionalProperties=$additionalProperties}"
+        "Transfer{token=$token, category=$category, created=$created, currency=$currency, descriptor=$descriptor, events=$events, fromBalance=$fromBalance, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, status=$status, toBalance=$toBalance, updated=$updated, additionalProperties=$additionalProperties}"
 }

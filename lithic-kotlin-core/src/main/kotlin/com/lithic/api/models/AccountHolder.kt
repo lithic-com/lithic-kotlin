@@ -22,6 +22,10 @@ import java.util.Objects
 class AccountHolder
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created")
+    @ExcludeMissing
+    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("account_token")
     @ExcludeMissing
     private val accountToken: JsonField<String> = JsonMissing.of(),
@@ -42,9 +46,6 @@ private constructor(
     @JsonProperty("control_person")
     @ExcludeMissing
     private val controlPerson: JsonField<AccountHolderIndividualResponse> = JsonMissing.of(),
-    @JsonProperty("created")
-    @ExcludeMissing
-    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
     @JsonProperty("exemption_type")
     @ExcludeMissing
@@ -61,13 +62,15 @@ private constructor(
     @JsonProperty("phone_number")
     @ExcludeMissing
     private val phoneNumber: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("required_documents")
+    @ExcludeMissing
+    private val requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
     @JsonProperty("status_reasons")
     @ExcludeMissing
     private val statusReasons: JsonField<List<StatusReason>> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("user_type")
     @ExcludeMissing
     private val userType: JsonField<UserType> = JsonMissing.of(),
@@ -75,14 +78,17 @@ private constructor(
     @ExcludeMissing
     private val verificationApplication: JsonField<AccountHolderVerificationApplication> =
         JsonMissing.of(),
-    @JsonProperty("required_documents")
-    @ExcludeMissing
-    private val requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of(),
     @JsonProperty("website_url")
     @ExcludeMissing
     private val websiteUrl: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** Globally unique identifier for the account holder. */
+    fun token(): String = token.getRequired("token")
+
+    /** Timestamp of when the account holder was created. */
+    fun created(): OffsetDateTime = created.getRequired("created")
 
     /** Globally unique identifier for the account. */
     fun accountToken(): String? = accountToken.getNullable("account_token")
@@ -126,9 +132,6 @@ private constructor(
     fun controlPerson(): AccountHolderIndividualResponse? =
         controlPerson.getNullable("control_person")
 
-    /** Timestamp of when the account holder was created. */
-    fun created(): OffsetDateTime = created.getRequired("created")
-
     /**
      * < Deprecated. Use control_person.email when user_type == "BUSINESS". Use
      * individual.phone_number when user_type == "INDIVIDUAL".
@@ -162,6 +165,13 @@ private constructor(
     fun phoneNumber(): String? = phoneNumber.getNullable("phone_number")
 
     /**
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
+     */
+    fun requiredDocuments(): List<RequiredDocument>? =
+        requiredDocuments.getNullable("required_documents")
+
+    /**
      * <Deprecated. Use verification_application.status instead>
      *
      * KYC and KYB evaluation states.
@@ -176,9 +186,6 @@ private constructor(
      */
     fun statusReasons(): List<StatusReason>? = statusReasons.getNullable("status_reasons")
 
-    /** Globally unique identifier for the account holder. */
-    fun token(): String = token.getRequired("token")
-
     /**
      * The type of Account Holder. If the type is "INDIVIDUAL", the "individual" attribute will be
      * present. If the type is "BUSINESS" then the "business_entity", "control_person",
@@ -191,15 +198,14 @@ private constructor(
     fun verificationApplication(): AccountHolderVerificationApplication? =
         verificationApplication.getNullable("verification_application")
 
-    /**
-     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
-     * be approved.
-     */
-    fun requiredDocuments(): List<RequiredDocument>? =
-        requiredDocuments.getNullable("required_documents")
-
     /** Only present when user_type == "BUSINESS". Business's primary website. */
     fun websiteUrl(): String? = websiteUrl.getNullable("website_url")
+
+    /** Globally unique identifier for the account holder. */
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
+
+    /** Timestamp of when the account holder was created. */
+    @JsonProperty("created") @ExcludeMissing fun _created() = created
 
     /** Globally unique identifier for the account. */
     @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
@@ -245,9 +251,6 @@ private constructor(
      */
     @JsonProperty("control_person") @ExcludeMissing fun _controlPerson() = controlPerson
 
-    /** Timestamp of when the account holder was created. */
-    @JsonProperty("created") @ExcludeMissing fun _created() = created
-
     /**
      * < Deprecated. Use control_person.email when user_type == "BUSINESS". Use
      * individual.phone_number when user_type == "INDIVIDUAL".
@@ -281,6 +284,12 @@ private constructor(
     @JsonProperty("phone_number") @ExcludeMissing fun _phoneNumber() = phoneNumber
 
     /**
+     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
+     * be approved.
+     */
+    @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
+
+    /**
      * <Deprecated. Use verification_application.status instead>
      *
      * KYC and KYB evaluation states.
@@ -295,9 +304,6 @@ private constructor(
      */
     @JsonProperty("status_reasons") @ExcludeMissing fun _statusReasons() = statusReasons
 
-    /** Globally unique identifier for the account holder. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
-
     /**
      * The type of Account Holder. If the type is "INDIVIDUAL", the "individual" attribute will be
      * present. If the type is "BUSINESS" then the "business_entity", "control_person",
@@ -311,12 +317,6 @@ private constructor(
     @ExcludeMissing
     fun _verificationApplication() = verificationApplication
 
-    /**
-     * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
-     * be approved.
-     */
-    @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
-
     /** Only present when user_type == "BUSINESS". Business's primary website. */
     @JsonProperty("website_url") @ExcludeMissing fun _websiteUrl() = websiteUrl
 
@@ -328,25 +328,25 @@ private constructor(
 
     fun validate(): AccountHolder = apply {
         if (!validated) {
+            token()
+            created()
             accountToken()
             beneficialOwnerEntities()?.forEach { it.validate() }
             beneficialOwnerIndividuals()?.forEach { it.validate() }
             businessAccountToken()
             businessEntity()?.validate()
             controlPerson()?.validate()
-            created()
             email()
             exemptionType()
             externalId()
             individual()?.validate()
             natureOfBusiness()
             phoneNumber()
+            requiredDocuments()?.forEach { it.validate() }
             status()
             statusReasons()
-            token()
             userType()
             verificationApplication()?.validate()
-            requiredDocuments()?.forEach { it.validate() }
             websiteUrl()
             validated = true
         }
@@ -361,6 +361,8 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
+        private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
         private var beneficialOwnerEntities: JsonField<List<AccountHolderBusinessResponse>> =
             JsonMissing.of()
@@ -369,46 +371,56 @@ private constructor(
         private var businessAccountToken: JsonField<String> = JsonMissing.of()
         private var businessEntity: JsonField<AccountHolderBusinessResponse> = JsonMissing.of()
         private var controlPerson: JsonField<AccountHolderIndividualResponse> = JsonMissing.of()
-        private var created: JsonField<OffsetDateTime> = JsonMissing.of()
         private var email: JsonField<String> = JsonMissing.of()
         private var exemptionType: JsonField<ExemptionType> = JsonMissing.of()
         private var externalId: JsonField<String> = JsonMissing.of()
         private var individual: JsonField<AccountHolderIndividualResponse> = JsonMissing.of()
         private var natureOfBusiness: JsonField<String> = JsonMissing.of()
         private var phoneNumber: JsonField<String> = JsonMissing.of()
+        private var requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var statusReasons: JsonField<List<StatusReason>> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var userType: JsonField<UserType> = JsonMissing.of()
         private var verificationApplication: JsonField<AccountHolderVerificationApplication> =
             JsonMissing.of()
-        private var requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of()
         private var websiteUrl: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountHolder: AccountHolder) = apply {
+            token = accountHolder.token
+            created = accountHolder.created
             accountToken = accountHolder.accountToken
             beneficialOwnerEntities = accountHolder.beneficialOwnerEntities
             beneficialOwnerIndividuals = accountHolder.beneficialOwnerIndividuals
             businessAccountToken = accountHolder.businessAccountToken
             businessEntity = accountHolder.businessEntity
             controlPerson = accountHolder.controlPerson
-            created = accountHolder.created
             email = accountHolder.email
             exemptionType = accountHolder.exemptionType
             externalId = accountHolder.externalId
             individual = accountHolder.individual
             natureOfBusiness = accountHolder.natureOfBusiness
             phoneNumber = accountHolder.phoneNumber
+            requiredDocuments = accountHolder.requiredDocuments
             status = accountHolder.status
             statusReasons = accountHolder.statusReasons
-            token = accountHolder.token
             userType = accountHolder.userType
             verificationApplication = accountHolder.verificationApplication
-            requiredDocuments = accountHolder.requiredDocuments
             websiteUrl = accountHolder.websiteUrl
             additionalProperties = accountHolder.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier for the account holder. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for the account holder. */
+        fun token(token: JsonField<String>) = apply { this.token = token }
+
+        /** Timestamp of when the account holder was created. */
+        fun created(created: OffsetDateTime) = created(JsonField.of(created))
+
+        /** Timestamp of when the account holder was created. */
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Globally unique identifier for the account. */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -504,12 +516,6 @@ private constructor(
             this.controlPerson = controlPerson
         }
 
-        /** Timestamp of when the account holder was created. */
-        fun created(created: OffsetDateTime) = created(JsonField.of(created))
-
-        /** Timestamp of when the account holder was created. */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
-
         /**
          * < Deprecated. Use control_person.email when user_type == "BUSINESS". Use
          * individual.phone_number when user_type == "INDIVIDUAL".
@@ -587,6 +593,21 @@ private constructor(
         fun phoneNumber(phoneNumber: JsonField<String>) = apply { this.phoneNumber = phoneNumber }
 
         /**
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
+         */
+        fun requiredDocuments(requiredDocuments: List<RequiredDocument>) =
+            requiredDocuments(JsonField.of(requiredDocuments))
+
+        /**
+         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
+         * holder to be approved.
+         */
+        fun requiredDocuments(requiredDocuments: JsonField<List<RequiredDocument>>) = apply {
+            this.requiredDocuments = requiredDocuments
+        }
+
+        /**
          * <Deprecated. Use verification_application.status instead>
          *
          * KYC and KYB evaluation states.
@@ -621,12 +642,6 @@ private constructor(
             this.statusReasons = statusReasons
         }
 
-        /** Globally unique identifier for the account holder. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for the account holder. */
-        fun token(token: JsonField<String>) = apply { this.token = token }
-
         /**
          * The type of Account Holder. If the type is "INDIVIDUAL", the "individual" attribute will
          * be present. If the type is "BUSINESS" then the "business_entity", "control_person",
@@ -651,21 +666,6 @@ private constructor(
         fun verificationApplication(
             verificationApplication: JsonField<AccountHolderVerificationApplication>
         ) = apply { this.verificationApplication = verificationApplication }
-
-        /**
-         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
-         * holder to be approved.
-         */
-        fun requiredDocuments(requiredDocuments: List<RequiredDocument>) =
-            requiredDocuments(JsonField.of(requiredDocuments))
-
-        /**
-         * Only present for "KYB_BASIC" workflow. A list of documents required for the account
-         * holder to be approved.
-         */
-        fun requiredDocuments(requiredDocuments: JsonField<List<RequiredDocument>>) = apply {
-            this.requiredDocuments = requiredDocuments
-        }
 
         /** Only present when user_type == "BUSINESS". Business's primary website. */
         fun websiteUrl(websiteUrl: String) = websiteUrl(JsonField.of(websiteUrl))
@@ -694,25 +694,25 @@ private constructor(
 
         fun build(): AccountHolder =
             AccountHolder(
+                token,
+                created,
                 accountToken,
                 beneficialOwnerEntities.map { it.toImmutable() },
                 beneficialOwnerIndividuals.map { it.toImmutable() },
                 businessAccountToken,
                 businessEntity,
                 controlPerson,
-                created,
                 email,
                 exemptionType,
                 externalId,
                 individual,
                 natureOfBusiness,
                 phoneNumber,
+                requiredDocuments.map { it.toImmutable() },
                 status,
                 statusReasons.map { it.toImmutable() },
-                token,
                 userType,
                 verificationApplication,
-                requiredDocuments.map { it.toImmutable() },
                 websiteUrl,
                 additionalProperties.toImmutable(),
             )
@@ -728,21 +728,21 @@ private constructor(
         @JsonProperty("dba_business_name")
         @ExcludeMissing
         private val dbaBusinessName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("entity_token")
+        @ExcludeMissing
+        private val entityToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("government_id")
         @ExcludeMissing
         private val governmentId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("legal_business_name")
         @ExcludeMissing
         private val legalBusinessName: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("parent_company")
-        @ExcludeMissing
-        private val parentCompany: JsonField<String> = JsonMissing.of(),
         @JsonProperty("phone_numbers")
         @ExcludeMissing
         private val phoneNumbers: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("entity_token")
+        @JsonProperty("parent_company")
         @ExcludeMissing
-        private val entityToken: JsonField<String> = JsonMissing.of(),
+        private val parentCompany: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -759,6 +759,9 @@ private constructor(
          */
         fun dbaBusinessName(): String = dbaBusinessName.getRequired("dba_business_name")
 
+        /** Globally unique identifier for the entity. */
+        fun entityToken(): String = entityToken.getRequired("entity_token")
+
         /**
          * Government-issued identification number. US Federal Employer Identification Numbers (EIN)
          * are currently supported, entered as full nine-digits, with or without hyphens.
@@ -768,14 +771,11 @@ private constructor(
         /** Legal (formal) business name. */
         fun legalBusinessName(): String = legalBusinessName.getRequired("legal_business_name")
 
-        /** Parent company name (if applicable). */
-        fun parentCompany(): String? = parentCompany.getNullable("parent_company")
-
         /** One or more of the business's phone number(s), entered as a list in E.164 format. */
         fun phoneNumbers(): List<String> = phoneNumbers.getRequired("phone_numbers")
 
-        /** Globally unique identifier for the entity. */
-        fun entityToken(): String = entityToken.getRequired("entity_token")
+        /** Parent company name (if applicable). */
+        fun parentCompany(): String? = parentCompany.getNullable("parent_company")
 
         /**
          * Business's physical address - PO boxes, UPS drops, and FedEx drops are not acceptable;
@@ -789,6 +789,9 @@ private constructor(
          */
         @JsonProperty("dba_business_name") @ExcludeMissing fun _dbaBusinessName() = dbaBusinessName
 
+        /** Globally unique identifier for the entity. */
+        @JsonProperty("entity_token") @ExcludeMissing fun _entityToken() = entityToken
+
         /**
          * Government-issued identification number. US Federal Employer Identification Numbers (EIN)
          * are currently supported, entered as full nine-digits, with or without hyphens.
@@ -800,14 +803,11 @@ private constructor(
         @ExcludeMissing
         fun _legalBusinessName() = legalBusinessName
 
-        /** Parent company name (if applicable). */
-        @JsonProperty("parent_company") @ExcludeMissing fun _parentCompany() = parentCompany
-
         /** One or more of the business's phone number(s), entered as a list in E.164 format. */
         @JsonProperty("phone_numbers") @ExcludeMissing fun _phoneNumbers() = phoneNumbers
 
-        /** Globally unique identifier for the entity. */
-        @JsonProperty("entity_token") @ExcludeMissing fun _entityToken() = entityToken
+        /** Parent company name (if applicable). */
+        @JsonProperty("parent_company") @ExcludeMissing fun _parentCompany() = parentCompany
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -819,11 +819,11 @@ private constructor(
             if (!validated) {
                 address().validate()
                 dbaBusinessName()
+                entityToken()
                 governmentId()
                 legalBusinessName()
-                parentCompany()
                 phoneNumbers()
-                entityToken()
+                parentCompany()
                 validated = true
             }
         }
@@ -839,22 +839,22 @@ private constructor(
 
             private var address: JsonField<Address> = JsonMissing.of()
             private var dbaBusinessName: JsonField<String> = JsonMissing.of()
+            private var entityToken: JsonField<String> = JsonMissing.of()
             private var governmentId: JsonField<String> = JsonMissing.of()
             private var legalBusinessName: JsonField<String> = JsonMissing.of()
-            private var parentCompany: JsonField<String> = JsonMissing.of()
             private var phoneNumbers: JsonField<List<String>> = JsonMissing.of()
-            private var entityToken: JsonField<String> = JsonMissing.of()
+            private var parentCompany: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountHolderBusinessResponse: AccountHolderBusinessResponse) =
                 apply {
                     address = accountHolderBusinessResponse.address
                     dbaBusinessName = accountHolderBusinessResponse.dbaBusinessName
+                    entityToken = accountHolderBusinessResponse.entityToken
                     governmentId = accountHolderBusinessResponse.governmentId
                     legalBusinessName = accountHolderBusinessResponse.legalBusinessName
-                    parentCompany = accountHolderBusinessResponse.parentCompany
                     phoneNumbers = accountHolderBusinessResponse.phoneNumbers
-                    entityToken = accountHolderBusinessResponse.entityToken
+                    parentCompany = accountHolderBusinessResponse.parentCompany
                     additionalProperties =
                         accountHolderBusinessResponse.additionalProperties.toMutableMap()
                 }
@@ -886,6 +886,14 @@ private constructor(
                 this.dbaBusinessName = dbaBusinessName
             }
 
+            /** Globally unique identifier for the entity. */
+            fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
+
+            /** Globally unique identifier for the entity. */
+            fun entityToken(entityToken: JsonField<String>) = apply {
+                this.entityToken = entityToken
+            }
+
             /**
              * Government-issued identification number. US Federal Employer Identification Numbers
              * (EIN) are currently supported, entered as full nine-digits, with or without hyphens.
@@ -909,14 +917,6 @@ private constructor(
                 this.legalBusinessName = legalBusinessName
             }
 
-            /** Parent company name (if applicable). */
-            fun parentCompany(parentCompany: String) = parentCompany(JsonField.of(parentCompany))
-
-            /** Parent company name (if applicable). */
-            fun parentCompany(parentCompany: JsonField<String>) = apply {
-                this.parentCompany = parentCompany
-            }
-
             /** One or more of the business's phone number(s), entered as a list in E.164 format. */
             fun phoneNumbers(phoneNumbers: List<String>) = phoneNumbers(JsonField.of(phoneNumbers))
 
@@ -925,12 +925,12 @@ private constructor(
                 this.phoneNumbers = phoneNumbers
             }
 
-            /** Globally unique identifier for the entity. */
-            fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
+            /** Parent company name (if applicable). */
+            fun parentCompany(parentCompany: String) = parentCompany(JsonField.of(parentCompany))
 
-            /** Globally unique identifier for the entity. */
-            fun entityToken(entityToken: JsonField<String>) = apply {
-                this.entityToken = entityToken
+            /** Parent company name (if applicable). */
+            fun parentCompany(parentCompany: JsonField<String>) = apply {
+                this.parentCompany = parentCompany
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -956,11 +956,11 @@ private constructor(
                 AccountHolderBusinessResponse(
                     address,
                     dbaBusinessName,
+                    entityToken,
                     governmentId,
                     legalBusinessName,
-                    parentCompany,
                     phoneNumbers.map { it.toImmutable() },
-                    entityToken,
+                    parentCompany,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -970,17 +970,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderBusinessResponse && address == other.address && dbaBusinessName == other.dbaBusinessName && governmentId == other.governmentId && legalBusinessName == other.legalBusinessName && parentCompany == other.parentCompany && phoneNumbers == other.phoneNumbers && entityToken == other.entityToken && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountHolderBusinessResponse && address == other.address && dbaBusinessName == other.dbaBusinessName && entityToken == other.entityToken && governmentId == other.governmentId && legalBusinessName == other.legalBusinessName && phoneNumbers == other.phoneNumbers && parentCompany == other.parentCompany && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(address, dbaBusinessName, governmentId, legalBusinessName, parentCompany, phoneNumbers, entityToken, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(address, dbaBusinessName, entityToken, governmentId, legalBusinessName, phoneNumbers, parentCompany, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountHolderBusinessResponse{address=$address, dbaBusinessName=$dbaBusinessName, governmentId=$governmentId, legalBusinessName=$legalBusinessName, parentCompany=$parentCompany, phoneNumbers=$phoneNumbers, entityToken=$entityToken, additionalProperties=$additionalProperties}"
+            "AccountHolderBusinessResponse{address=$address, dbaBusinessName=$dbaBusinessName, entityToken=$entityToken, governmentId=$governmentId, legalBusinessName=$legalBusinessName, phoneNumbers=$phoneNumbers, parentCompany=$parentCompany, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -998,6 +998,9 @@ private constructor(
         @JsonProperty("email")
         @ExcludeMissing
         private val email: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("entity_token")
+        @ExcludeMissing
+        private val entityToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("first_name")
         @ExcludeMissing
         private val firstName: JsonField<String> = JsonMissing.of(),
@@ -1007,9 +1010,6 @@ private constructor(
         @JsonProperty("phone_number")
         @ExcludeMissing
         private val phoneNumber: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("entity_token")
-        @ExcludeMissing
-        private val entityToken: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -1023,6 +1023,9 @@ private constructor(
         /** Individual's email address. */
         fun email(): String = email.getRequired("email")
 
+        /** Globally unique identifier for the entity. */
+        fun entityToken(): String = entityToken.getRequired("entity_token")
+
         /** Individual's first name, as it appears on government-issued identity documents. */
         fun firstName(): String = firstName.getRequired("first_name")
 
@@ -1031,9 +1034,6 @@ private constructor(
 
         /** Individual's phone number, entered in E.164 format. */
         fun phoneNumber(): String = phoneNumber.getRequired("phone_number")
-
-        /** Globally unique identifier for the entity. */
-        fun entityToken(): String = entityToken.getRequired("entity_token")
 
         /** Individual's current address */
         @JsonProperty("address") @ExcludeMissing fun _address() = address
@@ -1044,6 +1044,9 @@ private constructor(
         /** Individual's email address. */
         @JsonProperty("email") @ExcludeMissing fun _email() = email
 
+        /** Globally unique identifier for the entity. */
+        @JsonProperty("entity_token") @ExcludeMissing fun _entityToken() = entityToken
+
         /** Individual's first name, as it appears on government-issued identity documents. */
         @JsonProperty("first_name") @ExcludeMissing fun _firstName() = firstName
 
@@ -1052,9 +1055,6 @@ private constructor(
 
         /** Individual's phone number, entered in E.164 format. */
         @JsonProperty("phone_number") @ExcludeMissing fun _phoneNumber() = phoneNumber
-
-        /** Globally unique identifier for the entity. */
-        @JsonProperty("entity_token") @ExcludeMissing fun _entityToken() = entityToken
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1067,10 +1067,10 @@ private constructor(
                 address().validate()
                 dob()
                 email()
+                entityToken()
                 firstName()
                 lastName()
                 phoneNumber()
-                entityToken()
                 validated = true
             }
         }
@@ -1087,10 +1087,10 @@ private constructor(
             private var address: JsonField<Address> = JsonMissing.of()
             private var dob: JsonField<String> = JsonMissing.of()
             private var email: JsonField<String> = JsonMissing.of()
+            private var entityToken: JsonField<String> = JsonMissing.of()
             private var firstName: JsonField<String> = JsonMissing.of()
             private var lastName: JsonField<String> = JsonMissing.of()
             private var phoneNumber: JsonField<String> = JsonMissing.of()
-            private var entityToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountHolderIndividualResponse: AccountHolderIndividualResponse) =
@@ -1098,10 +1098,10 @@ private constructor(
                     address = accountHolderIndividualResponse.address
                     dob = accountHolderIndividualResponse.dob
                     email = accountHolderIndividualResponse.email
+                    entityToken = accountHolderIndividualResponse.entityToken
                     firstName = accountHolderIndividualResponse.firstName
                     lastName = accountHolderIndividualResponse.lastName
                     phoneNumber = accountHolderIndividualResponse.phoneNumber
-                    entityToken = accountHolderIndividualResponse.entityToken
                     additionalProperties =
                         accountHolderIndividualResponse.additionalProperties.toMutableMap()
                 }
@@ -1124,6 +1124,14 @@ private constructor(
             /** Individual's email address. */
             fun email(email: JsonField<String>) = apply { this.email = email }
 
+            /** Globally unique identifier for the entity. */
+            fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
+
+            /** Globally unique identifier for the entity. */
+            fun entityToken(entityToken: JsonField<String>) = apply {
+                this.entityToken = entityToken
+            }
+
             /** Individual's first name, as it appears on government-issued identity documents. */
             fun firstName(firstName: String) = firstName(JsonField.of(firstName))
 
@@ -1142,14 +1150,6 @@ private constructor(
             /** Individual's phone number, entered in E.164 format. */
             fun phoneNumber(phoneNumber: JsonField<String>) = apply {
                 this.phoneNumber = phoneNumber
-            }
-
-            /** Globally unique identifier for the entity. */
-            fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
-
-            /** Globally unique identifier for the entity. */
-            fun entityToken(entityToken: JsonField<String>) = apply {
-                this.entityToken = entityToken
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1176,10 +1176,10 @@ private constructor(
                     address,
                     dob,
                     email,
+                    entityToken,
                     firstName,
                     lastName,
                     phoneNumber,
-                    entityToken,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1189,17 +1189,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderIndividualResponse && address == other.address && dob == other.dob && email == other.email && firstName == other.firstName && lastName == other.lastName && phoneNumber == other.phoneNumber && entityToken == other.entityToken && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountHolderIndividualResponse && address == other.address && dob == other.dob && email == other.email && entityToken == other.entityToken && firstName == other.firstName && lastName == other.lastName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(address, dob, email, firstName, lastName, phoneNumber, entityToken, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(address, dob, email, entityToken, firstName, lastName, phoneNumber, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountHolderIndividualResponse{address=$address, dob=$dob, email=$email, firstName=$firstName, lastName=$lastName, phoneNumber=$phoneNumber, entityToken=$entityToken, additionalProperties=$additionalProperties}"
+            "AccountHolderIndividualResponse{address=$address, dob=$dob, email=$email, entityToken=$entityToken, firstName=$firstName, lastName=$lastName, phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
     }
 
     class ExemptionType
@@ -1874,15 +1874,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolder && accountToken == other.accountToken && beneficialOwnerEntities == other.beneficialOwnerEntities && beneficialOwnerIndividuals == other.beneficialOwnerIndividuals && businessAccountToken == other.businessAccountToken && businessEntity == other.businessEntity && controlPerson == other.controlPerson && created == other.created && email == other.email && exemptionType == other.exemptionType && externalId == other.externalId && individual == other.individual && natureOfBusiness == other.natureOfBusiness && phoneNumber == other.phoneNumber && status == other.status && statusReasons == other.statusReasons && token == other.token && userType == other.userType && verificationApplication == other.verificationApplication && requiredDocuments == other.requiredDocuments && websiteUrl == other.websiteUrl && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AccountHolder && token == other.token && created == other.created && accountToken == other.accountToken && beneficialOwnerEntities == other.beneficialOwnerEntities && beneficialOwnerIndividuals == other.beneficialOwnerIndividuals && businessAccountToken == other.businessAccountToken && businessEntity == other.businessEntity && controlPerson == other.controlPerson && email == other.email && exemptionType == other.exemptionType && externalId == other.externalId && individual == other.individual && natureOfBusiness == other.natureOfBusiness && phoneNumber == other.phoneNumber && requiredDocuments == other.requiredDocuments && status == other.status && statusReasons == other.statusReasons && userType == other.userType && verificationApplication == other.verificationApplication && websiteUrl == other.websiteUrl && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, beneficialOwnerEntities, beneficialOwnerIndividuals, businessAccountToken, businessEntity, controlPerson, created, email, exemptionType, externalId, individual, natureOfBusiness, phoneNumber, status, statusReasons, token, userType, verificationApplication, requiredDocuments, websiteUrl, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, created, accountToken, beneficialOwnerEntities, beneficialOwnerIndividuals, businessAccountToken, businessEntity, controlPerson, email, exemptionType, externalId, individual, natureOfBusiness, phoneNumber, requiredDocuments, status, statusReasons, userType, verificationApplication, websiteUrl, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountHolder{accountToken=$accountToken, beneficialOwnerEntities=$beneficialOwnerEntities, beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessAccountToken=$businessAccountToken, businessEntity=$businessEntity, controlPerson=$controlPerson, created=$created, email=$email, exemptionType=$exemptionType, externalId=$externalId, individual=$individual, natureOfBusiness=$natureOfBusiness, phoneNumber=$phoneNumber, status=$status, statusReasons=$statusReasons, token=$token, userType=$userType, verificationApplication=$verificationApplication, requiredDocuments=$requiredDocuments, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
+        "AccountHolder{token=$token, created=$created, accountToken=$accountToken, beneficialOwnerEntities=$beneficialOwnerEntities, beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessAccountToken=$businessAccountToken, businessEntity=$businessEntity, controlPerson=$controlPerson, email=$email, exemptionType=$exemptionType, externalId=$externalId, individual=$individual, natureOfBusiness=$natureOfBusiness, phoneNumber=$phoneNumber, requiredDocuments=$requiredDocuments, status=$status, statusReasons=$statusReasons, userType=$userType, verificationApplication=$verificationApplication, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
 }

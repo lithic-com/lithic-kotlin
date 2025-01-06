@@ -22,39 +22,33 @@ import java.util.Objects
 class AccountHolderCreateResponse
 @JsonCreator
 private constructor(
+    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonProperty("account_token")
     @ExcludeMissing
     private val accountToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("created")
-    @ExcludeMissing
-    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("external_id")
-    @ExcludeMissing
-    private val externalId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
     @JsonProperty("status_reasons")
     @ExcludeMissing
     private val statusReasons: JsonField<List<StatusReasons>> = JsonMissing.of(),
+    @JsonProperty("created")
+    @ExcludeMissing
+    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("external_id")
+    @ExcludeMissing
+    private val externalId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("required_documents")
     @ExcludeMissing
     private val requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of(),
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /** Globally unique identifier for the account holder. */
+    fun token(): String = token.getRequired("token")
+
     /** Globally unique identifier for the account. */
     fun accountToken(): String = accountToken.getRequired("account_token")
-
-    /** Timestamp of when the account holder was created. */
-    fun created(): OffsetDateTime? = created.getNullable("created")
-
-    /**
-     * Customer-provided token that indicates a relationship with an object outside of the Lithic
-     * ecosystem.
-     */
-    fun externalId(): String? = externalId.getNullable("external_id")
 
     /**
      * KYC and KYB evaluation states.
@@ -67,6 +61,15 @@ private constructor(
     /** Reason for the evaluation status. */
     fun statusReasons(): List<StatusReasons> = statusReasons.getRequired("status_reasons")
 
+    /** Timestamp of when the account holder was created. */
+    fun created(): OffsetDateTime? = created.getNullable("created")
+
+    /**
+     * Customer-provided token that indicates a relationship with an object outside of the Lithic
+     * ecosystem.
+     */
+    fun externalId(): String? = externalId.getNullable("external_id")
+
     /**
      * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
      * be approved.
@@ -75,19 +78,10 @@ private constructor(
         requiredDocuments.getNullable("required_documents")
 
     /** Globally unique identifier for the account holder. */
-    fun token(): String = token.getRequired("token")
+    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     /** Globally unique identifier for the account. */
     @JsonProperty("account_token") @ExcludeMissing fun _accountToken() = accountToken
-
-    /** Timestamp of when the account holder was created. */
-    @JsonProperty("created") @ExcludeMissing fun _created() = created
-
-    /**
-     * Customer-provided token that indicates a relationship with an object outside of the Lithic
-     * ecosystem.
-     */
-    @JsonProperty("external_id") @ExcludeMissing fun _externalId() = externalId
 
     /**
      * KYC and KYB evaluation states.
@@ -100,14 +94,20 @@ private constructor(
     /** Reason for the evaluation status. */
     @JsonProperty("status_reasons") @ExcludeMissing fun _statusReasons() = statusReasons
 
+    /** Timestamp of when the account holder was created. */
+    @JsonProperty("created") @ExcludeMissing fun _created() = created
+
+    /**
+     * Customer-provided token that indicates a relationship with an object outside of the Lithic
+     * ecosystem.
+     */
+    @JsonProperty("external_id") @ExcludeMissing fun _externalId() = externalId
+
     /**
      * Only present for "KYB_BASIC" workflow. A list of documents required for the account holder to
      * be approved.
      */
     @JsonProperty("required_documents") @ExcludeMissing fun _requiredDocuments() = requiredDocuments
-
-    /** Globally unique identifier for the account holder. */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -117,13 +117,13 @@ private constructor(
 
     fun validate(): AccountHolderCreateResponse = apply {
         if (!validated) {
+            token()
             accountToken()
-            created()
-            externalId()
             status()
             statusReasons()
+            created()
+            externalId()
             requiredDocuments()?.forEach { it.validate() }
-            token()
             validated = true
         }
     }
@@ -137,25 +137,31 @@ private constructor(
 
     class Builder {
 
+        private var token: JsonField<String> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
-        private var created: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var externalId: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var statusReasons: JsonField<List<StatusReasons>> = JsonMissing.of()
+        private var created: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var externalId: JsonField<String> = JsonMissing.of()
         private var requiredDocuments: JsonField<List<RequiredDocument>> = JsonMissing.of()
-        private var token: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountHolderCreateResponse: AccountHolderCreateResponse) = apply {
+            token = accountHolderCreateResponse.token
             accountToken = accountHolderCreateResponse.accountToken
-            created = accountHolderCreateResponse.created
-            externalId = accountHolderCreateResponse.externalId
             status = accountHolderCreateResponse.status
             statusReasons = accountHolderCreateResponse.statusReasons
+            created = accountHolderCreateResponse.created
+            externalId = accountHolderCreateResponse.externalId
             requiredDocuments = accountHolderCreateResponse.requiredDocuments
-            token = accountHolderCreateResponse.token
             additionalProperties = accountHolderCreateResponse.additionalProperties.toMutableMap()
         }
+
+        /** Globally unique identifier for the account holder. */
+        fun token(token: String) = token(JsonField.of(token))
+
+        /** Globally unique identifier for the account holder. */
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Globally unique identifier for the account. */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -164,24 +170,6 @@ private constructor(
         fun accountToken(accountToken: JsonField<String>) = apply {
             this.accountToken = accountToken
         }
-
-        /** Timestamp of when the account holder was created. */
-        fun created(created: OffsetDateTime) = created(JsonField.of(created))
-
-        /** Timestamp of when the account holder was created. */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
-
-        /**
-         * Customer-provided token that indicates a relationship with an object outside of the
-         * Lithic ecosystem.
-         */
-        fun externalId(externalId: String) = externalId(JsonField.of(externalId))
-
-        /**
-         * Customer-provided token that indicates a relationship with an object outside of the
-         * Lithic ecosystem.
-         */
-        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /**
          * KYC and KYB evaluation states.
@@ -208,6 +196,24 @@ private constructor(
             this.statusReasons = statusReasons
         }
 
+        /** Timestamp of when the account holder was created. */
+        fun created(created: OffsetDateTime) = created(JsonField.of(created))
+
+        /** Timestamp of when the account holder was created. */
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
+        /**
+         * Customer-provided token that indicates a relationship with an object outside of the
+         * Lithic ecosystem.
+         */
+        fun externalId(externalId: String) = externalId(JsonField.of(externalId))
+
+        /**
+         * Customer-provided token that indicates a relationship with an object outside of the
+         * Lithic ecosystem.
+         */
+        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
         /**
          * Only present for "KYB_BASIC" workflow. A list of documents required for the account
          * holder to be approved.
@@ -222,12 +228,6 @@ private constructor(
         fun requiredDocuments(requiredDocuments: JsonField<List<RequiredDocument>>) = apply {
             this.requiredDocuments = requiredDocuments
         }
-
-        /** Globally unique identifier for the account holder. */
-        fun token(token: String) = token(JsonField.of(token))
-
-        /** Globally unique identifier for the account holder. */
-        fun token(token: JsonField<String>) = apply { this.token = token }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -250,13 +250,13 @@ private constructor(
 
         fun build(): AccountHolderCreateResponse =
             AccountHolderCreateResponse(
+                token,
                 accountToken,
-                created,
-                externalId,
                 status,
                 statusReasons.map { it.toImmutable() },
+                created,
+                externalId,
                 requiredDocuments.map { it.toImmutable() },
-                token,
                 additionalProperties.toImmutable(),
             )
     }
@@ -566,15 +566,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderCreateResponse && accountToken == other.accountToken && created == other.created && externalId == other.externalId && status == other.status && statusReasons == other.statusReasons && requiredDocuments == other.requiredDocuments && token == other.token && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AccountHolderCreateResponse && token == other.token && accountToken == other.accountToken && status == other.status && statusReasons == other.statusReasons && created == other.created && externalId == other.externalId && requiredDocuments == other.requiredDocuments && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accountToken, created, externalId, status, statusReasons, requiredDocuments, token, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountToken, status, statusReasons, created, externalId, requiredDocuments, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountHolderCreateResponse{accountToken=$accountToken, created=$created, externalId=$externalId, status=$status, statusReasons=$statusReasons, requiredDocuments=$requiredDocuments, token=$token, additionalProperties=$additionalProperties}"
+        "AccountHolderCreateResponse{token=$token, accountToken=$accountToken, status=$status, statusReasons=$statusReasons, created=$created, externalId=$externalId, requiredDocuments=$requiredDocuments, additionalProperties=$additionalProperties}"
 }

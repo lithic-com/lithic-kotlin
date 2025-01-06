@@ -31,13 +31,13 @@ import java.util.Objects
 class VelocityLimitParams
 @JsonCreator
 private constructor(
-    @JsonProperty("scope") @ExcludeMissing private val scope: JsonField<Scope> = JsonMissing.of(),
-    @JsonProperty("period")
-    @ExcludeMissing
-    private val period: JsonField<Period> = JsonMissing.of(),
     @JsonProperty("filters")
     @ExcludeMissing
     private val filters: JsonField<Filters> = JsonMissing.of(),
+    @JsonProperty("period")
+    @ExcludeMissing
+    private val period: JsonField<Period> = JsonMissing.of(),
+    @JsonProperty("scope") @ExcludeMissing private val scope: JsonField<Scope> = JsonMissing.of(),
     @JsonProperty("limit_amount")
     @ExcludeMissing
     private val limitAmount: JsonField<Long> = JsonMissing.of(),
@@ -47,7 +47,7 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun scope(): Scope = scope.getRequired("scope")
+    fun filters(): Filters = filters.getRequired("filters")
 
     /**
      * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
@@ -55,7 +55,7 @@ private constructor(
      */
     fun period(): Period = period.getRequired("period")
 
-    fun filters(): Filters = filters.getRequired("filters")
+    fun scope(): Scope = scope.getRequired("scope")
 
     /**
      * The maximum amount of spend velocity allowed in the period in minor units (the smallest unit
@@ -71,7 +71,7 @@ private constructor(
      */
     fun limitCount(): Long? = limitCount.getNullable("limit_count")
 
-    @JsonProperty("scope") @ExcludeMissing fun _scope() = scope
+    @JsonProperty("filters") @ExcludeMissing fun _filters() = filters
 
     /**
      * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
@@ -79,7 +79,7 @@ private constructor(
      */
     @JsonProperty("period") @ExcludeMissing fun _period() = period
 
-    @JsonProperty("filters") @ExcludeMissing fun _filters() = filters
+    @JsonProperty("scope") @ExcludeMissing fun _scope() = scope
 
     /**
      * The maximum amount of spend velocity allowed in the period in minor units (the smallest unit
@@ -103,9 +103,9 @@ private constructor(
 
     fun validate(): VelocityLimitParams = apply {
         if (!validated) {
-            scope()
-            period()
             filters().validate()
+            period()
+            scope()
             limitAmount()
             limitCount()
             validated = true
@@ -121,25 +121,25 @@ private constructor(
 
     class Builder {
 
-        private var scope: JsonField<Scope> = JsonMissing.of()
-        private var period: JsonField<Period> = JsonMissing.of()
         private var filters: JsonField<Filters> = JsonMissing.of()
+        private var period: JsonField<Period> = JsonMissing.of()
+        private var scope: JsonField<Scope> = JsonMissing.of()
         private var limitAmount: JsonField<Long> = JsonMissing.of()
         private var limitCount: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(velocityLimitParams: VelocityLimitParams) = apply {
-            scope = velocityLimitParams.scope
-            period = velocityLimitParams.period
             filters = velocityLimitParams.filters
+            period = velocityLimitParams.period
+            scope = velocityLimitParams.scope
             limitAmount = velocityLimitParams.limitAmount
             limitCount = velocityLimitParams.limitCount
             additionalProperties = velocityLimitParams.additionalProperties.toMutableMap()
         }
 
-        fun scope(scope: Scope) = scope(JsonField.of(scope))
+        fun filters(filters: Filters) = filters(JsonField.of(filters))
 
-        fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
+        fun filters(filters: JsonField<Filters>) = apply { this.filters = filters }
 
         /**
          * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
@@ -153,9 +153,9 @@ private constructor(
          */
         fun period(period: JsonField<Period>) = apply { this.period = period }
 
-        fun filters(filters: Filters) = filters(JsonField.of(filters))
+        fun scope(scope: Scope) = scope(JsonField.of(scope))
 
-        fun filters(filters: JsonField<Filters>) = apply { this.filters = filters }
+        fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
 
         /**
          * The maximum amount of spend velocity allowed in the period in minor units (the smallest
@@ -208,9 +208,9 @@ private constructor(
 
         fun build(): VelocityLimitParams =
             VelocityLimitParams(
-                scope,
-                period,
                 filters,
+                period,
+                scope,
                 limitAmount,
                 limitCount,
                 additionalProperties.toImmutable(),
@@ -221,21 +221,15 @@ private constructor(
     class Filters
     @JsonCreator
     private constructor(
-        @JsonProperty("include_mccs")
-        @ExcludeMissing
-        private val includeMccs: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("include_countries")
         @ExcludeMissing
         private val includeCountries: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("include_mccs")
+        @ExcludeMissing
+        private val includeMccs: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        /**
-         * Merchant Category Codes to include in the velocity calculation. Transactions not matching
-         * this MCC will not be included in the calculated velocity.
-         */
-        fun includeMccs(): List<String>? = includeMccs.getNullable("include_mccs")
 
         /**
          * ISO-3166-1 alpha-3 Country Codes to include in the velocity calculation. Transactions not
@@ -247,7 +241,7 @@ private constructor(
          * Merchant Category Codes to include in the velocity calculation. Transactions not matching
          * this MCC will not be included in the calculated velocity.
          */
-        @JsonProperty("include_mccs") @ExcludeMissing fun _includeMccs() = includeMccs
+        fun includeMccs(): List<String>? = includeMccs.getNullable("include_mccs")
 
         /**
          * ISO-3166-1 alpha-3 Country Codes to include in the velocity calculation. Transactions not
@@ -257,6 +251,12 @@ private constructor(
         @ExcludeMissing
         fun _includeCountries() = includeCountries
 
+        /**
+         * Merchant Category Codes to include in the velocity calculation. Transactions not matching
+         * this MCC will not be included in the calculated velocity.
+         */
+        @JsonProperty("include_mccs") @ExcludeMissing fun _includeMccs() = includeMccs
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -265,8 +265,8 @@ private constructor(
 
         fun validate(): Filters = apply {
             if (!validated) {
-                includeMccs()
                 includeCountries()
+                includeMccs()
                 validated = true
             }
         }
@@ -280,28 +280,14 @@ private constructor(
 
         class Builder {
 
-            private var includeMccs: JsonField<List<String>> = JsonMissing.of()
             private var includeCountries: JsonField<List<String>> = JsonMissing.of()
+            private var includeMccs: JsonField<List<String>> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(filters: Filters) = apply {
-                includeMccs = filters.includeMccs
                 includeCountries = filters.includeCountries
+                includeMccs = filters.includeMccs
                 additionalProperties = filters.additionalProperties.toMutableMap()
-            }
-
-            /**
-             * Merchant Category Codes to include in the velocity calculation. Transactions not
-             * matching this MCC will not be included in the calculated velocity.
-             */
-            fun includeMccs(includeMccs: List<String>) = includeMccs(JsonField.of(includeMccs))
-
-            /**
-             * Merchant Category Codes to include in the velocity calculation. Transactions not
-             * matching this MCC will not be included in the calculated velocity.
-             */
-            fun includeMccs(includeMccs: JsonField<List<String>>) = apply {
-                this.includeMccs = includeMccs
             }
 
             /**
@@ -317,6 +303,20 @@ private constructor(
              */
             fun includeCountries(includeCountries: JsonField<List<String>>) = apply {
                 this.includeCountries = includeCountries
+            }
+
+            /**
+             * Merchant Category Codes to include in the velocity calculation. Transactions not
+             * matching this MCC will not be included in the calculated velocity.
+             */
+            fun includeMccs(includeMccs: List<String>) = includeMccs(JsonField.of(includeMccs))
+
+            /**
+             * Merchant Category Codes to include in the velocity calculation. Transactions not
+             * matching this MCC will not be included in the calculated velocity.
+             */
+            fun includeMccs(includeMccs: JsonField<List<String>>) = apply {
+                this.includeMccs = includeMccs
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -340,8 +340,8 @@ private constructor(
 
             fun build(): Filters =
                 Filters(
-                    includeMccs.map { it.toImmutable() },
                     includeCountries.map { it.toImmutable() },
+                    includeMccs.map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -351,17 +351,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Filters && includeMccs == other.includeMccs && includeCountries == other.includeCountries && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Filters && includeCountries == other.includeCountries && includeMccs == other.includeMccs && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(includeMccs, includeCountries, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(includeCountries, includeMccs, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Filters{includeMccs=$includeMccs, includeCountries=$includeCountries, additionalProperties=$additionalProperties}"
+            "Filters{includeCountries=$includeCountries, includeMccs=$includeMccs, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -578,15 +578,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is VelocityLimitParams && scope == other.scope && period == other.period && filters == other.filters && limitAmount == other.limitAmount && limitCount == other.limitCount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is VelocityLimitParams && filters == other.filters && period == other.period && scope == other.scope && limitAmount == other.limitAmount && limitCount == other.limitCount && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(scope, period, filters, limitAmount, limitCount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(filters, period, scope, limitAmount, limitCount, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "VelocityLimitParams{scope=$scope, period=$period, filters=$filters, limitAmount=$limitAmount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
+        "VelocityLimitParams{filters=$filters, period=$period, scope=$scope, limitAmount=$limitAmount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
 }
