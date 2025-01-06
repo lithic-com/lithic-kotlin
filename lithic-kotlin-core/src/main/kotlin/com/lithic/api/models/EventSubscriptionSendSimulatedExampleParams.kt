@@ -87,7 +87,7 @@ constructor(
             }
 
             /** Event type to send example message for. */
-            fun eventType(eventType: EventType) = apply { this.eventType = eventType }
+            fun eventType(eventType: EventType?) = apply { this.eventType = eventType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -166,7 +166,7 @@ constructor(
         }
 
         /** Event type to send example message for. */
-        fun eventType(eventType: EventType) = apply { body.eventType(eventType) }
+        fun eventType(eventType: EventType?) = apply { body.eventType(eventType) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -105,11 +105,13 @@ constructor(
 
             fun type(type: Type) = apply { this.type = type }
 
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
-            fun isForBenefitOf(isForBenefitOf: Boolean) = apply {
+            fun isForBenefitOf(isForBenefitOf: Boolean?) = apply {
                 this.isForBenefitOf = isForBenefitOf
             }
+
+            fun isForBenefitOf(isForBenefitOf: Boolean) = isForBenefitOf(isForBenefitOf as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -180,15 +182,17 @@ constructor(
             additionalQueryParams = financialAccountCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun idempotencyKey(idempotencyKey: String) = apply { this.idempotencyKey = idempotencyKey }
+        fun idempotencyKey(idempotencyKey: String?) = apply { this.idempotencyKey = idempotencyKey }
 
         fun nickname(nickname: String) = apply { body.nickname(nickname) }
 
         fun type(type: Type) = apply { body.type(type) }
 
-        fun accountToken(accountToken: String) = apply { body.accountToken(accountToken) }
+        fun accountToken(accountToken: String?) = apply { body.accountToken(accountToken) }
 
-        fun isForBenefitOf(isForBenefitOf: Boolean) = apply { body.isForBenefitOf(isForBenefitOf) }
+        fun isForBenefitOf(isForBenefitOf: Boolean?) = apply { body.isForBenefitOf(isForBenefitOf) }
+
+        fun isForBenefitOf(isForBenefitOf: Boolean) = isForBenefitOf(isForBenefitOf as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

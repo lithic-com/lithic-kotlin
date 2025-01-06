@@ -173,26 +173,26 @@ constructor(
             }
 
             /** If omitted, the previous carrier will be used. */
-            fun carrier(carrier: Carrier) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
 
             /**
              * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
-            fun expMonth(expMonth: String) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: String?) = apply { this.expMonth = expMonth }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
              * expiration date six years in the future will be generated.
              */
-            fun expYear(expYear: String) = apply { this.expYear = expYear }
+            fun expYear(expYear: String?) = apply { this.expYear = expYear }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
              * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
              * configured with Lithic before use.
              */
-            fun productId(productId: String) = apply { this.productId = productId }
+            fun productId(productId: String?) = apply { this.productId = productId }
 
             /**
              * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -206,7 +206,7 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -291,26 +291,26 @@ constructor(
         }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier?) = apply { body.carrier(carrier) }
 
         /**
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date six years in the future will be generated.
          */
-        fun expMonth(expMonth: String) = apply { body.expMonth(expMonth) }
+        fun expMonth(expMonth: String?) = apply { body.expMonth(expMonth) }
 
         /**
          * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date six years in the future will be generated.
          */
-        fun expYear(expYear: String) = apply { body.expYear(expYear) }
+        fun expYear(expYear: String?) = apply { body.expYear(expYear) }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String) = apply { body.productId(productId) }
+        fun productId(productId: String?) = apply { body.productId(productId) }
 
         /**
          * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -323,7 +323,7 @@ constructor(
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
-        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
+        fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
             body.shippingMethod(shippingMethod)
         }
 

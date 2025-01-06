@@ -116,7 +116,7 @@ constructor(
              * When set will use the following values as part of the Simulated Authentication. When
              * not set defaults to MATCH
              */
-            fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
+            fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck?) = apply {
                 this.cardExpiryCheck = cardExpiryCheck
             }
 
@@ -202,7 +202,7 @@ constructor(
          * When set will use the following values as part of the Simulated Authentication. When not
          * set defaults to MATCH
          */
-        fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck) = apply {
+        fun cardExpiryCheck(cardExpiryCheck: CardExpiryCheck?) = apply {
             body.cardExpiryCheck(cardExpiryCheck)
         }
 

@@ -92,10 +92,10 @@ constructor(
             }
 
             /** The end time of the backtest. */
-            fun end(end: OffsetDateTime) = apply { this.end = end }
+            fun end(end: OffsetDateTime?) = apply { this.end = end }
 
             /** The start time of the backtest. */
-            fun start(start: OffsetDateTime) = apply { this.start = start }
+            fun start(start: OffsetDateTime?) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -168,10 +168,10 @@ constructor(
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** The end time of the backtest. */
-        fun end(end: OffsetDateTime) = apply { body.end(end) }
+        fun end(end: OffsetDateTime?) = apply { body.end(end) }
 
         /** The start time of the backtest. */
-        fun start(start: OffsetDateTime) = apply { body.start(start) }
+        fun start(start: OffsetDateTime?) = apply { body.start(start) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

@@ -592,31 +592,34 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String) = apply { this.companyId = companyId }
+            fun companyId(companyId: String?) = apply { this.companyId = companyId }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate) = apply { this.dob = dob }
+            fun dob(dob: LocalDate?) = apply { this.dob = dob }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String) = apply {
+            fun doingBusinessAs(doingBusinessAs: String?) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
-            fun verificationEnforcement(verificationEnforcement: Boolean) = apply {
+            fun verificationEnforcement(verificationEnforcement: Boolean?) = apply {
                 this.verificationEnforcement = verificationEnforcement
             }
+
+            fun verificationEnforcement(verificationEnforcement: Boolean) =
+                verificationEnforcement(verificationEnforcement as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -851,21 +854,21 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String) = apply { this.companyId = companyId }
+            fun companyId(companyId: String?) = apply { this.companyId = companyId }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate) = apply { this.dob = dob }
+            fun dob(dob: LocalDate?) = apply { this.dob = dob }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String) = apply {
+            fun doingBusinessAs(doingBusinessAs: String?) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1093,27 +1096,27 @@ constructor(
              * accounts that are associated with the program, account_token field returned will be
              * null
              */
-            fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+            fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
             /** Address */
-            fun address(address: ExternalBankAccountAddress) = apply { this.address = address }
+            fun address(address: ExternalBankAccountAddress?) = apply { this.address = address }
 
             /** Optional field that helps identify bank accounts in receipts */
-            fun companyId(companyId: String) = apply { this.companyId = companyId }
+            fun companyId(companyId: String?) = apply { this.companyId = companyId }
 
             /** Date of Birth of the Individual that owns the external bank account */
-            fun dob(dob: LocalDate) = apply { this.dob = dob }
+            fun dob(dob: LocalDate?) = apply { this.dob = dob }
 
             /** Doing Business As */
-            fun doingBusinessAs(doingBusinessAs: String) = apply {
+            fun doingBusinessAs(doingBusinessAs: String?) = apply {
                 this.doingBusinessAs = doingBusinessAs
             }
 
             /** The nickname for this External Bank Account */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /** User Defined ID */
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

@@ -100,9 +100,9 @@ constructor(
                 this.effectiveDate = effectiveDate
             }
 
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
-            fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
+            fun progressTo(progressTo: ExternalPaymentProgressTo?) = apply {
                 this.progressTo = progressTo
             }
 
@@ -180,9 +180,9 @@ constructor(
 
         fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply { body.memo(memo) }
 
-        fun progressTo(progressTo: ExternalPaymentProgressTo) = apply {
+        fun progressTo(progressTo: ExternalPaymentProgressTo?) = apply {
             body.progressTo(progressTo)
         }
 

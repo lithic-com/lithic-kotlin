@@ -84,10 +84,10 @@ constructor(
             }
 
             /** The type of the endpoint. */
-            fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type?) = apply { this.type = type }
 
             /** The URL for the responder endpoint (must be http(s)). */
-            fun url(url: String) = apply { this.url = url }
+            fun url(url: String?) = apply { this.url = url }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -156,10 +156,10 @@ constructor(
         }
 
         /** The type of the endpoint. */
-        fun type(type: Type) = apply { body.type(type) }
+        fun type(type: Type?) = apply { body.type(type) }
 
         /** The URL for the responder endpoint (must be http(s)). */
-        fun url(url: String) = apply { body.url(url) }
+        fun url(url: String?) = apply { body.url(url) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

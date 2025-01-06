@@ -101,7 +101,7 @@ constructor(
              * authentication code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
              * "EMAIL_TO_CARDHOLDER_ADDRESS"
              */
-            fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
+            fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
                 this.activationMethodType = activationMethodType
             }
 
@@ -184,7 +184,7 @@ constructor(
          * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
          * "EMAIL_TO_CARDHOLDER_ADDRESS"
          */
-        fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
+        fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
             body.activationMethodType(activationMethodType)
         }
 

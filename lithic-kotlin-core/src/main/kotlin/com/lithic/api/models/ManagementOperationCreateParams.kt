@@ -158,13 +158,13 @@ constructor(
                 this.financialAccountToken = financialAccountToken
             }
 
-            fun token(token: String) = apply { this.token = token }
+            fun token(token: String?) = apply { this.token = token }
 
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
-            fun subtype(subtype: String) = apply { this.subtype = subtype }
+            fun subtype(subtype: String?) = apply { this.subtype = subtype }
 
-            fun userDefinedId(userDefinedId: String) = apply { this.userDefinedId = userDefinedId }
+            fun userDefinedId(userDefinedId: String?) = apply { this.userDefinedId = userDefinedId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -258,13 +258,13 @@ constructor(
             body.financialAccountToken(financialAccountToken)
         }
 
-        fun token(token: String) = apply { body.token(token) }
+        fun token(token: String?) = apply { body.token(token) }
 
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply { body.memo(memo) }
 
-        fun subtype(subtype: String) = apply { body.subtype(subtype) }
+        fun subtype(subtype: String?) = apply { body.subtype(subtype) }
 
-        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
+        fun userDefinedId(userDefinedId: String?) = apply { body.userDefinedId(userDefinedId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
