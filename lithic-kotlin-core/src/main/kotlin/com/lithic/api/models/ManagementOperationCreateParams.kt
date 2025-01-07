@@ -19,6 +19,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
+/** Create management operation */
 class ManagementOperationCreateParams
 constructor(
     private val body: ManagementOperationCreateBody,

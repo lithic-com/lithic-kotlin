@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
 
+/** Reverse a management operation */
 class ManagementOperationReverseParams
 constructor(
     private val managementOperationToken: String,

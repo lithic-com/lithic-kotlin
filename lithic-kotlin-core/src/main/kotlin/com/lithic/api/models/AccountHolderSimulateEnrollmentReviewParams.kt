@@ -18,6 +18,10 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/**
+ * Simulates an enrollment review for an account holder. This endpoint is only applicable for
+ * workflows that may required intervention such as `KYB_BASIC`.
+ */
 class AccountHolderSimulateEnrollmentReviewParams
 constructor(
     private val body: AccountHolderSimulateEnrollmentReviewBody,

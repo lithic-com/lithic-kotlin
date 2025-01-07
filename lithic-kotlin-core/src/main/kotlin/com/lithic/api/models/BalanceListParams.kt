@@ -13,6 +13,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** Get the balances for a program, business, or a given end-user account */
 class BalanceListParams
 constructor(
     private val accountToken: String?,

@@ -13,6 +13,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** List the financial transactions for a given financial account. */
 class FinancialTransactionListParams
 constructor(
     private val financialAccountToken: String,

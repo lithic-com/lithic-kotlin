@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Update an event subscription. */
 class EventSubscriptionUpdateParams
 constructor(
     private val eventSubscriptionToken: String,

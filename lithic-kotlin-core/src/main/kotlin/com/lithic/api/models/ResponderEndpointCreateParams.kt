@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Enroll a responder endpoint */
 class ResponderEndpointCreateParams
 constructor(
     private val body: ResponderEndpointCreateBody,

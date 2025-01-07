@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
 
+/** Update the external bank account by token. */
 class ExternalBankAccountUpdateParams
 constructor(
     private val externalBankAccountToken: String,

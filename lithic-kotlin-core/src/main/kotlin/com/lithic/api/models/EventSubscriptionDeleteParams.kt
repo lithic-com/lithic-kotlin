@@ -9,6 +9,7 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/** Delete an event subscription. */
 class EventSubscriptionDeleteParams
 constructor(
     private val eventSubscriptionToken: String,

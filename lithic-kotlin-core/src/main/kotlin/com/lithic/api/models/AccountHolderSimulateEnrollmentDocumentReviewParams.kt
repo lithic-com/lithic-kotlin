@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Simulates a review for an account holder document upload. */
 class AccountHolderSimulateEnrollmentDocumentReviewParams
 constructor(
     private val body: AccountHolderSimulateEnrollmentDocumentReviewBody,

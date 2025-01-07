@@ -13,6 +13,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Disenroll a responder endpoint */
 class ResponderEndpointDeleteParams
 constructor(
     private val type: Type,

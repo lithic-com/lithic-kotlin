@@ -7,6 +7,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
+/** List all the event subscriptions. */
 class EventSubscriptionListParams
 constructor(
     private val endingBefore: String?,

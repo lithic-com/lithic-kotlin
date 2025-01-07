@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Simulates a receipt of a Payment. */
 class PaymentSimulateReceiptParams
 constructor(
     private val body: PaymentSimulateReceiptBody,
