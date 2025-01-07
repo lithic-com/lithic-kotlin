@@ -27,7 +27,7 @@ private constructor(
 
     fun data(): Tokenization? = data.getNullable("data")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<Tokenization> = data
 
     @JsonAnyGetter
     @ExcludeMissing
