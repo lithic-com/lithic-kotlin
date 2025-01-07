@@ -40,11 +40,15 @@ private constructor(
 
     @JsonProperty("available_spend_limit")
     @ExcludeMissing
-    fun _availableSpendLimit() = availableSpendLimit
+    fun _availableSpendLimit(): JsonField<AvailableSpendLimit> = availableSpendLimit
 
-    @JsonProperty("spend_limit") @ExcludeMissing fun _spendLimit() = spendLimit
+    @JsonProperty("spend_limit")
+    @ExcludeMissing
+    fun _spendLimit(): JsonField<SpendLimit> = spendLimit
 
-    @JsonProperty("spend_velocity") @ExcludeMissing fun _spendVelocity() = spendVelocity
+    @JsonProperty("spend_velocity")
+    @ExcludeMissing
+    fun _spendVelocity(): JsonField<SpendVelocity> = spendVelocity
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -70,7 +74,7 @@ private constructor(
 
     class Builder {
 
-        private var availableSpendLimit: JsonField<AvailableSpendLimit> = JsonMissing.of()
+        private var availableSpendLimit: JsonField<AvailableSpendLimit>? = null
         private var spendLimit: JsonField<SpendLimit> = JsonMissing.of()
         private var spendVelocity: JsonField<SpendVelocity> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -120,7 +124,9 @@ private constructor(
 
         fun build(): CardSpendLimits =
             CardSpendLimits(
-                availableSpendLimit,
+                checkNotNull(availableSpendLimit) {
+                    "`availableSpendLimit` is required but was not set"
+                },
                 spendLimit,
                 spendVelocity,
                 additionalProperties.toImmutable(),
@@ -164,19 +170,19 @@ private constructor(
         /**
          * The available spend limit (in cents) relative to the annual limit configured on the Card.
          */
-        @JsonProperty("annually") @ExcludeMissing fun _annually() = annually
+        @JsonProperty("annually") @ExcludeMissing fun _annually(): JsonField<Long> = annually
 
         /**
          * The available spend limit (in cents) relative to the forever limit configured on the
          * Card.
          */
-        @JsonProperty("forever") @ExcludeMissing fun _forever() = forever
+        @JsonProperty("forever") @ExcludeMissing fun _forever(): JsonField<Long> = forever
 
         /**
          * The available spend limit (in cents) relative to the monthly limit configured on the
          * Card.
          */
-        @JsonProperty("monthly") @ExcludeMissing fun _monthly() = monthly
+        @JsonProperty("monthly") @ExcludeMissing fun _monthly(): JsonField<Long> = monthly
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -323,13 +329,13 @@ private constructor(
         fun monthly(): Long? = monthly.getNullable("monthly")
 
         /** The configured annual spend limit (in cents) on the Card. */
-        @JsonProperty("annually") @ExcludeMissing fun _annually() = annually
+        @JsonProperty("annually") @ExcludeMissing fun _annually(): JsonField<Long> = annually
 
         /** The configured forever spend limit (in cents) on the Card. */
-        @JsonProperty("forever") @ExcludeMissing fun _forever() = forever
+        @JsonProperty("forever") @ExcludeMissing fun _forever(): JsonField<Long> = forever
 
         /** The configured monthly spend limit (in cents) on the Card. */
-        @JsonProperty("monthly") @ExcludeMissing fun _monthly() = monthly
+        @JsonProperty("monthly") @ExcludeMissing fun _monthly(): JsonField<Long> = monthly
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -470,19 +476,19 @@ private constructor(
          * Current annual spend velocity (in cents) on the Card. Present if annual spend limit is
          * set.
          */
-        @JsonProperty("annually") @ExcludeMissing fun _annually() = annually
+        @JsonProperty("annually") @ExcludeMissing fun _annually(): JsonField<Long> = annually
 
         /**
          * Current forever spend velocity (in cents) on the Card. Present if forever spend limit is
          * set.
          */
-        @JsonProperty("forever") @ExcludeMissing fun _forever() = forever
+        @JsonProperty("forever") @ExcludeMissing fun _forever(): JsonField<Long> = forever
 
         /**
          * Current monthly spend velocity (in cents) on the Card. Present if monthly spend limit is
          * set.
          */
-        @JsonProperty("monthly") @ExcludeMissing fun _monthly() = monthly
+        @JsonProperty("monthly") @ExcludeMissing fun _monthly(): JsonField<Long> = monthly
 
         @JsonAnyGetter
         @ExcludeMissing

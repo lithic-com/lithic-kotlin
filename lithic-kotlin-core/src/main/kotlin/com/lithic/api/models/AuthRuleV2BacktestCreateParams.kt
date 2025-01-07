@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lithic.api.core.ExcludeMissing
+import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
@@ -55,11 +57,17 @@ constructor(
     /** The start time of the backtest. */
     fun start(): OffsetDateTime? = body.start()
 
+    /** The end time of the backtest. */
+    fun _end(): JsonField<OffsetDateTime> = body._end()
+
+    /** The start time of the backtest. */
+    fun _start(): JsonField<OffsetDateTime> = body._start()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): AuthRuleV2BacktestCreateBody = body
 
@@ -78,21 +86,41 @@ constructor(
     class AuthRuleV2BacktestCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("end") private val end: OffsetDateTime?,
-        @JsonProperty("start") private val start: OffsetDateTime?,
+        @JsonProperty("end")
+        @ExcludeMissing
+        private val end: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("start")
+        @ExcludeMissing
+        private val start: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The end time of the backtest. */
-        @JsonProperty("end") fun end(): OffsetDateTime? = end
+        fun end(): OffsetDateTime? = end.getNullable("end")
 
         /** The start time of the backtest. */
-        @JsonProperty("start") fun start(): OffsetDateTime? = start
+        fun start(): OffsetDateTime? = start.getNullable("start")
+
+        /** The end time of the backtest. */
+        @JsonProperty("end") @ExcludeMissing fun _end(): JsonField<OffsetDateTime> = end
+
+        /** The start time of the backtest. */
+        @JsonProperty("start") @ExcludeMissing fun _start(): JsonField<OffsetDateTime> = start
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): AuthRuleV2BacktestCreateBody = apply {
+            if (!validated) {
+                end()
+                start()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -103,8 +131,8 @@ constructor(
 
         class Builder {
 
-            private var end: OffsetDateTime? = null
-            private var start: OffsetDateTime? = null
+            private var end: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var start: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authRuleV2BacktestCreateBody: AuthRuleV2BacktestCreateBody) = apply {
@@ -115,10 +143,16 @@ constructor(
             }
 
             /** The end time of the backtest. */
-            fun end(end: OffsetDateTime?) = apply { this.end = end }
+            fun end(end: OffsetDateTime) = end(JsonField.of(end))
+
+            /** The end time of the backtest. */
+            fun end(end: JsonField<OffsetDateTime>) = apply { this.end = end }
 
             /** The start time of the backtest. */
-            fun start(start: OffsetDateTime?) = apply { this.start = start }
+            fun start(start: OffsetDateTime) = start(JsonField.of(start))
+
+            /** The start time of the backtest. */
+            fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -191,10 +225,35 @@ constructor(
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
         /** The end time of the backtest. */
-        fun end(end: OffsetDateTime?) = apply { body.end(end) }
+        fun end(end: OffsetDateTime) = apply { body.end(end) }
+
+        /** The end time of the backtest. */
+        fun end(end: JsonField<OffsetDateTime>) = apply { body.end(end) }
 
         /** The start time of the backtest. */
-        fun start(start: OffsetDateTime?) = apply { body.start(start) }
+        fun start(start: OffsetDateTime) = apply { body.start(start) }
+
+        /** The start time of the backtest. */
+        fun start(start: JsonField<OffsetDateTime>) = apply { body.start(start) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -292,25 +351,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AuthRuleV2BacktestCreateParams =

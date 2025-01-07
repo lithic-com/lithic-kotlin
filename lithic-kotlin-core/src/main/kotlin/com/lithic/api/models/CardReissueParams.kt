@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
@@ -59,11 +60,36 @@ constructor(
      */
     fun shippingMethod(): ShippingMethod? = body.shippingMethod()
 
+    /** If omitted, the previous carrier will be used. */
+    fun _carrier(): JsonField<Carrier> = body._carrier()
+
+    /**
+     * Specifies the configuration (e.g. physical card art) that the card should be manufactured
+     * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
+     * before use.
+     */
+    fun _productId(): JsonField<String> = body._productId()
+
+    /** If omitted, the previous shipping address will be used. */
+    fun _shippingAddress(): JsonField<ShippingAddress> = body._shippingAddress()
+
+    /**
+     * Shipping method for the card. Use of options besides `STANDARD` require additional
+     * permissions.
+     * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+     * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
+     * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+     * - `2_DAY` - FedEx 2-day shipping, with tracking
+     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     */
+    fun _shippingMethod(): JsonField<ShippingMethod> = body._shippingMethod()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): CardReissueBody = body
 
@@ -82,26 +108,34 @@ constructor(
     class CardReissueBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("carrier") private val carrier: Carrier?,
-        @JsonProperty("product_id") private val productId: String?,
-        @JsonProperty("shipping_address") private val shippingAddress: ShippingAddress?,
-        @JsonProperty("shipping_method") private val shippingMethod: ShippingMethod?,
+        @JsonProperty("carrier")
+        @ExcludeMissing
+        private val carrier: JsonField<Carrier> = JsonMissing.of(),
+        @JsonProperty("product_id")
+        @ExcludeMissing
+        private val productId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("shipping_address")
+        @ExcludeMissing
+        private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
+        @JsonProperty("shipping_method")
+        @ExcludeMissing
+        private val shippingMethod: JsonField<ShippingMethod> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** If omitted, the previous carrier will be used. */
-        @JsonProperty("carrier") fun carrier(): Carrier? = carrier
+        fun carrier(): Carrier? = carrier.getNullable("carrier")
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        @JsonProperty("product_id") fun productId(): String? = productId
+        fun productId(): String? = productId.getNullable("product_id")
 
         /** If omitted, the previous shipping address will be used. */
-        @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
+        fun shippingAddress(): ShippingAddress? = shippingAddress.getNullable("shipping_address")
 
         /**
          * Shipping method for the card. Use of options besides `STANDARD` require additional
@@ -114,11 +148,53 @@ constructor(
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
-        @JsonProperty("shipping_method") fun shippingMethod(): ShippingMethod? = shippingMethod
+        fun shippingMethod(): ShippingMethod? = shippingMethod.getNullable("shipping_method")
+
+        /** If omitted, the previous carrier will be used. */
+        @JsonProperty("carrier") @ExcludeMissing fun _carrier(): JsonField<Carrier> = carrier
+
+        /**
+         * Specifies the configuration (e.g. physical card art) that the card should be manufactured
+         * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
+         * before use.
+         */
+        @JsonProperty("product_id") @ExcludeMissing fun _productId(): JsonField<String> = productId
+
+        /** If omitted, the previous shipping address will be used. */
+        @JsonProperty("shipping_address")
+        @ExcludeMissing
+        fun _shippingAddress(): JsonField<ShippingAddress> = shippingAddress
+
+        /**
+         * Shipping method for the card. Use of options besides `STANDARD` require additional
+         * permissions.
+         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+         *   tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         */
+        @JsonProperty("shipping_method")
+        @ExcludeMissing
+        fun _shippingMethod(): JsonField<ShippingMethod> = shippingMethod
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): CardReissueBody = apply {
+            if (!validated) {
+                carrier()?.validate()
+                productId()
+                shippingAddress()?.validate()
+                shippingMethod()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -129,10 +205,10 @@ constructor(
 
         class Builder {
 
-            private var carrier: Carrier? = null
-            private var productId: String? = null
-            private var shippingAddress: ShippingAddress? = null
-            private var shippingMethod: ShippingMethod? = null
+            private var carrier: JsonField<Carrier> = JsonMissing.of()
+            private var productId: JsonField<String> = JsonMissing.of()
+            private var shippingAddress: JsonField<ShippingAddress> = JsonMissing.of()
+            private var shippingMethod: JsonField<ShippingMethod> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardReissueBody: CardReissueBody) = apply {
@@ -144,17 +220,31 @@ constructor(
             }
 
             /** If omitted, the previous carrier will be used. */
-            fun carrier(carrier: Carrier?) = apply { this.carrier = carrier }
+            fun carrier(carrier: Carrier) = carrier(JsonField.of(carrier))
+
+            /** If omitted, the previous carrier will be used. */
+            fun carrier(carrier: JsonField<Carrier>) = apply { this.carrier = carrier }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
              * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
              * configured with Lithic before use.
              */
-            fun productId(productId: String?) = apply { this.productId = productId }
+            fun productId(productId: String) = productId(JsonField.of(productId))
+
+            /**
+             * Specifies the configuration (e.g. physical card art) that the card should be
+             * manufactured with, and only applies to cards of type `PHYSICAL`. This must be
+             * configured with Lithic before use.
+             */
+            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
             /** If omitted, the previous shipping address will be used. */
-            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress) =
+                shippingAddress(JsonField.of(shippingAddress))
+
+            /** If omitted, the previous shipping address will be used. */
+            fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
                 this.shippingAddress = shippingAddress
             }
 
@@ -170,7 +260,22 @@ constructor(
              * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
              *   tracking
              */
-            fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
+            fun shippingMethod(shippingMethod: ShippingMethod) =
+                shippingMethod(JsonField.of(shippingMethod))
+
+            /**
+             * Shipping method for the card. Use of options besides `STANDARD` require additional
+             * permissions.
+             * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+             * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+             *   tracking
+             * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+             * - `2_DAY` - FedEx 2-day shipping, with tracking
+             * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
+             *   tracking
+             */
+            fun shippingMethod(shippingMethod: JsonField<ShippingMethod>) = apply {
                 this.shippingMethod = shippingMethod
             }
 
@@ -246,17 +351,32 @@ constructor(
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier?) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+
+        /** If omitted, the previous carrier will be used. */
+        fun carrier(carrier: JsonField<Carrier>) = apply { body.carrier(carrier) }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String?) = apply { body.productId(productId) }
+        fun productId(productId: String) = apply { body.productId(productId) }
+
+        /**
+         * Specifies the configuration (e.g. physical card art) that the card should be manufactured
+         * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
+         * before use.
+         */
+        fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
         /** If omitted, the previous shipping address will be used. */
-        fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
+        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            body.shippingAddress(shippingAddress)
+        }
+
+        /** If omitted, the previous shipping address will be used. */
+        fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
             body.shippingAddress(shippingAddress)
         }
 
@@ -271,8 +391,42 @@ constructor(
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
          */
-        fun shippingMethod(shippingMethod: ShippingMethod?) = apply {
+        fun shippingMethod(shippingMethod: ShippingMethod) = apply {
             body.shippingMethod(shippingMethod)
+        }
+
+        /**
+         * Shipping method for the card. Use of options besides `STANDARD` require additional
+         * permissions.
+         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
+         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
+         *   tracking
+         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
+         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
+         * - `2_DAY` - FedEx 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         */
+        fun shippingMethod(shippingMethod: JsonField<ShippingMethod>) = apply {
+            body.shippingMethod(shippingMethod)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -371,25 +525,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CardReissueParams =

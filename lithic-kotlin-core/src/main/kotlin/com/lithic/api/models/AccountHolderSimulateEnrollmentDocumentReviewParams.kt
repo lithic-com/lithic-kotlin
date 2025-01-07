@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
@@ -41,11 +42,27 @@ constructor(
      */
     fun statusReason(): DocumentUploadStatusReasons? = body.statusReason()
 
+    /** The account holder document upload which to perform the simulation upon. */
+    fun _documentUploadToken(): JsonField<String> = body._documentUploadToken()
+
+    /** An account holder document's upload status for use within the simulation. */
+    fun _status(): JsonField<Status> = body._status()
+
+    /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+    fun _acceptedEntityStatusReasons(): JsonField<List<String>> =
+        body._acceptedEntityStatusReasons()
+
+    /**
+     * Status reason that will be associated with the simulated account holder status. Only required
+     * for a `REJECTED` status or `PARTIAL_APPROVAL` status.
+     */
+    fun _statusReason(): JsonField<DocumentUploadStatusReasons> = body._statusReason()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): AccountHolderSimulateEnrollmentDocumentReviewBody = body
 
@@ -57,36 +74,74 @@ constructor(
     class AccountHolderSimulateEnrollmentDocumentReviewBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("document_upload_token") private val documentUploadToken: String,
-        @JsonProperty("status") private val status: Status,
+        @JsonProperty("document_upload_token")
+        @ExcludeMissing
+        private val documentUploadToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("status")
+        @ExcludeMissing
+        private val status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("accepted_entity_status_reasons")
-        private val acceptedEntityStatusReasons: List<String>?,
-        @JsonProperty("status_reason") private val statusReason: DocumentUploadStatusReasons?,
+        @ExcludeMissing
+        private val acceptedEntityStatusReasons: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("status_reason")
+        @ExcludeMissing
+        private val statusReason: JsonField<DocumentUploadStatusReasons> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The account holder document upload which to perform the simulation upon. */
-        @JsonProperty("document_upload_token")
-        fun documentUploadToken(): String = documentUploadToken
+        fun documentUploadToken(): String = documentUploadToken.getRequired("document_upload_token")
 
         /** An account holder document's upload status for use within the simulation. */
-        @JsonProperty("status") fun status(): Status = status
+        fun status(): Status = status.getRequired("status")
+
+        /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+        fun acceptedEntityStatusReasons(): List<String>? =
+            acceptedEntityStatusReasons.getNullable("accepted_entity_status_reasons")
+
+        /**
+         * Status reason that will be associated with the simulated account holder status. Only
+         * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
+         */
+        fun statusReason(): DocumentUploadStatusReasons? = statusReason.getNullable("status_reason")
+
+        /** The account holder document upload which to perform the simulation upon. */
+        @JsonProperty("document_upload_token")
+        @ExcludeMissing
+        fun _documentUploadToken(): JsonField<String> = documentUploadToken
+
+        /** An account holder document's upload status for use within the simulation. */
+        @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
         /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
         @JsonProperty("accepted_entity_status_reasons")
-        fun acceptedEntityStatusReasons(): List<String>? = acceptedEntityStatusReasons
+        @ExcludeMissing
+        fun _acceptedEntityStatusReasons(): JsonField<List<String>> = acceptedEntityStatusReasons
 
         /**
          * Status reason that will be associated with the simulated account holder status. Only
          * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
          */
         @JsonProperty("status_reason")
-        fun statusReason(): DocumentUploadStatusReasons? = statusReason
+        @ExcludeMissing
+        fun _statusReason(): JsonField<DocumentUploadStatusReasons> = statusReason
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountHolderSimulateEnrollmentDocumentReviewBody = apply {
+            if (!validated) {
+                documentUploadToken()
+                status()
+                acceptedEntityStatusReasons()
+                statusReason()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -97,10 +152,10 @@ constructor(
 
         class Builder {
 
-            private var documentUploadToken: String? = null
-            private var status: Status? = null
-            private var acceptedEntityStatusReasons: MutableList<String>? = null
-            private var statusReason: DocumentUploadStatusReasons? = null
+            private var documentUploadToken: JsonField<String>? = null
+            private var status: JsonField<Status>? = null
+            private var acceptedEntityStatusReasons: JsonField<MutableList<String>>? = null
+            private var statusReason: JsonField<DocumentUploadStatusReasons> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -112,7 +167,7 @@ constructor(
                 status = accountHolderSimulateEnrollmentDocumentReviewBody.status
                 acceptedEntityStatusReasons =
                     accountHolderSimulateEnrollmentDocumentReviewBody.acceptedEntityStatusReasons
-                        ?.toMutableList()
+                        .map { it.toMutableList() }
                 statusReason = accountHolderSimulateEnrollmentDocumentReviewBody.statusReason
                 additionalProperties =
                     accountHolderSimulateEnrollmentDocumentReviewBody.additionalProperties
@@ -120,23 +175,40 @@ constructor(
             }
 
             /** The account holder document upload which to perform the simulation upon. */
-            fun documentUploadToken(documentUploadToken: String) = apply {
+            fun documentUploadToken(documentUploadToken: String) =
+                documentUploadToken(JsonField.of(documentUploadToken))
+
+            /** The account holder document upload which to perform the simulation upon. */
+            fun documentUploadToken(documentUploadToken: JsonField<String>) = apply {
                 this.documentUploadToken = documentUploadToken
             }
 
             /** An account holder document's upload status for use within the simulation. */
-            fun status(status: Status) = apply { this.status = status }
+            fun status(status: Status) = status(JsonField.of(status))
+
+            /** An account holder document's upload status for use within the simulation. */
+            fun status(status: JsonField<Status>) = apply { this.status = status }
 
             /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
-            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>?) = apply {
-                this.acceptedEntityStatusReasons = acceptedEntityStatusReasons?.toMutableList()
-            }
+            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) =
+                acceptedEntityStatusReasons(JsonField.of(acceptedEntityStatusReasons))
+
+            /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+            fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: JsonField<List<String>>) =
+                apply {
+                    this.acceptedEntityStatusReasons =
+                        acceptedEntityStatusReasons.map { it.toMutableList() }
+                }
 
             /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
             fun addAcceptedEntityStatusReason(acceptedEntityStatusReason: String) = apply {
                 acceptedEntityStatusReasons =
-                    (acceptedEntityStatusReasons ?: mutableListOf()).apply {
-                        add(acceptedEntityStatusReason)
+                    (acceptedEntityStatusReasons ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(acceptedEntityStatusReason)
                     }
             }
 
@@ -144,7 +216,14 @@ constructor(
              * Status reason that will be associated with the simulated account holder status. Only
              * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
              */
-            fun statusReason(statusReason: DocumentUploadStatusReasons?) = apply {
+            fun statusReason(statusReason: DocumentUploadStatusReasons) =
+                statusReason(JsonField.of(statusReason))
+
+            /**
+             * Status reason that will be associated with the simulated account holder status. Only
+             * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
+             */
+            fun statusReason(statusReason: JsonField<DocumentUploadStatusReasons>) = apply {
                 this.statusReason = statusReason
             }
 
@@ -173,7 +252,7 @@ constructor(
                         "`documentUploadToken` is required but was not set"
                     },
                     checkNotNull(status) { "`status` is required but was not set" },
-                    acceptedEntityStatusReasons?.toImmutable(),
+                    (acceptedEntityStatusReasons ?: JsonMissing.of()).map { it.toImmutable() },
                     statusReason,
                     additionalProperties.toImmutable(),
                 )
@@ -229,13 +308,27 @@ constructor(
             body.documentUploadToken(documentUploadToken)
         }
 
+        /** The account holder document upload which to perform the simulation upon. */
+        fun documentUploadToken(documentUploadToken: JsonField<String>) = apply {
+            body.documentUploadToken(documentUploadToken)
+        }
+
         /** An account holder document's upload status for use within the simulation. */
         fun status(status: Status) = apply { body.status(status) }
 
+        /** An account holder document's upload status for use within the simulation. */
+        fun status(status: JsonField<Status>) = apply { body.status(status) }
+
         /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
-        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>?) = apply {
+        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) = apply {
             body.acceptedEntityStatusReasons(acceptedEntityStatusReasons)
         }
+
+        /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
+        fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: JsonField<List<String>>) =
+            apply {
+                body.acceptedEntityStatusReasons(acceptedEntityStatusReasons)
+            }
 
         /** A list of status reasons associated with a KYB account holder in PENDING_REVIEW */
         fun addAcceptedEntityStatusReason(acceptedEntityStatusReason: String) = apply {
@@ -246,8 +339,35 @@ constructor(
          * Status reason that will be associated with the simulated account holder status. Only
          * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
          */
-        fun statusReason(statusReason: DocumentUploadStatusReasons?) = apply {
+        fun statusReason(statusReason: DocumentUploadStatusReasons) = apply {
             body.statusReason(statusReason)
+        }
+
+        /**
+         * Status reason that will be associated with the simulated account holder status. Only
+         * required for a `REJECTED` status or `PARTIAL_APPROVAL` status.
+         */
+        fun statusReason(statusReason: JsonField<DocumentUploadStatusReasons>) = apply {
+            body.statusReason(statusReason)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -346,25 +466,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AccountHolderSimulateEnrollmentDocumentReviewParams =
