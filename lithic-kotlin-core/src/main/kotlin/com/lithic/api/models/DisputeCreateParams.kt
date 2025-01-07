@@ -19,6 +19,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/** Initiate a dispute. */
 class DisputeCreateParams
 constructor(
     private val body: DisputeCreateBody,

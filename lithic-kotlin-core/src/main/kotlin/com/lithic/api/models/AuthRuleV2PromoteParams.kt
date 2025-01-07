@@ -9,6 +9,10 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * Promotes a draft version of an authorization rule to the currently active version such that it is
+ * enforced in the authorization stream.
+ */
 class AuthRuleV2PromoteParams
 constructor(
     private val authRuleToken: String,

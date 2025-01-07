@@ -8,6 +8,7 @@ import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 
+/** List details. */
 class ReportSettlementListDetailsParams
 constructor(
     private val reportDate: LocalDate,

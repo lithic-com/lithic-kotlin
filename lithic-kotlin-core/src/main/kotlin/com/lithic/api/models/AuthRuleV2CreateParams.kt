@@ -28,6 +28,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Creates a new V2 authorization rule in draft mode */
 class AuthRuleV2CreateParams
 constructor(
     private val body: AuthRuleV2CreateBody,

@@ -8,6 +8,7 @@ import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 
+/** Get Credit Product Prime Rates */
 class CreditProductPrimeRateRetrieveParams
 constructor(
     private val creditProductToken: String,

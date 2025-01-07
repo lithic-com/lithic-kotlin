@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
 
+/** Release external payment */
 class ExternalPaymentReleaseParams
 constructor(
     private val externalPaymentToken: String,

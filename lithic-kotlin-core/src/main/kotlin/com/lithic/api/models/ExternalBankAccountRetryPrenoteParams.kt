@@ -15,6 +15,7 @@ import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/** Retry external bank account prenote verification. */
 class ExternalBankAccountRetryPrenoteParams
 constructor(
     private val externalBankAccountToken: String,

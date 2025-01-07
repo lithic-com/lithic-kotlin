@@ -19,6 +19,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
+/** Settle external payment */
 class ExternalPaymentSettleParams
 constructor(
     private val externalPaymentToken: String,

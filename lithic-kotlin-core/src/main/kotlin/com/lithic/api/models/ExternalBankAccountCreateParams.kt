@@ -29,6 +29,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
+/** Creates an external bank account within a program or Lithic account. */
 class ExternalBankAccountCreateParams
 constructor(
     private val body: ExternalBankAccountCreateBody,

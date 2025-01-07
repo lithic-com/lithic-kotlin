@@ -18,6 +18,10 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint is used to simulate a card's tokenization in the Digital Wallet and merchant
+ * tokenization ecosystem.
+ */
 class TokenizationSimulateParams
 constructor(
     private val body: TokenizationSimulateBody,

@@ -13,6 +13,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** List all the message attempts for a given event subscription. */
 class EventSubscriptionListAttemptsParams
 constructor(
     private val eventSubscriptionToken: String,

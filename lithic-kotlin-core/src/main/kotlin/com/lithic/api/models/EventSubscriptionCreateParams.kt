@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Create a new event subscription. */
 class EventSubscriptionCreateParams
 constructor(
     private val body: EventSubscriptionCreateBody,

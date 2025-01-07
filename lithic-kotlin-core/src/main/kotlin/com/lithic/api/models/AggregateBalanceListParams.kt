@@ -11,6 +11,7 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Get the aggregated balance across all end-user accounts by financial account type */
 class AggregateBalanceListParams
 constructor(
     private val financialAccountType: FinancialAccountType?,
