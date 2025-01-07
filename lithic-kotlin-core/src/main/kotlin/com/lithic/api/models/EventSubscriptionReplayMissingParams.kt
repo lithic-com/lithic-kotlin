@@ -11,6 +11,12 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/**
+ * Replays messages to the endpoint. Only messages that were created after `begin` will be sent.
+ * Messages that were previously sent to the endpoint are not resent. Message will be retried if
+ * endpoint responds with a non-2xx status code. See
+ * [Retry Schedule](https://docs.lithic.com/docs/events-api#retry-schedule) for details.
+ */
 class EventSubscriptionReplayMissingParams
 constructor(
     private val eventSubscriptionToken: String,

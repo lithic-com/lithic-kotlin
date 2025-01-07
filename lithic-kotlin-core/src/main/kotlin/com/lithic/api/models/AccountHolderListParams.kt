@@ -9,6 +9,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** Get a list of individual or business account holders and their KYC or KYB evaluation status. */
 class AccountHolderListParams
 constructor(
     private val begin: OffsetDateTime?,

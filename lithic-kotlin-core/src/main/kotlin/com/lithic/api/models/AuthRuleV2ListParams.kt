@@ -7,6 +7,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
+/** Lists V2 authorization rules */
 class AuthRuleV2ListParams
 constructor(
     private val accountToken: String?,

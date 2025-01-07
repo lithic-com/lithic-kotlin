@@ -19,6 +19,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/** Update dispute. Can only be modified if status is `NEW`. */
 class DisputeUpdateParams
 constructor(
     private val disputeToken: String,

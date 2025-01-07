@@ -12,6 +12,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
+/** List card tokenizations */
 class TokenizationListParams
 constructor(
     private val accountToken: String?,

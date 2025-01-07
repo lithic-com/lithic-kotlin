@@ -9,6 +9,7 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/** Withdraw dispute. */
 class DisputeDeleteParams
 constructor(
     private val disputeToken: String,

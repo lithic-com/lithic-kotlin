@@ -15,6 +15,7 @@ import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/** Simulates a return of a Payment. */
 class PaymentSimulateReturnParams
 constructor(
     private val body: PaymentSimulateReturnBody,

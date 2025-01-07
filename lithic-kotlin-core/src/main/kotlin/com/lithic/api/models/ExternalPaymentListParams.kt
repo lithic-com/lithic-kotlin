@@ -13,6 +13,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** List external payments */
 class ExternalPaymentListParams
 constructor(
     private val begin: OffsetDateTime?,

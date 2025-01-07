@@ -9,6 +9,12 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * Generate a new ASA HMAC secret key. The old ASA HMAC secret key will be deactivated 24 hours
+ * after a successful request to this endpoint. Make a
+ * [`GET /auth_stream/secret`](https://docs.lithic.com/reference/getauthstreamsecret) request to
+ * retrieve the new secret key.
+ */
 class AuthStreamEnrollmentRotateSecretParams
 constructor(
     private val additionalHeaders: Headers,
