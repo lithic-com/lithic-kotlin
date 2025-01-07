@@ -18,6 +18,10 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/**
+ * Create a new virtual or physical card. Parameters `shipping_address` and `product_id` only apply
+ * to physical cards.
+ */
 class CardCreateParams
 constructor(
     private val body: CardCreateBody,

@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Book transfer funds between two financial accounts or between a financial account and card */
 class BookTransferCreateParams
 constructor(
     private val body: BookTransferCreateBody,

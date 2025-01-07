@@ -9,6 +9,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** Get the balances for a given card. */
 class CardBalanceListParams
 constructor(
     private val cardToken: String,

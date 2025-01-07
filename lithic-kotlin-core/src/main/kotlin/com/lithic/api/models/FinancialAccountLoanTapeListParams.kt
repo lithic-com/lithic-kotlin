@@ -8,6 +8,7 @@ import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 
+/** List the loan tapes for a given financial account. */
 class FinancialAccountLoanTapeListParams
 constructor(
     private val financialAccountToken: String,

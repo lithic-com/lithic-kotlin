@@ -18,6 +18,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
+/** Initiates a payment between a financial account and an external bank account. */
 class PaymentCreateParams
 constructor(
     private val body: PaymentCreateBody,

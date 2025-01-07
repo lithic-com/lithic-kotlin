@@ -8,6 +8,7 @@ import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
 import java.util.Objects
 
+/** List the statements for a given financial account. */
 class FinancialAccountStatementListParams
 constructor(
     private val financialAccountToken: String,

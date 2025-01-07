@@ -13,6 +13,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/** List book transfers */
 class BookTransferListParams
 constructor(
     private val accountToken: String?,
