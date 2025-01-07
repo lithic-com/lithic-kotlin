@@ -29,7 +29,7 @@ private constructor(
     fun enrolled(): Boolean? = enrolled.getNullable("enrolled")
 
     /** True if the endpoint was enrolled successfully. */
-    @JsonProperty("enrolled") @ExcludeMissing fun _enrolled() = enrolled
+    @JsonProperty("enrolled") @ExcludeMissing fun _enrolled(): JsonField<Boolean> = enrolled
 
     @JsonAnyGetter
     @ExcludeMissing

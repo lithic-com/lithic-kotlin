@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
@@ -45,11 +46,18 @@ constructor(
      */
     fun activationMethodType(): ActivationMethodType? = body.activationMethodType()
 
+    /**
+     * The communication method that the user has selected to use to receive the authentication
+     * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
+     * "EMAIL_TO_CARDHOLDER_ADDRESS"
+     */
+    fun _activationMethodType(): JsonField<ActivationMethodType> = body._activationMethodType()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): TokenizationResendActivationCodeBody = body
 
@@ -69,7 +77,8 @@ constructor(
     @JsonCreator
     internal constructor(
         @JsonProperty("activation_method_type")
-        private val activationMethodType: ActivationMethodType?,
+        @ExcludeMissing
+        private val activationMethodType: JsonField<ActivationMethodType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -79,12 +88,30 @@ constructor(
          * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
          * "EMAIL_TO_CARDHOLDER_ADDRESS"
          */
+        fun activationMethodType(): ActivationMethodType? =
+            activationMethodType.getNullable("activation_method_type")
+
+        /**
+         * The communication method that the user has selected to use to receive the authentication
+         * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
+         * "EMAIL_TO_CARDHOLDER_ADDRESS"
+         */
         @JsonProperty("activation_method_type")
-        fun activationMethodType(): ActivationMethodType? = activationMethodType
+        @ExcludeMissing
+        fun _activationMethodType(): JsonField<ActivationMethodType> = activationMethodType
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): TokenizationResendActivationCodeBody = apply {
+            if (!validated) {
+                activationMethodType()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -95,7 +122,7 @@ constructor(
 
         class Builder {
 
-            private var activationMethodType: ActivationMethodType? = null
+            private var activationMethodType: JsonField<ActivationMethodType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -111,9 +138,18 @@ constructor(
              * authentication code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
              * "EMAIL_TO_CARDHOLDER_ADDRESS"
              */
-            fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
-                this.activationMethodType = activationMethodType
-            }
+            fun activationMethodType(activationMethodType: ActivationMethodType) =
+                activationMethodType(JsonField.of(activationMethodType))
+
+            /**
+             * The communication method that the user has selected to use to receive the
+             * authentication code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
+             * "EMAIL_TO_CARDHOLDER_ADDRESS"
+             */
+            fun activationMethodType(activationMethodType: JsonField<ActivationMethodType>) =
+                apply {
+                    this.activationMethodType = activationMethodType
+                }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -194,8 +230,36 @@ constructor(
          * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
          * "EMAIL_TO_CARDHOLDER_ADDRESS"
          */
-        fun activationMethodType(activationMethodType: ActivationMethodType?) = apply {
+        fun activationMethodType(activationMethodType: ActivationMethodType) = apply {
             body.activationMethodType(activationMethodType)
+        }
+
+        /**
+         * The communication method that the user has selected to use to receive the authentication
+         * code. Supported Values: Sms = "TEXT_TO_CARDHOLDER_NUMBER". Email =
+         * "EMAIL_TO_CARDHOLDER_ADDRESS"
+         */
+        fun activationMethodType(activationMethodType: JsonField<ActivationMethodType>) = apply {
+            body.activationMethodType(activationMethodType)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -294,25 +358,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): TokenizationResendActivationCodeParams =

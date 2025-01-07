@@ -27,7 +27,7 @@ private constructor(
 
     fun data(): List<EnhancedData> = data.getRequired("data")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<EnhancedData>> = data
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -51,20 +51,33 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<EnhancedData>> = JsonMissing.of()
+        private var data: JsonField<MutableList<EnhancedData>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             enhancedCommercialDataRetrieveResponse: EnhancedCommercialDataRetrieveResponse
         ) = apply {
-            data = enhancedCommercialDataRetrieveResponse.data
+            data = enhancedCommercialDataRetrieveResponse.data.map { it.toMutableList() }
             additionalProperties =
                 enhancedCommercialDataRetrieveResponse.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<EnhancedData>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<EnhancedData>>) = apply { this.data = data }
+        fun data(data: JsonField<List<EnhancedData>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
+
+        fun addData(data: EnhancedData) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(data)
+                }
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -87,7 +100,8 @@ private constructor(
 
         fun build(): EnhancedCommercialDataRetrieveResponse =
             EnhancedCommercialDataRetrieveResponse(
-                data.map { it.toImmutable() },
+                checkNotNull(data) { "`data` is required but was not set" }
+                    .map { it.toImmutable() },
                 additionalProperties.toImmutable()
             )
     }
