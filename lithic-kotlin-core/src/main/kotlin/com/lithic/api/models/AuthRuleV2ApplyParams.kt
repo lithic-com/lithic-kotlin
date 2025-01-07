@@ -16,6 +16,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.lithic.api.core.BaseDeserializer
 import com.lithic.api.core.BaseSerializer
 import com.lithic.api.core.ExcludeMissing
+import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.getOrThrow
@@ -380,17 +382,33 @@ constructor(
     class ApplyAuthRuleRequestAccountTokens
     @JsonCreator
     private constructor(
-        @JsonProperty("account_tokens") private val accountTokens: List<String>,
+        @JsonProperty("account_tokens")
+        @ExcludeMissing
+        private val accountTokens: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Account tokens to which the Auth Rule applies. */
-        @JsonProperty("account_tokens") fun accountTokens(): List<String> = accountTokens
+        fun accountTokens(): List<String> = accountTokens.getRequired("account_tokens")
+
+        /** Account tokens to which the Auth Rule applies. */
+        @JsonProperty("account_tokens")
+        @ExcludeMissing
+        fun _accountTokens(): JsonField<List<String>> = accountTokens
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ApplyAuthRuleRequestAccountTokens = apply {
+            if (!validated) {
+                accountTokens()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -401,25 +419,37 @@ constructor(
 
         class Builder {
 
-            private var accountTokens: MutableList<String>? = null
+            private var accountTokens: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
                 applyAuthRuleRequestAccountTokens: ApplyAuthRuleRequestAccountTokens
             ) = apply {
-                accountTokens = applyAuthRuleRequestAccountTokens.accountTokens.toMutableList()
+                accountTokens =
+                    applyAuthRuleRequestAccountTokens.accountTokens.map { it.toMutableList() }
                 additionalProperties =
                     applyAuthRuleRequestAccountTokens.additionalProperties.toMutableMap()
             }
 
             /** Account tokens to which the Auth Rule applies. */
-            fun accountTokens(accountTokens: List<String>) = apply {
-                this.accountTokens = accountTokens.toMutableList()
+            fun accountTokens(accountTokens: List<String>) =
+                accountTokens(JsonField.of(accountTokens))
+
+            /** Account tokens to which the Auth Rule applies. */
+            fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
+                this.accountTokens = accountTokens.map { it.toMutableList() }
             }
 
             /** Account tokens to which the Auth Rule applies. */
             fun addAccountToken(accountToken: String) = apply {
-                accountTokens = (accountTokens ?: mutableListOf()).apply { add(accountToken) }
+                accountTokens =
+                    (accountTokens ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(accountToken)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -444,7 +474,7 @@ constructor(
             fun build(): ApplyAuthRuleRequestAccountTokens =
                 ApplyAuthRuleRequestAccountTokens(
                     checkNotNull(accountTokens) { "`accountTokens` is required but was not set" }
-                        .toImmutable(),
+                        .map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -471,17 +501,33 @@ constructor(
     class ApplyAuthRuleRequestCardTokens
     @JsonCreator
     private constructor(
-        @JsonProperty("card_tokens") private val cardTokens: List<String>,
+        @JsonProperty("card_tokens")
+        @ExcludeMissing
+        private val cardTokens: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Card tokens to which the Auth Rule applies. */
-        @JsonProperty("card_tokens") fun cardTokens(): List<String> = cardTokens
+        fun cardTokens(): List<String> = cardTokens.getRequired("card_tokens")
+
+        /** Card tokens to which the Auth Rule applies. */
+        @JsonProperty("card_tokens")
+        @ExcludeMissing
+        fun _cardTokens(): JsonField<List<String>> = cardTokens
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ApplyAuthRuleRequestCardTokens = apply {
+            if (!validated) {
+                cardTokens()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -492,24 +538,35 @@ constructor(
 
         class Builder {
 
-            private var cardTokens: MutableList<String>? = null
+            private var cardTokens: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(applyAuthRuleRequestCardTokens: ApplyAuthRuleRequestCardTokens) =
                 apply {
-                    cardTokens = applyAuthRuleRequestCardTokens.cardTokens.toMutableList()
+                    cardTokens =
+                        applyAuthRuleRequestCardTokens.cardTokens.map { it.toMutableList() }
                     additionalProperties =
                         applyAuthRuleRequestCardTokens.additionalProperties.toMutableMap()
                 }
 
             /** Card tokens to which the Auth Rule applies. */
-            fun cardTokens(cardTokens: List<String>) = apply {
-                this.cardTokens = cardTokens.toMutableList()
+            fun cardTokens(cardTokens: List<String>) = cardTokens(JsonField.of(cardTokens))
+
+            /** Card tokens to which the Auth Rule applies. */
+            fun cardTokens(cardTokens: JsonField<List<String>>) = apply {
+                this.cardTokens = cardTokens.map { it.toMutableList() }
             }
 
             /** Card tokens to which the Auth Rule applies. */
             fun addCardToken(cardToken: String) = apply {
-                cardTokens = (cardTokens ?: mutableListOf()).apply { add(cardToken) }
+                cardTokens =
+                    (cardTokens ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(cardToken)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -534,7 +591,7 @@ constructor(
             fun build(): ApplyAuthRuleRequestCardTokens =
                 ApplyAuthRuleRequestCardTokens(
                     checkNotNull(cardTokens) { "`cardTokens` is required but was not set" }
-                        .toImmutable(),
+                        .map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -561,22 +618,46 @@ constructor(
     class ApplyAuthRuleRequestProgramLevel
     @JsonCreator
     private constructor(
-        @JsonProperty("program_level") private val programLevel: Boolean,
-        @JsonProperty("excluded_card_tokens") private val excludedCardTokens: List<String>?,
+        @JsonProperty("program_level")
+        @ExcludeMissing
+        private val programLevel: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("excluded_card_tokens")
+        @ExcludeMissing
+        private val excludedCardTokens: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Whether the Auth Rule applies to all authorizations on the card program. */
-        @JsonProperty("program_level") fun programLevel(): Boolean = programLevel
+        fun programLevel(): Boolean = programLevel.getRequired("program_level")
+
+        /** Card tokens to which the Auth Rule does not apply. */
+        fun excludedCardTokens(): List<String>? =
+            excludedCardTokens.getNullable("excluded_card_tokens")
+
+        /** Whether the Auth Rule applies to all authorizations on the card program. */
+        @JsonProperty("program_level")
+        @ExcludeMissing
+        fun _programLevel(): JsonField<Boolean> = programLevel
 
         /** Card tokens to which the Auth Rule does not apply. */
         @JsonProperty("excluded_card_tokens")
-        fun excludedCardTokens(): List<String>? = excludedCardTokens
+        @ExcludeMissing
+        fun _excludedCardTokens(): JsonField<List<String>> = excludedCardTokens
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ApplyAuthRuleRequestProgramLevel = apply {
+            if (!validated) {
+                programLevel()
+                excludedCardTokens()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -587,31 +668,48 @@ constructor(
 
         class Builder {
 
-            private var programLevel: Boolean? = null
-            private var excludedCardTokens: MutableList<String>? = null
+            private var programLevel: JsonField<Boolean>? = null
+            private var excludedCardTokens: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel) =
                 apply {
                     programLevel = applyAuthRuleRequestProgramLevel.programLevel
                     excludedCardTokens =
-                        applyAuthRuleRequestProgramLevel.excludedCardTokens?.toMutableList()
+                        applyAuthRuleRequestProgramLevel.excludedCardTokens.map {
+                            it.toMutableList()
+                        }
                     additionalProperties =
                         applyAuthRuleRequestProgramLevel.additionalProperties.toMutableMap()
                 }
 
             /** Whether the Auth Rule applies to all authorizations on the card program. */
-            fun programLevel(programLevel: Boolean) = apply { this.programLevel = programLevel }
+            fun programLevel(programLevel: Boolean) = programLevel(JsonField.of(programLevel))
+
+            /** Whether the Auth Rule applies to all authorizations on the card program. */
+            fun programLevel(programLevel: JsonField<Boolean>) = apply {
+                this.programLevel = programLevel
+            }
 
             /** Card tokens to which the Auth Rule does not apply. */
-            fun excludedCardTokens(excludedCardTokens: List<String>?) = apply {
-                this.excludedCardTokens = excludedCardTokens?.toMutableList()
+            fun excludedCardTokens(excludedCardTokens: List<String>) =
+                excludedCardTokens(JsonField.of(excludedCardTokens))
+
+            /** Card tokens to which the Auth Rule does not apply. */
+            fun excludedCardTokens(excludedCardTokens: JsonField<List<String>>) = apply {
+                this.excludedCardTokens = excludedCardTokens.map { it.toMutableList() }
             }
 
             /** Card tokens to which the Auth Rule does not apply. */
             fun addExcludedCardToken(excludedCardToken: String) = apply {
                 excludedCardTokens =
-                    (excludedCardTokens ?: mutableListOf()).apply { add(excludedCardToken) }
+                    (excludedCardTokens ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(excludedCardToken)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -636,7 +734,7 @@ constructor(
             fun build(): ApplyAuthRuleRequestProgramLevel =
                 ApplyAuthRuleRequestProgramLevel(
                     checkNotNull(programLevel) { "`programLevel` is required but was not set" },
-                    excludedCardTokens?.toImmutable(),
+                    (excludedCardTokens ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }

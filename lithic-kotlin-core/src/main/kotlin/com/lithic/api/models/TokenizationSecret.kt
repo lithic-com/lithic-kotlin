@@ -29,7 +29,7 @@ private constructor(
     fun secret(): String? = secret.getNullable("secret")
 
     /** The Tokenization Decisioning HMAC secret */
-    @JsonProperty("secret") @ExcludeMissing fun _secret() = secret
+    @JsonProperty("secret") @ExcludeMissing fun _secret(): JsonField<String> = secret
 
     @JsonAnyGetter
     @ExcludeMissing

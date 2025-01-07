@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
+import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.http.Headers
@@ -32,11 +33,14 @@ constructor(
     /** Event type to send example message for. */
     fun eventType(): EventType? = body.eventType()
 
+    /** Event type to send example message for. */
+    fun _eventType(): JsonField<EventType> = body._eventType()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): EventSubscriptionSendSimulatedExampleBody = body
 
@@ -55,17 +59,33 @@ constructor(
     class EventSubscriptionSendSimulatedExampleBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("event_type") private val eventType: EventType?,
+        @JsonProperty("event_type")
+        @ExcludeMissing
+        private val eventType: JsonField<EventType> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Event type to send example message for. */
-        @JsonProperty("event_type") fun eventType(): EventType? = eventType
+        fun eventType(): EventType? = eventType.getNullable("event_type")
+
+        /** Event type to send example message for. */
+        @JsonProperty("event_type")
+        @ExcludeMissing
+        fun _eventType(): JsonField<EventType> = eventType
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): EventSubscriptionSendSimulatedExampleBody = apply {
+            if (!validated) {
+                eventType()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -76,7 +96,7 @@ constructor(
 
         class Builder {
 
-            private var eventType: EventType? = null
+            private var eventType: JsonField<EventType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -88,7 +108,10 @@ constructor(
             }
 
             /** Event type to send example message for. */
-            fun eventType(eventType: EventType?) = apply { this.eventType = eventType }
+            fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
+
+            /** Event type to send example message for. */
+            fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -167,7 +190,29 @@ constructor(
         }
 
         /** Event type to send example message for. */
-        fun eventType(eventType: EventType?) = apply { body.eventType(eventType) }
+        fun eventType(eventType: EventType) = apply { body.eventType(eventType) }
+
+        /** Event type to send example message for. */
+        fun eventType(eventType: JsonField<EventType>) = apply { body.eventType(eventType) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -265,25 +310,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventSubscriptionSendSimulatedExampleParams =

@@ -89,34 +89,44 @@ private constructor(
     fun excludedCardTokens(): List<String>? = excludedCardTokens.getNullable("excluded_card_tokens")
 
     /** Auth Rule Token */
-    @JsonProperty("token") @ExcludeMissing fun _token() = token
+    @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
 
     /** Account tokens to which the Auth Rule applies. */
-    @JsonProperty("account_tokens") @ExcludeMissing fun _accountTokens() = accountTokens
+    @JsonProperty("account_tokens")
+    @ExcludeMissing
+    fun _accountTokens(): JsonField<List<String>> = accountTokens
 
     /** Card tokens to which the Auth Rule applies. */
-    @JsonProperty("card_tokens") @ExcludeMissing fun _cardTokens() = cardTokens
+    @JsonProperty("card_tokens")
+    @ExcludeMissing
+    fun _cardTokens(): JsonField<List<String>> = cardTokens
 
-    @JsonProperty("current_version") @ExcludeMissing fun _currentVersion() = currentVersion
+    @JsonProperty("current_version")
+    @ExcludeMissing
+    fun _currentVersion(): JsonField<CurrentVersion> = currentVersion
 
-    @JsonProperty("draft_version") @ExcludeMissing fun _draftVersion() = draftVersion
+    @JsonProperty("draft_version")
+    @ExcludeMissing
+    fun _draftVersion(): JsonField<DraftVersion> = draftVersion
 
     /** Auth Rule Name */
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /** Whether the Auth Rule applies to all authorizations on the card program. */
-    @JsonProperty("program_level") @ExcludeMissing fun _programLevel() = programLevel
+    @JsonProperty("program_level")
+    @ExcludeMissing
+    fun _programLevel(): JsonField<Boolean> = programLevel
 
     /** The state of the Auth Rule */
-    @JsonProperty("state") @ExcludeMissing fun _state() = state
+    @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<AuthRuleState> = state
 
     /** The type of Auth Rule */
-    @JsonProperty("type") @ExcludeMissing fun _type() = type
+    @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<AuthRuleType> = type
 
     /** Card tokens to which the Auth Rule does not apply. */
     @JsonProperty("excluded_card_tokens")
     @ExcludeMissing
-    fun _excludedCardTokens() = excludedCardTokens
+    fun _excludedCardTokens(): JsonField<List<String>> = excludedCardTokens
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -149,29 +159,29 @@ private constructor(
 
     class Builder {
 
-        private var token: JsonField<String> = JsonMissing.of()
-        private var accountTokens: JsonField<List<String>> = JsonMissing.of()
-        private var cardTokens: JsonField<List<String>> = JsonMissing.of()
-        private var currentVersion: JsonField<CurrentVersion> = JsonMissing.of()
-        private var draftVersion: JsonField<DraftVersion> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
-        private var programLevel: JsonField<Boolean> = JsonMissing.of()
-        private var state: JsonField<AuthRuleState> = JsonMissing.of()
-        private var type: JsonField<AuthRuleType> = JsonMissing.of()
-        private var excludedCardTokens: JsonField<List<String>> = JsonMissing.of()
+        private var token: JsonField<String>? = null
+        private var accountTokens: JsonField<MutableList<String>>? = null
+        private var cardTokens: JsonField<MutableList<String>>? = null
+        private var currentVersion: JsonField<CurrentVersion>? = null
+        private var draftVersion: JsonField<DraftVersion>? = null
+        private var name: JsonField<String>? = null
+        private var programLevel: JsonField<Boolean>? = null
+        private var state: JsonField<AuthRuleState>? = null
+        private var type: JsonField<AuthRuleType>? = null
+        private var excludedCardTokens: JsonField<MutableList<String>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(v2ApplyResponse: V2ApplyResponse) = apply {
             token = v2ApplyResponse.token
-            accountTokens = v2ApplyResponse.accountTokens
-            cardTokens = v2ApplyResponse.cardTokens
+            accountTokens = v2ApplyResponse.accountTokens.map { it.toMutableList() }
+            cardTokens = v2ApplyResponse.cardTokens.map { it.toMutableList() }
             currentVersion = v2ApplyResponse.currentVersion
             draftVersion = v2ApplyResponse.draftVersion
             name = v2ApplyResponse.name
             programLevel = v2ApplyResponse.programLevel
             state = v2ApplyResponse.state
             type = v2ApplyResponse.type
-            excludedCardTokens = v2ApplyResponse.excludedCardTokens
+            excludedCardTokens = v2ApplyResponse.excludedCardTokens.map { it.toMutableList() }
             additionalProperties = v2ApplyResponse.additionalProperties.toMutableMap()
         }
 
@@ -186,30 +196,57 @@ private constructor(
 
         /** Account tokens to which the Auth Rule applies. */
         fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
-            this.accountTokens = accountTokens
+            this.accountTokens = accountTokens.map { it.toMutableList() }
+        }
+
+        /** Account tokens to which the Auth Rule applies. */
+        fun addAccountToken(accountToken: String) = apply {
+            accountTokens =
+                (accountTokens ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(accountToken)
+                }
         }
 
         /** Card tokens to which the Auth Rule applies. */
         fun cardTokens(cardTokens: List<String>) = cardTokens(JsonField.of(cardTokens))
 
         /** Card tokens to which the Auth Rule applies. */
-        fun cardTokens(cardTokens: JsonField<List<String>>) = apply { this.cardTokens = cardTokens }
+        fun cardTokens(cardTokens: JsonField<List<String>>) = apply {
+            this.cardTokens = cardTokens.map { it.toMutableList() }
+        }
 
-        fun currentVersion(currentVersion: CurrentVersion) =
-            currentVersion(JsonField.of(currentVersion))
+        /** Card tokens to which the Auth Rule applies. */
+        fun addCardToken(cardToken: String) = apply {
+            cardTokens =
+                (cardTokens ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(cardToken)
+                }
+        }
+
+        fun currentVersion(currentVersion: CurrentVersion?) =
+            currentVersion(JsonField.ofNullable(currentVersion))
 
         fun currentVersion(currentVersion: JsonField<CurrentVersion>) = apply {
             this.currentVersion = currentVersion
         }
 
-        fun draftVersion(draftVersion: DraftVersion) = draftVersion(JsonField.of(draftVersion))
+        fun draftVersion(draftVersion: DraftVersion?) =
+            draftVersion(JsonField.ofNullable(draftVersion))
 
         fun draftVersion(draftVersion: JsonField<DraftVersion>) = apply {
             this.draftVersion = draftVersion
         }
 
         /** Auth Rule Name */
-        fun name(name: String) = name(JsonField.of(name))
+        fun name(name: String?) = name(JsonField.ofNullable(name))
 
         /** Auth Rule Name */
         fun name(name: JsonField<String>) = apply { this.name = name }
@@ -240,7 +277,19 @@ private constructor(
 
         /** Card tokens to which the Auth Rule does not apply. */
         fun excludedCardTokens(excludedCardTokens: JsonField<List<String>>) = apply {
-            this.excludedCardTokens = excludedCardTokens
+            this.excludedCardTokens = excludedCardTokens.map { it.toMutableList() }
+        }
+
+        /** Card tokens to which the Auth Rule does not apply. */
+        fun addExcludedCardToken(excludedCardToken: String) = apply {
+            excludedCardTokens =
+                (excludedCardTokens ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(excludedCardToken)
+                }
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -264,16 +313,18 @@ private constructor(
 
         fun build(): V2ApplyResponse =
             V2ApplyResponse(
-                token,
-                accountTokens.map { it.toImmutable() },
-                cardTokens.map { it.toImmutable() },
-                currentVersion,
-                draftVersion,
-                name,
-                programLevel,
-                state,
-                type,
-                excludedCardTokens.map { it.toImmutable() },
+                checkNotNull(token) { "`token` is required but was not set" },
+                checkNotNull(accountTokens) { "`accountTokens` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(cardTokens) { "`cardTokens` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(currentVersion) { "`currentVersion` is required but was not set" },
+                checkNotNull(draftVersion) { "`draftVersion` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
+                checkNotNull(programLevel) { "`programLevel` is required but was not set" },
+                checkNotNull(state) { "`state` is required but was not set" },
+                checkNotNull(type) { "`type` is required but was not set" },
+                (excludedCardTokens ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -299,10 +350,12 @@ private constructor(
         fun version(): Long = version.getRequired("version")
 
         /** Parameters for the current version of the Auth Rule */
-        @JsonProperty("parameters") @ExcludeMissing fun _parameters() = parameters
+        @JsonProperty("parameters")
+        @ExcludeMissing
+        fun _parameters(): JsonField<Parameters> = parameters
 
         /** The version of the rule, this is incremented whenever the rule's parameters change. */
-        @JsonProperty("version") @ExcludeMissing fun _version() = version
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -327,8 +380,8 @@ private constructor(
 
         class Builder {
 
-            private var parameters: JsonField<Parameters> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
+            private var parameters: JsonField<Parameters>? = null
+            private var version: JsonField<Long>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(currentVersion: CurrentVersion) = apply {
@@ -344,6 +397,12 @@ private constructor(
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
+
+            fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
+                parameters(Parameters.ofConditionalBlockParameters(conditionalBlockParameters))
+
+            fun parameters(velocityLimitParams: VelocityLimitParams) =
+                parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
             /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
@@ -376,8 +435,8 @@ private constructor(
 
             fun build(): CurrentVersion =
                 CurrentVersion(
-                    parameters,
-                    version,
+                    checkNotNull(parameters) { "`parameters` is required but was not set" },
+                    checkNotNull(version) { "`version` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -526,7 +585,9 @@ private constructor(
 
                 fun conditions(): List<Condition> = conditions.getRequired("conditions")
 
-                @JsonProperty("conditions") @ExcludeMissing fun _conditions() = conditions
+                @JsonProperty("conditions")
+                @ExcludeMissing
+                fun _conditions(): JsonField<List<Condition>> = conditions
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -550,12 +611,13 @@ private constructor(
 
                 class Builder {
 
-                    private var conditions: JsonField<List<Condition>> = JsonMissing.of()
+                    private var conditions: JsonField<MutableList<Condition>>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(conditionalBlockParameters: ConditionalBlockParameters) =
                         apply {
-                            conditions = conditionalBlockParameters.conditions
+                            conditions =
+                                conditionalBlockParameters.conditions.map { it.toMutableList() }
                             additionalProperties =
                                 conditionalBlockParameters.additionalProperties.toMutableMap()
                         }
@@ -564,7 +626,18 @@ private constructor(
                         conditions(JsonField.of(conditions))
 
                     fun conditions(conditions: JsonField<List<Condition>>) = apply {
-                        this.conditions = conditions
+                        this.conditions = conditions.map { it.toMutableList() }
+                    }
+
+                    fun addCondition(condition: Condition) = apply {
+                        conditions =
+                            (conditions ?: JsonField.of(mutableListOf())).apply {
+                                (asKnown()
+                                        ?: throw IllegalStateException(
+                                            "Field was set to non-list type: ${javaClass.simpleName}"
+                                        ))
+                                    .add(condition)
+                            }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -591,7 +664,8 @@ private constructor(
 
                     fun build(): ConditionalBlockParameters =
                         ConditionalBlockParameters(
-                            conditions.map { it.toImmutable() },
+                            checkNotNull(conditions) { "`conditions` is required but was not set" }
+                                .map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
@@ -693,13 +767,17 @@ private constructor(
                      * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
                      *   trailing 24 hours up and until the authorization.
                      */
-                    @JsonProperty("attribute") @ExcludeMissing fun _attribute() = attribute
+                    @JsonProperty("attribute")
+                    @ExcludeMissing
+                    fun _attribute(): JsonField<Attribute> = attribute
 
                     /** The operation to apply to the attribute */
-                    @JsonProperty("operation") @ExcludeMissing fun _operation() = operation
+                    @JsonProperty("operation")
+                    @ExcludeMissing
+                    fun _operation(): JsonField<Operation> = operation
 
                     /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                    @JsonProperty("value") @ExcludeMissing fun _value() = value
+                    @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Value> = value
 
                     @JsonAnyGetter
                     @ExcludeMissing
@@ -831,6 +909,15 @@ private constructor(
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(value: JsonField<Value>) = apply { this.value = value }
+
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
+                        fun value(string: String) = value(Value.ofString(string))
+
+                        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+                        fun value(long: Long) = value(Value.ofLong(long))
+
+                        /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
+                        fun valueOfStrings(strings: List<String>) = value(Value.ofStrings(strings))
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -1271,10 +1358,12 @@ private constructor(
         fun version(): Long = version.getRequired("version")
 
         /** Parameters for the current version of the Auth Rule */
-        @JsonProperty("parameters") @ExcludeMissing fun _parameters() = parameters
+        @JsonProperty("parameters")
+        @ExcludeMissing
+        fun _parameters(): JsonField<Parameters> = parameters
 
         /** The version of the rule, this is incremented whenever the rule's parameters change. */
-        @JsonProperty("version") @ExcludeMissing fun _version() = version
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1299,8 +1388,8 @@ private constructor(
 
         class Builder {
 
-            private var parameters: JsonField<Parameters> = JsonMissing.of()
-            private var version: JsonField<Long> = JsonMissing.of()
+            private var parameters: JsonField<Parameters>? = null
+            private var version: JsonField<Long>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(draftVersion: DraftVersion) = apply {
@@ -1316,6 +1405,12 @@ private constructor(
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
+
+            fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
+                parameters(Parameters.ofConditionalBlockParameters(conditionalBlockParameters))
+
+            fun parameters(velocityLimitParams: VelocityLimitParams) =
+                parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
             /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
@@ -1348,8 +1443,8 @@ private constructor(
 
             fun build(): DraftVersion =
                 DraftVersion(
-                    parameters,
-                    version,
+                    checkNotNull(parameters) { "`parameters` is required but was not set" },
+                    checkNotNull(version) { "`version` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1498,7 +1593,9 @@ private constructor(
 
                 fun conditions(): List<Condition> = conditions.getRequired("conditions")
 
-                @JsonProperty("conditions") @ExcludeMissing fun _conditions() = conditions
+                @JsonProperty("conditions")
+                @ExcludeMissing
+                fun _conditions(): JsonField<List<Condition>> = conditions
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1522,12 +1619,13 @@ private constructor(
 
                 class Builder {
 
-                    private var conditions: JsonField<List<Condition>> = JsonMissing.of()
+                    private var conditions: JsonField<MutableList<Condition>>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(conditionalBlockParameters: ConditionalBlockParameters) =
                         apply {
-                            conditions = conditionalBlockParameters.conditions
+                            conditions =
+                                conditionalBlockParameters.conditions.map { it.toMutableList() }
                             additionalProperties =
                                 conditionalBlockParameters.additionalProperties.toMutableMap()
                         }
@@ -1536,7 +1634,18 @@ private constructor(
                         conditions(JsonField.of(conditions))
 
                     fun conditions(conditions: JsonField<List<Condition>>) = apply {
-                        this.conditions = conditions
+                        this.conditions = conditions.map { it.toMutableList() }
+                    }
+
+                    fun addCondition(condition: Condition) = apply {
+                        conditions =
+                            (conditions ?: JsonField.of(mutableListOf())).apply {
+                                (asKnown()
+                                        ?: throw IllegalStateException(
+                                            "Field was set to non-list type: ${javaClass.simpleName}"
+                                        ))
+                                    .add(condition)
+                            }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1563,7 +1672,8 @@ private constructor(
 
                     fun build(): ConditionalBlockParameters =
                         ConditionalBlockParameters(
-                            conditions.map { it.toImmutable() },
+                            checkNotNull(conditions) { "`conditions` is required but was not set" }
+                                .map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
@@ -1665,13 +1775,17 @@ private constructor(
                      * - `CARD_TRANSACTION_COUNT_24H`: The number of transactions on the card in the
                      *   trailing 24 hours up and until the authorization.
                      */
-                    @JsonProperty("attribute") @ExcludeMissing fun _attribute() = attribute
+                    @JsonProperty("attribute")
+                    @ExcludeMissing
+                    fun _attribute(): JsonField<Attribute> = attribute
 
                     /** The operation to apply to the attribute */
-                    @JsonProperty("operation") @ExcludeMissing fun _operation() = operation
+                    @JsonProperty("operation")
+                    @ExcludeMissing
+                    fun _operation(): JsonField<Operation> = operation
 
                     /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
-                    @JsonProperty("value") @ExcludeMissing fun _value() = value
+                    @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Value> = value
 
                     @JsonAnyGetter
                     @ExcludeMissing
@@ -1803,6 +1917,15 @@ private constructor(
 
                         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
                         fun value(value: JsonField<Value>) = apply { this.value = value }
+
+                        /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
+                        fun value(string: String) = value(Value.ofString(string))
+
+                        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+                        fun value(long: Long) = value(Value.ofLong(long))
+
+                        /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
+                        fun valueOfStrings(strings: List<String>) = value(Value.ofStrings(strings))
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
