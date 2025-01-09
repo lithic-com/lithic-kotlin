@@ -404,10 +404,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ApplyAuthRuleRequestAccountTokens = apply {
-            if (!validated) {
-                accountTokens()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountTokens()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -523,10 +525,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ApplyAuthRuleRequestCardTokens = apply {
-            if (!validated) {
-                cardTokens()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            cardTokens()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -652,11 +656,13 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ApplyAuthRuleRequestProgramLevel = apply {
-            if (!validated) {
-                programLevel()
-                excludedCardTokens()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            programLevel()
+            excludedCardTokens()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

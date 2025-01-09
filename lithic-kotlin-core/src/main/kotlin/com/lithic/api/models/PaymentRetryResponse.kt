@@ -258,28 +258,30 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): PaymentRetryResponse = apply {
-        if (!validated) {
-            token()
-            category()
-            created()
-            currency()
-            descriptor()
-            direction()
-            events().forEach { it.validate() }
-            externalBankAccountToken()
-            financialAccountToken()
-            method()
-            methodAttributes().validate()
-            pendingAmount()
-            result()
-            settledAmount()
-            source()
-            status()
-            updated()
-            userDefinedId()
-            balance()?.validate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        category()
+        created()
+        currency()
+        descriptor()
+        direction()
+        events().forEach { it.validate() }
+        externalBankAccountToken()
+        financialAccountToken()
+        method()
+        methodAttributes().validate()
+        pendingAmount()
+        result()
+        settledAmount()
+        source()
+        status()
+        updated()
+        userDefinedId()
+        balance()?.validate()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

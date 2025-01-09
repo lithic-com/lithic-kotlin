@@ -252,31 +252,33 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): LoanTape = apply {
-        if (!validated) {
-            token()
-            accountStanding().validate()
-            availableCredit()
-            balances().validate()
-            created()
-            creditLimit()
-            creditProductToken()
-            date()
-            dayTotals().validate()
-            endingBalance()
-            excessCredits()
-            financialAccountToken()
-            interestDetails()?.validate()
-            minimumPaymentBalance().validate()
-            paymentAllocation().validate()
-            periodTotals().validate()
-            previousStatementBalance().validate()
-            startingBalance()
-            updated()
-            version()
-            ytdTotals().validate()
-            tier()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        accountStanding().validate()
+        availableCredit()
+        balances().validate()
+        created()
+        creditLimit()
+        creditProductToken()
+        date()
+        dayTotals().validate()
+        endingBalance()
+        excessCredits()
+        financialAccountToken()
+        interestDetails()?.validate()
+        minimumPaymentBalance().validate()
+        paymentAllocation().validate()
+        periodTotals().validate()
+        previousStatementBalance().validate()
+        startingBalance()
+        updated()
+        version()
+        ytdTotals().validate()
+        tier()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -645,16 +647,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): AccountStanding = apply {
-            if (!validated) {
-                consecutiveFullPaymentsMade()
-                consecutiveMinimumPaymentsMade()
-                consecutiveMinimumPaymentsMissed()
-                daysPastDue()
-                hasGrace()
-                periodNumber()
-                periodState()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            consecutiveFullPaymentsMade()
+            consecutiveMinimumPaymentsMade()
+            consecutiveMinimumPaymentsMissed()
+            daysPastDue()
+            hasGrace()
+            periodNumber()
+            periodState()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -930,13 +934,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Balances = apply {
-            if (!validated) {
-                due().validate()
-                nextStatementDue().validate()
-                pastDue().validate()
-                pastStatementsDue().validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            due().validate()
+            nextStatementDue().validate()
+            pastDue().validate()
+            pastStatementsDue().validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1077,12 +1083,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): CategoryBalances = apply {
-                if (!validated) {
-                    fees()
-                    interest()
-                    principal()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                fees()
+                interest()
+                principal()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1269,16 +1277,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): StatementTotals = apply {
-            if (!validated) {
-                balanceTransfers()
-                cashAdvances()
-                credits()
-                fees()
-                interest()
-                payments()
-                purchases()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            balanceTransfers()
+            cashAdvances()
+            credits()
+            fees()
+            interest()
+            payments()
+            purchases()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1498,16 +1508,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): InterestDetails = apply {
-            if (!validated) {
-                actualInterestCharged()
-                dailyBalanceAmounts().validate()
-                effectiveApr().validate()
-                interestCalculationMethod()
-                interestForPeriod().validate()
-                primeRate()
-                minimumInterestCharged()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            actualInterestCharged()
+            dailyBalanceAmounts().validate()
+            effectiveApr().validate()
+            interestCalculationMethod()
+            interestForPeriod().validate()
+            primeRate()
+            minimumInterestCharged()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1673,12 +1685,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): CategoryDetails = apply {
-                if (!validated) {
-                    balanceTransfers()
-                    cashAdvances()
-                    purchases()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                balanceTransfers()
+                cashAdvances()
+                purchases()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1877,11 +1891,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): BalanceDetails = apply {
-            if (!validated) {
-                amount()
-                remaining()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            remaining()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1990,12 +2006,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CategoryBalances = apply {
-            if (!validated) {
-                fees()
-                interest()
-                principal()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            fees()
+            interest()
+            principal()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

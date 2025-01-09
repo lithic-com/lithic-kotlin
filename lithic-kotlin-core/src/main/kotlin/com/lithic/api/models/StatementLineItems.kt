@@ -49,11 +49,13 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): StatementLineItems = apply {
-        if (!validated) {
-            data().forEach { it.validate() }
-            hasMore()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        data().forEach { it.validate() }
+        hasMore()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -258,21 +260,23 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): StatementLineItemResponse = apply {
-            if (!validated) {
-                token()
-                amount()
-                category()
-                created()
-                currency()
-                effectiveDate()
-                eventType()
-                financialAccountToken()
-                financialTransactionEventToken()
-                financialTransactionToken()
-                cardToken()
-                descriptor()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            token()
+            amount()
+            category()
+            created()
+            currency()
+            effectiveDate()
+            eventType()
+            financialAccountToken()
+            financialTransactionEventToken()
+            financialTransactionToken()
+            cardToken()
+            descriptor()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

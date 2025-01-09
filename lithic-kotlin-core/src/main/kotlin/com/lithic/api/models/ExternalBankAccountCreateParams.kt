@@ -614,26 +614,28 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): BankVerifiedCreateBankAccountApiRequest = apply {
-            if (!validated) {
-                accountNumber()
-                country()
-                currency()
-                financialAccountToken()
-                owner()
-                ownerType()
-                routingNumber()
-                type()
-                verificationMethod()
-                accountToken()
-                address()?.validate()
-                companyId()
-                dob()
-                doingBusinessAs()
-                name()
-                userDefinedId()
-                verificationEnforcement()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountNumber()
+            country()
+            currency()
+            financialAccountToken()
+            owner()
+            ownerType()
+            routingNumber()
+            type()
+            verificationMethod()
+            accountToken()
+            address()?.validate()
+            companyId()
+            dob()
+            doingBusinessAs()
+            name()
+            userDefinedId()
+            verificationEnforcement()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1072,18 +1074,20 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PlaidCreateBankAccountApiRequest = apply {
-            if (!validated) {
-                owner()
-                ownerType()
-                processorToken()
-                verificationMethod()
-                accountToken()
-                companyId()
-                dob()
-                doingBusinessAs()
-                userDefinedId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            owner()
+            ownerType()
+            processorToken()
+            verificationMethod()
+            accountToken()
+            companyId()
+            dob()
+            doingBusinessAs()
+            userDefinedId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1439,24 +1443,26 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ExternallyVerifiedCreateBankAccountApiRequest = apply {
-            if (!validated) {
-                accountNumber()
-                country()
-                currency()
-                owner()
-                ownerType()
-                routingNumber()
-                type()
-                verificationMethod()
-                accountToken()
-                address()?.validate()
-                companyId()
-                dob()
-                doingBusinessAs()
-                name()
-                userDefinedId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountNumber()
+            country()
+            currency()
+            owner()
+            ownerType()
+            routingNumber()
+            type()
+            verificationMethod()
+            accountToken()
+            address()?.validate()
+            companyId()
+            dob()
+            doingBusinessAs()
+            name()
+            userDefinedId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
