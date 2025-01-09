@@ -102,14 +102,16 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): VelocityLimitParams = apply {
-        if (!validated) {
-            filters().validate()
-            period()
-            scope()
-            limitAmount()
-            limitCount()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        filters().validate()
+        period().validate()
+        scope()
+        limitAmount()
+        limitCount()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -296,11 +298,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Filters = apply {
-            if (!validated) {
-                includeCountries()
-                includeMccs()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            includeCountries()
+            includeMccs()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -440,8 +444,6 @@ private constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         /**
          * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
          * value is 10 seconds, and the maximum value is 2678400 seconds.
@@ -487,13 +489,23 @@ private constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): Period = apply {
-            if (!validated) {
-                if (long == null && velocityLimitParamsPeriodWindow == null) {
-                    throw LithicInvalidDataException("Unknown Period: $_json")
-                }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitLong(long: Long) {}
+
+                    override fun visitVelocityLimitParamsPeriodWindow(
+                        velocityLimitParamsPeriodWindow: VelocityLimitParamsPeriodWindow
+                    ) {}
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

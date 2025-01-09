@@ -40,10 +40,12 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): BacktestCreateResponse = apply {
-        if (!validated) {
-            backtestToken()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        backtestToken()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

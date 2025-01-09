@@ -155,20 +155,22 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Tokenization = apply {
-        if (!validated) {
-            token()
-            accountToken()
-            cardToken()
-            createdAt()
-            status()
-            tokenRequestorName()
-            tokenUniqueReference()
-            tokenizationChannel()
-            updatedAt()
-            digitalCardArtToken()
-            events()?.forEach { it.validate() }
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        accountToken()
+        cardToken()
+        createdAt()
+        status()
+        tokenRequestorName()
+        tokenUniqueReference()
+        tokenizationChannel()
+        updatedAt()
+        digitalCardArtToken()
+        events()?.forEach { it.validate() }
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -660,13 +662,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): TokenizationEvent = apply {
-            if (!validated) {
-                token()
-                createdAt()
-                result()
-                type()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            token()
+            createdAt()
+            result()
+            type()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

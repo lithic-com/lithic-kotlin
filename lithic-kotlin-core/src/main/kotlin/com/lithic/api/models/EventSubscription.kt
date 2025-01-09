@@ -71,14 +71,16 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventSubscription = apply {
-        if (!validated) {
-            token()
-            description()
-            disabled()
-            url()
-            eventTypes()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        description()
+        disabled()
+        url()
+        eventTypes()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

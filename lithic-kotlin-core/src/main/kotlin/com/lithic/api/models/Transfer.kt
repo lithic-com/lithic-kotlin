@@ -195,22 +195,24 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Transfer = apply {
-        if (!validated) {
-            token()
-            category()
-            created()
-            currency()
-            descriptor()
-            events()?.forEach { it.validate() }
-            fromBalance()?.forEach { it.validate() }
-            pendingAmount()
-            result()
-            settledAmount()
-            status()
-            toBalance()?.forEach { it.validate() }
-            updated()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        category()
+        created()
+        currency()
+        descriptor()
+        events()?.forEach { it.validate() }
+        fromBalance()?.forEach { it.validate() }
+        pendingAmount()
+        result()
+        settledAmount()
+        status()
+        toBalance()?.forEach { it.validate() }
+        updated()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -581,14 +583,16 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): FinancialEvent = apply {
-            if (!validated) {
-                token()
-                amount()
-                created()
-                result()
-                type()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            token()
+            amount()
+            created()
+            result()
+            type()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

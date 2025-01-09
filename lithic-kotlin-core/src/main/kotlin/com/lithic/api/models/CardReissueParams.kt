@@ -187,13 +187,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CardReissueBody = apply {
-            if (!validated) {
-                carrier()?.validate()
-                productId()
-                shippingAddress()?.validate()
-                shippingMethod()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            carrier()?.validate()
+            productId()
+            shippingAddress()?.validate()
+            shippingMethod()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

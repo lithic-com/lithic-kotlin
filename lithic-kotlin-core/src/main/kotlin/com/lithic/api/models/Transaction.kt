@@ -304,34 +304,36 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Transaction = apply {
-        if (!validated) {
-            token()
-            accountToken()
-            acquirerFee()
-            acquirerReferenceNumber()
-            amount()
-            amounts().validate()
-            authorizationAmount()
-            authorizationCode()
-            avs()?.validate()
-            cardToken()
-            cardholderAuthentication()?.validate()
-            created()
-            merchant().validate()
-            merchantAmount()
-            merchantAuthorizationAmount()
-            merchantCurrency()
-            network()
-            networkRiskScore()
-            pos().validate()
-            result()
-            settledAmount()
-            status()
-            tokenInfo()?.validate()
-            updated()
-            events()?.forEach { it.validate() }
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        accountToken()
+        acquirerFee()
+        acquirerReferenceNumber()
+        amount()
+        amounts().validate()
+        authorizationAmount()
+        authorizationCode()
+        avs()?.validate()
+        cardToken()
+        cardholderAuthentication()?.validate()
+        created()
+        merchant().validate()
+        merchantAmount()
+        merchantAuthorizationAmount()
+        merchantCurrency()
+        network()
+        networkRiskScore()
+        pos().validate()
+        result()
+        settledAmount()
+        status()
+        tokenInfo()?.validate()
+        updated()
+        events()?.forEach { it.validate() }
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -751,13 +753,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): TransactionAmounts = apply {
-            if (!validated) {
-                cardholder().validate()
-                hold().validate()
-                merchant().validate()
-                settlement().validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            cardholder().validate()
+            hold().validate()
+            merchant().validate()
+            settlement().validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -896,12 +900,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Cardholder = apply {
-                if (!validated) {
-                    amount()
-                    conversionRate()
-                    currency()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                conversionRate()
+                currency()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1060,11 +1066,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Hold = apply {
-                if (!validated) {
-                    amount()
-                    currency()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                currency()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1197,11 +1205,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Merchant = apply {
-                if (!validated) {
-                    amount()
-                    currency()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                currency()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1334,11 +1344,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Settlement = apply {
-                if (!validated) {
-                    amount()
-                    currency()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                currency()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1479,11 +1491,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Avs = apply {
-            if (!validated) {
-                address()
-                zipcode()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            address()
+            zipcode()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1710,17 +1724,19 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): CardholderAuthentication = apply {
-            if (!validated) {
-                _3dsVersion()
-                acquirerExemption()
-                authenticationResult()
-                decisionMadeBy()
-                liabilityShift()
-                threeDSAuthenticationToken()
-                verificationAttempted()
-                verificationResult()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            _3dsVersion()
+            acquirerExemption()
+            authenticationResult()
+            decisionMadeBy()
+            liabilityShift()
+            threeDSAuthenticationToken()
+            verificationAttempted()
+            verificationResult()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2477,16 +2493,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Merchant = apply {
-            if (!validated) {
-                acceptorId()
-                acquiringInstitutionId()
-                city()
-                country()
-                descriptor()
-                mcc()
-                state()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            acceptorId()
+            acquiringInstitutionId()
+            city()
+            country()
+            descriptor()
+            mcc()
+            state()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2739,11 +2757,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Pos = apply {
-            if (!validated) {
-                entryMode().validate()
-                terminal().validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            entryMode().validate()
+            terminal().validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2853,13 +2873,15 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): PosEntryMode = apply {
-                if (!validated) {
-                    card()
-                    cardholder()
-                    pan()
-                    pinEntered()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                card()
+                cardholder()
+                pan()
+                pinEntered()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3378,16 +3400,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): PosTerminal = apply {
-                if (!validated) {
-                    attended()
-                    cardRetentionCapable()
-                    onPremise()
-                    operator()
-                    partialApprovalCapable()
-                    pinCapability()
-                    type()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                attended()
+                cardRetentionCapable()
+                onPremise()
+                operator()
+                partialApprovalCapable()
+                pinCapability()
+                type()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4180,10 +4204,12 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): TokenInfo = apply {
-            if (!validated) {
-                walletType()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            walletType()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -4467,19 +4493,21 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): TransactionEvent = apply {
-            if (!validated) {
-                token()
-                amount()
-                amounts().validate()
-                created()
-                detailedResults()
-                effectivePolarity()
-                networkInfo()?.validate()
-                result()
-                ruleResults().forEach { it.validate() }
-                type()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            token()
+            amount()
+            amounts().validate()
+            created()
+            detailedResults()
+            effectivePolarity()
+            networkInfo()?.validate()
+            result()
+            ruleResults().forEach { it.validate() }
+            type()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -4701,12 +4729,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): TransactionEventAmounts = apply {
-                if (!validated) {
-                    cardholder().validate()
-                    merchant().validate()
-                    settlement()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cardholder().validate()
+                merchant().validate()
+                settlement()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4839,12 +4869,14 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Cardholder = apply {
-                    if (!validated) {
-                        amount()
-                        conversionRate()
-                        currency()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    amount()
+                    conversionRate()
+                    currency()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -4997,11 +5029,13 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Merchant = apply {
-                    if (!validated) {
-                        amount()
-                        currency()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    amount()
+                    currency()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5151,12 +5185,14 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Settlement = apply {
-                    if (!validated) {
-                        amount()
-                        conversionRate()
-                        currency()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    amount()
+                    conversionRate()
+                    currency()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5767,12 +5803,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): NetworkInfo = apply {
-                if (!validated) {
-                    acquirer()?.validate()
-                    mastercard()?.validate()
-                    visa()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                acquirer()?.validate()
+                mastercard()?.validate()
+                visa()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -5893,11 +5931,13 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Acquirer = apply {
-                    if (!validated) {
-                        acquirerReferenceNumber()
-                        retrievalReferenceNumber()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    acquirerReferenceNumber()
+                    retrievalReferenceNumber()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -6048,11 +6088,13 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Mastercard = apply {
-                    if (!validated) {
-                        banknetReferenceNumber()
-                        switchSerialNumber()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    banknetReferenceNumber()
+                    switchSerialNumber()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -6176,10 +6218,12 @@ private constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Visa = apply {
-                    if (!validated) {
-                        transactionId()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    transactionId()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -6525,13 +6569,15 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): RuleResult = apply {
-                if (!validated) {
-                    authRuleToken()
-                    explanation()
-                    name()
-                    result()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                authRuleToken()
+                explanation()
+                name()
+                result()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

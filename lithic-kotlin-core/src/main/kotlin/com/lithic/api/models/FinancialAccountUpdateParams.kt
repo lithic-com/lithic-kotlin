@@ -73,10 +73,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): FinancialAccountUpdateBody = apply {
-            if (!validated) {
-                nickname()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            nickname()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

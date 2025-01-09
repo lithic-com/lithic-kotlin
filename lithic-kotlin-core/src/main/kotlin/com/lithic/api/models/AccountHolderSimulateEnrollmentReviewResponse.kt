@@ -360,29 +360,31 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): AccountHolderSimulateEnrollmentReviewResponse = apply {
-        if (!validated) {
-            token()
-            accountToken()
-            beneficialOwnerEntities()?.forEach { it.validate() }
-            beneficialOwnerIndividuals()?.forEach { it.validate() }
-            businessAccountToken()
-            businessEntity()?.validate()
-            controlPerson()?.validate()
-            created()
-            email()
-            exemptionType()
-            externalId()
-            individual()?.validate()
-            natureOfBusiness()
-            phoneNumber()
-            requiredDocuments()?.forEach { it.validate() }
-            status()
-            statusReasons()
-            userType()
-            verificationApplication()?.validate()
-            websiteUrl()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        token()
+        accountToken()
+        beneficialOwnerEntities()?.forEach { it.validate() }
+        beneficialOwnerIndividuals()?.forEach { it.validate() }
+        businessAccountToken()
+        businessEntity()?.validate()
+        controlPerson()?.validate()
+        created()
+        email()
+        exemptionType()
+        externalId()
+        individual()?.validate()
+        natureOfBusiness()
+        phoneNumber()
+        requiredDocuments()?.forEach { it.validate() }
+        status()
+        statusReasons()
+        userType()
+        verificationApplication()?.validate()
+        websiteUrl()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -942,15 +944,17 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): KybBusinessEntity = apply {
-            if (!validated) {
-                address().validate()
-                governmentId()
-                legalBusinessName()
-                phoneNumbers()
-                dbaBusinessName()
-                parentCompany()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            address().validate()
+            governmentId()
+            legalBusinessName()
+            phoneNumbers()
+            dbaBusinessName()
+            parentCompany()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1185,15 +1189,17 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Address2 = apply {
-                if (!validated) {
-                    address1()
-                    city()
-                    country()
-                    postalCode()
-                    state()
-                    address2()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                address1()
+                city()
+                country()
+                postalCode()
+                state()
+                address2()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1451,16 +1457,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Individual = apply {
-            if (!validated) {
-                address()?.validate()
-                dob()
-                email()
-                firstName()
-                governmentId()
-                lastName()
-                phoneNumber()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            address()?.validate()
+            dob()
+            email()
+            firstName()
+            governmentId()
+            lastName()
+            phoneNumber()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1685,15 +1693,17 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Address2 = apply {
-                if (!validated) {
-                    address1()
-                    city()
-                    country()
-                    postalCode()
-                    state()
-                    address2()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                address1()
+                city()
+                country()
+                postalCode()
+                state()
+                address2()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2321,13 +2331,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): VerificationApplication = apply {
-            if (!validated) {
-                created()
-                status()
-                statusReasons()
-                updated()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            created()
+            status()
+            statusReasons()
+            updated()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

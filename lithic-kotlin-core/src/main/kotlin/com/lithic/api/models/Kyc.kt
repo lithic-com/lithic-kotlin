@@ -100,14 +100,16 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Kyc = apply {
-        if (!validated) {
-            individual().validate()
-            tosTimestamp()
-            workflow()
-            externalId()
-            kycPassedTimestamp()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        individual().validate()
+        tosTimestamp()
+        workflow()
+        externalId()
+        kycPassedTimestamp()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -321,16 +323,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Individual = apply {
-            if (!validated) {
-                address().validate()
-                dob()
-                email()
-                firstName()
-                governmentId()
-                lastName()
-                phoneNumber()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            address().validate()
+            dob()
+            email()
+            firstName()
+            governmentId()
+            lastName()
+            phoneNumber()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
