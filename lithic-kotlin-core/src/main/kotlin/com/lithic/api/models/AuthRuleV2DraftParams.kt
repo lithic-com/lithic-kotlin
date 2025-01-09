@@ -127,9 +127,11 @@ constructor(
                 this.parameters = parameters
             }
 
+            /** Parameters for the current version of the Auth Rule */
             fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlockParameters(conditionalBlockParameters))
 
+            /** Parameters for the current version of the Auth Rule */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -204,10 +206,12 @@ constructor(
         /** Parameters for the current version of the Auth Rule */
         fun parameters(parameters: JsonField<Parameters>) = apply { body.parameters(parameters) }
 
+        /** Parameters for the current version of the Auth Rule */
         fun parameters(conditionalBlockParameters: Parameters.ConditionalBlockParameters) = apply {
             body.parameters(conditionalBlockParameters)
         }
 
+        /** Parameters for the current version of the Auth Rule */
         fun parameters(velocityLimitParams: VelocityLimitParams) = apply {
             body.parameters(velocityLimitParams)
         }
