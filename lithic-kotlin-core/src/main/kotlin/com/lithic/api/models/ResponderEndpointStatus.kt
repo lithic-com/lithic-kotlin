@@ -45,11 +45,13 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): ResponderEndpointStatus = apply {
-        if (!validated) {
-            enrolled()
-            url()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        enrolled()
+        url()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

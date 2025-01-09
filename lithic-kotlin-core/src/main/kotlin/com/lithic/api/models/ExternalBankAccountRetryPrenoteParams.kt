@@ -76,10 +76,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ExternalBankAccountRetryPrenoteBody = apply {
-            if (!validated) {
-                financialAccountToken()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            financialAccountToken()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

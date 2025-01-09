@@ -77,10 +77,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): BookTransferReverseBody = apply {
-            if (!validated) {
-                memo()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            memo()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
