@@ -153,7 +153,8 @@ private constructor(
     ) {
 
         /**
-         * The available spend limit (in cents) relative to the annual limit configured on the Card.
+         * The available spend limit (in cents) relative to the annual limit configured on the Card
+         * (e.g. 100000 would be a $1,000 limit).
          */
         fun annually(): Long? = annually.getNullable("annually")
 
@@ -170,7 +171,8 @@ private constructor(
         fun monthly(): Long? = monthly.getNullable("monthly")
 
         /**
-         * The available spend limit (in cents) relative to the annual limit configured on the Card.
+         * The available spend limit (in cents) relative to the annual limit configured on the Card
+         * (e.g. 100000 would be a $1,000 limit).
          */
         @JsonProperty("annually") @ExcludeMissing fun _annually(): JsonField<Long> = annually
 
@@ -226,13 +228,13 @@ private constructor(
 
             /**
              * The available spend limit (in cents) relative to the annual limit configured on the
-             * Card.
+             * Card (e.g. 100000 would be a $1,000 limit).
              */
             fun annually(annually: Long) = annually(JsonField.of(annually))
 
             /**
              * The available spend limit (in cents) relative to the annual limit configured on the
-             * Card.
+             * Card (e.g. 100000 would be a $1,000 limit).
              */
             fun annually(annually: JsonField<Long>) = apply { this.annually = annually }
 

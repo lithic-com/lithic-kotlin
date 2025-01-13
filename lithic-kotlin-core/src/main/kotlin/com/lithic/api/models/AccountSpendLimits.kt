@@ -154,7 +154,7 @@ private constructor(
 
         /**
          * The available spend limit (in cents) relative to the daily limit configured on the
-         * Account.
+         * Account (e.g. 100000 would be a $1,000 limit).
          */
         fun daily(): Long? = daily.getNullable("daily")
 
@@ -172,7 +172,7 @@ private constructor(
 
         /**
          * The available spend limit (in cents) relative to the daily limit configured on the
-         * Account.
+         * Account (e.g. 100000 would be a $1,000 limit).
          */
         @JsonProperty("daily") @ExcludeMissing fun _daily(): JsonField<Long> = daily
 
@@ -228,13 +228,13 @@ private constructor(
 
             /**
              * The available spend limit (in cents) relative to the daily limit configured on the
-             * Account.
+             * Account (e.g. 100000 would be a $1,000 limit).
              */
             fun daily(daily: Long) = daily(JsonField.of(daily))
 
             /**
              * The available spend limit (in cents) relative to the daily limit configured on the
-             * Account.
+             * Account (e.g. 100000 would be a $1,000 limit).
              */
             fun daily(daily: JsonField<Long>) = apply { this.daily = daily }
 
