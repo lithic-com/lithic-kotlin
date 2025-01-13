@@ -423,6 +423,8 @@ constructor(
 
             val ITIN_LETTER = of("ITIN_LETTER")
 
+            val FINCEN_BOI_REPORT = of("FINCEN_BOI_REPORT")
+
             fun of(value: String) = DocumentType(JsonField.of(value))
         }
 
@@ -445,6 +447,7 @@ constructor(
             UTILITY_BILL_STATEMENT,
             SSN_CARD,
             ITIN_LETTER,
+            FINCEN_BOI_REPORT,
         }
 
         enum class Value {
@@ -466,6 +469,7 @@ constructor(
             UTILITY_BILL_STATEMENT,
             SSN_CARD,
             ITIN_LETTER,
+            FINCEN_BOI_REPORT,
             _UNKNOWN,
         }
 
@@ -489,6 +493,7 @@ constructor(
                 UTILITY_BILL_STATEMENT -> Value.UTILITY_BILL_STATEMENT
                 SSN_CARD -> Value.SSN_CARD
                 ITIN_LETTER -> Value.ITIN_LETTER
+                FINCEN_BOI_REPORT -> Value.FINCEN_BOI_REPORT
                 else -> Value._UNKNOWN
             }
 
@@ -512,6 +517,7 @@ constructor(
                 UTILITY_BILL_STATEMENT -> Known.UTILITY_BILL_STATEMENT
                 SSN_CARD -> Known.SSN_CARD
                 ITIN_LETTER -> Known.ITIN_LETTER
+                FINCEN_BOI_REPORT -> Known.FINCEN_BOI_REPORT
                 else -> throw LithicInvalidDataException("Unknown DocumentType: $value")
             }
 
