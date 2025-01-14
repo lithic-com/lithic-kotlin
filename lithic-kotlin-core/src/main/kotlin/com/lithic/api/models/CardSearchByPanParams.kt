@@ -11,6 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.immutableEmptyMap
@@ -121,10 +122,7 @@ constructor(
             }
 
             fun build(): CardSearchByPanBody =
-                CardSearchByPanBody(
-                    checkNotNull(pan) { "`pan` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                CardSearchByPanBody(checkRequired("pan", pan), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
