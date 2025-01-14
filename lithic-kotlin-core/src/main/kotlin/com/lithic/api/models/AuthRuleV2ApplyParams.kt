@@ -20,6 +20,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -371,7 +372,7 @@ constructor(
 
         fun build(): AuthRuleV2ApplyParams =
             AuthRuleV2ApplyParams(
-                checkNotNull(authRuleToken) { "`authRuleToken` is required but was not set" },
+                checkRequired("authRuleToken", authRuleToken),
                 body ?: AuthRuleV2ApplyBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -475,8 +476,7 @@ constructor(
 
             fun build(): ApplyAuthRuleRequestAccountTokens =
                 ApplyAuthRuleRequestAccountTokens(
-                    checkNotNull(accountTokens) { "`accountTokens` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("accountTokens", accountTokens).map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -594,8 +594,7 @@ constructor(
 
             fun build(): ApplyAuthRuleRequestCardTokens =
                 ApplyAuthRuleRequestCardTokens(
-                    checkNotNull(cardTokens) { "`cardTokens` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -739,7 +738,7 @@ constructor(
 
             fun build(): ApplyAuthRuleRequestProgramLevel =
                 ApplyAuthRuleRequestProgramLevel(
-                    checkNotNull(programLevel) { "`programLevel` is required but was not set" },
+                    checkRequired("programLevel", programLevel),
                     (excludedCardTokens ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
