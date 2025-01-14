@@ -21,6 +21,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -537,8 +538,7 @@ constructor(
 
             fun build(): CreateAuthRuleRequestAccountTokens =
                 CreateAuthRuleRequestAccountTokens(
-                    checkNotNull(accountTokens) { "`accountTokens` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("accountTokens", accountTokens).map { it.toImmutable() },
                     name,
                     parameters,
                     type,
@@ -783,8 +783,7 @@ constructor(
 
                     fun build(): ConditionalBlockParameters =
                         ConditionalBlockParameters(
-                            checkNotNull(conditions) { "`conditions` is required but was not set" }
-                                .map { it.toImmutable() },
+                            checkRequired("conditions", conditions).map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
@@ -1688,8 +1687,7 @@ constructor(
 
             fun build(): CreateAuthRuleRequestCardTokens =
                 CreateAuthRuleRequestCardTokens(
-                    checkNotNull(cardTokens) { "`cardTokens` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
                     name,
                     parameters,
                     type,
@@ -1934,8 +1932,7 @@ constructor(
 
                     fun build(): ConditionalBlockParameters =
                         ConditionalBlockParameters(
-                            checkNotNull(conditions) { "`conditions` is required but was not set" }
-                                .map { it.toImmutable() },
+                            checkRequired("conditions", conditions).map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
@@ -2864,7 +2861,7 @@ constructor(
 
             fun build(): CreateAuthRuleRequestProgramLevel =
                 CreateAuthRuleRequestProgramLevel(
-                    checkNotNull(programLevel) { "`programLevel` is required but was not set" },
+                    checkRequired("programLevel", programLevel),
                     (excludedCardTokens ?: JsonMissing.of()).map { it.toImmutable() },
                     name,
                     parameters,
@@ -3110,8 +3107,7 @@ constructor(
 
                     fun build(): ConditionalBlockParameters =
                         ConditionalBlockParameters(
-                            checkNotNull(conditions) { "`conditions` is required but was not set" }
-                                .map { it.toImmutable() },
+                            checkRequired("conditions", conditions).map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
