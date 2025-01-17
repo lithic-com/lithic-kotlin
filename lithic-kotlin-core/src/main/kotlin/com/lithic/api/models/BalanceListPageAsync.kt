@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Get the balances for a program, business, or a given end-user account */
 class BalanceListPageAsync
 private constructor(
     private val balancesService: BalanceServiceAsync,

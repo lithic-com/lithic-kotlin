@@ -110,6 +110,7 @@ private constructor(
      * Unique identifier assigned to a transaction by the acquirer that can be used in dispute and
      * chargeback filing.
      */
+    @Deprecated("deprecated")
     fun acquirerReferenceNumber(): String? =
         acquirerReferenceNumber.getNullable("acquirer_reference_number")
 
@@ -118,11 +119,12 @@ private constructor(
      * in the anticipated settlement currency. Once the transaction has settled, this field
      * represents the settled amount in the settlement currency.
      */
-    fun amount(): Long = amount.getRequired("amount")
+    @Deprecated("deprecated") fun amount(): Long = amount.getRequired("amount")
 
     fun amounts(): TransactionAmounts = amounts.getRequired("amounts")
 
     /** The authorization amount of the transaction in the anticipated settlement currency. */
+    @Deprecated("deprecated")
     fun authorizationAmount(): Long? = authorizationAmount.getNullable("authorization_amount")
 
     /**
@@ -145,9 +147,11 @@ private constructor(
     fun merchant(): Merchant = merchant.getRequired("merchant")
 
     /** Analogous to the 'amount', but in the merchant currency. */
+    @Deprecated("deprecated")
     fun merchantAmount(): Long? = merchantAmount.getNullable("merchant_amount")
 
     /** Analogous to the 'authorization_amount', but in the merchant currency. */
+    @Deprecated("deprecated")
     fun merchantAuthorizationAmount(): Long? =
         merchantAuthorizationAmount.getNullable("merchant_authorization_amount")
 
@@ -174,6 +178,7 @@ private constructor(
     fun result(): DeclineResult = result.getRequired("result")
 
     /** The settled amount of the transaction in the settlement currency. */
+    @Deprecated("deprecated")
     fun settledAmount(): Long = settledAmount.getRequired("settled_amount")
 
     /** Status of the transaction. */
@@ -205,6 +210,7 @@ private constructor(
      * Unique identifier assigned to a transaction by the acquirer that can be used in dispute and
      * chargeback filing.
      */
+    @Deprecated("deprecated")
     @JsonProperty("acquirer_reference_number")
     @ExcludeMissing
     fun _acquirerReferenceNumber(): JsonField<String> = acquirerReferenceNumber
@@ -214,11 +220,15 @@ private constructor(
      * in the anticipated settlement currency. Once the transaction has settled, this field
      * represents the settled amount in the settlement currency.
      */
-    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+    @Deprecated("deprecated")
+    @JsonProperty("amount")
+    @ExcludeMissing
+    fun _amount(): JsonField<Long> = amount
 
     @JsonProperty("amounts") @ExcludeMissing fun _amounts(): JsonField<TransactionAmounts> = amounts
 
     /** The authorization amount of the transaction in the anticipated settlement currency. */
+    @Deprecated("deprecated")
     @JsonProperty("authorization_amount")
     @ExcludeMissing
     fun _authorizationAmount(): JsonField<Long> = authorizationAmount
@@ -246,11 +256,13 @@ private constructor(
     @JsonProperty("merchant") @ExcludeMissing fun _merchant(): JsonField<Merchant> = merchant
 
     /** Analogous to the 'amount', but in the merchant currency. */
+    @Deprecated("deprecated")
     @JsonProperty("merchant_amount")
     @ExcludeMissing
     fun _merchantAmount(): JsonField<Long> = merchantAmount
 
     /** Analogous to the 'authorization_amount', but in the merchant currency. */
+    @Deprecated("deprecated")
     @JsonProperty("merchant_authorization_amount")
     @ExcludeMissing
     fun _merchantAuthorizationAmount(): JsonField<Long> = merchantAuthorizationAmount
@@ -282,6 +294,7 @@ private constructor(
     @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<DeclineResult> = result
 
     /** The settled amount of the transaction in the settlement currency. */
+    @Deprecated("deprecated")
     @JsonProperty("settled_amount")
     @ExcludeMissing
     fun _settledAmount(): JsonField<Long> = settledAmount
@@ -441,6 +454,7 @@ private constructor(
          * Unique identifier assigned to a transaction by the acquirer that can be used in dispute
          * and chargeback filing.
          */
+        @Deprecated("deprecated")
         fun acquirerReferenceNumber(acquirerReferenceNumber: String?) =
             acquirerReferenceNumber(JsonField.ofNullable(acquirerReferenceNumber))
 
@@ -448,6 +462,7 @@ private constructor(
          * Unique identifier assigned to a transaction by the acquirer that can be used in dispute
          * and chargeback filing.
          */
+        @Deprecated("deprecated")
         fun acquirerReferenceNumber(acquirerReferenceNumber: JsonField<String>) = apply {
             this.acquirerReferenceNumber = acquirerReferenceNumber
         }
@@ -457,13 +472,14 @@ private constructor(
          * transaction in the anticipated settlement currency. Once the transaction has settled,
          * this field represents the settled amount in the settlement currency.
          */
-        fun amount(amount: Long) = amount(JsonField.of(amount))
+        @Deprecated("deprecated") fun amount(amount: Long) = amount(JsonField.of(amount))
 
         /**
          * When the transaction is pending, this represents the authorization amount of the
          * transaction in the anticipated settlement currency. Once the transaction has settled,
          * this field represents the settled amount in the settlement currency.
          */
+        @Deprecated("deprecated")
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         fun amounts(amounts: TransactionAmounts) = amounts(JsonField.of(amounts))
@@ -471,14 +487,17 @@ private constructor(
         fun amounts(amounts: JsonField<TransactionAmounts>) = apply { this.amounts = amounts }
 
         /** The authorization amount of the transaction in the anticipated settlement currency. */
+        @Deprecated("deprecated")
         fun authorizationAmount(authorizationAmount: Long?) =
             authorizationAmount(JsonField.ofNullable(authorizationAmount))
 
         /** The authorization amount of the transaction in the anticipated settlement currency. */
+        @Deprecated("deprecated")
         fun authorizationAmount(authorizationAmount: Long) =
             authorizationAmount(authorizationAmount as Long?)
 
         /** The authorization amount of the transaction in the anticipated settlement currency. */
+        @Deprecated("deprecated")
         fun authorizationAmount(authorizationAmount: JsonField<Long>) = apply {
             this.authorizationAmount = authorizationAmount
         }
@@ -526,26 +545,32 @@ private constructor(
         fun merchant(merchant: JsonField<Merchant>) = apply { this.merchant = merchant }
 
         /** Analogous to the 'amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAmount(merchantAmount: Long?) =
             merchantAmount(JsonField.ofNullable(merchantAmount))
 
         /** Analogous to the 'amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAmount(merchantAmount: Long) = merchantAmount(merchantAmount as Long?)
 
         /** Analogous to the 'amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAmount(merchantAmount: JsonField<Long>) = apply {
             this.merchantAmount = merchantAmount
         }
 
         /** Analogous to the 'authorization_amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAuthorizationAmount(merchantAuthorizationAmount: Long?) =
             merchantAuthorizationAmount(JsonField.ofNullable(merchantAuthorizationAmount))
 
         /** Analogous to the 'authorization_amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAuthorizationAmount(merchantAuthorizationAmount: Long) =
             merchantAuthorizationAmount(merchantAuthorizationAmount as Long?)
 
         /** Analogous to the 'authorization_amount', but in the merchant currency. */
+        @Deprecated("deprecated")
         fun merchantAuthorizationAmount(merchantAuthorizationAmount: JsonField<Long>) = apply {
             this.merchantAuthorizationAmount = merchantAuthorizationAmount
         }
@@ -609,9 +634,11 @@ private constructor(
         fun result(result: JsonField<DeclineResult>) = apply { this.result = result }
 
         /** The settled amount of the transaction in the settlement currency. */
+        @Deprecated("deprecated")
         fun settledAmount(settledAmount: Long) = settledAmount(JsonField.of(settledAmount))
 
         /** The settled amount of the transaction in the settlement currency. */
+        @Deprecated("deprecated")
         fun settledAmount(settledAmount: JsonField<Long>) = apply {
             this.settledAmount = settledAmount
         }
@@ -1905,6 +1932,7 @@ private constructor(
                 )
         }
 
+        /** Whether an acquirer exemption applied to the transaction. */
         class AcquirerExemption
         @JsonCreator
         private constructor(
@@ -2001,6 +2029,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Indicates what the outcome of the 3DS authentication process is. */
         class AuthenticationResult
         @JsonCreator
         private constructor(
@@ -2070,6 +2099,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Indicates which party made the 3DS authentication decision. */
         class DecisionMadeBy
         @JsonCreator
         private constructor(
@@ -2145,6 +2175,16 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /**
+         * Indicates whether chargeback liability shift applies to the transaction. Possible enum
+         * values:
+         *
+         *     * `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure flow, chargeback liability shift applies.
+         *     * `ACQUIRER_EXEMPTION`: The acquirer utilised an exemption to bypass Strong Customer Authentication (`transStatus = N`, or `transStatus = I`). Liability remains with the acquirer and in this case the `acquirer_exemption` field is expected to be not `NONE`.
+         *     * `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant is liable.
+         * - `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
+         *   cryptography, possibly recurring. Chargeback liability shift to the issuer applies.
+         */
         class LiabilityShift
         @JsonCreator
         private constructor(
@@ -2214,6 +2254,10 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /**
+         * Indicates whether a 3DS challenge flow was used, and if so, what the verification method
+         * was. (deprecated, use `authentication_result`)
+         */
         class VerificationAttempted
         @JsonCreator
         private constructor(
@@ -2272,6 +2316,10 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /**
+         * Indicates whether a transaction is considered 3DS authenticated. (deprecated, use
+         * `authentication_result`)
+         */
         class VerificationResult
         @JsonCreator
         private constructor(
@@ -2628,6 +2676,11 @@ private constructor(
             "Merchant{acceptorId=$acceptorId, acquiringInstitutionId=$acquiringInstitutionId, city=$city, country=$country, descriptor=$descriptor, mcc=$mcc, state=$state, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Card network of the authorization. Can be `INTERLINK`, `MAESTRO`, `MASTERCARD`, `VISA`, or
+     * `UNKNOWN`. Value is `UNKNOWN` when Lithic cannot determine the network code from the upstream
+     * provider.
+     */
     class Network
     @JsonCreator
     private constructor(
@@ -2948,6 +3001,7 @@ private constructor(
                     )
             }
 
+            /** Card presence indicator */
             class Card
             @JsonCreator
             private constructor(
@@ -3017,6 +3071,7 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** Cardholder presence indicator */
             class Cardholder
             @JsonCreator
             private constructor(
@@ -3122,6 +3177,7 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** Method of entry for the PAN */
             class Pan
             @JsonCreator
             private constructor(
@@ -3518,6 +3574,7 @@ private constructor(
                     )
             }
 
+            /** The person that is designated to swipe the card */
             class Operator
             @JsonCreator
             private constructor(
@@ -3587,6 +3644,7 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** Status of whether the POS is able to accept PINs */
             class PinCapability
             @JsonCreator
             private constructor(
@@ -3656,6 +3714,7 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** POS Type */
             class Type
             @JsonCreator
             private constructor(
@@ -4064,6 +4123,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Status of the transaction. */
     class Status
     @JsonCreator
     private constructor(
@@ -4244,6 +4304,12 @@ private constructor(
                 )
         }
 
+        /**
+         * The wallet_type field will indicate the source of the token. Possible token sources
+         * include digital wallets (Apple, Google, or Samsung Pay), merchant tokenization, and
+         * “other” sources like in-flight commerce. Masterpass is not currently supported and is
+         * included for future use.
+         */
         class WalletType
         @JsonCreator
         private constructor(
@@ -5659,6 +5725,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Indicates whether the transaction event is a credit or debit to the account. */
         class EffectivePolarity
         @JsonCreator
         private constructor(
@@ -6626,6 +6693,7 @@ private constructor(
                     )
             }
 
+            /** The detailed_result associated with this rule's decline. */
             class DetailedResult
             @JsonCreator
             private constructor(
@@ -7025,6 +7093,7 @@ private constructor(
                 "RuleResult{authRuleToken=$authRuleToken, explanation=$explanation, name=$name, result=$result, additionalProperties=$additionalProperties}"
         }
 
+        /** Type of transaction event */
         class Type
         @JsonCreator
         private constructor(

@@ -886,6 +886,7 @@ private constructor(
             "DraftVersion{parameters=$parameters, version=$version, additionalProperties=$additionalProperties}"
     }
 
+    /** The state of the Auth Rule */
     class AuthRuleState
     @JsonCreator
     private constructor(
@@ -943,6 +944,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The type of Auth Rule */
     class AuthRuleType
     @JsonCreator
     private constructor(

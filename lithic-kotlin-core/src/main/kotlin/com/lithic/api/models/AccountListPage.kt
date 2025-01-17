@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.AccountService
 import java.util.Objects
 
+/** List account configurations. */
 class AccountListPage
 private constructor(
     private val accountsService: AccountService,

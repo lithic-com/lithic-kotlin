@@ -249,6 +249,7 @@ private constructor(
             )
     }
 
+    /** Reason for the financial account being marked as Charged Off */
     class ChargedOffReason
     @JsonCreator
     private constructor(
@@ -306,6 +307,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** State of the financial account */
     class FinancialAccountState
     @JsonCreator
     private constructor(

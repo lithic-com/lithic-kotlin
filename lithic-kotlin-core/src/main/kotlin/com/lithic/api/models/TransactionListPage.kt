@@ -16,6 +16,10 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.TransactionService
 import java.util.Objects
 
+/**
+ * List card transactions. All amounts are in the smallest unit of their respective currency (e.g.,
+ * cents for USD) and inclusive of any acquirer fees.
+ */
 class TransactionListPage
 private constructor(
     private val transactionsService: TransactionService,

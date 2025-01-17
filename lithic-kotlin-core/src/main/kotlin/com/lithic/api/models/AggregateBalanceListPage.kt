@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.AggregateBalanceService
 import java.util.Objects
 
+/** Get the aggregated balance across all end-user accounts by financial account type */
 class AggregateBalanceListPage
 private constructor(
     private val aggregateBalancesService: AggregateBalanceService,

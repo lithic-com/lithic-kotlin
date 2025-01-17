@@ -398,6 +398,7 @@ private constructor(
             )
     }
 
+    /** Indicates whether the Auth Rule is ACTIVE or INACTIVE */
     class State
     @JsonCreator
     private constructor(

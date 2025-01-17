@@ -415,6 +415,7 @@ private constructor(
             )
     }
 
+    /** Category of the book transfer */
     class Category
     @JsonCreator
     private constructor(
@@ -815,6 +816,10 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /**
+         * APPROVED financial events were successful while DECLINED financial events were declined
+         * by user, Lithic, or the network.
+         */
         class Result
         @JsonCreator
         private constructor(
@@ -890,6 +895,10 @@ private constructor(
             "BookTransferEvent{token=$token, amount=$amount, created=$created, detailedResults=$detailedResults, memo=$memo, result=$result, subtype=$subtype, type=$type, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * APPROVED transactions were successful while DECLINED transactions were declined by user,
+     * Lithic, or the network.
+     */
     class Result
     @JsonCreator
     private constructor(
@@ -947,6 +956,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Status types: _ `DECLINED` - The transfer was declined. _ `REVERSED` - The transfer was
+     * reversed \* `SETTLED` - The transfer is completed.
+     */
     class Status
     @JsonCreator
     private constructor(

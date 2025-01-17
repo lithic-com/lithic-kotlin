@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.financialAccounts.BalanceService
 import java.util.Objects
 
+/** Get the balances for a given financial account. */
 class FinancialAccountBalanceListPage
 private constructor(
     private val balancesService: BalanceService,

@@ -436,6 +436,7 @@ constructor(
             )
     }
 
+    /** An account holder's status for use within the simulation. */
     class Status
     @JsonCreator
     private constructor(

@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.ExternalPaymentService
 import java.util.Objects
 
+/** List external payments */
 class ExternalPaymentListPage
 private constructor(
     private val externalPaymentsService: ExternalPaymentService,

@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.financialAccounts.statements.LineItemService
 import java.util.Objects
 
+/** List the line items for a given statement within a given financial account. */
 class FinancialAccountStatementLineItemListPage
 private constructor(
     private val lineItemsService: LineItemService,

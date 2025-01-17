@@ -376,6 +376,7 @@ constructor(
             )
     }
 
+    /** The type of document to upload */
     class DocumentType
     @JsonCreator
     private constructor(

@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List the line items for a given statement within a given financial account. */
 class FinancialAccountStatementLineItemListPageAsync
 private constructor(
     private val lineItemsService: LineItemServiceAsync,

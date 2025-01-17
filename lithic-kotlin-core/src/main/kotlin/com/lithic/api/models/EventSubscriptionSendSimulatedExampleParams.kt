@@ -324,6 +324,7 @@ constructor(
             )
     }
 
+    /** Event type to send example message for. */
     class EventType
     @JsonCreator
     private constructor(

@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.DisputeService
 import java.util.Objects
 
+/** List evidence metadata for a dispute. */
 class DisputeListEvidencesPage
 private constructor(
     private val disputesService: DisputeService,

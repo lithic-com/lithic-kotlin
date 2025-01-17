@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List external payments */
 class ExternalPaymentListPageAsync
 private constructor(
     private val externalPaymentsService: ExternalPaymentServiceAsync,

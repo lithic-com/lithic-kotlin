@@ -656,6 +656,7 @@ private constructor(
                     )
             }
 
+            /** A flag indicating whether the transaction is tax exempt or not. */
             class TaxExemptIndicator
             @JsonCreator
             private constructor(
@@ -1254,6 +1255,7 @@ private constructor(
                     )
             }
 
+            /** The type of fuel purchased. */
             class FuelType
             @JsonCreator
             private constructor(
@@ -2127,6 +2129,7 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /** Unit of measure for fuel disbursement. */
             class FuelUnitOfMeasure
             @JsonCreator
             private constructor(
@@ -2233,6 +2236,7 @@ private constructor(
                 "FuelData{quantity=$quantity, type=$type, unitOfMeasure=$unitOfMeasure, unitPrice=$unitPrice, additionalProperties=$additionalProperties}"
         }
 
+        /** The type of fuel service. */
         class ServiceType
         @JsonCreator
         private constructor(

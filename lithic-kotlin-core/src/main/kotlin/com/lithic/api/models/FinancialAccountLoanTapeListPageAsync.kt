@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List the loan tapes for a given financial account. */
 class FinancialAccountLoanTapeListPageAsync
 private constructor(
     private val loanTapesService: LoanTapeServiceAsync,

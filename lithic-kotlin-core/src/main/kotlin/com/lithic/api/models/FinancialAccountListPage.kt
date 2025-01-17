@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.FinancialAccountService
 import java.util.Objects
 
+/** Retrieve information on your financial accounts including routing and account number. */
 class FinancialAccountListPage
 private constructor(
     private val financialAccountsService: FinancialAccountService,
