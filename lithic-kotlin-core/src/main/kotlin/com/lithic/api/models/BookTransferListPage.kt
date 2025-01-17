@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.BookTransferService
 import java.util.Objects
 
+/** List book transfers */
 class BookTransferListPage
 private constructor(
     private val bookTransfersService: BookTransferService,

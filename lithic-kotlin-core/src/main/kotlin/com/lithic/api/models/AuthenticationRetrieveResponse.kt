@@ -574,6 +574,10 @@ private constructor(
             )
     }
 
+    /**
+     * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
+     * `acctType`.
+     */
     class AccountType
     @JsonCreator
     private constructor(
@@ -637,6 +641,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Indicates the outcome of the 3DS authentication process. */
     class AuthenticationResult
     @JsonCreator
     private constructor(
@@ -694,6 +699,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Indicates whether the expiration date provided by the cardholder during checkout matches
+     * Lithic's record of the card's expiration date.
+     */
     class CardExpiryCheck
     @JsonCreator
     private constructor(
@@ -1310,6 +1319,7 @@ private constructor(
             "Cardholder{addressMatch=$addressMatch, billingAddress=$billingAddress, email=$email, name=$name, phoneNumberHome=$phoneNumberHome, phoneNumberMobile=$phoneNumberMobile, phoneNumberWork=$phoneNumberWork, shippingAddress=$shippingAddress, additionalProperties=$additionalProperties}"
     }
 
+    /** Channel in which the authentication occurs. Maps to EMV 3DS field deviceChannel. */
     class Channel
     @JsonCreator
     private constructor(
@@ -1373,6 +1383,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Entity that made the authentication decision. */
     class DecisionMadeBy
     @JsonCreator
     private constructor(
@@ -2074,6 +2085,9 @@ private constructor(
                     )
             }
 
+            /**
+             * The delivery time frame for the merchandise. Maps to EMV 3DS field deliveryTimeframe.
+             */
             class DeliveryTimeFrame
             @JsonCreator
             private constructor(
@@ -2144,6 +2158,10 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /**
+             * Indicates whether the purchase is for merchandise that is available now or at a
+             * future date. Maps to EMV 3DS field preOrderPurchaseInd.
+             */
             class OrderAvailability
             @JsonCreator
             private constructor(
@@ -2202,6 +2220,10 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /**
+             * Indicates whether the cardholder is reordering previously purchased merchandise. Maps
+             * to EMV 3DS field reorderItemsInd.
+             */
             class ReorderItems
             @JsonCreator
             private constructor(
@@ -2259,6 +2281,12 @@ private constructor(
                 override fun toString() = value.toString()
             }
 
+            /**
+             * Shipping method that the cardholder chose for the transaction. If purchase includes
+             * one or more item, this indicator is used for the physical goods; if the purchase only
+             * includes digital goods, this indicator is used to describe the most expensive item
+             * purchased. Maps to EMV 3DS field shipIndicator.
+             */
             class ShippingMethod
             @JsonCreator
             private constructor(
@@ -2394,6 +2422,10 @@ private constructor(
             "Merchant{id=$id, country=$country, mcc=$mcc, name=$name, riskIndicator=$riskIndicator, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Either PAYMENT_AUTHENTICATION or NON_PAYMENT_AUTHENTICATION. For NON_PAYMENT_AUTHENTICATION,
+     * additional_data and transaction fields are not populated.
+     */
     class MessageCategory
     @JsonCreator
     private constructor(
@@ -2597,6 +2629,10 @@ private constructor(
                 )
         }
 
+        /**
+         * Mastercard only: Indicates whether the network would have considered the authentication
+         * request to be low risk or not.
+         */
         class NetworkDecision
         @JsonCreator
         private constructor(
@@ -2818,6 +2854,11 @@ private constructor(
             "App{deviceInfo=$deviceInfo, ip=$ip, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Type of authentication request - i.e., the type of transaction or interaction is causing the
+     * merchant to request an authentication. Maps to EMV 3DS field
+     * threeDSRequestorAuthenticationInd.
+     */
     class AuthenticationRequestType
     @JsonCreator
     private constructor(
@@ -3206,6 +3247,12 @@ private constructor(
             "Browser{ip=$ip, javaEnabled=$javaEnabled, javascriptEnabled=$javascriptEnabled, language=$language, timeZone=$timeZone, userAgent=$userAgent, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
+     * the initiation of the merchant rather than the cardholder. The most common example of this is
+     * where a merchant is authenticating before billing for a recurring transaction such as a pay
+     * TV subscription or a utility bill. Maps to EMV 3DS field threeRIInd.
+     */
     class ThreeRiRequestType
     @JsonCreator
     private constructor(
@@ -3561,6 +3608,10 @@ private constructor(
                 )
         }
 
+        /**
+         * Type of the transaction for which a 3DS authentication request is occurring. Maps to EMV
+         * 3DS field transType.
+         */
         class Type
         @JsonCreator
         private constructor(

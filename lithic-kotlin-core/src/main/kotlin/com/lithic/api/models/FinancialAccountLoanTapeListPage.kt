@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
 import java.util.Objects
 
+/** List the loan tapes for a given financial account. */
 class FinancialAccountLoanTapeListPage
 private constructor(
     private val loanTapesService: LoanTapeService,

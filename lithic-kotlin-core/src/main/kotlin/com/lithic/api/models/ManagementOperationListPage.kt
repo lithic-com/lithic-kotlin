@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.ManagementOperationService
 import java.util.Objects
 
+/** List management operations */
 class ManagementOperationListPage
 private constructor(
     private val managementOperationsService: ManagementOperationService,

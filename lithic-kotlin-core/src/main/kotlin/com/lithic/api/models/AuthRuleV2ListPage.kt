@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.authRules.V2Service
 import java.util.Objects
 
+/** Lists V2 authorization rules */
 class AuthRuleV2ListPage
 private constructor(
     private val v2Service: V2Service,

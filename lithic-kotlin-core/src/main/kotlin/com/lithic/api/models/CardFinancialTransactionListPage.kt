@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.cards.FinancialTransactionService
 import java.util.Objects
 
+/** List the financial transactions for a given card. */
 class CardFinancialTransactionListPage
 private constructor(
     private val financialTransactionsService: FinancialTransactionService,

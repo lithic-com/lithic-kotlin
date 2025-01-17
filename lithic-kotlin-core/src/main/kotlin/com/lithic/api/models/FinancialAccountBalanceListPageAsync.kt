@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Get the balances for a given financial account. */
 class FinancialAccountBalanceListPageAsync
 private constructor(
     private val balancesService: BalanceServiceAsync,

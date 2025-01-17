@@ -222,6 +222,7 @@ private constructor(
             )
     }
 
+    /** Card network. */
     class Network
     @JsonCreator
     private constructor(

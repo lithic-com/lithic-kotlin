@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.financialAccounts.StatementService
 import java.util.Objects
 
+/** List the statements for a given financial account. */
 class FinancialAccountStatementListPage
 private constructor(
     private val statementsService: StatementService,

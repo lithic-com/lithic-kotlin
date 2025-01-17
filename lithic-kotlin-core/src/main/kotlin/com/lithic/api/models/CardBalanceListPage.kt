@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.cards.BalanceService
 import java.util.Objects
 
+/** Get the balances for a given card. */
 class CardBalanceListPage
 private constructor(
     private val balancesService: BalanceService,

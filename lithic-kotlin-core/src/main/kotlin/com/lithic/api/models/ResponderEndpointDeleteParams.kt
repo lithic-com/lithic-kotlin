@@ -198,6 +198,7 @@ constructor(
             )
     }
 
+    /** The type of the endpoint. */
     class Type
     @JsonCreator
     private constructor(

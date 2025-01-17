@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List all the payments for the provided search criteria. */
 class PaymentListPageAsync
 private constructor(
     private val paymentsService: PaymentServiceAsync,
