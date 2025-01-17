@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List card tokenizations */
 class TokenizationListPageAsync
 private constructor(
     private val tokenizationsService: TokenizationServiceAsync,

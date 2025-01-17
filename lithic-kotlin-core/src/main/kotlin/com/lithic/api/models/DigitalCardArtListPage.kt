@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.DigitalCardArtService
 import java.util.Objects
 
+/** List digital card art. */
 class DigitalCardArtListPage
 private constructor(
     private val digitalCardArtService: DigitalCardArtService,

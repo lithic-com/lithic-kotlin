@@ -65,6 +65,7 @@ constructor(
      * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
      * Authorization Rules. The field will be removed from the schema in a future release.
      */
+    @Deprecated("deprecated")
     fun verificationAddress(): VerificationAddress? = body.verificationAddress()
 
     /**
@@ -97,6 +98,7 @@ constructor(
      * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
      * Authorization Rules. The field will be removed from the schema in a future release.
      */
+    @Deprecated("deprecated")
     fun _verificationAddress(): JsonField<VerificationAddress> = body._verificationAddress()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -171,6 +173,7 @@ constructor(
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
          * Authorization Rules. The field will be removed from the schema in a future release.
          */
+        @Deprecated("deprecated")
         fun verificationAddress(): VerificationAddress? =
             verificationAddress.getNullable("verification_address")
 
@@ -210,6 +213,7 @@ constructor(
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
          * Authorization Rules. The field will be removed from the schema in a future release.
          */
+        @Deprecated("deprecated")
         @JsonProperty("verification_address")
         @ExcludeMissing
         fun _verificationAddress(): JsonField<VerificationAddress> = verificationAddress
@@ -325,6 +329,7 @@ constructor(
              * supported by Authorization Rules. The field will be removed from the schema in a
              * future release.
              */
+            @Deprecated("deprecated")
             fun verificationAddress(verificationAddress: VerificationAddress) =
                 verificationAddress(JsonField.of(verificationAddress))
 
@@ -334,6 +339,7 @@ constructor(
              * supported by Authorization Rules. The field will be removed from the schema in a
              * future release.
              */
+            @Deprecated("deprecated")
             fun verificationAddress(verificationAddress: JsonField<VerificationAddress>) = apply {
                 this.verificationAddress = verificationAddress
             }
@@ -475,6 +481,7 @@ constructor(
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
          * Authorization Rules. The field will be removed from the schema in a future release.
          */
+        @Deprecated("deprecated")
         fun verificationAddress(verificationAddress: VerificationAddress) = apply {
             body.verificationAddress(verificationAddress)
         }
@@ -484,6 +491,7 @@ constructor(
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
          * Authorization Rules. The field will be removed from the schema in a future release.
          */
+        @Deprecated("deprecated")
         fun verificationAddress(verificationAddress: JsonField<VerificationAddress>) = apply {
             body.verificationAddress(verificationAddress)
         }
@@ -614,6 +622,7 @@ constructor(
             )
     }
 
+    /** Account states. */
     class State
     @JsonCreator
     private constructor(
@@ -676,6 +685,7 @@ constructor(
      * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
      * Authorization Rules. The field will be removed from the schema in a future release.
      */
+    @Deprecated("deprecated")
     @NoAutoDetect
     class VerificationAddress
     @JsonCreator

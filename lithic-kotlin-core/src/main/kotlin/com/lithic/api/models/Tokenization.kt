@@ -368,6 +368,7 @@ private constructor(
             )
     }
 
+    /** The status of the tokenization request */
     class Status
     @JsonCreator
     private constructor(
@@ -455,6 +456,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
     class TokenRequestorName
     @JsonCreator
     private constructor(
@@ -566,6 +568,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** The channel through which the tokenization was made. */
     class TokenizationChannel
     @JsonCreator
     private constructor(
@@ -763,6 +766,7 @@ private constructor(
                 )
         }
 
+        /** Enum representing the result of the tokenization event */
         class Result
         @JsonCreator
         private constructor(
@@ -874,6 +878,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Enum representing the type of tokenization event that occurred */
         class Type
         @JsonCreator
         private constructor(

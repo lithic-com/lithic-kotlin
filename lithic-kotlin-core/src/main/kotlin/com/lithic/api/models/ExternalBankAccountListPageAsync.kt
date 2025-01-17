@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List all the external bank accounts for the provided search criteria. */
 class ExternalBankAccountListPageAsync
 private constructor(
     private val externalBankAccountsService: ExternalBankAccountServiceAsync,

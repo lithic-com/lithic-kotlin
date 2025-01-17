@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.cards.AggregateBalanceService
 import java.util.Objects
 
+/** Get the aggregated card balance across all end-user accounts. */
 class CardAggregateBalanceListPage
 private constructor(
     private val aggregateBalancesService: AggregateBalanceService,

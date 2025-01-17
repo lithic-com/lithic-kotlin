@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.ExternalBankAccountService
 import java.util.Objects
 
+/** List all the external bank accounts for the provided search criteria. */
 class ExternalBankAccountListPage
 private constructor(
     private val externalBankAccountsService: ExternalBankAccountService,

@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.reports.SettlementService
 import java.util.Objects
 
+/** List details. */
 class ReportSettlementListDetailsPage
 private constructor(
     private val settlementService: SettlementService,

@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List details. */
 class ReportSettlementListDetailsPageAsync
 private constructor(
     private val settlementService: SettlementServiceAsync,

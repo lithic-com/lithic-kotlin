@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Get the balances for a given card. */
 class CardBalanceListPageAsync
 private constructor(
     private val balancesService: BalanceServiceAsync,

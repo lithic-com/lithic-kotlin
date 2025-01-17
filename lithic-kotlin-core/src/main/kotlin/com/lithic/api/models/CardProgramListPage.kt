@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.CardProgramService
 import java.util.Objects
 
+/** List card programs. */
 class CardProgramListPage
 private constructor(
     private val cardProgramsService: CardProgramService,

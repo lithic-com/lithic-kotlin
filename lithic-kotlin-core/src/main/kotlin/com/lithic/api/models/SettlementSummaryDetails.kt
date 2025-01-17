@@ -283,6 +283,7 @@ private constructor(
             )
     }
 
+    /** Card network where the transaction took place */
     class Network
     @JsonCreator
     private constructor(

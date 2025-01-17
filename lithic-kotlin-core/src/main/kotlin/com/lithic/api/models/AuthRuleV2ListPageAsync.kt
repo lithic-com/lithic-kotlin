@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Lists V2 authorization rules */
 class AuthRuleV2ListPageAsync
 private constructor(
     private val v2Service: V2ServiceAsync,

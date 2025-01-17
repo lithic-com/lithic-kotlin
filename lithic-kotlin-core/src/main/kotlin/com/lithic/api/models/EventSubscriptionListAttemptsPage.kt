@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.events.SubscriptionService
 import java.util.Objects
 
+/** List all the message attempts for a given event subscription. */
 class EventSubscriptionListAttemptsPage
 private constructor(
     private val subscriptionsService: SubscriptionService,

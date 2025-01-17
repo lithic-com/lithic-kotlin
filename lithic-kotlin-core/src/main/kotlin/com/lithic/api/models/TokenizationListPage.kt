@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.TokenizationService
 import java.util.Objects
 
+/** List card tokenizations */
 class TokenizationListPage
 private constructor(
     private val tokenizationsService: TokenizationService,
