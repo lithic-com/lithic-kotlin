@@ -274,6 +274,7 @@ constructor(
             )
     }
 
+    /** List disputes of a specific status. */
     class Status
     @JsonCreator
     private constructor(

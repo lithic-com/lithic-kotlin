@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.BalanceService
 import java.util.Objects
 
+/** Get the balances for a program, business, or a given end-user account */
 class BalanceListPage
 private constructor(
     private val balancesService: BalanceService,

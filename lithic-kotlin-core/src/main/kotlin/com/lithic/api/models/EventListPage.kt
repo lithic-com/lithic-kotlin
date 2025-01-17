@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.EventService
 import java.util.Objects
 
+/** List all events. */
 class EventListPage
 private constructor(
     private val eventsService: EventService,

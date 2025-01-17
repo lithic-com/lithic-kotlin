@@ -616,6 +616,7 @@ private constructor(
             )
     }
 
+    /** Account State */
     class State
     @JsonCreator
     private constructor(
@@ -679,6 +680,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Account Type */
     class Type
     @JsonCreator
     private constructor(
@@ -736,6 +738,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Verification State */
     class VerificationState
     @JsonCreator
     private constructor(

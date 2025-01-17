@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.EventService
 import java.util.Objects
 
+/** List all the message attempts for a given event. */
 class EventListAttemptsPage
 private constructor(
     private val eventsService: EventService,

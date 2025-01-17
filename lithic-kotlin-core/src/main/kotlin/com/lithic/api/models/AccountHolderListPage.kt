@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.AccountHolderService
 import java.util.Objects
 
+/** Get a list of individual or business account holders and their KYC or KYB evaluation status. */
 class AccountHolderListPage
 private constructor(
     private val accountHoldersService: AccountHolderService,

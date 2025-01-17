@@ -16,6 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.events.SubscriptionService
 import java.util.Objects
 
+/** List all the event subscriptions. */
 class EventSubscriptionListPage
 private constructor(
     private val subscriptionsService: SubscriptionService,

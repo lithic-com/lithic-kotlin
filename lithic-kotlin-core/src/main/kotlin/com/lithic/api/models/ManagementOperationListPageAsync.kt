@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List management operations */
 class ManagementOperationListPageAsync
 private constructor(
     private val managementOperationsService: ManagementOperationServiceAsync,

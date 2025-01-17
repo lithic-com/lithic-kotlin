@@ -294,6 +294,10 @@ constructor(
             )
     }
 
+    /**
+     * Filters for transactions using transaction result field. Can filter by `APPROVED`, and
+     * `DECLINED`.
+     */
     class Result
     @JsonCreator
     private constructor(
@@ -351,6 +355,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** Filters for transactions using transaction status field. */
     class CardTransactionStatusFilter
     @JsonCreator
     private constructor(

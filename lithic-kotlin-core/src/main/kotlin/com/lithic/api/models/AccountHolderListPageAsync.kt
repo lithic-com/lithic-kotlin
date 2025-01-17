@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Get a list of individual or business account holders and their KYC or KYB evaluation status. */
 class AccountHolderListPageAsync
 private constructor(
     private val accountHoldersService: AccountHolderServiceAsync,

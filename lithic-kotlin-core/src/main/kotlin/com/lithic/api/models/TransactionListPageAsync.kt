@@ -18,6 +18,10 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * List card transactions. All amounts are in the smallest unit of their respective currency (e.g.,
+ * cents for USD) and inclusive of any acquirer fees.
+ */
 class TransactionListPageAsync
 private constructor(
     private val transactionsService: TransactionServiceAsync,

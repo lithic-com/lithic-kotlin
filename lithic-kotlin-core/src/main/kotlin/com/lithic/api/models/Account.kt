@@ -86,11 +86,13 @@ private constructor(
      * removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch Auth
      * Rule information instead.
      */
+    @Deprecated("deprecated")
     fun authRuleTokens(): List<String>? = authRuleTokens.getNullable("auth_rule_tokens")
 
     /** 3-digit alphabetic ISO 4217 code for the currency of the cardholder. */
     fun cardholderCurrency(): String? = cardholderCurrency.getNullable("cardholder_currency")
 
+    @Deprecated("deprecated")
     fun verificationAddress(): VerificationAddress? =
         verificationAddress.getNullable("verification_address")
 
@@ -138,6 +140,7 @@ private constructor(
      * removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch Auth
      * Rule information instead.
      */
+    @Deprecated("deprecated")
     @JsonProperty("auth_rule_tokens")
     @ExcludeMissing
     fun _authRuleTokens(): JsonField<List<String>> = authRuleTokens
@@ -147,6 +150,7 @@ private constructor(
     @ExcludeMissing
     fun _cardholderCurrency(): JsonField<String> = cardholderCurrency
 
+    @Deprecated("deprecated")
     @JsonProperty("verification_address")
     @ExcludeMissing
     fun _verificationAddress(): JsonField<VerificationAddress> = verificationAddress
@@ -282,6 +286,7 @@ private constructor(
          * be removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch
          * Auth Rule information instead.
          */
+        @Deprecated("deprecated")
         fun authRuleTokens(authRuleTokens: List<String>) =
             authRuleTokens(JsonField.of(authRuleTokens))
 
@@ -291,6 +296,7 @@ private constructor(
          * be removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch
          * Auth Rule information instead.
          */
+        @Deprecated("deprecated")
         fun authRuleTokens(authRuleTokens: JsonField<List<String>>) = apply {
             this.authRuleTokens = authRuleTokens.map { it.toMutableList() }
         }
@@ -301,6 +307,7 @@ private constructor(
          * be removed from the schema in a future release. Use the `/auth_rules` endpoints to fetch
          * Auth Rule information instead.
          */
+        @Deprecated("deprecated")
         fun addAuthRuleToken(authRuleToken: String) = apply {
             authRuleTokens =
                 (authRuleTokens ?: JsonField.of(mutableListOf())).apply {
@@ -321,9 +328,11 @@ private constructor(
             this.cardholderCurrency = cardholderCurrency
         }
 
+        @Deprecated("deprecated")
         fun verificationAddress(verificationAddress: VerificationAddress) =
             verificationAddress(JsonField.of(verificationAddress))
 
+        @Deprecated("deprecated")
         fun verificationAddress(verificationAddress: JsonField<VerificationAddress>) = apply {
             this.verificationAddress = verificationAddress
         }
@@ -504,6 +513,16 @@ private constructor(
             "SpendLimit{daily=$daily, lifetime=$lifetime, monthly=$monthly, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * Account state:
+     * - `ACTIVE` - Account is able to transact and create new cards.
+     * - `PAUSED` - Account will not be able to transact or create new cards. It can be set back to
+     *   `ACTIVE`.
+     * - `CLOSED` - Account will not be able to transact or create new cards. `CLOSED` accounts are
+     *   also unable to be transitioned to `ACTIVE` or `PAUSED` states. `CLOSED` accounts result
+     *   from failing to pass KYB/KYC or Lithic closing for risk/compliance reasons. Please contact
+     *   [support@lithic.com](mailto:support@lithic.com) if you believe this was in error.
+     */
     class State
     @JsonCreator
     private constructor(
@@ -749,6 +768,7 @@ private constructor(
             "AccountHolder{token=$token, businessAccountToken=$businessAccountToken, email=$email, phoneNumber=$phoneNumber, additionalProperties=$additionalProperties}"
     }
 
+    @Deprecated("deprecated")
     @NoAutoDetect
     class VerificationAddress
     @JsonCreator

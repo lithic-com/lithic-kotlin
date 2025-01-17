@@ -399,6 +399,7 @@ constructor(
             )
     }
 
+    /** Event Type */
     class SupportedSimulationTypes
     @JsonCreator
     private constructor(
@@ -486,6 +487,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** Decline reason */
     class SupportedSimulationDeclineReasons
     @JsonCreator
     private constructor(

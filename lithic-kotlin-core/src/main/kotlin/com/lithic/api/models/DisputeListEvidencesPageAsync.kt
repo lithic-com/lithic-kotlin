@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List evidence metadata for a dispute. */
 class DisputeListEvidencesPageAsync
 private constructor(
     private val disputesService: DisputeServiceAsync,

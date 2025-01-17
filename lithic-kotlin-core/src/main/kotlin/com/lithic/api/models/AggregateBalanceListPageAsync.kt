@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Get the aggregated balance across all end-user accounts by financial account type */
 class AggregateBalanceListPageAsync
 private constructor(
     private val aggregateBalancesService: AggregateBalanceServiceAsync,

@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List the statements for a given financial account. */
 class FinancialAccountStatementListPageAsync
 private constructor(
     private val statementsService: StatementServiceAsync,

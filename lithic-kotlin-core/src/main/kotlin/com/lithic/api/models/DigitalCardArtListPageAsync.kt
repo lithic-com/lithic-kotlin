@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List digital card art. */
 class DigitalCardArtListPageAsync
 private constructor(
     private val digitalCardArtService: DigitalCardArtServiceAsync,

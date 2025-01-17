@@ -317,6 +317,7 @@ constructor(
             )
     }
 
+    /** Book Transfer category to be returned. */
     class Category
     @JsonCreator
     private constructor(
@@ -404,6 +405,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** Book transfer result to be returned. */
     class Result
     @JsonCreator
     private constructor(
@@ -461,6 +463,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** Book transfer status to be returned. */
     class Status
     @JsonCreator
     private constructor(

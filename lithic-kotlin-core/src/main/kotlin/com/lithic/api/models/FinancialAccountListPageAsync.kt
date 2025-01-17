@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** Retrieve information on your financial accounts including routing and account number. */
 class FinancialAccountListPageAsync
 private constructor(
     private val financialAccountsService: FinancialAccountServiceAsync,

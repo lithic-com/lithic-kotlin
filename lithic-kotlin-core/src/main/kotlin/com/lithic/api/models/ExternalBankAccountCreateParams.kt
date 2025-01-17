@@ -877,6 +877,7 @@ constructor(
                 )
         }
 
+        /** Account Type */
         class AccountType
         @JsonCreator
         private constructor(
@@ -1677,6 +1678,7 @@ constructor(
                 )
         }
 
+        /** Account Type */
         class Type
         @JsonCreator
         private constructor(
@@ -1734,6 +1736,7 @@ constructor(
             override fun toString() = value.toString()
         }
 
+        /** Verification Method */
         class ExternallyVerifiedVerificationMethod
         @JsonCreator
         private constructor(

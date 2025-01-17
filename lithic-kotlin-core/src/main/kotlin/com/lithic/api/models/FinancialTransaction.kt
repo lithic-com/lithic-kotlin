@@ -415,6 +415,12 @@ private constructor(
             )
     }
 
+    /**
+     * Status types:
+     * - `CARD` - Issuing card transaction.
+     * - `ACH` - Transaction over ACH.
+     * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
+     */
     class Category
     @JsonCreator
     private constructor(
@@ -655,6 +661,10 @@ private constructor(
                 )
         }
 
+        /**
+         * APPROVED financial events were successful while DECLINED financial events were declined
+         * by user, Lithic, or the network.
+         */
         class Result
         @JsonCreator
         private constructor(
@@ -1147,6 +1157,10 @@ private constructor(
             "FinancialEvent{token=$token, amount=$amount, created=$created, result=$result, type=$type, additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * APPROVED transactions were successful while DECLINED transactions were declined by user,
+     * Lithic, or the network.
+     */
     class Result
     @JsonCreator
     private constructor(
@@ -1204,6 +1218,15 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Status types:
+     * - `DECLINED` - The transaction was declined.
+     * - `EXPIRED` - The authorization as it has passed its expiration time. Card transaction only.
+     * - `PENDING` - The transaction is expected to settle.
+     * - `RETURNED` - The transaction has been returned.
+     * - `SETTLED` - The transaction is completed.
+     * - `VOIDED` - The transaction was voided. Card transaction only.
+     */
     class Status
     @JsonCreator
     private constructor(

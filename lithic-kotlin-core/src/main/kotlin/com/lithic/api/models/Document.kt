@@ -208,6 +208,7 @@ private constructor(
             )
     }
 
+    /** Type of documentation to be submitted for verification of an account holder */
     class DocumentType
     @JsonCreator
     private constructor(
@@ -723,6 +724,7 @@ private constructor(
                 )
         }
 
+        /** Type of image to upload. */
         class ImageType
         @JsonCreator
         private constructor(
@@ -780,6 +782,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Status of an account holder's document upload. */
         class DocumentUploadStatus
         @JsonCreator
         private constructor(
@@ -855,6 +858,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** The status reasons for an account holder document upload that is not ACCEPTED */
         class DocumentUploadStatusReasons
         @JsonCreator
         private constructor(

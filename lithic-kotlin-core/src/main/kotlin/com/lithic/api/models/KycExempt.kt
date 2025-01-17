@@ -288,6 +288,7 @@ private constructor(
             )
     }
 
+    /** Specifies the type of KYC Exempt user */
     class KycExemptionType
     @JsonCreator
     private constructor(
@@ -345,6 +346,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Specifies the workflow type. This must be 'KYC_EXEMPT' */
     class Workflow
     @JsonCreator
     private constructor(

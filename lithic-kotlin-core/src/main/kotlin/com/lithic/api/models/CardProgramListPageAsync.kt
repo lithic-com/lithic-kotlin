@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List card programs. */
 class CardProgramListPageAsync
 private constructor(
     private val cardProgramsService: CardProgramServiceAsync,

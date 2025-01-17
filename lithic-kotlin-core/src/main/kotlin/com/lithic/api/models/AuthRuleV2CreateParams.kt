@@ -690,6 +690,7 @@ constructor(
             }
         }
 
+        /** The type of Auth Rule */
         class AuthRuleType
         @JsonCreator
         private constructor(
@@ -1078,6 +1079,7 @@ constructor(
             }
         }
 
+        /** The type of Auth Rule */
         class AuthRuleType
         @JsonCreator
         private constructor(
@@ -1492,6 +1494,7 @@ constructor(
             }
         }
 
+        /** The type of Auth Rule */
         class AuthRuleType
         @JsonCreator
         private constructor(

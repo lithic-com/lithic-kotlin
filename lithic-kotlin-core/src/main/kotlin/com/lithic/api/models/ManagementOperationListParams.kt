@@ -297,6 +297,7 @@ constructor(
             )
     }
 
+    /** Management operation category to be returned. */
     class ManagementOperationCategory
     @JsonCreator
     private constructor(
@@ -367,6 +368,7 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /** Management operation status to be returned. */
     class TransactionStatus
     @JsonCreator
     private constructor(
