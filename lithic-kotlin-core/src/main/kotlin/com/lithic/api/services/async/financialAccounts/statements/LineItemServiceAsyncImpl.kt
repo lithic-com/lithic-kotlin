@@ -15,7 +15,7 @@ import com.lithic.api.models.FinancialAccountStatementLineItemListPageAsync
 import com.lithic.api.models.FinancialAccountStatementLineItemListParams
 
 class LineItemServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LineItemServiceAsync {
 

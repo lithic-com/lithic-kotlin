@@ -17,7 +17,7 @@ import com.lithic.api.models.CardFinancialTransactionRetrieveParams
 import com.lithic.api.models.FinancialTransaction
 
 class FinancialTransactionServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : FinancialTransactionServiceAsync {
 
