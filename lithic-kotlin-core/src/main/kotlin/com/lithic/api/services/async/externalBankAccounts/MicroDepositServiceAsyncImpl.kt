@@ -16,7 +16,7 @@ import com.lithic.api.models.ExternalBankAccountMicroDepositCreateParams
 import com.lithic.api.models.MicroDepositCreateResponse
 
 class MicroDepositServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : MicroDepositServiceAsync {
 

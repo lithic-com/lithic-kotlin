@@ -36,7 +36,7 @@ import com.lithic.api.services.async.transactions.EventServiceAsync
 import com.lithic.api.services.async.transactions.EventServiceAsyncImpl
 
 class TransactionServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : TransactionServiceAsync {
 

@@ -18,7 +18,7 @@ import com.lithic.api.models.AuthStreamEnrollmentRotateSecretParams
 import com.lithic.api.models.AuthStreamSecret
 
 class AuthStreamEnrollmentServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AuthStreamEnrollmentServiceAsync {
 
