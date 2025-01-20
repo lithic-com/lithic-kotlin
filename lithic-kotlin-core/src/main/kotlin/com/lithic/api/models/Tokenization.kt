@@ -70,7 +70,7 @@ private constructor(
     /** Date and time when the tokenization first occurred. UTC time zone. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /** The network's dynamic pan for the tokenized transaction. */
+    /** The dynamic pan assigned to the token by the network. */
     fun dpan(): String? = dpan.getNullable("dpan")
 
     /** The status of the tokenization request */
@@ -116,7 +116,7 @@ private constructor(
     @ExcludeMissing
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
-    /** The network's dynamic pan for the tokenized transaction. */
+    /** The dynamic pan assigned to the token by the network. */
     @JsonProperty("dpan") @ExcludeMissing fun _dpan(): JsonField<String> = dpan
 
     /** The status of the tokenization request */
@@ -247,10 +247,10 @@ private constructor(
         /** Date and time when the tokenization first occurred. UTC time zone. */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        /** The network's dynamic pan for the tokenized transaction. */
+        /** The dynamic pan assigned to the token by the network. */
         fun dpan(dpan: String?) = dpan(JsonField.ofNullable(dpan))
 
-        /** The network's dynamic pan for the tokenized transaction. */
+        /** The dynamic pan assigned to the token by the network. */
         fun dpan(dpan: JsonField<String>) = apply { this.dpan = dpan }
 
         /** The status of the tokenization request */
