@@ -28,7 +28,7 @@ import com.lithic.api.services.async.externalBankAccounts.MicroDepositServiceAsy
 import com.lithic.api.services.async.externalBankAccounts.MicroDepositServiceAsyncImpl
 
 class ExternalBankAccountServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExternalBankAccountServiceAsync {
 

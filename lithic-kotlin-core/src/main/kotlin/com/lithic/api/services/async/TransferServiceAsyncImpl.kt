@@ -16,7 +16,7 @@ import com.lithic.api.models.Transfer
 import com.lithic.api.models.TransferCreateParams
 
 class TransferServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : TransferServiceAsync {
 
