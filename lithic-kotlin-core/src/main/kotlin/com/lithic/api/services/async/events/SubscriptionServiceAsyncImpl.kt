@@ -30,7 +30,7 @@ import com.lithic.api.models.EventSubscriptionUpdateParams
 import com.lithic.api.models.SubscriptionRetrieveSecretResponse
 
 class SubscriptionServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : SubscriptionServiceAsync {
 

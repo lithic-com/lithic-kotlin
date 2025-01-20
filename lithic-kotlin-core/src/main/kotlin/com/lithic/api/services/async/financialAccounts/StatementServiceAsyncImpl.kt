@@ -19,7 +19,7 @@ import com.lithic.api.services.async.financialAccounts.statements.LineItemServic
 import com.lithic.api.services.async.financialAccounts.statements.LineItemServiceAsyncImpl
 
 class StatementServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : StatementServiceAsync {
 

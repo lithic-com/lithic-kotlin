@@ -20,7 +20,7 @@ import com.lithic.api.models.ResponderEndpointDeleteParams
 import com.lithic.api.models.ResponderEndpointStatus
 
 class ResponderEndpointServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ResponderEndpointServiceAsync {
 

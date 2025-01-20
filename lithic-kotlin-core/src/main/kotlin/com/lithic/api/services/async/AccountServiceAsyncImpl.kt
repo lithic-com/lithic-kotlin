@@ -21,7 +21,7 @@ import com.lithic.api.models.AccountSpendLimits
 import com.lithic.api.models.AccountUpdateParams
 
 class AccountServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AccountServiceAsync {
 
