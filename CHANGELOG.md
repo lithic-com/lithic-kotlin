@@ -1,5 +1,93 @@
 # Changelog
 
+## 0.74.0 (2025-01-21)
+
+Full Changelog: [v0.73.0...v0.74.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.73.0...v0.74.0)
+
+### ⚠ BREAKING CHANGES
+
+* **types:** improve auth rules types ([#431](https://github.com/lithic-com/lithic-kotlin/issues/431))
+* **client:** switch query params objects to use `QueryParams` ([#410](https://github.com/lithic-com/lithic-kotlin/issues/410))
+* **api:** removes AccountHolder `resubmit` endpoint and `KYC_ADVANCED` workflow ([#405](https://github.com/lithic-com/lithic-kotlin/issues/405))
+
+### Features
+
+* **api:** adds EventRuleResult to Transaction Events ([#393](https://github.com/lithic-com/lithic-kotlin/issues/393)) ([ba514e8](https://github.com/lithic-com/lithic-kotlin/commit/ba514e86059eb8ded49746a701e80082245b1807))
+* **api:** removes AccountHolder `resubmit` endpoint and `KYC_ADVANCED` workflow ([#405](https://github.com/lithic-com/lithic-kotlin/issues/405)) ([e8203a1](https://github.com/lithic-com/lithic-kotlin/commit/e8203a156077e99f725e3a1f4dbbb316447436db))
+* **client:** add various convenience setters to models ([#420](https://github.com/lithic-com/lithic-kotlin/issues/420)) ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **client:** allow setting arbitrary JSON for top-level body params ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **client:** expose getters for `JsonField` of body params ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **client:** put body field in params, add more convenience methods, and add missing docs ([#414](https://github.com/lithic-com/lithic-kotlin/issues/414)) ([57ff634](https://github.com/lithic-com/lithic-kotlin/commit/57ff634bb99742a50c4c58ebbcf06ce54e0753de))
+* **types:** improve auth rules types ([#431](https://github.com/lithic-com/lithic-kotlin/issues/431)) ([53fef3a](https://github.com/lithic-com/lithic-kotlin/commit/53fef3a4be24c27249f3e25b249c485c35f1afc1))
+
+
+### Bug Fixes
+
+* **client:** add some missing `validate()` calls ([#424](https://github.com/lithic-com/lithic-kotlin/issues/424)) ([3855a16](https://github.com/lithic-com/lithic-kotlin/commit/3855a166783e10b2f78b87c5e48d81350f427a90))
+* **client:** allow passing null for nullable fields where missing ([#417](https://github.com/lithic-com/lithic-kotlin/issues/417)) ([e23add6](https://github.com/lithic-com/lithic-kotlin/commit/e23add6e159cde446edac537834a9509798d2bf8))
+* **client:** consistently throw on omitting required fields ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **client:** convert `JsonField` containing list type to mutable in builder ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **client:** make service impl constructors internal ([#440](https://github.com/lithic-com/lithic-kotlin/issues/440)) ([07e534a](https://github.com/lithic-com/lithic-kotlin/commit/07e534a28faa9061f40c0f4640575ff2de3e2330))
+* reuse model in pagination items type ([#441](https://github.com/lithic-com/lithic-kotlin/issues/441)) ([2df674e](https://github.com/lithic-com/lithic-kotlin/commit/2df674e8e35889a49e8069fc13f9f885df99268c))
+
+
+### Chores
+
+* **api:** adds `dpan` property to Tokenization ([#435](https://github.com/lithic-com/lithic-kotlin/issues/435)) ([728b987](https://github.com/lithic-com/lithic-kotlin/commit/728b98735c6398708ed96aff2576ef568e8afba3))
+* **api:** new ConvertPhysical endpoint to convert a virtual card to a physical card ([#404](https://github.com/lithic-com/lithic-kotlin/issues/404)) ([e48a2a7](https://github.com/lithic-com/lithic-kotlin/commit/e48a2a747480f0e66cfbef55e8da857ae046a2bf))
+* **api:** updates to documentation and additional filter for status on Transactions ([#427](https://github.com/lithic-com/lithic-kotlin/issues/427)) ([9a2d0a0](https://github.com/lithic-com/lithic-kotlin/commit/9a2d0a0f6997ec79cd30229fdf20fd43da5dbb68))
+* bump license year ([#413](https://github.com/lithic-com/lithic-kotlin/issues/413)) ([d6527e5](https://github.com/lithic-com/lithic-kotlin/commit/d6527e52667f26132e5c9c6824037bdf689f4c76))
+* **docs:** add example project ([#408](https://github.com/lithic-com/lithic-kotlin/issues/408)) ([52f1b55](https://github.com/lithic-com/lithic-kotlin/commit/52f1b55eecb6829c1592c9b16d54c2856321a16c))
+* **docs:** fix unused import ([#409](https://github.com/lithic-com/lithic-kotlin/issues/409)) ([f72f483](https://github.com/lithic-com/lithic-kotlin/commit/f72f483d7a3221dcf39c51d5d079fc764cfd3a6a))
+* **docs:** update readme ([#407](https://github.com/lithic-com/lithic-kotlin/issues/407)) ([e3d68a6](https://github.com/lithic-com/lithic-kotlin/commit/e3d68a62b1878d95070fbf3c6a91079476e9a2d0))
+* **docs:** updates documentation for DPANs ([#439](https://github.com/lithic-com/lithic-kotlin/issues/439)) ([de00c86](https://github.com/lithic-com/lithic-kotlin/commit/de00c862562b31effc4f20cb16be1dee8126b24c))
+* **internal:** add and tweak check functions ([#432](https://github.com/lithic-com/lithic-kotlin/issues/432)) ([7c06a1c](https://github.com/lithic-com/lithic-kotlin/commit/7c06a1cd34891a7d7349a4a83ed462872b464aca))
+* **internal:** add some missing newlines between methods ([#423](https://github.com/lithic-com/lithic-kotlin/issues/423)) ([aab8f6b](https://github.com/lithic-com/lithic-kotlin/commit/aab8f6bcb2535c19cab3f5d4bb5202dcb02de59b))
+* **internal:** extract a `checkRequired` function ([#430](https://github.com/lithic-com/lithic-kotlin/issues/430)) ([830e4a7](https://github.com/lithic-com/lithic-kotlin/commit/830e4a7fb6ae6fa460dffc961938822dcb99c169))
+* **internal:** fix up root `build.gradle.kts` formatting ([#425](https://github.com/lithic-com/lithic-kotlin/issues/425)) ([5204a00](https://github.com/lithic-com/lithic-kotlin/commit/5204a00412bf0f213116a5b508af22d79e883205))
+* **internal:** refactor `validate` methods ([3855a16](https://github.com/lithic-com/lithic-kotlin/commit/3855a166783e10b2f78b87c5e48d81350f427a90))
+* **internal:** remove unused and expand used wildcard imports ([#401](https://github.com/lithic-com/lithic-kotlin/issues/401)) ([6a3a4b4](https://github.com/lithic-com/lithic-kotlin/commit/6a3a4b4d99da8f89bd9d36f742c6acdb4328bd18))
+* **internal:** remove unused and expand used wildcard imports ([#403](https://github.com/lithic-com/lithic-kotlin/issues/403)) ([646cd0a](https://github.com/lithic-com/lithic-kotlin/commit/646cd0a437ae051dc613aa1d1155f03e6308c0e3))
+* **internal:** remove unused Gradle imports ([#426](https://github.com/lithic-com/lithic-kotlin/issues/426)) ([50e8ca1](https://github.com/lithic-com/lithic-kotlin/commit/50e8ca12d0131c3bf0ee5bb499f4376c353148bc))
+* **internal:** remove unused imports ([#398](https://github.com/lithic-com/lithic-kotlin/issues/398)) ([743d7ca](https://github.com/lithic-com/lithic-kotlin/commit/743d7cab12b35957d0e4801f0c1512d355942e26))
+* **internal:** remove unused or unnecessary Gradle imports ([#428](https://github.com/lithic-com/lithic-kotlin/issues/428)) ([cc25bca](https://github.com/lithic-com/lithic-kotlin/commit/cc25bca75e74a33f878be624d8e2723ff5300d31))
+* **internal:** tweak client options nullability handling ([7c06a1c](https://github.com/lithic-com/lithic-kotlin/commit/7c06a1cd34891a7d7349a4a83ed462872b464aca))
+* **internal:** update examples ([#418](https://github.com/lithic-com/lithic-kotlin/issues/418)) ([2f36a97](https://github.com/lithic-com/lithic-kotlin/commit/2f36a975cd3f6bf29c459263783d5c68f8cbc2cb))
+* **internal:** update some gradle formatting ([#429](https://github.com/lithic-com/lithic-kotlin/issues/429)) ([251742d](https://github.com/lithic-com/lithic-kotlin/commit/251742d3e56a2824d7947672fd1158b1e48e55db))
+* **internal:** upgrade kotlin compiler and gradle ([#437](https://github.com/lithic-com/lithic-kotlin/issues/437)) ([84043c2](https://github.com/lithic-com/lithic-kotlin/commit/84043c285b52f7d15d743aee7cb71ebacf2c8edf))
+* simplify examples involving lists ([#433](https://github.com/lithic-com/lithic-kotlin/issues/433)) ([855d967](https://github.com/lithic-com/lithic-kotlin/commit/855d967fe4c2d609b749df8f24ddd36e99354c22))
+* simplify examples involving unions ([#434](https://github.com/lithic-com/lithic-kotlin/issues/434)) ([0c2af28](https://github.com/lithic-com/lithic-kotlin/commit/0c2af28c3c17bd76cd5ad4f0c264ddfcb296f876))
+* **test:** remove unused imports ([#399](https://github.com/lithic-com/lithic-kotlin/issues/399)) ([8cd6e20](https://github.com/lithic-com/lithic-kotlin/commit/8cd6e2077a70ee006842c3b896e43e308f4adae2))
+* **test:** use `JsonValue` instead of `JsonString` ([#400](https://github.com/lithic-com/lithic-kotlin/issues/400)) ([e57643e](https://github.com/lithic-com/lithic-kotlin/commit/e57643e1c20260239a58ab8a6ceea11bfd53222a))
+* update example values in tests and docs ([#395](https://github.com/lithic-com/lithic-kotlin/issues/395)) ([3324a94](https://github.com/lithic-com/lithic-kotlin/commit/3324a940b95c795a4cca9dcb5410838abf41eacd))
+* update parameter examples in tests and docs ([#406](https://github.com/lithic-com/lithic-kotlin/issues/406)) ([12b741c](https://github.com/lithic-com/lithic-kotlin/commit/12b741c5aa7d0ba0945c6824ca718e19de78eb57))
+
+
+### Documentation
+
+* add more documentation ([#438](https://github.com/lithic-com/lithic-kotlin/issues/438)) ([9e3c843](https://github.com/lithic-com/lithic-kotlin/commit/9e3c8430faa92a925cd0200e66e8fd1dfc37fdc9))
+* add params class javadocs ([#419](https://github.com/lithic-com/lithic-kotlin/issues/419)) ([090e5bd](https://github.com/lithic-com/lithic-kotlin/commit/090e5bd1aec0f46bb2dee0c346b64abf3186574a))
+* add some missing javadocs ([#415](https://github.com/lithic-com/lithic-kotlin/issues/415)) ([b00a43b](https://github.com/lithic-com/lithic-kotlin/commit/b00a43b60029d234604160c76ae2186771276a16))
+* add sonatype readme badge ([#436](https://github.com/lithic-com/lithic-kotlin/issues/436)) ([5ac5998](https://github.com/lithic-com/lithic-kotlin/commit/5ac59980f78abfbf57e872034eec435a53bde6a7))
+* **readme:** fix misplaced period ([#421](https://github.com/lithic-com/lithic-kotlin/issues/421)) ([fe0bb69](https://github.com/lithic-com/lithic-kotlin/commit/fe0bb69d99f1674871a964d151459d06c9204a9e))
+* update some builder method javadocs ([#422](https://github.com/lithic-com/lithic-kotlin/issues/422)) ([da5b86b](https://github.com/lithic-com/lithic-kotlin/commit/da5b86ba89a7c9d15ebaecc4a714f87fceed84c2))
+
+
+### Styles
+
+* **internal:** explicitly add some method return types ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **internal:** make enum value definitions less verbose ([#396](https://github.com/lithic-com/lithic-kotlin/issues/396)) ([bfbee37](https://github.com/lithic-com/lithic-kotlin/commit/bfbee3793f8da4bade2ce84c78e3ac2373b84d91))
+* **internal:** move enum identity methods to bottom of class ([#397](https://github.com/lithic-com/lithic-kotlin/issues/397)) ([c5cabdd](https://github.com/lithic-com/lithic-kotlin/commit/c5cabdde4180aaa357cb7a55aa8a9b9dbf75ba16))
+* **internal:** move headers and query params setters below others ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **internal:** simplify existing convenience setters on params ([47d9bf9](https://github.com/lithic-com/lithic-kotlin/commit/47d9bf9fbfa426f80e47156f49de1b99a2483050))
+* **internal:** sort fields ([#416](https://github.com/lithic-com/lithic-kotlin/issues/416)) ([dbfefd4](https://github.com/lithic-com/lithic-kotlin/commit/dbfefd4f55b63ed204d4aca31b37af0fbc94529f))
+
+
+### Refactors
+
+* **client:** switch query params objects to use `QueryParams` ([#410](https://github.com/lithic-com/lithic-kotlin/issues/410)) ([2696a81](https://github.com/lithic-com/lithic-kotlin/commit/2696a812ffea31886c6f8a830d16b8ec812e8c41))
+* **internal:** use constructor to deserialize json ([#411](https://github.com/lithic-com/lithic-kotlin/issues/411)) ([34c9c20](https://github.com/lithic-com/lithic-kotlin/commit/34c9c20b8ce12ff7f948880552ec19c64c823dd5))
+
 ## 0.73.0 (2024-11-26)
 
 Full Changelog: [v0.72.0...v0.73.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.72.0...v0.73.0)

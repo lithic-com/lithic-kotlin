@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.35.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.74.0)
 
 <!-- x-release-please-end -->
 
@@ -25,7 +25,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithi
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.73.0")
+implementation("com.lithic.api:lithic-kotlin:0.74.0")
 ```
 
 #### Maven
@@ -34,7 +34,7 @@ implementation("com.lithic.api:lithic-kotlin:0.73.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.73.0</version>
+    <version>0.74.0</version>
 </dependency>
 ```
 
