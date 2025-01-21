@@ -26,7 +26,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<LineItemListResponse> = response().data()
+    fun data(): List<StatementLineItems.StatementLineItemResponse> = response().data()
 
     fun hasMore(): Boolean = response().hasMore()
 
@@ -90,17 +90,20 @@ private constructor(
     @JsonCreator
     constructor(
         @JsonProperty("data")
-        private val data: JsonField<List<LineItemListResponse>> = JsonMissing.of(),
+        private val data: JsonField<List<StatementLineItems.StatementLineItemResponse>> =
+            JsonMissing.of(),
         @JsonProperty("has_more") private val hasMore: JsonField<Boolean> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun data(): List<LineItemListResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<StatementLineItems.StatementLineItemResponse> =
+            data.getNullable("data") ?: listOf()
 
         fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
-        @JsonProperty("data") fun _data(): JsonField<List<LineItemListResponse>>? = data
+        @JsonProperty("data")
+        fun _data(): JsonField<List<StatementLineItems.StatementLineItemResponse>>? = data
 
         @JsonProperty("has_more") fun _hasMore(): JsonField<Boolean>? = hasMore
 
@@ -142,7 +145,8 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<LineItemListResponse>> = JsonMissing.of()
+            private var data: JsonField<List<StatementLineItems.StatementLineItemResponse>> =
+                JsonMissing.of()
             private var hasMore: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -152,9 +156,12 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<LineItemListResponse>) = data(JsonField.of(data))
+            fun data(data: List<StatementLineItems.StatementLineItemResponse>) =
+                data(JsonField.of(data))
 
-            fun data(data: JsonField<List<LineItemListResponse>>) = apply { this.data = data }
+            fun data(data: JsonField<List<StatementLineItems.StatementLineItemResponse>>) = apply {
+                this.data = data
+            }
 
             fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
@@ -176,9 +183,9 @@ private constructor(
     class AutoPager
     constructor(
         private val firstPage: FinancialAccountStatementLineItemListPage,
-    ) : Sequence<LineItemListResponse> {
+    ) : Sequence<StatementLineItems.StatementLineItemResponse> {
 
-        override fun iterator(): Iterator<LineItemListResponse> = iterator {
+        override fun iterator(): Iterator<StatementLineItems.StatementLineItemResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
