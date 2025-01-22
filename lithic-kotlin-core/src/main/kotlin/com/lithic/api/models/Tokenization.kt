@@ -55,6 +55,9 @@ private constructor(
     @JsonProperty("events")
     @ExcludeMissing
     private val events: JsonField<List<TokenizationEvent>> = JsonMissing.of(),
+    @JsonProperty("payment_account_reference_id")
+    @ExcludeMissing
+    private val paymentAccountReferenceId: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
@@ -99,6 +102,10 @@ private constructor(
 
     /** A list of events related to the tokenization. */
     fun events(): List<TokenizationEvent>? = events.getNullable("events")
+
+    /** The network's unique reference for the card that is tokenized. */
+    fun paymentAccountReferenceId(): String? =
+        paymentAccountReferenceId.getNullable("payment_account_reference_id")
 
     /** Globally unique identifier for a Tokenization */
     @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
@@ -156,6 +163,11 @@ private constructor(
     @ExcludeMissing
     fun _events(): JsonField<List<TokenizationEvent>> = events
 
+    /** The network's unique reference for the card that is tokenized. */
+    @JsonProperty("payment_account_reference_id")
+    @ExcludeMissing
+    fun _paymentAccountReferenceId(): JsonField<String> = paymentAccountReferenceId
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -179,6 +191,7 @@ private constructor(
         updatedAt()
         digitalCardArtToken()
         events()?.forEach { it.validate() }
+        paymentAccountReferenceId()
         validated = true
     }
 
@@ -203,6 +216,7 @@ private constructor(
         private var updatedAt: JsonField<OffsetDateTime>? = null
         private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var events: JsonField<MutableList<TokenizationEvent>>? = null
+        private var paymentAccountReferenceId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(tokenization: Tokenization) = apply {
@@ -218,6 +232,7 @@ private constructor(
             updatedAt = tokenization.updatedAt
             digitalCardArtToken = tokenization.digitalCardArtToken
             events = tokenization.events.map { it.toMutableList() }
+            paymentAccountReferenceId = tokenization.paymentAccountReferenceId
             additionalProperties = tokenization.additionalProperties.toMutableMap()
         }
 
@@ -331,6 +346,15 @@ private constructor(
                 }
         }
 
+        /** The network's unique reference for the card that is tokenized. */
+        fun paymentAccountReferenceId(paymentAccountReferenceId: String?) =
+            paymentAccountReferenceId(JsonField.ofNullable(paymentAccountReferenceId))
+
+        /** The network's unique reference for the card that is tokenized. */
+        fun paymentAccountReferenceId(paymentAccountReferenceId: JsonField<String>) = apply {
+            this.paymentAccountReferenceId = paymentAccountReferenceId
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -364,6 +388,7 @@ private constructor(
                 checkRequired("updatedAt", updatedAt),
                 digitalCardArtToken,
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
+                paymentAccountReferenceId,
                 additionalProperties.toImmutable(),
             )
     }
@@ -977,15 +1002,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Tokenization && token == other.token && accountToken == other.accountToken && cardToken == other.cardToken && createdAt == other.createdAt && dpan == other.dpan && status == other.status && tokenRequestorName == other.tokenRequestorName && tokenUniqueReference == other.tokenUniqueReference && tokenizationChannel == other.tokenizationChannel && updatedAt == other.updatedAt && digitalCardArtToken == other.digitalCardArtToken && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Tokenization && token == other.token && accountToken == other.accountToken && cardToken == other.cardToken && createdAt == other.createdAt && dpan == other.dpan && status == other.status && tokenRequestorName == other.tokenRequestorName && tokenUniqueReference == other.tokenUniqueReference && tokenizationChannel == other.tokenizationChannel && updatedAt == other.updatedAt && digitalCardArtToken == other.digitalCardArtToken && events == other.events && paymentAccountReferenceId == other.paymentAccountReferenceId && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardToken, createdAt, dpan, status, tokenRequestorName, tokenUniqueReference, tokenizationChannel, updatedAt, digitalCardArtToken, events, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardToken, createdAt, dpan, status, tokenRequestorName, tokenUniqueReference, tokenizationChannel, updatedAt, digitalCardArtToken, events, paymentAccountReferenceId, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, additionalProperties=$additionalProperties}"
+        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, paymentAccountReferenceId=$paymentAccountReferenceId, additionalProperties=$additionalProperties}"
 }
