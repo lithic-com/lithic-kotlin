@@ -4469,7 +4469,9 @@ private constructor(
          * identifiers often link together events within the same transaction lifecycle and can be
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
-         * card network and the event type.
+         * card network and the event type. If the field is populated by the network, we will pass
+         * it through as is unless otherwise specified. Please consult the official network
+         * documentation for more details about these fields and how to use them.
          */
         fun networkInfo(): NetworkInfo? = networkInfo.getNullable("network_info")
 
@@ -4511,7 +4513,9 @@ private constructor(
          * identifiers often link together events within the same transaction lifecycle and can be
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
-         * card network and the event type.
+         * card network and the event type. If the field is populated by the network, we will pass
+         * it through as is unless otherwise specified. Please consult the official network
+         * documentation for more details about these fields and how to use them.
          */
         @JsonProperty("network_info")
         @ExcludeMissing
@@ -4643,7 +4647,10 @@ private constructor(
              * acquirer. These identifiers often link together events within the same transaction
              * lifecycle and can be used to locate a particular transaction, such as during
              * processing of disputes. Not all fields are available in all events, and the presence
-             * of these fields is dependent on the card network and the event type.
+             * of these fields is dependent on the card network and the event type. If the field is
+             * populated by the network, we will pass it through as is unless otherwise specified.
+             * Please consult the official network documentation for more details about these fields
+             * and how to use them.
              */
             fun networkInfo(networkInfo: NetworkInfo?) =
                 networkInfo(JsonField.ofNullable(networkInfo))
@@ -4654,7 +4661,10 @@ private constructor(
              * acquirer. These identifiers often link together events within the same transaction
              * lifecycle and can be used to locate a particular transaction, such as during
              * processing of disputes. Not all fields are available in all events, and the presence
-             * of these fields is dependent on the card network and the event type.
+             * of these fields is dependent on the card network and the event type. If the field is
+             * populated by the network, we will pass it through as is unless otherwise specified.
+             * Please consult the official network documentation for more details about these fields
+             * and how to use them.
              */
             fun networkInfo(networkInfo: JsonField<NetworkInfo>) = apply {
                 this.networkInfo = networkInfo
@@ -5793,7 +5803,9 @@ private constructor(
          * identifiers often link together events within the same transaction lifecycle and can be
          * used to locate a particular transaction, such as during processing of disputes. Not all
          * fields are available in all events, and the presence of these fields is dependent on the
-         * card network and the event type.
+         * card network and the event type. If the field is populated by the network, we will pass
+         * it through as is unless otherwise specified. Please consult the official network
+         * documentation for more details about these fields and how to use them.
          */
         @NoAutoDetect
         class NetworkInfo
@@ -6081,6 +6093,12 @@ private constructor(
                 @JsonProperty("switch_serial_number")
                 @ExcludeMissing
                 private val switchSerialNumber: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("original_banknet_reference_number")
+                @ExcludeMissing
+                private val originalBanknetReferenceNumber: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("original_switch_serial_number")
+                @ExcludeMissing
+                private val originalSwitchSerialNumber: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
@@ -6096,6 +6114,30 @@ private constructor(
                 fun switchSerialNumber(): String? =
                     switchSerialNumber.getNullable("switch_serial_number")
 
+                /**
+                 * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                 * `banknet_reference_number` of a prior related event. May be populated in
+                 * authorization reversals, incremental authorizations (authorization requests that
+                 * augment a previously authorized amount), automated fuel dispenser authorization
+                 * advices and clearings, and financial authorizations. If the original banknet
+                 * reference number contains all zeroes, then no actual reference number could be
+                 * found by the network or acquirer. If Mastercard converts a transaction from
+                 * dual-message to single-message, such as for certain ATM transactions, it will
+                 * populate the original banknet reference number in the resulting financial
+                 * authorization with the banknet reference number of the initial authorization,
+                 * which Lithic does not receive.
+                 */
+                fun originalBanknetReferenceNumber(): String? =
+                    originalBanknetReferenceNumber.getNullable("original_banknet_reference_number")
+
+                /**
+                 * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                 * `switch_serial_number` of a prior related event. May be populated in returns and
+                 * return reversals. Applicable to single-message transactions only.
+                 */
+                fun originalSwitchSerialNumber(): String? =
+                    originalSwitchSerialNumber.getNullable("original_switch_serial_number")
+
                 /** Identifier assigned by Mastercard. */
                 @JsonProperty("banknet_reference_number")
                 @ExcludeMissing
@@ -6108,6 +6150,33 @@ private constructor(
                 @JsonProperty("switch_serial_number")
                 @ExcludeMissing
                 fun _switchSerialNumber(): JsonField<String> = switchSerialNumber
+
+                /**
+                 * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                 * `banknet_reference_number` of a prior related event. May be populated in
+                 * authorization reversals, incremental authorizations (authorization requests that
+                 * augment a previously authorized amount), automated fuel dispenser authorization
+                 * advices and clearings, and financial authorizations. If the original banknet
+                 * reference number contains all zeroes, then no actual reference number could be
+                 * found by the network or acquirer. If Mastercard converts a transaction from
+                 * dual-message to single-message, such as for certain ATM transactions, it will
+                 * populate the original banknet reference number in the resulting financial
+                 * authorization with the banknet reference number of the initial authorization,
+                 * which Lithic does not receive.
+                 */
+                @JsonProperty("original_banknet_reference_number")
+                @ExcludeMissing
+                fun _originalBanknetReferenceNumber(): JsonField<String> =
+                    originalBanknetReferenceNumber
+
+                /**
+                 * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                 * `switch_serial_number` of a prior related event. May be populated in returns and
+                 * return reversals. Applicable to single-message transactions only.
+                 */
+                @JsonProperty("original_switch_serial_number")
+                @ExcludeMissing
+                fun _originalSwitchSerialNumber(): JsonField<String> = originalSwitchSerialNumber
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -6122,6 +6191,8 @@ private constructor(
 
                     banknetReferenceNumber()
                     switchSerialNumber()
+                    originalBanknetReferenceNumber()
+                    originalSwitchSerialNumber()
                     validated = true
                 }
 
@@ -6136,11 +6207,15 @@ private constructor(
 
                     private var banknetReferenceNumber: JsonField<String>? = null
                     private var switchSerialNumber: JsonField<String>? = null
+                    private var originalBanknetReferenceNumber: JsonField<String> = JsonMissing.of()
+                    private var originalSwitchSerialNumber: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(mastercard: Mastercard) = apply {
                         banknetReferenceNumber = mastercard.banknetReferenceNumber
                         switchSerialNumber = mastercard.switchSerialNumber
+                        originalBanknetReferenceNumber = mastercard.originalBanknetReferenceNumber
+                        originalSwitchSerialNumber = mastercard.originalSwitchSerialNumber
                         additionalProperties = mastercard.additionalProperties.toMutableMap()
                     }
 
@@ -6168,6 +6243,61 @@ private constructor(
                         this.switchSerialNumber = switchSerialNumber
                     }
 
+                    /**
+                     * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                     * `banknet_reference_number` of a prior related event. May be populated in
+                     * authorization reversals, incremental authorizations (authorization requests
+                     * that augment a previously authorized amount), automated fuel dispenser
+                     * authorization advices and clearings, and financial authorizations. If the
+                     * original banknet reference number contains all zeroes, then no actual
+                     * reference number could be found by the network or acquirer. If Mastercard
+                     * converts a transaction from dual-message to single-message, such as for
+                     * certain ATM transactions, it will populate the original banknet reference
+                     * number in the resulting financial authorization with the banknet reference
+                     * number of the initial authorization, which Lithic does not receive.
+                     */
+                    fun originalBanknetReferenceNumber(originalBanknetReferenceNumber: String?) =
+                        originalBanknetReferenceNumber(
+                            JsonField.ofNullable(originalBanknetReferenceNumber)
+                        )
+
+                    /**
+                     * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                     * `banknet_reference_number` of a prior related event. May be populated in
+                     * authorization reversals, incremental authorizations (authorization requests
+                     * that augment a previously authorized amount), automated fuel dispenser
+                     * authorization advices and clearings, and financial authorizations. If the
+                     * original banknet reference number contains all zeroes, then no actual
+                     * reference number could be found by the network or acquirer. If Mastercard
+                     * converts a transaction from dual-message to single-message, such as for
+                     * certain ATM transactions, it will populate the original banknet reference
+                     * number in the resulting financial authorization with the banknet reference
+                     * number of the initial authorization, which Lithic does not receive.
+                     */
+                    fun originalBanknetReferenceNumber(
+                        originalBanknetReferenceNumber: JsonField<String>
+                    ) = apply {
+                        this.originalBanknetReferenceNumber = originalBanknetReferenceNumber
+                    }
+
+                    /**
+                     * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                     * `switch_serial_number` of a prior related event. May be populated in returns
+                     * and return reversals. Applicable to single-message transactions only.
+                     */
+                    fun originalSwitchSerialNumber(originalSwitchSerialNumber: String?) =
+                        originalSwitchSerialNumber(JsonField.ofNullable(originalSwitchSerialNumber))
+
+                    /**
+                     * [Available on January 28th] Identifier assigned by Mastercard. Matches the
+                     * `switch_serial_number` of a prior related event. May be populated in returns
+                     * and return reversals. Applicable to single-message transactions only.
+                     */
+                    fun originalSwitchSerialNumber(originalSwitchSerialNumber: JsonField<String>) =
+                        apply {
+                            this.originalSwitchSerialNumber = originalSwitchSerialNumber
+                        }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         putAllAdditionalProperties(additionalProperties)
@@ -6194,6 +6324,8 @@ private constructor(
                         Mastercard(
                             checkRequired("banknetReferenceNumber", banknetReferenceNumber),
                             checkRequired("switchSerialNumber", switchSerialNumber),
+                            originalBanknetReferenceNumber,
+                            originalSwitchSerialNumber,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -6203,17 +6335,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Mastercard && banknetReferenceNumber == other.banknetReferenceNumber && switchSerialNumber == other.switchSerialNumber && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Mastercard && banknetReferenceNumber == other.banknetReferenceNumber && switchSerialNumber == other.switchSerialNumber && originalBanknetReferenceNumber == other.originalBanknetReferenceNumber && originalSwitchSerialNumber == other.originalSwitchSerialNumber && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(banknetReferenceNumber, switchSerialNumber, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(banknetReferenceNumber, switchSerialNumber, originalBanknetReferenceNumber, originalSwitchSerialNumber, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Mastercard{banknetReferenceNumber=$banknetReferenceNumber, switchSerialNumber=$switchSerialNumber, additionalProperties=$additionalProperties}"
+                    "Mastercard{banknetReferenceNumber=$banknetReferenceNumber, switchSerialNumber=$switchSerialNumber, originalBanknetReferenceNumber=$originalBanknetReferenceNumber, originalSwitchSerialNumber=$originalSwitchSerialNumber, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
@@ -6223,6 +6355,9 @@ private constructor(
                 @JsonProperty("transaction_id")
                 @ExcludeMissing
                 private val transactionId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("original_transaction_id")
+                @ExcludeMissing
+                private val originalTransactionId: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
@@ -6230,10 +6365,29 @@ private constructor(
                 /** Identifier assigned by Visa. */
                 fun transactionId(): String? = transactionId.getNullable("transaction_id")
 
+                /**
+                 * [Available on January 28th] Identifier assigned by Visa. Matches the
+                 * `transaction_id` of a prior related event. May be populated in incremental
+                 * authorizations (authorization requests that augment a previously authorized
+                 * amount), authorization advices, financial authorizations, and clearings.
+                 */
+                fun originalTransactionId(): String? =
+                    originalTransactionId.getNullable("original_transaction_id")
+
                 /** Identifier assigned by Visa. */
                 @JsonProperty("transaction_id")
                 @ExcludeMissing
                 fun _transactionId(): JsonField<String> = transactionId
+
+                /**
+                 * [Available on January 28th] Identifier assigned by Visa. Matches the
+                 * `transaction_id` of a prior related event. May be populated in incremental
+                 * authorizations (authorization requests that augment a previously authorized
+                 * amount), authorization advices, financial authorizations, and clearings.
+                 */
+                @JsonProperty("original_transaction_id")
+                @ExcludeMissing
+                fun _originalTransactionId(): JsonField<String> = originalTransactionId
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -6247,6 +6401,7 @@ private constructor(
                     }
 
                     transactionId()
+                    originalTransactionId()
                     validated = true
                 }
 
@@ -6260,10 +6415,12 @@ private constructor(
                 class Builder {
 
                     private var transactionId: JsonField<String>? = null
+                    private var originalTransactionId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(visa: Visa) = apply {
                         transactionId = visa.transactionId
+                        originalTransactionId = visa.originalTransactionId
                         additionalProperties = visa.additionalProperties.toMutableMap()
                     }
 
@@ -6274,6 +6431,25 @@ private constructor(
                     /** Identifier assigned by Visa. */
                     fun transactionId(transactionId: JsonField<String>) = apply {
                         this.transactionId = transactionId
+                    }
+
+                    /**
+                     * [Available on January 28th] Identifier assigned by Visa. Matches the
+                     * `transaction_id` of a prior related event. May be populated in incremental
+                     * authorizations (authorization requests that augment a previously authorized
+                     * amount), authorization advices, financial authorizations, and clearings.
+                     */
+                    fun originalTransactionId(originalTransactionId: String?) =
+                        originalTransactionId(JsonField.ofNullable(originalTransactionId))
+
+                    /**
+                     * [Available on January 28th] Identifier assigned by Visa. Matches the
+                     * `transaction_id` of a prior related event. May be populated in incremental
+                     * authorizations (authorization requests that augment a previously authorized
+                     * amount), authorization advices, financial authorizations, and clearings.
+                     */
+                    fun originalTransactionId(originalTransactionId: JsonField<String>) = apply {
+                        this.originalTransactionId = originalTransactionId
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -6301,7 +6477,8 @@ private constructor(
                     fun build(): Visa =
                         Visa(
                             checkRequired("transactionId", transactionId),
-                            additionalProperties.toImmutable()
+                            originalTransactionId,
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -6310,17 +6487,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Visa && transactionId == other.transactionId && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Visa && transactionId == other.transactionId && originalTransactionId == other.originalTransactionId && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(transactionId, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(transactionId, originalTransactionId, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Visa{transactionId=$transactionId, additionalProperties=$additionalProperties}"
+                    "Visa{transactionId=$transactionId, originalTransactionId=$originalTransactionId, additionalProperties=$additionalProperties}"
             }
 
             override fun equals(other: Any?): Boolean {
