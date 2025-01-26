@@ -289,7 +289,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
         private var accountStanding: JsonField<AccountStanding>? = null
@@ -659,7 +659,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var consecutiveFullPaymentsMade: JsonField<Long>? = null
             private var consecutiveMinimumPaymentsMade: JsonField<Long>? = null
@@ -940,7 +940,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var due: JsonField<CategoryBalances>? = null
             private var nextStatementDue: JsonField<CategoryBalances>? = null
@@ -1084,7 +1084,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var fees: JsonField<Long>? = null
                 private var interest: JsonField<Long>? = null
@@ -1282,7 +1282,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var balanceTransfers: JsonField<Long>? = null
             private var cashAdvances: JsonField<Long>? = null
@@ -1511,7 +1511,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var actualInterestCharged: JsonField<Long>? = null
             private var dailyBalanceAmounts: JsonField<CategoryDetails>? = null
@@ -1676,7 +1676,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var balanceTransfers: JsonField<String>? = null
                 private var cashAdvances: JsonField<String>? = null
@@ -1879,7 +1879,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var remaining: JsonField<Long>? = null
@@ -1995,7 +1995,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var fees: JsonField<Long>? = null
             private var interest: JsonField<Long>? = null

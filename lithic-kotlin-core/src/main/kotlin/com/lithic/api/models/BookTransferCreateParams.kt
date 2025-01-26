@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** Book transfer funds between two financial accounts or between a financial account and card */
 class BookTransferCreateParams
-constructor(
+private constructor(
     private val body: BookTransferCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -249,7 +249,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var category: JsonField<Category>? = null
@@ -410,7 +410,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: BookTransferCreateBody.Builder = BookTransferCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

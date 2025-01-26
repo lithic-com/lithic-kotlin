@@ -75,7 +75,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var availableSpendLimit: JsonField<AvailableSpendLimit>? = null
         private var spendLimit: JsonField<SpendLimit> = JsonMissing.of()
@@ -211,7 +211,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var annually: JsonField<Long> = JsonMissing.of()
             private var forever: JsonField<Long> = JsonMissing.of()
@@ -366,7 +366,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var annually: JsonField<Long> = JsonMissing.of()
             private var forever: JsonField<Long> = JsonMissing.of()
@@ -521,7 +521,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var annually: JsonField<Long> = JsonMissing.of()
             private var forever: JsonField<Long> = JsonMissing.of()

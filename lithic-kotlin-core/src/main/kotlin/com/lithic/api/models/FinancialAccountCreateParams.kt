@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** Create a new financial account */
 class FinancialAccountCreateParams
-constructor(
+private constructor(
     private val idempotencyKey: String?,
     private val body: FinancialAccountCreateBody,
     private val additionalHeaders: Headers,
@@ -127,7 +127,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var nickname: JsonField<String>? = null
             private var type: JsonField<Type>? = null
@@ -220,7 +220,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var idempotencyKey: String? = null
         private var body: FinancialAccountCreateBody.Builder = FinancialAccountCreateBody.builder()

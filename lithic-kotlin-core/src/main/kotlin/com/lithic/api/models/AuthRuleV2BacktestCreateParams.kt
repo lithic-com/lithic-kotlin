@@ -43,7 +43,7 @@ import java.util.Objects
  * required inputs to evaluate the rule, then it will not be included in the final backtest report.
  */
 class AuthRuleV2BacktestCreateParams
-constructor(
+private constructor(
     private val authRuleToken: String,
     private val body: AuthRuleV2BacktestCreateBody,
     private val additionalHeaders: Headers,
@@ -132,7 +132,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var end: JsonField<OffsetDateTime> = JsonMissing.of()
             private var start: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -210,7 +210,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var authRuleToken: String? = null
         private var body: AuthRuleV2BacktestCreateBody.Builder =

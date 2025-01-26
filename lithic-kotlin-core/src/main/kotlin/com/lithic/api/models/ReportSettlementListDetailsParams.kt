@@ -11,7 +11,7 @@ import java.util.Objects
 
 /** List details. */
 class ReportSettlementListDetailsParams
-constructor(
+private constructor(
     private val reportDate: LocalDate,
     private val endingBefore: String?,
     private val pageSize: Long?,
@@ -67,7 +67,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var reportDate: LocalDate? = null
         private var endingBefore: String? = null

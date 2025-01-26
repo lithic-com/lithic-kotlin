@@ -61,7 +61,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var enrolled: JsonField<Boolean> = JsonMissing.of()
         private var url: JsonField<String> = JsonMissing.of()

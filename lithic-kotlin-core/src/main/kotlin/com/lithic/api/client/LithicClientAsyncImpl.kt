@@ -67,8 +67,7 @@ import com.lithic.api.services.async.TransferServiceAsyncImpl
 import com.lithic.api.services.async.WebhookServiceAsync
 import com.lithic.api.services.async.WebhookServiceAsyncImpl
 
-class LithicClientAsyncImpl
-constructor(
+class LithicClientAsyncImpl(
     private val clientOptions: ClientOptions,
 ) : LithicClientAsync {
 

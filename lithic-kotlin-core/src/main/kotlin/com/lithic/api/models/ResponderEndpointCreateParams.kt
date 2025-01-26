@@ -21,7 +21,7 @@ import java.util.Objects
 
 /** Enroll a responder endpoint */
 class ResponderEndpointCreateParams
-constructor(
+private constructor(
     private val body: ResponderEndpointCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -96,7 +96,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var type: JsonField<Type> = JsonMissing.of()
             private var url: JsonField<String> = JsonMissing.of()
@@ -174,7 +174,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: ResponderEndpointCreateBody.Builder =
             ResponderEndpointCreateBody.builder()

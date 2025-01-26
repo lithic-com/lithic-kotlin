@@ -18,7 +18,7 @@ import java.util.Objects
  * cents for USD) and inclusive of any acquirer fees.
  */
 class TransactionListParams
-constructor(
+private constructor(
     private val accountToken: String?,
     private val begin: OffsetDateTime?,
     private val cardToken: String?,
@@ -107,7 +107,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountToken: String? = null
         private var begin: OffsetDateTime? = null

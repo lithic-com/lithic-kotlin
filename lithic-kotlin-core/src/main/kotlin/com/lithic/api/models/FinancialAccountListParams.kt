@@ -13,7 +13,7 @@ import java.util.Objects
 
 /** Retrieve information on your financial accounts including routing and account number. */
 class FinancialAccountListParams
-constructor(
+private constructor(
     private val accountToken: String?,
     private val businessAccountToken: String?,
     private val type: Type?,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountToken: String? = null
         private var businessAccountToken: String? = null

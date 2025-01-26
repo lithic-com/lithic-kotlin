@@ -334,7 +334,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
         private var accountType: JsonField<AccountType>? = null
@@ -996,7 +996,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var addressMatch: JsonField<Boolean> = JsonMissing.of()
             private var billingAddress: JsonField<ThreeDSAddress> = JsonMissing.of()
@@ -1259,7 +1259,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var address1: JsonField<String> = JsonMissing.of()
                 private var address2: JsonField<String> = JsonMissing.of()
@@ -1635,7 +1635,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var country: JsonField<String>? = null
@@ -1941,7 +1941,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var deliveryEmailAddress: JsonField<String> = JsonMissing.of()
                 private var deliveryTimeFrame: JsonField<DeliveryTimeFrame> = JsonMissing.of()
@@ -2728,7 +2728,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var networkDecision: JsonField<NetworkDecision> = JsonMissing.of()
             private var networkRiskScore: JsonField<Long> = JsonMissing.of()
@@ -2948,7 +2948,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var deviceInfo: JsonField<String> = JsonMissing.of()
             private var ip: JsonField<String> = JsonMissing.of()
@@ -3267,7 +3267,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var ip: JsonField<String> = JsonMissing.of()
             private var javaEnabled: JsonField<Boolean> = JsonMissing.of()
@@ -3678,7 +3678,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
             private var currency: JsonField<String>? = null

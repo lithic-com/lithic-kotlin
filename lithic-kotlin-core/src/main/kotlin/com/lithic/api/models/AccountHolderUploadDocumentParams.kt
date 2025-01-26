@@ -39,7 +39,7 @@ import java.util.Objects
  * document is supported per KYC verification.
  */
 class AccountHolderUploadDocumentParams
-constructor(
+private constructor(
     private val accountHolderToken: String,
     private val body: AccountHolderUploadDocumentBody,
     private val additionalHeaders: Headers,
@@ -132,7 +132,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var documentType: JsonField<DocumentType>? = null
             private var entityToken: JsonField<String>? = null
@@ -215,7 +215,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountHolderToken: String? = null
         private var body: AccountHolderUploadDocumentBody.Builder =

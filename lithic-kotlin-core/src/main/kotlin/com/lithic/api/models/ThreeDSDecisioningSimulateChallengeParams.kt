@@ -23,7 +23,7 @@ import java.util.Objects
  * solution.
  */
 class ThreeDSDecisioningSimulateChallengeParams
-constructor(
+private constructor(
     private val body: ThreeDSDecisioningSimulateChallengeBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -98,7 +98,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var token: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -172,7 +172,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: ThreeDSDecisioningSimulateChallengeBody.Builder =
             ThreeDSDecisioningSimulateChallengeBody.builder()

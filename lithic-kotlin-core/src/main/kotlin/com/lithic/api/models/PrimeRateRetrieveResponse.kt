@@ -65,7 +65,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var data: JsonField<MutableList<InterestRate>>? = null
         private var hasMore: JsonField<Boolean>? = null
@@ -181,7 +181,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate>? = null
             private var rate: JsonField<String>? = null

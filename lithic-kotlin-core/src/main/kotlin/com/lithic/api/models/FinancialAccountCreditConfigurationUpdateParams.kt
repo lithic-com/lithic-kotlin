@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** Update an account's credit configuration */
 class FinancialAccountCreditConfigurationUpdateParams
-constructor(
+private constructor(
     private val financialAccountToken: String,
     private val body: FinancialAccountCreditConfigurationUpdateBody,
     private val additionalHeaders: Headers,
@@ -140,7 +140,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var creditLimit: JsonField<Long> = JsonMissing.of()
             private var creditProductToken: JsonField<String> = JsonMissing.of()
@@ -244,7 +244,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var financialAccountToken: String? = null
         private var body: FinancialAccountCreditConfigurationUpdateBody.Builder =

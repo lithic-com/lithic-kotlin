@@ -16,7 +16,7 @@ import java.util.Objects
 
 /** List the financial transactions for a given financial account. */
 class FinancialTransactionListParams
-constructor(
+private constructor(
     private val financialAccountToken: String,
     private val begin: OffsetDateTime?,
     private val category: Category?,
@@ -102,7 +102,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var financialAccountToken: String? = null
         private var begin: OffsetDateTime? = null

@@ -23,7 +23,7 @@ import java.util.Objects
 
 /** Create external payment */
 class ExternalPaymentCreateParams
-constructor(
+private constructor(
     private val body: ExternalPaymentCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -191,7 +191,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var category: JsonField<ExternalPaymentCategory>? = null
@@ -328,7 +328,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: ExternalPaymentCreateBody.Builder = ExternalPaymentCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
