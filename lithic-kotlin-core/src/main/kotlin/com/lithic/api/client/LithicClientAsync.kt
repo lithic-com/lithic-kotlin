@@ -48,6 +48,12 @@ import com.lithic.api.services.async.WebhookServiceAsync
  */
 interface LithicClientAsync {
 
+    /**
+     * Returns a version of this client that uses synchronous execution.
+     *
+     * The returned client shares its resources, like its connection pool and thread pools, with
+     * this client.
+     */
     fun sync(): LithicClient
 
     fun accounts(): AccountServiceAsync
