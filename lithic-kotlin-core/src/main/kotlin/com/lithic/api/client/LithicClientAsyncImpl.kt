@@ -65,8 +65,7 @@ import com.lithic.api.services.async.TransactionServiceAsyncImpl
 import com.lithic.api.services.async.TransferServiceAsync
 import com.lithic.api.services.async.TransferServiceAsyncImpl
 
-class LithicClientAsyncImpl
-constructor(
+class LithicClientAsyncImpl(
     private val clientOptions: ClientOptions,
 ) : LithicClientAsync {
 

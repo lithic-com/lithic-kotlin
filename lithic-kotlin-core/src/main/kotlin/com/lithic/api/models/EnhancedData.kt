@@ -93,7 +93,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
         private var common: JsonField<CommonData>? = null
@@ -266,7 +266,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var lineItems: JsonField<MutableList<LineItem>>? = null
             private var tax: JsonField<TaxData>? = null
@@ -433,7 +433,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var amount: JsonField<Double> = JsonMissing.of()
                 private var description: JsonField<String> = JsonMissing.of()
@@ -590,7 +590,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var amount: JsonField<Long> = JsonMissing.of()
                 private var exempt: JsonField<TaxExemptIndicator> = JsonMissing.of()
@@ -862,7 +862,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amountTotals: JsonField<AmountTotals>? = null
             private var fuel: JsonField<FuelData>? = null
@@ -1026,7 +1026,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var discount: JsonField<Long> = JsonMissing.of()
                 private var grossSale: JsonField<Long> = JsonMissing.of()
@@ -1180,7 +1180,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var quantity: JsonField<Double> = JsonMissing.of()
                 private var type: JsonField<FuelType> = JsonMissing.of()

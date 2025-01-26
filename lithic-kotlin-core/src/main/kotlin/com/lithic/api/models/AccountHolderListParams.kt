@@ -11,7 +11,7 @@ import java.util.Objects
 
 /** Get a list of individual or business account holders and their KYC or KYB evaluation status. */
 class AccountHolderListParams
-constructor(
+private constructor(
     private val begin: OffsetDateTime?,
     private val email: String?,
     private val end: OffsetDateTime?,
@@ -118,7 +118,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var begin: OffsetDateTime? = null
         private var email: String? = null

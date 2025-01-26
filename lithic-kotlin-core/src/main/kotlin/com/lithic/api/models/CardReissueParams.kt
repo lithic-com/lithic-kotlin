@@ -27,7 +27,7 @@ import java.util.Objects
  * renewed a total of 8 times.
  */
 class CardReissueParams
-constructor(
+private constructor(
     private val cardToken: String,
     private val body: CardReissueBody,
     private val additionalHeaders: Headers,
@@ -206,7 +206,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var carrier: JsonField<Carrier> = JsonMissing.of()
             private var productId: JsonField<String> = JsonMissing.of()
@@ -337,7 +337,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cardToken: String? = null
         private var body: CardReissueBody.Builder = CardReissueBody.builder()

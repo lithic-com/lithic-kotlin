@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** Card program's response to a 3DS Challenge Request (CReq) */
 class ThreeDSDecisioningChallengeResponseParams
-constructor(
+private constructor(
     private val body: ThreeDSDecisioningChallengeResponseBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -118,7 +118,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var token: JsonField<String>? = null
             private var challengeResponse: JsonField<ChallengeResult>? = null
@@ -209,7 +209,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: ThreeDSDecisioningChallengeResponseBody.Builder =
             ThreeDSDecisioningChallengeResponseBody.builder()

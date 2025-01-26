@@ -162,8 +162,7 @@ private constructor(
         }
     }
 
-    class AutoPager
-    constructor(
+    class AutoPager(
         private val firstPage: AuthRuleV2ListPage,
     ) : Sequence<V2ListResponse> {
 

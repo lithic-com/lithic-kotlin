@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** Update a financial account */
 class FinancialAccountUpdateParams
-constructor(
+private constructor(
     private val financialAccountToken: String,
     private val body: FinancialAccountUpdateBody,
     private val additionalHeaders: Headers,
@@ -89,7 +89,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var nickname: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -153,7 +153,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var financialAccountToken: String? = null
         private var body: FinancialAccountUpdateBody.Builder = FinancialAccountUpdateBody.builder()
