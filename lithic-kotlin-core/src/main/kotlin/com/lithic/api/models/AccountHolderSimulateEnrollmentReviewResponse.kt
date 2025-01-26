@@ -395,7 +395,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var token: JsonField<String> = JsonMissing.of()
         private var accountToken: JsonField<String> = JsonMissing.of()
@@ -965,7 +965,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var address: JsonField<Address2>? = null
             private var governmentId: JsonField<String>? = null
@@ -1207,7 +1207,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var address1: JsonField<String>? = null
                 private var city: JsonField<String>? = null
@@ -1476,7 +1476,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var address: JsonField<Address2> = JsonMissing.of()
             private var dob: JsonField<String> = JsonMissing.of()
@@ -1711,7 +1711,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var address1: JsonField<String>? = null
                 private var city: JsonField<String>? = null
@@ -2369,7 +2369,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var created: JsonField<OffsetDateTime>? = null
             private var status: JsonField<Status>? = null

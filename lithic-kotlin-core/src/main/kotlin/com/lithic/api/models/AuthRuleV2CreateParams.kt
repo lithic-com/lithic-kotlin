@@ -32,7 +32,7 @@ import java.util.Objects
 
 /** Creates a new V2 authorization rule in draft mode */
 class AuthRuleV2CreateParams
-constructor(
+private constructor(
     private val body: AuthRuleV2CreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -176,7 +176,8 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<AuthRuleV2CreateBody>(AuthRuleV2CreateBody::class) {
+        internal class Deserializer :
+            BaseDeserializer<AuthRuleV2CreateBody>(AuthRuleV2CreateBody::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleV2CreateBody {
                 val json = JsonValue.fromJsonNode(node)
@@ -201,7 +202,8 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<AuthRuleV2CreateBody>(AuthRuleV2CreateBody::class) {
+        internal class Serializer :
+            BaseSerializer<AuthRuleV2CreateBody>(AuthRuleV2CreateBody::class) {
 
             override fun serialize(
                 value: AuthRuleV2CreateBody,
@@ -230,7 +232,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: AuthRuleV2CreateBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -448,7 +450,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountTokens: JsonField<MutableList<String>>? = null
             private var name: JsonField<String> = JsonMissing.of()
@@ -645,7 +647,7 @@ constructor(
                 }
             }
 
-            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
+            internal class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
@@ -665,7 +667,7 @@ constructor(
                 }
             }
 
-            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
+            internal class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
                     value: Parameters,
@@ -833,7 +835,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cardTokens: JsonField<MutableList<String>>? = null
             private var name: JsonField<String> = JsonMissing.of()
@@ -1028,7 +1030,7 @@ constructor(
                 }
             }
 
-            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
+            internal class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
@@ -1048,7 +1050,7 @@ constructor(
                 }
             }
 
-            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
+            internal class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
                     value: Parameters,
@@ -1229,7 +1231,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var programLevel: JsonField<Boolean>? = null
             private var excludedCardTokens: JsonField<MutableList<String>>? = null
@@ -1437,7 +1439,7 @@ constructor(
                 }
             }
 
-            class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
+            internal class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                     val json = JsonValue.fromJsonNode(node)
@@ -1457,7 +1459,7 @@ constructor(
                 }
             }
 
-            class Serializer : BaseSerializer<Parameters>(Parameters::class) {
+            internal class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
                 override fun serialize(
                     value: Parameters,

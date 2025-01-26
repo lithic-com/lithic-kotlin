@@ -141,7 +141,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var attribute: JsonField<ConditionalAttribute> = JsonMissing.of()
         private var operation: JsonField<Operation> = JsonMissing.of()
@@ -470,7 +470,7 @@ private constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<Value>(Value::class) {
+        internal class Deserializer : BaseDeserializer<Value>(Value::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Value {
                 val json = JsonValue.fromJsonNode(node)
@@ -489,7 +489,7 @@ private constructor(
             }
         }
 
-        class Serializer : BaseSerializer<Value>(Value::class) {
+        internal class Serializer : BaseSerializer<Value>(Value::class) {
 
             override fun serialize(
                 value: Value,

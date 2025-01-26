@@ -31,7 +31,7 @@ import java.util.Objects
  * process. Reach out at [lithic.com/contact](https://lithic.com/contact) for more information.
  */
 class TokenizationResendActivationCodeParams
-constructor(
+private constructor(
     private val tokenizationToken: String,
     private val body: TokenizationResendActivationCodeBody,
     private val additionalHeaders: Headers,
@@ -123,7 +123,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var activationMethodType: JsonField<ActivationMethodType> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -206,7 +206,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var tokenizationToken: String? = null
         private var body: TokenizationResendActivationCodeBody.Builder =

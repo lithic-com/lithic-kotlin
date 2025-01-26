@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** Create a new event subscription. */
 class EventSubscriptionCreateParams
-constructor(
+private constructor(
     private val body: EventSubscriptionCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -147,7 +147,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var url: JsonField<String>? = null
             private var description: JsonField<String> = JsonMissing.of()
@@ -268,7 +268,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: EventSubscriptionCreateBody.Builder =
             EventSubscriptionCreateBody.builder()

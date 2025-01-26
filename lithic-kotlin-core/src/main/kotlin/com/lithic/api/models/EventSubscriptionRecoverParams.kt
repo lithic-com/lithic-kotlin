@@ -14,7 +14,7 @@ import java.util.Objects
 
 /** Resend all failed messages since a given time. */
 class EventSubscriptionRecoverParams
-constructor(
+private constructor(
     private val eventSubscriptionToken: String,
     private val begin: OffsetDateTime?,
     private val end: OffsetDateTime?,
@@ -74,7 +74,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var eventSubscriptionToken: String? = null
         private var begin: OffsetDateTime? = null

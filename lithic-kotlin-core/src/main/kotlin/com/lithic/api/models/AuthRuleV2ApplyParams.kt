@@ -35,7 +35,7 @@ import java.util.Objects
  * This endpoint will replace any existing associations with the provided list of entities.
  */
 class AuthRuleV2ApplyParams
-constructor(
+private constructor(
     private val authRuleToken: String,
     private val body: AuthRuleV2ApplyBody,
     private val additionalHeaders: Headers,
@@ -183,7 +183,8 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<AuthRuleV2ApplyBody>(AuthRuleV2ApplyBody::class) {
+        internal class Deserializer :
+            BaseDeserializer<AuthRuleV2ApplyBody>(AuthRuleV2ApplyBody::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): AuthRuleV2ApplyBody {
                 val json = JsonValue.fromJsonNode(node)
@@ -202,7 +203,8 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<AuthRuleV2ApplyBody>(AuthRuleV2ApplyBody::class) {
+        internal class Serializer :
+            BaseSerializer<AuthRuleV2ApplyBody>(AuthRuleV2ApplyBody::class) {
 
             override fun serialize(
                 value: AuthRuleV2ApplyBody,
@@ -231,7 +233,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var authRuleToken: String? = null
         private var body: AuthRuleV2ApplyBody? = null
@@ -420,7 +422,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountTokens: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -540,7 +542,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cardTokens: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -671,7 +673,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var programLevel: JsonField<Boolean>? = null
             private var excludedCardTokens: JsonField<MutableList<String>>? = null

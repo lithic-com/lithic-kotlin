@@ -88,7 +88,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var entityToken: JsonField<String>? = null
         private var statusReasons: JsonField<MutableList<String>>? = null

@@ -26,7 +26,7 @@ import java.util.Objects
  * _Note: setting a card to a `CLOSED` state is a final action that cannot be undone._
  */
 class CardUpdateParams
-constructor(
+private constructor(
     private val cardToken: String,
     private val body: CardUpdateBody,
     private val additionalHeaders: Headers,
@@ -333,7 +333,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
@@ -535,7 +535,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cardToken: String? = null
         private var body: CardUpdateBody.Builder = CardUpdateBody.builder()

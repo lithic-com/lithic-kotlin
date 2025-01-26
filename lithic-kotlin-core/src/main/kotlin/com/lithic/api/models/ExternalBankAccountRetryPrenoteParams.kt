@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** Retry external bank account prenote verification. */
 class ExternalBankAccountRetryPrenoteParams
-constructor(
+private constructor(
     private val externalBankAccountToken: String,
     private val body: ExternalBankAccountRetryPrenoteBody,
     private val additionalHeaders: Headers,
@@ -92,7 +92,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var financialAccountToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -164,7 +164,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalBankAccountToken: String? = null
         private var body: ExternalBankAccountRetryPrenoteBody.Builder =

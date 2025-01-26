@@ -25,7 +25,7 @@ import java.util.Objects
  * Uploaded documents must either be a `jpg`, `png` or `pdf` file, and each must be less than 5 GiB.
  */
 class DisputeInitiateEvidenceUploadParams
-constructor(
+private constructor(
     private val disputeToken: String,
     private val body: DisputeInitiateEvidenceUploadBody,
     private val additionalHeaders: Headers,
@@ -98,7 +98,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var filename: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -166,7 +166,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var disputeToken: String? = null
         private var body: DisputeInitiateEvidenceUploadBody.Builder =

@@ -36,7 +36,7 @@ import java.util.Objects
  * ran in shadow mode.
  */
 class AuthRuleV2DraftParams
-constructor(
+private constructor(
     private val authRuleToken: String,
     private val body: AuthRuleV2DraftBody,
     private val additionalHeaders: Headers,
@@ -111,7 +111,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var parameters: JsonField<Parameters> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -186,7 +186,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var authRuleToken: String? = null
         private var body: AuthRuleV2DraftBody.Builder = AuthRuleV2DraftBody.builder()
@@ -442,7 +442,7 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
+        internal class Deserializer : BaseDeserializer<Parameters>(Parameters::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Parameters {
                 val json = JsonValue.fromJsonNode(node)
@@ -460,7 +460,7 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<Parameters>(Parameters::class) {
+        internal class Serializer : BaseSerializer<Parameters>(Parameters::class) {
 
             override fun serialize(
                 value: Parameters,
