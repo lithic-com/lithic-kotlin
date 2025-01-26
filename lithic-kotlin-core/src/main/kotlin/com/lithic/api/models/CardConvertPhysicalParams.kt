@@ -31,7 +31,7 @@ import java.util.Objects
  * deprecated types of `DIGITAL_WALLET` and `UNLOCKED`).
  */
 class CardConvertPhysicalParams
-constructor(
+private constructor(
     private val cardToken: String,
     private val body: CardConvertPhysicalBody,
     private val additionalHeaders: Headers,
@@ -210,7 +210,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var shippingAddress: JsonField<ShippingAddress>? = null
             private var carrier: JsonField<Carrier> = JsonMissing.of()
@@ -341,7 +341,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cardToken: String? = null
         private var body: CardConvertPhysicalBody.Builder = CardConvertPhysicalBody.builder()

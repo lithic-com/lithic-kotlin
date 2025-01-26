@@ -76,7 +76,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var backtestToken: JsonField<String>? = null
         private var results: JsonField<Results>? = null
@@ -186,7 +186,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var currentVersion: JsonField<RuleStats> = JsonMissing.of()
             private var draftVersion: JsonField<RuleStats> = JsonMissing.of()
@@ -330,7 +330,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var approved: JsonField<Long> = JsonMissing.of()
                 private var declined: JsonField<Long> = JsonMissing.of()
@@ -509,7 +509,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var approved: JsonField<Boolean> = JsonMissing.of()
                     private var eventToken: JsonField<String> = JsonMissing.of()
@@ -691,7 +691,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var authRuleToken: JsonField<String> = JsonMissing.of()
             private var end: JsonField<OffsetDateTime> = JsonMissing.of()

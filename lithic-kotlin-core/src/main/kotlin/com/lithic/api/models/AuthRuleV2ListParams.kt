@@ -9,7 +9,7 @@ import java.util.Objects
 
 /** Lists V2 authorization rules */
 class AuthRuleV2ListParams
-constructor(
+private constructor(
     private val accountToken: String?,
     private val cardToken: String?,
     private val endingBefore: String?,
@@ -65,7 +65,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountToken: String? = null
         private var cardToken: String? = null

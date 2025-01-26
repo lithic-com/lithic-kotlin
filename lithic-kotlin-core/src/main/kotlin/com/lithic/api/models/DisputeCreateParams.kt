@@ -23,7 +23,7 @@ import java.util.Objects
 
 /** Initiate a dispute. */
 class DisputeCreateParams
-constructor(
+private constructor(
     private val body: DisputeCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -157,7 +157,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var reason: JsonField<Reason>? = null
@@ -269,7 +269,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: DisputeCreateBody.Builder = DisputeCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

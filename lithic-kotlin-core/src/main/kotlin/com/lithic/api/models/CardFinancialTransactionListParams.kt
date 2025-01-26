@@ -16,7 +16,7 @@ import java.util.Objects
 
 /** List the financial transactions for a given card. */
 class CardFinancialTransactionListParams
-constructor(
+private constructor(
     private val cardToken: String,
     private val begin: OffsetDateTime?,
     private val category: Category?,
@@ -102,7 +102,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cardToken: String? = null
         private var begin: OffsetDateTime? = null

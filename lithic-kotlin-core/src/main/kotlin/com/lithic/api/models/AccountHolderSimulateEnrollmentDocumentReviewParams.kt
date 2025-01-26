@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** Simulates a review for an account holder document upload. */
 class AccountHolderSimulateEnrollmentDocumentReviewParams
-constructor(
+private constructor(
     private val body: AccountHolderSimulateEnrollmentDocumentReviewBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -153,7 +153,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var documentUploadToken: JsonField<String>? = null
             private var status: JsonField<Status>? = null
@@ -285,7 +285,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: AccountHolderSimulateEnrollmentDocumentReviewBody.Builder =
             AccountHolderSimulateEnrollmentDocumentReviewBody.builder()

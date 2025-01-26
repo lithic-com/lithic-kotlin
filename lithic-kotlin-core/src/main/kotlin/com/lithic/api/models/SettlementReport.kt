@@ -230,7 +230,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var created: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<String>? = null

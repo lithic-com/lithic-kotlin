@@ -292,7 +292,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
         private var category: JsonField<Payment.Category>? = null

@@ -120,7 +120,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var individual: JsonField<Individual>? = null
         private var tosTimestamp: JsonField<String>? = null
@@ -345,7 +345,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var address: JsonField<Address>? = null
             private var dob: JsonField<String>? = null

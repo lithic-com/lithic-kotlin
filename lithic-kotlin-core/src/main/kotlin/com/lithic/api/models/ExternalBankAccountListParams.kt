@@ -14,7 +14,7 @@ import java.util.Objects
 
 /** List all the external bank accounts for the provided search criteria. */
 class ExternalBankAccountListParams
-constructor(
+private constructor(
     private val accountToken: String?,
     private val accountTypes: List<AccountType>?,
     private val countries: List<String>?,
@@ -92,7 +92,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountToken: String? = null
         private var accountTypes: MutableList<AccountType>? = null

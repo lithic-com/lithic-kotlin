@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** Update the information associated with a particular account holder. */
 class AccountHolderUpdateParams
-constructor(
+private constructor(
     private val accountHolderToken: String,
     private val body: AccountHolderUpdateBody,
     private val additionalHeaders: Headers,
@@ -174,7 +174,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var businessAccountToken: JsonField<String> = JsonMissing.of()
             private var email: JsonField<String> = JsonMissing.of()
@@ -287,7 +287,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountHolderToken: String? = null
         private var body: AccountHolderUpdateBody.Builder = AccountHolderUpdateBody.builder()

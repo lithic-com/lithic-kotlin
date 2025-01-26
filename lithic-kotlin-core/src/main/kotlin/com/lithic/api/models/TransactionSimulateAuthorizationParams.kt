@@ -29,7 +29,7 @@ import java.util.Objects
  * endpoint.
  */
 class TransactionSimulateAuthorizationParams
-constructor(
+private constructor(
     private val body: TransactionSimulateAuthorizationBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -367,7 +367,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var descriptor: JsonField<String>? = null
@@ -598,7 +598,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: TransactionSimulateAuthorizationBody.Builder =
             TransactionSimulateAuthorizationBody.builder()

@@ -28,7 +28,7 @@ import java.util.Objects
  * [lithic.com/contact](https://lithic.com/contact) for more information.
  */
 class TokenizationUpdateDigitalCardArtParams
-constructor(
+private constructor(
     private val tokenizationToken: String,
     private val body: TokenizationUpdateDigitalCardArtBody,
     private val additionalHeaders: Headers,
@@ -124,7 +124,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -208,7 +208,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var tokenizationToken: String? = null
         private var body: TokenizationUpdateDigitalCardArtBody.Builder =

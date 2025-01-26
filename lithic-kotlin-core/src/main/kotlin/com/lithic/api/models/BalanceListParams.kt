@@ -15,7 +15,7 @@ import java.util.Objects
 
 /** Get the balances for a program, business, or a given end-user account */
 class BalanceListParams
-constructor(
+private constructor(
     private val accountToken: String?,
     private val balanceDate: OffsetDateTime?,
     private val businessAccountToken: String?,
@@ -69,7 +69,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var accountToken: String? = null
         private var balanceDate: OffsetDateTime? = null
