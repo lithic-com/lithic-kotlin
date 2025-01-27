@@ -60,6 +60,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [Statements]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<Statement>>? = null

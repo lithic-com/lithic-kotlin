@@ -88,6 +88,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [RequiredDocument]. */
     class Builder internal constructor() {
 
         private var entityToken: JsonField<String>? = null

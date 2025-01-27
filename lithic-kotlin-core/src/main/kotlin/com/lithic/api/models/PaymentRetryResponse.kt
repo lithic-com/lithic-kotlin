@@ -292,6 +292,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PaymentRetryResponse]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null

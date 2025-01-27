@@ -92,6 +92,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ExternalBankAccountRetryPrenoteBody]. */
         class Builder internal constructor() {
 
             private var financialAccountToken: JsonField<String> = JsonMissing.of()
@@ -163,6 +164,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ExternalBankAccountRetryPrenoteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

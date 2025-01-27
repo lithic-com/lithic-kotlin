@@ -98,6 +98,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ThreeDSDecisioningSimulateChallengeBody]. */
         class Builder internal constructor() {
 
             private var token: JsonField<String> = JsonMissing.of()
@@ -171,6 +172,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ThreeDSDecisioningSimulateChallengeParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -47,6 +47,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [DisputeDeleteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

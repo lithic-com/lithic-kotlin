@@ -50,6 +50,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AuthRuleV2PromoteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

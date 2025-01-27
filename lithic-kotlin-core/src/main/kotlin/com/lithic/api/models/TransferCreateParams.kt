@@ -193,6 +193,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [TransferCreateBody]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -320,6 +321,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TransferCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

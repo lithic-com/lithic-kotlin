@@ -164,6 +164,10 @@ private constructor(
                 )
         }
 
+        /**
+         * An interface that defines how to map each variant of [AuthRuleV2ApplyBody] to a value of
+         * type [T].
+         */
         interface Visitor<out T> {
 
             fun visitApplyAuthRuleRequestAccountTokens(
@@ -178,6 +182,16 @@ private constructor(
                 applyAuthRuleRequestProgramLevel: ApplyAuthRuleRequestProgramLevel
             ): T
 
+            /**
+             * Maps an unknown variant of [AuthRuleV2ApplyBody] to a value of type [T].
+             *
+             * An instance of [AuthRuleV2ApplyBody] can contain an unknown variant if it was
+             * deserialized from data that doesn't match any known variant. For example, if the SDK
+             * is on an older version than the API, then the API may respond with new variants that
+             * the SDK is unaware of.
+             *
+             * @throws LithicInvalidDataException in the default implementation.
+             */
             fun unknown(json: JsonValue?): T {
                 throw LithicInvalidDataException("Unknown AuthRuleV2ApplyBody: $json")
             }
@@ -232,6 +246,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AuthRuleV2ApplyParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -422,6 +437,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ApplyAuthRuleRequestAccountTokens]. */
         class Builder internal constructor() {
 
             private var accountTokens: JsonField<MutableList<String>>? = null
@@ -542,6 +558,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ApplyAuthRuleRequestCardTokens]. */
         class Builder internal constructor() {
 
             private var cardTokens: JsonField<MutableList<String>>? = null
@@ -673,6 +690,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ApplyAuthRuleRequestProgramLevel]. */
         class Builder internal constructor() {
 
             private var programLevel: JsonField<Boolean>? = null

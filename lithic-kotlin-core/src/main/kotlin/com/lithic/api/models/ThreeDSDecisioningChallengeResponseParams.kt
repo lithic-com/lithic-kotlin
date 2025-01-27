@@ -118,6 +118,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ThreeDSDecisioningChallengeResponseBody]. */
         class Builder internal constructor() {
 
             private var token: JsonField<String>? = null
@@ -208,6 +209,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ThreeDSDecisioningChallengeResponseParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

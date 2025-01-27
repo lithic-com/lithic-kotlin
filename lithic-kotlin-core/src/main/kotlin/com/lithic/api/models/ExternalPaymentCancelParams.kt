@@ -104,6 +104,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ExternalPaymentCancelBody]. */
         class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate>? = null
@@ -178,6 +179,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ExternalPaymentCancelParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

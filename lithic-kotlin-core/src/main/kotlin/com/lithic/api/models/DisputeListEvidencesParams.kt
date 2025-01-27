@@ -87,6 +87,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [DisputeListEvidencesParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

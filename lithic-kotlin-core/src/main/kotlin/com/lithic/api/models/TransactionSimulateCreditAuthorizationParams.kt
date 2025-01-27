@@ -182,6 +182,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [TransactionSimulateCreditAuthorizationBody]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -308,6 +309,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TransactionSimulateCreditAuthorizationParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
