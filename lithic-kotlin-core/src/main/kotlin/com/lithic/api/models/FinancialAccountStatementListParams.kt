@@ -90,6 +90,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [FinancialAccountStatementListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

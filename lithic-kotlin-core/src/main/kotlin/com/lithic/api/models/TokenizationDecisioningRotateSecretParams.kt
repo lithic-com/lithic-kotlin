@@ -39,6 +39,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TokenizationDecisioningRotateSecretParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

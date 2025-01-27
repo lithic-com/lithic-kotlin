@@ -54,6 +54,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventSubscriptionListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

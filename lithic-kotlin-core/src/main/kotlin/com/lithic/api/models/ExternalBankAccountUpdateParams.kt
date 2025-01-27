@@ -226,6 +226,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ExternalBankAccountUpdateBody]. */
         class Builder internal constructor() {
 
             private var address: JsonField<ExternalBankAccountAddress> = JsonMissing.of()
@@ -371,6 +372,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ExternalBankAccountUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -53,6 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionRetrieveSecretResponse]. */
     class Builder internal constructor() {
 
         private var secret: JsonField<String> = JsonMissing.of()
