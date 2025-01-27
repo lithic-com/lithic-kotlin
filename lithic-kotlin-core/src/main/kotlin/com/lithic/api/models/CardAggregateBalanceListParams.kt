@@ -45,6 +45,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CardAggregateBalanceListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

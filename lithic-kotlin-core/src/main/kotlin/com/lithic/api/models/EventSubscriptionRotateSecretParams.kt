@@ -50,6 +50,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventSubscriptionRotateSecretParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

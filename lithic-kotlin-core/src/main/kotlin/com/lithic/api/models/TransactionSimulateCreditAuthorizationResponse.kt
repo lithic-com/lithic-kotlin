@@ -63,6 +63,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TransactionSimulateCreditAuthorizationResponse]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String> = JsonMissing.of()

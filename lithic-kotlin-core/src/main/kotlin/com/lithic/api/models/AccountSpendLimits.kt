@@ -75,6 +75,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AccountSpendLimits]. */
     class Builder internal constructor() {
 
         private var availableSpendLimit: JsonField<AvailableSpendLimit>? = null
@@ -211,6 +212,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [AvailableSpendLimit]. */
         class Builder internal constructor() {
 
             private var daily: JsonField<Long> = JsonMissing.of()
@@ -366,6 +368,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [SpendLimit]. */
         class Builder internal constructor() {
 
             private var daily: JsonField<Long> = JsonMissing.of()
@@ -521,6 +524,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [SpendVelocity]. */
         class Builder internal constructor() {
 
             private var daily: JsonField<Long> = JsonMissing.of()

@@ -53,6 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ResponderEndpointCreateResponse]. */
     class Builder internal constructor() {
 
         private var enrolled: JsonField<Boolean> = JsonMissing.of()

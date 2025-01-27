@@ -58,6 +58,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AccountHolderRetrieveDocumentParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -292,6 +292,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SettlementDetail]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -590,6 +591,14 @@ private constructor(
         private val value: JsonField<String>,
     ) : Enum {
 
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
@@ -607,6 +616,7 @@ private constructor(
             fun of(value: String) = Network(JsonField.of(value))
         }
 
+        /** An enum containing [Network]'s known values. */
         enum class Known {
             INTERLINK,
             MAESTRO,
@@ -615,15 +625,32 @@ private constructor(
             VISA,
         }
 
+        /**
+         * An enum containing [Network]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Network] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
         enum class Value {
             INTERLINK,
             MAESTRO,
             MASTERCARD,
             UNKNOWN,
             VISA,
+            /** An enum member indicating that [Network] was instantiated with an unknown value. */
             _UNKNOWN,
         }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
         fun value(): Value =
             when (this) {
                 INTERLINK -> Value.INTERLINK
@@ -634,6 +661,15 @@ private constructor(
                 else -> Value._UNKNOWN
             }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
         fun known(): Known =
             when (this) {
                 INTERLINK -> Known.INTERLINK
@@ -695,6 +731,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [OtherFeesDetails]. */
         class Builder internal constructor() {
 
             private var isa: JsonField<Long> = JsonMissing.of()
@@ -757,6 +794,14 @@ private constructor(
         private val value: JsonField<String>,
     ) : Enum {
 
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
@@ -782,6 +827,7 @@ private constructor(
             fun of(value: String) = Type(JsonField.of(value))
         }
 
+        /** An enum containing [Type]'s known values. */
         enum class Known {
             ADJUSTMENT,
             ARBITRATION,
@@ -794,6 +840,15 @@ private constructor(
             REPRESENTMENT,
         }
 
+        /**
+         * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Type] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
         enum class Value {
             ADJUSTMENT,
             ARBITRATION,
@@ -804,9 +859,17 @@ private constructor(
             NON_FINANCIAL,
             PREARBITRATION,
             REPRESENTMENT,
+            /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
         fun value(): Value =
             when (this) {
                 ADJUSTMENT -> Value.ADJUSTMENT
@@ -821,6 +884,15 @@ private constructor(
                 else -> Value._UNKNOWN
             }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
         fun known(): Known =
             when (this) {
                 ADJUSTMENT -> Known.ADJUSTMENT

@@ -192,6 +192,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ShippingAddress]. */
     class Builder internal constructor() {
 
         private var address1: JsonField<String>? = null

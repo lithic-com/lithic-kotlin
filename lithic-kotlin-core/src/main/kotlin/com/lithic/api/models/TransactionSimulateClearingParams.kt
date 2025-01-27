@@ -143,6 +143,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [TransactionSimulateClearingBody]. */
         class Builder internal constructor() {
 
             private var token: JsonField<String>? = null
@@ -241,6 +242,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TransactionSimulateClearingParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

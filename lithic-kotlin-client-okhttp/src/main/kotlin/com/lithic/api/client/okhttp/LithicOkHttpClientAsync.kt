@@ -21,6 +21,7 @@ class LithicOkHttpClientAsync private constructor() {
         fun fromEnv(): LithicClientAsync = builder().fromEnv().build()
     }
 
+    /** A builder for [LithicOkHttpClientAsync]. */
     class Builder internal constructor() {
 
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()

@@ -55,6 +55,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TransactionSimulateClearingResponse]. */
     class Builder internal constructor() {
 
         private var debuggingRequestId: JsonField<String> = JsonMissing.of()

@@ -91,6 +91,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ExternalBankAccountMicroDepositCreateBody]. */
         class Builder internal constructor() {
 
             private var microDeposits: JsonField<MutableList<Long>>? = null
@@ -176,6 +177,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ExternalBankAccountMicroDepositCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

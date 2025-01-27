@@ -66,6 +66,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CardBalanceListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

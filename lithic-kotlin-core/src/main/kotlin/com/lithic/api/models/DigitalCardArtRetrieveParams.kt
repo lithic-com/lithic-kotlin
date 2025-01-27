@@ -40,6 +40,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [DigitalCardArtRetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

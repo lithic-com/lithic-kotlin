@@ -51,6 +51,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TokenizationSimulateResponse]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<Tokenization>>? = null

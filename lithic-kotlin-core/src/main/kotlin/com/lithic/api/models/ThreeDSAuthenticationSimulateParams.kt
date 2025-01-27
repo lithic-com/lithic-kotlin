@@ -143,6 +143,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ThreeDSAuthenticationSimulateBody]. */
         class Builder internal constructor() {
 
             private var merchant: JsonField<Merchant>? = null
@@ -247,6 +248,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ThreeDSAuthenticationSimulateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -504,6 +506,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Merchant]. */
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
@@ -660,6 +663,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Transaction]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -739,6 +743,14 @@ private constructor(
         private val value: JsonField<String>,
     ) : Enum {
 
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
@@ -752,19 +764,40 @@ private constructor(
             fun of(value: String) = CardExpiryCheck(JsonField.of(value))
         }
 
+        /** An enum containing [CardExpiryCheck]'s known values. */
         enum class Known {
             MATCH,
             MISMATCH,
             NOT_PRESENT,
         }
 
+        /**
+         * An enum containing [CardExpiryCheck]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [CardExpiryCheck] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
         enum class Value {
             MATCH,
             MISMATCH,
             NOT_PRESENT,
+            /**
+             * An enum member indicating that [CardExpiryCheck] was instantiated with an unknown
+             * value.
+             */
             _UNKNOWN,
         }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
         fun value(): Value =
             when (this) {
                 MATCH -> Value.MATCH
@@ -773,6 +806,15 @@ private constructor(
                 else -> Value._UNKNOWN
             }
 
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
         fun known(): Known =
             when (this) {
                 MATCH -> Known.MATCH

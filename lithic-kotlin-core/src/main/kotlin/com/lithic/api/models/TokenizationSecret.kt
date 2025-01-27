@@ -53,6 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TokenizationSecret]. */
     class Builder internal constructor() {
 
         private var secret: JsonField<String> = JsonMissing.of()

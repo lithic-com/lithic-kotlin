@@ -104,6 +104,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ExternalPaymentReverseBody]. */
         class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate>? = null
@@ -179,6 +180,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ExternalPaymentReverseParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
