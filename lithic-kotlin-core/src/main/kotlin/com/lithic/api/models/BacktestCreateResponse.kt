@@ -55,6 +55,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [BacktestCreateResponse]. */
     class Builder internal constructor() {
 
         private var backtestToken: JsonField<String> = JsonMissing.of()

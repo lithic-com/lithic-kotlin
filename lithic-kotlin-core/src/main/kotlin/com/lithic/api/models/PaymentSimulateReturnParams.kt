@@ -103,6 +103,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [PaymentSimulateReturnBody]. */
         class Builder internal constructor() {
 
             private var paymentToken: JsonField<String>? = null
@@ -184,6 +185,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PaymentSimulateReturnParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

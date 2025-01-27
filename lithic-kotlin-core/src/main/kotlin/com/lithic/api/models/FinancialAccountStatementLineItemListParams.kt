@@ -71,6 +71,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [FinancialAccountStatementLineItemListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

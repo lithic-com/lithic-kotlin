@@ -65,6 +65,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PrimeRateRetrieveResponse]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<InterestRate>>? = null
@@ -181,6 +182,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [InterestRate]. */
         class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate>? = null

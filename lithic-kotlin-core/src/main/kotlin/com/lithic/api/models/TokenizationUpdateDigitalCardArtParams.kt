@@ -124,6 +124,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [TokenizationUpdateDigitalCardArtBody]. */
         class Builder internal constructor() {
 
             private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
@@ -207,6 +208,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TokenizationUpdateDigitalCardArtParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -68,6 +68,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CardEmbedParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

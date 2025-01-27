@@ -86,6 +86,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [CardSearchByPanBody]. */
         class Builder internal constructor() {
 
             private var pan: JsonField<String>? = null
@@ -150,6 +151,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CardSearchByPanParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

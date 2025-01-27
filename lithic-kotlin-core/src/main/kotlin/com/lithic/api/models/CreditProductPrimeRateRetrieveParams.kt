@@ -56,6 +56,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CreditProductPrimeRateRetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

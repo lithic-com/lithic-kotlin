@@ -140,6 +140,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [FinancialAccountCreditConfigurationUpdateBody]. */
         class Builder internal constructor() {
 
             private var creditLimit: JsonField<Long> = JsonMissing.of()
@@ -243,6 +244,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [FinancialAccountCreditConfigurationUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

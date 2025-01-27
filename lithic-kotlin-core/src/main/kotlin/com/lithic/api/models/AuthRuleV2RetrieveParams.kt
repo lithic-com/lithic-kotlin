@@ -40,6 +40,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AuthRuleV2RetrieveParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

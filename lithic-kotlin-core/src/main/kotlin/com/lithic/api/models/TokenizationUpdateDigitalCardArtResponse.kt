@@ -51,6 +51,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TokenizationUpdateDigitalCardArtResponse]. */
     class Builder internal constructor() {
 
         private var data: JsonField<Tokenization> = JsonMissing.of()

@@ -93,6 +93,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [BookTransferReverseBody]. */
         class Builder internal constructor() {
 
             private var memo: JsonField<String> = JsonMissing.of()
@@ -157,6 +158,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [BookTransferReverseParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
