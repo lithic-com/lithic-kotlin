@@ -418,7 +418,7 @@ private constructor(
         /** Auth Rule Name */
         fun name(): String? = name.getNullable("name")
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(): Parameters? = parameters.getNullable("parameters")
 
         /** The type of Auth Rule */
@@ -432,7 +432,7 @@ private constructor(
         /** Auth Rule Name */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonProperty("parameters")
         @ExcludeMissing
         fun _parameters(): JsonField<Parameters> = parameters
@@ -513,19 +513,19 @@ private constructor(
             /** Auth Rule Name */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: Parameters) = parameters(JsonField.of(parameters))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -564,7 +564,7 @@ private constructor(
                 )
         }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonDeserialize(using = Parameters.Deserializer::class)
         @JsonSerialize(using = Parameters.Serializer::class)
         class Parameters
@@ -856,7 +856,7 @@ private constructor(
         /** Auth Rule Name */
         fun name(): String? = name.getNullable("name")
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(): Parameters? = parameters.getNullable("parameters")
 
         /** The type of Auth Rule */
@@ -870,7 +870,7 @@ private constructor(
         /** Auth Rule Name */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonProperty("parameters")
         @ExcludeMissing
         fun _parameters(): JsonField<Parameters> = parameters
@@ -949,19 +949,19 @@ private constructor(
             /** Auth Rule Name */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: Parameters) = parameters(JsonField.of(parameters))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -1000,7 +1000,7 @@ private constructor(
                 )
         }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonDeserialize(using = Parameters.Deserializer::class)
         @JsonSerialize(using = Parameters.Serializer::class)
         class Parameters
@@ -1299,7 +1299,7 @@ private constructor(
         /** Auth Rule Name */
         fun name(): String? = name.getNullable("name")
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(): Parameters? = parameters.getNullable("parameters")
 
         /** The type of Auth Rule */
@@ -1318,7 +1318,7 @@ private constructor(
         /** Auth Rule Name */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonProperty("parameters")
         @ExcludeMissing
         fun _parameters(): JsonField<Parameters> = parameters
@@ -1410,19 +1410,19 @@ private constructor(
             /** Auth Rule Name */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: Parameters) = parameters(JsonField.of(parameters))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -1462,7 +1462,7 @@ private constructor(
                 )
         }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonDeserialize(using = Parameters.Deserializer::class)
         @JsonSerialize(using = Parameters.Serializer::class)
         class Parameters

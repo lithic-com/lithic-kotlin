@@ -30,7 +30,7 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
 /**
- * Creates a new draft version of an authorization rules that will be ran in shadow mode.
+ * Creates a new draft version of a rule that will be ran in shadow mode.
  *
  * This can also be utilized to reset the draft parameters, causing a draft version to no longer be
  * ran in shadow mode.
@@ -45,10 +45,10 @@ private constructor(
 
     fun authRuleToken(): String = authRuleToken
 
-    /** Parameters for the current version of the Auth Rule */
+    /** Parameters for the Auth Rule */
     fun parameters(): Parameters? = body.parameters()
 
-    /** Parameters for the current version of the Auth Rule */
+    /** Parameters for the Auth Rule */
     fun _parameters(): JsonField<Parameters> = body._parameters()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -81,10 +81,10 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(): Parameters? = parameters.getNullable("parameters")
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         @JsonProperty("parameters")
         @ExcludeMissing
         fun _parameters(): JsonField<Parameters> = parameters
@@ -122,19 +122,19 @@ private constructor(
                 additionalProperties = authRuleV2DraftBody.additionalProperties.toMutableMap()
             }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: Parameters?) = parameters(JsonField.ofNullable(parameters))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
-            /** Parameters for the current version of the Auth Rule */
+            /** Parameters for the Auth Rule */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -204,18 +204,18 @@ private constructor(
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(parameters: Parameters?) = apply { body.parameters(parameters) }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(parameters: JsonField<Parameters>) = apply { body.parameters(parameters) }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(conditionalBlock: ConditionalBlockParameters) = apply {
             body.parameters(conditionalBlock)
         }
 
-        /** Parameters for the current version of the Auth Rule */
+        /** Parameters for the Auth Rule */
         fun parameters(velocityLimitParams: VelocityLimitParams) = apply {
             body.parameters(velocityLimitParams)
         }
@@ -346,7 +346,7 @@ private constructor(
             )
     }
 
-    /** Parameters for the current version of the Auth Rule */
+    /** Parameters for the Auth Rule */
     @JsonDeserialize(using = Parameters.Deserializer::class)
     @JsonSerialize(using = Parameters.Serializer::class)
     class Parameters
