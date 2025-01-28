@@ -2,18 +2,21 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
+import com.lithic.api.core.toImmutable
 import java.util.Objects
 
-/** Fetches a V2 authorization rule by its token */
-class AuthRuleV2RetrieveParams
+/** Deletes a V2 authorization rule */
+class AuthRuleV2DeleteParams
 private constructor(
     private val authRuleToken: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun authRuleToken(): String = authRuleToken
@@ -21,6 +24,10 @@ private constructor(
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
+    internal fun getBody(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -40,18 +47,21 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [AuthRuleV2RetrieveParams]. */
+    /** A builder for [AuthRuleV2DeleteParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
         private var authRuleToken: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
+        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(authRuleV2RetrieveParams: AuthRuleV2RetrieveParams) = apply {
-            authRuleToken = authRuleV2RetrieveParams.authRuleToken
-            additionalHeaders = authRuleV2RetrieveParams.additionalHeaders.toBuilder()
-            additionalQueryParams = authRuleV2RetrieveParams.additionalQueryParams.toBuilder()
+        internal fun from(authRuleV2DeleteParams: AuthRuleV2DeleteParams) = apply {
+            authRuleToken = authRuleV2DeleteParams.authRuleToken
+            additionalHeaders = authRuleV2DeleteParams.additionalHeaders.toBuilder()
+            additionalQueryParams = authRuleV2DeleteParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                authRuleV2DeleteParams.additionalBodyProperties.toMutableMap()
         }
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
@@ -154,11 +164,34 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun build(): AuthRuleV2RetrieveParams =
-            AuthRuleV2RetrieveParams(
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.clear()
+            putAllAdditionalBodyProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            additionalBodyProperties.put(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            additionalBodyProperties.remove(key)
+        }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalBodyProperty)
+        }
+
+        fun build(): AuthRuleV2DeleteParams =
+            AuthRuleV2DeleteParams(
                 checkRequired("authRuleToken", authRuleToken),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -167,11 +200,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthRuleV2RetrieveParams && authRuleToken == other.authRuleToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AuthRuleV2DeleteParams && authRuleToken == other.authRuleToken && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(authRuleToken, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
-        "AuthRuleV2RetrieveParams{authRuleToken=$authRuleToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "AuthRuleV2DeleteParams{authRuleToken=$authRuleToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
