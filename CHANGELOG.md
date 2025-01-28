@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.75.0 (2025-01-28)
+
+Full Changelog: [v0.74.0...v0.75.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.74.0...v0.75.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** better union variant method and variable names ([#448](https://github.com/lithic-com/lithic-kotlin/issues/448))
+
+### Features
+
+* **api:** adds additional fields to TransactionEvents ([#449](https://github.com/lithic-com/lithic-kotlin/issues/449)) ([31bd8f0](https://github.com/lithic-com/lithic-kotlin/commit/31bd8f08296431bc3bd054dcc43b6de0401ca608))
+* **api:** adds additional request types for updating an Auth Rule ([#456](https://github.com/lithic-com/lithic-kotlin/issues/456)) ([842776d](https://github.com/lithic-com/lithic-kotlin/commit/842776d5515da49763b2a5ffadb75bfa09799e0f))
+* **client:** add `close` method ([#451](https://github.com/lithic-com/lithic-kotlin/issues/451)) ([572867b](https://github.com/lithic-com/lithic-kotlin/commit/572867b07e0bec5dd04ee086df3c802aecf618bb))
+* **client:** better union variant method and variable names ([#448](https://github.com/lithic-com/lithic-kotlin/issues/448)) ([4dea8e0](https://github.com/lithic-com/lithic-kotlin/commit/4dea8e07fc471074f2201f5640a6c418d1bc9590))
+
+
+### Bug Fixes
+
+* **client:** make some classes and constructors non-public ([#454](https://github.com/lithic-com/lithic-kotlin/issues/454)) ([448f974](https://github.com/lithic-com/lithic-kotlin/commit/448f97447465a5b7a4c0e71442eefc334904ed62))
+
+
+### Chores
+
+* add max retries to test ([#450](https://github.com/lithic-com/lithic-kotlin/issues/450)) ([918b729](https://github.com/lithic-com/lithic-kotlin/commit/918b729161c7addc0ab425c1759977cf147d2d08))
+* **api:** additional field added to 3DS Responses and Tokenization ([#442](https://github.com/lithic-com/lithic-kotlin/issues/442)) ([c0e3245](https://github.com/lithic-com/lithic-kotlin/commit/c0e324575400def645b04e9d2b2e16b234d0d897))
+* **internal:** remove some unnecessary `constructor` keywords ([448f974](https://github.com/lithic-com/lithic-kotlin/commit/448f97447465a5b7a4c0e71442eefc334904ed62))
+* **internal:** swap `checkNotNull` to `checkRequired` ([#447](https://github.com/lithic-com/lithic-kotlin/issues/447)) ([e3dcb54](https://github.com/lithic-com/lithic-kotlin/commit/e3dcb54509e7951e596cedc37ac8a8e1a937c022))
+* update tests ([#445](https://github.com/lithic-com/lithic-kotlin/issues/445)) ([996829e](https://github.com/lithic-com/lithic-kotlin/commit/996829e99270e2267c33904af7acf17a1adb32a2))
+
+
+### Documentation
+
+* `async` and `sync` method comments ([#453](https://github.com/lithic-com/lithic-kotlin/issues/453)) ([01654ce](https://github.com/lithic-com/lithic-kotlin/commit/01654ce4660efb143bb0d81bf984c5827f2b90f7))
+* add client documentation ([#452](https://github.com/lithic-com/lithic-kotlin/issues/452)) ([280f5cd](https://github.com/lithic-com/lithic-kotlin/commit/280f5cd9001d76885a845a63735c033c28705782))
+* builder, enum, and union comments ([#455](https://github.com/lithic-com/lithic-kotlin/issues/455)) ([c784711](https://github.com/lithic-com/lithic-kotlin/commit/c7847117bc3e15ee24772d15e8105ed05fdaf761))
+* move up requirements section ([#446](https://github.com/lithic-com/lithic-kotlin/issues/446)) ([374d78c](https://github.com/lithic-com/lithic-kotlin/commit/374d78c17989ce9b30e7511a591c1ff04cf2d53e))
+* update readme ([#444](https://github.com/lithic-com/lithic-kotlin/issues/444)) ([f8a669e](https://github.com/lithic-com/lithic-kotlin/commit/f8a669e31e3601956cbb907af57f048e98b371e0))
+
 ## 0.74.0 (2025-01-21)
 
 Full Changelog: [v0.73.0...v0.74.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.73.0...v0.74.0)
