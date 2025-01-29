@@ -3,6 +3,7 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.Params
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -17,7 +18,7 @@ private constructor(
     private val startingAfter: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /** Only return Authorization Rules that are bound to the provided account token. */
     fun accountToken(): String? = accountToken
@@ -44,9 +45,9 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.accountToken?.let { queryParams.put("account_token", listOf(it.toString())) }
         this.cardToken?.let { queryParams.put("card_token", listOf(it.toString())) }

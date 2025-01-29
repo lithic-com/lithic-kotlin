@@ -13,6 +13,7 @@ import com.lithic.api.core.BaseDeserializer
 import com.lithic.api.core.BaseSerializer
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.Params
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -32,7 +33,7 @@ private constructor(
     private val body: AccountHolderCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun kyb(): Kyb? = body.kyb()
 
@@ -44,11 +45,11 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): AccountHolderCreateBody = body
+    internal fun _body(): AccountHolderCreateBody = body
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @JsonDeserialize(using = AccountHolderCreateBody.Deserializer::class)
     @JsonSerialize(using = AccountHolderCreateBody.Serializer::class)
