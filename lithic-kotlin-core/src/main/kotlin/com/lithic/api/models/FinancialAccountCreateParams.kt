@@ -12,6 +12,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.Params
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -27,7 +28,7 @@ private constructor(
     private val body: FinancialAccountCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun idempotencyKey(): String? = idempotencyKey
 
@@ -53,16 +54,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): FinancialAccountCreateBody = body
+    internal fun _body(): FinancialAccountCreateBody = body
 
-    internal fun getHeaders(): Headers {
+    override fun _headers(): Headers {
         val headers = Headers.builder()
         this.idempotencyKey?.let { headers.put("Idempotency-Key", listOf(it.toString())) }
         headers.putAll(additionalHeaders)
         return headers.build()
     }
 
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
     class FinancialAccountCreateBody
