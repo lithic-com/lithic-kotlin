@@ -11,6 +11,7 @@ import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.json
+import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.models.Transaction
 import com.lithic.api.models.TransactionListPageAsync
@@ -68,11 +69,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("v1", "transactions", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { retrieveHandler.handle(it) }
@@ -100,11 +98,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("v1", "transactions")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listHandler.handle(it) }
@@ -137,12 +132,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "authorize")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateAuthorizationHandler.handle(it) }
@@ -171,12 +163,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "authorization_advice")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateAuthorizationAdviceHandler.handle(it) }
@@ -207,12 +196,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "clearing")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateClearingHandler.handle(it) }
@@ -241,12 +227,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "credit_authorization_advice")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateCreditAuthorizationHandler.handle(it) }
@@ -274,12 +257,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "return")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateReturnHandler.handle(it) }
@@ -307,12 +287,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "return_reversal")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateReturnReversalHandler.handle(it) }
@@ -342,12 +319,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "simulate", "void")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { simulateVoidHandler.handle(it) }

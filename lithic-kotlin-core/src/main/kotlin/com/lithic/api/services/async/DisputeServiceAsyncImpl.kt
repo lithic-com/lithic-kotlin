@@ -15,6 +15,7 @@ import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.json
 import com.lithic.api.core.multipartFormData
+import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.models.Dispute
@@ -50,12 +51,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "disputes")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { createHandler.handle(it) }
@@ -79,11 +77,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("v1", "disputes", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { retrieveHandler.handle(it) }
@@ -107,12 +102,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.PATCH)
                 .addPathSegments("v1", "disputes", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { updateHandler.handle(it) }
@@ -137,11 +129,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("v1", "disputes")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listHandler.handle(it) }
@@ -166,12 +155,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.DELETE)
                 .addPathSegments("v1", "disputes", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { deleteHandler.handle(it) }
@@ -204,12 +190,9 @@ internal constructor(
                     "evidences",
                     params.getPathParam(1)
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { deleteEvidenceHandler.handle(it) }
@@ -239,12 +222,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "disputes", params.getPathParam(0), "evidences")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { initiateEvidenceUploadHandler.handle(it) }
@@ -269,11 +249,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("v1", "disputes", params.getPathParam(0), "evidences")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listEvidencesHandler.handle(it) }
@@ -304,11 +281,8 @@ internal constructor(
                     "evidences",
                     params.getPathParam(1)
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { retrieveEvidenceHandler.handle(it) }

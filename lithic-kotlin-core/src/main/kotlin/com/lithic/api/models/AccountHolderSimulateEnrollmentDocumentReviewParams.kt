@@ -12,6 +12,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.Params
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -26,7 +27,7 @@ private constructor(
     private val body: AccountHolderSimulateEnrollmentDocumentReviewBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /** The account holder document upload which to perform the simulation upon. */
     fun documentUploadToken(): String = body.documentUploadToken()
@@ -65,11 +66,11 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): AccountHolderSimulateEnrollmentDocumentReviewBody = body
+    internal fun _body(): AccountHolderSimulateEnrollmentDocumentReviewBody = body
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
     class AccountHolderSimulateEnrollmentDocumentReviewBody
