@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.76.0 (2025-01-30)
+
+Full Changelog: [v0.75.0...v0.76.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.75.0...v0.76.0)
+
+### Features
+
+* **client:** add `_queryParams` and `_headers` methods ([#457](https://github.com/lithic-com/lithic-kotlin/issues/457)) ([3cdce16](https://github.com/lithic-com/lithic-kotlin/commit/3cdce169f4ffee9ac11f14eb5cace659822add2e))
+
+
+### Bug Fixes
+
+* **client:** don't leak responses when retrying ([#462](https://github.com/lithic-com/lithic-kotlin/issues/462)) ([8056c53](https://github.com/lithic-com/lithic-kotlin/commit/8056c53ccaa83b44ebca4c34c9fdce4b52ea8f12))
+
+
+### Chores
+
+* **internal:** improve `RetryingHttpClientTest` ([#461](https://github.com/lithic-com/lithic-kotlin/issues/461)) ([671fa6d](https://github.com/lithic-com/lithic-kotlin/commit/671fa6d44929666caa69ca5d404ec2eb925516db))
+
+
+### Documentation
+
+* fix incorrect additional properties info ([#463](https://github.com/lithic-com/lithic-kotlin/issues/463)) ([7bfe638](https://github.com/lithic-com/lithic-kotlin/commit/7bfe6384608ce9e49218b9cc87269cdf57e09c14))
+
+
+### Refactors
+
+* **internal:** extract request preparation logic ([3cdce16](https://github.com/lithic-com/lithic-kotlin/commit/3cdce169f4ffee9ac11f14eb5cace659822add2e))
+
 ## 0.75.0 (2025-01-28)
 
 Full Changelog: [v0.74.0...v0.75.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.74.0...v0.75.0)
