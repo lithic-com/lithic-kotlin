@@ -68,6 +68,9 @@ private constructor(
     @JsonProperty("browser")
     @ExcludeMissing
     private val browser: JsonField<Browser> = JsonMissing.of(),
+    @JsonProperty("challenge_orchestrated_by")
+    @ExcludeMissing
+    private val challengeOrchestratedBy: JsonField<ChallengeOrchestratedBy> = JsonMissing.of(),
     @JsonProperty("three_ri_request_type")
     @ExcludeMissing
     private val threeRiRequestType: JsonField<ThreeRiRequestType> = JsonMissing.of(),
@@ -87,8 +90,8 @@ private constructor(
     fun accountType(): AccountType? = accountType.getNullable("account_type")
 
     /** Indicates the outcome of the 3DS authentication process. */
-    fun authenticationResult(): AuthenticationResult? =
-        authenticationResult.getNullable("authentication_result")
+    fun authenticationResult(): AuthenticationResult =
+        authenticationResult.getRequired("authentication_result")
 
     /**
      * Indicates whether the expiration date provided by the cardholder during checkout matches
@@ -160,6 +163,10 @@ private constructor(
      * channel is 'BROWSER'.
      */
     fun browser(): Browser? = browser.getNullable("browser")
+
+    /** Entity that orchestrates the challenge. */
+    fun challengeOrchestratedBy(): ChallengeOrchestratedBy? =
+        challengeOrchestratedBy.getNullable("challenge_orchestrated_by")
 
     /**
      * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
@@ -277,6 +284,11 @@ private constructor(
      */
     @JsonProperty("browser") @ExcludeMissing fun _browser(): JsonField<Browser> = browser
 
+    /** Entity that orchestrates the challenge. */
+    @JsonProperty("challenge_orchestrated_by")
+    @ExcludeMissing
+    fun _challengeOrchestratedBy(): JsonField<ChallengeOrchestratedBy> = challengeOrchestratedBy
+
     /**
      * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
      * the initiation of the merchant rather than the cardholder. The most common example of this is
@@ -322,6 +334,7 @@ private constructor(
         app()?.validate()
         authenticationRequestType()
         browser()?.validate()
+        challengeOrchestratedBy()
         threeRiRequestType()
         transaction()?.validate()
         validated = true
@@ -356,6 +369,7 @@ private constructor(
         private var authenticationRequestType: JsonField<AuthenticationRequestType> =
             JsonMissing.of()
         private var browser: JsonField<Browser> = JsonMissing.of()
+        private var challengeOrchestratedBy: JsonField<ChallengeOrchestratedBy> = JsonMissing.of()
         private var threeRiRequestType: JsonField<ThreeRiRequestType> = JsonMissing.of()
         private var transaction: JsonField<Transaction> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -378,6 +392,7 @@ private constructor(
             app = authenticationRetrieveResponse.app
             authenticationRequestType = authenticationRetrieveResponse.authenticationRequestType
             browser = authenticationRetrieveResponse.browser
+            challengeOrchestratedBy = authenticationRetrieveResponse.challengeOrchestratedBy
             threeRiRequestType = authenticationRetrieveResponse.threeRiRequestType
             transaction = authenticationRetrieveResponse.transaction
             additionalProperties =
@@ -405,8 +420,8 @@ private constructor(
         }
 
         /** Indicates the outcome of the 3DS authentication process. */
-        fun authenticationResult(authenticationResult: AuthenticationResult?) =
-            authenticationResult(JsonField.ofNullable(authenticationResult))
+        fun authenticationResult(authenticationResult: AuthenticationResult) =
+            authenticationResult(JsonField.of(authenticationResult))
 
         /** Indicates the outcome of the 3DS authentication process. */
         fun authenticationResult(authenticationResult: JsonField<AuthenticationResult>) = apply {
@@ -570,6 +585,16 @@ private constructor(
          */
         fun browser(browser: JsonField<Browser>) = apply { this.browser = browser }
 
+        /** Entity that orchestrates the challenge. */
+        fun challengeOrchestratedBy(challengeOrchestratedBy: ChallengeOrchestratedBy?) =
+            challengeOrchestratedBy(JsonField.ofNullable(challengeOrchestratedBy))
+
+        /** Entity that orchestrates the challenge. */
+        fun challengeOrchestratedBy(challengeOrchestratedBy: JsonField<ChallengeOrchestratedBy>) =
+            apply {
+                this.challengeOrchestratedBy = challengeOrchestratedBy
+            }
+
         /**
          * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place
          * at the initiation of the merchant rather than the cardholder. The most common example of
@@ -643,6 +668,7 @@ private constructor(
                 app,
                 authenticationRequestType,
                 browser,
+                challengeOrchestratedBy,
                 threeRiRequestType,
                 transaction,
                 additionalProperties.toImmutable(),
@@ -776,6 +802,10 @@ private constructor(
 
             val SUCCESS = of("SUCCESS")
 
+            val PENDING_CHALLENGE = of("PENDING_CHALLENGE")
+
+            val PENDING_DECISION = of("PENDING_DECISION")
+
             fun of(value: String) = AuthenticationResult(JsonField.of(value))
         }
 
@@ -783,6 +813,8 @@ private constructor(
         enum class Known {
             DECLINE,
             SUCCESS,
+            PENDING_CHALLENGE,
+            PENDING_DECISION,
         }
 
         /**
@@ -798,6 +830,8 @@ private constructor(
         enum class Value {
             DECLINE,
             SUCCESS,
+            PENDING_CHALLENGE,
+            PENDING_DECISION,
             /**
              * An enum member indicating that [AuthenticationResult] was instantiated with an
              * unknown value.
@@ -816,6 +850,8 @@ private constructor(
             when (this) {
                 DECLINE -> Value.DECLINE
                 SUCCESS -> Value.SUCCESS
+                PENDING_CHALLENGE -> Value.PENDING_CHALLENGE
+                PENDING_DECISION -> Value.PENDING_DECISION
                 else -> Value._UNKNOWN
             }
 
@@ -832,6 +868,8 @@ private constructor(
             when (this) {
                 DECLINE -> Known.DECLINE
                 SUCCESS -> Known.SUCCESS
+                PENDING_CHALLENGE -> Known.PENDING_CHALLENGE
+                PENDING_DECISION -> Known.PENDING_DECISION
                 else -> throw LithicInvalidDataException("Unknown AuthenticationResult: $value")
             }
 
@@ -3932,6 +3970,110 @@ private constructor(
             "Browser{ip=$ip, javaEnabled=$javaEnabled, javascriptEnabled=$javascriptEnabled, language=$language, timeZone=$timeZone, userAgent=$userAgent, additionalProperties=$additionalProperties}"
     }
 
+    /** Entity that orchestrates the challenge. */
+    class ChallengeOrchestratedBy
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val LITHIC = of("LITHIC")
+
+            val CUSTOMER = of("CUSTOMER")
+
+            val NO_CHALLENGE = of("NO_CHALLENGE")
+
+            fun of(value: String) = ChallengeOrchestratedBy(JsonField.of(value))
+        }
+
+        /** An enum containing [ChallengeOrchestratedBy]'s known values. */
+        enum class Known {
+            LITHIC,
+            CUSTOMER,
+            NO_CHALLENGE,
+        }
+
+        /**
+         * An enum containing [ChallengeOrchestratedBy]'s known values, as well as an [_UNKNOWN]
+         * member.
+         *
+         * An instance of [ChallengeOrchestratedBy] can contain an unknown value in a couple of
+         * cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            LITHIC,
+            CUSTOMER,
+            NO_CHALLENGE,
+            /**
+             * An enum member indicating that [ChallengeOrchestratedBy] was instantiated with an
+             * unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                LITHIC -> Value.LITHIC
+                CUSTOMER -> Value.CUSTOMER
+                NO_CHALLENGE -> Value.NO_CHALLENGE
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
+        fun known(): Known =
+            when (this) {
+                LITHIC -> Known.LITHIC
+                CUSTOMER -> Known.CUSTOMER
+                NO_CHALLENGE -> Known.NO_CHALLENGE
+                else -> throw LithicInvalidDataException("Unknown ChallengeOrchestratedBy: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ChallengeOrchestratedBy && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
     /**
      * Type of 3DS Requestor Initiated (3RI) request i.e., a 3DS authentication that takes place at
      * the initiation of the merchant rather than the cardholder. The most common example of this is
@@ -4469,15 +4611,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthenticationRetrieveResponse && token == other.token && accountType == other.accountType && authenticationResult == other.authenticationResult && cardExpiryCheck == other.cardExpiryCheck && cardToken == other.cardToken && cardholder == other.cardholder && channel == other.channel && created == other.created && decisionMadeBy == other.decisionMadeBy && merchant == other.merchant && messageCategory == other.messageCategory && threeDSRequestorChallengeIndicator == other.threeDSRequestorChallengeIndicator && additionalData == other.additionalData && app == other.app && authenticationRequestType == other.authenticationRequestType && browser == other.browser && threeRiRequestType == other.threeRiRequestType && transaction == other.transaction && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AuthenticationRetrieveResponse && token == other.token && accountType == other.accountType && authenticationResult == other.authenticationResult && cardExpiryCheck == other.cardExpiryCheck && cardToken == other.cardToken && cardholder == other.cardholder && channel == other.channel && created == other.created && decisionMadeBy == other.decisionMadeBy && merchant == other.merchant && messageCategory == other.messageCategory && threeDSRequestorChallengeIndicator == other.threeDSRequestorChallengeIndicator && additionalData == other.additionalData && app == other.app && authenticationRequestType == other.authenticationRequestType && browser == other.browser && challengeOrchestratedBy == other.challengeOrchestratedBy && threeRiRequestType == other.threeRiRequestType && transaction == other.transaction && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, accountType, authenticationResult, cardExpiryCheck, cardToken, cardholder, channel, created, decisionMadeBy, merchant, messageCategory, threeDSRequestorChallengeIndicator, additionalData, app, authenticationRequestType, browser, threeRiRequestType, transaction, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountType, authenticationResult, cardExpiryCheck, cardToken, cardholder, channel, created, decisionMadeBy, merchant, messageCategory, threeDSRequestorChallengeIndicator, additionalData, app, authenticationRequestType, browser, challengeOrchestratedBy, threeRiRequestType, transaction, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AuthenticationRetrieveResponse{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, decisionMadeBy=$decisionMadeBy, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, threeRiRequestType=$threeRiRequestType, transaction=$transaction, additionalProperties=$additionalProperties}"
+        "AuthenticationRetrieveResponse{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, decisionMadeBy=$decisionMadeBy, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeOrchestratedBy=$challengeOrchestratedBy, threeRiRequestType=$threeRiRequestType, transaction=$transaction, additionalProperties=$additionalProperties}"
 }
