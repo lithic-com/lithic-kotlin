@@ -122,6 +122,9 @@ class AuthenticationRetrieveResponseTest {
                         .userAgent("user_agent")
                         .build()
                 )
+                .challengeOrchestratedBy(
+                    AuthenticationRetrieveResponse.ChallengeOrchestratedBy.LITHIC
+                )
                 .threeRiRequestType(
                     AuthenticationRetrieveResponse.ThreeRiRequestType.ACCOUNT_VERIFICATION
                 )
@@ -254,6 +257,8 @@ class AuthenticationRetrieveResponseTest {
                     .userAgent("user_agent")
                     .build()
             )
+        assertThat(authenticationRetrieveResponse.challengeOrchestratedBy())
+            .isEqualTo(AuthenticationRetrieveResponse.ChallengeOrchestratedBy.LITHIC)
         assertThat(authenticationRetrieveResponse.threeRiRequestType())
             .isEqualTo(AuthenticationRetrieveResponse.ThreeRiRequestType.ACCOUNT_VERIFICATION)
         assertThat(authenticationRetrieveResponse.transaction())
