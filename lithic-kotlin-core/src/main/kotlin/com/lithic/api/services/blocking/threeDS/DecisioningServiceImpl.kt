@@ -44,9 +44,8 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response.use { challengeResponseHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        response.use { challengeResponseHandler.handle(it) }
     }
 
     private val retrieveSecretHandler: Handler<DecisioningRetrieveSecretResponse> =
@@ -71,15 +70,14 @@ internal constructor(
                 .addPathSegments("v1", "three_ds_decisioning", "secret")
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { retrieveSecretHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { retrieveSecretHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val rotateSecretHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
@@ -98,12 +96,11 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "three_ds_decisioning", "secret", "rotate")
-                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepare(clientOptions, params)
-        clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response.use { rotateSecretHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        response.use { rotateSecretHandler.handle(it) }
     }
 
     private val simulateChallengeHandler: Handler<DecisioningSimulateChallengeResponse> =
@@ -126,15 +123,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response
-                .use { simulateChallengeHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        return response
+            .use { simulateChallengeHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val simulateChallengeResponseHandler: Handler<Void?> =
@@ -155,8 +151,7 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepare(clientOptions, params)
-        clientOptions.httpClient.execute(request, requestOptions).let { response ->
-            response.use { simulateChallengeResponseHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.execute(request, requestOptions)
+        response.use { simulateChallengeResponseHandler.handle(it) }
     }
 }
