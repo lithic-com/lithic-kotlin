@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.77.0 (2025-02-05)
+
+Full Changelog: [v0.76.0...v0.77.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.76.0...v0.77.0)
+
+### Features
+
+* **client:** send client-side timeout headers ([#464](https://github.com/lithic-com/lithic-kotlin/issues/464)) ([78f8b1c](https://github.com/lithic-com/lithic-kotlin/commit/78f8b1ca2daf68a6e12c73adc6f88c9b2341333c))
+
+
+### Bug Fixes
+
+* **api:** add missing `@MustBeClosed` annotations ([#467](https://github.com/lithic-com/lithic-kotlin/issues/467)) ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+* **api:** switch `CompletableFuture&lt;Void&gt;` to `CompletableFuture<Void?>` ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+* **client:** add missing validation calls on response ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+* **client:** always provide a body for `PATCH` methods ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+
+
+### Chores
+
+* **api:** new PaymentEventType for ACH Returns and small updates to 3DS AuthenticationResult ([#466](https://github.com/lithic-com/lithic-kotlin/issues/466)) ([facbcae](https://github.com/lithic-com/lithic-kotlin/commit/facbcae8f0baad31f28e368a510956e2d7744e69))
+* **internal:** minor formatting/style changes ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+* **internal:** rename some tests ([bb693f6](https://github.com/lithic-com/lithic-kotlin/commit/bb693f69b1133ee0b6ae5bb41517e8bceb7ca87f))
+
 ## 0.76.0 (2025-01-30)
 
 Full Changelog: [v0.75.0...v0.76.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.75.0...v0.76.0)
