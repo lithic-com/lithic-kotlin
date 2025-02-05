@@ -37,15 +37,14 @@ internal constructor(
                 .addPathSegments("v1", "cards", params.getPathParam(0), "balances")
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { listHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { listHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-                .let { CardBalanceListPageAsync.of(this, params, it) }
-        }
+            }
+            .let { CardBalanceListPageAsync.of(this, params, it) }
     }
 }

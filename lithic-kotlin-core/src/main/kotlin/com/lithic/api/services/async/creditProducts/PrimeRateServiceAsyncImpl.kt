@@ -39,9 +39,8 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.use { createHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        response.use { createHandler.handle(it) }
     }
 
     private val retrieveHandler: Handler<PrimeRateRetrieveResponse> =
@@ -59,14 +58,13 @@ internal constructor(
                 .addPathSegments("v1", "credit_products", params.getPathParam(0), "prime_rates")
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { retrieveHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { retrieveHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 }
