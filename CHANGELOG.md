@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.77.1 (2025-02-13)
+
+Full Changelog: [v0.77.0...v0.77.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.77.0...v0.77.1)
+
+### Chores
+
+* **api:** new 3DS Event and new `challenge_metadata` property on Authentications ([#468](https://github.com/lithic-com/lithic-kotlin/issues/468)) ([17b80e6](https://github.com/lithic-com/lithic-kotlin/commit/17b80e605598c1bb5cbad8c2963f5108baaf9a9a))
+
+
+### Documentation
+
+* add more phantom reachability docs ([#470](https://github.com/lithic-com/lithic-kotlin/issues/470)) ([c91fab0](https://github.com/lithic-com/lithic-kotlin/commit/c91fab02ae67fc8c954d3dd5c3367592953f1026))
+
 ## 0.77.0 (2025-02-05)
 
 Full Changelog: [v0.76.0...v0.77.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.76.0...v0.77.0)
