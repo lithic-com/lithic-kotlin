@@ -28,6 +28,7 @@ class ExternalBankAccountUpdateParamsTest {
             .name("name")
             .owner("owner")
             .ownerType(OwnerType.INDIVIDUAL)
+            .type(ExternalBankAccountUpdateParams.AccountTypeExternal.CHECKING)
             .userDefinedId("x")
             .build()
     }
@@ -53,6 +54,7 @@ class ExternalBankAccountUpdateParamsTest {
                 .name("name")
                 .owner("owner")
                 .ownerType(OwnerType.INDIVIDUAL)
+                .type(ExternalBankAccountUpdateParams.AccountTypeExternal.CHECKING)
                 .userDefinedId("x")
                 .build()
         val body = params._body()
@@ -74,6 +76,8 @@ class ExternalBankAccountUpdateParamsTest {
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.owner()).isEqualTo("owner")
         assertThat(body.ownerType()).isEqualTo(OwnerType.INDIVIDUAL)
+        assertThat(body.type())
+            .isEqualTo(ExternalBankAccountUpdateParams.AccountTypeExternal.CHECKING)
         assertThat(body.userDefinedId()).isEqualTo("x")
     }
 
