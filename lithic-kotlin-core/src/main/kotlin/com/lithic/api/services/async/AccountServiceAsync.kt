@@ -16,7 +16,7 @@ interface AccountServiceAsync {
     /** Get account configuration such as spend limits. */
     suspend fun retrieve(
         params: AccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
     /**
@@ -26,13 +26,13 @@ interface AccountServiceAsync {
      */
     suspend fun update(
         params: AccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
     /** List account configurations. */
     suspend fun list(
         params: AccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPageAsync
 
     /**
@@ -43,6 +43,6 @@ interface AccountServiceAsync {
      */
     suspend fun retrieveSpendLimits(
         params: AccountRetrieveSpendLimitsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSpendLimits
 }

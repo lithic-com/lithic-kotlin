@@ -13,12 +13,12 @@ interface SettlementService {
     /** List details. */
     fun listDetails(
         params: ReportSettlementListDetailsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementListDetailsPage
 
     /** Get the settlement report for a specified report date. Not available in sandbox. */
     fun summary(
         params: ReportSettlementSummaryParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SettlementReport
 }

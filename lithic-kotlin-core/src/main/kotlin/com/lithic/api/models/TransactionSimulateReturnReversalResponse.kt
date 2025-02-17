@@ -100,7 +100,7 @@ private constructor(
         fun build(): TransactionSimulateReturnReversalResponse =
             TransactionSimulateReturnReversalResponse(
                 debuggingRequestId,
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

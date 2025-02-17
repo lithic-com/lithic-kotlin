@@ -290,11 +290,8 @@ private constructor(
     }
 
     /** Specifies the type of KYC Exempt user */
-    class KycExemptionType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class KycExemptionType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -386,11 +383,7 @@ private constructor(
     }
 
     /** Specifies the workflow type. This must be 'KYC_EXEMPT' */
-    class Workflow
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Workflow @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -411,7 +404,7 @@ private constructor(
 
         /** An enum containing [Workflow]'s known values. */
         enum class Known {
-            KYC_EXEMPT,
+            KYC_EXEMPT
         }
 
         /**

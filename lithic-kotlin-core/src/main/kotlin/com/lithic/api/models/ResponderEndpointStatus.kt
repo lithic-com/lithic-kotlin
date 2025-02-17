@@ -106,11 +106,7 @@ private constructor(
         }
 
         fun build(): ResponderEndpointStatus =
-            ResponderEndpointStatus(
-                enrolled,
-                url,
-                additionalProperties.toImmutable(),
-            )
+            ResponderEndpointStatus(enrolled, url, additionalProperties.toImmutable())
     }
 
     override fun equals(other: Any?): Boolean {

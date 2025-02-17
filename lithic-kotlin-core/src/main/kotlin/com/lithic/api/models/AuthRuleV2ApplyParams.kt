@@ -224,7 +224,7 @@ private constructor(
             override fun serialize(
                 value: AuthRuleV2ApplyBody,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.applyAuthRuleRequestAccountTokens != null ->
@@ -496,7 +496,7 @@ private constructor(
             fun build(): ApplyAuthRuleRequestAccountTokens =
                 ApplyAuthRuleRequestAccountTokens(
                     checkRequired("accountTokens", accountTokens).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -615,7 +615,7 @@ private constructor(
             fun build(): ApplyAuthRuleRequestCardTokens =
                 ApplyAuthRuleRequestCardTokens(
                     checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

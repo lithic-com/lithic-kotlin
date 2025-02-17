@@ -17,10 +17,8 @@ import com.lithic.api.models.FinancialAccountLoanTapeListParams
 import com.lithic.api.models.FinancialAccountLoanTapeRetrieveParams
 import com.lithic.api.models.LoanTape
 
-class LoanTapeServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LoanTapeServiceAsync {
+class LoanTapeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LoanTapeServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Get a specific loan tape for a given financial account. */
     override suspend fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): LoanTape {
         val request =
             HttpRequest.builder()
@@ -40,7 +38,7 @@ internal constructor(
                     "financial_accounts",
                     params.getPathParam(0),
                     "loan_tapes",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -61,7 +59,7 @@ internal constructor(
     /** List the loan tapes for a given financial account. */
     override suspend fun list(
         params: FinancialAccountLoanTapeListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountLoanTapeListPageAsync {
         val request =
             HttpRequest.builder()

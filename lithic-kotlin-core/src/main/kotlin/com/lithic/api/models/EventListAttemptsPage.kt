@@ -74,11 +74,7 @@ private constructor(
     companion object {
 
         fun of(eventsService: EventService, params: EventListAttemptsParams, response: Response) =
-            EventListAttemptsPage(
-                eventsService,
-                params,
-                response,
-            )
+            EventListAttemptsPage(eventsService, params, response)
     }
 
     @NoAutoDetect
@@ -159,18 +155,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: EventListAttemptsPage,
-    ) : Sequence<MessageAttempt> {
+    class AutoPager(private val firstPage: EventListAttemptsPage) : Sequence<MessageAttempt> {
 
         override fun iterator(): Iterator<MessageAttempt> = iterator {
             var page = firstPage

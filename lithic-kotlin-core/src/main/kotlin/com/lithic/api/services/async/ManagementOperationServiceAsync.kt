@@ -15,24 +15,24 @@ interface ManagementOperationServiceAsync {
     /** Create management operation */
     suspend fun create(
         params: ManagementOperationCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationTransaction
 
     /** Get management operation */
     suspend fun retrieve(
         params: ManagementOperationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationTransaction
 
     /** List management operations */
     suspend fun list(
         params: ManagementOperationListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationListPageAsync
 
     /** Reverse a management operation */
     suspend fun reverse(
         params: ManagementOperationReverseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationTransaction
 }

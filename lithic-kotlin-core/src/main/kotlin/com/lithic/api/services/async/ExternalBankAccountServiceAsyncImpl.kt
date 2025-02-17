@@ -29,9 +29,7 @@ import com.lithic.api.services.async.externalBankAccounts.MicroDepositServiceAsy
 import com.lithic.api.services.async.externalBankAccounts.MicroDepositServiceAsyncImpl
 
 class ExternalBankAccountServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalBankAccountServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ExternalBankAccountServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -48,7 +46,7 @@ internal constructor(
     /** Creates an external bank account within a program or Lithic account. */
     override suspend fun create(
         params: ExternalBankAccountCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountCreateResponse {
         val request =
             HttpRequest.builder()
@@ -74,7 +72,7 @@ internal constructor(
     /** Get the external bank account by token. */
     override suspend fun retrieve(
         params: ExternalBankAccountRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountRetrieveResponse {
         val request =
             HttpRequest.builder()
@@ -99,7 +97,7 @@ internal constructor(
     /** Update the external bank account by token. */
     override suspend fun update(
         params: ExternalBankAccountUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountUpdateResponse {
         val request =
             HttpRequest.builder()
@@ -125,7 +123,7 @@ internal constructor(
     /** List all the external bank accounts for the provided search criteria. */
     override suspend fun list(
         params: ExternalBankAccountListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountListPageAsync {
         val request =
             HttpRequest.builder()
@@ -151,7 +149,7 @@ internal constructor(
     /** Retry external bank account micro deposit verification. */
     override suspend fun retryMicroDeposits(
         params: ExternalBankAccountRetryMicroDepositsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountRetryMicroDepositsResponse {
         val request =
             HttpRequest.builder()
@@ -160,7 +158,7 @@ internal constructor(
                     "v1",
                     "external_bank_accounts",
                     params.getPathParam(0),
-                    "retry_micro_deposits"
+                    "retry_micro_deposits",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -182,7 +180,7 @@ internal constructor(
     /** Retry external bank account prenote verification. */
     override suspend fun retryPrenote(
         params: ExternalBankAccountRetryPrenoteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalBankAccountRetryPrenoteResponse {
         val request =
             HttpRequest.builder()
@@ -191,7 +189,7 @@ internal constructor(
                     "v1",
                     "external_bank_accounts",
                     params.getPathParam(0),
-                    "retry_prenote"
+                    "retry_prenote",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()

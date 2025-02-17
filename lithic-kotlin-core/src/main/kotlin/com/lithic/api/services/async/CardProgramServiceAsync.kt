@@ -13,12 +13,12 @@ interface CardProgramServiceAsync {
     /** Get card program. */
     suspend fun retrieve(
         params: CardProgramRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgram
 
     /** List card programs. */
     suspend fun list(
         params: CardProgramListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgramListPageAsync
 }

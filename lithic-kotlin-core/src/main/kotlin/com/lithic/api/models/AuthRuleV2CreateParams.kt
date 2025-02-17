@@ -200,7 +200,7 @@ private constructor(
                 tryDeserialize(node, jacksonTypeRef<CreateAuthRuleRequestAccountTokens>())?.let {
                     return AuthRuleV2CreateBody(
                         createAuthRuleRequestAccountTokens = it,
-                        _json = json
+                        _json = json,
                     )
                 }
                 tryDeserialize(node, jacksonTypeRef<CreateAuthRuleRequestCardTokens>())?.let {
@@ -209,7 +209,7 @@ private constructor(
                 tryDeserialize(node, jacksonTypeRef<CreateAuthRuleRequestProgramLevel>())?.let {
                     return AuthRuleV2CreateBody(
                         createAuthRuleRequestProgramLevel = it,
-                        _json = json
+                        _json = json,
                     )
                 }
 
@@ -223,7 +223,7 @@ private constructor(
             override fun serialize(
                 value: AuthRuleV2CreateBody,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.createAuthRuleRequestAccountTokens != null ->
@@ -703,7 +703,7 @@ private constructor(
                 override fun serialize(
                     value: Parameters,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.conditionalBlock != null ->
@@ -718,11 +718,8 @@ private constructor(
         }
 
         /** The type of Auth Rule */
-        class AuthRuleType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class AuthRuleType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1139,7 +1136,7 @@ private constructor(
                 override fun serialize(
                     value: Parameters,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.conditionalBlock != null ->
@@ -1154,11 +1151,8 @@ private constructor(
         }
 
         /** The type of Auth Rule */
-        class AuthRuleType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class AuthRuleType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1601,7 +1595,7 @@ private constructor(
                 override fun serialize(
                     value: Parameters,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.conditionalBlock != null ->
@@ -1616,11 +1610,8 @@ private constructor(
         }
 
         /** The type of Auth Rule */
-        class AuthRuleType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class AuthRuleType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.

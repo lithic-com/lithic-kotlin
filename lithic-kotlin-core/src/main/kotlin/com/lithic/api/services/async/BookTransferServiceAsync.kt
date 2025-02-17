@@ -17,24 +17,24 @@ interface BookTransferServiceAsync {
      */
     suspend fun create(
         params: BookTransferCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 
     /** Get book transfer by token */
     suspend fun retrieve(
         params: BookTransferRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 
     /** List book transfers */
     suspend fun list(
         params: BookTransferListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPageAsync
 
     /** Reverse a book transfer */
     suspend fun reverse(
         params: BookTransferReverseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 }

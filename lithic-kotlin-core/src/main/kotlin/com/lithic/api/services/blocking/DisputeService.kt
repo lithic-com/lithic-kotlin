@@ -22,31 +22,31 @@ interface DisputeService {
     /** Initiate a dispute. */
     fun create(
         params: DisputeCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** Get dispute. */
     fun retrieve(
         params: DisputeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** Update dispute. Can only be modified if status is `NEW`. */
     fun update(
         params: DisputeUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** List disputes. */
     fun list(
         params: DisputeListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPage
 
     /** Withdraw dispute. */
     fun delete(
         params: DisputeDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /**
@@ -55,7 +55,7 @@ interface DisputeService {
      */
     fun deleteEvidence(
         params: DisputeDeleteEvidenceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
     /**
@@ -67,19 +67,19 @@ interface DisputeService {
      */
     fun initiateEvidenceUpload(
         params: DisputeInitiateEvidenceUploadParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
     /** List evidence metadata for a dispute. */
     fun listEvidences(
         params: DisputeListEvidencesParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListEvidencesPage
 
     /** Get a dispute's evidence metadata. */
     fun retrieveEvidence(
         params: DisputeRetrieveEvidenceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
     fun uploadEvidence(disputeToken: String, file: ByteArray)

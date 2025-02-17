@@ -12,12 +12,12 @@ interface PrimeRateServiceAsync {
     /** Post Credit Product Prime Rate */
     suspend fun create(
         params: CreditProductPrimeRateCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get Credit Product Prime Rates */
     suspend fun retrieve(
         params: CreditProductPrimeRateRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PrimeRateRetrieveResponse
 }

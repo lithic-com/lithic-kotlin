@@ -24,10 +24,8 @@ import com.lithic.api.models.EventRetrieveParams
 import com.lithic.api.services.async.events.SubscriptionServiceAsync
 import com.lithic.api.services.async.events.SubscriptionServiceAsyncImpl
 
-class EventServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : EventServiceAsync {
+class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    EventServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -43,7 +41,7 @@ internal constructor(
     /** Get an event. */
     override suspend fun retrieve(
         params: EventRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Event {
         val request =
             HttpRequest.builder()
@@ -68,7 +66,7 @@ internal constructor(
     /** List all events. */
     override suspend fun list(
         params: EventListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventListPageAsync {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
     /** List all the message attempts for a given event. */
     override suspend fun listAttempts(
         params: EventListAttemptsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventListAttemptsPageAsync {
         val request =
             HttpRequest.builder()

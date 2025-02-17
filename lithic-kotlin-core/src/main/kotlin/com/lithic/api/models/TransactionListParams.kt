@@ -300,11 +300,7 @@ private constructor(
      * Filters for transactions using transaction result field. Can filter by `APPROVED`, and
      * `DECLINED`.
      */
-    class Result
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Result @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -395,9 +391,7 @@ private constructor(
     /** Filters for transactions using transaction status field. */
     class CardTransactionStatusFilter
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

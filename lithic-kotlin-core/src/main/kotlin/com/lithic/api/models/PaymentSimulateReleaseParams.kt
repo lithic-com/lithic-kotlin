@@ -128,7 +128,7 @@ private constructor(
             fun build(): PaymentSimulateReleaseBody =
                 PaymentSimulateReleaseBody(
                     checkRequired("paymentToken", paymentToken),
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

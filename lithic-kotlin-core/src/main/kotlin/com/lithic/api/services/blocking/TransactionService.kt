@@ -36,7 +36,7 @@ interface TransactionService {
      */
     fun retrieve(
         params: TransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
 
     /**
@@ -45,7 +45,7 @@ interface TransactionService {
      */
     fun list(
         params: TransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPage
 
     /**
@@ -58,7 +58,7 @@ interface TransactionService {
      */
     fun simulateAuthorization(
         params: TransactionSimulateAuthorizationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateAuthorizationResponse
 
     /**
@@ -67,7 +67,7 @@ interface TransactionService {
      */
     fun simulateAuthorizationAdvice(
         params: TransactionSimulateAuthorizationAdviceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateAuthorizationAdviceResponse
 
     /**
@@ -79,7 +79,7 @@ interface TransactionService {
      */
     fun simulateClearing(
         params: TransactionSimulateClearingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateClearingResponse
 
     /**
@@ -88,7 +88,7 @@ interface TransactionService {
      */
     fun simulateCreditAuthorization(
         params: TransactionSimulateCreditAuthorizationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateCreditAuthorizationResponse
 
     /**
@@ -97,7 +97,7 @@ interface TransactionService {
      */
     fun simulateReturn(
         params: TransactionSimulateReturnParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateReturnResponse
 
     /**
@@ -106,7 +106,7 @@ interface TransactionService {
      */
     fun simulateReturnReversal(
         params: TransactionSimulateReturnReversalParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateReturnReversalResponse
 
     /**
@@ -117,6 +117,6 @@ interface TransactionService {
      */
     fun simulateVoid(
         params: TransactionSimulateVoidParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateVoidResponse
 }

@@ -14,18 +14,18 @@ interface ResponderEndpointService {
     /** Enroll a responder endpoint */
     fun create(
         params: ResponderEndpointCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ResponderEndpointCreateResponse
 
     /** Disenroll a responder endpoint */
     fun delete(
         params: ResponderEndpointDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Check the status of a responder endpoint */
     fun checkStatus(
         params: ResponderEndpointCheckStatusParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ResponderEndpointStatus
 }

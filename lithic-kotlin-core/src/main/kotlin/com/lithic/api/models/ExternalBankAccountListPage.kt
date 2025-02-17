@@ -76,13 +76,8 @@ private constructor(
         fun of(
             externalBankAccountsService: ExternalBankAccountService,
             params: ExternalBankAccountListParams,
-            response: Response
-        ) =
-            ExternalBankAccountListPage(
-                externalBankAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ExternalBankAccountListPage(externalBankAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ExternalBankAccountListPage,
-    ) : Sequence<ExternalBankAccountListResponse> {
+    class AutoPager(private val firstPage: ExternalBankAccountListPage) :
+        Sequence<ExternalBankAccountListResponse> {
 
         override fun iterator(): Iterator<ExternalBankAccountListResponse> = iterator {
             var page = firstPage

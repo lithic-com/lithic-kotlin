@@ -78,13 +78,8 @@ private constructor(
         fun of(
             settlementService: SettlementServiceAsync,
             params: ReportSettlementListDetailsParams,
-            response: Response
-        ) =
-            ReportSettlementListDetailsPageAsync(
-                settlementService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ReportSettlementListDetailsPageAsync(settlementService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ReportSettlementListDetailsPageAsync,
-    ) : Flow<SettlementDetail> {
+    class AutoPager(private val firstPage: ReportSettlementListDetailsPageAsync) :
+        Flow<SettlementDetail> {
 
         override suspend fun collect(collector: FlowCollector<SettlementDetail>) {
             var page = firstPage

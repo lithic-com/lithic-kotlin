@@ -17,24 +17,24 @@ interface BookTransferService {
      */
     fun create(
         params: BookTransferCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 
     /** Get book transfer by token */
     fun retrieve(
         params: BookTransferRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 
     /** List book transfers */
     fun list(
         params: BookTransferListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPage
 
     /** Reverse a book transfer */
     fun reverse(
         params: BookTransferReverseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
 }

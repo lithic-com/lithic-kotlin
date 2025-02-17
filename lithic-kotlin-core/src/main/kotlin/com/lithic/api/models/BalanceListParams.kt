@@ -49,7 +49,7 @@ private constructor(
         this.balanceDate?.let {
             queryParams.put(
                 "balance_date",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.businessAccountToken?.let {
@@ -217,9 +217,7 @@ private constructor(
     /** List balances for a given Financial Account type. */
     class FinancialAccountType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

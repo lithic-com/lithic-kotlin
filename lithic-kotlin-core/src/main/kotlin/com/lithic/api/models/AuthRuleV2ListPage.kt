@@ -68,11 +68,7 @@ private constructor(
     companion object {
 
         fun of(v2Service: V2Service, params: AuthRuleV2ListParams, response: Response) =
-            AuthRuleV2ListPage(
-                v2Service,
-                params,
-                response,
-            )
+            AuthRuleV2ListPage(v2Service, params, response)
     }
 
     @NoAutoDetect
@@ -153,18 +149,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AuthRuleV2ListPage,
-    ) : Sequence<V2ListResponse> {
+    class AutoPager(private val firstPage: AuthRuleV2ListPage) : Sequence<V2ListResponse> {
 
         override fun iterator(): Iterator<V2ListResponse> = iterator {
             var page = firstPage

@@ -78,13 +78,8 @@ private constructor(
         fun of(
             bookTransfersService: BookTransferServiceAsync,
             params: BookTransferListParams,
-            response: Response
-        ) =
-            BookTransferListPageAsync(
-                bookTransfersService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = BookTransferListPageAsync(bookTransfersService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: BookTransferListPageAsync,
-    ) : Flow<BookTransferResponse> {
+    class AutoPager(private val firstPage: BookTransferListPageAsync) : Flow<BookTransferResponse> {
 
         override suspend fun collect(collector: FlowCollector<BookTransferResponse>) {
             var page = firstPage

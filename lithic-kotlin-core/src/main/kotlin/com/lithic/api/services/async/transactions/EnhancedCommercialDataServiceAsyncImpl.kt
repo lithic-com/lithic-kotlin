@@ -16,9 +16,8 @@ import com.lithic.api.models.EnhancedCommercialDataRetrieveResponse
 import com.lithic.api.models.TransactionEnhancedCommercialDataRetrieveParams
 
 class EnhancedCommercialDataServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : EnhancedCommercialDataServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) :
+    EnhancedCommercialDataServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -32,7 +31,7 @@ internal constructor(
      */
     override suspend fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EnhancedCommercialDataRetrieveResponse {
         val request =
             HttpRequest.builder()
@@ -41,7 +40,7 @@ internal constructor(
                     "v1",
                     "transactions",
                     params.getPathParam(0),
-                    "enhanced_commercial_data"
+                    "enhanced_commercial_data",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

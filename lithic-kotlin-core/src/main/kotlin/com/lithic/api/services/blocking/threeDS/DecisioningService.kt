@@ -16,7 +16,7 @@ interface DecisioningService {
     /** Card program's response to a 3DS Challenge Request (CReq) */
     fun challengeResponse(
         params: ThreeDSDecisioningChallengeResponseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -29,7 +29,7 @@ interface DecisioningService {
      */
     fun retrieveSecret(
         params: ThreeDSDecisioningRetrieveSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DecisioningRetrieveSecretResponse
 
     /**
@@ -40,7 +40,7 @@ interface DecisioningService {
      */
     fun rotateSecret(
         params: ThreeDSDecisioningRotateSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -50,7 +50,7 @@ interface DecisioningService {
      */
     fun simulateChallenge(
         params: ThreeDSDecisioningSimulateChallengeParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DecisioningSimulateChallengeResponse
 
     /**
@@ -59,6 +59,6 @@ interface DecisioningService {
      */
     fun simulateChallengeResponse(
         params: ThreeDSDecisioningSimulateChallengeResponseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

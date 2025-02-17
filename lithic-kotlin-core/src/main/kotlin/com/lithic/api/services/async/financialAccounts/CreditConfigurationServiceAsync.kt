@@ -12,12 +12,12 @@ interface CreditConfigurationServiceAsync {
     /** Get an Account's credit configuration */
     suspend fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
     /** Update an account's credit configuration */
     suspend fun update(
         params: FinancialAccountCreditConfigurationUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 }

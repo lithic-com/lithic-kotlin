@@ -36,7 +36,7 @@ interface TransactionServiceAsync {
      */
     suspend fun retrieve(
         params: TransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
 
     /**
@@ -45,7 +45,7 @@ interface TransactionServiceAsync {
      */
     suspend fun list(
         params: TransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPageAsync
 
     /**
@@ -58,7 +58,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateAuthorization(
         params: TransactionSimulateAuthorizationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateAuthorizationResponse
 
     /**
@@ -67,7 +67,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateAuthorizationAdvice(
         params: TransactionSimulateAuthorizationAdviceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateAuthorizationAdviceResponse
 
     /**
@@ -79,7 +79,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateClearing(
         params: TransactionSimulateClearingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateClearingResponse
 
     /**
@@ -88,7 +88,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateCreditAuthorization(
         params: TransactionSimulateCreditAuthorizationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateCreditAuthorizationResponse
 
     /**
@@ -97,7 +97,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateReturn(
         params: TransactionSimulateReturnParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateReturnResponse
 
     /**
@@ -106,7 +106,7 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateReturnReversal(
         params: TransactionSimulateReturnReversalParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateReturnReversalResponse
 
     /**
@@ -117,6 +117,6 @@ interface TransactionServiceAsync {
      */
     suspend fun simulateVoid(
         params: TransactionSimulateVoidParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionSimulateVoidResponse
 }

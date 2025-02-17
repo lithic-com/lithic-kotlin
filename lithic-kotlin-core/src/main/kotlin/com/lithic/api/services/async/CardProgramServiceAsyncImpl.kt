@@ -17,10 +17,8 @@ import com.lithic.api.models.CardProgramListPageAsync
 import com.lithic.api.models.CardProgramListParams
 import com.lithic.api.models.CardProgramRetrieveParams
 
-class CardProgramServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CardProgramServiceAsync {
+class CardProgramServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CardProgramServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Get card program. */
     override suspend fun retrieve(
         params: CardProgramRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CardProgram {
         val request =
             HttpRequest.builder()
@@ -55,7 +53,7 @@ internal constructor(
     /** List card programs. */
     override suspend fun list(
         params: CardProgramListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CardProgramListPageAsync {
         val request =
             HttpRequest.builder()

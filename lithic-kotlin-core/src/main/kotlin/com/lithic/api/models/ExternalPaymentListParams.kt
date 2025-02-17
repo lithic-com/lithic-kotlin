@@ -313,9 +313,7 @@ private constructor(
     /** External Payment category to be returned. */
     class ExternalPaymentCategory
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -421,11 +419,8 @@ private constructor(
     }
 
     /** External Payment result to be returned. */
-    class TransactionResult
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionResult @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -517,11 +512,8 @@ private constructor(
     }
 
     /** Book transfer status to be returned. */
-    class TransactionStatus
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
