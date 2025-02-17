@@ -169,11 +169,11 @@ interface CardServiceAsync {
 
     suspend fun getEmbedHtml(
         params: CardGetEmbedHtmlParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): String
 
     suspend fun getEmbedUrl(
         params: CardGetEmbedUrlParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): String
 }
