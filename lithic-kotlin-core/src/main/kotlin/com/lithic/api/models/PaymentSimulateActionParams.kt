@@ -25,7 +25,7 @@ import java.util.Objects
 class PaymentSimulateActionParams
 private constructor(
     private val paymentToken: String,
-    private val body: PaymentSimulateActionBody,
+    private val body: SimulateActionRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -56,7 +56,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PaymentSimulateActionBody = body
+    internal fun _body(): SimulateActionRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -70,9 +70,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PaymentSimulateActionBody
+    class SimulateActionRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("event_type")
         @ExcludeMissing
         private val eventType: JsonField<SupportedSimulationTypes> = JsonMissing.of(),
@@ -117,7 +117,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PaymentSimulateActionBody = apply {
+        fun validate(): SimulateActionRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -135,7 +135,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PaymentSimulateActionBody]. */
+        /** A builder for [SimulateActionRequest]. */
         class Builder internal constructor() {
 
             private var eventType: JsonField<SupportedSimulationTypes>? = null
@@ -144,11 +144,11 @@ private constructor(
             private var returnReasonCode: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(paymentSimulateActionBody: PaymentSimulateActionBody) = apply {
-                eventType = paymentSimulateActionBody.eventType
-                declineReason = paymentSimulateActionBody.declineReason
-                returnReasonCode = paymentSimulateActionBody.returnReasonCode
-                additionalProperties = paymentSimulateActionBody.additionalProperties.toMutableMap()
+            internal fun from(simulateActionRequest: SimulateActionRequest) = apply {
+                eventType = simulateActionRequest.eventType
+                declineReason = simulateActionRequest.declineReason
+                returnReasonCode = simulateActionRequest.returnReasonCode
+                additionalProperties = simulateActionRequest.additionalProperties.toMutableMap()
             }
 
             /** Event Type */
@@ -196,8 +196,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PaymentSimulateActionBody =
-                PaymentSimulateActionBody(
+            fun build(): SimulateActionRequest =
+                SimulateActionRequest(
                     checkRequired("eventType", eventType),
                     declineReason,
                     returnReasonCode,
@@ -210,7 +210,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentSimulateActionBody && eventType == other.eventType && declineReason == other.declineReason && returnReasonCode == other.returnReasonCode && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SimulateActionRequest && eventType == other.eventType && declineReason == other.declineReason && returnReasonCode == other.returnReasonCode && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -220,7 +220,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentSimulateActionBody{eventType=$eventType, declineReason=$declineReason, returnReasonCode=$returnReasonCode, additionalProperties=$additionalProperties}"
+            "SimulateActionRequest{eventType=$eventType, declineReason=$declineReason, returnReasonCode=$returnReasonCode, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -235,7 +235,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var paymentToken: String? = null
-        private var body: PaymentSimulateActionBody.Builder = PaymentSimulateActionBody.builder()
+        private var body: SimulateActionRequest.Builder = SimulateActionRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

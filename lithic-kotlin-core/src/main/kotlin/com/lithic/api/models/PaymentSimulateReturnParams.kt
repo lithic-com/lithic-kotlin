@@ -22,7 +22,7 @@ import java.util.Objects
 /** Simulates a return of a Payment. */
 class PaymentSimulateReturnParams
 private constructor(
-    private val body: PaymentSimulateReturnBody,
+    private val body: SimulateOriginationReturnRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -45,16 +45,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PaymentSimulateReturnBody = body
+    internal fun _body(): SimulateOriginationReturnRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class PaymentSimulateReturnBody
+    class SimulateOriginationReturnRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("payment_token")
         @ExcludeMissing
         private val paymentToken: JsonField<String> = JsonMissing.of(),
@@ -87,7 +87,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PaymentSimulateReturnBody = apply {
+        fun validate(): SimulateOriginationReturnRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -104,18 +104,20 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PaymentSimulateReturnBody]. */
+        /** A builder for [SimulateOriginationReturnRequest]. */
         class Builder internal constructor() {
 
             private var paymentToken: JsonField<String>? = null
             private var returnReasonCode: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(paymentSimulateReturnBody: PaymentSimulateReturnBody) = apply {
-                paymentToken = paymentSimulateReturnBody.paymentToken
-                returnReasonCode = paymentSimulateReturnBody.returnReasonCode
-                additionalProperties = paymentSimulateReturnBody.additionalProperties.toMutableMap()
-            }
+            internal fun from(simulateOriginationReturnRequest: SimulateOriginationReturnRequest) =
+                apply {
+                    paymentToken = simulateOriginationReturnRequest.paymentToken
+                    returnReasonCode = simulateOriginationReturnRequest.returnReasonCode
+                    additionalProperties =
+                        simulateOriginationReturnRequest.additionalProperties.toMutableMap()
+                }
 
             /** Payment Token */
             fun paymentToken(paymentToken: String) = paymentToken(JsonField.of(paymentToken))
@@ -153,8 +155,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PaymentSimulateReturnBody =
-                PaymentSimulateReturnBody(
+            fun build(): SimulateOriginationReturnRequest =
+                SimulateOriginationReturnRequest(
                     checkRequired("paymentToken", paymentToken),
                     returnReasonCode,
                     additionalProperties.toImmutable(),
@@ -166,7 +168,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentSimulateReturnBody && paymentToken == other.paymentToken && returnReasonCode == other.returnReasonCode && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SimulateOriginationReturnRequest && paymentToken == other.paymentToken && returnReasonCode == other.returnReasonCode && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -176,7 +178,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentSimulateReturnBody{paymentToken=$paymentToken, returnReasonCode=$returnReasonCode, additionalProperties=$additionalProperties}"
+            "SimulateOriginationReturnRequest{paymentToken=$paymentToken, returnReasonCode=$returnReasonCode, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -190,7 +192,8 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: PaymentSimulateReturnBody.Builder = PaymentSimulateReturnBody.builder()
+        private var body: SimulateOriginationReturnRequest.Builder =
+            SimulateOriginationReturnRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

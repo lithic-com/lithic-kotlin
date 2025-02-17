@@ -34,7 +34,7 @@ import java.util.Objects
 class CardConvertPhysicalParams
 private constructor(
     private val cardToken: String,
-    private val body: CardConvertPhysicalBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -97,7 +97,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): CardConvertPhysicalBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -111,9 +111,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CardConvertPhysicalBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("shipping_address")
         @ExcludeMissing
         private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
@@ -192,7 +192,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CardConvertPhysicalBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -211,7 +211,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [CardConvertPhysicalBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var shippingAddress: JsonField<ShippingAddress>? = null
@@ -220,12 +220,12 @@ private constructor(
             private var shippingMethod: JsonField<ShippingMethod> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(cardConvertPhysicalBody: CardConvertPhysicalBody) = apply {
-                shippingAddress = cardConvertPhysicalBody.shippingAddress
-                carrier = cardConvertPhysicalBody.carrier
-                productId = cardConvertPhysicalBody.productId
-                shippingMethod = cardConvertPhysicalBody.shippingMethod
-                additionalProperties = cardConvertPhysicalBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                shippingAddress = body.shippingAddress
+                carrier = body.carrier
+                productId = body.productId
+                shippingMethod = body.shippingMethod
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The shipping address this card will be sent to. */
@@ -307,8 +307,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CardConvertPhysicalBody =
-                CardConvertPhysicalBody(
+            fun build(): Body =
+                Body(
                     checkRequired("shippingAddress", shippingAddress),
                     carrier,
                     productId,
@@ -322,7 +322,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CardConvertPhysicalBody && shippingAddress == other.shippingAddress && carrier == other.carrier && productId == other.productId && shippingMethod == other.shippingMethod && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && shippingAddress == other.shippingAddress && carrier == other.carrier && productId == other.productId && shippingMethod == other.shippingMethod && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -332,7 +332,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CardConvertPhysicalBody{shippingAddress=$shippingAddress, carrier=$carrier, productId=$productId, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
+            "Body{shippingAddress=$shippingAddress, carrier=$carrier, productId=$productId, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -347,7 +347,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var cardToken: String? = null
-        private var body: CardConvertPhysicalBody.Builder = CardConvertPhysicalBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

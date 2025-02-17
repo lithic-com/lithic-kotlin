@@ -24,7 +24,7 @@ import java.util.Objects
 class ExternalPaymentReleaseParams
 private constructor(
     private val externalPaymentToken: String,
-    private val body: ExternalPaymentReleaseBody,
+    private val body: ExternalPaymentActionRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -45,7 +45,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): ExternalPaymentReleaseBody = body
+    internal fun _body(): ExternalPaymentActionRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -59,9 +59,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ExternalPaymentReleaseBody
+    class ExternalPaymentActionRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("effective_date")
         @ExcludeMissing
         private val effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -88,7 +88,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ExternalPaymentReleaseBody = apply {
+        fun validate(): ExternalPaymentActionRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -105,18 +105,18 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [ExternalPaymentReleaseBody]. */
+        /** A builder for [ExternalPaymentActionRequest]. */
         class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate>? = null
             private var memo: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(externalPaymentReleaseBody: ExternalPaymentReleaseBody) = apply {
-                effectiveDate = externalPaymentReleaseBody.effectiveDate
-                memo = externalPaymentReleaseBody.memo
+            internal fun from(externalPaymentActionRequest: ExternalPaymentActionRequest) = apply {
+                effectiveDate = externalPaymentActionRequest.effectiveDate
+                memo = externalPaymentActionRequest.memo
                 additionalProperties =
-                    externalPaymentReleaseBody.additionalProperties.toMutableMap()
+                    externalPaymentActionRequest.additionalProperties.toMutableMap()
             }
 
             fun effectiveDate(effectiveDate: LocalDate) = effectiveDate(JsonField.of(effectiveDate))
@@ -148,8 +148,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ExternalPaymentReleaseBody =
-                ExternalPaymentReleaseBody(
+            fun build(): ExternalPaymentActionRequest =
+                ExternalPaymentActionRequest(
                     checkRequired("effectiveDate", effectiveDate),
                     memo,
                     additionalProperties.toImmutable(),
@@ -161,7 +161,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalPaymentReleaseBody && effectiveDate == other.effectiveDate && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExternalPaymentActionRequest && effectiveDate == other.effectiveDate && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -171,7 +171,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExternalPaymentReleaseBody{effectiveDate=$effectiveDate, memo=$memo, additionalProperties=$additionalProperties}"
+            "ExternalPaymentActionRequest{effectiveDate=$effectiveDate, memo=$memo, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -186,7 +186,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var externalPaymentToken: String? = null
-        private var body: ExternalPaymentReleaseBody.Builder = ExternalPaymentReleaseBody.builder()
+        private var body: ExternalPaymentActionRequest.Builder =
+            ExternalPaymentActionRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

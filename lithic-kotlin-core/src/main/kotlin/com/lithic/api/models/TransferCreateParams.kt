@@ -22,7 +22,7 @@ import java.util.Objects
 /** Transfer funds between two financial accounts or between a financial account and card */
 class TransferCreateParams
 private constructor(
-    private val body: TransferCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -87,16 +87,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): TransferCreateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class TransferCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Long> = JsonMissing.of(),
@@ -174,7 +174,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): TransferCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -194,7 +194,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [TransferCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -204,13 +204,13 @@ private constructor(
             private var memo: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(transferCreateBody: TransferCreateBody) = apply {
-                amount = transferCreateBody.amount
-                from = transferCreateBody.from
-                to = transferCreateBody.to
-                token = transferCreateBody.token
-                memo = transferCreateBody.memo
-                additionalProperties = transferCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                from = body.from
+                to = body.to
+                token = body.token
+                memo = body.memo
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -286,8 +286,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): TransferCreateBody =
-                TransferCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("amount", amount),
                     checkRequired("from", from),
                     checkRequired("to", to),
@@ -302,7 +302,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransferCreateBody && amount == other.amount && from == other.from && to == other.to && token == other.token && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && amount == other.amount && from == other.from && to == other.to && token == other.token && memo == other.memo && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -312,7 +312,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransferCreateBody{amount=$amount, from=$from, to=$to, token=$token, memo=$memo, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, from=$from, to=$to, token=$token, memo=$memo, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -326,7 +326,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: TransferCreateBody.Builder = TransferCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
