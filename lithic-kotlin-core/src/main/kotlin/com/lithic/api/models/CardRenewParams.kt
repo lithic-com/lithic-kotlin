@@ -31,7 +31,7 @@ import java.util.Objects
 class CardRenewParams
 private constructor(
     private val cardToken: String,
-    private val body: CardRenewBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -118,7 +118,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): CardRenewBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -132,9 +132,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CardRenewBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("shipping_address")
         @ExcludeMissing
         private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
@@ -243,7 +243,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CardRenewBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -264,7 +264,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [CardRenewBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var shippingAddress: JsonField<ShippingAddress>? = null
@@ -275,14 +275,14 @@ private constructor(
             private var shippingMethod: JsonField<ShippingMethod> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(cardRenewBody: CardRenewBody) = apply {
-                shippingAddress = cardRenewBody.shippingAddress
-                carrier = cardRenewBody.carrier
-                expMonth = cardRenewBody.expMonth
-                expYear = cardRenewBody.expYear
-                productId = cardRenewBody.productId
-                shippingMethod = cardRenewBody.shippingMethod
-                additionalProperties = cardRenewBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                shippingAddress = body.shippingAddress
+                carrier = body.carrier
+                expMonth = body.expMonth
+                expYear = body.expYear
+                productId = body.productId
+                shippingMethod = body.shippingMethod
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The shipping address this card will be sent to. */
@@ -388,8 +388,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CardRenewBody =
-                CardRenewBody(
+            fun build(): Body =
+                Body(
                     checkRequired("shippingAddress", shippingAddress),
                     carrier,
                     expMonth,
@@ -405,7 +405,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CardRenewBody && shippingAddress == other.shippingAddress && carrier == other.carrier && expMonth == other.expMonth && expYear == other.expYear && productId == other.productId && shippingMethod == other.shippingMethod && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && shippingAddress == other.shippingAddress && carrier == other.carrier && expMonth == other.expMonth && expYear == other.expYear && productId == other.productId && shippingMethod == other.shippingMethod && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -415,7 +415,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CardRenewBody{shippingAddress=$shippingAddress, carrier=$carrier, expMonth=$expMonth, expYear=$expYear, productId=$productId, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
+            "Body{shippingAddress=$shippingAddress, carrier=$carrier, expMonth=$expMonth, expYear=$expYear, productId=$productId, shippingMethod=$shippingMethod, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -430,7 +430,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var cardToken: String? = null
-        private var body: CardRenewBody.Builder = CardRenewBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

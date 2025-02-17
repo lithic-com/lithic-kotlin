@@ -26,7 +26,7 @@ import java.util.Objects
 class ExternalBankAccountUpdateParams
 private constructor(
     private val externalBankAccountToken: String,
-    private val body: ExternalBankAccountUpdateBody,
+    private val body: UpdateBankAccountApiRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -97,7 +97,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): ExternalBankAccountUpdateBody = body
+    internal fun _body(): UpdateBankAccountApiRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -111,9 +111,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class ExternalBankAccountUpdateBody
+    class UpdateBankAccountApiRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("address")
         @ExcludeMissing
         private val address: JsonField<ExternalBankAccountAddress> = JsonMissing.of(),
@@ -217,7 +217,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): ExternalBankAccountUpdateBody = apply {
+        fun validate(): UpdateBankAccountApiRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -241,7 +241,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [ExternalBankAccountUpdateBody]. */
+        /** A builder for [UpdateBankAccountApiRequest]. */
         class Builder internal constructor() {
 
             private var address: JsonField<ExternalBankAccountAddress> = JsonMissing.of()
@@ -255,20 +255,19 @@ private constructor(
             private var userDefinedId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(externalBankAccountUpdateBody: ExternalBankAccountUpdateBody) =
-                apply {
-                    address = externalBankAccountUpdateBody.address
-                    companyId = externalBankAccountUpdateBody.companyId
-                    dob = externalBankAccountUpdateBody.dob
-                    doingBusinessAs = externalBankAccountUpdateBody.doingBusinessAs
-                    name = externalBankAccountUpdateBody.name
-                    owner = externalBankAccountUpdateBody.owner
-                    ownerType = externalBankAccountUpdateBody.ownerType
-                    type = externalBankAccountUpdateBody.type
-                    userDefinedId = externalBankAccountUpdateBody.userDefinedId
-                    additionalProperties =
-                        externalBankAccountUpdateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(updateBankAccountApiRequest: UpdateBankAccountApiRequest) = apply {
+                address = updateBankAccountApiRequest.address
+                companyId = updateBankAccountApiRequest.companyId
+                dob = updateBankAccountApiRequest.dob
+                doingBusinessAs = updateBankAccountApiRequest.doingBusinessAs
+                name = updateBankAccountApiRequest.name
+                owner = updateBankAccountApiRequest.owner
+                ownerType = updateBankAccountApiRequest.ownerType
+                type = updateBankAccountApiRequest.type
+                userDefinedId = updateBankAccountApiRequest.userDefinedId
+                additionalProperties =
+                    updateBankAccountApiRequest.additionalProperties.toMutableMap()
+            }
 
             /** Address */
             fun address(address: ExternalBankAccountAddress) = address(JsonField.of(address))
@@ -354,8 +353,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): ExternalBankAccountUpdateBody =
-                ExternalBankAccountUpdateBody(
+            fun build(): UpdateBankAccountApiRequest =
+                UpdateBankAccountApiRequest(
                     address,
                     companyId,
                     dob,
@@ -374,7 +373,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalBankAccountUpdateBody && address == other.address && companyId == other.companyId && dob == other.dob && doingBusinessAs == other.doingBusinessAs && name == other.name && owner == other.owner && ownerType == other.ownerType && type == other.type && userDefinedId == other.userDefinedId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is UpdateBankAccountApiRequest && address == other.address && companyId == other.companyId && dob == other.dob && doingBusinessAs == other.doingBusinessAs && name == other.name && owner == other.owner && ownerType == other.ownerType && type == other.type && userDefinedId == other.userDefinedId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -384,7 +383,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExternalBankAccountUpdateBody{address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, type=$type, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+            "UpdateBankAccountApiRequest{address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, name=$name, owner=$owner, ownerType=$ownerType, type=$type, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -399,8 +398,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var externalBankAccountToken: String? = null
-        private var body: ExternalBankAccountUpdateBody.Builder =
-            ExternalBankAccountUpdateBody.builder()
+        private var body: UpdateBankAccountApiRequest.Builder =
+            UpdateBankAccountApiRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
