@@ -78,13 +78,8 @@ private constructor(
         fun of(
             managementOperationsService: ManagementOperationServiceAsync,
             params: ManagementOperationListParams,
-            response: Response
-        ) =
-            ManagementOperationListPageAsync(
-                managementOperationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ManagementOperationListPageAsync(managementOperationsService, params, response)
     }
 
     @NoAutoDetect
@@ -168,18 +163,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ManagementOperationListPageAsync,
-    ) : Flow<ManagementOperationTransaction> {
+    class AutoPager(private val firstPage: ManagementOperationListPageAsync) :
+        Flow<ManagementOperationTransaction> {
 
         override suspend fun collect(collector: FlowCollector<ManagementOperationTransaction>) {
             var page = firstPage

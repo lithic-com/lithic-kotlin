@@ -137,7 +137,7 @@ private constructor(
             fun build(): ExternalBankAccountRetryMicroDepositsBody =
                 ExternalBankAccountRetryMicroDepositsBody(
                     financialAccountToken,
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

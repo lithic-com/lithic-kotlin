@@ -68,11 +68,7 @@ private constructor(
     companion object {
 
         fun of(cardsService: CardService, params: CardListParams, response: Response) =
-            CardListPage(
-                cardsService,
-                params,
-                response,
-            )
+            CardListPage(cardsService, params, response)
     }
 
     @NoAutoDetect
@@ -153,18 +149,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CardListPage,
-    ) : Sequence<Card> {
+    class AutoPager(private val firstPage: CardListPage) : Sequence<Card> {
 
         override fun iterator(): Iterator<Card> = iterator {
             var page = firstPage

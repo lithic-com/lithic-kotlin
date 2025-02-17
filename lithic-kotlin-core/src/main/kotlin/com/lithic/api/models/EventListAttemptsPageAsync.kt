@@ -78,13 +78,8 @@ private constructor(
         fun of(
             eventsService: EventServiceAsync,
             params: EventListAttemptsParams,
-            response: Response
-        ) =
-            EventListAttemptsPageAsync(
-                eventsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = EventListAttemptsPageAsync(eventsService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +160,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: EventListAttemptsPageAsync,
-    ) : Flow<MessageAttempt> {
+    class AutoPager(private val firstPage: EventListAttemptsPageAsync) : Flow<MessageAttempt> {
 
         override suspend fun collect(collector: FlowCollector<MessageAttempt>) {
             var page = firstPage

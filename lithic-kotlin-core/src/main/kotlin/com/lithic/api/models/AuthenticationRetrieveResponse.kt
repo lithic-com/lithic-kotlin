@@ -685,7 +685,7 @@ private constructor(
                 checkRequired("messageCategory", messageCategory),
                 checkRequired(
                     "threeDSRequestorChallengeIndicator",
-                    threeDSRequestorChallengeIndicator
+                    threeDSRequestorChallengeIndicator,
                 ),
                 additionalData,
                 app,
@@ -704,11 +704,8 @@ private constructor(
      * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
      * `acctType`.
      */
-    class AccountType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class AccountType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -807,9 +804,7 @@ private constructor(
     /** Indicates the outcome of the 3DS authentication process. */
     class AuthenticationResult
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -917,11 +912,8 @@ private constructor(
      * Indicates whether the expiration date provided by the cardholder during checkout matches
      * Lithic's record of the card's expiration date.
      */
-    class CardExpiryCheck
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class CardExpiryCheck @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1574,11 +1566,7 @@ private constructor(
     }
 
     /** Channel in which the authentication occurs. Maps to EMV 3DS field deviceChannel. */
-    class Channel
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Channel @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2305,9 +2293,7 @@ private constructor(
              */
             class DeliveryTimeFrame
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2419,9 +2405,7 @@ private constructor(
              */
             class OrderAvailability
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2521,9 +2505,7 @@ private constructor(
              */
             class ReorderItems
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2623,9 +2605,7 @@ private constructor(
              */
             class ShippingMethod
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2800,11 +2780,8 @@ private constructor(
      * Either PAYMENT_AUTHENTICATION or NON_PAYMENT_AUTHENTICATION. For NON_PAYMENT_AUTHENTICATION,
      * additional_data and transaction fields are not populated.
      */
-    class MessageCategory
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class MessageCategory @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2908,9 +2885,7 @@ private constructor(
      */
     class ThreeDSRequestorChallengeIndicator
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -3189,9 +3164,7 @@ private constructor(
          */
         class NetworkDecision
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3421,12 +3394,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): App =
-                App(
-                    deviceInfo,
-                    ip,
-                    additionalProperties.toImmutable(),
-                )
+            fun build(): App = App(deviceInfo, ip, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -3454,9 +3422,7 @@ private constructor(
      */
     class AuthenticationRequestType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -3992,11 +3958,8 @@ private constructor(
         }
 
         /** The type of challenge method used for authentication. */
-        class MethodType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class MethodType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -4108,9 +4071,7 @@ private constructor(
     /** Entity that orchestrates the challenge. */
     class ChallengeOrchestratedBy
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -4210,11 +4171,8 @@ private constructor(
     }
 
     /** Entity that made the authentication decision. */
-    class DecisionMadeBy
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class DecisionMadeBy @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -4331,9 +4289,7 @@ private constructor(
      */
     class ThreeRiRequestType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -4727,11 +4683,7 @@ private constructor(
          * Type of the transaction for which a 3DS authentication request is occurring. Maps to EMV
          * 3DS field transType.
          */
-        class Type
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.

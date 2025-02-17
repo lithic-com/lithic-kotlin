@@ -11,6 +11,6 @@ interface BalanceService {
     /** Get the balances for a given financial account. */
     fun list(
         params: FinancialAccountBalanceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountBalanceListPage
 }

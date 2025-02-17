@@ -13,12 +13,12 @@ interface LoanTapeServiceAsync {
     /** Get a specific loan tape for a given financial account. */
     suspend fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): LoanTape
 
     /** List the loan tapes for a given financial account. */
     suspend fun list(
         params: FinancialAccountLoanTapeListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountLoanTapeListPageAsync
 }

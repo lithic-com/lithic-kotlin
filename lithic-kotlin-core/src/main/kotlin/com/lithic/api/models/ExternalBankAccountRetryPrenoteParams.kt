@@ -136,7 +136,7 @@ private constructor(
             fun build(): ExternalBankAccountRetryPrenoteBody =
                 ExternalBankAccountRetryPrenoteBody(
                     financialAccountToken,
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

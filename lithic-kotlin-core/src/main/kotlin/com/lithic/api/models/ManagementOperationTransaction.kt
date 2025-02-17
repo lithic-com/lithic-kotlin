@@ -319,9 +319,7 @@ private constructor(
 
     class ManagementOperationCategory
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -429,9 +427,7 @@ private constructor(
 
     class ManagementOperationDirection
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -749,9 +745,7 @@ private constructor(
 
         class DetailedResults
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -772,7 +766,7 @@ private constructor(
 
             /** An enum containing [DetailedResults]'s known values. */
             enum class Known {
-                APPROVED,
+                APPROVED
             }
 
             /**
@@ -838,9 +832,7 @@ private constructor(
 
         class TransactionResult
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -934,9 +926,7 @@ private constructor(
 
         class ManagementOperationEventType
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1122,11 +1112,8 @@ private constructor(
             "ManagementOperationEvent{token=$token, amount=$amount, created=$created, detailedResults=$detailedResults, effectiveDate=$effectiveDate, memo=$memo, result=$result, type=$type, subtype=$subtype, additionalProperties=$additionalProperties}"
     }
 
-    class TransactionResult
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionResult @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1217,11 +1204,8 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class TransactionStatus
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

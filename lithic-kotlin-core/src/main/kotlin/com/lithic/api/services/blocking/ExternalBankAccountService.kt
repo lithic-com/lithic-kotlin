@@ -24,36 +24,36 @@ interface ExternalBankAccountService {
     /** Creates an external bank account within a program or Lithic account. */
     fun create(
         params: ExternalBankAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
 
     /** Get the external bank account by token. */
     fun retrieve(
         params: ExternalBankAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetrieveResponse
 
     /** Update the external bank account by token. */
     fun update(
         params: ExternalBankAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountUpdateResponse
 
     /** List all the external bank accounts for the provided search criteria. */
     fun list(
         params: ExternalBankAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountListPage
 
     /** Retry external bank account micro deposit verification. */
     fun retryMicroDeposits(
         params: ExternalBankAccountRetryMicroDepositsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetryMicroDepositsResponse
 
     /** Retry external bank account prenote verification. */
     fun retryPrenote(
         params: ExternalBankAccountRetryPrenoteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetryPrenoteResponse
 }

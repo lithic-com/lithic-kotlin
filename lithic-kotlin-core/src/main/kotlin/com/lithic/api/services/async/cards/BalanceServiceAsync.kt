@@ -11,6 +11,6 @@ interface BalanceServiceAsync {
     /** Get the balances for a given card. */
     suspend fun list(
         params: CardBalanceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardBalanceListPageAsync
 }

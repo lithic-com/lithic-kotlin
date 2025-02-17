@@ -19,9 +19,7 @@ import com.lithic.api.models.AuthStreamEnrollmentRotateSecretParams
 import com.lithic.api.models.AuthStreamSecret
 
 class AuthStreamEnrollmentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AuthStreamEnrollmentServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : AuthStreamEnrollmentServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -37,7 +35,7 @@ internal constructor(
      */
     override suspend fun retrieveSecret(
         params: AuthStreamEnrollmentRetrieveSecretParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AuthStreamSecret {
         val request =
             HttpRequest.builder()
@@ -65,7 +63,7 @@ internal constructor(
      */
     override suspend fun rotateSecret(
         params: AuthStreamEnrollmentRotateSecretParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()

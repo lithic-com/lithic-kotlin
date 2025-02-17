@@ -234,11 +234,7 @@ private constructor(
             }
 
             fun build(): Results =
-                Results(
-                    currentVersion,
-                    draftVersion,
-                    additionalProperties.toImmutable(),
-                )
+                Results(currentVersion, draftVersion, additionalProperties.toImmutable())
         }
 
         @NoAutoDetect
@@ -572,12 +568,7 @@ private constructor(
                     }
 
                     fun build(): Example =
-                        Example(
-                            approved,
-                            eventToken,
-                            timestamp,
-                            additionalProperties.toImmutable(),
-                        )
+                        Example(approved, eventToken, timestamp, additionalProperties.toImmutable())
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -750,12 +741,7 @@ private constructor(
             }
 
             fun build(): SimulationParameters =
-                SimulationParameters(
-                    authRuleToken,
-                    end,
-                    start,
-                    additionalProperties.toImmutable(),
-                )
+                SimulationParameters(authRuleToken, end, start, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

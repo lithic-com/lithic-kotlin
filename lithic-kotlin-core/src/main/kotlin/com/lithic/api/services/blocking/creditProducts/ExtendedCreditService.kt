@@ -11,6 +11,6 @@ interface ExtendedCreditService {
     /** Get the extended credit for a given credit product under a program */
     fun retrieve(
         params: CreditProductExtendedCreditRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExtendedCredit
 }

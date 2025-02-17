@@ -32,10 +32,8 @@ import com.lithic.api.models.DisputeRetrieveEvidenceParams
 import com.lithic.api.models.DisputeRetrieveParams
 import com.lithic.api.models.DisputeUpdateParams
 
-class DisputeServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DisputeServiceAsync {
+class DisputeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    DisputeServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -45,7 +43,7 @@ internal constructor(
     /** Initiate a dispute. */
     override suspend fun create(
         params: DisputeCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Dispute {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
     /** Get dispute. */
     override suspend fun retrieve(
         params: DisputeRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Dispute {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
     /** Update dispute. Can only be modified if status is `NEW`. */
     override suspend fun update(
         params: DisputeUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Dispute {
         val request =
             HttpRequest.builder()
@@ -120,7 +118,7 @@ internal constructor(
     /** List disputes. */
     override suspend fun list(
         params: DisputeListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DisputeListPageAsync {
         val request =
             HttpRequest.builder()
@@ -145,7 +143,7 @@ internal constructor(
     /** Withdraw dispute. */
     override suspend fun delete(
         params: DisputeDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Dispute {
         val request =
             HttpRequest.builder()
@@ -173,7 +171,7 @@ internal constructor(
      */
     override suspend fun deleteEvidence(
         params: DisputeDeleteEvidenceParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DisputeEvidence {
         val request =
             HttpRequest.builder()
@@ -183,7 +181,7 @@ internal constructor(
                     "disputes",
                     params.getPathParam(0),
                     "evidences",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -210,7 +208,7 @@ internal constructor(
      */
     override suspend fun initiateEvidenceUpload(
         params: DisputeInitiateEvidenceUploadParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DisputeEvidence {
         val request =
             HttpRequest.builder()
@@ -236,7 +234,7 @@ internal constructor(
     /** List evidence metadata for a dispute. */
     override suspend fun listEvidences(
         params: DisputeListEvidencesParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DisputeListEvidencesPageAsync {
         val request =
             HttpRequest.builder()
@@ -261,7 +259,7 @@ internal constructor(
     /** Get a dispute's evidence metadata. */
     override suspend fun retrieveEvidence(
         params: DisputeRetrieveEvidenceParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DisputeEvidence {
         val request =
             HttpRequest.builder()
@@ -271,7 +269,7 @@ internal constructor(
                     "disputes",
                     params.getPathParam(0),
                     "evidences",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

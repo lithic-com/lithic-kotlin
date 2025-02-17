@@ -305,11 +305,7 @@ private constructor(
      * Note:
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -416,11 +412,8 @@ private constructor(
     }
 
     /** Status Reasons for KYC/KYB enrollment states */
-    class StatusReasons
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class StatusReasons @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

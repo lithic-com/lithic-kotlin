@@ -129,7 +129,7 @@ private constructor(
             fun build(): TransactionSimulateReturnReversalBody =
                 TransactionSimulateReturnReversalBody(
                     checkRequired("token", token),
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

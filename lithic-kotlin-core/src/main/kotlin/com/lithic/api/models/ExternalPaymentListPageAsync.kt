@@ -78,13 +78,8 @@ private constructor(
         fun of(
             externalPaymentsService: ExternalPaymentServiceAsync,
             params: ExternalPaymentListParams,
-            response: Response
-        ) =
-            ExternalPaymentListPageAsync(
-                externalPaymentsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ExternalPaymentListPageAsync(externalPaymentsService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +160,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ExternalPaymentListPageAsync,
-    ) : Flow<ExternalPayment> {
+    class AutoPager(private val firstPage: ExternalPaymentListPageAsync) : Flow<ExternalPayment> {
 
         override suspend fun collect(collector: FlowCollector<ExternalPayment>) {
             var page = firstPage

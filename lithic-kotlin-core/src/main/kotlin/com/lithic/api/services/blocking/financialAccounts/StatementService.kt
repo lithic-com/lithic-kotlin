@@ -16,12 +16,12 @@ interface StatementService {
     /** Get a specific statement for a given financial account. */
     fun retrieve(
         params: FinancialAccountStatementRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Statement
 
     /** List the statements for a given financial account. */
     fun list(
         params: FinancialAccountStatementListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementListPage
 }

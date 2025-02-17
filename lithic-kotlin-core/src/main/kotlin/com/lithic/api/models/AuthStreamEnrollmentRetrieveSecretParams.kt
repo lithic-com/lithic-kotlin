@@ -153,7 +153,7 @@ private constructor(
         fun build(): AuthStreamEnrollmentRetrieveSecretParams =
             AuthStreamEnrollmentRetrieveSecretParams(
                 additionalHeaders.build(),
-                additionalQueryParams.build()
+                additionalQueryParams.build(),
             )
     }
 

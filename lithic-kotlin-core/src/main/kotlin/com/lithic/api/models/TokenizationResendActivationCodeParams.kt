@@ -178,7 +178,7 @@ private constructor(
             fun build(): TokenizationResendActivationCodeBody =
                 TokenizationResendActivationCodeBody(
                     activationMethodType,
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -382,9 +382,7 @@ private constructor(
      */
     class ActivationMethodType
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -76,13 +76,8 @@ private constructor(
         fun of(
             settlementService: SettlementService,
             params: ReportSettlementListDetailsParams,
-            response: Response
-        ) =
-            ReportSettlementListDetailsPage(
-                settlementService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ReportSettlementListDetailsPage(settlementService, params, response)
     }
 
     @NoAutoDetect
@@ -164,18 +159,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ReportSettlementListDetailsPage,
-    ) : Sequence<SettlementDetail> {
+    class AutoPager(private val firstPage: ReportSettlementListDetailsPage) :
+        Sequence<SettlementDetail> {
 
         override fun iterator(): Iterator<SettlementDetail> = iterator {
             var page = firstPage

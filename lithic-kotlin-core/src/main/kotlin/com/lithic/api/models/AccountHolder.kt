@@ -1331,11 +1331,8 @@ private constructor(
     }
 
     /** The type of KYC exemption for a KYC-Exempt Account Holder. */
-    class ExemptionType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ExemptionType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1434,11 +1431,7 @@ private constructor(
      * Note:
      * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
      */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1544,11 +1537,8 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class StatusReason
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class StatusReason @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1698,11 +1688,7 @@ private constructor(
      * "beneficial_owner_individuals", "beneficial_owner_entities", "nature_of_business", and
      * "website_url" attributes will be present.
      */
-    class UserType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class UserType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1977,11 +1963,7 @@ private constructor(
          * Note:
          * - `PENDING_REVIEW` is only applicable for the `KYB_BASIC` workflow.
          */
-        class Status
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2089,11 +2071,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class StatusReason
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class StatusReason @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.

@@ -18,7 +18,7 @@ interface AuthStreamEnrollmentService {
      */
     fun retrieveSecret(
         params: AuthStreamEnrollmentRetrieveSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthStreamSecret
 
     /**
@@ -29,6 +29,6 @@ interface AuthStreamEnrollmentService {
      */
     fun rotateSecret(
         params: AuthStreamEnrollmentRotateSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

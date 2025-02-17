@@ -70,11 +70,7 @@ private constructor(
     companion object {
 
         fun of(v2Service: V2ServiceAsync, params: AuthRuleV2ListParams, response: Response) =
-            AuthRuleV2ListPageAsync(
-                v2Service,
-                params,
-                response,
-            )
+            AuthRuleV2ListPageAsync(v2Service, params, response)
     }
 
     @NoAutoDetect
@@ -155,18 +151,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AuthRuleV2ListPageAsync,
-    ) : Flow<V2ListResponse> {
+    class AutoPager(private val firstPage: AuthRuleV2ListPageAsync) : Flow<V2ListResponse> {
 
         override suspend fun collect(collector: FlowCollector<V2ListResponse>) {
             var page = firstPage
