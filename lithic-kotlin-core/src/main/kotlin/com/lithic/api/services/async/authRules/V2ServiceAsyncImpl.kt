@@ -34,10 +34,8 @@ import com.lithic.api.models.V2UpdateResponse
 import com.lithic.api.services.async.authRules.v2.BacktestServiceAsync
 import com.lithic.api.services.async.authRules.v2.BacktestServiceAsyncImpl
 
-class V2ServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : V2ServiceAsync {
+class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    V2ServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -51,7 +49,7 @@ internal constructor(
     /** Creates a new V2 authorization rule in draft mode */
     override suspend fun create(
         params: AuthRuleV2CreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2CreateResponse {
         val request =
             HttpRequest.builder()
@@ -76,7 +74,7 @@ internal constructor(
     /** Fetches a V2 authorization rule by its token */
     override suspend fun retrieve(
         params: AuthRuleV2RetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2RetrieveResponse {
         val request =
             HttpRequest.builder()
@@ -105,7 +103,7 @@ internal constructor(
      */
     override suspend fun update(
         params: AuthRuleV2UpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2UpdateResponse {
         val request =
             HttpRequest.builder()
@@ -131,7 +129,7 @@ internal constructor(
     /** Lists V2 authorization rules */
     override suspend fun list(
         params: AuthRuleV2ListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AuthRuleV2ListPageAsync {
         val request =
             HttpRequest.builder()
@@ -175,7 +173,7 @@ internal constructor(
      */
     override suspend fun apply(
         params: AuthRuleV2ApplyParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2ApplyResponse {
         val request =
             HttpRequest.builder()
@@ -205,7 +203,7 @@ internal constructor(
      */
     override suspend fun draft(
         params: AuthRuleV2DraftParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2DraftResponse {
         val request =
             HttpRequest.builder()
@@ -233,7 +231,7 @@ internal constructor(
      */
     override suspend fun promote(
         params: AuthRuleV2PromoteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2PromoteResponse {
         val request =
             HttpRequest.builder()
@@ -303,7 +301,7 @@ internal constructor(
      */
     override suspend fun report(
         params: AuthRuleV2ReportParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): V2ReportResponse {
         val request =
             HttpRequest.builder()

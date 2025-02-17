@@ -78,13 +78,8 @@ private constructor(
         fun of(
             externalBankAccountsService: ExternalBankAccountServiceAsync,
             params: ExternalBankAccountListParams,
-            response: Response
-        ) =
-            ExternalBankAccountListPageAsync(
-                externalBankAccountsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ExternalBankAccountListPageAsync(externalBankAccountsService, params, response)
     }
 
     @NoAutoDetect
@@ -168,18 +163,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ExternalBankAccountListPageAsync,
-    ) : Flow<ExternalBankAccountListResponse> {
+    class AutoPager(private val firstPage: ExternalBankAccountListPageAsync) :
+        Flow<ExternalBankAccountListResponse> {
 
         override suspend fun collect(collector: FlowCollector<ExternalBankAccountListResponse>) {
             var page = firstPage

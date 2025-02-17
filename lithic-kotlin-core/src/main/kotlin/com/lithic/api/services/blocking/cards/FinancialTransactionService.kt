@@ -13,12 +13,12 @@ interface FinancialTransactionService {
     /** Get the card financial transaction for the provided token. */
     fun retrieve(
         params: CardFinancialTransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransaction
 
     /** List the financial transactions for a given card. */
     fun list(
         params: CardFinancialTransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardFinancialTransactionListPage
 }

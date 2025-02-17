@@ -70,11 +70,7 @@ private constructor(
     companion object {
 
         fun of(cardsService: CardServiceAsync, params: CardListParams, response: Response) =
-            CardListPageAsync(
-                cardsService,
-                params,
-                response,
-            )
+            CardListPageAsync(cardsService, params, response)
     }
 
     @NoAutoDetect
@@ -155,18 +151,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CardListPageAsync,
-    ) : Flow<Card> {
+    class AutoPager(private val firstPage: CardListPageAsync) : Flow<Card> {
 
         override suspend fun collect(collector: FlowCollector<Card>) {
             var page = firstPage

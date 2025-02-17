@@ -32,30 +32,30 @@ interface FinancialAccountServiceAsync {
     /** Create a new financial account */
     suspend fun create(
         params: FinancialAccountCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
     /** Get a financial account */
     suspend fun retrieve(
         params: FinancialAccountRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
     /** Update a financial account */
     suspend fun update(
         params: FinancialAccountUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
     /** Retrieve information on your financial accounts including routing and account number. */
     suspend fun list(
         params: FinancialAccountListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPageAsync
 
     /** Update issuing account state to charged off */
     suspend fun chargeOff(
         params: FinancialAccountChargeOffParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 }

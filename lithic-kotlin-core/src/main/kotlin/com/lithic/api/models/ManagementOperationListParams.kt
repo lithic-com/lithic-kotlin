@@ -302,9 +302,7 @@ private constructor(
     /** Management operation category to be returned. */
     class ManagementOperationCategory
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -411,11 +409,8 @@ private constructor(
     }
 
     /** Management operation status to be returned. */
-    class TransactionStatus
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -754,7 +754,7 @@ private constructor(
                     checkRequired("consecutiveMinimumPaymentsMade", consecutiveMinimumPaymentsMade),
                     checkRequired(
                         "consecutiveMinimumPaymentsMissed",
-                        consecutiveMinimumPaymentsMissed
+                        consecutiveMinimumPaymentsMissed,
                     ),
                     checkRequired("daysPastDue", daysPastDue),
                     checkRequired("hasGrace", hasGrace),
@@ -764,11 +764,8 @@ private constructor(
                 )
         }
 
-        class PeriodState
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class PeriodState @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1253,11 +1250,8 @@ private constructor(
             "StatementTotals{balanceTransfers=$balanceTransfers, cashAdvances=$cashAdvances, credits=$credits, fees=$fees, interest=$interest, payments=$payments, purchases=$purchases, additionalProperties=$additionalProperties}"
     }
 
-    class StatementType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class StatementType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1701,9 +1695,7 @@ private constructor(
 
         class InterestCalculationMethod
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.

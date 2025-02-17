@@ -64,13 +64,8 @@ private constructor(
         fun of(
             financialTransactionsService: FinancialTransactionServiceAsync,
             params: FinancialTransactionListParams,
-            response: Response
-        ) =
-            FinancialTransactionListPageAsync(
-                financialTransactionsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = FinancialTransactionListPageAsync(financialTransactionsService, params, response)
     }
 
     @NoAutoDetect
@@ -152,18 +147,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: FinancialTransactionListPageAsync,
-    ) : Flow<FinancialTransaction> {
+    class AutoPager(private val firstPage: FinancialTransactionListPageAsync) :
+        Flow<FinancialTransaction> {
 
         override suspend fun collect(collector: FlowCollector<FinancialTransaction>) {
             var page = firstPage

@@ -266,11 +266,7 @@ private constructor(
     }
 
     /** Returns cards with the specified state. */
-    class State
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class State @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

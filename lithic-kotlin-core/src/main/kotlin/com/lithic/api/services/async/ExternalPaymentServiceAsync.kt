@@ -18,42 +18,42 @@ interface ExternalPaymentServiceAsync {
     /** Create external payment */
     suspend fun create(
         params: ExternalPaymentCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Get external payment */
     suspend fun retrieve(
         params: ExternalPaymentRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** List external payments */
     suspend fun list(
         params: ExternalPaymentListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPaymentListPageAsync
 
     /** Cancel external payment */
     suspend fun cancel(
         params: ExternalPaymentCancelParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Release external payment */
     suspend fun release(
         params: ExternalPaymentReleaseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Reverse external payment */
     suspend fun reverse(
         params: ExternalPaymentReverseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Settle external payment */
     suspend fun settle(
         params: ExternalPaymentSettleParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 }

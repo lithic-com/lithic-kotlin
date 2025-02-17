@@ -108,7 +108,7 @@ interface LithicClient {
     /** Status of api */
     fun apiStatus(
         params: ClientApiStatusParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ApiStatus
 
     /**

@@ -24,43 +24,43 @@ interface SubscriptionService {
     /** Create a new event subscription. */
     fun create(
         params: EventSubscriptionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Get an event subscription. */
     fun retrieve(
         params: EventSubscriptionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Update an event subscription. */
     fun update(
         params: EventSubscriptionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** List all the event subscriptions. */
     fun list(
         params: EventSubscriptionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPage
 
     /** Delete an event subscription. */
     fun delete(
         params: EventSubscriptionDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** List all the message attempts for a given event subscription. */
     fun listAttempts(
         params: EventSubscriptionListAttemptsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListAttemptsPage
 
     /** Resend all failed messages since a given time. */
     fun recover(
         params: EventSubscriptionRecoverParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -71,13 +71,13 @@ interface SubscriptionService {
      */
     fun replayMissing(
         params: EventSubscriptionReplayMissingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get the secret for an event subscription. */
     fun retrieveSecret(
         params: EventSubscriptionRetrieveSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionRetrieveSecretResponse
 
     /**
@@ -86,12 +86,12 @@ interface SubscriptionService {
      */
     fun rotateSecret(
         params: EventSubscriptionRotateSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Send an example message for event. */
     fun sendSimulatedExample(
         params: EventSubscriptionSendSimulatedExampleParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

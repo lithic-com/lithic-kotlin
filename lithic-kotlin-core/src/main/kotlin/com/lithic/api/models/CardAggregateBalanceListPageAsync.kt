@@ -64,13 +64,8 @@ private constructor(
         fun of(
             aggregateBalancesService: AggregateBalanceServiceAsync,
             params: CardAggregateBalanceListParams,
-            response: Response
-        ) =
-            CardAggregateBalanceListPageAsync(
-                aggregateBalancesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CardAggregateBalanceListPageAsync(aggregateBalancesService, params, response)
     }
 
     @NoAutoDetect
@@ -154,18 +149,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CardAggregateBalanceListPageAsync,
-    ) : Flow<AggregateBalanceListResponse> {
+    class AutoPager(private val firstPage: CardAggregateBalanceListPageAsync) :
+        Flow<AggregateBalanceListResponse> {
 
         override suspend fun collect(collector: FlowCollector<AggregateBalanceListResponse>) {
             var page = firstPage

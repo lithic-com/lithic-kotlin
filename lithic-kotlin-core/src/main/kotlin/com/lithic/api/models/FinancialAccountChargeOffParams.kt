@@ -137,7 +137,7 @@ private constructor(
             fun build(): FinancialAccountChargeOffBody =
                 FinancialAccountChargeOffBody(
                     checkRequired("reason", reason),
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -322,11 +322,8 @@ private constructor(
     }
 
     /** Reason for the financial account being marked as Charged Off */
-    class ChargedOffReason
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ChargedOffReason @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

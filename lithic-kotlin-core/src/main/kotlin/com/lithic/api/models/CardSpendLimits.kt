@@ -283,12 +283,7 @@ private constructor(
             }
 
             fun build(): AvailableSpendLimit =
-                AvailableSpendLimit(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toImmutable(),
-                )
+                AvailableSpendLimit(annually, forever, monthly, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -421,12 +416,7 @@ private constructor(
             }
 
             fun build(): SpendLimit =
-                SpendLimit(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toImmutable(),
-                )
+                SpendLimit(annually, forever, monthly, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -595,12 +585,7 @@ private constructor(
             }
 
             fun build(): SpendVelocity =
-                SpendVelocity(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toImmutable(),
-                )
+                SpendVelocity(annually, forever, monthly, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

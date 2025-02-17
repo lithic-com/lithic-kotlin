@@ -18,9 +18,7 @@ import com.lithic.api.models.FinancialAccountCreditConfigurationRetrieveParams
 import com.lithic.api.models.FinancialAccountCreditConfigurationUpdateParams
 
 class CreditConfigurationServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CreditConfigurationServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : CreditConfigurationServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** Get an Account's credit configuration */
     override suspend fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountCreditConfig {
         val request =
             HttpRequest.builder()
@@ -40,7 +38,7 @@ internal constructor(
                     "v1",
                     "financial_accounts",
                     params.getPathParam(0),
-                    "credit_configuration"
+                    "credit_configuration",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
@@ -61,7 +59,7 @@ internal constructor(
     /** Update an account's credit configuration */
     override suspend fun update(
         params: FinancialAccountCreditConfigurationUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountCreditConfig {
         val request =
             HttpRequest.builder()
@@ -70,7 +68,7 @@ internal constructor(
                     "v1",
                     "financial_accounts",
                     params.getPathParam(0),
-                    "credit_configuration"
+                    "credit_configuration",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()

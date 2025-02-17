@@ -153,7 +153,7 @@ private constructor(
         fun build(): TokenizationDecisioningRetrieveSecretParams =
             TokenizationDecisioningRetrieveSecretParams(
                 additionalHeaders.build(),
-                additionalQueryParams.build()
+                additionalQueryParams.build(),
             )
     }
 

@@ -18,10 +18,8 @@ import com.lithic.api.models.CreditProductPrimeRateCreateParams
 import com.lithic.api.models.CreditProductPrimeRateRetrieveParams
 import com.lithic.api.models.PrimeRateRetrieveResponse
 
-class PrimeRateServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PrimeRateServiceAsync {
+class PrimeRateServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PrimeRateServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Post Credit Product Prime Rate */
     override suspend fun create(
         params: CreditProductPrimeRateCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -50,7 +48,7 @@ internal constructor(
     /** Get Credit Product Prime Rates */
     override suspend fun retrieve(
         params: CreditProductPrimeRateRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PrimeRateRetrieveResponse {
         val request =
             HttpRequest.builder()

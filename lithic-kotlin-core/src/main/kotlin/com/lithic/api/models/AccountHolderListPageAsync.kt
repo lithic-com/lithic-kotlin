@@ -64,13 +64,8 @@ private constructor(
         fun of(
             accountHoldersService: AccountHolderServiceAsync,
             params: AccountHolderListParams,
-            response: Response
-        ) =
-            AccountHolderListPageAsync(
-                accountHoldersService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = AccountHolderListPageAsync(accountHoldersService, params, response)
     }
 
     @NoAutoDetect
@@ -151,18 +146,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AccountHolderListPageAsync,
-    ) : Flow<AccountHolder> {
+    class AutoPager(private val firstPage: AccountHolderListPageAsync) : Flow<AccountHolder> {
 
         override suspend fun collect(collector: FlowCollector<AccountHolder>) {
             var page = firstPage

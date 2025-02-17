@@ -652,11 +652,8 @@ private constructor(
     }
 
     /** Name of digital wallet provider. */
-    class DigitalWallet
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class DigitalWallet @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

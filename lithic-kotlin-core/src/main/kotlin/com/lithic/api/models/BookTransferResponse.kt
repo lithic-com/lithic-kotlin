@@ -417,11 +417,7 @@ private constructor(
     }
 
     /** Category of the book transfer */
-    class Category
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Category @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -798,9 +794,7 @@ private constructor(
 
         class DetailedResult
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -895,11 +889,7 @@ private constructor(
          * APPROVED financial events were successful while DECLINED financial events were declined
          * by user, Lithic, or the network.
          */
-        class Result
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Result @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1011,11 +1001,7 @@ private constructor(
      * APPROVED transactions were successful while DECLINED transactions were declined by user,
      * Lithic, or the network.
      */
-    class Result
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Result @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1107,11 +1093,7 @@ private constructor(
      * Status types: _ `DECLINED` - The transfer was declined. _ `REVERSED` - The transfer was
      * reversed \* `SETTLED` - The transfer is completed.
      */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

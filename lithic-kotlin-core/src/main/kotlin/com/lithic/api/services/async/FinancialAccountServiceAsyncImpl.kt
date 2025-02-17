@@ -33,9 +33,7 @@ import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
 import com.lithic.api.services.async.financialAccounts.StatementServiceAsyncImpl
 
 class FinancialAccountServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : FinancialAccountServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : FinancialAccountServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -71,7 +69,7 @@ internal constructor(
     /** Create a new financial account */
     override suspend fun create(
         params: FinancialAccountCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccount {
         val request =
             HttpRequest.builder()
@@ -96,7 +94,7 @@ internal constructor(
     /** Get a financial account */
     override suspend fun retrieve(
         params: FinancialAccountRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccount {
         val request =
             HttpRequest.builder()
@@ -120,7 +118,7 @@ internal constructor(
     /** Update a financial account */
     override suspend fun update(
         params: FinancialAccountUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccount {
         val request =
             HttpRequest.builder()
@@ -146,7 +144,7 @@ internal constructor(
     /** Retrieve information on your financial accounts including routing and account number. */
     override suspend fun list(
         params: FinancialAccountListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountListPageAsync {
         val request =
             HttpRequest.builder()
@@ -172,7 +170,7 @@ internal constructor(
     /** Update issuing account state to charged off */
     override suspend fun chargeOff(
         params: FinancialAccountChargeOffParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountCreditConfig {
         val request =
             HttpRequest.builder()

@@ -149,7 +149,7 @@ private constructor(
             fun build(): ExternalBankAccountMicroDepositCreateBody =
                 ExternalBankAccountMicroDepositCreateBody(
                     checkRequired("microDeposits", microDeposits).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

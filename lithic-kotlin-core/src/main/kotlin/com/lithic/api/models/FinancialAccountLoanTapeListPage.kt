@@ -76,13 +76,8 @@ private constructor(
         fun of(
             loanTapesService: LoanTapeService,
             params: FinancialAccountLoanTapeListParams,
-            response: Response
-        ) =
-            FinancialAccountLoanTapeListPage(
-                loanTapesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = FinancialAccountLoanTapeListPage(loanTapesService, params, response)
     }
 
     @NoAutoDetect
@@ -163,18 +158,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: FinancialAccountLoanTapeListPage,
-    ) : Sequence<LoanTape> {
+    class AutoPager(private val firstPage: FinancialAccountLoanTapeListPage) : Sequence<LoanTape> {
 
         override fun iterator(): Iterator<LoanTape> = iterator {
             var page = firstPage

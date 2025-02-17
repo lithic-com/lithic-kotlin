@@ -18,9 +18,7 @@ import com.lithic.api.models.DigitalCardArtListParams
 import com.lithic.api.models.DigitalCardArtRetrieveParams
 
 class DigitalCardArtServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DigitalCardArtServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : DigitalCardArtServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -30,7 +28,7 @@ internal constructor(
     /** Get digital card art by token. */
     override suspend fun retrieve(
         params: DigitalCardArtRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DigitalCardArt {
         val request =
             HttpRequest.builder()
@@ -55,7 +53,7 @@ internal constructor(
     /** List digital card art. */
     override suspend fun list(
         params: DigitalCardArtListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DigitalCardArtListPageAsync {
         val request =
             HttpRequest.builder()

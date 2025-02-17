@@ -17,10 +17,8 @@ import com.lithic.api.models.ReportSettlementListDetailsParams
 import com.lithic.api.models.ReportSettlementSummaryParams
 import com.lithic.api.models.SettlementReport
 
-class SettlementServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : SettlementServiceAsync {
+class SettlementServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    SettlementServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** List details. */
     override suspend fun listDetails(
         params: ReportSettlementListDetailsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ReportSettlementListDetailsPageAsync {
         val request =
             HttpRequest.builder()
@@ -56,7 +54,7 @@ internal constructor(
     /** Get the settlement report for a specified report date. Not available in sandbox. */
     override suspend fun summary(
         params: ReportSettlementSummaryParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SettlementReport {
         val request =
             HttpRequest.builder()

@@ -15,10 +15,8 @@ import com.lithic.api.errors.LithicError
 import com.lithic.api.models.FinancialAccountStatementLineItemListPageAsync
 import com.lithic.api.models.FinancialAccountStatementLineItemListParams
 
-class LineItemServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LineItemServiceAsync {
+class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LineItemServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -31,7 +29,7 @@ internal constructor(
     /** List the line items for a given statement within a given financial account. */
     override suspend fun list(
         params: FinancialAccountStatementLineItemListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): FinancialAccountStatementLineItemListPageAsync {
         val request =
             HttpRequest.builder()
@@ -42,7 +40,7 @@ internal constructor(
                     params.getPathParam(0),
                     "statements",
                     params.getPathParam(1),
-                    "line_items"
+                    "line_items",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

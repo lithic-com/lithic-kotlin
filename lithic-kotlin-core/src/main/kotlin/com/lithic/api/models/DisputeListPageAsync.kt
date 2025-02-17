@@ -72,13 +72,8 @@ private constructor(
         fun of(
             disputesService: DisputeServiceAsync,
             params: DisputeListParams,
-            response: Response
-        ) =
-            DisputeListPageAsync(
-                disputesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = DisputeListPageAsync(disputesService, params, response)
     }
 
     @NoAutoDetect
@@ -159,18 +154,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DisputeListPageAsync,
-    ) : Flow<Dispute> {
+    class AutoPager(private val firstPage: DisputeListPageAsync) : Flow<Dispute> {
 
         override suspend fun collect(collector: FlowCollector<Dispute>) {
             var page = firstPage

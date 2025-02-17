@@ -18,18 +18,18 @@ interface EventService {
     /** Get an event. */
     fun retrieve(
         params: EventRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
     /** List all events. */
     fun list(
         params: EventListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 
     /** List all the message attempts for a given event. */
     fun listAttempts(
         params: EventListAttemptsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPage
 }

@@ -13,12 +13,12 @@ interface DigitalCardArtServiceAsync {
     /** Get digital card art by token. */
     suspend fun retrieve(
         params: DigitalCardArtRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArt
 
     /** List digital card art. */
     suspend fun list(
         params: DigitalCardArtListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArtListPageAsync
 }

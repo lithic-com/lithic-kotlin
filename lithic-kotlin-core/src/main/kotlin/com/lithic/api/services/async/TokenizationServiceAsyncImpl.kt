@@ -28,10 +28,8 @@ import com.lithic.api.models.TokenizationUnpauseParams
 import com.lithic.api.models.TokenizationUpdateDigitalCardArtParams
 import com.lithic.api.models.TokenizationUpdateDigitalCardArtResponse
 
-class TokenizationServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TokenizationServiceAsync {
+class TokenizationServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    TokenizationServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -42,7 +40,7 @@ internal constructor(
     /** Get tokenization */
     override suspend fun retrieve(
         params: TokenizationRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TokenizationRetrieveResponse {
         val request =
             HttpRequest.builder()
@@ -67,7 +65,7 @@ internal constructor(
     /** List card tokenizations */
     override suspend fun list(
         params: TokenizationListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TokenizationListPageAsync {
         val request =
             HttpRequest.builder()
@@ -99,7 +97,7 @@ internal constructor(
      */
     override suspend fun activate(
         params: TokenizationActivateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -126,7 +124,7 @@ internal constructor(
      */
     override suspend fun deactivate(
         params: TokenizationDeactivateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -178,7 +176,7 @@ internal constructor(
      */
     override suspend fun resendActivationCode(
         params: TokenizationResendActivationCodeParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -187,7 +185,7 @@ internal constructor(
                     "v1",
                     "tokenizations",
                     params.getPathParam(0),
-                    "resend_activation_code"
+                    "resend_activation_code",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -206,7 +204,7 @@ internal constructor(
      */
     override suspend fun simulate(
         params: TokenizationSimulateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TokenizationSimulateResponse {
         val request =
             HttpRequest.builder()
@@ -237,7 +235,7 @@ internal constructor(
      */
     override suspend fun unpause(
         params: TokenizationUnpauseParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -265,7 +263,7 @@ internal constructor(
      */
     override suspend fun updateDigitalCardArt(
         params: TokenizationUpdateDigitalCardArtParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TokenizationUpdateDigitalCardArtResponse {
         val request =
             HttpRequest.builder()
@@ -274,7 +272,7 @@ internal constructor(
                     "v1",
                     "tokenizations",
                     params.getPathParam(0),
-                    "update_digital_card_art"
+                    "update_digital_card_art",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()

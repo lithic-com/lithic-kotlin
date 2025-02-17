@@ -66,9 +66,7 @@ import com.lithic.api.services.async.TransactionServiceAsyncImpl
 import com.lithic.api.services.async.TransferServiceAsync
 import com.lithic.api.services.async.TransferServiceAsyncImpl
 
-class LithicClientAsyncImpl(
-    private val clientOptions: ClientOptions,
-) : LithicClientAsync {
+class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicClientAsync {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions
@@ -240,7 +238,7 @@ class LithicClientAsyncImpl(
     /** Status of api */
     override suspend fun apiStatus(
         params: ClientApiStatusParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ApiStatus {
         val request =
             HttpRequest.builder()

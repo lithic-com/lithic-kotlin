@@ -18,18 +18,18 @@ interface EventServiceAsync {
     /** Get an event. */
     suspend fun retrieve(
         params: EventRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
     /** List all events. */
     suspend fun list(
         params: EventListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPageAsync
 
     /** List all the message attempts for a given event. */
     suspend fun listAttempts(
         params: EventListAttemptsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync
 }

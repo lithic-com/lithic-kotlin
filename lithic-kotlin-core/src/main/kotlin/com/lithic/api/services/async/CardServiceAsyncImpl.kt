@@ -36,10 +36,8 @@ import com.lithic.api.services.async.cards.BalanceServiceAsyncImpl
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsyncImpl
 
-class CardServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CardServiceAsync {
+class CardServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CardServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -90,7 +88,7 @@ internal constructor(
     /** Get card configuration such as spend limit and state. */
     override suspend fun retrieve(
         params: CardRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Card {
         val request =
             HttpRequest.builder()
@@ -141,7 +139,7 @@ internal constructor(
     /** List cards. */
     override suspend fun list(
         params: CardListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CardListPageAsync {
         val request =
             HttpRequest.builder()
@@ -175,7 +173,7 @@ internal constructor(
      */
     override suspend fun convertPhysical(
         params: CardConvertPhysicalParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Card {
         val request =
             HttpRequest.builder()
@@ -246,7 +244,7 @@ internal constructor(
      */
     override suspend fun provision(
         params: CardProvisionParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CardProvisionResponse {
         val request =
             HttpRequest.builder()
@@ -331,7 +329,7 @@ internal constructor(
      */
     override suspend fun retrieveSpendLimits(
         params: CardRetrieveSpendLimitsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CardSpendLimits {
         val request =
             HttpRequest.builder()
@@ -360,7 +358,7 @@ internal constructor(
      */
     override suspend fun searchByPan(
         params: CardSearchByPanParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Card {
         val request =
             HttpRequest.builder()

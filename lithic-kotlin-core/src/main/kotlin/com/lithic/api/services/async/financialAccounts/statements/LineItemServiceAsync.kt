@@ -11,6 +11,6 @@ interface LineItemServiceAsync {
     /** List the line items for a given statement within a given financial account. */
     suspend fun list(
         params: FinancialAccountStatementLineItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementLineItemListPageAsync
 }
