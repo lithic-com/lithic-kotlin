@@ -13,12 +13,12 @@ interface FinancialTransactionServiceAsync {
     /** Get the financial transaction for the provided token. */
     suspend fun retrieve(
         params: FinancialTransactionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransaction
 
     /** List the financial transactions for a given financial account. */
     suspend fun list(
         params: FinancialTransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransactionListPageAsync
 }

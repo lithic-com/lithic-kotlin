@@ -24,43 +24,43 @@ interface SubscriptionServiceAsync {
     /** Create a new event subscription. */
     suspend fun create(
         params: EventSubscriptionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Get an event subscription. */
     suspend fun retrieve(
         params: EventSubscriptionRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Update an event subscription. */
     suspend fun update(
         params: EventSubscriptionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** List all the event subscriptions. */
     suspend fun list(
         params: EventSubscriptionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPageAsync
 
     /** Delete an event subscription. */
     suspend fun delete(
         params: EventSubscriptionDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** List all the message attempts for a given event subscription. */
     suspend fun listAttempts(
         params: EventSubscriptionListAttemptsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListAttemptsPageAsync
 
     /** Resend all failed messages since a given time. */
     suspend fun recover(
         params: EventSubscriptionRecoverParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -71,13 +71,13 @@ interface SubscriptionServiceAsync {
      */
     suspend fun replayMissing(
         params: EventSubscriptionReplayMissingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get the secret for an event subscription. */
     suspend fun retrieveSecret(
         params: EventSubscriptionRetrieveSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionRetrieveSecretResponse
 
     /**
@@ -86,12 +86,12 @@ interface SubscriptionServiceAsync {
      */
     suspend fun rotateSecret(
         params: EventSubscriptionRotateSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Send an example message for event. */
     suspend fun sendSimulatedExample(
         params: EventSubscriptionSendSimulatedExampleParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 }

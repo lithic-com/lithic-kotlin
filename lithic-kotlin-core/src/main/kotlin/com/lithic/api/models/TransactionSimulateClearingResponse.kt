@@ -100,7 +100,7 @@ private constructor(
         fun build(): TransactionSimulateClearingResponse =
             TransactionSimulateClearingResponse(
                 debuggingRequestId,
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

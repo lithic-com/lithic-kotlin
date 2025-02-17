@@ -108,7 +108,7 @@ interface LithicClientAsync {
     /** Status of api */
     suspend fun apiStatus(
         params: ClientApiStatusParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ApiStatus
 
     /**

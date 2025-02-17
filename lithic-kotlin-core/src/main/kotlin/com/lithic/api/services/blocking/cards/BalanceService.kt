@@ -11,6 +11,6 @@ interface BalanceService {
     /** Get the balances for a given card. */
     fun list(
         params: CardBalanceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardBalanceListPage
 }

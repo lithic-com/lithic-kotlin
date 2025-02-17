@@ -19,7 +19,7 @@ interface TokenizationDecisioningService {
      */
     fun retrieveSecret(
         params: TokenizationDecisioningRetrieveSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationSecret
 
     /**
@@ -28,6 +28,6 @@ interface TokenizationDecisioningService {
      */
     fun rotateSecret(
         params: TokenizationDecisioningRotateSecretParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationDecisioningRotateSecretResponse
 }

@@ -29,13 +29,13 @@ interface V2ServiceAsync {
     /** Creates a new V2 authorization rule in draft mode */
     suspend fun create(
         params: AuthRuleV2CreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2CreateResponse
 
     /** Fetches a V2 authorization rule by its token */
     suspend fun retrieve(
         params: AuthRuleV2RetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveResponse
 
     /**
@@ -46,19 +46,19 @@ interface V2ServiceAsync {
      */
     suspend fun update(
         params: AuthRuleV2UpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2UpdateResponse
 
     /** Lists V2 authorization rules */
     suspend fun list(
         params: AuthRuleV2ListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRuleV2ListPageAsync
 
     /** Deletes a V2 authorization rule */
     suspend fun delete(
         params: AuthRuleV2DeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -68,7 +68,7 @@ interface V2ServiceAsync {
      */
     suspend fun apply(
         params: AuthRuleV2ApplyParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ApplyResponse
 
     /**
@@ -79,7 +79,7 @@ interface V2ServiceAsync {
      */
     suspend fun draft(
         params: AuthRuleV2DraftParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2DraftResponse
 
     /**
@@ -88,7 +88,7 @@ interface V2ServiceAsync {
      */
     suspend fun promote(
         params: AuthRuleV2PromoteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2PromoteResponse
 
     /**
@@ -139,6 +139,6 @@ interface V2ServiceAsync {
      */
     suspend fun report(
         params: AuthRuleV2ReportParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ReportResponse
 }

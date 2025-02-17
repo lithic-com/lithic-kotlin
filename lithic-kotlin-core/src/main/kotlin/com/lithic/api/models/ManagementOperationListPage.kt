@@ -76,13 +76,8 @@ private constructor(
         fun of(
             managementOperationsService: ManagementOperationService,
             params: ManagementOperationListParams,
-            response: Response
-        ) =
-            ManagementOperationListPage(
-                managementOperationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = ManagementOperationListPage(managementOperationsService, params, response)
     }
 
     @NoAutoDetect
@@ -166,18 +161,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ManagementOperationListPage,
-    ) : Sequence<ManagementOperationTransaction> {
+    class AutoPager(private val firstPage: ManagementOperationListPage) :
+        Sequence<ManagementOperationTransaction> {
 
         override fun iterator(): Iterator<ManagementOperationTransaction> = iterator {
             var page = firstPage

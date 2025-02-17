@@ -78,13 +78,8 @@ private constructor(
         fun of(
             digitalCardArtService: DigitalCardArtServiceAsync,
             params: DigitalCardArtListParams,
-            response: Response
-        ) =
-            DigitalCardArtListPageAsync(
-                digitalCardArtService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = DigitalCardArtListPageAsync(digitalCardArtService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +160,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DigitalCardArtListPageAsync,
-    ) : Flow<DigitalCardArt> {
+    class AutoPager(private val firstPage: DigitalCardArtListPageAsync) : Flow<DigitalCardArt> {
 
         override suspend fun collect(collector: FlowCollector<DigitalCardArt>) {
             var page = firstPage

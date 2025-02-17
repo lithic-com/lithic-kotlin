@@ -32,19 +32,19 @@ interface AccountHolderServiceAsync {
      */
     suspend fun create(
         params: AccountHolderCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderCreateResponse
 
     /** Get an Individual or Business Account Holder and/or their KYC or KYB evaluation status. */
     suspend fun retrieve(
         params: AccountHolderRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolder
 
     /** Update the information associated with a particular account holder. */
     suspend fun update(
         params: AccountHolderUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderUpdateResponse
 
     /**
@@ -52,7 +52,7 @@ interface AccountHolderServiceAsync {
      */
     suspend fun list(
         params: AccountHolderListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListPageAsync
 
     /**
@@ -72,7 +72,7 @@ interface AccountHolderServiceAsync {
      */
     suspend fun listDocuments(
         params: AccountHolderListDocumentsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListDocumentsResponse
 
     /**
@@ -92,13 +92,13 @@ interface AccountHolderServiceAsync {
      */
     suspend fun retrieveDocument(
         params: AccountHolderRetrieveDocumentParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
 
     /** Simulates a review for an account holder document upload. */
     suspend fun simulateEnrollmentDocumentReview(
         params: AccountHolderSimulateEnrollmentDocumentReviewParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
 
     /**
@@ -107,7 +107,7 @@ interface AccountHolderServiceAsync {
      */
     suspend fun simulateEnrollmentReview(
         params: AccountHolderSimulateEnrollmentReviewParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderSimulateEnrollmentReviewResponse
 
     /**
@@ -130,6 +130,6 @@ interface AccountHolderServiceAsync {
      */
     suspend fun uploadDocument(
         params: AccountHolderUploadDocumentParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
 }

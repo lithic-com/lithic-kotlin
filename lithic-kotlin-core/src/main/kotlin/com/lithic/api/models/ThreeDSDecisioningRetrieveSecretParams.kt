@@ -152,7 +152,7 @@ private constructor(
         fun build(): ThreeDSDecisioningRetrieveSecretParams =
             ThreeDSDecisioningRetrieveSecretParams(
                 additionalHeaders.build(),
-                additionalQueryParams.build()
+                additionalQueryParams.build(),
             )
     }
 

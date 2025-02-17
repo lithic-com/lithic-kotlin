@@ -11,6 +11,6 @@ interface MicroDepositServiceAsync {
     /** Verify the external bank account by providing the micro deposit amounts. */
     suspend fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): MicroDepositCreateResponse
 }

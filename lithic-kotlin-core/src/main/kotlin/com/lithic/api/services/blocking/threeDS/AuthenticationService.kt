@@ -13,7 +13,7 @@ interface AuthenticationService {
     /** Get 3DS Authentication by token */
     fun retrieve(
         params: ThreeDSAuthenticationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthenticationRetrieveResponse
 
     /**
@@ -23,6 +23,6 @@ interface AuthenticationService {
      */
     fun simulate(
         params: ThreeDSAuthenticationSimulateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthenticationSimulateResponse
 }

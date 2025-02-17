@@ -11,6 +11,6 @@ interface TransferService {
     /** Transfer funds between two financial accounts or between a financial account and card */
     fun create(
         params: TransferCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Transfer
 }

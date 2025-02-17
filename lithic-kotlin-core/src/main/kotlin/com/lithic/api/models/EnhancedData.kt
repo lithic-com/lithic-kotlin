@@ -652,20 +652,13 @@ private constructor(
                 }
 
                 fun build(): TaxData =
-                    TaxData(
-                        amount,
-                        exempt,
-                        merchantTaxId,
-                        additionalProperties.toImmutable(),
-                    )
+                    TaxData(amount, exempt, merchantTaxId, additionalProperties.toImmutable())
             }
 
             /** A flag indicating whether the transaction is tax exempt or not. */
             class TaxExemptIndicator
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1127,12 +1120,7 @@ private constructor(
                 }
 
                 fun build(): AmountTotals =
-                    AmountTotals(
-                        discount,
-                        grossSale,
-                        netSale,
-                        additionalProperties.toImmutable(),
-                    )
+                    AmountTotals(discount, grossSale, netSale, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1303,11 +1291,8 @@ private constructor(
             }
 
             /** The type of fuel purchased. */
-            class FuelType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class FuelType @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2217,9 +2202,7 @@ private constructor(
             /** Unit of measure for fuel disbursement. */
             class FuelUnitOfMeasure
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2362,11 +2345,8 @@ private constructor(
         }
 
         /** The type of fuel service. */
-        class ServiceType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class ServiceType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.

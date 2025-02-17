@@ -24,9 +24,7 @@ import com.lithic.api.models.ExternalPaymentReverseParams
 import com.lithic.api.models.ExternalPaymentSettleParams
 
 class ExternalPaymentServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalPaymentServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ExternalPaymentServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -36,7 +34,7 @@ internal constructor(
     /** Create external payment */
     override suspend fun create(
         params: ExternalPaymentCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()
@@ -61,7 +59,7 @@ internal constructor(
     /** Get external payment */
     override suspend fun retrieve(
         params: ExternalPaymentRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()
@@ -86,7 +84,7 @@ internal constructor(
     /** List external payments */
     override suspend fun list(
         params: ExternalPaymentListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPaymentListPageAsync {
         val request =
             HttpRequest.builder()
@@ -111,7 +109,7 @@ internal constructor(
     /** Cancel external payment */
     override suspend fun cancel(
         params: ExternalPaymentCancelParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()
@@ -136,7 +134,7 @@ internal constructor(
     /** Release external payment */
     override suspend fun release(
         params: ExternalPaymentReleaseParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()
@@ -161,7 +159,7 @@ internal constructor(
     /** Reverse external payment */
     override suspend fun reverse(
         params: ExternalPaymentReverseParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()
@@ -186,7 +184,7 @@ internal constructor(
     /** Settle external payment */
     override suspend fun settle(
         params: ExternalPaymentSettleParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ExternalPayment {
         val request =
             HttpRequest.builder()

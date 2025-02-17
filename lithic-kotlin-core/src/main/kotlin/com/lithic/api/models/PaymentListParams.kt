@@ -305,11 +305,7 @@ private constructor(
             )
     }
 
-    class Category
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Category @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -330,7 +326,7 @@ private constructor(
 
         /** An enum containing [Category]'s known values. */
         enum class Known {
-            ACH,
+            ACH
         }
 
         /**
@@ -391,11 +387,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Result
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Result @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -483,11 +475,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

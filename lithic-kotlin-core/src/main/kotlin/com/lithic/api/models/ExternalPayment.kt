@@ -319,9 +319,7 @@ private constructor(
 
     class ExternalPaymentCategory
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -634,9 +632,7 @@ private constructor(
 
         class DetailedResults
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -657,7 +653,7 @@ private constructor(
 
             /** An enum containing [DetailedResults]'s known values. */
             enum class Known {
-                APPROVED,
+                APPROVED
             }
 
             /**
@@ -723,9 +719,7 @@ private constructor(
 
         class TransactionResult
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -819,9 +813,7 @@ private constructor(
 
         class ExternalPaymentEventType
         @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1043,9 +1035,7 @@ private constructor(
 
     class ExternalPaymentDirection
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1138,11 +1128,8 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class TransactionResult
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionResult @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1233,11 +1220,8 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class TransactionStatus
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class TransactionStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

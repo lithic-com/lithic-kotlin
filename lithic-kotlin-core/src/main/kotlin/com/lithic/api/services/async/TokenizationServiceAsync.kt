@@ -22,13 +22,13 @@ interface TokenizationServiceAsync {
     /** Get tokenization */
     suspend fun retrieve(
         params: TokenizationRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationRetrieveResponse
 
     /** List card tokenizations */
     suspend fun list(
         params: TokenizationListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationListPageAsync
 
     /**
@@ -42,7 +42,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun activate(
         params: TokenizationActivateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -57,7 +57,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun deactivate(
         params: TokenizationDeactivateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -71,7 +71,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun pause(
         params: TokenizationPauseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -87,7 +87,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun resendActivationCode(
         params: TokenizationResendActivationCodeParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -96,7 +96,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun simulate(
         params: TokenizationSimulateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationSimulateResponse
 
     /**
@@ -109,7 +109,7 @@ interface TokenizationServiceAsync {
      */
     suspend fun unpause(
         params: TokenizationUnpauseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -123,6 +123,6 @@ interface TokenizationServiceAsync {
      */
     suspend fun updateDigitalCardArt(
         params: TokenizationUpdateDigitalCardArtParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationUpdateDigitalCardArtResponse
 }

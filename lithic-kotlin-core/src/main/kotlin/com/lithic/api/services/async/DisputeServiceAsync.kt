@@ -22,31 +22,31 @@ interface DisputeServiceAsync {
     /** Initiate a dispute. */
     suspend fun create(
         params: DisputeCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** Get dispute. */
     suspend fun retrieve(
         params: DisputeRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** Update dispute. Can only be modified if status is `NEW`. */
     suspend fun update(
         params: DisputeUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /** List disputes. */
     suspend fun list(
         params: DisputeListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPageAsync
 
     /** Withdraw dispute. */
     suspend fun delete(
         params: DisputeDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
     /**
@@ -55,7 +55,7 @@ interface DisputeServiceAsync {
      */
     suspend fun deleteEvidence(
         params: DisputeDeleteEvidenceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
     /**
@@ -67,18 +67,18 @@ interface DisputeServiceAsync {
      */
     suspend fun initiateEvidenceUpload(
         params: DisputeInitiateEvidenceUploadParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
     /** List evidence metadata for a dispute. */
     suspend fun listEvidences(
         params: DisputeListEvidencesParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListEvidencesPageAsync
 
     /** Get a dispute's evidence metadata. */
     suspend fun retrieveEvidence(
         params: DisputeRetrieveEvidenceParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 }

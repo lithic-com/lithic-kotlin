@@ -29,13 +29,13 @@ interface V2Service {
     /** Creates a new V2 authorization rule in draft mode */
     fun create(
         params: AuthRuleV2CreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2CreateResponse
 
     /** Fetches a V2 authorization rule by its token */
     fun retrieve(
         params: AuthRuleV2RetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveResponse
 
     /**
@@ -46,19 +46,19 @@ interface V2Service {
      */
     fun update(
         params: AuthRuleV2UpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2UpdateResponse
 
     /** Lists V2 authorization rules */
     fun list(
         params: AuthRuleV2ListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRuleV2ListPage
 
     /** Deletes a V2 authorization rule */
     fun delete(
         params: AuthRuleV2DeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -68,7 +68,7 @@ interface V2Service {
      */
     fun apply(
         params: AuthRuleV2ApplyParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ApplyResponse
 
     /**
@@ -79,7 +79,7 @@ interface V2Service {
      */
     fun draft(
         params: AuthRuleV2DraftParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2DraftResponse
 
     /**
@@ -88,7 +88,7 @@ interface V2Service {
      */
     fun promote(
         params: AuthRuleV2PromoteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2PromoteResponse
 
     /**
@@ -139,6 +139,6 @@ interface V2Service {
      */
     fun report(
         params: AuthRuleV2ReportParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ReportResponse
 }

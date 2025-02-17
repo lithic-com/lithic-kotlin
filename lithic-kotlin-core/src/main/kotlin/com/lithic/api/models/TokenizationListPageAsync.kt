@@ -78,13 +78,8 @@ private constructor(
         fun of(
             tokenizationsService: TokenizationServiceAsync,
             params: TokenizationListParams,
-            response: Response
-        ) =
-            TokenizationListPageAsync(
-                tokenizationsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = TokenizationListPageAsync(tokenizationsService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +160,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    hasMore,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, hasMore, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: TokenizationListPageAsync,
-    ) : Flow<Tokenization> {
+    class AutoPager(private val firstPage: TokenizationListPageAsync) : Flow<Tokenization> {
 
         override suspend fun collect(collector: FlowCollector<Tokenization>) {
             var page = firstPage

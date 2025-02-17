@@ -36,13 +36,13 @@ interface CardService {
      */
     fun create(
         params: CardCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
     /** Get card configuration such as spend limit and state. */
     fun retrieve(
         params: CardRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
     /**
@@ -52,13 +52,13 @@ interface CardService {
      */
     fun update(
         params: CardUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
     /** List cards. */
     fun list(
         params: CardListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPage
 
     /**
@@ -73,7 +73,7 @@ interface CardService {
      */
     fun convertPhysical(
         params: CardConvertPhysicalParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
     /**
@@ -104,7 +104,7 @@ interface CardService {
      */
     fun embed(
         params: CardEmbedParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): String
 
     /**
@@ -117,7 +117,7 @@ interface CardService {
      */
     fun provision(
         params: CardProvisionParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProvisionResponse
 
     /**
@@ -128,7 +128,7 @@ interface CardService {
      */
     fun reissue(
         params: CardReissueParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
     /**
@@ -148,7 +148,7 @@ interface CardService {
      */
     fun retrieveSpendLimits(
         params: CardRetrieveSpendLimitsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CardSpendLimits
 
     /**
@@ -159,6 +159,6 @@ interface CardService {
      */
     fun searchByPan(
         params: CardSearchByPanParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 }

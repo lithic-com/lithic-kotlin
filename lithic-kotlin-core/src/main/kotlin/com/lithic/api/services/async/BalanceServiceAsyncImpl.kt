@@ -15,10 +15,8 @@ import com.lithic.api.errors.LithicError
 import com.lithic.api.models.BalanceListPageAsync
 import com.lithic.api.models.BalanceListParams
 
-class BalanceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BalanceServiceAsync {
+class BalanceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    BalanceServiceAsync {
 
     private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
 
@@ -29,7 +27,7 @@ internal constructor(
     /** Get the balances for a program, business, or a given end-user account */
     override suspend fun list(
         params: BalanceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BalanceListPageAsync {
         val request =
             HttpRequest.builder()
