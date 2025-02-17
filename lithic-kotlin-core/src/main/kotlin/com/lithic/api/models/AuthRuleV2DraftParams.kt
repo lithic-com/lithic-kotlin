@@ -39,7 +39,7 @@ import java.util.Objects
 class AuthRuleV2DraftParams
 private constructor(
     private val authRuleToken: String,
-    private val body: AuthRuleV2DraftBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -58,7 +58,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): AuthRuleV2DraftBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -72,9 +72,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AuthRuleV2DraftBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("parameters")
         @ExcludeMissing
         private val parameters: JsonField<Parameters> = JsonMissing.of(),
@@ -96,7 +96,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AuthRuleV2DraftBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -112,15 +112,15 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [AuthRuleV2DraftBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var parameters: JsonField<Parameters> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(authRuleV2DraftBody: AuthRuleV2DraftBody) = apply {
-                parameters = authRuleV2DraftBody.parameters
-                additionalProperties = authRuleV2DraftBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                parameters = body.parameters
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** Parameters for the Auth Rule */
@@ -158,8 +158,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AuthRuleV2DraftBody =
-                AuthRuleV2DraftBody(parameters, additionalProperties.toImmutable())
+            fun build(): Body = Body(parameters, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -167,7 +166,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleV2DraftBody && parameters == other.parameters && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && parameters == other.parameters && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -177,7 +176,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AuthRuleV2DraftBody{parameters=$parameters, additionalProperties=$additionalProperties}"
+            "Body{parameters=$parameters, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -192,7 +191,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var authRuleToken: String? = null
-        private var body: AuthRuleV2DraftBody.Builder = AuthRuleV2DraftBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
