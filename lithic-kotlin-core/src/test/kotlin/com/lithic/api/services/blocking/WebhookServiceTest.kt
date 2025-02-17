@@ -72,7 +72,7 @@ class WebhookServiceTest {
                             .put("webhook-timestamp", "1676312022")
                             .put("webhook-signature", "v1,$webhookSignature")
                             .build(),
-                        null
+                        null,
                     )
             }
             .isInstanceOf(LithicException::class.java)
@@ -88,7 +88,7 @@ class WebhookServiceTest {
                             .put("webhook-timestamp", "1676312742")
                             .put("webhook-signature", "v1,$webhookSignature")
                             .build(),
-                        null
+                        null,
                     )
             }
             .isInstanceOf(LithicException::class.java)
@@ -110,12 +110,9 @@ class WebhookServiceTest {
                         Headers.builder()
                             .put("webhook-id", webhookId)
                             .put("webhook-timestamp", webhookTimestamp)
-                            .put(
-                                "webhook-signature",
-                                "v1,$webhookSignature v1,Zm9v",
-                            )
+                            .put("webhook-signature", "v1,$webhookSignature v1,Zm9v")
                             .build(),
-                        null
+                        null,
                     )
             }
             .doesNotThrowAnyException()
@@ -128,12 +125,9 @@ class WebhookServiceTest {
                         Headers.builder()
                             .put("webhook-id", webhookId)
                             .put("webhook-timestamp", webhookTimestamp)
-                            .put(
-                                "webhook-signature",
-                                "v2,$webhookSignature",
-                            )
+                            .put("webhook-signature", "v2,$webhookSignature")
                             .build(),
-                        null
+                        null,
                     )
             }
             .isInstanceOf(LithicException::class.java)
@@ -147,12 +141,9 @@ class WebhookServiceTest {
                         Headers.builder()
                             .put("webhook-id", webhookId)
                             .put("webhook-timestamp", webhookTimestamp)
-                            .put(
-                                "webhook-signature",
-                                "v1,$webhookSignature v2,$webhookSignature",
-                            )
+                            .put("webhook-signature", "v1,$webhookSignature v2,$webhookSignature")
                             .build(),
-                        null
+                        null,
                     )
             }
             .doesNotThrowAnyException()
@@ -165,12 +156,9 @@ class WebhookServiceTest {
                         Headers.builder()
                             .put("webhook-id", webhookId)
                             .put("webhook-timestamp", webhookTimestamp)
-                            .put(
-                                "webhook-signature",
-                                webhookSignature,
-                            )
+                            .put("webhook-signature", webhookSignature)
                             .build(),
-                        null
+                        null,
                     )
             }
             .isInstanceOf(LithicException::class.java)

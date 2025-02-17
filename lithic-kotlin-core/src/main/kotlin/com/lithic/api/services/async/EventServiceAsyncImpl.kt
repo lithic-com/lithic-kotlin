@@ -114,7 +114,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     override suspend fun resend(
         eventToken: String,
         eventSubscriptionToken: String,
-        body: JsonValue
+        body: JsonValue,
     ) {
         val request =
             HttpRequest.builder()
@@ -124,7 +124,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     eventToken,
                     "event_subscriptions",
                     eventSubscriptionToken,
-                    "resend"
+                    "resend",
                 )
                 .body(json(clientOptions.jsonMapper, body))
                 .build()
