@@ -24,7 +24,7 @@ import java.util.Objects
 /** Initiates a payment between a financial account and an external bank account. */
 class PaymentCreateParams
 private constructor(
-    private val body: PaymentCreateBody,
+    private val body: CreatePaymentRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -79,16 +79,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PaymentCreateBody = body
+    internal fun _body(): CreatePaymentRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class PaymentCreateBody
+    class CreatePaymentRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Long> = JsonMissing.of(),
@@ -179,7 +179,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PaymentCreateBody = apply {
+        fun validate(): CreatePaymentRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -203,7 +203,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PaymentCreateBody]. */
+        /** A builder for [CreatePaymentRequest]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -217,17 +217,17 @@ private constructor(
             private var userDefinedId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(paymentCreateBody: PaymentCreateBody) = apply {
-                amount = paymentCreateBody.amount
-                externalBankAccountToken = paymentCreateBody.externalBankAccountToken
-                financialAccountToken = paymentCreateBody.financialAccountToken
-                method = paymentCreateBody.method
-                methodAttributes = paymentCreateBody.methodAttributes
-                type = paymentCreateBody.type
-                token = paymentCreateBody.token
-                memo = paymentCreateBody.memo
-                userDefinedId = paymentCreateBody.userDefinedId
-                additionalProperties = paymentCreateBody.additionalProperties.toMutableMap()
+            internal fun from(createPaymentRequest: CreatePaymentRequest) = apply {
+                amount = createPaymentRequest.amount
+                externalBankAccountToken = createPaymentRequest.externalBankAccountToken
+                financialAccountToken = createPaymentRequest.financialAccountToken
+                method = createPaymentRequest.method
+                methodAttributes = createPaymentRequest.methodAttributes
+                type = createPaymentRequest.type
+                token = createPaymentRequest.token
+                memo = createPaymentRequest.memo
+                userDefinedId = createPaymentRequest.userDefinedId
+                additionalProperties = createPaymentRequest.additionalProperties.toMutableMap()
             }
 
             fun amount(amount: Long) = amount(JsonField.of(amount))
@@ -305,8 +305,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PaymentCreateBody =
-                PaymentCreateBody(
+            fun build(): CreatePaymentRequest =
+                CreatePaymentRequest(
                     checkRequired("amount", amount),
                     checkRequired("externalBankAccountToken", externalBankAccountToken),
                     checkRequired("financialAccountToken", financialAccountToken),
@@ -325,7 +325,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentCreateBody && amount == other.amount && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && type == other.type && token == other.token && memo == other.memo && userDefinedId == other.userDefinedId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreatePaymentRequest && amount == other.amount && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && type == other.type && token == other.token && memo == other.memo && userDefinedId == other.userDefinedId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -335,7 +335,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentCreateBody{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+            "CreatePaymentRequest{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -349,7 +349,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: PaymentCreateBody.Builder = PaymentCreateBody.builder()
+        private var body: CreatePaymentRequest.Builder = CreatePaymentRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

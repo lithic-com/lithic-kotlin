@@ -27,7 +27,7 @@ import java.util.Objects
  */
 class TokenizationSimulateParams
 private constructor(
-    private val body: TokenizationSimulateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -105,16 +105,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): TokenizationSimulateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class TokenizationSimulateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("cvv") @ExcludeMissing private val cvv: JsonField<String> = JsonMissing.of(),
         @JsonProperty("expiration_date")
         @ExcludeMissing
@@ -225,7 +225,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): TokenizationSimulateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -248,7 +248,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [TokenizationSimulateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var cvv: JsonField<String>? = null
@@ -262,16 +262,16 @@ private constructor(
                 JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(tokenizationSimulateBody: TokenizationSimulateBody) = apply {
-                cvv = tokenizationSimulateBody.cvv
-                expirationDate = tokenizationSimulateBody.expirationDate
-                pan = tokenizationSimulateBody.pan
-                tokenizationSource = tokenizationSimulateBody.tokenizationSource
-                accountScore = tokenizationSimulateBody.accountScore
-                deviceScore = tokenizationSimulateBody.deviceScore
-                entity = tokenizationSimulateBody.entity
-                walletRecommendedDecision = tokenizationSimulateBody.walletRecommendedDecision
-                additionalProperties = tokenizationSimulateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                cvv = body.cvv
+                expirationDate = body.expirationDate
+                pan = body.pan
+                tokenizationSource = body.tokenizationSource
+                accountScore = body.accountScore
+                deviceScore = body.deviceScore
+                entity = body.entity
+                walletRecommendedDecision = body.walletRecommendedDecision
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The three digit cvv for the card. */
@@ -370,8 +370,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): TokenizationSimulateBody =
-                TokenizationSimulateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("cvv", cvv),
                     checkRequired("expirationDate", expirationDate),
                     checkRequired("pan", pan),
@@ -389,7 +389,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TokenizationSimulateBody && cvv == other.cvv && expirationDate == other.expirationDate && pan == other.pan && tokenizationSource == other.tokenizationSource && accountScore == other.accountScore && deviceScore == other.deviceScore && entity == other.entity && walletRecommendedDecision == other.walletRecommendedDecision && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && cvv == other.cvv && expirationDate == other.expirationDate && pan == other.pan && tokenizationSource == other.tokenizationSource && accountScore == other.accountScore && deviceScore == other.deviceScore && entity == other.entity && walletRecommendedDecision == other.walletRecommendedDecision && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -399,7 +399,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TokenizationSimulateBody{cvv=$cvv, expirationDate=$expirationDate, pan=$pan, tokenizationSource=$tokenizationSource, accountScore=$accountScore, deviceScore=$deviceScore, entity=$entity, walletRecommendedDecision=$walletRecommendedDecision, additionalProperties=$additionalProperties}"
+            "Body{cvv=$cvv, expirationDate=$expirationDate, pan=$pan, tokenizationSource=$tokenizationSource, accountScore=$accountScore, deviceScore=$deviceScore, entity=$entity, walletRecommendedDecision=$walletRecommendedDecision, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -413,7 +413,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: TokenizationSimulateBody.Builder = TokenizationSimulateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

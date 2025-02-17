@@ -25,7 +25,7 @@ import java.util.Objects
  */
 class TransactionSimulateReturnParams
 private constructor(
-    private val body: TransactionSimulateReturnBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -54,16 +54,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): TransactionSimulateReturnBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class TransactionSimulateReturnBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Long> = JsonMissing.of(),
@@ -101,7 +101,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): TransactionSimulateReturnBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -119,7 +119,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [TransactionSimulateReturnBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
@@ -127,14 +127,12 @@ private constructor(
             private var pan: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(transactionSimulateReturnBody: TransactionSimulateReturnBody) =
-                apply {
-                    amount = transactionSimulateReturnBody.amount
-                    descriptor = transactionSimulateReturnBody.descriptor
-                    pan = transactionSimulateReturnBody.pan
-                    additionalProperties =
-                        transactionSimulateReturnBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                descriptor = body.descriptor
+                pan = body.pan
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /** Amount (in cents) to authorize. */
             fun amount(amount: Long) = amount(JsonField.of(amount))
@@ -173,8 +171,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): TransactionSimulateReturnBody =
-                TransactionSimulateReturnBody(
+            fun build(): Body =
+                Body(
                     checkRequired("amount", amount),
                     checkRequired("descriptor", descriptor),
                     checkRequired("pan", pan),
@@ -187,7 +185,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionSimulateReturnBody && amount == other.amount && descriptor == other.descriptor && pan == other.pan && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && amount == other.amount && descriptor == other.descriptor && pan == other.pan && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -197,7 +195,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransactionSimulateReturnBody{amount=$amount, descriptor=$descriptor, pan=$pan, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, descriptor=$descriptor, pan=$pan, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -211,8 +209,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: TransactionSimulateReturnBody.Builder =
-            TransactionSimulateReturnBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

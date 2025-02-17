@@ -27,7 +27,7 @@ import java.util.Objects
  */
 class CardCreateParams
 private constructor(
-    private val body: CardCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -296,16 +296,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): CardCreateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class CardCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
         @JsonProperty("account_token")
         @ExcludeMissing
@@ -648,7 +648,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CardCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -680,7 +680,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [CardCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var type: JsonField<Type>? = null
@@ -702,25 +702,25 @@ private constructor(
             private var state: JsonField<State> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(cardCreateBody: CardCreateBody) = apply {
-                type = cardCreateBody.type
-                accountToken = cardCreateBody.accountToken
-                cardProgramToken = cardCreateBody.cardProgramToken
-                carrier = cardCreateBody.carrier
-                digitalCardArtToken = cardCreateBody.digitalCardArtToken
-                expMonth = cardCreateBody.expMonth
-                expYear = cardCreateBody.expYear
-                memo = cardCreateBody.memo
-                pin = cardCreateBody.pin
-                productId = cardCreateBody.productId
-                replacementAccountToken = cardCreateBody.replacementAccountToken
-                replacementFor = cardCreateBody.replacementFor
-                shippingAddress = cardCreateBody.shippingAddress
-                shippingMethod = cardCreateBody.shippingMethod
-                spendLimit = cardCreateBody.spendLimit
-                spendLimitDuration = cardCreateBody.spendLimitDuration
-                state = cardCreateBody.state
-                additionalProperties = cardCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                type = body.type
+                accountToken = body.accountToken
+                cardProgramToken = body.cardProgramToken
+                carrier = body.carrier
+                digitalCardArtToken = body.digitalCardArtToken
+                expMonth = body.expMonth
+                expYear = body.expYear
+                memo = body.memo
+                pin = body.pin
+                productId = body.productId
+                replacementAccountToken = body.replacementAccountToken
+                replacementFor = body.replacementFor
+                shippingAddress = body.shippingAddress
+                shippingMethod = body.shippingMethod
+                spendLimit = body.spendLimit
+                spendLimitDuration = body.spendLimitDuration
+                state = body.state
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1039,8 +1039,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CardCreateBody =
-                CardCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("type", type),
                     accountToken,
                     cardProgramToken,
@@ -1067,7 +1067,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CardCreateBody && type == other.type && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && carrier == other.carrier && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && memo == other.memo && pin == other.pin && productId == other.productId && replacementAccountToken == other.replacementAccountToken && replacementFor == other.replacementFor && shippingAddress == other.shippingAddress && shippingMethod == other.shippingMethod && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && type == other.type && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && carrier == other.carrier && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && memo == other.memo && pin == other.pin && productId == other.productId && replacementAccountToken == other.replacementAccountToken && replacementFor == other.replacementFor && shippingAddress == other.shippingAddress && shippingMethod == other.shippingMethod && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1077,7 +1077,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CardCreateBody{type=$type, accountToken=$accountToken, cardProgramToken=$cardProgramToken, carrier=$carrier, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, pin=$pin, productId=$productId, replacementAccountToken=$replacementAccountToken, replacementFor=$replacementFor, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
+            "Body{type=$type, accountToken=$accountToken, cardProgramToken=$cardProgramToken, carrier=$carrier, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, memo=$memo, pin=$pin, productId=$productId, replacementAccountToken=$replacementAccountToken, replacementFor=$replacementFor, shippingAddress=$shippingAddress, shippingMethod=$shippingMethod, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1091,7 +1091,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: CardCreateBody.Builder = CardCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

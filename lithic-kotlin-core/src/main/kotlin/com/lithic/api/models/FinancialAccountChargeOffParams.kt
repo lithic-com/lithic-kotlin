@@ -25,7 +25,7 @@ import java.util.Objects
 class FinancialAccountChargeOffParams
 private constructor(
     private val financialAccountToken: String,
-    private val body: FinancialAccountChargeOffBody,
+    private val body: ChargeOffAccountRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -44,7 +44,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): FinancialAccountChargeOffBody = body
+    internal fun _body(): ChargeOffAccountRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -58,9 +58,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class FinancialAccountChargeOffBody
+    class ChargeOffAccountRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("reason")
         @ExcludeMissing
         private val reason: JsonField<ChargedOffReason> = JsonMissing.of(),
@@ -80,7 +80,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): FinancialAccountChargeOffBody = apply {
+        fun validate(): ChargeOffAccountRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -96,18 +96,16 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [FinancialAccountChargeOffBody]. */
+        /** A builder for [ChargeOffAccountRequest]. */
         class Builder internal constructor() {
 
             private var reason: JsonField<ChargedOffReason>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(financialAccountChargeOffBody: FinancialAccountChargeOffBody) =
-                apply {
-                    reason = financialAccountChargeOffBody.reason
-                    additionalProperties =
-                        financialAccountChargeOffBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(chargeOffAccountRequest: ChargeOffAccountRequest) = apply {
+                reason = chargeOffAccountRequest.reason
+                additionalProperties = chargeOffAccountRequest.additionalProperties.toMutableMap()
+            }
 
             /** Reason for the financial account being marked as Charged Off */
             fun reason(reason: ChargedOffReason) = reason(JsonField.of(reason))
@@ -134,8 +132,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): FinancialAccountChargeOffBody =
-                FinancialAccountChargeOffBody(
+            fun build(): ChargeOffAccountRequest =
+                ChargeOffAccountRequest(
                     checkRequired("reason", reason),
                     additionalProperties.toImmutable(),
                 )
@@ -146,7 +144,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountChargeOffBody && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ChargeOffAccountRequest && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -156,7 +154,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FinancialAccountChargeOffBody{reason=$reason, additionalProperties=$additionalProperties}"
+            "ChargeOffAccountRequest{reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -171,8 +169,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var financialAccountToken: String? = null
-        private var body: FinancialAccountChargeOffBody.Builder =
-            FinancialAccountChargeOffBody.builder()
+        private var body: ChargeOffAccountRequest.Builder = ChargeOffAccountRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

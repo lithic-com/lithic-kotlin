@@ -26,7 +26,9 @@ class AccountHolderUpdateParamsTest {
                 .email("email")
                 .phoneNumber("phone_number")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.businessAccountToken()).isEqualTo("business_account_token")
         assertThat(body.email()).isEqualTo("email")
@@ -39,7 +41,9 @@ class AccountHolderUpdateParamsTest {
             AccountHolderUpdateParams.builder()
                 .accountHolderToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

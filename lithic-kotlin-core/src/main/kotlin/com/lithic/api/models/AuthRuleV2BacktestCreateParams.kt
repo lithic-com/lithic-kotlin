@@ -46,7 +46,7 @@ import java.util.Objects
 class AuthRuleV2BacktestCreateParams
 private constructor(
     private val authRuleToken: String,
-    private val body: AuthRuleV2BacktestCreateBody,
+    private val body: BacktestRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -71,7 +71,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): AuthRuleV2BacktestCreateBody = body
+    internal fun _body(): BacktestRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -85,9 +85,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AuthRuleV2BacktestCreateBody
+    class BacktestRequest
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("end")
         @ExcludeMissing
         private val end: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -116,7 +116,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AuthRuleV2BacktestCreateBody = apply {
+        fun validate(): BacktestRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -133,18 +133,17 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [AuthRuleV2BacktestCreateBody]. */
+        /** A builder for [BacktestRequest]. */
         class Builder internal constructor() {
 
             private var end: JsonField<OffsetDateTime> = JsonMissing.of()
             private var start: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(authRuleV2BacktestCreateBody: AuthRuleV2BacktestCreateBody) = apply {
-                end = authRuleV2BacktestCreateBody.end
-                start = authRuleV2BacktestCreateBody.start
-                additionalProperties =
-                    authRuleV2BacktestCreateBody.additionalProperties.toMutableMap()
+            internal fun from(backtestRequest: BacktestRequest) = apply {
+                end = backtestRequest.end
+                start = backtestRequest.start
+                additionalProperties = backtestRequest.additionalProperties.toMutableMap()
             }
 
             /** The end time of the backtest. */
@@ -178,8 +177,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AuthRuleV2BacktestCreateBody =
-                AuthRuleV2BacktestCreateBody(end, start, additionalProperties.toImmutable())
+            fun build(): BacktestRequest =
+                BacktestRequest(end, start, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -187,7 +186,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleV2BacktestCreateBody && end == other.end && start == other.start && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BacktestRequest && end == other.end && start == other.start && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -197,7 +196,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AuthRuleV2BacktestCreateBody{end=$end, start=$start, additionalProperties=$additionalProperties}"
+            "BacktestRequest{end=$end, start=$start, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -212,8 +211,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var authRuleToken: String? = null
-        private var body: AuthRuleV2BacktestCreateBody.Builder =
-            AuthRuleV2BacktestCreateBody.builder()
+        private var body: BacktestRequest.Builder = BacktestRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
