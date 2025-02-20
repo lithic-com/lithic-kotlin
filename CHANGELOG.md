@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.78.0 (2025-02-20)
+
+Full Changelog: [v0.77.0...v0.78.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.77.0...v0.78.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** rename some params builder methods ([#472](https://github.com/lithic-com/lithic-kotlin/issues/472))
+
+### Features
+
+* **client:** support `JsonField#asX()` for known values ([#474](https://github.com/lithic-com/lithic-kotlin/issues/474)) ([6d2bf99](https://github.com/lithic-com/lithic-kotlin/commit/6d2bf99b5f228711a73cc9356c573e319291db51))
+* **client:** update enum `asX` methods ([#473](https://github.com/lithic-com/lithic-kotlin/issues/473)) ([8dc1cf2](https://github.com/lithic-com/lithic-kotlin/commit/8dc1cf22942009d83a494ecb812e695bc8e45e10))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([#481](https://github.com/lithic-com/lithic-kotlin/issues/481)) ([b51a28b](https://github.com/lithic-com/lithic-kotlin/commit/b51a28b6d8563df83d916ecdf783df59cbeea5b5))
+
+
+### Chores
+
+* **api:** new 3DS Event and new `challenge_metadata` property on Authentications ([#468](https://github.com/lithic-com/lithic-kotlin/issues/468)) ([17b80e6](https://github.com/lithic-com/lithic-kotlin/commit/17b80e605598c1bb5cbad8c2963f5108baaf9a9a))
+* **ci:** update gradle actions to v4 ([#478](https://github.com/lithic-com/lithic-kotlin/issues/478)) ([2dc33fb](https://github.com/lithic-com/lithic-kotlin/commit/2dc33fb27f76ce56c8af45fa27cf87236d72029e))
+* **client:** remove checked exception related code ([#479](https://github.com/lithic-com/lithic-kotlin/issues/479)) ([8fa143f](https://github.com/lithic-com/lithic-kotlin/commit/8fa143f9147b3260424c84b01a20ffebd1b21bfa))
+* **client:** rename some params builder methods ([#472](https://github.com/lithic-com/lithic-kotlin/issues/472)) ([01d3464](https://github.com/lithic-com/lithic-kotlin/commit/01d3464af31bbcfb77ade2964e2ce7bc3206328a))
+* **docs:** add faq to readme ([#480](https://github.com/lithic-com/lithic-kotlin/issues/480)) ([af02bea](https://github.com/lithic-com/lithic-kotlin/commit/af02bea51adc663ef1997f88783c95082aefc75a))
+* **docs:** reorganize readme ([#475](https://github.com/lithic-com/lithic-kotlin/issues/475)) ([9a3291e](https://github.com/lithic-com/lithic-kotlin/commit/9a3291e744dbaf58dd781315444e7c3a446fdfd9))
+* **internal:** get rid of configuration cache ([#477](https://github.com/lithic-com/lithic-kotlin/issues/477)) ([f127cf4](https://github.com/lithic-com/lithic-kotlin/commit/f127cf475dbbb4ab9abdc759d93011d65826511a))
+* **internal:** optimize build and test perf ([8ae4ab6](https://github.com/lithic-com/lithic-kotlin/commit/8ae4ab64861cc81f46c1855bbde67fb816b82578))
+* **internal:** optimize build and test perf ([46091e9](https://github.com/lithic-com/lithic-kotlin/commit/46091e95ac53954e39bba1a20d38abd8be18fdd9))
+* **internal:** remove unnecessary non-null asserts in tests ([b51a28b](https://github.com/lithic-com/lithic-kotlin/commit/b51a28b6d8563df83d916ecdf783df59cbeea5b5))
+* **internal:** update formatter ([8ae4ab6](https://github.com/lithic-com/lithic-kotlin/commit/8ae4ab64861cc81f46c1855bbde67fb816b82578))
+* **internal:** update formatter ([#471](https://github.com/lithic-com/lithic-kotlin/issues/471)) ([46091e9](https://github.com/lithic-com/lithic-kotlin/commit/46091e95ac53954e39bba1a20d38abd8be18fdd9))
+* **internal:** update some formatting in `Values.kt` ([6d2bf99](https://github.com/lithic-com/lithic-kotlin/commit/6d2bf99b5f228711a73cc9356c573e319291db51))
+* **internal:** use `assertNotNull` in tests for type narrowing ([b51a28b](https://github.com/lithic-com/lithic-kotlin/commit/b51a28b6d8563df83d916ecdf783df59cbeea5b5))
+
+
+### Documentation
+
+* add more phantom reachability docs ([#470](https://github.com/lithic-com/lithic-kotlin/issues/470)) ([c91fab0](https://github.com/lithic-com/lithic-kotlin/commit/c91fab02ae67fc8c954d3dd5c3367592953f1026))
+
 ## 0.77.0 (2025-02-05)
 
 Full Changelog: [v0.76.0...v0.77.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.76.0...v0.77.0)
