@@ -40,9 +40,34 @@ This library requires Java 8 or later.
 
 ## Usage
 
-### Configure the client
+```kotlin
+import com.lithic.api.client.LithicClient
+import com.lithic.api.client.okhttp.LithicOkHttpClient
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
 
-Use `LithicOkHttpClient.builder()` to configure the client. At a minimum you need to set `.apiKey()`:
+// Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
+val client: LithicClient = LithicOkHttpClient.fromEnv()
+
+val params: CardCreateParams = CardCreateParams.builder()
+    .type(CardCreateParams.Type.SINGLE_USE)
+    .build()
+val card: Card = client.cards().create(params)
+```
+
+## Client configuration
+
+Configure the client using environment variables:
+
+```kotlin
+import com.lithic.api.client.LithicClient
+import com.lithic.api.client.okhttp.LithicOkHttpClient
+
+// Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
+val client: LithicClient = LithicOkHttpClient.fromEnv()
+```
+
+Or manually:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
@@ -53,37 +78,65 @@ val client: LithicClient = LithicOkHttpClient.builder()
     .build()
 ```
 
-Alternately, set the environment with `LITHIC_API_KEY` or `LITHIC_WEBHOOK_SECRET`, and use `LithicOkHttpClient.fromEnv()` to read from the environment.
+Or using a combination of the two approaches:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-val client: LithicClient = LithicOkHttpClient.fromEnv()
-
-// Note: you can also call fromEnv() from the client builder, for example if you need to set additional properties
 val client: LithicClient = LithicOkHttpClient.builder()
+    // Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
     .fromEnv()
-    // ... set properties on the builder
+    .apiKey("My Lithic API Key")
     .build()
 ```
 
-| Property      | Environment variable    | Required | Default value |
-| ------------- | ----------------------- | -------- | ------------- |
-| apiKey        | `LITHIC_API_KEY`        | true     | —             |
-| webhookSecret | `LITHIC_WEBHOOK_SECRET` | false    | —             |
+See this table for the available options:
 
-Read the documentation for more configuration options.
+| Setter          | Environment variable    | Required | Default value |
+| --------------- | ----------------------- | -------- | ------------- |
+| `apiKey`        | `LITHIC_API_KEY`        | true     | -             |
+| `webhookSecret` | `LITHIC_WEBHOOK_SECRET` | false    | -             |
 
----
+> [!TIP]
+> Don't create more than one client in the same application. Each client has a connection pool and
+> thread pools, which are more efficient to share between requests.
 
-### Example: creating a resource
+## Requests and responses
 
-To create a new card, first use the `CardCreateParams` builder to specify attributes, then pass that to the `create` method of the `cards` service.
+To send a request to the Lithic API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a Kotlin class.
+
+For example, `client.cards().create(...)` should be called with an instance of `CardCreateParams`, and it will return an instance of `Card`.
+
+## Asynchronous execution
+
+The default client is synchronous. To switch to asynchronous execution, call the `async()` method:
 
 ```kotlin
+import com.lithic.api.client.LithicClient
+import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
+
+// Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
+val client: LithicClient = LithicOkHttpClient.fromEnv()
+
+val params: CardCreateParams = CardCreateParams.builder()
+    .type(CardCreateParams.Type.SINGLE_USE)
+    .build()
+val card: Card = client.async().cards().create(params)
+```
+
+Or create an asynchronous client from the beginning:
+
+```kotlin
+import com.lithic.api.client.LithicClientAsync
+import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
+
+// Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
+val client: LithicClientAsync = LithicOkHttpClientAsync.fromEnv()
 
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
@@ -91,152 +144,30 @@ val params: CardCreateParams = CardCreateParams.builder()
 val card: Card = client.cards().create(params)
 ```
 
-### Example: listing resources
+The asynchronous client supports the same options as the synchronous one, except most methods are [suspending](https://kotlinlang.org/docs/coroutines-guide.html).
 
-The Lithic API provides a `list` method to get a paginated list of cards. You can retrieve the first page by:
+## Error handling
 
-```kotlin
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardListPage
+The SDK throws custom unchecked exception types:
 
-val page: CardListPage = client.cards().list()
-for (card: Card in page.data()) {
-    print(card)
-}
-```
+- `LithicServiceException`: Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-Use the `CardListParams` builder to set parameters:
+  | Status | Exception                       |
+  | ------ | ------------------------------- |
+  | 400    | `BadRequestException`           |
+  | 401    | `AuthenticationException`       |
+  | 403    | `PermissionDeniedException`     |
+  | 404    | `NotFoundException`             |
+  | 422    | `UnprocessableEntityException`  |
+  | 429    | `RateLimitException`            |
+  | 5xx    | `InternalServerException`       |
+  | others | `UnexpectedStatusCodeException` |
 
-```kotlin
-import com.lithic.api.models.CardListPage
-import com.lithic.api.models.CardListParams
-import java.time.OffsetDateTime
+- `LithicIoException`: I/O networking errors.
 
-val params: CardListParams = CardListParams.builder()
-    .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-    .begin(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    .end(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-    .endingBefore("ending_before")
-    .pageSize(1L)
-    .startingAfter("starting_after")
-    .state(CardListParams.State.CLOSED)
-    .build()
-val page1: CardListPage = client.cards().list(params)
+- `LithicInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
-// Using the `from` method of the builder you can reuse previous params values:
-val page2: CardListPage = client.cards().list(CardListParams.builder()
-    .from(params)
-    .build())
-
-// Or easily get params for the next page by using the helper `getNextPageParams`:
-val page3: CardListPage = client.cards().list(params.getNextPageParams(page2))
-```
-
-See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
-
----
-
-## Enums
-
-The Lithic SDK generates wrapper classes for all enum properties in the API. You can read and write these
-values directly using the static instances of the class:
-
-```kotlin
-// Read an enum property
-if (card.state == Card.State.CLOSED) {
-  // ...
-}
-
-// Write an enum property
-card.builder().state(Card.State.CLOSED).build()
-```
-
-Over time, the Lithic API may add new values to the property that are not yet represented by the enum type in
-this SDK. If an unrecognized value is found, the enum is set to a special sentinel value `_UNKNOWN` and you can use `asString` to read the string that was received:
-
-```kotlin
-when (card.state.value()) {
-    Card.State.Value.CLOSED -> {
-        // ... handle recognized enum value
-    }
-    ...
-    case Card.State.Value._UNKNOWN -> {
-        String cardState = card.state.asString()
-        // ... handle unrecognized enum value as string
-    }
-}
-```
-
-To write an unrecognized enum value, pass a string to the wrapper class's `of` constructor method:
-
-```kotlin
-Card.builder().state(State.of("NEW_STATE")).build()
-```
-
-## Requests
-
-### Parameters and bodies
-
-To make a request to the Lithic API, you generally build an instance of the appropriate `Params` class.
-
-See [Undocumented request params](#undocumented-request-params) for how to send arbitrary parameters.
-
-## Responses
-
-### Response validation
-
-When receiving a response, the Lithic Kotlin SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Kotlin type. If you directly access the mistaken property, the SDK will throw an unchecked `LithicInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
-
-```kotlin
-import com.lithic.api.models.Card
-
-val card: Card = client.cards().create().validate()
-```
-
-### Nullable Properties
-
-Model properties that are optional or allow a null value are represented as `Optional`. The empty case can represent either that the field was provided as null, or that it was simply not present.
-
-```kotlin
-// Card.cvv returns String?
-card.cvv != null // false
-```
-
-### Response properties as JSON
-
-In rare cases, you may want to access the underlying JSON value for a response property rather than using the typed version provided by this SDK. Each model property has a corresponding JSON version, with an underscore before the method name, which returns a `JsonField` value.
-
-```kotlin
-import com.lithic.api.core.JsonField
-import java.util.Optional
-
-val field: JsonField = responseObj._field
-
-if (field.isMissing()) {
-  // Value was not specified in the JSON response
-} else if (field.isNull()) {
-  // Value was provided as a literal null
-} else {
-  // See if value was provided as a string
-  val jsonString: String? = field.asString();
-
-  // If the value given by the API did not match the shape that the SDK expects
-  // you can deserialise into a custom type
-  val myObj: MyClass = responseObj._field.asUnknown()?.convert(MyClass.class)
-}
-```
-
-### Additional model properties
-
-Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
-
-```kotlin
-import com.lithic.api.core.JsonValue
-
-val secret: JsonValue = address._additionalProperties().get("secret_field")
-```
-
----
+- `LithicException`: Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
 
 ## Pagination
 
@@ -285,9 +216,21 @@ while (page != null) {
 }
 ```
 
----
+## Logging
 
----
+The SDK uses the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
+
+Enable logging by setting the `LITHIC_LOG` environment variable to `info`:
+
+```sh
+$ export LITHIC_LOG=info
+```
+
+Or to `debug` for more verbose logging:
+
+```sh
+$ export LITHIC_LOG=debug
+```
 
 ## Webhook Verification
 
@@ -299,36 +242,23 @@ both of which will raise an error if the signature is invalid.
 Note that the "body" parameter must be the raw JSON string sent from the server (do not parse it first).
 The `.unwrap()` method can parse this JSON for you.
 
----
-
-## Error handling
-
-This library throws exceptions in a single hierarchy for easy handling:
-
-- **`LithicException`** - Base exception for all exceptions
-
-- **`LithicServiceException`** - HTTP errors with a well-formed response body we were able to parse. The exception message and the `.debuggingRequestId()` will be set by the server.
-
-  | 400    | BadRequestException           |
-  | ------ | ----------------------------- |
-  | 401    | AuthenticationException       |
-  | 403    | PermissionDeniedException     |
-  | 404    | NotFoundException             |
-  | 422    | UnprocessableEntityException  |
-  | 429    | RateLimitException            |
-  | 5xx    | InternalServerException       |
-  | others | UnexpectedStatusCodeException |
-
-- **`LithicIoException`** - I/O networking errors
-- **`LithicInvalidDataException`** - any other exceptions on the client side, e.g.:
-  - We failed to serialize the request body
-  - We failed to parse the response body (has access to response code and body)
-
 ## Network options
 
 ### Retries
 
-Requests that experience certain errors are automatically retried 2 times by default, with a short exponential backoff. Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors will all be retried by default. You can provide a `maxRetries` on the client builder to configure this:
+The SDK automatically retries 2 times by default, with a short exponential backoff.
+
+Only the following error types are retried:
+
+- Connection errors (for example, due to a network connectivity problem)
+- 408 Request Timeout
+- 409 Conflict
+- 429 Rate Limit
+- 5xx Internal
+
+The API may also explicitly instruct the SDK to retry or not retry a response.
+
+To set a custom number of retries, configure the client using the `maxRetries` method:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
@@ -342,7 +272,20 @@ val client: LithicClient = LithicOkHttpClient.builder()
 
 ### Timeouts
 
-Requests time out after 1 minute by default. You can configure this on the client builder:
+Requests time out after 1 minute by default.
+
+To set a custom timeout, configure the method call using the `timeout` method:
+
+```kotlin
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
+
+val card: Card = client.cards().create(
+  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
+)
+```
+
+Or configure the default for all method calls at the client level:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
@@ -357,7 +300,7 @@ val client: LithicClient = LithicOkHttpClient.builder()
 
 ### Proxies
 
-Requests can be routed through a proxy. You can configure this on the client builder:
+To route requests through a proxy, configure the client using the `proxy` method:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
@@ -367,13 +310,17 @@ import java.net.Proxy
 
 val client: LithicClient = LithicOkHttpClient.builder()
     .fromEnv()
-    .proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("example.com", 8080)))
+    .proxy(Proxy(
+      Proxy.Type.HTTP, InetSocketAddress(
+        "https://example.com", 8080
+      )
+    ))
     .build()
 ```
 
 ### Environments
 
-Requests are made to the production environment by default. You can connect to other environments, like `sandbox`, via the client builder:
+The SDK sends requests to the production by default. To send requests to a different environment, configure the client like so:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
@@ -385,15 +332,13 @@ val client: LithicClient = LithicOkHttpClient.builder()
     .build()
 ```
 
-## Making custom/undocumented requests
+## Undocumented API functionality
 
-This library is typed for convenient access to the documented API. If you need to access undocumented params or response properties, the library can still be used.
+The SDK is typed for convenient usage of the documented API. However, it also supports working with undocumented or not yet supported parts of the API.
 
-### Undocumented request params
+### Parameters
 
-In [Example: creating a resource](#example-creating-a-resource) above, we used the `CardCreateParams.builder()` to pass to the `create` method of the `cards` service.
-
-Sometimes, the API may support other properties that are not yet supported in the Kotlin SDK types. In that case, you can attach them using raw setters:
+To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQueryParam`, or `putAdditionalBodyProperty` methods on any `Params` class:
 
 ```kotlin
 import com.lithic.api.core.JsonValue
@@ -406,26 +351,98 @@ val params: CardCreateParams = CardCreateParams.builder()
     .build()
 ```
 
-You can also use the `putAdditionalProperty` method on nested headers, query params, or body objects.
+These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
 
-### Undocumented response properties
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a `JsonValue` object to its setter:
 
-To access undocumented response properties, you can use `res._additionalProperties()` on a response object to get a map of untyped fields of type `Map<String, JsonValue>`. You can then access fields like `res._additionalProperties().get("secret_prop").asString()` or use other helpers defined on the `JsonValue` class to extract it to a desired type.
+```kotlin
+import com.lithic.api.core.JsonValue
+import com.lithic.api.models.CardCreateParams
 
-## Logging
-
-We use the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
-
-You can enable logging by setting the environment variable `LITHIC_LOG` to `info`.
-
-```sh
-$ export LITHIC_LOG=info
+val params: CardCreateParams = CardCreateParams.builder()
+    .type(JsonValue.from(42))
+    .build()
 ```
 
-Or to `debug` for more verbose logging.
+### Response properties
 
-```sh
-$ export LITHIC_LOG=debug
+To access undocumented response properties, call the `_additionalProperties()` method:
+
+```kotlin
+import com.lithic.api.core.JsonBoolean
+import com.lithic.api.core.JsonNull
+import com.lithic.api.core.JsonNumber
+import com.lithic.api.core.JsonValue
+
+val additionalProperties: Map<String, JsonValue> = client.cards().create(params)._additionalProperties()
+val secretPropertyValue: JsonValue = additionalProperties.get("secretProperty")
+
+val result = when (secretPropertyValue) {
+    is JsonNull -> "It's null!"
+    is JsonBoolean -> "It's a boolean!"
+    is JsonNumber -> "It's a number!"
+    // Other types include `JsonMissing`, `JsonString`, `JsonArray`, and `JsonObject`
+    else -> "It's something else!"
+}
+```
+
+To access a property's raw JSON value, which may be undocumented, call its `_` prefixed method:
+
+```kotlin
+import com.lithic.api.core.JsonField
+import com.lithic.api.models.CardCreateParams
+
+val type: JsonField<CardCreateParams.Type> = client.cards().create(params)._type()
+
+if (type.isMissing()) {
+  // The property is absent from the JSON response
+} else if (type.isNull()) {
+  // The property was set to literal null
+} else {
+  // Check if value was provided as a string
+  // Other methods include `asNumber()`, `asBoolean()`, etc.
+  val jsonString: String? = type.asString();
+
+  // Try to deserialize into a custom type
+  val myObject: MyClass = type.asUnknown()!!.convert(MyClass::class.java)
+}
+```
+
+### Response validation
+
+In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `String`, but the API could return something else.
+
+By default, the SDK will not throw an exception in this case. It will throw `LithicInvalidDataException` only if you directly access the property.
+
+If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
+
+```kotlin
+import com.lithic.api.models.Card
+
+val card: Card = client.cards().create(params).validate()
+```
+
+Or configure the method call to validate the response using the `responseValidation` method:
+
+```kotlin
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
+
+val card: Card = client.cards().create(
+  params, RequestOptions.builder().responseValidation(true).build()
+)
+```
+
+Or configure the default for all method calls at the client level:
+
+```kotlin
+import com.lithic.api.client.LithicClient
+import com.lithic.api.client.okhttp.LithicOkHttpClient
+
+val client: LithicClient = LithicOkHttpClient.builder()
+    .fromEnv()
+    .responseValidation(true)
+    .build()
 ```
 
 ## Semantic versioning
