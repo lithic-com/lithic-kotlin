@@ -52,7 +52,7 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalBankAcc
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("v1", "external_bank_accounts")
-                .body(json(clientOptions.jsonMapper, params._body()))
+                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepareAsync(clientOptions, params)
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
