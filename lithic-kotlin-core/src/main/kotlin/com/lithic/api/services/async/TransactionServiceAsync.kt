@@ -44,9 +44,16 @@ interface TransactionServiceAsync {
      * (e.g., cents for USD) and inclusive of any acquirer fees.
      */
     suspend fun list(
-        params: TransactionListParams,
+        params: TransactionListParams = TransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPageAsync
+
+    /**
+     * List card transactions. All amounts are in the smallest unit of their respective currency
+     * (e.g., cents for USD) and inclusive of any acquirer fees.
+     */
+    suspend fun list(requestOptions: RequestOptions): TransactionListPageAsync =
+        list(TransactionListParams.none(), requestOptions)
 
     /**
      * Simulates an authorization request from the card network as if it came from a merchant

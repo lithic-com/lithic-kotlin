@@ -107,9 +107,13 @@ interface LithicClientAsync {
 
     /** Status of api */
     suspend fun apiStatus(
-        params: ClientApiStatusParams,
+        params: ClientApiStatusParams = ClientApiStatusParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ApiStatus
+
+    /** Status of api */
+    suspend fun apiStatus(requestOptions: RequestOptions): ApiStatus =
+        apiStatus(ClientApiStatusParams.none(), requestOptions)
 
     /**
      * Closes this client, relinquishing any underlying resources.

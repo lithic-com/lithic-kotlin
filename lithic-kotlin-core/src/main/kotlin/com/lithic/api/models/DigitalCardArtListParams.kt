@@ -52,6 +52,8 @@ private constructor(
 
     companion object {
 
+        fun none(): DigitalCardArtListParams = builder().build()
+
         fun builder() = Builder()
     }
 

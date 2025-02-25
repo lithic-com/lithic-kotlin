@@ -39,9 +39,13 @@ interface DisputeServiceAsync {
 
     /** List disputes. */
     suspend fun list(
-        params: DisputeListParams,
+        params: DisputeListParams = DisputeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPageAsync
+
+    /** List disputes. */
+    suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
+        list(DisputeListParams.none(), requestOptions)
 
     /** Withdraw dispute. */
     suspend fun delete(

@@ -28,9 +28,13 @@ interface BookTransferService {
 
     /** List book transfers */
     fun list(
-        params: BookTransferListParams,
+        params: BookTransferListParams = BookTransferListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPage
+
+    /** List book transfers */
+    fun list(requestOptions: RequestOptions): BookTransferListPage =
+        list(BookTransferListParams.none(), requestOptions)
 
     /** Reverse a book transfer */
     fun reverse(

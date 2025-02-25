@@ -165,6 +165,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ThreeDSDecisioningSimulateChallengeParams = builder().build()
+
         fun builder() = Builder()
     }
 
