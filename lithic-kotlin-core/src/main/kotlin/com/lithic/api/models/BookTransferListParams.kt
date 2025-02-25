@@ -113,6 +113,8 @@ private constructor(
 
     companion object {
 
+        fun none(): BookTransferListParams = builder().build()
+
         fun builder() = Builder()
     }
 

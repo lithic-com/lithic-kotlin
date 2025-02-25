@@ -89,6 +89,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ExternalBankAccountListParams = builder().build()
+
         fun builder() = Builder()
     }
 

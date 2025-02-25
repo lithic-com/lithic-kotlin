@@ -66,6 +66,8 @@ private constructor(
 
     companion object {
 
+        fun none(): BalanceListParams = builder().build()
+
         fun builder() = Builder()
     }
 

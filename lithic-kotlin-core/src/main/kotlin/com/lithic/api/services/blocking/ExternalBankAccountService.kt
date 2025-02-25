@@ -23,9 +23,13 @@ interface ExternalBankAccountService {
 
     /** Creates an external bank account within a program or Lithic account. */
     fun create(
-        params: ExternalBankAccountCreateParams,
+        params: ExternalBankAccountCreateParams = ExternalBankAccountCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
+
+    /** Creates an external bank account within a program or Lithic account. */
+    fun create(requestOptions: RequestOptions): ExternalBankAccountCreateResponse =
+        create(ExternalBankAccountCreateParams.none(), requestOptions)
 
     /** Get the external bank account by token. */
     fun retrieve(
@@ -41,9 +45,13 @@ interface ExternalBankAccountService {
 
     /** List all the external bank accounts for the provided search criteria. */
     fun list(
-        params: ExternalBankAccountListParams,
+        params: ExternalBankAccountListParams = ExternalBankAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountListPage
+
+    /** List all the external bank accounts for the provided search criteria. */
+    fun list(requestOptions: RequestOptions): ExternalBankAccountListPage =
+        list(ExternalBankAccountListParams.none(), requestOptions)
 
     /** Retry external bank account micro deposit verification. */
     fun retryMicroDeposits(

@@ -10,7 +10,11 @@ interface AggregateBalanceService {
 
     /** Get the aggregated card balance across all end-user accounts. */
     fun list(
-        params: CardAggregateBalanceListParams,
+        params: CardAggregateBalanceListParams = CardAggregateBalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardAggregateBalanceListPage
+
+    /** Get the aggregated card balance across all end-user accounts. */
+    fun list(requestOptions: RequestOptions): CardAggregateBalanceListPage =
+        list(CardAggregateBalanceListParams.none(), requestOptions)
 }

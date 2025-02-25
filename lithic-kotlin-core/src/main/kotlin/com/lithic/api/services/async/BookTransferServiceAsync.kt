@@ -28,9 +28,13 @@ interface BookTransferServiceAsync {
 
     /** List book transfers */
     suspend fun list(
-        params: BookTransferListParams,
+        params: BookTransferListParams = BookTransferListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPageAsync
+
+    /** List book transfers */
+    suspend fun list(requestOptions: RequestOptions): BookTransferListPageAsync =
+        list(BookTransferListParams.none(), requestOptions)
 
     /** Reverse a book transfer */
     suspend fun reverse(

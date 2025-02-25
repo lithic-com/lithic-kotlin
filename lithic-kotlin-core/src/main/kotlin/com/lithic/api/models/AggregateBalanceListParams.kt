@@ -42,6 +42,8 @@ private constructor(
 
     companion object {
 
+        fun none(): AggregateBalanceListParams = builder().build()
+
         fun builder() = Builder()
     }
 

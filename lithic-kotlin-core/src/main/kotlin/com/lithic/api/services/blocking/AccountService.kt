@@ -31,9 +31,13 @@ interface AccountService {
 
     /** List account configurations. */
     fun list(
-        params: AccountListParams,
+        params: AccountListParams = AccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPage
+
+    /** List account configurations. */
+    fun list(requestOptions: RequestOptions): AccountListPage =
+        list(AccountListParams.none(), requestOptions)
 
     /**
      * Get an Account's available spend limits, which is based on the spend limit configured on the

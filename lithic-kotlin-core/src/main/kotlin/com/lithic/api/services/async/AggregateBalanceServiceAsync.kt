@@ -10,7 +10,11 @@ interface AggregateBalanceServiceAsync {
 
     /** Get the aggregated balance across all end-user accounts by financial account type */
     suspend fun list(
-        params: AggregateBalanceListParams,
+        params: AggregateBalanceListParams = AggregateBalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregateBalanceListPageAsync
+
+    /** Get the aggregated balance across all end-user accounts by financial account type */
+    suspend fun list(requestOptions: RequestOptions): AggregateBalanceListPageAsync =
+        list(AggregateBalanceListParams.none(), requestOptions)
 }

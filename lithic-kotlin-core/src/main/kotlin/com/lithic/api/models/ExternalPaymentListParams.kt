@@ -109,6 +109,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ExternalPaymentListParams = builder().build()
+
         fun builder() = Builder()
     }
 

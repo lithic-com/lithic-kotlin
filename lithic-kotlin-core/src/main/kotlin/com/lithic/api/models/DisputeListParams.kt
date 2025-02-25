@@ -91,6 +91,8 @@ private constructor(
 
     companion object {
 
+        fun none(): DisputeListParams = builder().build()
+
         fun builder() = Builder()
     }
 

@@ -26,9 +26,13 @@ interface ManagementOperationServiceAsync {
 
     /** List management operations */
     suspend fun list(
-        params: ManagementOperationListParams,
+        params: ManagementOperationListParams = ManagementOperationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationListPageAsync
+
+    /** List management operations */
+    suspend fun list(requestOptions: RequestOptions): ManagementOperationListPageAsync =
+        list(ManagementOperationListParams.none(), requestOptions)
 
     /** Reverse a management operation */
     suspend fun reverse(

@@ -36,9 +36,13 @@ interface PaymentService {
 
     /** List all the payments for the provided search criteria. */
     fun list(
-        params: PaymentListParams,
+        params: PaymentListParams = PaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentListPage
+
+    /** List all the payments for the provided search criteria. */
+    fun list(requestOptions: RequestOptions): PaymentListPage =
+        list(PaymentListParams.none(), requestOptions)
 
     /** Retry an origination which has been returned. */
     fun retry(
