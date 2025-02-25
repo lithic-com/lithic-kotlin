@@ -64,6 +64,7 @@ private constructor(
      * Status types:
      * - `CARD` - Issuing card transaction.
      * - `ACH` - Transaction over ACH.
+     * - `INTERNAL` - Transaction for internal adjustment.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
     fun category(): Category = category.getRequired("category")
@@ -123,6 +124,7 @@ private constructor(
      * Status types:
      * - `CARD` - Issuing card transaction.
      * - `ACH` - Transaction over ACH.
+     * - `INTERNAL` - Transaction for internal adjustment.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
     @JsonProperty("category") @ExcludeMissing fun _category(): JsonField<Category> = category
@@ -252,6 +254,7 @@ private constructor(
          * Status types:
          * - `CARD` - Issuing card transaction.
          * - `ACH` - Transaction over ACH.
+         * - `INTERNAL` - Transaction for internal adjustment.
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
          */
         fun category(category: Category) = category(JsonField.of(category))
@@ -260,6 +263,7 @@ private constructor(
          * Status types:
          * - `CARD` - Issuing card transaction.
          * - `ACH` - Transaction over ACH.
+         * - `INTERNAL` - Transaction for internal adjustment.
          * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
          */
         fun category(category: JsonField<Category>) = apply { this.category = category }
@@ -420,6 +424,7 @@ private constructor(
      * Status types:
      * - `CARD` - Issuing card transaction.
      * - `ACH` - Transaction over ACH.
+     * - `INTERNAL` - Transaction for internal adjustment.
      * - `TRANSFER` - Internal transfer of funds between financial accounts in your program.
      */
     class Category @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -440,6 +445,8 @@ private constructor(
 
             val CARD = of("CARD")
 
+            val INTERNAL = of("INTERNAL")
+
             val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Category(JsonField.of(value))
@@ -449,6 +456,7 @@ private constructor(
         enum class Known {
             ACH,
             CARD,
+            INTERNAL,
             TRANSFER,
         }
 
@@ -464,6 +472,7 @@ private constructor(
         enum class Value {
             ACH,
             CARD,
+            INTERNAL,
             TRANSFER,
             /** An enum member indicating that [Category] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -480,6 +489,7 @@ private constructor(
             when (this) {
                 ACH -> Value.ACH
                 CARD -> Value.CARD
+                INTERNAL -> Value.INTERNAL
                 TRANSFER -> Value.TRANSFER
                 else -> Value._UNKNOWN
             }
@@ -497,6 +507,7 @@ private constructor(
             when (this) {
                 ACH -> Known.ACH
                 CARD -> Known.CARD
+                INTERNAL -> Known.INTERNAL
                 TRANSFER -> Known.TRANSFER
                 else -> throw LithicInvalidDataException("Unknown Category: $value")
             }
@@ -930,6 +941,8 @@ private constructor(
 
                 val INTEREST_REVERSAL = of("INTEREST_REVERSAL")
 
+                val INTERNAL_ADJUSTMENT = of("INTERNAL_ADJUSTMENT")
+
                 val LATE_PAYMENT = of("LATE_PAYMENT")
 
                 val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
@@ -1008,6 +1021,7 @@ private constructor(
                 FINANCIAL_CREDIT_AUTHORIZATION,
                 INTEREST,
                 INTEREST_REVERSAL,
+                INTERNAL_ADJUSTMENT,
                 LATE_PAYMENT,
                 LATE_PAYMENT_REVERSAL,
                 PROVISIONAL_CREDIT,
@@ -1085,6 +1099,7 @@ private constructor(
                 FINANCIAL_CREDIT_AUTHORIZATION,
                 INTEREST,
                 INTEREST_REVERSAL,
+                INTERNAL_ADJUSTMENT,
                 LATE_PAYMENT,
                 LATE_PAYMENT_REVERSAL,
                 PROVISIONAL_CREDIT,
@@ -1164,6 +1179,7 @@ private constructor(
                     FINANCIAL_CREDIT_AUTHORIZATION -> Value.FINANCIAL_CREDIT_AUTHORIZATION
                     INTEREST -> Value.INTEREST
                     INTEREST_REVERSAL -> Value.INTEREST_REVERSAL
+                    INTERNAL_ADJUSTMENT -> Value.INTERNAL_ADJUSTMENT
                     LATE_PAYMENT -> Value.LATE_PAYMENT
                     LATE_PAYMENT_REVERSAL -> Value.LATE_PAYMENT_REVERSAL
                     PROVISIONAL_CREDIT -> Value.PROVISIONAL_CREDIT
@@ -1241,6 +1257,7 @@ private constructor(
                     FINANCIAL_CREDIT_AUTHORIZATION -> Known.FINANCIAL_CREDIT_AUTHORIZATION
                     INTEREST -> Known.INTEREST
                     INTEREST_REVERSAL -> Known.INTEREST_REVERSAL
+                    INTERNAL_ADJUSTMENT -> Known.INTERNAL_ADJUSTMENT
                     LATE_PAYMENT -> Known.LATE_PAYMENT
                     LATE_PAYMENT_REVERSAL -> Known.LATE_PAYMENT_REVERSAL
                     PROVISIONAL_CREDIT -> Known.PROVISIONAL_CREDIT

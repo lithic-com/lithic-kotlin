@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.78.1 (2025-02-25)
+
+Full Changelog: [v0.78.0...v0.78.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.78.0...v0.78.1)
+
+### Chores
+
+* **api:** adds new `Internal` Category for FinancialTransactions ([#485](https://github.com/lithic-com/lithic-kotlin/issues/485)) ([ea6571f](https://github.com/lithic-com/lithic-kotlin/commit/ea6571f2069163e6c49241552743ce88c7858b5e))
+
+
+### Documentation
+
+* add immutability explanation to readme ([#482](https://github.com/lithic-com/lithic-kotlin/issues/482)) ([cdf036c](https://github.com/lithic-com/lithic-kotlin/commit/cdf036c31755db3e247308d0263c1c80cbe5bbee))
+* add source file links to readme ([#484](https://github.com/lithic-com/lithic-kotlin/issues/484)) ([a2cf7db](https://github.com/lithic-com/lithic-kotlin/commit/a2cf7dbdb11f0a7aff43178d48f593d579d768ab))
+
 ## 0.78.0 (2025-02-20)
 
 Full Changelog: [v0.77.0...v0.78.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.77.0...v0.78.0)

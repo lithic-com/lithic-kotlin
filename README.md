@@ -2,7 +2,7 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.78.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.78.1)
 
 <!-- x-release-please-end -->
 
@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.78.0")
+implementation("com.lithic.api:lithic-kotlin:0.78.1")
 ```
 
 ### Maven
@@ -28,7 +28,7 @@ implementation("com.lithic.api:lithic-kotlin:0.78.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.78.0</version>
+    <version>0.78.1</version>
 </dependency>
 ```
 
@@ -108,6 +108,14 @@ To send a request to the Lithic API, build an instance of some `Params` class an
 
 For example, `client.cards().create(...)` should be called with an instance of `CardCreateParams`, and it will return an instance of `Card`.
 
+## Immutability
+
+Each class in the SDK has an associated [builder](https://blogs.oracle.com/javamagazine/post/exploring-joshua-blochs-builder-design-pattern-in-java) or factory method for constructing it.
+
+Each class is [immutable](https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html) once constructed. If the class has an associated builder, then it has a `toBuilder()` method, which can be used to convert it back to a builder for making a modified copy.
+
+Because each class is immutable, builder modification will _never_ affect already built class instances.
+
 ## Asynchronous execution
 
 The default client is synchronous. To switch to asynchronous execution, call the `async()` method:
@@ -150,7 +158,7 @@ The asynchronous client supports the same options as the synchronous one, except
 
 The SDK throws custom unchecked exception types:
 
-- `LithicServiceException`: Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
+- [`LithicServiceException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
   | Status | Exception                       |
   | ------ | ------------------------------- |
@@ -163,11 +171,11 @@ The SDK throws custom unchecked exception types:
   | 5xx    | `InternalServerException`       |
   | others | `UnexpectedStatusCodeException` |
 
-- `LithicIoException`: I/O networking errors.
+- [`LithicIoException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicIoException.kt): I/O networking errors.
 
-- `LithicInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
+- [`LithicInvalidDataException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
-- `LithicException`: Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
+- [`LithicException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
 
 ## Pagination
 
@@ -353,7 +361,7 @@ val params: CardCreateParams = CardCreateParams.builder()
 
 These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
 
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a `JsonValue` object to its setter:
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/JsonValue.kt) object to its setter:
 
 ```kotlin
 import com.lithic.api.core.JsonValue
@@ -412,7 +420,7 @@ if (type.isMissing()) {
 
 In rare cases, the API may return a response that doesn't match the expected type. For example, the SDK may expect a property to contain a `String`, but the API could return something else.
 
-By default, the SDK will not throw an exception in this case. It will throw `LithicInvalidDataException` only if you directly access the property.
+By default, the SDK will not throw an exception in this case. It will throw [`LithicInvalidDataException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicInvalidDataException.kt) only if you directly access the property.
 
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
