@@ -19,7 +19,6 @@ import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.Carrier
 import com.lithic.api.models.ShippingAddress
 import com.lithic.api.models.SpendLimitDuration
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -27,13 +26,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CardServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.create(
                 CardCreateParams.builder()
@@ -70,36 +70,38 @@ class CardServiceTest {
                     .state(CardCreateParams.State.OPEN)
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.retrieve(
                 CardRetrieveParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.update(
                 CardUpdateParams.builder()
@@ -113,31 +115,33 @@ class CardServiceTest {
                     .state(CardUpdateParams.State.CLOSED)
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
-        val response = cardService.list()
-        println(response)
-        response.data().forEach { it.validate() }
+
+        val page = cardService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callConvertPhysical() {
+    fun convertPhysical() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.convertPhysical(
                 CardConvertPhysicalParams.builder()
@@ -164,35 +168,34 @@ class CardServiceTest {
                     .shippingMethod(CardConvertPhysicalParams.ShippingMethod._2_DAY)
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callEmbed() {
+    fun embed() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
-        val cardEmbedResponse =
-            cardService.embed(
-                CardEmbedParams.builder().embedRequest("embed_request").hmac("hmac").build()
-            )
-        println(cardEmbedResponse)
-        assertThat(cardEmbedResponse).isNotBlank()
+
+        cardService.embed(
+            CardEmbedParams.builder().embedRequest("embed_request").hmac("hmac").build()
+        )
     }
 
     @Test
-    fun callProvision() {
+    fun provision() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
-        val cardProvisionResponse =
+
+        val response =
             cardService.provision(
                 CardProvisionParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -204,18 +207,19 @@ class CardServiceTest {
                     .nonceSignature("U3RhaW5sZXNzIHJvY2tz")
                     .build()
             )
-        println(cardProvisionResponse)
-        cardProvisionResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callReissue() {
+    fun reissue() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.reissue(
                 CardReissueParams.builder()
@@ -242,18 +246,19 @@ class CardServiceTest {
                     .shippingMethod(CardReissueParams.ShippingMethod._2_DAY)
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callRenew() {
+    fun renew() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.renew(
                 CardRenewParams.builder()
@@ -282,39 +287,41 @@ class CardServiceTest {
                     .shippingMethod(CardRenewParams.ShippingMethod._2_DAY)
                     .build()
             )
-        println(card)
+
         card.validate()
     }
 
     @Test
-    fun callRetrieveSpendLimits() {
+    fun retrieveSpendLimits() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val cardSpendLimits =
             cardService.retrieveSpendLimits(
                 CardRetrieveSpendLimitsParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
             )
-        println(cardSpendLimits)
+
         cardSpendLimits.validate()
     }
 
     @Test
-    fun callSearchByPan() {
+    fun searchByPan() {
         val client =
             LithicOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
+
         val card =
             cardService.searchByPan(CardSearchByPanParams.builder().pan("4111111289144142").build())
-        println(card)
+
         card.validate()
     }
 
