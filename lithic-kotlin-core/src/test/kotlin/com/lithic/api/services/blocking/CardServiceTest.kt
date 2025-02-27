@@ -19,6 +19,7 @@ import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.Carrier
 import com.lithic.api.models.ShippingAddress
 import com.lithic.api.models.SpendLimitDuration
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
