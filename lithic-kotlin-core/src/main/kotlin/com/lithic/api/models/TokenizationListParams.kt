@@ -87,6 +87,8 @@ private constructor(
 
     companion object {
 
+        fun none(): TokenizationListParams = builder().build()
+
         fun builder() = Builder()
     }
 

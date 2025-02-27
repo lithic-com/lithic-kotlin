@@ -10,7 +10,11 @@ interface BalanceServiceAsync {
 
     /** Get the balances for a program, business, or a given end-user account */
     suspend fun list(
-        params: BalanceListParams,
+        params: BalanceListParams = BalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPageAsync
+
+    /** Get the balances for a program, business, or a given end-user account */
+    suspend fun list(requestOptions: RequestOptions): BalanceListPageAsync =
+        list(BalanceListParams.none(), requestOptions)
 }

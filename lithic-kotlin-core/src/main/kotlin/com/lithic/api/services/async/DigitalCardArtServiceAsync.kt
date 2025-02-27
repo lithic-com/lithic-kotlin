@@ -18,7 +18,11 @@ interface DigitalCardArtServiceAsync {
 
     /** List digital card art. */
     suspend fun list(
-        params: DigitalCardArtListParams,
+        params: DigitalCardArtListParams = DigitalCardArtListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArtListPageAsync
+
+    /** List digital card art. */
+    suspend fun list(requestOptions: RequestOptions): DigitalCardArtListPageAsync =
+        list(DigitalCardArtListParams.none(), requestOptions)
 }

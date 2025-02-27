@@ -43,6 +43,8 @@ private constructor(
 
     companion object {
 
+        fun none(): CardAggregateBalanceListParams = builder().build()
+
         fun builder() = Builder()
     }
 

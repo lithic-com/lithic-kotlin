@@ -10,7 +10,11 @@ interface AggregateBalanceService {
 
     /** Get the aggregated balance across all end-user accounts by financial account type */
     fun list(
-        params: AggregateBalanceListParams,
+        params: AggregateBalanceListParams = AggregateBalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregateBalanceListPage
+
+    /** Get the aggregated balance across all end-user accounts by financial account type */
+    fun list(requestOptions: RequestOptions): AggregateBalanceListPage =
+        list(AggregateBalanceListParams.none(), requestOptions)
 }

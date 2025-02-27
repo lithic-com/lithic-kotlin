@@ -39,6 +39,8 @@ private constructor(
 
     companion object {
 
+        fun none(): AuthStreamEnrollmentRotateSecretParams = builder().build()
+
         fun builder() = Builder()
     }
 

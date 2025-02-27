@@ -17,9 +17,20 @@ interface AuthStreamEnrollmentServiceAsync {
      * more detail about verifying ASA webhooks.
      */
     suspend fun retrieveSecret(
-        params: AuthStreamEnrollmentRetrieveSecretParams,
+        params: AuthStreamEnrollmentRetrieveSecretParams =
+            AuthStreamEnrollmentRetrieveSecretParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthStreamSecret
+
+    /**
+     * Retrieve the ASA HMAC secret key. If one does not exist for your program yet, calling this
+     * endpoint will create one for you. The headers (which you can use to verify webhooks) will
+     * begin appearing shortly after calling this endpoint for the first time. See
+     * [this page](https://docs.lithic.com/docs/auth-stream-access-asa#asa-webhook-verification) for
+     * more detail about verifying ASA webhooks.
+     */
+    suspend fun retrieveSecret(requestOptions: RequestOptions): AuthStreamSecret =
+        retrieveSecret(AuthStreamEnrollmentRetrieveSecretParams.none(), requestOptions)
 
     /**
      * Generate a new ASA HMAC secret key. The old ASA HMAC secret key will be deactivated 24 hours
@@ -28,7 +39,17 @@ interface AuthStreamEnrollmentServiceAsync {
      * retrieve the new secret key.
      */
     suspend fun rotateSecret(
-        params: AuthStreamEnrollmentRotateSecretParams,
+        params: AuthStreamEnrollmentRotateSecretParams =
+            AuthStreamEnrollmentRotateSecretParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     )
+
+    /**
+     * Generate a new ASA HMAC secret key. The old ASA HMAC secret key will be deactivated 24 hours
+     * after a successful request to this endpoint. Make a
+     * [`GET /auth_stream/secret`](https://docs.lithic.com/reference/getauthstreamsecret) request to
+     * retrieve the new secret key.
+     */
+    suspend fun rotateSecret(requestOptions: RequestOptions) =
+        rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
 }

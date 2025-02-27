@@ -1873,6 +1873,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ExternalBankAccountCreateParams = builder().build()
+
         fun builder() = Builder()
     }
 

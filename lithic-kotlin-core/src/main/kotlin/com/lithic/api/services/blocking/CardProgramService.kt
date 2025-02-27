@@ -18,7 +18,11 @@ interface CardProgramService {
 
     /** List card programs. */
     fun list(
-        params: CardProgramListParams,
+        params: CardProgramListParams = CardProgramListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgramListPage
+
+    /** List card programs. */
+    fun list(requestOptions: RequestOptions): CardProgramListPage =
+        list(CardProgramListParams.none(), requestOptions)
 }

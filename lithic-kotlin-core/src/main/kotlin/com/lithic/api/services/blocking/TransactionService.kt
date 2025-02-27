@@ -44,9 +44,16 @@ interface TransactionService {
      * (e.g., cents for USD) and inclusive of any acquirer fees.
      */
     fun list(
-        params: TransactionListParams,
+        params: TransactionListParams = TransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPage
+
+    /**
+     * List card transactions. All amounts are in the smallest unit of their respective currency
+     * (e.g., cents for USD) and inclusive of any acquirer fees.
+     */
+    fun list(requestOptions: RequestOptions): TransactionListPage =
+        list(TransactionListParams.none(), requestOptions)
 
     /**
      * Simulates an authorization request from the card network as if it came from a merchant

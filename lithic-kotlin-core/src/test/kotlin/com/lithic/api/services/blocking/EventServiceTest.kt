@@ -7,7 +7,6 @@ import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.core.JsonString
 import com.lithic.api.models.*
 import com.lithic.api.models.EventListAttemptsParams
-import com.lithic.api.models.EventListParams
 import com.lithic.api.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -37,7 +36,7 @@ class EventServiceTest {
                 .apiKey("My Lithic API Key")
                 .build()
         val eventService = client.events()
-        val response = eventService.list(EventListParams.builder().build())
+        val response = eventService.list()
         println(response)
         response.data().forEach { it.validate() }
     }
