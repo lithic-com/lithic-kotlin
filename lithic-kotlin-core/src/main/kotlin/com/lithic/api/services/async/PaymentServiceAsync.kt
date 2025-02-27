@@ -36,9 +36,13 @@ interface PaymentServiceAsync {
 
     /** List all the payments for the provided search criteria. */
     suspend fun list(
-        params: PaymentListParams,
+        params: PaymentListParams = PaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentListPageAsync
+
+    /** List all the payments for the provided search criteria. */
+    suspend fun list(requestOptions: RequestOptions): PaymentListPageAsync =
+        list(PaymentListParams.none(), requestOptions)
 
     /** Retry an origination which has been returned. */
     suspend fun retry(

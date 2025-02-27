@@ -104,6 +104,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ManagementOperationListParams = builder().build()
+
         fun builder() = Builder()
     }
 

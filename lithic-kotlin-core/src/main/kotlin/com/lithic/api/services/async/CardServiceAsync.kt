@@ -59,9 +59,13 @@ interface CardServiceAsync {
 
     /** List cards. */
     suspend fun list(
-        params: CardListParams,
+        params: CardListParams = CardListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPageAsync
+
+    /** List cards. */
+    suspend fun list(requestOptions: RequestOptions): CardListPageAsync =
+        list(CardListParams.none(), requestOptions)
 
     /**
      * Convert a virtual card into a physical card and manufacture it. Customer must supply relevant

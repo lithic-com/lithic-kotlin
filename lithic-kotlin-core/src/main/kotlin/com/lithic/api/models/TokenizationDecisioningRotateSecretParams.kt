@@ -37,6 +37,8 @@ private constructor(
 
     companion object {
 
+        fun none(): TokenizationDecisioningRotateSecretParams = builder().build()
+
         fun builder() = Builder()
     }
 

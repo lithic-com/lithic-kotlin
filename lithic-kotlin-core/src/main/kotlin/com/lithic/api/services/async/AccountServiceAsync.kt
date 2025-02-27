@@ -31,9 +31,13 @@ interface AccountServiceAsync {
 
     /** List account configurations. */
     suspend fun list(
-        params: AccountListParams,
+        params: AccountListParams = AccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPageAsync
+
+    /** List account configurations. */
+    suspend fun list(requestOptions: RequestOptions): AccountListPageAsync =
+        list(AccountListParams.none(), requestOptions)
 
     /**
      * Get an Account's available spend limits, which is based on the spend limit configured on the

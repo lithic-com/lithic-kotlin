@@ -51,9 +51,15 @@ interface AccountHolderServiceAsync {
      * Get a list of individual or business account holders and their KYC or KYB evaluation status.
      */
     suspend fun list(
-        params: AccountHolderListParams,
+        params: AccountHolderListParams = AccountHolderListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListPageAsync
+
+    /**
+     * Get a list of individual or business account holders and their KYC or KYB evaluation status.
+     */
+    suspend fun list(requestOptions: RequestOptions): AccountHolderListPageAsync =
+        list(AccountHolderListParams.none(), requestOptions)
 
     /**
      * Retrieve the status of account holder document uploads, or retrieve the upload URLs to

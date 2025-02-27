@@ -27,9 +27,13 @@ interface TokenizationServiceAsync {
 
     /** List card tokenizations */
     suspend fun list(
-        params: TokenizationListParams,
+        params: TokenizationListParams = TokenizationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationListPageAsync
+
+    /** List card tokenizations */
+    suspend fun list(requestOptions: RequestOptions): TokenizationListPageAsync =
+        list(TokenizationListParams.none(), requestOptions)
 
     /**
      * This endpoint is used to ask the card network to activate a tokenization. A successful

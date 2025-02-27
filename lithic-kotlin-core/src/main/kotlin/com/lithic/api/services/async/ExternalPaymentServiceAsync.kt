@@ -29,9 +29,13 @@ interface ExternalPaymentServiceAsync {
 
     /** List external payments */
     suspend fun list(
-        params: ExternalPaymentListParams,
+        params: ExternalPaymentListParams = ExternalPaymentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPaymentListPageAsync
+
+    /** List external payments */
+    suspend fun list(requestOptions: RequestOptions): ExternalPaymentListPageAsync =
+        list(ExternalPaymentListParams.none(), requestOptions)
 
     /** Cancel external payment */
     suspend fun cancel(

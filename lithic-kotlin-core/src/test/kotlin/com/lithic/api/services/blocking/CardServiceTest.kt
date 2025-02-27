@@ -9,7 +9,6 @@ import com.lithic.api.models.CardCreateParams
 import com.lithic.api.models.CardEmbedParams
 import com.lithic.api.models.CardGetEmbedHtmlParams
 import com.lithic.api.models.CardGetEmbedUrlParams
-import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardReissueParams
 import com.lithic.api.models.CardRenewParams
@@ -126,7 +125,7 @@ class CardServiceTest {
                 .apiKey("My Lithic API Key")
                 .build()
         val cardService = client.cards()
-        val response = cardService.list(CardListParams.builder().build())
+        val response = cardService.list()
         println(response)
         response.data().forEach { it.validate() }
     }

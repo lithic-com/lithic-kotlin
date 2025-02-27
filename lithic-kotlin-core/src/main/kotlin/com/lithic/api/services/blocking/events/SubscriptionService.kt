@@ -41,9 +41,13 @@ interface SubscriptionService {
 
     /** List all the event subscriptions. */
     fun list(
-        params: EventSubscriptionListParams,
+        params: EventSubscriptionListParams = EventSubscriptionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPage
+
+    /** List all the event subscriptions. */
+    fun list(requestOptions: RequestOptions): EventSubscriptionListPage =
+        list(EventSubscriptionListParams.none(), requestOptions)
 
     /** Delete an event subscription. */
     fun delete(

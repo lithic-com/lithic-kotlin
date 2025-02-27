@@ -18,7 +18,11 @@ interface CardProgramServiceAsync {
 
     /** List card programs. */
     suspend fun list(
-        params: CardProgramListParams,
+        params: CardProgramListParams = CardProgramListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgramListPageAsync
+
+    /** List card programs. */
+    suspend fun list(requestOptions: RequestOptions): CardProgramListPageAsync =
+        list(CardProgramListParams.none(), requestOptions)
 }

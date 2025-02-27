@@ -62,6 +62,8 @@ private constructor(
 
     companion object {
 
+        fun none(): AuthRuleV2ListParams = builder().build()
+
         fun builder() = Builder()
     }
 

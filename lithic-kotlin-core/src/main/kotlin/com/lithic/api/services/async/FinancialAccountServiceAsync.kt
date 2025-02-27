@@ -49,9 +49,13 @@ interface FinancialAccountServiceAsync {
 
     /** Retrieve information on your financial accounts including routing and account number. */
     suspend fun list(
-        params: FinancialAccountListParams,
+        params: FinancialAccountListParams = FinancialAccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPageAsync
+
+    /** Retrieve information on your financial accounts including routing and account number. */
+    suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
+        list(FinancialAccountListParams.none(), requestOptions)
 
     /** Update issuing account state to charged off */
     suspend fun chargeOff(

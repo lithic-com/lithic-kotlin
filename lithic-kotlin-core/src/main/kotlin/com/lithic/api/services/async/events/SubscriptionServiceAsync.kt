@@ -41,9 +41,13 @@ interface SubscriptionServiceAsync {
 
     /** List all the event subscriptions. */
     suspend fun list(
-        params: EventSubscriptionListParams,
+        params: EventSubscriptionListParams = EventSubscriptionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPageAsync
+
+    /** List all the event subscriptions. */
+    suspend fun list(requestOptions: RequestOptions): EventSubscriptionListPageAsync =
+        list(EventSubscriptionListParams.none(), requestOptions)
 
     /** Delete an event subscription. */
     suspend fun delete(
