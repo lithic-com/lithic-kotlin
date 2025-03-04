@@ -102,6 +102,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ManagementOperationActionRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -179,6 +188,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ManagementOperationReverseParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .managementOperationToken()
+         * .effectiveDate()
+         * ```
+         */
         fun builder() = Builder()
     }
 

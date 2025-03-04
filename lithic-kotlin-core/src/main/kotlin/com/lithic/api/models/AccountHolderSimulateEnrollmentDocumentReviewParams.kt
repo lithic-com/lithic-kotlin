@@ -152,6 +152,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [SimulateEnrollmentDocumentReviewRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .documentUploadToken()
+             * .status()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -279,6 +289,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AccountHolderSimulateEnrollmentDocumentReviewParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .documentUploadToken()
+         * .status()
+         * ```
+         */
         fun builder() = Builder()
     }
 

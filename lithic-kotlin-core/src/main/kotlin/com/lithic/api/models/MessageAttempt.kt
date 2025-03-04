@@ -132,6 +132,21 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [MessageAttempt].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * .eventSubscriptionToken()
+         * .eventToken()
+         * .response()
+         * .responseStatusCode()
+         * .status()
+         * .url()
+         * ```
+         */
         fun builder() = Builder()
     }
 

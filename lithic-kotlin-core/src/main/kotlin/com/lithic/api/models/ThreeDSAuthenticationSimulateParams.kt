@@ -141,6 +141,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .merchant()
+             * .pan()
+             * .transaction()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -243,6 +253,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ThreeDSAuthenticationSimulateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .merchant()
+         * .pan()
+         * .transaction()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -506,6 +527,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Merchant].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .country()
+             * .mcc()
+             * .name()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -669,6 +701,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Transaction].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .currency()
+             * ```
+             */
             fun builder() = Builder()
         }
 

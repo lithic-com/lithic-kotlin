@@ -422,6 +422,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [KybPatchRequest]. */
                 fun builder() = Builder()
             }
 
@@ -793,6 +794,15 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [KybBusinessEntityPatch].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .entityToken()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1121,6 +1131,14 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [IndividualPatch].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .entityToken()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1379,6 +1397,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [KycPatchRequest]. */
                 fun builder() = Builder()
             }
 
@@ -1601,6 +1620,14 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [IndividualPatch].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .entityToken()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1928,6 +1955,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [PatchRequest]. */
                 fun builder() = Builder()
             }
 
@@ -2084,6 +2112,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountHolderUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountHolderToken()
+         * .body()
+         * ```
+         */
         fun builder() = Builder()
     }
 

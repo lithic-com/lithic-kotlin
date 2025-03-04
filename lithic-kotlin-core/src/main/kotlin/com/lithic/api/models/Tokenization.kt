@@ -200,6 +200,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Tokenization].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .cardToken()
+         * .createdAt()
+         * .dpan()
+         * .status()
+         * .tokenRequestorName()
+         * .tokenUniqueReference()
+         * .tokenizationChannel()
+         * .updatedAt()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -848,6 +865,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [TokenizationEvent]. */
             fun builder() = Builder()
         }
 

@@ -170,6 +170,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [NetworkTotalListResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .amounts()
+         * .created()
+         * .currency()
+         * .institutionId()
+         * .network()
+         * .reportDate()
+         * .settlementInstitutionId()
+         * .settlementService()
+         * .updated()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -410,6 +427,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Amounts].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .grossSettlement()
+             * .interchangeFees()
+             * .netSettlement()
+             * ```
+             */
             fun builder() = Builder()
         }
 

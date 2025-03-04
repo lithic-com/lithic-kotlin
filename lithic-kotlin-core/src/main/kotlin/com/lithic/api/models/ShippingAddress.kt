@@ -189,6 +189,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ShippingAddress].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .address1()
+         * .city()
+         * .country()
+         * .firstName()
+         * .lastName()
+         * .postalCode()
+         * .state()
+         * ```
+         */
         fun builder() = Builder()
     }
 

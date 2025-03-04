@@ -17,6 +17,7 @@ class LithicOkHttpClientAsync private constructor() {
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [LithicOkHttpClientAsync]. */
         fun builder() = Builder()
 
         fun fromEnv(): LithicClientAsync = builder().fromEnv().build()

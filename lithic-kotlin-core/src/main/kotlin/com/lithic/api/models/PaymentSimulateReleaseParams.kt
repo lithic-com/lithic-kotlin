@@ -83,6 +83,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [SimulateOriginationReleaseRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .paymentToken()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -156,6 +165,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentSimulateReleaseParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .paymentToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

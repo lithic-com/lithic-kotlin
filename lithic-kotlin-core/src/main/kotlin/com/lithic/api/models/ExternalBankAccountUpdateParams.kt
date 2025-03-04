@@ -238,6 +238,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [UpdateBankAccountApiRequest].
+             */
             fun builder() = Builder()
         }
 
@@ -390,6 +394,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalBankAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

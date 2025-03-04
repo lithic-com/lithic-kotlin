@@ -41,6 +41,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ResponderEndpointCheckStatusParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 

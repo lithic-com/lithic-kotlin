@@ -72,6 +72,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountSpendLimits].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .availableSpendLimit()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -209,6 +217,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [AvailableSpendLimit]. */
             fun builder() = Builder()
         }
 
@@ -360,6 +369,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [SpendLimit]. */
             fun builder() = Builder()
         }
 
@@ -511,6 +521,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [SpendVelocity]. */
             fun builder() = Builder()
         }
 

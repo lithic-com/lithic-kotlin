@@ -178,6 +178,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AggregateBalance].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .availableAmount()
+         * .created()
+         * .currency()
+         * .financialAccountType()
+         * .lastFinancialAccountToken()
+         * .lastTransactionEventToken()
+         * .lastTransactionToken()
+         * .pendingAmount()
+         * .totalAmount()
+         * .updated()
+         * ```
+         */
         fun builder() = Builder()
     }
 

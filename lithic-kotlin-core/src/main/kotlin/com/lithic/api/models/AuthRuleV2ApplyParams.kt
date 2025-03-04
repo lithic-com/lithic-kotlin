@@ -299,6 +299,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [ApplyAuthRuleRequestAccountTokens].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .accountTokens()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -419,6 +428,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [ApplyAuthRuleRequestCardTokens].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .cardTokens()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -550,6 +568,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [ApplyAuthRuleRequestProgramLevel].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .programLevel()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -650,6 +677,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AuthRuleV2ApplyParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .authRuleToken()
+         * .body()
+         * ```
+         */
         fun builder() = Builder()
     }
 

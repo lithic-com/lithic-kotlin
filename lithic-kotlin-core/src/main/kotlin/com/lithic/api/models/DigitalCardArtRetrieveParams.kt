@@ -38,6 +38,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [DigitalCardArtRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .digitalCardArtToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

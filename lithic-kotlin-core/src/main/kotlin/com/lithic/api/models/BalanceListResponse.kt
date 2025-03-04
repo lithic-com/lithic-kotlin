@@ -168,6 +168,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BalanceListResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .availableAmount()
+         * .created()
+         * .currency()
+         * .lastTransactionEventToken()
+         * .lastTransactionToken()
+         * .pendingAmount()
+         * .totalAmount()
+         * .type()
+         * .updated()
+         * ```
+         */
         fun builder() = Builder()
     }
 

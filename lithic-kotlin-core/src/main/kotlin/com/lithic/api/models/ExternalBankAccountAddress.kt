@@ -85,6 +85,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalBankAccountAddress].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .address1()
+         * .city()
+         * .country()
+         * .postalCode()
+         * .state()
+         * ```
+         */
         fun builder() = Builder()
     }
 

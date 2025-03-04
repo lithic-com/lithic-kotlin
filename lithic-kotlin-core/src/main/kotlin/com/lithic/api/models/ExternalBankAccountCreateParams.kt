@@ -522,6 +522,23 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [BankVerifiedCreateBankAccountApiRequest].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .accountNumber()
+                 * .country()
+                 * .currency()
+                 * .financialAccountToken()
+                 * .owner()
+                 * .ownerType()
+                 * .routingNumber()
+                 * .type()
+                 * .verificationMethod()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1034,6 +1051,18 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [PlaidCreateBankAccountApiRequest].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .owner()
+                 * .ownerType()
+                 * .processorToken()
+                 * .verificationMethod()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1421,6 +1450,22 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [ExternallyVerifiedCreateBankAccountApiRequest].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .accountNumber()
+                 * .country()
+                 * .currency()
+                 * .owner()
+                 * .ownerType()
+                 * .routingNumber()
+                 * .type()
+                 * .verificationMethod()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1875,6 +1920,10 @@ private constructor(
 
         fun none(): ExternalBankAccountCreateParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountCreateParams].
+         */
         fun builder() = Builder()
     }
 

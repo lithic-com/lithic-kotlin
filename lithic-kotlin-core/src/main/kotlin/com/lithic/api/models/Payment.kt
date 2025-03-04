@@ -254,6 +254,31 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Payment].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .category()
+         * .created()
+         * .currency()
+         * .descriptor()
+         * .direction()
+         * .events()
+         * .externalBankAccountToken()
+         * .financialAccountToken()
+         * .method()
+         * .methodAttributes()
+         * .pendingAmount()
+         * .result()
+         * .settledAmount()
+         * .source()
+         * .status()
+         * .updated()
+         * .userDefinedId()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -831,6 +856,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [PaymentEvent].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .amount()
+             * .created()
+             * .result()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1588,6 +1625,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [PaymentMethodAttributes].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .companyId()
+             * .receiptRoutingNumber()
+             * .retries()
+             * .returnReasonCode()
+             * .secCode()
+             * .traceNumbers()
+             * ```
+             */
             fun builder() = Builder()
         }
 

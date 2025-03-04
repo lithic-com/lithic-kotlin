@@ -39,6 +39,10 @@ private constructor(
 
         fun none(): TokenizationDecisioningRotateSecretParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [TokenizationDecisioningRotateSecretParams].
+         */
         fun builder() = Builder()
     }
 

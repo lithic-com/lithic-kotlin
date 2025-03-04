@@ -310,6 +310,27 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountRetrieveResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .country()
+         * .created()
+         * .currency()
+         * .lastFour()
+         * .owner()
+         * .ownerType()
+         * .routingNumber()
+         * .state()
+         * .type()
+         * .verificationAttempts()
+         * .verificationMethod()
+         * .verificationState()
+         * ```
+         */
         fun builder() = Builder()
     }
 
