@@ -154,6 +154,35 @@ val card: Card = client.cards().create(params)
 
 The asynchronous client supports the same options as the synchronous one, except most methods are [suspending](https://kotlinlang.org/docs/coroutines-guide.html).
 
+## Raw responses
+
+The SDK defines methods that deserialize responses into instances of Kotlin classes. However, these methods don't provide access to the response headers, status code, or the raw response body.
+
+To access this data, prefix any HTTP method call on a client or service with `withRawResponse()`:
+
+```kotlin
+import com.lithic.api.core.http.Headers
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.models.Card
+import com.lithic.api.models.CardCreateParams
+
+val params: CardCreateParams = CardCreateParams.builder()
+    .type(CardCreateParams.Type.SINGLE_USE)
+    .build()
+val card: HttpResponseFor<Card> = client.cards().withRawResponse().create(params)
+
+val statusCode: Int = card.statusCode()
+val headers: Headers = card.headers()
+```
+
+You can still deserialize the response into an instance of a Kotlin class if needed:
+
+```kotlin
+import com.lithic.api.models.Card
+
+val parsedCard: Card = card.parse()
+```
+
 ## Error handling
 
 The SDK throws custom unchecked exception types:
