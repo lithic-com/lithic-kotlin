@@ -12,6 +12,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.checkKnown
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
@@ -308,12 +309,8 @@ private constructor(
         /** A list of all financial events that have modified this trasnfer. */
         fun addEvent(event: FinancialEvent) = apply {
             events =
-                (events ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(event)
+                (events ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("events", it).add(event)
                 }
         }
 
@@ -328,12 +325,8 @@ private constructor(
         /** The updated balance of the sending financial account. */
         fun addFromBalance(fromBalance: Balance) = apply {
             this.fromBalance =
-                (this.fromBalance ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(fromBalance)
+                (this.fromBalance ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("fromBalance", it).add(fromBalance)
                 }
         }
 
@@ -410,12 +403,8 @@ private constructor(
         /** The updated balance of the receiving financial account. */
         fun addToBalance(toBalance: Balance) = apply {
             this.toBalance =
-                (this.toBalance ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(toBalance)
+                (this.toBalance ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("toBalance", it).add(toBalance)
                 }
         }
 
