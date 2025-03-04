@@ -64,6 +64,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [StatementLineItems].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .hasMore()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -281,6 +290,24 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [StatementLineItemResponse].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .amount()
+             * .category()
+             * .created()
+             * .currency()
+             * .effectiveDate()
+             * .eventType()
+             * .financialAccountToken()
+             * .financialTransactionEventToken()
+             * .financialTransactionToken()
+             * ```
+             */
             fun builder() = Builder()
         }
 

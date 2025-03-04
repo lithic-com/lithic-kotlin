@@ -132,6 +132,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [SimulateActionRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .eventType()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -227,6 +235,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentSimulateActionParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .paymentToken()
+         * .eventType()
+         * ```
+         */
         fun builder() = Builder()
     }
 

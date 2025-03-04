@@ -281,6 +281,31 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Statement].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountStanding()
+         * .amountDue()
+         * .availableCredit()
+         * .created()
+         * .creditLimit()
+         * .creditProductToken()
+         * .daysInBillingCycle()
+         * .endingBalance()
+         * .financialAccountToken()
+         * .paymentDueDate()
+         * .periodTotals()
+         * .startingBalance()
+         * .statementEndDate()
+         * .statementStartDate()
+         * .statementType()
+         * .updated()
+         * .ytdTotals()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -649,6 +674,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AccountStanding].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .consecutiveFullPaymentsMade()
+             * .consecutiveMinimumPaymentsMade()
+             * .consecutiveMinimumPaymentsMissed()
+             * .daysPastDue()
+             * .hasGrace()
+             * .periodNumber()
+             * .periodState()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -946,6 +985,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AmountDue].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .pastDue()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1131,6 +1179,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [StatementTotals].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .balanceTransfers()
+             * .cashAdvances()
+             * .credits()
+             * .fees()
+             * .interest()
+             * .payments()
+             * .purchases()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1463,6 +1525,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InterestDetails].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .actualInterestCharged()
+             * .dailyBalanceAmounts()
+             * .effectiveApr()
+             * .interestCalculationMethod()
+             * .interestForPeriod()
+             * .primeRate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1629,6 +1704,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [CategoryDetails].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .balanceTransfers()
+                 * .cashAdvances()
+                 * .purchases()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 

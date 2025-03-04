@@ -211,6 +211,25 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BookTransferResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .category()
+         * .created()
+         * .currency()
+         * .events()
+         * .fromFinancialAccountToken()
+         * .pendingAmount()
+         * .result()
+         * .settledAmount()
+         * .status()
+         * .toFinancialAccountToken()
+         * .updated()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -663,6 +682,21 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [BookTransferEvent].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .amount()
+             * .created()
+             * .detailedResults()
+             * .memo()
+             * .result()
+             * .subtype()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 

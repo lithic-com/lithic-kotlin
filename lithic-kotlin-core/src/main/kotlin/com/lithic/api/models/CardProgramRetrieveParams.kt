@@ -38,6 +38,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CardProgramRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .cardProgramToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

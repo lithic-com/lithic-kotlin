@@ -381,6 +381,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountHolder].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -924,6 +933,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountHolderBusinessResponse].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dbaBusinessName()
+             * .entityToken()
+             * .governmentId()
+             * .legalBusinessName()
+             * .phoneNumbers()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1187,6 +1210,21 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountHolderIndividualResponse].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .entityToken()
+             * .firstName()
+             * .lastName()
+             * .phoneNumber()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1876,6 +1914,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountHolderVerificationApplication].
+             */
             fun builder() = Builder()
         }
 

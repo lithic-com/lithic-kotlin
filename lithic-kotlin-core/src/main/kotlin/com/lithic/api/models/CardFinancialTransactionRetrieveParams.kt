@@ -42,6 +42,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CardFinancialTransactionRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .cardToken()
+         * .financialTransactionToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

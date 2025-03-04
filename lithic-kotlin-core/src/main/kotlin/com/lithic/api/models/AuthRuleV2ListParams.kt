@@ -64,6 +64,7 @@ private constructor(
 
         fun none(): AuthRuleV2ListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [AuthRuleV2ListParams]. */
         fun builder() = Builder()
     }
 

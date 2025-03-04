@@ -111,6 +111,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InterestRate].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * .rate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -190,6 +199,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CreditProductPrimeRateCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .creditProductToken()
+         * .effectiveDate()
+         * .rate()
+         * ```
+         */
         fun builder() = Builder()
     }
 

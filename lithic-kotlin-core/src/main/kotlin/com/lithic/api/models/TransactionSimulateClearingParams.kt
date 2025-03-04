@@ -141,6 +141,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -234,6 +242,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [TransactionSimulateClearingParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * ```
+         */
         fun builder() = Builder()
     }
 

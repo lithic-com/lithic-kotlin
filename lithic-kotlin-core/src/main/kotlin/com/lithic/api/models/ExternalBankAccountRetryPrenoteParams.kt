@@ -90,6 +90,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [RetryPrenoteVerificationRequest].
+             */
             fun builder() = Builder()
         }
 
@@ -161,6 +165,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountRetryPrenoteParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalBankAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

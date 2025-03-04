@@ -74,6 +74,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [BacktestResults].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .backtestToken()
+         * .results()
+         * .simulationParameters()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -185,6 +195,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Results]. */
             fun builder() = Builder()
         }
 
@@ -326,6 +337,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [RuleStats]. */
                 fun builder() = Builder()
             }
 
@@ -502,6 +514,7 @@ private constructor(
 
                 companion object {
 
+                    /** Returns a mutable builder for constructing an instance of [Example]. */
                     fun builder() = Builder()
                 }
 
@@ -680,6 +693,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [SimulationParameters]. */
             fun builder() = Builder()
         }
 

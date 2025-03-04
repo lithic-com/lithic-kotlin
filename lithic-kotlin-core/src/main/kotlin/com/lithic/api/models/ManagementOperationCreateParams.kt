@@ -201,6 +201,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CreateManagementOperationRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .category()
+             * .direction()
+             * .effectiveDate()
+             * .eventType()
+             * .financialAccountToken()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -347,6 +361,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ManagementOperationCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .amount()
+         * .category()
+         * .direction()
+         * .effectiveDate()
+         * .eventType()
+         * .financialAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

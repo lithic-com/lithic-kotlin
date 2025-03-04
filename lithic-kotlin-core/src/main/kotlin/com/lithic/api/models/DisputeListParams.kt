@@ -93,6 +93,7 @@ private constructor(
 
         fun none(): DisputeListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [DisputeListParams]. */
         fun builder() = Builder()
     }
 

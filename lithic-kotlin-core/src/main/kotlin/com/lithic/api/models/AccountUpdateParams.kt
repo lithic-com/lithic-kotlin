@@ -242,6 +242,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Body]. */
             fun builder() = Builder()
         }
 
@@ -398,6 +399,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AccountUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -806,6 +815,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [VerificationAddress]. */
             fun builder() = Builder()
         }
 

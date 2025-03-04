@@ -93,6 +93,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [EventSubscriptionListAttemptsParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .eventSubscriptionToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

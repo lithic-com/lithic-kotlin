@@ -158,6 +158,22 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [V2UpdateResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountTokens()
+         * .cardTokens()
+         * .currentVersion()
+         * .draftVersion()
+         * .name()
+         * .programLevel()
+         * .state()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -368,6 +384,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CurrentVersion].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .parameters()
+             * .version()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -655,6 +680,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [DraftVersion].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .parameters()
+             * .version()
+             * ```
+             */
             fun builder() = Builder()
         }
 

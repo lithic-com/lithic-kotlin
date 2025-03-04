@@ -143,6 +143,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Event].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * .eventType()
+         * .payload()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -689,6 +700,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Payload]. */
             fun builder() = Builder()
         }
 

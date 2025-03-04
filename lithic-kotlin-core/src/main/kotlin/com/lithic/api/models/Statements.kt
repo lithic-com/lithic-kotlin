@@ -58,6 +58,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Statements].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .hasMore()
+         * ```
+         */
         fun builder() = Builder()
     }
 

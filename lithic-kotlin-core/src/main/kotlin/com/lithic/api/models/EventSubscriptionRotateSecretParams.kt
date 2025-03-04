@@ -48,6 +48,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [EventSubscriptionRotateSecretParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .eventSubscriptionToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

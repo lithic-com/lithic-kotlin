@@ -53,6 +53,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [TokenizationDeactivateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .tokenizationToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

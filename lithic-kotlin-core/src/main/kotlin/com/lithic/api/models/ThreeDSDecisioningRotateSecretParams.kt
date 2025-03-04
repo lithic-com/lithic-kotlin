@@ -41,6 +41,10 @@ private constructor(
 
         fun none(): ThreeDSDecisioningRotateSecretParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ThreeDSDecisioningRotateSecretParams].
+         */
         fun builder() = Builder()
     }
 
