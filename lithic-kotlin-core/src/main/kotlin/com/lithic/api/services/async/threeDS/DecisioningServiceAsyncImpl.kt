@@ -42,6 +42,7 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
+        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
         response.use { challengeResponseHandler.handle(it) }
     }
@@ -68,11 +69,12 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                 .addPathSegments("v1", "three_ds_decisioning", "secret")
                 .build()
                 .prepareAsync(clientOptions, params)
+        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
         return response
             .use { retrieveSecretHandler.handle(it) }
             .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                if (requestOptions.responseValidation!!) {
                     it.validate()
                 }
             }
@@ -97,6 +99,7 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepareAsync(clientOptions, params)
+        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
         response.use { rotateSecretHandler.handle(it) }
     }
@@ -121,11 +124,12 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
+        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
         return response
             .use { simulateChallengeHandler.handle(it) }
             .also {
-                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                if (requestOptions.responseValidation!!) {
                     it.validate()
                 }
             }
@@ -149,6 +153,7 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
+        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
         val response = clientOptions.httpClient.executeAsync(request, requestOptions)
         response.use { simulateChallengeResponseHandler.handle(it) }
     }
