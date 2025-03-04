@@ -64,6 +64,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CardBalanceListParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .cardToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

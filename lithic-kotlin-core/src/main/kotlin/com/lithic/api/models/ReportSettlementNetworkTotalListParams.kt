@@ -119,6 +119,10 @@ private constructor(
 
         fun none(): ReportSettlementNetworkTotalListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ReportSettlementNetworkTotalListParams].
+         */
         fun builder() = Builder()
     }
 

@@ -124,6 +124,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CardProgram].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * .name()
+         * .panRangeEnd()
+         * .panRangeStart()
+         * ```
+         */
         fun builder() = Builder()
     }
 

@@ -220,6 +220,7 @@ private constructor(
 
     companion object {
 
+        /** Returns a mutable builder for constructing an instance of [Transfer]. */
         fun builder() = Builder()
     }
 
@@ -634,6 +635,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [FinancialEvent]. */
             fun builder() = Builder()
         }
 

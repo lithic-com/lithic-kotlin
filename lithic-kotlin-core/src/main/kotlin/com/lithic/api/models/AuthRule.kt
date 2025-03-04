@@ -164,6 +164,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AuthRule].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .state()
+         * ```
+         */
         fun builder() = Builder()
     }
 

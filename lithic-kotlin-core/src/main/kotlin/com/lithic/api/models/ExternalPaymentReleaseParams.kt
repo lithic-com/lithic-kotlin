@@ -102,6 +102,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ExternalPaymentActionRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -178,6 +187,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalPaymentReleaseParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalPaymentToken()
+         * .effectiveDate()
+         * ```
+         */
         fun builder() = Builder()
     }
 

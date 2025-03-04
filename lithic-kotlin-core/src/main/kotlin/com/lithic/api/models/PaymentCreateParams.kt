@@ -200,6 +200,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CreatePaymentRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .externalBankAccountToken()
+             * .financialAccountToken()
+             * .method()
+             * .methodAttributes()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -342,6 +355,19 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .amount()
+         * .externalBankAccountToken()
+         * .financialAccountToken()
+         * .method()
+         * .methodAttributes()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -674,6 +700,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [PaymentMethodRequestAttributes].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .secCode()
+             * ```
+             */
             fun builder() = Builder()
         }
 

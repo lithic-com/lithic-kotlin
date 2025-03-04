@@ -90,6 +90,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [RetryMicroDepositVerificationRequest].
+             */
             fun builder() = Builder()
         }
 
@@ -162,6 +166,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountRetryMicroDepositsParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalBankAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

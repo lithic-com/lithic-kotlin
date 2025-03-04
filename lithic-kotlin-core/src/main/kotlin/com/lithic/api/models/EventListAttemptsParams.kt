@@ -93,6 +93,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventListAttemptsParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .eventToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

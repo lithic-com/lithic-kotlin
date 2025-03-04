@@ -357,6 +357,25 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AuthenticationRetrieveResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountType()
+         * .authenticationResult()
+         * .cardExpiryCheck()
+         * .cardToken()
+         * .cardholder()
+         * .channel()
+         * .created()
+         * .merchant()
+         * .messageCategory()
+         * .threeDSRequestorChallengeIndicator()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -1193,6 +1212,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Cardholder]. */
             fun builder() = Builder()
         }
 
@@ -1457,6 +1477,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [ThreeDSAddress]. */
                 fun builder() = Builder()
             }
 
@@ -1799,6 +1820,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Merchant].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .country()
+             * .mcc()
+             * .name()
+             * .riskIndicator()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -2106,6 +2139,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [RiskIndicator]. */
                 fun builder() = Builder()
             }
 
@@ -3178,6 +3212,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [AdditionalData]. */
             fun builder() = Builder()
         }
 
@@ -3445,6 +3480,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [App]. */
             fun builder() = Builder()
         }
 
@@ -3808,6 +3844,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Browser]. */
             fun builder() = Builder()
         }
 
@@ -4018,6 +4055,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ChallengeMetadata].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .methodType()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -4730,6 +4775,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Transaction].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .currency()
+             * .currencyExponent()
+             * .dateTime()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 

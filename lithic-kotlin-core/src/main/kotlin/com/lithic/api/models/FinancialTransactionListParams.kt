@@ -99,6 +99,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [FinancialTransactionListParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .financialAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

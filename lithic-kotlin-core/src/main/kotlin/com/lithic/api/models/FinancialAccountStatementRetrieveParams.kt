@@ -44,6 +44,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [FinancialAccountStatementRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .financialAccountToken()
+         * .statementToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

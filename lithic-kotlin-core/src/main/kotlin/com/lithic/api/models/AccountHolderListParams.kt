@@ -117,6 +117,7 @@ private constructor(
 
         fun none(): AccountHolderListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [AccountHolderListParams]. */
         fun builder() = Builder()
     }
 

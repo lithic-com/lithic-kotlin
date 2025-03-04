@@ -89,6 +89,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventSubscription].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .description()
+         * .disabled()
+         * .url()
+         * ```
+         */
         fun builder() = Builder()
     }
 

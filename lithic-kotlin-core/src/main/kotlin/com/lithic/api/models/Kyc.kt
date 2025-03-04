@@ -117,6 +117,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Kyc].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .individual()
+         * .tosTimestamp()
+         * .workflow()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -343,6 +353,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Individual].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .firstName()
+             * .governmentId()
+             * .lastName()
+             * .phoneNumber()
+             * ```
+             */
             fun builder() = Builder()
         }
 

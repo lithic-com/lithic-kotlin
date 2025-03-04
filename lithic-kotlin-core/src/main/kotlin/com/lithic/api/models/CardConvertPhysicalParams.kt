@@ -208,6 +208,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .shippingAddress()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -339,6 +347,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CardConvertPhysicalParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .cardToken()
+         * .shippingAddress()
+         * ```
+         */
         fun builder() = Builder()
     }
 

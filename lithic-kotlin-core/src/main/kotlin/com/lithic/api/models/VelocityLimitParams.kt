@@ -120,6 +120,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [VelocityLimitParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .filters()
+         * .period()
+         * .scope()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -315,6 +325,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Filters]. */
             fun builder() = Builder()
         }
 
