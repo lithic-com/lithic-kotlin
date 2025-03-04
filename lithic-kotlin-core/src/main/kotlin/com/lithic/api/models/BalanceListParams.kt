@@ -68,6 +68,7 @@ private constructor(
 
         fun none(): BalanceListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [BalanceListParams]. */
         fun builder() = Builder()
     }
 

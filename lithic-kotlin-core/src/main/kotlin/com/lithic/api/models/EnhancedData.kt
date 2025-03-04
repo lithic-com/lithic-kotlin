@@ -91,6 +91,18 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EnhancedData].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .common()
+         * .eventToken()
+         * .fleet()
+         * .transactionToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -261,6 +273,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CommonData].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .lineItems()
+             * .tax()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -425,6 +446,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [LineItem]. */
                 fun builder() = Builder()
             }
 
@@ -583,6 +605,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [TaxData]. */
                 fun builder() = Builder()
             }
 
@@ -899,6 +922,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Fleet].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amountTotals()
+             * .fuel()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1064,6 +1096,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [AmountTotals]. */
                 fun builder() = Builder()
             }
 
@@ -1214,6 +1247,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [FuelData]. */
                 fun builder() = Builder()
             }
 

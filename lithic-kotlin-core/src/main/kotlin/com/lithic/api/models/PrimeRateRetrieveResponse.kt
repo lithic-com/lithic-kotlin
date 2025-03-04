@@ -63,6 +63,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PrimeRateRetrieveResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .hasMore()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -176,6 +185,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InterestRate].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * .rate()
+             * ```
+             */
             fun builder() = Builder()
         }
 

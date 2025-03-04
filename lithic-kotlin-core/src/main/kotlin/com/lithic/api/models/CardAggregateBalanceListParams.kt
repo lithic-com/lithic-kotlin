@@ -45,6 +45,10 @@ private constructor(
 
         fun none(): CardAggregateBalanceListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CardAggregateBalanceListParams].
+         */
         fun builder() = Builder()
     }
 

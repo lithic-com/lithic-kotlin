@@ -182,6 +182,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Account].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * .spendLimit()
+         * .state()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -430,6 +441,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [SpendLimit].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .daily()
+             * .lifetime()
+             * .monthly()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -705,6 +726,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [AccountHolder].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .businessAccountToken()
+             * .email()
+             * .phoneNumber()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -910,6 +942,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [VerificationAddress].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address1()
+             * .city()
+             * .country()
+             * .postalCode()
+             * .state()
+             * ```
+             */
             fun builder() = Builder()
         }
 

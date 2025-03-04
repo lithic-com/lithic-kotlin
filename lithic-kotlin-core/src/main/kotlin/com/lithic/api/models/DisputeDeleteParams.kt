@@ -45,6 +45,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [DisputeDeleteParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .disputeToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

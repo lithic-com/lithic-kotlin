@@ -118,6 +118,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [ExternalPaymentActionWithProgressToRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -207,6 +216,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [ExternalPaymentSettleParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalPaymentToken()
+         * .effectiveDate()
+         * ```
+         */
         fun builder() = Builder()
     }
 

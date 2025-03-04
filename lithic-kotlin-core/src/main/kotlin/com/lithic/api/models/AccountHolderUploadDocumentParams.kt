@@ -130,6 +130,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .documentType()
+             * .entityToken()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -211,6 +220,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AccountHolderUploadDocumentParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountHolderToken()
+         * .documentType()
+         * .entityToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

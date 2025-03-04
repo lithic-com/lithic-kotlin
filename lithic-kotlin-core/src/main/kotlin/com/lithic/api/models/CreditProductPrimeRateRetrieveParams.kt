@@ -54,6 +54,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CreditProductPrimeRateRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .creditProductToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

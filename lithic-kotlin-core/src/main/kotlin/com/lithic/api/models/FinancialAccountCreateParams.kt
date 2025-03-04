@@ -125,6 +125,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CreateFinancialAccountRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .nickname()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -219,6 +229,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [FinancialAccountCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .nickname()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 

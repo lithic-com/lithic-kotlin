@@ -134,6 +134,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [SimulateEnrollmentReviewRequest].
+             */
             fun builder() = Builder()
         }
 
@@ -246,6 +250,10 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AccountHolderSimulateEnrollmentReviewParams].
+         */
         fun builder() = Builder()
     }
 

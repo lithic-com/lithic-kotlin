@@ -41,6 +41,10 @@ private constructor(
 
         fun none(): AuthStreamEnrollmentRotateSecretParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [AuthStreamEnrollmentRotateSecretParams].
+         */
         fun builder() = Builder()
     }
 

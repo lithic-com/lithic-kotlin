@@ -54,6 +54,7 @@ private constructor(
 
         fun none(): CardProgramListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [CardProgramListParams]. */
         fun builder() = Builder()
     }
 

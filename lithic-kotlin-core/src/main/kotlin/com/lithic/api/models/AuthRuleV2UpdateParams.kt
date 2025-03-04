@@ -293,6 +293,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [AccountLevelRule]. */
                 fun builder() = Builder()
             }
 
@@ -574,6 +575,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [CardLevelRule]. */
                 fun builder() = Builder()
             }
 
@@ -867,6 +869,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [ProgramLevelRule]. */
                 fun builder() = Builder()
             }
 
@@ -1095,6 +1098,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AuthRuleV2UpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .authRuleToken()
+         * .body()
+         * ```
+         */
         fun builder() = Builder()
     }
 

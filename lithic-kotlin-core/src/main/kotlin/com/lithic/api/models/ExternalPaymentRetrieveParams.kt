@@ -38,6 +38,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalPaymentRetrieveParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalPaymentToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

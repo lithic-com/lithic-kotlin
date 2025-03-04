@@ -226,6 +226,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Kyb].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .beneficialOwnerEntities()
+         * .beneficialOwnerIndividuals()
+         * .businessEntity()
+         * .controlPerson()
+         * .natureOfBusiness()
+         * .tosTimestamp()
+         * .workflow()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -597,6 +611,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [BusinessEntity].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .governmentId()
+             * .legalBusinessName()
+             * .phoneNumbers()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -865,6 +890,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [KybIndividual].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .firstName()
+             * .governmentId()
+             * .lastName()
+             * ```
+             */
             fun builder() = Builder()
         }
 

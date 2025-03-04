@@ -420,6 +420,24 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Card].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .cardProgramToken()
+         * .created()
+         * .funding()
+         * .lastFour()
+         * .pinStatus()
+         * .spendLimit()
+         * .spendLimitDuration()
+         * .state()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -996,6 +1014,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [FundingAccount].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .created()
+             * .lastFour()
+             * .state()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 

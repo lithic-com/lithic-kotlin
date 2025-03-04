@@ -129,6 +129,21 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [FinancialAccountCreditConfig].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountToken()
+         * .chargedOffReason()
+         * .creditLimit()
+         * .creditProductToken()
+         * .externalBankAccountToken()
+         * .financialAccountState()
+         * .isSpendBlocked()
+         * .tier()
+         * ```
+         */
         fun builder() = Builder()
     }
 

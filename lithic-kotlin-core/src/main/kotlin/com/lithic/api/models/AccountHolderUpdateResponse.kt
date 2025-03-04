@@ -558,6 +558,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [KybKycPatchResponse]. */
             fun builder() = Builder()
         }
 
@@ -1117,6 +1118,7 @@ private constructor(
 
             companion object {
 
+                /** Returns a mutable builder for constructing an instance of [Individual]. */
                 fun builder() = Builder()
             }
 
@@ -1368,6 +1370,18 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Address].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .address1()
+                     * .city()
+                     * .country()
+                     * .postalCode()
+                     * .state()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -2211,6 +2225,18 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [VerificationApplication].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .created()
+                 * .status()
+                 * .statusReasons()
+                 * .updated()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -2854,6 +2880,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [PatchResponse]. */
             fun builder() = Builder()
         }
 
@@ -3078,6 +3105,18 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Address].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .address1()
+                 * .city()
+                 * .country()
+                 * .postalCode()
+                 * .state()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 

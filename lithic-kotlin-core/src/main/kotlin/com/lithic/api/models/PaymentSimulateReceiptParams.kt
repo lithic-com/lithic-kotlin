@@ -152,6 +152,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [SimulateReceiptRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .amount()
+             * .financialAccountToken()
+             * .receiptType()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -261,6 +272,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentSimulateReceiptParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .amount()
+         * .financialAccountToken()
+         * .receiptType()
+         * ```
+         */
         fun builder() = Builder()
     }
 

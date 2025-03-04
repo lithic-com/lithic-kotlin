@@ -42,6 +42,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DisputeRetrieveEvidenceParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .disputeToken()
+         * .evidenceToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 

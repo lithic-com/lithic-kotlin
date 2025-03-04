@@ -44,6 +44,9 @@ private constructor(
 
         fun none(): AggregateBalanceListParams = builder().build()
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AggregateBalanceListParams].
+         */
         fun builder() = Builder()
     }
 

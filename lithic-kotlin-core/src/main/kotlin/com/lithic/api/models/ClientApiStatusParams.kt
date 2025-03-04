@@ -29,6 +29,7 @@ private constructor(
 
         fun none(): ClientApiStatusParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [ClientApiStatusParams]. */
         fun builder() = Builder()
     }
 

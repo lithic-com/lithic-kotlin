@@ -93,6 +93,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ChargeOffAccountRequest].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .reason()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -161,6 +169,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [FinancialAccountChargeOffParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .financialAccountToken()
+         * .reason()
+         * ```
+         */
         fun builder() = Builder()
     }
 

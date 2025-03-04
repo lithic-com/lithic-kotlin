@@ -138,6 +138,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [FinancialAccountCreditConfigRequest].
+             */
             fun builder() = Builder()
         }
 
@@ -239,6 +243,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [FinancialAccountCreditConfigurationUpdateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .financialAccountToken()
+         * ```
+         */
         fun builder() = Builder()
     }
 
