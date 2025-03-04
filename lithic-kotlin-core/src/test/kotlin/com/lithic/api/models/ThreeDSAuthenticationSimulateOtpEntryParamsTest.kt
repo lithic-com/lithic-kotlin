@@ -6,34 +6,43 @@ import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ThreeDSDecisioningSimulateChallengeParamsTest {
+class ThreeDSAuthenticationSimulateOtpEntryParamsTest {
 
     @Test
     fun create() {
-        ThreeDSDecisioningSimulateChallengeParams.builder()
+        ThreeDSAuthenticationSimulateOtpEntryParams.builder()
             .token("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
+            .otp("123456")
             .build()
     }
 
     @Test
     fun body() {
         val params =
-            ThreeDSDecisioningSimulateChallengeParams.builder()
+            ThreeDSAuthenticationSimulateOtpEntryParams.builder()
                 .token("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
+                .otp("123456")
                 .build()
 
         val body = params._body()
 
         assertNotNull(body)
         assertThat(body.token()).isEqualTo("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
+        assertThat(body.otp()).isEqualTo("123456")
     }
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = ThreeDSDecisioningSimulateChallengeParams.builder().build()
+        val params =
+            ThreeDSAuthenticationSimulateOtpEntryParams.builder()
+                .token("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
+                .otp("123456")
+                .build()
 
         val body = params._body()
 
         assertNotNull(body)
+        assertThat(body.token()).isEqualTo("fabd829d-7f7b-4432-a8f2-07ea4889aaac")
+        assertThat(body.otp()).isEqualTo("123456")
     }
 }
