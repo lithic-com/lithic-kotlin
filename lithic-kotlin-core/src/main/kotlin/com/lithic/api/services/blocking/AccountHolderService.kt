@@ -2,7 +2,9 @@
 
 package com.lithic.api.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.AccountHolder
 import com.lithic.api.models.AccountHolderCreateParams
 import com.lithic.api.models.AccountHolderCreateResponse
@@ -21,6 +23,11 @@ import com.lithic.api.models.AccountHolderUploadDocumentParams
 import com.lithic.api.models.Document
 
 interface AccountHolderService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Create an account holder and initiate the appropriate onboarding workflow. Account holders
@@ -138,4 +145,112 @@ interface AccountHolderService {
         params: AccountHolderUploadDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
+
+    /**
+     * A view of [AccountHolderService] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /v1/account_holders`, but is otherwise the same as
+         * [AccountHolderService.create].
+         */
+        @MustBeClosed
+        fun create(
+            params: AccountHolderCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/account_holders/{account_holder_token}`, but is
+         * otherwise the same as [AccountHolderService.retrieve].
+         */
+        @MustBeClosed
+        fun retrieve(
+            params: AccountHolderRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolder>
+
+        /**
+         * Returns a raw HTTP response for `patch /v1/account_holders/{account_holder_token}`, but
+         * is otherwise the same as [AccountHolderService.update].
+         */
+        @MustBeClosed
+        fun update(
+            params: AccountHolderUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderUpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/account_holders`, but is otherwise the same as
+         * [AccountHolderService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: AccountHolderListParams = AccountHolderListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/account_holders`, but is otherwise the same as
+         * [AccountHolderService.list].
+         */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AccountHolderListPage> =
+            list(AccountHolderListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /v1/account_holders/{account_holder_token}/documents`, but is otherwise the same as
+         * [AccountHolderService.listDocuments].
+         */
+        @MustBeClosed
+        fun listDocuments(
+            params: AccountHolderListDocumentsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderListDocumentsResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /v1/account_holders/{account_holder_token}/documents/{document_token}`, but is otherwise
+         * the same as [AccountHolderService.retrieveDocument].
+         */
+        @MustBeClosed
+        fun retrieveDocument(
+            params: AccountHolderRetrieveDocumentParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/simulate/account_holders/enrollment_document_review`, but is otherwise the same as
+         * [AccountHolderService.simulateEnrollmentDocumentReview].
+         */
+        @MustBeClosed
+        fun simulateEnrollmentDocumentReview(
+            params: AccountHolderSimulateEnrollmentDocumentReviewParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/simulate/account_holders/enrollment_review`,
+         * but is otherwise the same as [AccountHolderService.simulateEnrollmentReview].
+         */
+        @MustBeClosed
+        fun simulateEnrollmentReview(
+            params: AccountHolderSimulateEnrollmentReviewParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderSimulateEnrollmentReviewResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/account_holders/{account_holder_token}/documents`, but is otherwise the same as
+         * [AccountHolderService.uploadDocument].
+         */
+        @MustBeClosed
+        fun uploadDocument(
+            params: AccountHolderUploadDocumentParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document>
+    }
 }

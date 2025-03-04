@@ -2,7 +2,10 @@
 
 package com.lithic.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponse
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.TokenizationActivateParams
 import com.lithic.api.models.TokenizationDeactivateParams
 import com.lithic.api.models.TokenizationListPageAsync
@@ -18,6 +21,11 @@ import com.lithic.api.models.TokenizationUpdateDigitalCardArtParams
 import com.lithic.api.models.TokenizationUpdateDigitalCardArtResponse
 
 interface TokenizationServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Get tokenization */
     suspend fun retrieve(
@@ -129,4 +137,113 @@ interface TokenizationServiceAsync {
         params: TokenizationUpdateDigitalCardArtParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationUpdateDigitalCardArtResponse
+
+    /**
+     * A view of [TokenizationServiceAsync] that provides access to raw HTTP responses for each
+     * method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /v1/tokenizations/{tokenization_token}`, but is
+         * otherwise the same as [TokenizationServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: TokenizationRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TokenizationRetrieveResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/tokenizations`, but is otherwise the same as
+         * [TokenizationServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: TokenizationListParams = TokenizationListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TokenizationListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/tokenizations`, but is otherwise the same as
+         * [TokenizationServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<TokenizationListPageAsync> =
+            list(TokenizationListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/activate`,
+         * but is otherwise the same as [TokenizationServiceAsync.activate].
+         */
+        @MustBeClosed
+        suspend fun activate(
+            params: TokenizationActivateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/deactivate`,
+         * but is otherwise the same as [TokenizationServiceAsync.deactivate].
+         */
+        @MustBeClosed
+        suspend fun deactivate(
+            params: TokenizationDeactivateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/pause`, but
+         * is otherwise the same as [TokenizationServiceAsync.pause].
+         */
+        @MustBeClosed
+        suspend fun pause(
+            params: TokenizationPauseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/tokenizations/{tokenization_token}/resend_activation_code`, but is otherwise the same
+         * as [TokenizationServiceAsync.resendActivationCode].
+         */
+        @MustBeClosed
+        suspend fun resendActivationCode(
+            params: TokenizationResendActivationCodeParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v1/simulate/tokenizations`, but is otherwise the
+         * same as [TokenizationServiceAsync.simulate].
+         */
+        @MustBeClosed
+        suspend fun simulate(
+            params: TokenizationSimulateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TokenizationSimulateResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/unpause`,
+         * but is otherwise the same as [TokenizationServiceAsync.unpause].
+         */
+        @MustBeClosed
+        suspend fun unpause(
+            params: TokenizationUnpauseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/tokenizations/{tokenization_token}/update_digital_card_art`, but is otherwise the
+         * same as [TokenizationServiceAsync.updateDigitalCardArt].
+         */
+        @MustBeClosed
+        suspend fun updateDigitalCardArt(
+            params: TokenizationUpdateDigitalCardArtParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse>
+    }
 }

@@ -10,6 +10,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.models.FinancialAccountLoanTapeListPageAsync
@@ -20,63 +22,100 @@ import com.lithic.api.models.LoanTape
 class LoanTapeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     LoanTapeServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: LoanTapeServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveHandler: Handler<LoanTape> =
-        jsonHandler<LoanTape>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): LoanTapeServiceAsync.WithRawResponse = withRawResponse
 
-    /** Get a specific loan tape for a given financial account. */
     override suspend fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
         requestOptions: RequestOptions,
-    ): LoanTape {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "v1",
-                    "financial_accounts",
-                    params.getPathParam(0),
-                    "loan_tapes",
-                    params.getPathParam(1),
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): LoanTape =
+        // get /v1/financial_accounts/{financial_account_token}/loan_tapes/{loan_tape_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<FinancialAccountLoanTapeListPageAsync.Response> =
-        jsonHandler<FinancialAccountLoanTapeListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List the loan tapes for a given financial account. */
     override suspend fun list(
         params: FinancialAccountLoanTapeListParams,
         requestOptions: RequestOptions,
-    ): FinancialAccountLoanTapeListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "financial_accounts", params.getPathParam(0), "loan_tapes")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): FinancialAccountLoanTapeListPageAsync =
+        // get /v1/financial_accounts/{financial_account_token}/loan_tapes
+        withRawResponse().list(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        LoanTapeServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveHandler: Handler<LoanTape> =
+            jsonHandler<LoanTape>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: FinancialAccountLoanTapeRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<LoanTape> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "v1",
+                        "financial_accounts",
+                        params.getPathParam(0),
+                        "loan_tapes",
+                        params.getPathParam(1),
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-            .let { FinancialAccountLoanTapeListPageAsync.of(this, params, it) }
+        }
+
+        private val listHandler: Handler<FinancialAccountLoanTapeListPageAsync.Response> =
+            jsonHandler<FinancialAccountLoanTapeListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: FinancialAccountLoanTapeListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountLoanTapeListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "v1",
+                        "financial_accounts",
+                        params.getPathParam(0),
+                        "loan_tapes",
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        FinancialAccountLoanTapeListPageAsync.of(
+                            LoanTapeServiceAsyncImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 }

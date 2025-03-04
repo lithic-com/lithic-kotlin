@@ -2,7 +2,10 @@
 
 package com.lithic.api.services.blocking.authRules
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponse
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.AuthRuleV2ApplyParams
 import com.lithic.api.models.AuthRuleV2CreateParams
 import com.lithic.api.models.AuthRuleV2DeleteParams
@@ -23,6 +26,11 @@ import com.lithic.api.models.V2UpdateResponse
 import com.lithic.api.services.blocking.authRules.v2.BacktestService
 
 interface V2Service {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun backtests(): BacktestService
 
@@ -145,4 +153,108 @@ interface V2Service {
         params: AuthRuleV2ReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ReportResponse
+
+    /** A view of [V2Service] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun backtests(): BacktestService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v2/auth_rules`, but is otherwise the same as
+         * [V2Service.create].
+         */
+        @MustBeClosed
+        fun create(
+            params: AuthRuleV2CreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2CreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}`, but is otherwise
+         * the same as [V2Service.retrieve].
+         */
+        @MustBeClosed
+        fun retrieve(
+            params: AuthRuleV2RetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2RetrieveResponse>
+
+        /**
+         * Returns a raw HTTP response for `patch /v2/auth_rules/{auth_rule_token}`, but is
+         * otherwise the same as [V2Service.update].
+         */
+        @MustBeClosed
+        fun update(
+            params: AuthRuleV2UpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2UpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v2/auth_rules`, but is otherwise the same as
+         * [V2Service.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: AuthRuleV2ListParams = AuthRuleV2ListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRuleV2ListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /v2/auth_rules`, but is otherwise the same as
+         * [V2Service.list].
+         */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AuthRuleV2ListPage> =
+            list(AuthRuleV2ListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `delete /v2/auth_rules/{auth_rule_token}`, but is
+         * otherwise the same as [V2Service.delete].
+         */
+        @MustBeClosed
+        fun delete(
+            params: AuthRuleV2DeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/apply`, but is
+         * otherwise the same as [V2Service.apply].
+         */
+        @MustBeClosed
+        fun apply(
+            params: AuthRuleV2ApplyParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2ApplyResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/draft`, but is
+         * otherwise the same as [V2Service.draft].
+         */
+        @MustBeClosed
+        fun draft(
+            params: AuthRuleV2DraftParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2DraftResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/promote`, but is
+         * otherwise the same as [V2Service.promote].
+         */
+        @MustBeClosed
+        fun promote(
+            params: AuthRuleV2PromoteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2PromoteResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/report`, but is
+         * otherwise the same as [V2Service.report].
+         */
+        @MustBeClosed
+        fun report(
+            params: AuthRuleV2ReportParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2ReportResponse>
+    }
 }

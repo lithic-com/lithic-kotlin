@@ -2,7 +2,9 @@
 
 package com.lithic.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Dispute
 import com.lithic.api.models.DisputeCreateParams
 import com.lithic.api.models.DisputeDeleteEvidenceParams
@@ -18,6 +20,11 @@ import com.lithic.api.models.DisputeRetrieveParams
 import com.lithic.api.models.DisputeUpdateParams
 
 interface DisputeServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** Initiate a dispute. */
     suspend fun create(
@@ -85,4 +92,110 @@ interface DisputeServiceAsync {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
+
+    /**
+     * A view of [DisputeServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /v1/disputes`, but is otherwise the same as
+         * [DisputeServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: DisputeCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Dispute>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/disputes/{dispute_token}`, but is otherwise the
+         * same as [DisputeServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: DisputeRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Dispute>
+
+        /**
+         * Returns a raw HTTP response for `patch /v1/disputes/{dispute_token}`, but is otherwise
+         * the same as [DisputeServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: DisputeUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Dispute>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
+         * [DisputeServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: DisputeListParams = DisputeListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DisputeListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
+         * [DisputeServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPageAsync> =
+            list(DisputeListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `delete /v1/disputes/{dispute_token}`, but is otherwise
+         * the same as [DisputeServiceAsync.delete].
+         */
+        @MustBeClosed
+        suspend fun delete(
+            params: DisputeDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Dispute>
+
+        /**
+         * Returns a raw HTTP response for `delete
+         * /v1/disputes/{dispute_token}/evidences/{evidence_token}`, but is otherwise the same as
+         * [DisputeServiceAsync.deleteEvidence].
+         */
+        @MustBeClosed
+        suspend fun deleteEvidence(
+            params: DisputeDeleteEvidenceParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DisputeEvidence>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/disputes/{dispute_token}/evidences`, but is
+         * otherwise the same as [DisputeServiceAsync.initiateEvidenceUpload].
+         */
+        @MustBeClosed
+        suspend fun initiateEvidenceUpload(
+            params: DisputeInitiateEvidenceUploadParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DisputeEvidence>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/disputes/{dispute_token}/evidences`, but is
+         * otherwise the same as [DisputeServiceAsync.listEvidences].
+         */
+        @MustBeClosed
+        suspend fun listEvidences(
+            params: DisputeListEvidencesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DisputeListEvidencesPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /v1/disputes/{dispute_token}/evidences/{evidence_token}`, but is otherwise the same as
+         * [DisputeServiceAsync.retrieveEvidence].
+         */
+        @MustBeClosed
+        suspend fun retrieveEvidence(
+            params: DisputeRetrieveEvidenceParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DisputeEvidence>
+    }
 }
