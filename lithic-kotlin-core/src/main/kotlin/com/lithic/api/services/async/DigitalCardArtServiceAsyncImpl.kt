@@ -10,6 +10,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.models.DigitalCardArt
@@ -20,57 +22,89 @@ import com.lithic.api.models.DigitalCardArtRetrieveParams
 class DigitalCardArtServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : DigitalCardArtServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: DigitalCardArtServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveHandler: Handler<DigitalCardArt> =
-        jsonHandler<DigitalCardArt>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): DigitalCardArtServiceAsync.WithRawResponse = withRawResponse
 
-    /** Get digital card art by token. */
     override suspend fun retrieve(
         params: DigitalCardArtRetrieveParams,
         requestOptions: RequestOptions,
-    ): DigitalCardArt {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "digital_card_art", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DigitalCardArt =
+        // get /v1/digital_card_art/{digital_card_art_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<DigitalCardArtListPageAsync.Response> =
-        jsonHandler<DigitalCardArtListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List digital card art. */
     override suspend fun list(
         params: DigitalCardArtListParams,
         requestOptions: RequestOptions,
-    ): DigitalCardArtListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "digital_card_art")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): DigitalCardArtListPageAsync =
+        // get /v1/digital_card_art
+        withRawResponse().list(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        DigitalCardArtServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveHandler: Handler<DigitalCardArt> =
+            jsonHandler<DigitalCardArt>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: DigitalCardArtRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DigitalCardArt> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "digital_card_art", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-            .let { DigitalCardArtListPageAsync.of(this, params, it) }
+        }
+
+        private val listHandler: Handler<DigitalCardArtListPageAsync.Response> =
+            jsonHandler<DigitalCardArtListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: DigitalCardArtListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DigitalCardArtListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "digital_card_art")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        DigitalCardArtListPageAsync.of(
+                            DigitalCardArtServiceAsyncImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 }
