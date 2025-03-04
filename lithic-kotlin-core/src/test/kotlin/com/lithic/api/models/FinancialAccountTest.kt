@@ -34,10 +34,14 @@ class FinancialAccountTest {
                 )
                 .isForBenefitOf(true)
                 .nickname("nickname")
+                .status(FinancialAccount.FinancialAccountStatus.OPEN)
                 .type(FinancialAccount.Type.ISSUING)
                 .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .accountNumber("account_number")
                 .routingNumber("routing_number")
+                .statusChangeReason(
+                    FinancialAccount.FinancialAccountStatusChangeReason.CHARGED_OFF_DELINQUENT
+                )
                 .build()
         assertThat(financialAccount).isNotNull
         assertThat(financialAccount.token()).isEqualTo("b68b7424-aa69-4cbc-a946-30d90181b621")
@@ -63,10 +67,14 @@ class FinancialAccountTest {
             )
         assertThat(financialAccount.isForBenefitOf()).isEqualTo(true)
         assertThat(financialAccount.nickname()).isEqualTo("nickname")
+        assertThat(financialAccount.status())
+            .isEqualTo(FinancialAccount.FinancialAccountStatus.OPEN)
         assertThat(financialAccount.type()).isEqualTo(FinancialAccount.Type.ISSUING)
         assertThat(financialAccount.updated())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(financialAccount.accountNumber()).isEqualTo("account_number")
         assertThat(financialAccount.routingNumber()).isEqualTo("routing_number")
+        assertThat(financialAccount.statusChangeReason())
+            .isEqualTo(FinancialAccount.FinancialAccountStatusChangeReason.CHARGED_OFF_DELINQUENT)
     }
 }
