@@ -11,6 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
+import com.lithic.api.core.checkKnown
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
@@ -211,12 +212,8 @@ private constructor(
          */
         fun addSettlementCurrency(settlementCurrency: String) = apply {
             settlementCurrencies =
-                (settlementCurrencies ?: JsonField.of(mutableListOf())).apply {
-                    (asKnown()
-                            ?: throw IllegalStateException(
-                                "Field was set to non-list type: ${javaClass.simpleName}"
-                            ))
-                        .add(settlementCurrency)
+                (settlementCurrencies ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("settlementCurrencies", it).add(settlementCurrency)
                 }
         }
 
