@@ -10,6 +10,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.models.EnhancedCommercialDataRetrieveResponse
@@ -19,39 +21,55 @@ class EnhancedCommercialDataServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) :
     EnhancedCommercialDataServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: EnhancedCommercialDataServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveHandler: Handler<EnhancedCommercialDataRetrieveResponse> =
-        jsonHandler<EnhancedCommercialDataRetrieveResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    override fun withRawResponse(): EnhancedCommercialDataServiceAsync.WithRawResponse =
+        withRawResponse
 
-    /**
-     * Get all L2/L3 enhanced commercial data associated with a transaction. Not available in
-     * sandbox.
-     */
     override suspend fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions,
-    ): EnhancedCommercialDataRetrieveResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "v1",
-                    "transactions",
-                    params.getPathParam(0),
-                    "enhanced_commercial_data",
-                )
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): EnhancedCommercialDataRetrieveResponse =
+        // get /v1/transactions/{transaction_token}/enhanced_commercial_data
+        withRawResponse().retrieve(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        EnhancedCommercialDataServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveHandler: Handler<EnhancedCommercialDataRetrieveResponse> =
+            jsonHandler<EnhancedCommercialDataRetrieveResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: TransactionEnhancedCommercialDataRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "v1",
+                        "transactions",
+                        params.getPathParam(0),
+                        "enhanced_commercial_data",
+                    )
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 package com.lithic.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardConvertPhysicalParams
 import com.lithic.api.models.CardCreateParams
@@ -25,6 +27,11 @@ import com.lithic.api.services.async.cards.BalanceServiceAsync
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 
 interface CardServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun aggregateBalances(): AggregateBalanceServiceAsync
 
@@ -180,4 +187,132 @@ interface CardServiceAsync {
         params: CardGetEmbedUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): String
+
+    /** A view of [CardServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse
+
+        fun balances(): BalanceServiceAsync.WithRawResponse
+
+        fun financialTransactions(): FinancialTransactionServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards`, but is otherwise the same as
+         * [CardServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: CardCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/cards/{card_token}`, but is otherwise the same
+         * as [CardServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: CardRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `patch /v1/cards/{card_token}`, but is otherwise the same
+         * as [CardServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: CardUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
+         * [CardServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: CardListParams = CardListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
+         * [CardServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CardListPageAsync> =
+            list(CardListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/convert_physical`, but is
+         * otherwise the same as [CardServiceAsync.convertPhysical].
+         */
+        @MustBeClosed
+        suspend fun convertPhysical(
+            params: CardConvertPhysicalParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/embed/card`, but is otherwise the same as
+         * [CardServiceAsync.embed].
+         */
+        @MustBeClosed
+        suspend fun embed(
+            params: CardEmbedParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<String>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/provision`, but is otherwise
+         * the same as [CardServiceAsync.provision].
+         */
+        @MustBeClosed
+        suspend fun provision(
+            params: CardProvisionParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardProvisionResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/reissue`, but is otherwise
+         * the same as [CardServiceAsync.reissue].
+         */
+        @MustBeClosed
+        suspend fun reissue(
+            params: CardReissueParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/renew`, but is otherwise the
+         * same as [CardServiceAsync.renew].
+         */
+        @MustBeClosed
+        suspend fun renew(
+            params: CardRenewParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/cards/{card_token}/spend_limits`, but is
+         * otherwise the same as [CardServiceAsync.retrieveSpendLimits].
+         */
+        @MustBeClosed
+        suspend fun retrieveSpendLimits(
+            params: CardRetrieveSpendLimitsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardSpendLimits>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/search_by_pan`, but is otherwise the same
+         * as [CardServiceAsync.searchByPan].
+         */
+        @MustBeClosed
+        suspend fun searchByPan(
+            params: CardSearchByPanParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
+    }
 }

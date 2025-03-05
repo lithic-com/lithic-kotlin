@@ -2,7 +2,9 @@
 
 package com.lithic.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.ExternalBankAccountCreateParams
 import com.lithic.api.models.ExternalBankAccountCreateResponse
 import com.lithic.api.models.ExternalBankAccountListPageAsync
@@ -18,6 +20,11 @@ import com.lithic.api.models.ExternalBankAccountUpdateResponse
 import com.lithic.api.services.async.externalBankAccounts.MicroDepositServiceAsync
 
 interface ExternalBankAccountServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun microDeposits(): MicroDepositServiceAsync
 
@@ -64,4 +71,97 @@ interface ExternalBankAccountServiceAsync {
         params: ExternalBankAccountRetryPrenoteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetryPrenoteResponse
+
+    /**
+     * A view of [ExternalBankAccountServiceAsync] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        fun microDeposits(): MicroDepositServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /v1/external_bank_accounts`, but is otherwise the
+         * same as [ExternalBankAccountServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: ExternalBankAccountCreateParams = ExternalBankAccountCreateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/external_bank_accounts`, but is otherwise the
+         * same as [ExternalBankAccountServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(ExternalBankAccountCreateParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /v1/external_bank_accounts/{external_bank_account_token}`, but is otherwise the same as
+         * [ExternalBankAccountServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: ExternalBankAccountRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountRetrieveResponse>
+
+        /**
+         * Returns a raw HTTP response for `patch
+         * /v1/external_bank_accounts/{external_bank_account_token}`, but is otherwise the same as
+         * [ExternalBankAccountServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: ExternalBankAccountUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountUpdateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/external_bank_accounts`, but is otherwise the
+         * same as [ExternalBankAccountServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: ExternalBankAccountListParams = ExternalBankAccountListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/external_bank_accounts`, but is otherwise the
+         * same as [ExternalBankAccountServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<ExternalBankAccountListPageAsync> =
+            list(ExternalBankAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/external_bank_accounts/{external_bank_account_token}/retry_micro_deposits`, but is
+         * otherwise the same as [ExternalBankAccountServiceAsync.retryMicroDeposits].
+         */
+        @MustBeClosed
+        suspend fun retryMicroDeposits(
+            params: ExternalBankAccountRetryMicroDepositsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountRetryMicroDepositsResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/external_bank_accounts/{external_bank_account_token}/retry_prenote`, but is otherwise
+         * the same as [ExternalBankAccountServiceAsync.retryPrenote].
+         */
+        @MustBeClosed
+        suspend fun retryPrenote(
+            params: ExternalBankAccountRetryPrenoteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountRetryPrenoteResponse>
+    }
 }
