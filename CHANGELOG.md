@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.79.0 (2025-03-05)
+
+Full Changelog: [v0.78.0...v0.79.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.78.0...v0.79.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** refactor multipart formdata impl ([#497](https://github.com/lithic-com/lithic-kotlin/issues/497))
+
+### Features
+
+* **api:** new Settlement API endpoints and changes to update Account Holder endpoint ([#498](https://github.com/lithic-com/lithic-kotlin/issues/498)) ([369ca61](https://github.com/lithic-com/lithic-kotlin/commit/369ca61e30d8d0dfd17c8e676795ee218f31dc3e))
+* **client:** allow configuring timeouts granularly ([#494](https://github.com/lithic-com/lithic-kotlin/issues/494)) ([101d312](https://github.com/lithic-com/lithic-kotlin/commit/101d312fa3ab3342d2d7082d4b96725dda177958))
+* **client:** allow omitting params object when none required ([#486](https://github.com/lithic-com/lithic-kotlin/issues/486)) ([7321c2a](https://github.com/lithic-com/lithic-kotlin/commit/7321c2ade8a95d3c40142de223a1e8fea85dc3d3))
+* **client:** support raw response access ([#495](https://github.com/lithic-com/lithic-kotlin/issues/495)) ([fd18c21](https://github.com/lithic-com/lithic-kotlin/commit/fd18c2110484a7d3cae61d351859a01111c67950))
+
+
+### Chores
+
+* **api:** adds new `Internal` Category for FinancialTransactions ([#485](https://github.com/lithic-com/lithic-kotlin/issues/485)) ([ea6571f](https://github.com/lithic-com/lithic-kotlin/commit/ea6571f2069163e6c49241552743ce88c7858b5e))
+* **client:** refactor multipart formdata impl ([#497](https://github.com/lithic-com/lithic-kotlin/issues/497)) ([799abb6](https://github.com/lithic-com/lithic-kotlin/commit/799abb65aa3a8df90958004a2f880fa8e172c50a))
+* **client:** use deep identity methods for primitive array types ([#489](https://github.com/lithic-com/lithic-kotlin/issues/489)) ([6eda308](https://github.com/lithic-com/lithic-kotlin/commit/6eda3085e09e56e8df47c399e8c00d60d4034b91))
+* **internal:** add async service tests ([#488](https://github.com/lithic-com/lithic-kotlin/issues/488)) ([72c70f2](https://github.com/lithic-com/lithic-kotlin/commit/72c70f222d109ac80256fd43d3a919430486ac25))
+* **internal:** improve sync service tests ([72c70f2](https://github.com/lithic-com/lithic-kotlin/commit/72c70f222d109ac80256fd43d3a919430486ac25))
+* **internal:** refactor `ErrorHandlingTest` ([#493](https://github.com/lithic-com/lithic-kotlin/issues/493)) ([0d594a7](https://github.com/lithic-com/lithic-kotlin/commit/0d594a73220c075329e2400ab9f142641c9e4c75))
+* **internal:** refactor `ServiceParamsTest` ([#490](https://github.com/lithic-com/lithic-kotlin/issues/490)) ([d277dd8](https://github.com/lithic-com/lithic-kotlin/commit/d277dd8546471df6a714c8b0019b59da9d8550d0))
+
+
+### Documentation
+
+* add immutability explanation to readme ([#482](https://github.com/lithic-com/lithic-kotlin/issues/482)) ([cdf036c](https://github.com/lithic-com/lithic-kotlin/commit/cdf036c31755db3e247308d0263c1c80cbe5bbee))
+* add raw response readme documentation ([#499](https://github.com/lithic-com/lithic-kotlin/issues/499)) ([9498b78](https://github.com/lithic-com/lithic-kotlin/commit/9498b784115cfb3465dcb53bb956d1493c605926))
+* add source file links to readme ([#484](https://github.com/lithic-com/lithic-kotlin/issues/484)) ([a2cf7db](https://github.com/lithic-com/lithic-kotlin/commit/a2cf7dbdb11f0a7aff43178d48f593d579d768ab))
+* note required fields in `builder` javadoc ([#500](https://github.com/lithic-com/lithic-kotlin/issues/500)) ([dab26f1](https://github.com/lithic-com/lithic-kotlin/commit/dab26f137ac80c08503de20d907cd87dd20be945))
+* readme parameter tweaks ([72c70f2](https://github.com/lithic-com/lithic-kotlin/commit/72c70f222d109ac80256fd43d3a919430486ac25))
+* update URLs from stainlessapi.com to stainless.com ([58a2cb1](https://github.com/lithic-com/lithic-kotlin/commit/58a2cb1690328b0d70e0d67f6bc2889e1744f10e))
+* update URLs from stainlessapi.com to stainless.com ([#492](https://github.com/lithic-com/lithic-kotlin/issues/492)) ([1f1da06](https://github.com/lithic-com/lithic-kotlin/commit/1f1da069377c221baf337df95a8b0384ebf850c4))
+
 ## 0.78.0 (2025-02-20)
 
 Full Changelog: [v0.77.0...v0.78.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.77.0...v0.78.0)
