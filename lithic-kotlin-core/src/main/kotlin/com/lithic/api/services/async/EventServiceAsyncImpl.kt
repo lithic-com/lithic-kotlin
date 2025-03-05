@@ -12,6 +12,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.json
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
@@ -27,91 +29,137 @@ import com.lithic.api.services.async.events.SubscriptionServiceAsyncImpl
 class EventServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     EventServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: EventServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val subscriptions: SubscriptionServiceAsync by lazy {
         SubscriptionServiceAsyncImpl(clientOptions)
     }
 
+    override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
+
     override fun subscriptions(): SubscriptionServiceAsync = subscriptions
 
-    private val retrieveHandler: Handler<Event> =
-        jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Get an event. */
     override suspend fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions,
-    ): Event {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "events", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): Event =
+        // get /v1/events/{event_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<EventListPageAsync.Response> =
-        jsonHandler<EventListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List all events. */
     override suspend fun list(
         params: EventListParams,
         requestOptions: RequestOptions,
-    ): EventListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "events")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { EventListPageAsync.of(this, params, it) }
-    }
+    ): EventListPageAsync =
+        // get /v1/events
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val listAttemptsHandler: Handler<EventListAttemptsPageAsync.Response> =
-        jsonHandler<EventListAttemptsPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List all the message attempts for a given event. */
     override suspend fun listAttempts(
         params: EventListAttemptsParams,
         requestOptions: RequestOptions,
-    ): EventListAttemptsPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "events", params.getPathParam(0), "attempts")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listAttemptsHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): EventListAttemptsPageAsync =
+        // get /v1/events/{event_token}/attempts
+        withRawResponse().listAttempts(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        EventServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val subscriptions: SubscriptionServiceAsync.WithRawResponse by lazy {
+            SubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
+
+        private val retrieveHandler: Handler<Event> =
+            jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: EventRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Event> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "events", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-            .let { EventListAttemptsPageAsync.of(this, params, it) }
+        }
+
+        private val listHandler: Handler<EventListPageAsync.Response> =
+            jsonHandler<EventListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: EventListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "events")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { EventListPageAsync.of(EventServiceAsyncImpl(clientOptions), params, it) }
+            }
+        }
+
+        private val listAttemptsHandler: Handler<EventListAttemptsPageAsync.Response> =
+            jsonHandler<EventListAttemptsPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun listAttempts(
+            params: EventListAttemptsParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventListAttemptsPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "events", params.getPathParam(0), "attempts")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listAttemptsHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        EventListAttemptsPageAsync.of(
+                            EventServiceAsyncImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 
     override suspend fun resend(

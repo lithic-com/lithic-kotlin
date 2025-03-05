@@ -10,6 +10,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.json
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
@@ -33,217 +35,295 @@ import com.lithic.api.models.PaymentSimulateReturnResponse
 class PaymentServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     PaymentServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: PaymentServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val createHandler: Handler<PaymentCreateResponse> =
-        jsonHandler<PaymentCreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): PaymentServiceAsync.WithRawResponse = withRawResponse
 
-    /** Initiates a payment between a financial account and an external bank account. */
     override suspend fun create(
         params: PaymentCreateParams,
         requestOptions: RequestOptions,
-    ): PaymentCreateResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "payments")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): PaymentCreateResponse =
+        // post /v1/payments
+        withRawResponse().create(params, requestOptions).parse()
 
-    private val retrieveHandler: Handler<Payment> =
-        jsonHandler<Payment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Get the payment by token. */
     override suspend fun retrieve(
         params: PaymentRetrieveParams,
         requestOptions: RequestOptions,
-    ): Payment {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "payments", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): Payment =
+        // get /v1/payments/{payment_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<PaymentListPageAsync.Response> =
-        jsonHandler<PaymentListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List all the payments for the provided search criteria. */
     override suspend fun list(
         params: PaymentListParams,
         requestOptions: RequestOptions,
-    ): PaymentListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "payments")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { PaymentListPageAsync.of(this, params, it) }
-    }
+    ): PaymentListPageAsync =
+        // get /v1/payments
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val retryHandler: Handler<PaymentRetryResponse> =
-        jsonHandler<PaymentRetryResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Retry an origination which has been returned. */
     override suspend fun retry(
         params: PaymentRetryParams,
         requestOptions: RequestOptions,
-    ): PaymentRetryResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "payments", params.getPathParam(0), "retry")
-                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retryHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): PaymentRetryResponse =
+        // post /v1/payments/{payment_token}/retry
+        withRawResponse().retry(params, requestOptions).parse()
 
-    private val simulateActionHandler: Handler<PaymentSimulateActionResponse> =
-        jsonHandler<PaymentSimulateActionResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Simulate payment lifecycle event */
     override suspend fun simulateAction(
         params: PaymentSimulateActionParams,
         requestOptions: RequestOptions,
-    ): PaymentSimulateActionResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "simulate", "payments", params.getPathParam(0), "action")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { simulateActionHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): PaymentSimulateActionResponse =
+        // post /v1/simulate/payments/{payment_token}/action
+        withRawResponse().simulateAction(params, requestOptions).parse()
 
-    private val simulateReceiptHandler: Handler<PaymentSimulateReceiptResponse> =
-        jsonHandler<PaymentSimulateReceiptResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Simulates a receipt of a Payment. */
     override suspend fun simulateReceipt(
         params: PaymentSimulateReceiptParams,
         requestOptions: RequestOptions,
-    ): PaymentSimulateReceiptResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "simulate", "payments", "receipt")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { simulateReceiptHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): PaymentSimulateReceiptResponse =
+        // post /v1/simulate/payments/receipt
+        withRawResponse().simulateReceipt(params, requestOptions).parse()
 
-    private val simulateReleaseHandler: Handler<PaymentSimulateReleaseResponse> =
-        jsonHandler<PaymentSimulateReleaseResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Simulates a release of a Payment. */
     override suspend fun simulateRelease(
         params: PaymentSimulateReleaseParams,
         requestOptions: RequestOptions,
-    ): PaymentSimulateReleaseResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "simulate", "payments", "release")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { simulateReleaseHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): PaymentSimulateReleaseResponse =
+        // post /v1/simulate/payments/release
+        withRawResponse().simulateRelease(params, requestOptions).parse()
 
-    private val simulateReturnHandler: Handler<PaymentSimulateReturnResponse> =
-        jsonHandler<PaymentSimulateReturnResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** Simulates a return of a Payment. */
     override suspend fun simulateReturn(
         params: PaymentSimulateReturnParams,
         requestOptions: RequestOptions,
-    ): PaymentSimulateReturnResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "simulate", "payments", "return")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { simulateReturnHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): PaymentSimulateReturnResponse =
+        // post /v1/simulate/payments/return
+        withRawResponse().simulateReturn(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        PaymentServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<PaymentCreateResponse> =
+            jsonHandler<PaymentCreateResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun create(
+            params: PaymentCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentCreateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "payments")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val retrieveHandler: Handler<Payment> =
+            jsonHandler<Payment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: PaymentRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Payment> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "payments", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<PaymentListPageAsync.Response> =
+            jsonHandler<PaymentListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: PaymentListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "payments")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        PaymentListPageAsync.of(PaymentServiceAsyncImpl(clientOptions), params, it)
+                    }
+            }
+        }
+
+        private val retryHandler: Handler<PaymentRetryResponse> =
+            jsonHandler<PaymentRetryResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun retry(
+            params: PaymentRetryParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentRetryResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "payments", params.getPathParam(0), "retry")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retryHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val simulateActionHandler: Handler<PaymentSimulateActionResponse> =
+            jsonHandler<PaymentSimulateActionResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun simulateAction(
+            params: PaymentSimulateActionParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentSimulateActionResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "simulate", "payments", params.getPathParam(0), "action")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { simulateActionHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val simulateReceiptHandler: Handler<PaymentSimulateReceiptResponse> =
+            jsonHandler<PaymentSimulateReceiptResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun simulateReceipt(
+            params: PaymentSimulateReceiptParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentSimulateReceiptResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "simulate", "payments", "receipt")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { simulateReceiptHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val simulateReleaseHandler: Handler<PaymentSimulateReleaseResponse> =
+            jsonHandler<PaymentSimulateReleaseResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun simulateRelease(
+            params: PaymentSimulateReleaseParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentSimulateReleaseResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "simulate", "payments", "release")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { simulateReleaseHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val simulateReturnHandler: Handler<PaymentSimulateReturnResponse> =
+            jsonHandler<PaymentSimulateReturnResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun simulateReturn(
+            params: PaymentSimulateReturnParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentSimulateReturnResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "simulate", "payments", "return")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { simulateReturnHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }

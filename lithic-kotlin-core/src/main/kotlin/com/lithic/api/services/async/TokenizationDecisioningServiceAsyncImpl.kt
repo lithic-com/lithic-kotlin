@@ -10,6 +10,8 @@ import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.parseable
 import com.lithic.api.core.json
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
@@ -22,66 +24,84 @@ class TokenizationDecisioningServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) :
     TokenizationDecisioningServiceAsync {
 
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: TokenizationDecisioningServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val retrieveSecretHandler: Handler<TokenizationSecret> =
-        jsonHandler<TokenizationSecret>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): TokenizationDecisioningServiceAsync.WithRawResponse =
+        withRawResponse
 
-    /**
-     * Retrieve the Tokenization Decisioning secret key. If one does not exist your program yet,
-     * calling this endpoint will create one for you. The headers of the Tokenization Decisioning
-     * request will contain a hmac signature which you can use to verify requests originate from
-     * Lithic. See [this page](https://docs.lithic.com/docs/events-api#verifying-webhooks) for more
-     * detail about verifying Tokenization Decisioning requests.
-     */
     override suspend fun retrieveSecret(
         params: TokenizationDecisioningRetrieveSecretParams,
         requestOptions: RequestOptions,
-    ): TokenizationSecret {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("v1", "tokenization_decisioning", "secret")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveSecretHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): TokenizationSecret =
+        // get /v1/tokenization_decisioning/secret
+        withRawResponse().retrieveSecret(params, requestOptions).parse()
 
-    private val rotateSecretHandler: Handler<TokenizationDecisioningRotateSecretResponse> =
-        jsonHandler<TokenizationDecisioningRotateSecretResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Generate a new Tokenization Decisioning secret key. The old Tokenization Decisioning secret
-     * key will be deactivated 24 hours after a successful request to this endpoint.
-     */
     override suspend fun rotateSecret(
         params: TokenizationDecisioningRotateSecretParams,
         requestOptions: RequestOptions,
-    ): TokenizationDecisioningRotateSecretResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("v1", "tokenization_decisioning", "secret", "rotate")
-                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { rotateSecretHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): TokenizationDecisioningRotateSecretResponse =
+        // post /v1/tokenization_decisioning/secret/rotate
+        withRawResponse().rotateSecret(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        TokenizationDecisioningServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+
+        private val retrieveSecretHandler: Handler<TokenizationSecret> =
+            jsonHandler<TokenizationSecret>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieveSecret(
+            params: TokenizationDecisioningRetrieveSecretParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<TokenizationSecret> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v1", "tokenization_decisioning", "secret")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveSecretHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val rotateSecretHandler: Handler<TokenizationDecisioningRotateSecretResponse> =
+            jsonHandler<TokenizationDecisioningRotateSecretResponse>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun rotateSecret(
+            params: TokenizationDecisioningRotateSecretParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<TokenizationDecisioningRotateSecretResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v1", "tokenization_decisioning", "secret", "rotate")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { rotateSecretHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }
