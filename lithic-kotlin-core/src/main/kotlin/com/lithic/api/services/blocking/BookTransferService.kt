@@ -39,7 +39,7 @@ interface BookTransferService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPage
 
-    /** List book transfers */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): BookTransferListPage =
         list(BookTransferListParams.none(), requestOptions)
 
@@ -84,10 +84,7 @@ interface BookTransferService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BookTransferListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/book_transfers`, but is otherwise the same as
-         * [BookTransferService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BookTransferListPage> =
             list(BookTransferListParams.none(), requestOptions)

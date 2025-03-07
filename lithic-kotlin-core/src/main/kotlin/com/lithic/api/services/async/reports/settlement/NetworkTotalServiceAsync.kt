@@ -36,10 +36,7 @@ interface NetworkTotalServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementNetworkTotalListPageAsync
 
-    /**
-     * (Available March 4, 2025) List network total records with optional filters. Not available in
-     * sandbox.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): ReportSettlementNetworkTotalListPageAsync =
         list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
 
@@ -70,10 +67,7 @@ interface NetworkTotalServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementNetworkTotalListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals`, but is
-         * otherwise the same as [NetworkTotalServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

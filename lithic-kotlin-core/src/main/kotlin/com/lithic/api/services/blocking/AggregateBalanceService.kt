@@ -21,7 +21,7 @@ interface AggregateBalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregateBalanceListPage
 
-    /** Get the aggregated balance across all end-user accounts by financial account type */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): AggregateBalanceListPage =
         list(AggregateBalanceListParams.none(), requestOptions)
 
@@ -41,10 +41,7 @@ interface AggregateBalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AggregateBalanceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/aggregate_balances`, but is otherwise the same
-         * as [AggregateBalanceService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AggregateBalanceListPage> =
             list(AggregateBalanceListParams.none(), requestOptions)
