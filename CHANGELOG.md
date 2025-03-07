@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.80.0 (2025-03-07)
+
+Full Changelog: [v0.79.0...v0.80.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.79.0...v0.80.0)
+
+### Features
+
+* **client:** accept `InputStream` and `Path` for file params ([#502](https://github.com/lithic-com/lithic-kotlin/issues/502)) ([e2c5acc](https://github.com/lithic-com/lithic-kotlin/commit/e2c5acc9688cb7064e7810bd693fb105c2ec2cf9))
+* **client:** detect binary incompatible jackson versions ([#504](https://github.com/lithic-com/lithic-kotlin/issues/504)) ([88052f9](https://github.com/lithic-com/lithic-kotlin/commit/88052f90f671b111d04fe4b719aaa181fc587872))
+
+
+### Chores
+
+* **internal:** reenable warnings as errors ([918fd64](https://github.com/lithic-com/lithic-kotlin/commit/918fd642111c5980de515234a551a4630f45457b))
+
 ## 0.79.0 (2025-03-05)
 
 Full Changelog: [v0.78.0...v0.79.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.78.0...v0.79.0)
