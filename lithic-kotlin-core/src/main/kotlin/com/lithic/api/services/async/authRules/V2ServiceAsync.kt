@@ -63,7 +63,7 @@ interface V2ServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRuleV2ListPageAsync
 
-    /** Lists V2 authorization rules */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): AuthRuleV2ListPageAsync =
         list(AuthRuleV2ListParams.none(), requestOptions)
 
@@ -199,10 +199,7 @@ interface V2ServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRuleV2ListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v2/auth_rules`, but is otherwise the same as
-         * [V2ServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AuthRuleV2ListPageAsync> =
             list(AuthRuleV2ListParams.none(), requestOptions)

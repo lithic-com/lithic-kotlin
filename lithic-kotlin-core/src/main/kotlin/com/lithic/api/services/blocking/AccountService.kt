@@ -42,7 +42,7 @@ interface AccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPage
 
-    /** List account configurations. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): AccountListPage =
         list(AccountListParams.none(), requestOptions)
 
@@ -90,10 +90,7 @@ interface AccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/accounts`, but is otherwise the same as
-         * [AccountService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPage> =
             list(AccountListParams.none(), requestOptions)

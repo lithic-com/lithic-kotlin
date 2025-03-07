@@ -36,10 +36,7 @@ interface NetworkTotalService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementNetworkTotalListPage
 
-    /**
-     * (Available March 4, 2025) List network total records with optional filters. Not available in
-     * sandbox.
-     */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ReportSettlementNetworkTotalListPage =
         list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
 
@@ -69,10 +66,7 @@ interface NetworkTotalService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementNetworkTotalListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals`, but is
-         * otherwise the same as [NetworkTotalService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions

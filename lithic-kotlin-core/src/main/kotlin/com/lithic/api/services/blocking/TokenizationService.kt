@@ -39,7 +39,7 @@ interface TokenizationService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationListPage
 
-    /** List card tokenizations */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): TokenizationListPage =
         list(TokenizationListParams.none(), requestOptions)
 
@@ -163,10 +163,7 @@ interface TokenizationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/tokenizations`, but is otherwise the same as
-         * [TokenizationService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TokenizationListPage> =
             list(TokenizationListParams.none(), requestOptions)

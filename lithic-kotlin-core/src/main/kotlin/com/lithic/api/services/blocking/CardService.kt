@@ -9,6 +9,8 @@ import com.lithic.api.models.Card
 import com.lithic.api.models.CardConvertPhysicalParams
 import com.lithic.api.models.CardCreateParams
 import com.lithic.api.models.CardEmbedParams
+import com.lithic.api.models.CardGetEmbedHtmlParams
+import com.lithic.api.models.CardGetEmbedUrlParams
 import com.lithic.api.models.CardListPage
 import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
@@ -68,7 +70,7 @@ interface CardService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPage
 
-    /** List cards. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CardListPage =
         list(CardListParams.none(), requestOptions)
 
@@ -173,6 +175,16 @@ interface CardService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
+    fun getEmbedHtml(
+        params: CardGetEmbedHtmlParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): String
+
+    fun getEmbedUrl(
+        params: CardGetEmbedUrlParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): String
+
     /** A view of [CardService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -222,10 +234,7 @@ interface CardService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
-         * [CardService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CardListPage> =
             list(CardListParams.none(), requestOptions)

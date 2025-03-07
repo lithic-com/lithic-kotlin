@@ -21,7 +21,7 @@ interface BalanceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPageAsync
 
-    /** Get the balances for a program, business, or a given end-user account */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): BalanceListPageAsync =
         list(BalanceListParams.none(), requestOptions)
 
@@ -40,10 +40,7 @@ interface BalanceServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/balances`, but is otherwise the same as
-         * [BalanceServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPageAsync> =
             list(BalanceListParams.none(), requestOptions)

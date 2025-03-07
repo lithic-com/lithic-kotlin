@@ -32,6 +32,7 @@ import com.lithic.api.services.async.TokenizationDecisioningServiceAsync
 import com.lithic.api.services.async.TokenizationServiceAsync
 import com.lithic.api.services.async.TransactionServiceAsync
 import com.lithic.api.services.async.TransferServiceAsync
+import com.lithic.api.services.async.WebhookServiceAsync
 
 /**
  * A client for interacting with the Lithic REST API asynchronously. You can also switch to
@@ -92,6 +93,8 @@ interface LithicClientAsync {
 
     fun responderEndpoints(): ResponderEndpointServiceAsync
 
+    fun webhooks(): WebhookServiceAsync
+
     fun externalBankAccounts(): ExternalBankAccountServiceAsync
 
     fun payments(): PaymentServiceAsync
@@ -118,7 +121,7 @@ interface LithicClientAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ApiStatus
 
-    /** Status of api */
+    /** @see [apiStatus] */
     suspend fun apiStatus(requestOptions: RequestOptions): ApiStatus =
         apiStatus(ClientApiStatusParams.none(), requestOptions)
 
@@ -198,10 +201,7 @@ interface LithicClientAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ApiStatus>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/status`, but is otherwise the same as
-         * [LithicClientAsync.apiStatus].
-         */
+        /** @see [apiStatus] */
         @MustBeClosed
         suspend fun apiStatus(requestOptions: RequestOptions): HttpResponseFor<ApiStatus> =
             apiStatus(ClientApiStatusParams.none(), requestOptions)

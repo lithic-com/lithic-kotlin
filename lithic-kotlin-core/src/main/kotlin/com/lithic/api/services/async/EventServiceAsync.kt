@@ -3,6 +3,7 @@
 package com.lithic.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Event
@@ -34,7 +35,7 @@ interface EventServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPageAsync
 
-    /** List all events. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): EventListPageAsync =
         list(EventListParams.none(), requestOptions)
 
@@ -43,6 +44,8 @@ interface EventServiceAsync {
         params: EventListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync
+
+    suspend fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 
     /** A view of [EventServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -69,10 +72,7 @@ interface EventServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/events`, but is otherwise the same as
-         * [EventServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPageAsync> =
             list(EventListParams.none(), requestOptions)

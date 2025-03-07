@@ -50,7 +50,7 @@ interface DisputeService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPage
 
-    /** List disputes. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): DisputeListPage =
         list(DisputeListParams.none(), requestOptions)
 
@@ -92,6 +92,8 @@ interface DisputeService {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
+
+    fun uploadEvidence(disputeToken: String, file: ByteArray)
 
     /** A view of [DisputeService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -136,10 +138,7 @@ interface DisputeService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
-         * [DisputeService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPage> =
             list(DisputeListParams.none(), requestOptions)

@@ -9,6 +9,8 @@ import com.lithic.api.models.Card
 import com.lithic.api.models.CardConvertPhysicalParams
 import com.lithic.api.models.CardCreateParams
 import com.lithic.api.models.CardEmbedParams
+import com.lithic.api.models.CardGetEmbedHtmlParams
+import com.lithic.api.models.CardGetEmbedUrlParams
 import com.lithic.api.models.CardListPageAsync
 import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
@@ -68,7 +70,7 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPageAsync
 
-    /** List cards. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): CardListPageAsync =
         list(CardListParams.none(), requestOptions)
 
@@ -176,6 +178,16 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
+    suspend fun getEmbedHtml(
+        params: CardGetEmbedHtmlParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): String
+
+    suspend fun getEmbedUrl(
+        params: CardGetEmbedUrlParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): String
+
     /** A view of [CardServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -225,10 +237,7 @@ interface CardServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
-         * [CardServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CardListPageAsync> =
             list(CardListParams.none(), requestOptions)

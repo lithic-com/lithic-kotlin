@@ -50,7 +50,7 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPageAsync
 
-    /** List disputes. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
         list(DisputeListParams.none(), requestOptions)
 
@@ -92,6 +92,8 @@ interface DisputeServiceAsync {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
+
+    suspend fun uploadEvidence(disputeToken: String, file: ByteArray)
 
     /**
      * A view of [DisputeServiceAsync] that provides access to raw HTTP responses for each method.
@@ -138,10 +140,7 @@ interface DisputeServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
-         * [DisputeServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPageAsync> =
             list(DisputeListParams.none(), requestOptions)
