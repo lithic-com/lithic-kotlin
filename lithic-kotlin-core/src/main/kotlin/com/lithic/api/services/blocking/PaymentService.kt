@@ -47,7 +47,7 @@ interface PaymentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentListPage
 
-    /** List all the payments for the provided search criteria. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): PaymentListPage =
         list(PaymentListParams.none(), requestOptions)
 
@@ -114,10 +114,7 @@ interface PaymentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/payments`, but is otherwise the same as
-         * [PaymentService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentListPage> =
             list(PaymentListParams.none(), requestOptions)

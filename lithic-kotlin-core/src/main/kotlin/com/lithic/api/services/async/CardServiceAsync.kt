@@ -70,7 +70,7 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPageAsync
 
-    /** List cards. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): CardListPageAsync =
         list(CardListParams.none(), requestOptions)
 
@@ -237,10 +237,7 @@ interface CardServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
-         * [CardServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CardListPageAsync> =
             list(CardListParams.none(), requestOptions)

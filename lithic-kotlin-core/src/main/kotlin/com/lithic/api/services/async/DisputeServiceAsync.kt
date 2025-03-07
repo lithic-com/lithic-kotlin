@@ -50,7 +50,7 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPageAsync
 
-    /** List disputes. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
         list(DisputeListParams.none(), requestOptions)
 
@@ -140,10 +140,7 @@ interface DisputeServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
-         * [DisputeServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPageAsync> =
             list(DisputeListParams.none(), requestOptions)

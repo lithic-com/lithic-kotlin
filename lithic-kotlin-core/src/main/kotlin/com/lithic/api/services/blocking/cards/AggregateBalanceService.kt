@@ -21,7 +21,7 @@ interface AggregateBalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardAggregateBalanceListPage
 
-    /** Get the aggregated card balance across all end-user accounts. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CardAggregateBalanceListPage =
         list(CardAggregateBalanceListParams.none(), requestOptions)
 
@@ -41,10 +41,7 @@ interface AggregateBalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardAggregateBalanceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/cards/aggregate_balances`, but is otherwise the
-         * same as [AggregateBalanceService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CardAggregateBalanceListPage> =
             list(CardAggregateBalanceListParams.none(), requestOptions)

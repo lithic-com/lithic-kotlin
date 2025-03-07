@@ -38,14 +38,7 @@ interface DecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DecisioningRetrieveSecretResponse
 
-    /**
-     * Retrieve the 3DS Decisioning HMAC secret key. If one does not exist for your program yet,
-     * calling this endpoint will create one for you. The headers (which you can use to verify 3DS
-     * Decisioning requests) will begin appearing shortly after calling this endpoint for the first
-     * time. See
-     * [this page](https://docs.lithic.com/docs/3ds-decisioning#3ds-decisioning-hmac-secrets) for
-     * more detail about verifying 3DS Decisioning requests.
-     */
+    /** @see [retrieveSecret] */
     suspend fun retrieveSecret(requestOptions: RequestOptions): DecisioningRetrieveSecretResponse =
         retrieveSecret(ThreeDSDecisioningRetrieveSecretParams.none(), requestOptions)
 
@@ -60,12 +53,7 @@ interface DecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /**
-     * Generate a new 3DS Decisioning HMAC secret key. The old secret key will be deactivated 24
-     * hours after a successful request to this endpoint. Make a
-     * [`GET /three_ds_decisioning/secret`](https://docs.lithic.com/reference/getthreedsdecisioningsecret)
-     * request to retrieve the new secret key.
-     */
+    /** @see [rotateSecret] */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
         rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)
 
@@ -96,10 +84,7 @@ interface DecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DecisioningRetrieveSecretResponse>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/three_ds_decisioning/secret`, but is otherwise
-         * the same as [DecisioningServiceAsync.retrieveSecret].
-         */
+        /** @see [retrieveSecret] */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -117,10 +102,7 @@ interface DecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /**
-         * Returns a raw HTTP response for `post /v1/three_ds_decisioning/secret/rotate`, but is
-         * otherwise the same as [DecisioningServiceAsync.rotateSecret].
-         */
+        /** @see [rotateSecret] */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
             rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)

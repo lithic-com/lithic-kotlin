@@ -60,7 +60,7 @@ interface FinancialAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPage
 
-    /** Retrieve information on your financial accounts including routing and account number. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): FinancialAccountListPage =
         list(FinancialAccountListParams.none(), requestOptions)
 
@@ -126,10 +126,7 @@ interface FinancialAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/financial_accounts`, but is otherwise the same
-         * as [FinancialAccountService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<FinancialAccountListPage> =
             list(FinancialAccountListParams.none(), requestOptions)

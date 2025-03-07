@@ -29,7 +29,7 @@ interface CardProgramService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgramListPage
 
-    /** List card programs. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): CardProgramListPage =
         list(CardProgramListParams.none(), requestOptions)
 
@@ -58,10 +58,7 @@ interface CardProgramService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgramListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/card_programs`, but is otherwise the same as
-         * [CardProgramService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CardProgramListPage> =
             list(CardProgramListParams.none(), requestOptions)
