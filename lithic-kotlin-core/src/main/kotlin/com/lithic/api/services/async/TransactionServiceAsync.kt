@@ -55,10 +55,7 @@ interface TransactionServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPageAsync
 
-    /**
-     * List card transactions. All amounts are in the smallest unit of their respective currency
-     * (e.g., cents for USD) and inclusive of any acquirer fees.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): TransactionListPageAsync =
         list(TransactionListParams.none(), requestOptions)
 
@@ -164,10 +161,7 @@ interface TransactionServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/transactions`, but is otherwise the same as
-         * [TransactionServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

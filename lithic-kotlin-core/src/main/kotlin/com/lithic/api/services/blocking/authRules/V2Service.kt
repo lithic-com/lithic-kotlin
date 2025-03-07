@@ -63,7 +63,7 @@ interface V2Service {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRuleV2ListPage
 
-    /** Lists V2 authorization rules */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): AuthRuleV2ListPage =
         list(AuthRuleV2ListParams.none(), requestOptions)
 
@@ -199,10 +199,7 @@ interface V2Service {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRuleV2ListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v2/auth_rules`, but is otherwise the same as
-         * [V2Service.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AuthRuleV2ListPage> =
             list(AuthRuleV2ListParams.none(), requestOptions)

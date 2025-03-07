@@ -29,7 +29,7 @@ interface DigitalCardArtServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArtListPageAsync
 
-    /** List digital card art. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): DigitalCardArtListPageAsync =
         list(DigitalCardArtListParams.none(), requestOptions)
 
@@ -59,10 +59,7 @@ interface DigitalCardArtServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DigitalCardArtListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/digital_card_art`, but is otherwise the same as
-         * [DigitalCardArtServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
