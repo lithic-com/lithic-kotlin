@@ -39,7 +39,7 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationListPageAsync
 
-    /** List card tokenizations */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): TokenizationListPageAsync =
         list(TokenizationListParams.none(), requestOptions)
 
@@ -164,10 +164,7 @@ interface TokenizationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/tokenizations`, but is otherwise the same as
-         * [TokenizationServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

@@ -40,7 +40,7 @@ interface ExternalPaymentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPaymentListPage
 
-    /** List external payments */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ExternalPaymentListPage =
         list(ExternalPaymentListParams.none(), requestOptions)
 
@@ -104,10 +104,7 @@ interface ExternalPaymentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPaymentListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/external_payments`, but is otherwise the same as
-         * [ExternalPaymentService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ExternalPaymentListPage> =
             list(ExternalPaymentListParams.none(), requestOptions)

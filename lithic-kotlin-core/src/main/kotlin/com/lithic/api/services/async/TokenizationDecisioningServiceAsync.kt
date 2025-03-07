@@ -30,13 +30,7 @@ interface TokenizationDecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationSecret
 
-    /**
-     * Retrieve the Tokenization Decisioning secret key. If one does not exist your program yet,
-     * calling this endpoint will create one for you. The headers of the Tokenization Decisioning
-     * request will contain a hmac signature which you can use to verify requests originate from
-     * Lithic. See [this page](https://docs.lithic.com/docs/events-api#verifying-webhooks) for more
-     * detail about verifying Tokenization Decisioning requests.
-     */
+    /** @see [retrieveSecret] */
     suspend fun retrieveSecret(requestOptions: RequestOptions): TokenizationSecret =
         retrieveSecret(TokenizationDecisioningRetrieveSecretParams.none(), requestOptions)
 
@@ -50,10 +44,7 @@ interface TokenizationDecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationDecisioningRotateSecretResponse
 
-    /**
-     * Generate a new Tokenization Decisioning secret key. The old Tokenization Decisioning secret
-     * key will be deactivated 24 hours after a successful request to this endpoint.
-     */
+    /** @see [rotateSecret] */
     suspend fun rotateSecret(
         requestOptions: RequestOptions
     ): TokenizationDecisioningRotateSecretResponse =
@@ -76,10 +67,7 @@ interface TokenizationDecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationSecret>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/tokenization_decisioning/secret`, but is
-         * otherwise the same as [TokenizationDecisioningServiceAsync.retrieveSecret].
-         */
+        /** @see [retrieveSecret] */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -97,10 +85,7 @@ interface TokenizationDecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationDecisioningRotateSecretResponse>
 
-        /**
-         * Returns a raw HTTP response for `post /v1/tokenization_decisioning/secret/rotate`, but is
-         * otherwise the same as [TokenizationDecisioningServiceAsync.rotateSecret].
-         */
+        /** @see [rotateSecret] */
         @MustBeClosed
         suspend fun rotateSecret(
             requestOptions: RequestOptions

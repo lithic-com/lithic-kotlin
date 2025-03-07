@@ -47,7 +47,7 @@ interface PaymentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentListPageAsync
 
-    /** List all the payments for the provided search criteria. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): PaymentListPageAsync =
         list(PaymentListParams.none(), requestOptions)
 
@@ -116,10 +116,7 @@ interface PaymentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/payments`, but is otherwise the same as
-         * [PaymentServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentListPageAsync> =
             list(PaymentListParams.none(), requestOptions)

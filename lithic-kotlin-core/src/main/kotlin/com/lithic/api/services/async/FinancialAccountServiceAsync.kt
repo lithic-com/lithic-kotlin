@@ -60,7 +60,7 @@ interface FinancialAccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPageAsync
 
-    /** Retrieve information on your financial accounts including routing and account number. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
         list(FinancialAccountListParams.none(), requestOptions)
 
@@ -126,10 +126,7 @@ interface FinancialAccountServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/financial_accounts`, but is otherwise the same
-         * as [FinancialAccountServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
