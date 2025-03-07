@@ -29,7 +29,7 @@ interface DigitalCardArtService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArtListPage
 
-    /** List digital card art. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): DigitalCardArtListPage =
         list(DigitalCardArtListParams.none(), requestOptions)
 
@@ -58,10 +58,7 @@ interface DigitalCardArtService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DigitalCardArtListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/digital_card_art`, but is otherwise the same as
-         * [DigitalCardArtService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DigitalCardArtListPage> =
             list(DigitalCardArtListParams.none(), requestOptions)

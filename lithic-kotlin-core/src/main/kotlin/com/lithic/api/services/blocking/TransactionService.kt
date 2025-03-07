@@ -55,10 +55,7 @@ interface TransactionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPage
 
-    /**
-     * List card transactions. All amounts are in the smallest unit of their respective currency
-     * (e.g., cents for USD) and inclusive of any acquirer fees.
-     */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): TransactionListPage =
         list(TransactionListParams.none(), requestOptions)
 
@@ -163,10 +160,7 @@ interface TransactionService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/transactions`, but is otherwise the same as
-         * [TransactionService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionListPage> =
             list(TransactionListParams.none(), requestOptions)

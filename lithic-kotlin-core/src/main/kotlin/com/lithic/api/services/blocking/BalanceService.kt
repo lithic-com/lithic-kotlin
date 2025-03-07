@@ -21,7 +21,7 @@ interface BalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPage
 
-    /** Get the balances for a program, business, or a given end-user account */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): BalanceListPage =
         list(BalanceListParams.none(), requestOptions)
 
@@ -38,10 +38,7 @@ interface BalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/balances`, but is otherwise the same as
-         * [BalanceService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPage> =
             list(BalanceListParams.none(), requestOptions)

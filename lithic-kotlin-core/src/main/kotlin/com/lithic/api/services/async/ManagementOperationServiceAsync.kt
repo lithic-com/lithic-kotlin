@@ -37,7 +37,7 @@ interface ManagementOperationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationListPageAsync
 
-    /** List management operations */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): ManagementOperationListPageAsync =
         list(ManagementOperationListParams.none(), requestOptions)
 
@@ -84,10 +84,7 @@ interface ManagementOperationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ManagementOperationListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/management_operations`, but is otherwise the
-         * same as [ManagementOperationServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

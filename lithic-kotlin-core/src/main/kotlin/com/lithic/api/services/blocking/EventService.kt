@@ -35,7 +35,7 @@ interface EventService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 
-    /** List all events. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): EventListPage =
         list(EventListParams.none(), requestOptions)
 
@@ -72,10 +72,7 @@ interface EventService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/events`, but is otherwise the same as
-         * [EventService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPage> =
             list(EventListParams.none(), requestOptions)
