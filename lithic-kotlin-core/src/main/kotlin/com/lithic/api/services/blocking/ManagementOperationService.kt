@@ -37,7 +37,7 @@ interface ManagementOperationService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationListPage
 
-    /** List management operations */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ManagementOperationListPage =
         list(ManagementOperationListParams.none(), requestOptions)
 
@@ -84,10 +84,7 @@ interface ManagementOperationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ManagementOperationListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/management_operations`, but is otherwise the
-         * same as [ManagementOperationService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ManagementOperationListPage> =
             list(ManagementOperationListParams.none(), requestOptions)

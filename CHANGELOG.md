@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.80.0 (2025-03-10)
+
+Full Changelog: [v0.79.0...v0.80.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.79.0...v0.80.0)
+
+### Features
+
+* **client:** accept `InputStream` and `Path` for file params ([#502](https://github.com/lithic-com/lithic-kotlin/issues/502)) ([e2c5acc](https://github.com/lithic-com/lithic-kotlin/commit/e2c5acc9688cb7064e7810bd693fb105c2ec2cf9))
+* **client:** detect binary incompatible jackson versions ([#504](https://github.com/lithic-com/lithic-kotlin/issues/504)) ([88052f9](https://github.com/lithic-com/lithic-kotlin/commit/88052f90f671b111d04fe4b719aaa181fc587872))
+* generate and publish docs ([#505](https://github.com/lithic-com/lithic-kotlin/issues/505)) ([b997570](https://github.com/lithic-com/lithic-kotlin/commit/b9975703068cac6b974f9e495ece6af253994d10))
+
+
+### Chores
+
+* **internal:** add `.kotlin` to `.gitignore` ([#507](https://github.com/lithic-com/lithic-kotlin/issues/507)) ([172ec4e](https://github.com/lithic-com/lithic-kotlin/commit/172ec4e0571c7bedc152011bdc8b0a4633918215))
+* **internal:** reenable warnings as errors ([918fd64](https://github.com/lithic-com/lithic-kotlin/commit/918fd642111c5980de515234a551a4630f45457b))
+
+
+### Documentation
+
+* document `JsonValue` construction in readme ([#510](https://github.com/lithic-com/lithic-kotlin/issues/510)) ([f7cc4ac](https://github.com/lithic-com/lithic-kotlin/commit/f7cc4acff3af47d03d213d326d1bd7f2d6444446))
+* revise readme docs about nested params ([#509](https://github.com/lithic-com/lithic-kotlin/issues/509)) ([3946612](https://github.com/lithic-com/lithic-kotlin/commit/3946612e55863d920508173a6531b4530624ca53))
+
 ## 0.79.0 (2025-03-05)
 
 Full Changelog: [v0.78.0...v0.79.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.78.0...v0.79.0)

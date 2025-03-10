@@ -34,7 +34,7 @@ interface ExternalBankAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
 
-    /** Creates an external bank account within a program or Lithic account. */
+    /** @see [create] */
     fun create(requestOptions: RequestOptions): ExternalBankAccountCreateResponse =
         create(ExternalBankAccountCreateParams.none(), requestOptions)
 
@@ -56,7 +56,7 @@ interface ExternalBankAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountListPage
 
-    /** List all the external bank accounts for the provided search criteria. */
+    /** @see [list] */
     fun list(requestOptions: RequestOptions): ExternalBankAccountListPage =
         list(ExternalBankAccountListParams.none(), requestOptions)
 
@@ -90,10 +90,7 @@ interface ExternalBankAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse>
 
-        /**
-         * Returns a raw HTTP response for `post /v1/external_bank_accounts`, but is otherwise the
-         * same as [ExternalBankAccountService.create].
-         */
+        /** @see [create] */
         @MustBeClosed
         fun create(
             requestOptions: RequestOptions
@@ -132,10 +129,7 @@ interface ExternalBankAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountListPage>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/external_bank_accounts`, but is otherwise the
-         * same as [ExternalBankAccountService.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ExternalBankAccountListPage> =
             list(ExternalBankAccountListParams.none(), requestOptions)

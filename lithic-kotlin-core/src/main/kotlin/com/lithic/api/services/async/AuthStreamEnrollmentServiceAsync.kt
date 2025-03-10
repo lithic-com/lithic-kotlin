@@ -30,13 +30,7 @@ interface AuthStreamEnrollmentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthStreamSecret
 
-    /**
-     * Retrieve the ASA HMAC secret key. If one does not exist for your program yet, calling this
-     * endpoint will create one for you. The headers (which you can use to verify webhooks) will
-     * begin appearing shortly after calling this endpoint for the first time. See
-     * [this page](https://docs.lithic.com/docs/auth-stream-access-asa#asa-webhook-verification) for
-     * more detail about verifying ASA webhooks.
-     */
+    /** @see [retrieveSecret] */
     suspend fun retrieveSecret(requestOptions: RequestOptions): AuthStreamSecret =
         retrieveSecret(AuthStreamEnrollmentRetrieveSecretParams.none(), requestOptions)
 
@@ -52,12 +46,7 @@ interface AuthStreamEnrollmentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /**
-     * Generate a new ASA HMAC secret key. The old ASA HMAC secret key will be deactivated 24 hours
-     * after a successful request to this endpoint. Make a
-     * [`GET /auth_stream/secret`](https://docs.lithic.com/reference/getauthstreamsecret) request to
-     * retrieve the new secret key.
-     */
+    /** @see [rotateSecret] */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
         rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
 
@@ -78,10 +67,7 @@ interface AuthStreamEnrollmentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthStreamSecret>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/auth_stream/secret`, but is otherwise the same
-         * as [AuthStreamEnrollmentServiceAsync.retrieveSecret].
-         */
+        /** @see [retrieveSecret] */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -99,10 +85,7 @@ interface AuthStreamEnrollmentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /**
-         * Returns a raw HTTP response for `post /v1/auth_stream/secret/rotate`, but is otherwise
-         * the same as [AuthStreamEnrollmentServiceAsync.rotateSecret].
-         */
+        /** @see [rotateSecret] */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
             rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)

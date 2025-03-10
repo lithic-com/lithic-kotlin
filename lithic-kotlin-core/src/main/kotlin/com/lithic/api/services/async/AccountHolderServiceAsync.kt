@@ -71,9 +71,7 @@ interface AccountHolderServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListPageAsync
 
-    /**
-     * Get a list of individual or business account holders and their KYC or KYB evaluation status.
-     */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): AccountHolderListPageAsync =
         list(AccountHolderListParams.none(), requestOptions)
 
@@ -201,10 +199,7 @@ interface AccountHolderServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/account_holders`, but is otherwise the same as
-         * [AccountHolderServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

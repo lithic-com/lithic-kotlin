@@ -39,7 +39,7 @@ interface BookTransferServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferListPageAsync
 
-    /** List book transfers */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): BookTransferListPageAsync =
         list(BookTransferListParams.none(), requestOptions)
 
@@ -85,10 +85,7 @@ interface BookTransferServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BookTransferListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/book_transfers`, but is otherwise the same as
-         * [BookTransferServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

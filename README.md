@@ -2,7 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.79.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.80.0)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.80.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.80.0)
 
 <!-- x-release-please-end -->
 
@@ -10,7 +11,7 @@ The Lithic Kotlin SDK provides convenient access to the Lithic REST API from app
 
 The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com).
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.79.0).
 
 ## Installation
 
@@ -19,7 +20,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.79.0")
+implementation("com.lithic.api:lithic-kotlin:0.80.0")
 ```
 
 ### Maven
@@ -28,7 +29,7 @@ implementation("com.lithic.api:lithic-kotlin:0.79.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.79.0</version>
+    <version>0.80.0</version>
 </dependency>
 ```
 
@@ -388,9 +389,9 @@ val params: CardCreateParams = CardCreateParams.builder()
     .build()
 ```
 
-These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods. You can also set undocumented parameters on nested headers, query params, or body classes using the `putAdditionalProperty` method. These properties can be accessed on the built object later using the `_additionalProperties()` method.
+These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
 
-To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/JsonValue.kt) object to its setter:
+To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/Values.kt) object to its setter:
 
 ```kotlin
 import com.lithic.api.core.JsonValue
@@ -399,6 +400,41 @@ import com.lithic.api.models.CardCreateParams
 val params: CardCreateParams = CardCreateParams.builder()
     .type(JsonValue.from(42))
     .build()
+```
+
+The most straightforward way to create a [`JsonValue`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/Values.kt) is using its `from(...)` method:
+
+```kotlin
+import com.lithic.api.core.JsonValue
+
+// Create primitive JSON values
+val nullValue: JsonValue = JsonValue.from(null)
+val booleanValue: JsonValue = JsonValue.from(true)
+val numberValue: JsonValue = JsonValue.from(42)
+val stringValue: JsonValue = JsonValue.from("Hello World!")
+
+// Create a JSON array value equivalent to `["Hello", "World"]`
+val arrayValue: JsonValue = JsonValue.from(listOf(
+  "Hello", "World"
+))
+
+// Create a JSON object value equivalent to `{ "a": 1, "b": 2 }`
+val objectValue: JsonValue = JsonValue.from(mapOf(
+  "a" to 1, "b" to 2
+))
+
+// Create an arbitrarily nested JSON equivalent to:
+// {
+//   "a": [1, 2],
+//   "b": [3, 4]
+// }
+val complexValue: JsonValue = JsonValue.from(mapOf(
+  "a" to listOf(
+    1, 2
+  ), "b" to listOf(
+    3, 4
+  )
+))
 ```
 
 ### Response properties

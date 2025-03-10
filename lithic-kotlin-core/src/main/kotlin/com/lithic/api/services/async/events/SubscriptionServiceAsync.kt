@@ -53,7 +53,7 @@ interface SubscriptionServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPageAsync
 
-    /** List all the event subscriptions. */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): EventSubscriptionListPageAsync =
         list(EventSubscriptionListParams.none(), requestOptions)
 
@@ -154,10 +154,7 @@ interface SubscriptionServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscriptionListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/event_subscriptions`, but is otherwise the same
-         * as [SubscriptionServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

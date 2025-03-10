@@ -40,7 +40,7 @@ interface ExternalPaymentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPaymentListPageAsync
 
-    /** List external payments */
+    /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): ExternalPaymentListPageAsync =
         list(ExternalPaymentListParams.none(), requestOptions)
 
@@ -104,10 +104,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPaymentListPageAsync>
 
-        /**
-         * Returns a raw HTTP response for `get /v1/external_payments`, but is otherwise the same as
-         * [ExternalPaymentServiceAsync.list].
-         */
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
