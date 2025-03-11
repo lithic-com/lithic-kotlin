@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.80.0 (2025-03-11)
+
+Full Changelog: [v0.79.0...v0.80.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.79.0...v0.80.0)
+
+### Features
+
+* **client:** accept `InputStream` and `Path` for file params ([#502](https://github.com/lithic-com/lithic-kotlin/issues/502)) ([e2c5acc](https://github.com/lithic-com/lithic-kotlin/commit/e2c5acc9688cb7064e7810bd693fb105c2ec2cf9))
+* **client:** detect binary incompatible jackson versions ([#504](https://github.com/lithic-com/lithic-kotlin/issues/504)) ([88052f9](https://github.com/lithic-com/lithic-kotlin/commit/88052f90f671b111d04fe4b719aaa181fc587872))
+* **client:** update currency data type ([#512](https://github.com/lithic-com/lithic-kotlin/issues/512)) ([03f99e4](https://github.com/lithic-com/lithic-kotlin/commit/03f99e4d6d6aeb7a61e5d481bd63325abcb5f226))
+* generate and publish docs ([#505](https://github.com/lithic-com/lithic-kotlin/issues/505)) ([b997570](https://github.com/lithic-com/lithic-kotlin/commit/b9975703068cac6b974f9e495ece6af253994d10))
+
+
+### Chores
+
+* **api:** release of Network Totals reporting and new filters for Velocity Limit Rules ([#511](https://github.com/lithic-com/lithic-kotlin/issues/511)) ([dfd9746](https://github.com/lithic-com/lithic-kotlin/commit/dfd9746f98a982769ec423b35c6ea229a6b5d83b))
+* **client:** deprecate some fields ([03f99e4](https://github.com/lithic-com/lithic-kotlin/commit/03f99e4d6d6aeb7a61e5d481bd63325abcb5f226))
+* **internal:** add `.kotlin` to `.gitignore` ([#507](https://github.com/lithic-com/lithic-kotlin/issues/507)) ([172ec4e](https://github.com/lithic-com/lithic-kotlin/commit/172ec4e0571c7bedc152011bdc8b0a4633918215))
+* **internal:** reenable warnings as errors ([918fd64](https://github.com/lithic-com/lithic-kotlin/commit/918fd642111c5980de515234a551a4630f45457b))
+
+
+### Documentation
+
+* document `JsonValue` construction in readme ([#510](https://github.com/lithic-com/lithic-kotlin/issues/510)) ([f7cc4ac](https://github.com/lithic-com/lithic-kotlin/commit/f7cc4acff3af47d03d213d326d1bd7f2d6444446))
+* revise readme docs about nested params ([#509](https://github.com/lithic-com/lithic-kotlin/issues/509)) ([3946612](https://github.com/lithic-com/lithic-kotlin/commit/3946612e55863d920508173a6531b4530624ca53))
+* update some descriptions ([03f99e4](https://github.com/lithic-com/lithic-kotlin/commit/03f99e4d6d6aeb7a61e5d481bd63325abcb5f226))
+
 ## 0.79.0 (2025-03-05)
 
 Full Changelog: [v0.78.0...v0.79.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.78.0...v0.79.0)
