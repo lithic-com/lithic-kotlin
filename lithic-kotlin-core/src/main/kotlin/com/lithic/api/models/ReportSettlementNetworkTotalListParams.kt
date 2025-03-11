@@ -15,10 +15,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-/**
- * (Available March 4, 2025) List network total records with optional filters. Not available in
- * sandbox.
- */
+/** List network total records with optional filters. Not available in sandbox. */
 class ReportSettlementNetworkTotalListParams
 private constructor(
     private val begin: OffsetDateTime?,

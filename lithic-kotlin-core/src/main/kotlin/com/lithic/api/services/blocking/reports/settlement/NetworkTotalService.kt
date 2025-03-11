@@ -17,19 +17,13 @@ interface NetworkTotalService {
      */
     fun withRawResponse(): WithRawResponse
 
-    /**
-     * (Available March 4, 2025) Retrieve a specific network total record by token. Not available in
-     * sandbox.
-     */
+    /** Retrieve a specific network total record by token. Not available in sandbox. */
     fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkTotalRetrieveResponse
 
-    /**
-     * (Available March 4, 2025) List network total records with optional filters. Not available in
-     * sandbox.
-     */
+    /** List network total records with optional filters. Not available in sandbox. */
     fun list(
         params: ReportSettlementNetworkTotalListParams =
             ReportSettlementNetworkTotalListParams.none(),
