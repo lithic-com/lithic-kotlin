@@ -351,7 +351,7 @@ private constructor(
              */
             fun country(): String = country.getRequired("country")
 
-            /** currency of the external account 3-digit alphabetic ISO 4217 code */
+            /** currency of the external account 3-character alphabetic ISO 4217 code */
             fun currency(): String = currency.getRequired("currency")
 
             /** The financial account token of the operating account to fund the micro deposits */
@@ -416,7 +416,7 @@ private constructor(
              */
             @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
-            /** currency of the external account 3-digit alphabetic ISO 4217 code */
+            /** currency of the external account 3-character alphabetic ISO 4217 code */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /** The financial account token of the operating account to fund the micro deposits */
@@ -611,10 +611,10 @@ private constructor(
                  */
                 fun country(country: JsonField<String>) = apply { this.country = country }
 
-                /** currency of the external account 3-digit alphabetic ISO 4217 code */
+                /** currency of the external account 3-character alphabetic ISO 4217 code */
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                /** currency of the external account 3-digit alphabetic ISO 4217 code */
+                /** currency of the external account 3-character alphabetic ISO 4217 code */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 /**
@@ -1296,7 +1296,7 @@ private constructor(
              */
             fun country(): String = country.getRequired("country")
 
-            /** currency of the external account 3-digit alphabetic ISO 4217 code */
+            /** currency of the external account 3-character alphabetic ISO 4217 code */
             fun currency(): String = currency.getRequired("currency")
 
             /**
@@ -1354,7 +1354,7 @@ private constructor(
              */
             @JsonProperty("country") @ExcludeMissing fun _country(): JsonField<String> = country
 
-            /** currency of the external account 3-digit alphabetic ISO 4217 code */
+            /** currency of the external account 3-character alphabetic ISO 4217 code */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
             /**
@@ -1536,10 +1536,10 @@ private constructor(
                  */
                 fun country(country: JsonField<String>) = apply { this.country = country }
 
-                /** currency of the external account 3-digit alphabetic ISO 4217 code */
+                /** currency of the external account 3-character alphabetic ISO 4217 code */
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                /** currency of the external account 3-digit alphabetic ISO 4217 code */
+                /** currency of the external account 3-character alphabetic ISO 4217 code */
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 /**
