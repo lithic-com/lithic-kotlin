@@ -75,7 +75,7 @@ private constructor(
     /** Date and time when the transfer occurred. UTC time zone. */
     fun created(): OffsetDateTime? = created.getNullable("created")
 
-    /** 3-digit alphabetic ISO 4217 code for the settling currency of the transaction. */
+    /** 3-character alphabetic ISO 4217 code for the settling currency of the transaction. */
     fun currency(): String? = currency.getNullable("currency")
 
     /** A string that provides a description of the transfer; may be useful to display to users. */
@@ -134,7 +134,7 @@ private constructor(
     /** Date and time when the transfer occurred. UTC time zone. */
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
-    /** 3-digit alphabetic ISO 4217 code for the settling currency of the transaction. */
+    /** 3-character alphabetic ISO 4217 code for the settling currency of the transaction. */
     @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /** A string that provides a description of the transfer; may be useful to display to users. */
@@ -283,10 +283,10 @@ private constructor(
         /** Date and time when the transfer occurred. UTC time zone. */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
-        /** 3-digit alphabetic ISO 4217 code for the settling currency of the transaction. */
+        /** 3-character alphabetic ISO 4217 code for the settling currency of the transaction. */
         fun currency(currency: String) = currency(JsonField.of(currency))
 
-        /** 3-digit alphabetic ISO 4217 code for the settling currency of the transaction. */
+        /** 3-character alphabetic ISO 4217 code for the settling currency of the transaction. */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
