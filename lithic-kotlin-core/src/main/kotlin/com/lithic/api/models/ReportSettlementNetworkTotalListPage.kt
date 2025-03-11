@@ -16,10 +16,7 @@ import com.lithic.api.core.toImmutable
 import com.lithic.api.services.blocking.reports.settlement.NetworkTotalService
 import java.util.Objects
 
-/**
- * (Available March 4, 2025) List network total records with optional filters. Not available in
- * sandbox.
- */
+/** List network total records with optional filters. Not available in sandbox. */
 class ReportSettlementNetworkTotalListPage
 private constructor(
     private val networkTotalsService: NetworkTotalService,
