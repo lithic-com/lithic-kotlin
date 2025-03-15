@@ -146,7 +146,11 @@ private constructor(
             this.eventTypes = eventTypes?.toMutableList()
         }
 
-        /** Event types to filter events by. */
+        /**
+         * Adds a single [EventType] to [eventTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addEventType(eventType: EventType) = apply {
             eventTypes = (eventTypes ?: mutableListOf()).apply { add(eventType) }
         }
@@ -154,7 +158,11 @@ private constructor(
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Page size (for pagination). */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**
@@ -166,7 +174,11 @@ private constructor(
         /** Whether to include the event payload content in the response. */
         fun withContent(withContent: Boolean?) = apply { this.withContent = withContent }
 
-        /** Whether to include the event payload content in the response. */
+        /**
+         * Alias for [Builder.withContent].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun withContent(withContent: Boolean) = withContent(withContent as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {

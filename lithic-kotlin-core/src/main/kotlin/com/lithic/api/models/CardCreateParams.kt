@@ -45,6 +45,9 @@ private constructor(
      * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
      * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
      *   instead.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun type(): Type = body.type()
 
@@ -53,6 +56,9 @@ private constructor(
      * for programs enrolling users using the
      * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
      * [Managing Your Program](doc:managing-your-program) for more information.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun accountToken(): String? = body.accountToken()
 
@@ -62,9 +68,16 @@ private constructor(
      * utilize the program's default `card_program_token`. In Sandbox, use
      * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
      * creating cards on specific card programs.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun cardProgramToken(): String? = body.cardProgramToken()
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun carrier(): Carrier? = body.carrier()
 
     /**
@@ -72,27 +85,44 @@ private constructor(
      * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
      * See
      * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun digitalCardArtToken(): String? = body.digitalCardArtToken()
 
     /**
      * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an expiration
      * date will be generated.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun expMonth(): String? = body.expMonth()
 
     /**
      * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
      * expiration date will be generated.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun expYear(): String? = body.expYear()
 
-    /** Friendly name to identify the card. */
+    /**
+     * Friendly name to identify the card.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun memo(): String? = body.memo()
 
     /**
      * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
      * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun pin(): String? = body.pin()
 
@@ -100,6 +130,9 @@ private constructor(
      * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before use.
      * Specifies the configuration (i.e., physical card art) that the card should be manufactured
      * with.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun productId(): String? = body.productId()
 
@@ -109,6 +142,9 @@ private constructor(
      * is specified, `replacement_for` must also be specified. If `replacement_for` is specified and
      * this field is omitted, the replacement card's account will be inferred from the card being
      * replaced.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun replacementAccountToken(): String? = body.replacementAccountToken()
 
@@ -116,9 +152,16 @@ private constructor(
      * Globally unique identifier for the card that this card will replace. If the card type is
      * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it will be
      * replaced by a `VIRTUAL` card.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun replacementFor(): String? = body.replacementFor()
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun shippingAddress(): ShippingAddress? = body.shippingAddress()
 
     /**
@@ -130,6 +173,9 @@ private constructor(
      * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
      * - `2_DAY` - FedEx 2-day shipping, with tracking
      * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun shippingMethod(): ShippingMethod? = body.shippingMethod()
 
@@ -138,6 +184,9 @@ private constructor(
      * Transaction requests above the spend limit will be declined. Note that a spend limit of 0 is
      * effectively no limit, and should only be used to reset or remove a prior limit. Only a limit
      * of 1 or above will result in declined transactions due to checks against the card limit.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun spendLimit(): Long? = body.spendLimit()
 
@@ -151,6 +200,9 @@ private constructor(
      *   month prior.
      * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
      *   under the spend limit.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun spendLimitDuration(): SpendLimitDuration? = body.spendLimitDuration()
 
@@ -158,135 +210,132 @@ private constructor(
      * Card state values:
      * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
      * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun state(): State? = body.state()
 
     /**
-     * Card types:
-     * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet like
-     *   Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-     * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-     *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-     *   [lithic.com/contact](https://lithic.com/contact) for more information.
-     * - `SINGLE_USE` - Card is closed upon first successful authorization.
-     * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that successfully
-     *   authorizes the card.
-     * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
-     * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-     *   instead.
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _type(): JsonField<Type> = body._type()
 
     /**
-     * Globally unique identifier for the account that the card will be associated with. Required
-     * for programs enrolling users using the
-     * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
-     * [Managing Your Program](doc:managing-your-program) for more information.
+     * Returns the raw JSON value of [accountToken].
+     *
+     * Unlike [accountToken], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _accountToken(): JsonField<String> = body._accountToken()
 
     /**
-     * For card programs with more than one BIN range. This must be configured with Lithic before
-     * use. Identifies the card program/BIN range under which to create the card. If omitted, will
-     * utilize the program's default `card_program_token`. In Sandbox, use
-     * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
-     * creating cards on specific card programs.
+     * Returns the raw JSON value of [cardProgramToken].
+     *
+     * Unlike [cardProgramToken], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _cardProgramToken(): JsonField<String> = body._cardProgramToken()
 
+    /**
+     * Returns the raw JSON value of [carrier].
+     *
+     * Unlike [carrier], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _carrier(): JsonField<Carrier> = body._carrier()
 
     /**
-     * Specifies the digital card art to be displayed in the user’s digital wallet after
-     * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
-     * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     * Returns the raw JSON value of [digitalCardArtToken].
+     *
+     * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _digitalCardArtToken(): JsonField<String> = body._digitalCardArtToken()
 
     /**
-     * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an expiration
-     * date will be generated.
+     * Returns the raw JSON value of [expMonth].
+     *
+     * Unlike [expMonth], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _expMonth(): JsonField<String> = body._expMonth()
 
     /**
-     * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
-     * expiration date will be generated.
+     * Returns the raw JSON value of [expYear].
+     *
+     * Unlike [expYear], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _expYear(): JsonField<String> = body._expYear()
 
-    /** Friendly name to identify the card. */
+    /**
+     * Returns the raw JSON value of [memo].
+     *
+     * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _memo(): JsonField<String> = body._memo()
 
     /**
-     * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
-     * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+     * Returns the raw JSON value of [pin].
+     *
+     * Unlike [pin], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _pin(): JsonField<String> = body._pin()
 
     /**
-     * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before use.
-     * Specifies the configuration (i.e., physical card art) that the card should be manufactured
-     * with.
+     * Returns the raw JSON value of [productId].
+     *
+     * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _productId(): JsonField<String> = body._productId()
 
     /**
-     * Restricted field limited to select use cases. Lithic will reach out directly if this field
-     * should be used. Globally unique identifier for the replacement card's account. If this field
-     * is specified, `replacement_for` must also be specified. If `replacement_for` is specified and
-     * this field is omitted, the replacement card's account will be inferred from the card being
-     * replaced.
+     * Returns the raw JSON value of [replacementAccountToken].
+     *
+     * Unlike [replacementAccountToken], this method doesn't throw if the JSON field has an
+     * unexpected type.
      */
     fun _replacementAccountToken(): JsonField<String> = body._replacementAccountToken()
 
     /**
-     * Globally unique identifier for the card that this card will replace. If the card type is
-     * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it will be
-     * replaced by a `VIRTUAL` card.
+     * Returns the raw JSON value of [replacementFor].
+     *
+     * Unlike [replacementFor], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _replacementFor(): JsonField<String> = body._replacementFor()
 
+    /**
+     * Returns the raw JSON value of [shippingAddress].
+     *
+     * Unlike [shippingAddress], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _shippingAddress(): JsonField<ShippingAddress> = body._shippingAddress()
 
     /**
-     * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
-     * `STANDARD` require additional permissions.
-     * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-     * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
-     * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-     * - `2_DAY` - FedEx 2-day shipping, with tracking
-     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     * Returns the raw JSON value of [shippingMethod].
+     *
+     * Unlike [shippingMethod], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _shippingMethod(): JsonField<ShippingMethod> = body._shippingMethod()
 
     /**
-     * Amount (in cents) to limit approved authorizations (e.g. 100000 would be a $1,000 limit).
-     * Transaction requests above the spend limit will be declined. Note that a spend limit of 0 is
-     * effectively no limit, and should only be used to reset or remove a prior limit. Only a limit
-     * of 1 or above will result in declined transactions due to checks against the card limit.
+     * Returns the raw JSON value of [spendLimit].
+     *
+     * Unlike [spendLimit], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _spendLimit(): JsonField<Long> = body._spendLimit()
 
     /**
-     * Spend limit duration values:
-     * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
-     * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
-     * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
-     *   support recurring monthly payments, which can occur on different day every month, the time
-     *   window we consider for monthly velocity starts 6 days after the current calendar date one
-     *   month prior.
-     * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
-     *   under the spend limit.
+     * Returns the raw JSON value of [spendLimitDuration].
+     *
+     * Unlike [spendLimitDuration], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _spendLimitDuration(): JsonField<SpendLimitDuration> = body._spendLimitDuration()
 
     /**
-     * Card state values:
-     * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
-     * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+     * Returns the raw JSON value of [state].
+     *
+     * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _state(): JsonField<State> = body._state()
 
@@ -371,6 +420,9 @@ private constructor(
          *   instead.
          * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
          *   instead.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun type(): Type = type.getRequired("type")
 
@@ -379,6 +431,9 @@ private constructor(
          * Required for programs enrolling users using the
          * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
          * [Managing Your Program](doc:managing-your-program) for more information.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun accountToken(): String? = accountToken.getNullable("account_token")
 
@@ -388,9 +443,16 @@ private constructor(
          * omitted, will utilize the program's default `card_program_token`. In Sandbox, use
          * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
          * creating cards on specific card programs.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun cardProgramToken(): String? = cardProgramToken.getNullable("card_program_token")
 
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun carrier(): Carrier? = carrier.getNullable("carrier")
 
         /**
@@ -398,6 +460,9 @@ private constructor(
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
          * use. See
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun digitalCardArtToken(): String? =
             digitalCardArtToken.getNullable("digital_card_art_token")
@@ -405,21 +470,35 @@ private constructor(
         /**
          * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun expMonth(): String? = expMonth.getNullable("exp_month")
 
         /**
          * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date will be generated.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun expYear(): String? = expYear.getNullable("exp_year")
 
-        /** Friendly name to identify the card. */
+        /**
+         * Friendly name to identify the card.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun memo(): String? = memo.getNullable("memo")
 
         /**
          * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
          * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun pin(): String? = pin.getNullable("pin")
 
@@ -427,6 +506,9 @@ private constructor(
          * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
          * use. Specifies the configuration (i.e., physical card art) that the card should be
          * manufactured with.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun productId(): String? = productId.getNullable("product_id")
 
@@ -436,6 +518,9 @@ private constructor(
          * this field is specified, `replacement_for` must also be specified. If `replacement_for`
          * is specified and this field is omitted, the replacement card's account will be inferred
          * from the card being replaced.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun replacementAccountToken(): String? =
             replacementAccountToken.getNullable("replacement_account_token")
@@ -444,9 +529,16 @@ private constructor(
          * Globally unique identifier for the card that this card will replace. If the card type is
          * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
          * will be replaced by a `VIRTUAL` card.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun replacementFor(): String? = replacementFor.getNullable("replacement_for")
 
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun shippingAddress(): ShippingAddress? = shippingAddress.getNullable("shipping_address")
 
         /**
@@ -459,6 +551,9 @@ private constructor(
          * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
          * - `2_DAY` - FedEx 2-day shipping, with tracking
          * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun shippingMethod(): ShippingMethod? = shippingMethod.getNullable("shipping_method")
 
@@ -468,6 +563,9 @@ private constructor(
          * is effectively no limit, and should only be used to reset or remove a prior limit. Only a
          * limit of 1 or above will result in declined transactions due to checks against the card
          * limit.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun spendLimit(): Long? = spendLimit.getNullable("spend_limit")
 
@@ -482,6 +580,9 @@ private constructor(
          *   calendar date one month prior.
          * - `TRANSACTION` - Card will authorize multiple transactions if each individual
          *   transaction is under the spend limit.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun spendLimitDuration(): SpendLimitDuration? =
             spendLimitDuration.getNullable("spend_limit_duration")
@@ -490,155 +591,152 @@ private constructor(
          * Card state values:
          * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun state(): State? = state.getNullable("state")
 
         /**
-         * Card types:
-         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         *   like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         *   [lithic.com/contact](https://lithic.com/contact) for more information.
-         * - `SINGLE_USE` - Card is closed upon first successful authorization.
-         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         *   successfully authorizes the card.
-         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-         *   instead.
-         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-         *   instead.
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
-         * Globally unique identifier for the account that the card will be associated with.
-         * Required for programs enrolling users using the
-         * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
-         * [Managing Your Program](doc:managing-your-program) for more information.
+         * Returns the raw JSON value of [accountToken].
+         *
+         * Unlike [accountToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("account_token")
         @ExcludeMissing
         fun _accountToken(): JsonField<String> = accountToken
 
         /**
-         * For card programs with more than one BIN range. This must be configured with Lithic
-         * before use. Identifies the card program/BIN range under which to create the card. If
-         * omitted, will utilize the program's default `card_program_token`. In Sandbox, use
-         * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
-         * creating cards on specific card programs.
+         * Returns the raw JSON value of [cardProgramToken].
+         *
+         * Unlike [cardProgramToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("card_program_token")
         @ExcludeMissing
         fun _cardProgramToken(): JsonField<String> = cardProgramToken
 
+        /**
+         * Returns the raw JSON value of [carrier].
+         *
+         * Unlike [carrier], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("carrier") @ExcludeMissing fun _carrier(): JsonField<Carrier> = carrier
 
         /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         * Returns the raw JSON value of [digitalCardArtToken].
+         *
+         * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("digital_card_art_token")
         @ExcludeMissing
         fun _digitalCardArtToken(): JsonField<String> = digitalCardArtToken
 
         /**
-         * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
-         * expiration date will be generated.
+         * Returns the raw JSON value of [expMonth].
+         *
+         * Unlike [expMonth], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("exp_month") @ExcludeMissing fun _expMonth(): JsonField<String> = expMonth
 
         /**
-         * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
-         * expiration date will be generated.
+         * Returns the raw JSON value of [expYear].
+         *
+         * Unlike [expYear], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("exp_year") @ExcludeMissing fun _expYear(): JsonField<String> = expYear
 
-        /** Friendly name to identify the card. */
+        /**
+         * Returns the raw JSON value of [memo].
+         *
+         * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
         /**
-         * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+         * Returns the raw JSON value of [pin].
+         *
+         * Unlike [pin], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("pin") @ExcludeMissing fun _pin(): JsonField<String> = pin
 
         /**
-         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
-         * use. Specifies the configuration (i.e., physical card art) that the card should be
-         * manufactured with.
+         * Returns the raw JSON value of [productId].
+         *
+         * Unlike [productId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("product_id") @ExcludeMissing fun _productId(): JsonField<String> = productId
 
         /**
-         * Restricted field limited to select use cases. Lithic will reach out directly if this
-         * field should be used. Globally unique identifier for the replacement card's account. If
-         * this field is specified, `replacement_for` must also be specified. If `replacement_for`
-         * is specified and this field is omitted, the replacement card's account will be inferred
-         * from the card being replaced.
+         * Returns the raw JSON value of [replacementAccountToken].
+         *
+         * Unlike [replacementAccountToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("replacement_account_token")
         @ExcludeMissing
         fun _replacementAccountToken(): JsonField<String> = replacementAccountToken
 
         /**
-         * Globally unique identifier for the card that this card will replace. If the card type is
-         * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
-         * will be replaced by a `VIRTUAL` card.
+         * Returns the raw JSON value of [replacementFor].
+         *
+         * Unlike [replacementFor], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("replacement_for")
         @ExcludeMissing
         fun _replacementFor(): JsonField<String> = replacementFor
 
+        /**
+         * Returns the raw JSON value of [shippingAddress].
+         *
+         * Unlike [shippingAddress], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("shipping_address")
         @ExcludeMissing
         fun _shippingAddress(): JsonField<ShippingAddress> = shippingAddress
 
         /**
-         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-         * besides `STANDARD` require additional permissions.
-         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         *   tracking
-         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         * Returns the raw JSON value of [shippingMethod].
+         *
+         * Unlike [shippingMethod], this method doesn't throw if the JSON field has an unexpected
+         * type.
          */
         @JsonProperty("shipping_method")
         @ExcludeMissing
         fun _shippingMethod(): JsonField<ShippingMethod> = shippingMethod
 
         /**
-         * Amount (in cents) to limit approved authorizations (e.g. 100000 would be a $1,000 limit).
-         * Transaction requests above the spend limit will be declined. Note that a spend limit of 0
-         * is effectively no limit, and should only be used to reset or remove a prior limit. Only a
-         * limit of 1 or above will result in declined transactions due to checks against the card
-         * limit.
+         * Returns the raw JSON value of [spendLimit].
+         *
+         * Unlike [spendLimit], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("spend_limit") @ExcludeMissing fun _spendLimit(): JsonField<Long> = spendLimit
 
         /**
-         * Spend limit duration values:
-         * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
-         * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
-         *   card.
-         * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
-         *   To support recurring monthly payments, which can occur on different day every month,
-         *   the time window we consider for monthly velocity starts 6 days after the current
-         *   calendar date one month prior.
-         * - `TRANSACTION` - Card will authorize multiple transactions if each individual
-         *   transaction is under the spend limit.
+         * Returns the raw JSON value of [spendLimitDuration].
+         *
+         * Unlike [spendLimitDuration], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("spend_limit_duration")
         @ExcludeMissing
         fun _spendLimitDuration(): JsonField<SpendLimitDuration> = spendLimitDuration
 
         /**
-         * Card state values:
-         * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
-         * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+         * Returns the raw JSON value of [state].
+         *
+         * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<State> = state
 
@@ -750,20 +848,11 @@ private constructor(
             fun type(type: Type) = type(JsonField.of(type))
 
             /**
-             * Card types:
-             * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
-             *   wallet like Apple Pay or Google Pay (if the card program is digital
-             *   wallet-enabled).
-             * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label
-             *   branding, credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach
-             *   out at [lithic.com/contact](https://lithic.com/contact) for more information.
-             * - `SINGLE_USE` - Card is closed upon first successful authorization.
-             * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-             *   successfully authorizes the card.
-             * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-             *   instead.
-             * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use
-             *   VIRTUAL instead.
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
@@ -776,10 +865,11 @@ private constructor(
             fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
 
             /**
-             * Globally unique identifier for the account that the card will be associated with.
-             * Required for programs enrolling users using the
-             * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
-             * [Managing Your Program](doc:managing-your-program) for more information.
+             * Sets [Builder.accountToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun accountToken(accountToken: JsonField<String>) = apply {
                 this.accountToken = accountToken
@@ -796,11 +886,11 @@ private constructor(
                 cardProgramToken(JsonField.of(cardProgramToken))
 
             /**
-             * For card programs with more than one BIN range. This must be configured with Lithic
-             * before use. Identifies the card program/BIN range under which to create the card. If
-             * omitted, will utilize the program's default `card_program_token`. In Sandbox, use
-             * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
-             * creating cards on specific card programs.
+             * Sets [Builder.cardProgramToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.cardProgramToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun cardProgramToken(cardProgramToken: JsonField<String>) = apply {
                 this.cardProgramToken = cardProgramToken
@@ -808,6 +898,13 @@ private constructor(
 
             fun carrier(carrier: Carrier) = carrier(JsonField.of(carrier))
 
+            /**
+             * Sets [Builder.carrier] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.carrier] with a well-typed [Carrier] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun carrier(carrier: JsonField<Carrier>) = apply { this.carrier = carrier }
 
             /**
@@ -820,10 +917,11 @@ private constructor(
                 digitalCardArtToken(JsonField.of(digitalCardArtToken))
 
             /**
-             * Specifies the digital card art to be displayed in the user’s digital wallet after
-             * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-             * use. See
-             * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+             * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.digitalCardArtToken] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
@@ -836,8 +934,11 @@ private constructor(
             fun expMonth(expMonth: String) = expMonth(JsonField.of(expMonth))
 
             /**
-             * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
-             * expiration date will be generated.
+             * Sets [Builder.expMonth] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.expMonth] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun expMonth(expMonth: JsonField<String>) = apply { this.expMonth = expMonth }
 
@@ -848,15 +949,24 @@ private constructor(
             fun expYear(expYear: String) = expYear(JsonField.of(expYear))
 
             /**
-             * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
-             * expiration date will be generated.
+             * Sets [Builder.expYear] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.expYear] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun expYear(expYear: JsonField<String>) = apply { this.expYear = expYear }
 
             /** Friendly name to identify the card. */
             fun memo(memo: String) = memo(JsonField.of(memo))
 
-            /** Friendly name to identify the card. */
+            /**
+             * Sets [Builder.memo] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /**
@@ -866,8 +976,11 @@ private constructor(
             fun pin(pin: String) = pin(JsonField.of(pin))
 
             /**
-             * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`.
-             * See [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+             * Sets [Builder.pin] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.pin] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun pin(pin: JsonField<String>) = apply { this.pin = pin }
 
@@ -879,9 +992,11 @@ private constructor(
             fun productId(productId: String) = productId(JsonField.of(productId))
 
             /**
-             * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
-             * before use. Specifies the configuration (i.e., physical card art) that the card
-             * should be manufactured with.
+             * Sets [Builder.productId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.productId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
@@ -896,11 +1011,11 @@ private constructor(
                 replacementAccountToken(JsonField.of(replacementAccountToken))
 
             /**
-             * Restricted field limited to select use cases. Lithic will reach out directly if this
-             * field should be used. Globally unique identifier for the replacement card's account.
-             * If this field is specified, `replacement_for` must also be specified. If
-             * `replacement_for` is specified and this field is omitted, the replacement card's
-             * account will be inferred from the card being replaced.
+             * Sets [Builder.replacementAccountToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.replacementAccountToken] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun replacementAccountToken(replacementAccountToken: JsonField<String>) = apply {
                 this.replacementAccountToken = replacementAccountToken
@@ -915,9 +1030,11 @@ private constructor(
                 replacementFor(JsonField.of(replacementFor))
 
             /**
-             * Globally unique identifier for the card that this card will replace. If the card type
-             * is `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL`
-             * it will be replaced by a `VIRTUAL` card.
+             * Sets [Builder.replacementFor] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.replacementFor] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun replacementFor(replacementFor: JsonField<String>) = apply {
                 this.replacementFor = replacementFor
@@ -926,6 +1043,13 @@ private constructor(
             fun shippingAddress(shippingAddress: ShippingAddress) =
                 shippingAddress(JsonField.of(shippingAddress))
 
+            /**
+             * Sets [Builder.shippingAddress] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.shippingAddress] with a well-typed [ShippingAddress]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
                 this.shippingAddress = shippingAddress
             }
@@ -946,16 +1070,11 @@ private constructor(
                 shippingMethod(JsonField.of(shippingMethod))
 
             /**
-             * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-             * besides `STANDARD` require additional permissions.
-             * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-             * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-             *   tracking
-             * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-             * - `2_DAY` - FedEx 2-day shipping, with tracking
-             * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
-             *   tracking
+             * Sets [Builder.shippingMethod] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.shippingMethod] with a well-typed [ShippingMethod]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun shippingMethod(shippingMethod: JsonField<ShippingMethod>) = apply {
                 this.shippingMethod = shippingMethod
@@ -971,11 +1090,11 @@ private constructor(
             fun spendLimit(spendLimit: Long) = spendLimit(JsonField.of(spendLimit))
 
             /**
-             * Amount (in cents) to limit approved authorizations (e.g. 100000 would be a $1,000
-             * limit). Transaction requests above the spend limit will be declined. Note that a
-             * spend limit of 0 is effectively no limit, and should only be used to reset or remove
-             * a prior limit. Only a limit of 1 or above will result in declined transactions due to
-             * checks against the card limit.
+             * Sets [Builder.spendLimit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.spendLimit] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
             fun spendLimit(spendLimit: JsonField<Long>) = apply { this.spendLimit = spendLimit }
 
@@ -996,17 +1115,11 @@ private constructor(
                 spendLimitDuration(JsonField.of(spendLimitDuration))
 
             /**
-             * Spend limit duration values:
-             * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing
-             *   year.
-             * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of
-             *   the card.
-             * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing
-             *   month. To support recurring monthly payments, which can occur on different day
-             *   every month, the time window we consider for monthly velocity starts 6 days after
-             *   the current calendar date one month prior.
-             * - `TRANSACTION` - Card will authorize multiple transactions if each individual
-             *   transaction is under the spend limit.
+             * Sets [Builder.spendLimitDuration] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.spendLimitDuration] with a well-typed
+             * [SpendLimitDuration] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
              */
             fun spendLimitDuration(spendLimitDuration: JsonField<SpendLimitDuration>) = apply {
                 this.spendLimitDuration = spendLimitDuration
@@ -1021,10 +1134,11 @@ private constructor(
             fun state(state: State) = state(JsonField.of(state))
 
             /**
-             * Card state values:
-             * - `OPEN` - Card will approve authorizations (if they match card and account
-             *   parameters).
-             * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+             * Sets [Builder.state] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.state] with a well-typed [State] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
              */
             fun state(state: JsonField<State>) = apply { this.state = state }
 
@@ -1135,19 +1249,10 @@ private constructor(
         fun type(type: Type) = apply { body.type(type) }
 
         /**
-         * Card types:
-         * - `VIRTUAL` - Card will authorize at any merchant and can be added to a digital wallet
-         *   like Apple Pay or Google Pay (if the card program is digital wallet-enabled).
-         * - `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding,
-         *   credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. Reach out at
-         *   [lithic.com/contact](https://lithic.com/contact) for more information.
-         * - `SINGLE_USE` - Card is closed upon first successful authorization.
-         * - `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to the first merchant that
-         *   successfully authorizes the card.
-         * - `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-         *   instead.
-         * - `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-         *   instead.
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun type(type: JsonField<Type>) = apply { body.type(type) }
 
@@ -1160,10 +1265,11 @@ private constructor(
         fun accountToken(accountToken: String) = apply { body.accountToken(accountToken) }
 
         /**
-         * Globally unique identifier for the account that the card will be associated with.
-         * Required for programs enrolling users using the
-         * [/account_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
-         * [Managing Your Program](doc:managing-your-program) for more information.
+         * Sets [Builder.accountToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun accountToken(accountToken: JsonField<String>) = apply {
             body.accountToken(accountToken)
@@ -1181,11 +1287,11 @@ private constructor(
         }
 
         /**
-         * For card programs with more than one BIN range. This must be configured with Lithic
-         * before use. Identifies the card program/BIN range under which to create the card. If
-         * omitted, will utilize the program's default `card_program_token`. In Sandbox, use
-         * 00000000-0000-0000-1000-000000000000 and 00000000-0000-0000-2000-000000000000 to test
-         * creating cards on specific card programs.
+         * Sets [Builder.cardProgramToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.cardProgramToken] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun cardProgramToken(cardProgramToken: JsonField<String>) = apply {
             body.cardProgramToken(cardProgramToken)
@@ -1193,6 +1299,12 @@ private constructor(
 
         fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
 
+        /**
+         * Sets [Builder.carrier] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.carrier] with a well-typed [Carrier] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun carrier(carrier: JsonField<Carrier>) = apply { body.carrier(carrier) }
 
         /**
@@ -1206,10 +1318,11 @@ private constructor(
         }
 
         /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet after
-         * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.digitalCardArtToken] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
             body.digitalCardArtToken(digitalCardArtToken)
@@ -1222,8 +1335,10 @@ private constructor(
         fun expMonth(expMonth: String) = apply { body.expMonth(expMonth) }
 
         /**
-         * Two digit (MM) expiry month. If neither `exp_month` nor `exp_year` is provided, an
-         * expiration date will be generated.
+         * Sets [Builder.expMonth] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expMonth] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun expMonth(expMonth: JsonField<String>) = apply { body.expMonth(expMonth) }
 
@@ -1234,15 +1349,22 @@ private constructor(
         fun expYear(expYear: String) = apply { body.expYear(expYear) }
 
         /**
-         * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
-         * expiration date will be generated.
+         * Sets [Builder.expYear] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expYear] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun expYear(expYear: JsonField<String>) = apply { body.expYear(expYear) }
 
         /** Friendly name to identify the card. */
         fun memo(memo: String) = apply { body.memo(memo) }
 
-        /** Friendly name to identify the card. */
+        /**
+         * Sets [Builder.memo] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.memo] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
 
         /**
@@ -1252,8 +1374,10 @@ private constructor(
         fun pin(pin: String) = apply { body.pin(pin) }
 
         /**
-         * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
-         * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
+         * Sets [Builder.pin] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.pin] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun pin(pin: JsonField<String>) = apply { body.pin(pin) }
 
@@ -1265,9 +1389,11 @@ private constructor(
         fun productId(productId: String) = apply { body.productId(productId) }
 
         /**
-         * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
-         * use. Specifies the configuration (i.e., physical card art) that the card should be
-         * manufactured with.
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
@@ -1283,11 +1409,11 @@ private constructor(
         }
 
         /**
-         * Restricted field limited to select use cases. Lithic will reach out directly if this
-         * field should be used. Globally unique identifier for the replacement card's account. If
-         * this field is specified, `replacement_for` must also be specified. If `replacement_for`
-         * is specified and this field is omitted, the replacement card's account will be inferred
-         * from the card being replaced.
+         * Sets [Builder.replacementAccountToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.replacementAccountToken] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun replacementAccountToken(replacementAccountToken: JsonField<String>) = apply {
             body.replacementAccountToken(replacementAccountToken)
@@ -1301,9 +1427,11 @@ private constructor(
         fun replacementFor(replacementFor: String) = apply { body.replacementFor(replacementFor) }
 
         /**
-         * Globally unique identifier for the card that this card will replace. If the card type is
-         * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
-         * will be replaced by a `VIRTUAL` card.
+         * Sets [Builder.replacementFor] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.replacementFor] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun replacementFor(replacementFor: JsonField<String>) = apply {
             body.replacementFor(replacementFor)
@@ -1313,6 +1441,13 @@ private constructor(
             body.shippingAddress(shippingAddress)
         }
 
+        /**
+         * Sets [Builder.shippingAddress] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.shippingAddress] with a well-typed [ShippingAddress]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
             body.shippingAddress(shippingAddress)
         }
@@ -1333,15 +1468,11 @@ private constructor(
         }
 
         /**
-         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
-         * besides `STANDARD` require additional permissions.
-         * - `STANDARD` - USPS regular mail or similar international option, with no tracking
-         * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
-         *   tracking
-         * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         * Sets [Builder.shippingMethod] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.shippingMethod] with a well-typed [ShippingMethod] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun shippingMethod(shippingMethod: JsonField<ShippingMethod>) = apply {
             body.shippingMethod(shippingMethod)
@@ -1357,11 +1488,10 @@ private constructor(
         fun spendLimit(spendLimit: Long) = apply { body.spendLimit(spendLimit) }
 
         /**
-         * Amount (in cents) to limit approved authorizations (e.g. 100000 would be a $1,000 limit).
-         * Transaction requests above the spend limit will be declined. Note that a spend limit of 0
-         * is effectively no limit, and should only be used to reset or remove a prior limit. Only a
-         * limit of 1 or above will result in declined transactions due to checks against the card
-         * limit.
+         * Sets [Builder.spendLimit] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.spendLimit] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun spendLimit(spendLimit: JsonField<Long>) = apply { body.spendLimit(spendLimit) }
 
@@ -1382,16 +1512,11 @@ private constructor(
         }
 
         /**
-         * Spend limit duration values:
-         * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
-         * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
-         *   card.
-         * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
-         *   To support recurring monthly payments, which can occur on different day every month,
-         *   the time window we consider for monthly velocity starts 6 days after the current
-         *   calendar date one month prior.
-         * - `TRANSACTION` - Card will authorize multiple transactions if each individual
-         *   transaction is under the spend limit.
+         * Sets [Builder.spendLimitDuration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.spendLimitDuration] with a well-typed
+         * [SpendLimitDuration] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
          */
         fun spendLimitDuration(spendLimitDuration: JsonField<SpendLimitDuration>) = apply {
             body.spendLimitDuration(spendLimitDuration)
@@ -1405,9 +1530,10 @@ private constructor(
         fun state(state: State) = apply { body.state(state) }
 
         /**
-         * Card state values:
-         * - `OPEN` - Card will approve authorizations (if they match card and account parameters).
-         * - `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
+         * Sets [Builder.state] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.state] with a well-typed [State] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun state(state: JsonField<State>) = apply { body.state(state) }
 
