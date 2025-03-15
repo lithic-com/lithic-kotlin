@@ -17,6 +17,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
+import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
 /**
@@ -43,14 +44,17 @@ private constructor(
      * tokenization. This artwork must be approved by the network and configured by Lithic to use.
      * See
      * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun digitalCardArtToken(): String? = body.digitalCardArtToken()
 
     /**
-     * Specifies the digital card art to be displayed in the user’s digital wallet for a
-     * tokenization. This artwork must be approved by the network and configured by Lithic to use.
-     * See
-     * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+     * Returns the raw JSON value of [digitalCardArtToken].
+     *
+     * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     fun _digitalCardArtToken(): JsonField<String> = body._digitalCardArtToken()
 
@@ -89,15 +93,18 @@ private constructor(
          * tokenization. This artwork must be approved by the network and configured by Lithic to
          * use. See
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
         fun digitalCardArtToken(): String? =
             digitalCardArtToken.getNullable("digital_card_art_token")
 
         /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet for a
-         * tokenization. This artwork must be approved by the network and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         * Returns the raw JSON value of [digitalCardArtToken].
+         *
+         * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
          */
         @JsonProperty("digital_card_art_token")
         @ExcludeMissing
@@ -147,10 +154,11 @@ private constructor(
                 digitalCardArtToken(JsonField.of(digitalCardArtToken))
 
             /**
-             * Specifies the digital card art to be displayed in the user’s digital wallet for a
-             * tokenization. This artwork must be approved by the network and configured by Lithic
-             * to use. See
-             * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+             * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.digitalCardArtToken] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
              */
             fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
                 this.digitalCardArtToken = digitalCardArtToken
@@ -246,10 +254,11 @@ private constructor(
         }
 
         /**
-         * Specifies the digital card art to be displayed in the user’s digital wallet for a
-         * tokenization. This artwork must be approved by the network and configured by Lithic to
-         * use. See
-         * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
+         * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.digitalCardArtToken] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun digitalCardArtToken(digitalCardArtToken: JsonField<String>) = apply {
             body.digitalCardArtToken(digitalCardArtToken)

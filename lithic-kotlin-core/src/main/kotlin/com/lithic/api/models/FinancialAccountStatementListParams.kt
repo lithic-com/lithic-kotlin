@@ -157,14 +157,22 @@ private constructor(
             this.includeInitialStatements = includeInitialStatements
         }
 
-        /** Whether to include the initial statement. It is not included by default. */
+        /**
+         * Alias for [Builder.includeInitialStatements].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun includeInitialStatements(includeInitialStatements: Boolean) =
             includeInitialStatements(includeInitialStatements as Boolean?)
 
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Page size (for pagination). */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**

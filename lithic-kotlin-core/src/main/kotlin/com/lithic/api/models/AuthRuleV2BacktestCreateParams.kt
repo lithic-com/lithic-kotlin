@@ -17,6 +17,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
+import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -53,16 +54,34 @@ private constructor(
 
     fun authRuleToken(): String = authRuleToken
 
-    /** The end time of the backtest. */
+    /**
+     * The end time of the backtest.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun end(): OffsetDateTime? = body.end()
 
-    /** The start time of the backtest. */
+    /**
+     * The start time of the backtest.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun start(): OffsetDateTime? = body.start()
 
-    /** The end time of the backtest. */
+    /**
+     * Returns the raw JSON value of [end].
+     *
+     * Unlike [end], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _end(): JsonField<OffsetDateTime> = body._end()
 
-    /** The start time of the backtest. */
+    /**
+     * Returns the raw JSON value of [start].
+     *
+     * Unlike [start], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _start(): JsonField<OffsetDateTime> = body._start()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -98,16 +117,34 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The end time of the backtest. */
+        /**
+         * The end time of the backtest.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun end(): OffsetDateTime? = end.getNullable("end")
 
-        /** The start time of the backtest. */
+        /**
+         * The start time of the backtest.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun start(): OffsetDateTime? = start.getNullable("start")
 
-        /** The end time of the backtest. */
+        /**
+         * Returns the raw JSON value of [end].
+         *
+         * Unlike [end], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("end") @ExcludeMissing fun _end(): JsonField<OffsetDateTime> = end
 
-        /** The start time of the backtest. */
+        /**
+         * Returns the raw JSON value of [start].
+         *
+         * Unlike [start], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("start") @ExcludeMissing fun _start(): JsonField<OffsetDateTime> = start
 
         @JsonAnyGetter
@@ -150,13 +187,25 @@ private constructor(
             /** The end time of the backtest. */
             fun end(end: OffsetDateTime) = end(JsonField.of(end))
 
-            /** The end time of the backtest. */
+            /**
+             * Sets [Builder.end] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.end] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun end(end: JsonField<OffsetDateTime>) = apply { this.end = end }
 
             /** The start time of the backtest. */
             fun start(start: OffsetDateTime) = start(JsonField.of(start))
 
-            /** The start time of the backtest. */
+            /**
+             * Sets [Builder.start] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.start] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -237,13 +286,25 @@ private constructor(
         /** The end time of the backtest. */
         fun end(end: OffsetDateTime) = apply { body.end(end) }
 
-        /** The end time of the backtest. */
+        /**
+         * Sets [Builder.end] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.end] with a well-typed [OffsetDateTime] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun end(end: JsonField<OffsetDateTime>) = apply { body.end(end) }
 
         /** The start time of the backtest. */
         fun start(start: OffsetDateTime) = apply { body.start(start) }
 
-        /** The start time of the backtest. */
+        /**
+         * Sets [Builder.start] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.start] with a well-typed [OffsetDateTime] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun start(start: JsonField<OffsetDateTime>) = apply { body.start(start) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
