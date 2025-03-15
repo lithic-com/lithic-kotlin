@@ -13,6 +13,7 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
+import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -25,8 +26,18 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun provisioningPayload(): String? = provisioningPayload.getNullable("provisioning_payload")
 
+    /**
+     * Returns the raw JSON value of [provisioningPayload].
+     *
+     * Unlike [provisioningPayload], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("provisioning_payload")
     @ExcludeMissing
     fun _provisioningPayload(): JsonField<String> = provisioningPayload
@@ -68,6 +79,13 @@ private constructor(
         fun provisioningPayload(provisioningPayload: String) =
             provisioningPayload(JsonField.of(provisioningPayload))
 
+        /**
+         * Sets [Builder.provisioningPayload] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.provisioningPayload] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun provisioningPayload(provisioningPayload: JsonField<String>) = apply {
             this.provisioningPayload = provisioningPayload
         }
