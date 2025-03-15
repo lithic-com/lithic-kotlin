@@ -81,40 +81,93 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Globally unique identifier. */
+    /**
+     * Globally unique identifier.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun token(): String = token.getRequired("token")
 
-    /** Amount under dispute. May be different from the original transaction amount. */
+    /**
+     * Amount under dispute. May be different from the original transaction amount.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun amount(): Long = amount.getRequired("amount")
 
-    /** Date dispute entered arbitration. */
+    /**
+     * Date dispute entered arbitration.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun arbitrationDate(): OffsetDateTime? = arbitrationDate.getNullable("arbitration_date")
 
-    /** Timestamp of when first Dispute was reported. */
+    /**
+     * Timestamp of when first Dispute was reported.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun created(): OffsetDateTime = created.getRequired("created")
 
-    /** Date that the dispute was filed by the customer making the dispute. */
+    /**
+     * Date that the dispute was filed by the customer making the dispute.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun customerFiledDate(): OffsetDateTime? = customerFiledDate.getNullable("customer_filed_date")
 
-    /** End customer description of the reason for the dispute. */
+    /**
+     * End customer description of the reason for the dispute.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun customerNote(): String? = customerNote.getNullable("customer_note")
 
-    /** Unique identifiers for the dispute from the network. */
+    /**
+     * Unique identifiers for the dispute from the network.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun networkClaimIds(): List<String>? = networkClaimIds.getNullable("network_claim_ids")
 
-    /** Date that the dispute was submitted to the network. */
+    /**
+     * Date that the dispute was submitted to the network.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun networkFiledDate(): OffsetDateTime? = networkFiledDate.getNullable("network_filed_date")
 
-    /** Network reason code used to file the dispute. */
+    /**
+     * Network reason code used to file the dispute.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun networkReasonCode(): String? = networkReasonCode.getNullable("network_reason_code")
 
-    /** Date dispute entered pre-arbitration. */
+    /**
+     * Date dispute entered pre-arbitration.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun prearbitrationDate(): OffsetDateTime? =
         prearbitrationDate.getNullable("prearbitration_date")
 
     /**
      * Unique identifier for the dispute from the network. If there are multiple, this will be the
      * first claim id set by the network
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun primaryClaimId(): String? = primaryClaimId.getNullable("primary_claim_id")
 
@@ -134,19 +187,42 @@ private constructor(
      * - `PROCESSING_ERROR`: Processing error.
      * - `REFUND_NOT_PROCESSED`: The refund was not processed.
      * - `RECURRING_TRANSACTION_NOT_CANCELLED`: The recurring transaction was not cancelled.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun reason(): Reason = reason.getRequired("reason")
 
-    /** Date the representment was received. */
+    /**
+     * Date the representment was received.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun representmentDate(): OffsetDateTime? = representmentDate.getNullable("representment_date")
 
-    /** Resolution amount net of network fees. */
+    /**
+     * Resolution amount net of network fees.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun resolutionAmount(): Long? = resolutionAmount.getNullable("resolution_amount")
 
-    /** Date that the dispute was resolved. */
+    /**
+     * Date that the dispute was resolved.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun resolutionDate(): OffsetDateTime? = resolutionDate.getNullable("resolution_date")
 
-    /** Note by Dispute team on the case resolution. */
+    /**
+     * Note by Dispute team on the case resolution.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun resolutionNote(): String? = resolutionNote.getNullable("resolution_note")
 
     /**
@@ -168,6 +244,9 @@ private constructor(
      * - `WON_ARBITRATION`: Won arbitration.
      * - `WON_FIRST_CHARGEBACK`: Won first chargeback.
      * - `WON_PREARBITRATION`: Won prearbitration.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
     fun resolutionReason(): ResolutionReason? = resolutionReason.getNullable("resolution_reason")
 
@@ -181,146 +260,185 @@ private constructor(
      * - `ARBITRATION` - Case has entered arbitration.
      * - `CASE_WON` - Case was won and credit will be issued.
      * - `CASE_CLOSED` - Case was lost or withdrawn.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun status(): Status = status.getRequired("status")
 
     /**
      * The transaction that is being disputed. A transaction can only be disputed once but may have
      * multiple dispute cases.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun transactionToken(): String = transactionToken.getRequired("transaction_token")
 
-    /** Globally unique identifier. */
+    /**
+     * Returns the raw JSON value of [token].
+     *
+     * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
 
-    /** Amount under dispute. May be different from the original transaction amount. */
+    /**
+     * Returns the raw JSON value of [amount].
+     *
+     * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
 
-    /** Date dispute entered arbitration. */
+    /**
+     * Returns the raw JSON value of [arbitrationDate].
+     *
+     * Unlike [arbitrationDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("arbitration_date")
     @ExcludeMissing
     fun _arbitrationDate(): JsonField<OffsetDateTime> = arbitrationDate
 
-    /** Timestamp of when first Dispute was reported. */
+    /**
+     * Returns the raw JSON value of [created].
+     *
+     * Unlike [created], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
-    /** Date that the dispute was filed by the customer making the dispute. */
+    /**
+     * Returns the raw JSON value of [customerFiledDate].
+     *
+     * Unlike [customerFiledDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("customer_filed_date")
     @ExcludeMissing
     fun _customerFiledDate(): JsonField<OffsetDateTime> = customerFiledDate
 
-    /** End customer description of the reason for the dispute. */
+    /**
+     * Returns the raw JSON value of [customerNote].
+     *
+     * Unlike [customerNote], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("customer_note")
     @ExcludeMissing
     fun _customerNote(): JsonField<String> = customerNote
 
-    /** Unique identifiers for the dispute from the network. */
+    /**
+     * Returns the raw JSON value of [networkClaimIds].
+     *
+     * Unlike [networkClaimIds], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("network_claim_ids")
     @ExcludeMissing
     fun _networkClaimIds(): JsonField<List<String>> = networkClaimIds
 
-    /** Date that the dispute was submitted to the network. */
+    /**
+     * Returns the raw JSON value of [networkFiledDate].
+     *
+     * Unlike [networkFiledDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("network_filed_date")
     @ExcludeMissing
     fun _networkFiledDate(): JsonField<OffsetDateTime> = networkFiledDate
 
-    /** Network reason code used to file the dispute. */
+    /**
+     * Returns the raw JSON value of [networkReasonCode].
+     *
+     * Unlike [networkReasonCode], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("network_reason_code")
     @ExcludeMissing
     fun _networkReasonCode(): JsonField<String> = networkReasonCode
 
-    /** Date dispute entered pre-arbitration. */
+    /**
+     * Returns the raw JSON value of [prearbitrationDate].
+     *
+     * Unlike [prearbitrationDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("prearbitration_date")
     @ExcludeMissing
     fun _prearbitrationDate(): JsonField<OffsetDateTime> = prearbitrationDate
 
     /**
-     * Unique identifier for the dispute from the network. If there are multiple, this will be the
-     * first claim id set by the network
+     * Returns the raw JSON value of [primaryClaimId].
+     *
+     * Unlike [primaryClaimId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("primary_claim_id")
     @ExcludeMissing
     fun _primaryClaimId(): JsonField<String> = primaryClaimId
 
     /**
-     * Dispute reason:
-     * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
-     * - `CANCELLED`: Transaction was cancelled by the customer.
-     * - `DUPLICATED`: The transaction was a duplicate.
-     * - `FRAUD_CARD_NOT_PRESENT`: Fraudulent transaction, card not present.
-     * - `FRAUD_CARD_PRESENT`: Fraudulent transaction, card present.
-     * - `FRAUD_OTHER`: Fraudulent transaction, other types such as questionable merchant activity.
-     * - `GOODS_SERVICES_NOT_AS_DESCRIBED`: The goods or services were not as described.
-     * - `GOODS_SERVICES_NOT_RECEIVED`: The goods or services were not received.
-     * - `INCORRECT_AMOUNT`: The transaction amount was incorrect.
-     * - `MISSING_AUTH`: The transaction was missing authorization.
-     * - `OTHER`: Other reason.
-     * - `PROCESSING_ERROR`: Processing error.
-     * - `REFUND_NOT_PROCESSED`: The refund was not processed.
-     * - `RECURRING_TRANSACTION_NOT_CANCELLED`: The recurring transaction was not cancelled.
+     * Returns the raw JSON value of [reason].
+     *
+     * Unlike [reason], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
 
-    /** Date the representment was received. */
+    /**
+     * Returns the raw JSON value of [representmentDate].
+     *
+     * Unlike [representmentDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("representment_date")
     @ExcludeMissing
     fun _representmentDate(): JsonField<OffsetDateTime> = representmentDate
 
-    /** Resolution amount net of network fees. */
+    /**
+     * Returns the raw JSON value of [resolutionAmount].
+     *
+     * Unlike [resolutionAmount], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("resolution_amount")
     @ExcludeMissing
     fun _resolutionAmount(): JsonField<Long> = resolutionAmount
 
-    /** Date that the dispute was resolved. */
+    /**
+     * Returns the raw JSON value of [resolutionDate].
+     *
+     * Unlike [resolutionDate], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("resolution_date")
     @ExcludeMissing
     fun _resolutionDate(): JsonField<OffsetDateTime> = resolutionDate
 
-    /** Note by Dispute team on the case resolution. */
+    /**
+     * Returns the raw JSON value of [resolutionNote].
+     *
+     * Unlike [resolutionNote], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("resolution_note")
     @ExcludeMissing
     fun _resolutionNote(): JsonField<String> = resolutionNote
 
     /**
-     * Reason for the dispute resolution:
-     * - `CASE_LOST`: This case was lost at final arbitration.
-     * - `NETWORK_REJECTED`: Network rejected.
-     * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
-     * - `NO_DISPUTE_RIGHTS_BELOW_THRESHOLD`: No dispute rights, below threshold.
-     * - `NO_DISPUTE_RIGHTS_CONTACTLESS`: No dispute rights, contactless.
-     * - `NO_DISPUTE_RIGHTS_HYBRID`: No dispute rights, hybrid.
-     * - `NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS`: No dispute rights, max chargebacks.
-     * - `NO_DISPUTE_RIGHTS_OTHER`: No dispute rights, other.
-     * - `PAST_FILING_DATE`: Past filing date.
-     * - `PREARBITRATION_REJECTED`: Prearbitration rejected.
-     * - `PROCESSOR_REJECTED_OTHER`: Processor rejected, other.
-     * - `REFUNDED`: Refunded.
-     * - `REFUNDED_AFTER_CHARGEBACK`: Refunded after chargeback.
-     * - `WITHDRAWN`: Withdrawn.
-     * - `WON_ARBITRATION`: Won arbitration.
-     * - `WON_FIRST_CHARGEBACK`: Won first chargeback.
-     * - `WON_PREARBITRATION`: Won prearbitration.
+     * Returns the raw JSON value of [resolutionReason].
+     *
+     * Unlike [resolutionReason], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("resolution_reason")
     @ExcludeMissing
     fun _resolutionReason(): JsonField<ResolutionReason> = resolutionReason
 
     /**
-     * Status types:
-     * - `NEW` - New dispute case is opened.
-     * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
-     * - `SUBMITTED` - Dispute is submitted to the card network.
-     * - `REPRESENTMENT` - Case has entered second presentment.
-     * - `PREARBITRATION` - Case has entered prearbitration.
-     * - `ARBITRATION` - Case has entered arbitration.
-     * - `CASE_WON` - Case was won and credit will be issued.
-     * - `CASE_CLOSED` - Case was lost or withdrawn.
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     /**
-     * The transaction that is being disputed. A transaction can only be disputed once but may have
-     * multiple dispute cases.
+     * Returns the raw JSON value of [transactionToken].
+     *
+     * Unlike [transactionToken], this method doesn't throw if the JSON field has an unexpected
+     * type.
      */
     @JsonProperty("transaction_token")
     @ExcludeMissing
@@ -442,20 +560,36 @@ private constructor(
         /** Globally unique identifier. */
         fun token(token: String) = token(JsonField.of(token))
 
-        /** Globally unique identifier. */
+        /**
+         * Sets [Builder.token] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.token] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Amount under dispute. May be different from the original transaction amount. */
         fun amount(amount: Long) = amount(JsonField.of(amount))
 
-        /** Amount under dispute. May be different from the original transaction amount. */
+        /**
+         * Sets [Builder.amount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /** Date dispute entered arbitration. */
         fun arbitrationDate(arbitrationDate: OffsetDateTime?) =
             arbitrationDate(JsonField.ofNullable(arbitrationDate))
 
-        /** Date dispute entered arbitration. */
+        /**
+         * Sets [Builder.arbitrationDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.arbitrationDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun arbitrationDate(arbitrationDate: JsonField<OffsetDateTime>) = apply {
             this.arbitrationDate = arbitrationDate
         }
@@ -463,14 +597,26 @@ private constructor(
         /** Timestamp of when first Dispute was reported. */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
-        /** Timestamp of when first Dispute was reported. */
+        /**
+         * Sets [Builder.created] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.created] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Date that the dispute was filed by the customer making the dispute. */
         fun customerFiledDate(customerFiledDate: OffsetDateTime?) =
             customerFiledDate(JsonField.ofNullable(customerFiledDate))
 
-        /** Date that the dispute was filed by the customer making the dispute. */
+        /**
+         * Sets [Builder.customerFiledDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customerFiledDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun customerFiledDate(customerFiledDate: JsonField<OffsetDateTime>) = apply {
             this.customerFiledDate = customerFiledDate
         }
@@ -478,7 +624,13 @@ private constructor(
         /** End customer description of the reason for the dispute. */
         fun customerNote(customerNote: String?) = customerNote(JsonField.ofNullable(customerNote))
 
-        /** End customer description of the reason for the dispute. */
+        /**
+         * Sets [Builder.customerNote] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customerNote] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun customerNote(customerNote: JsonField<String>) = apply {
             this.customerNote = customerNote
         }
@@ -487,12 +639,22 @@ private constructor(
         fun networkClaimIds(networkClaimIds: List<String>?) =
             networkClaimIds(JsonField.ofNullable(networkClaimIds))
 
-        /** Unique identifiers for the dispute from the network. */
+        /**
+         * Sets [Builder.networkClaimIds] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.networkClaimIds] with a well-typed `List<String>` value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun networkClaimIds(networkClaimIds: JsonField<List<String>>) = apply {
             this.networkClaimIds = networkClaimIds.map { it.toMutableList() }
         }
 
-        /** Unique identifiers for the dispute from the network. */
+        /**
+         * Adds a single [String] to [networkClaimIds].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addNetworkClaimId(networkClaimId: String) = apply {
             networkClaimIds =
                 (networkClaimIds ?: JsonField.of(mutableListOf())).also {
@@ -504,7 +666,13 @@ private constructor(
         fun networkFiledDate(networkFiledDate: OffsetDateTime?) =
             networkFiledDate(JsonField.ofNullable(networkFiledDate))
 
-        /** Date that the dispute was submitted to the network. */
+        /**
+         * Sets [Builder.networkFiledDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.networkFiledDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun networkFiledDate(networkFiledDate: JsonField<OffsetDateTime>) = apply {
             this.networkFiledDate = networkFiledDate
         }
@@ -513,7 +681,13 @@ private constructor(
         fun networkReasonCode(networkReasonCode: String?) =
             networkReasonCode(JsonField.ofNullable(networkReasonCode))
 
-        /** Network reason code used to file the dispute. */
+        /**
+         * Sets [Builder.networkReasonCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.networkReasonCode] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun networkReasonCode(networkReasonCode: JsonField<String>) = apply {
             this.networkReasonCode = networkReasonCode
         }
@@ -522,7 +696,13 @@ private constructor(
         fun prearbitrationDate(prearbitrationDate: OffsetDateTime?) =
             prearbitrationDate(JsonField.ofNullable(prearbitrationDate))
 
-        /** Date dispute entered pre-arbitration. */
+        /**
+         * Sets [Builder.prearbitrationDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.prearbitrationDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun prearbitrationDate(prearbitrationDate: JsonField<OffsetDateTime>) = apply {
             this.prearbitrationDate = prearbitrationDate
         }
@@ -535,8 +715,11 @@ private constructor(
             primaryClaimId(JsonField.ofNullable(primaryClaimId))
 
         /**
-         * Unique identifier for the dispute from the network. If there are multiple, this will be
-         * the first claim id set by the network
+         * Sets [Builder.primaryClaimId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.primaryClaimId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun primaryClaimId(primaryClaimId: JsonField<String>) = apply {
             this.primaryClaimId = primaryClaimId
@@ -563,22 +746,10 @@ private constructor(
         fun reason(reason: Reason) = reason(JsonField.of(reason))
 
         /**
-         * Dispute reason:
-         * - `ATM_CASH_MISDISPENSE`: ATM cash misdispense.
-         * - `CANCELLED`: Transaction was cancelled by the customer.
-         * - `DUPLICATED`: The transaction was a duplicate.
-         * - `FRAUD_CARD_NOT_PRESENT`: Fraudulent transaction, card not present.
-         * - `FRAUD_CARD_PRESENT`: Fraudulent transaction, card present.
-         * - `FRAUD_OTHER`: Fraudulent transaction, other types such as questionable merchant
-         *   activity.
-         * - `GOODS_SERVICES_NOT_AS_DESCRIBED`: The goods or services were not as described.
-         * - `GOODS_SERVICES_NOT_RECEIVED`: The goods or services were not received.
-         * - `INCORRECT_AMOUNT`: The transaction amount was incorrect.
-         * - `MISSING_AUTH`: The transaction was missing authorization.
-         * - `OTHER`: Other reason.
-         * - `PROCESSING_ERROR`: Processing error.
-         * - `REFUND_NOT_PROCESSED`: The refund was not processed.
-         * - `RECURRING_TRANSACTION_NOT_CANCELLED`: The recurring transaction was not cancelled.
+         * Sets [Builder.reason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.reason] with a well-typed [Reason] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
@@ -586,7 +757,13 @@ private constructor(
         fun representmentDate(representmentDate: OffsetDateTime?) =
             representmentDate(JsonField.ofNullable(representmentDate))
 
-        /** Date the representment was received. */
+        /**
+         * Sets [Builder.representmentDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.representmentDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
         fun representmentDate(representmentDate: JsonField<OffsetDateTime>) = apply {
             this.representmentDate = representmentDate
         }
@@ -595,10 +772,20 @@ private constructor(
         fun resolutionAmount(resolutionAmount: Long?) =
             resolutionAmount(JsonField.ofNullable(resolutionAmount))
 
-        /** Resolution amount net of network fees. */
+        /**
+         * Alias for [Builder.resolutionAmount].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun resolutionAmount(resolutionAmount: Long) = resolutionAmount(resolutionAmount as Long?)
 
-        /** Resolution amount net of network fees. */
+        /**
+         * Sets [Builder.resolutionAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.resolutionAmount] with a well-typed [Long] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun resolutionAmount(resolutionAmount: JsonField<Long>) = apply {
             this.resolutionAmount = resolutionAmount
         }
@@ -607,7 +794,13 @@ private constructor(
         fun resolutionDate(resolutionDate: OffsetDateTime?) =
             resolutionDate(JsonField.ofNullable(resolutionDate))
 
-        /** Date that the dispute was resolved. */
+        /**
+         * Sets [Builder.resolutionDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.resolutionDate] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun resolutionDate(resolutionDate: JsonField<OffsetDateTime>) = apply {
             this.resolutionDate = resolutionDate
         }
@@ -616,7 +809,13 @@ private constructor(
         fun resolutionNote(resolutionNote: String?) =
             resolutionNote(JsonField.ofNullable(resolutionNote))
 
-        /** Note by Dispute team on the case resolution. */
+        /**
+         * Sets [Builder.resolutionNote] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.resolutionNote] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun resolutionNote(resolutionNote: JsonField<String>) = apply {
             this.resolutionNote = resolutionNote
         }
@@ -645,24 +844,11 @@ private constructor(
             resolutionReason(JsonField.ofNullable(resolutionReason))
 
         /**
-         * Reason for the dispute resolution:
-         * - `CASE_LOST`: This case was lost at final arbitration.
-         * - `NETWORK_REJECTED`: Network rejected.
-         * - `NO_DISPUTE_RIGHTS_3DS`: No dispute rights, 3DS.
-         * - `NO_DISPUTE_RIGHTS_BELOW_THRESHOLD`: No dispute rights, below threshold.
-         * - `NO_DISPUTE_RIGHTS_CONTACTLESS`: No dispute rights, contactless.
-         * - `NO_DISPUTE_RIGHTS_HYBRID`: No dispute rights, hybrid.
-         * - `NO_DISPUTE_RIGHTS_MAX_CHARGEBACKS`: No dispute rights, max chargebacks.
-         * - `NO_DISPUTE_RIGHTS_OTHER`: No dispute rights, other.
-         * - `PAST_FILING_DATE`: Past filing date.
-         * - `PREARBITRATION_REJECTED`: Prearbitration rejected.
-         * - `PROCESSOR_REJECTED_OTHER`: Processor rejected, other.
-         * - `REFUNDED`: Refunded.
-         * - `REFUNDED_AFTER_CHARGEBACK`: Refunded after chargeback.
-         * - `WITHDRAWN`: Withdrawn.
-         * - `WON_ARBITRATION`: Won arbitration.
-         * - `WON_FIRST_CHARGEBACK`: Won first chargeback.
-         * - `WON_PREARBITRATION`: Won prearbitration.
+         * Sets [Builder.resolutionReason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.resolutionReason] with a well-typed [ResolutionReason]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
         fun resolutionReason(resolutionReason: JsonField<ResolutionReason>) = apply {
             this.resolutionReason = resolutionReason
@@ -682,15 +868,10 @@ private constructor(
         fun status(status: Status) = status(JsonField.of(status))
 
         /**
-         * Status types:
-         * - `NEW` - New dispute case is opened.
-         * - `PENDING_CUSTOMER` - Lithic is waiting for customer to provide more information.
-         * - `SUBMITTED` - Dispute is submitted to the card network.
-         * - `REPRESENTMENT` - Case has entered second presentment.
-         * - `PREARBITRATION` - Case has entered prearbitration.
-         * - `ARBITRATION` - Case has entered arbitration.
-         * - `CASE_WON` - Case was won and credit will be issued.
-         * - `CASE_CLOSED` - Case was lost or withdrawn.
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [Status] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
@@ -702,8 +883,11 @@ private constructor(
             transactionToken(JsonField.of(transactionToken))
 
         /**
-         * The transaction that is being disputed. A transaction can only be disputed once but may
-         * have multiple dispute cases.
+         * Sets [Builder.transactionToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.transactionToken] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
         fun transactionToken(transactionToken: JsonField<String>) = apply {
             this.transactionToken = transactionToken

@@ -46,10 +46,19 @@ private constructor(
 
     fun authRuleToken(): String = authRuleToken
 
-    /** Parameters for the Auth Rule */
+    /**
+     * Parameters for the Auth Rule
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun parameters(): Parameters? = body.parameters()
 
-    /** Parameters for the Auth Rule */
+    /**
+     * Returns the raw JSON value of [parameters].
+     *
+     * Unlike [parameters], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _parameters(): JsonField<Parameters> = body._parameters()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -82,10 +91,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Parameters for the Auth Rule */
+        /**
+         * Parameters for the Auth Rule
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun parameters(): Parameters? = parameters.getNullable("parameters")
 
-        /** Parameters for the Auth Rule */
+        /**
+         * Returns the raw JSON value of [parameters].
+         *
+         * Unlike [parameters], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("parameters")
         @ExcludeMissing
         fun _parameters(): JsonField<Parameters> = parameters
@@ -127,16 +145,28 @@ private constructor(
             /** Parameters for the Auth Rule */
             fun parameters(parameters: Parameters?) = parameters(JsonField.ofNullable(parameters))
 
-            /** Parameters for the Auth Rule */
+            /**
+             * Sets [Builder.parameters] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.parameters] with a well-typed [Parameters] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun parameters(parameters: JsonField<Parameters>) = apply {
                 this.parameters = parameters
             }
 
-            /** Parameters for the Auth Rule */
+            /**
+             * Alias for calling [parameters] with
+             * `Parameters.ofConditionalBlock(conditionalBlock)`.
+             */
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
-            /** Parameters for the Auth Rule */
+            /**
+             * Alias for calling [parameters] with
+             * `Parameters.ofVelocityLimitParams(velocityLimitParams)`.
+             */
             fun parameters(velocityLimitParams: VelocityLimitParams) =
                 parameters(Parameters.ofVelocityLimitParams(velocityLimitParams))
 
@@ -216,15 +246,26 @@ private constructor(
         /** Parameters for the Auth Rule */
         fun parameters(parameters: Parameters?) = apply { body.parameters(parameters) }
 
-        /** Parameters for the Auth Rule */
+        /**
+         * Sets [Builder.parameters] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.parameters] with a well-typed [Parameters] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun parameters(parameters: JsonField<Parameters>) = apply { body.parameters(parameters) }
 
-        /** Parameters for the Auth Rule */
+        /**
+         * Alias for calling [parameters] with `Parameters.ofConditionalBlock(conditionalBlock)`.
+         */
         fun parameters(conditionalBlock: ConditionalBlockParameters) = apply {
             body.parameters(conditionalBlock)
         }
 
-        /** Parameters for the Auth Rule */
+        /**
+         * Alias for calling [parameters] with
+         * `Parameters.ofVelocityLimitParams(velocityLimitParams)`.
+         */
         fun parameters(velocityLimitParams: VelocityLimitParams) = apply {
             body.parameters(velocityLimitParams)
         }

@@ -204,7 +204,11 @@ private constructor(
         /** The number of account_holders to limit the response to. */
         fun limit(limit: Long?) = apply { this.limit = limit }
 
-        /** The number of account_holders to limit the response to. */
+        /**
+         * Alias for [Builder.limit].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun limit(limit: Long) = limit(limit as Long?)
 
         /** Phone number of the account holder. The query must be an exact match. */

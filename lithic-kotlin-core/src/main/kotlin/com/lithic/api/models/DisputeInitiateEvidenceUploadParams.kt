@@ -17,6 +17,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
+import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
 /**
@@ -35,10 +36,19 @@ private constructor(
 
     fun disputeToken(): String = disputeToken
 
-    /** Filename of the evidence. */
+    /**
+     * Filename of the evidence.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun filename(): String? = body.filename()
 
-    /** Filename of the evidence. */
+    /**
+     * Returns the raw JSON value of [filename].
+     *
+     * Unlike [filename], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _filename(): JsonField<String> = body._filename()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -71,10 +81,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Filename of the evidence. */
+        /**
+         * Filename of the evidence.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun filename(): String? = filename.getNullable("filename")
 
-        /** Filename of the evidence. */
+        /**
+         * Returns the raw JSON value of [filename].
+         *
+         * Unlike [filename], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("filename") @ExcludeMissing fun _filename(): JsonField<String> = filename
 
         @JsonAnyGetter
@@ -114,7 +133,13 @@ private constructor(
             /** Filename of the evidence. */
             fun filename(filename: String) = filename(JsonField.of(filename))
 
-            /** Filename of the evidence. */
+            /**
+             * Sets [Builder.filename] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.filename] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun filename(filename: JsonField<String>) = apply { this.filename = filename }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -197,7 +222,12 @@ private constructor(
         /** Filename of the evidence. */
         fun filename(filename: String) = apply { body.filename(filename) }
 
-        /** Filename of the evidence. */
+        /**
+         * Sets [Builder.filename] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.filename] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun filename(filename: JsonField<String>) = apply { body.filename(filename) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

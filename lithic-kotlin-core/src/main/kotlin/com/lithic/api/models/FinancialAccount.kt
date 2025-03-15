@@ -59,74 +59,184 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Globally unique identifier for the account */
+    /**
+     * Globally unique identifier for the account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun token(): String = token.getRequired("token")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountToken(): String? = accountToken.getNullable("account_token")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun created(): OffsetDateTime = created.getRequired("created")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun creditConfiguration(): FinancialAccountCreditConfig? =
         creditConfiguration.getNullable("credit_configuration")
 
-    /** Whether financial account is for the benefit of another entity */
+    /**
+     * Whether financial account is for the benefit of another entity
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun isForBenefitOf(): Boolean = isForBenefitOf.getRequired("is_for_benefit_of")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun nickname(): String? = nickname.getNullable("nickname")
 
-    /** Status of the financial account */
+    /**
+     * Status of the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun status(): FinancialAccountStatus = status.getRequired("status")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun type(): Type = type.getRequired("type")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
     fun updated(): OffsetDateTime = updated.getRequired("updated")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun accountNumber(): String? = accountNumber.getNullable("account_number")
 
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun routingNumber(): String? = routingNumber.getNullable("routing_number")
 
-    /** Reason for the financial account status change */
+    /**
+     * Reason for the financial account status change
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun statusChangeReason(): FinancialAccountStatusChangeReason? =
         statusChangeReason.getNullable("status_change_reason")
 
-    /** Globally unique identifier for the account */
+    /**
+     * Returns the raw JSON value of [token].
+     *
+     * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
 
+    /**
+     * Returns the raw JSON value of [accountToken].
+     *
+     * Unlike [accountToken], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("account_token")
     @ExcludeMissing
     fun _accountToken(): JsonField<String> = accountToken
 
+    /**
+     * Returns the raw JSON value of [created].
+     *
+     * Unlike [created], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
+    /**
+     * Returns the raw JSON value of [creditConfiguration].
+     *
+     * Unlike [creditConfiguration], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("credit_configuration")
     @ExcludeMissing
     fun _creditConfiguration(): JsonField<FinancialAccountCreditConfig> = creditConfiguration
 
-    /** Whether financial account is for the benefit of another entity */
+    /**
+     * Returns the raw JSON value of [isForBenefitOf].
+     *
+     * Unlike [isForBenefitOf], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("is_for_benefit_of")
     @ExcludeMissing
     fun _isForBenefitOf(): JsonField<Boolean> = isForBenefitOf
 
+    /**
+     * Returns the raw JSON value of [nickname].
+     *
+     * Unlike [nickname], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("nickname") @ExcludeMissing fun _nickname(): JsonField<String> = nickname
 
-    /** Status of the financial account */
+    /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("status")
     @ExcludeMissing
     fun _status(): JsonField<FinancialAccountStatus> = status
 
+    /**
+     * Returns the raw JSON value of [type].
+     *
+     * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+    /**
+     * Returns the raw JSON value of [updated].
+     *
+     * Unlike [updated], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
 
+    /**
+     * Returns the raw JSON value of [accountNumber].
+     *
+     * Unlike [accountNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("account_number")
     @ExcludeMissing
     fun _accountNumber(): JsonField<String> = accountNumber
 
+    /**
+     * Returns the raw JSON value of [routingNumber].
+     *
+     * Unlike [routingNumber], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("routing_number")
     @ExcludeMissing
     fun _routingNumber(): JsonField<String> = routingNumber
 
-    /** Reason for the financial account status change */
+    /**
+     * Returns the raw JSON value of [statusChangeReason].
+     *
+     * Unlike [statusChangeReason], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
     @JsonProperty("status_change_reason")
     @ExcludeMissing
     fun _statusChangeReason(): JsonField<FinancialAccountStatusChangeReason> = statusChangeReason
@@ -217,22 +327,48 @@ private constructor(
         /** Globally unique identifier for the account */
         fun token(token: String) = token(JsonField.of(token))
 
-        /** Globally unique identifier for the account */
+        /**
+         * Sets [Builder.token] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.token] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         fun accountToken(accountToken: String?) = accountToken(JsonField.ofNullable(accountToken))
 
+        /**
+         * Sets [Builder.accountToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountToken(accountToken: JsonField<String>) = apply {
             this.accountToken = accountToken
         }
 
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
+        /**
+         * Sets [Builder.created] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.created] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         fun creditConfiguration(creditConfiguration: FinancialAccountCreditConfig?) =
             creditConfiguration(JsonField.ofNullable(creditConfiguration))
 
+        /**
+         * Sets [Builder.creditConfiguration] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.creditConfiguration] with a well-typed
+         * [FinancialAccountCreditConfig] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
         fun creditConfiguration(creditConfiguration: JsonField<FinancialAccountCreditConfig>) =
             apply {
                 this.creditConfiguration = creditConfiguration
@@ -241,32 +377,70 @@ private constructor(
         /** Whether financial account is for the benefit of another entity */
         fun isForBenefitOf(isForBenefitOf: Boolean) = isForBenefitOf(JsonField.of(isForBenefitOf))
 
-        /** Whether financial account is for the benefit of another entity */
+        /**
+         * Sets [Builder.isForBenefitOf] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.isForBenefitOf] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun isForBenefitOf(isForBenefitOf: JsonField<Boolean>) = apply {
             this.isForBenefitOf = isForBenefitOf
         }
 
         fun nickname(nickname: String?) = nickname(JsonField.ofNullable(nickname))
 
+        /**
+         * Sets [Builder.nickname] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.nickname] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun nickname(nickname: JsonField<String>) = apply { this.nickname = nickname }
 
         /** Status of the financial account */
         fun status(status: FinancialAccountStatus) = status(JsonField.of(status))
 
-        /** Status of the financial account */
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [FinancialAccountStatus] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun status(status: JsonField<FinancialAccountStatus>) = apply { this.status = status }
 
         fun type(type: Type) = type(JsonField.of(type))
 
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
 
+        /**
+         * Sets [Builder.updated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.updated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         fun accountNumber(accountNumber: String?) =
             accountNumber(JsonField.ofNullable(accountNumber))
 
+        /**
+         * Sets [Builder.accountNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun accountNumber(accountNumber: JsonField<String>) = apply {
             this.accountNumber = accountNumber
         }
@@ -274,6 +448,13 @@ private constructor(
         fun routingNumber(routingNumber: String?) =
             routingNumber(JsonField.ofNullable(routingNumber))
 
+        /**
+         * Sets [Builder.routingNumber] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.routingNumber] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun routingNumber(routingNumber: JsonField<String>) = apply {
             this.routingNumber = routingNumber
         }
@@ -282,7 +463,13 @@ private constructor(
         fun statusChangeReason(statusChangeReason: FinancialAccountStatusChangeReason?) =
             statusChangeReason(JsonField.ofNullable(statusChangeReason))
 
-        /** Reason for the financial account status change */
+        /**
+         * Sets [Builder.statusChangeReason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.statusChangeReason] with a well-typed
+         * [FinancialAccountStatusChangeReason] value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
+         */
         fun statusChangeReason(statusChangeReason: JsonField<FinancialAccountStatusChangeReason>) =
             apply {
                 this.statusChangeReason = statusChangeReason
@@ -354,55 +541,123 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Reason for the financial account being marked as Charged Off */
+        /**
+         * Reason for the financial account being marked as Charged Off
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun chargedOffReason(): ChargedOffReason? =
             chargedOffReason.getNullable("charged_off_reason")
 
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun creditLimit(): Long? = creditLimit.getNullable("credit_limit")
 
-        /** Globally unique identifier for the credit product */
+        /**
+         * Globally unique identifier for the credit product
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun creditProductToken(): String? = creditProductToken.getNullable("credit_product_token")
 
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun externalBankAccountToken(): String? =
             externalBankAccountToken.getNullable("external_bank_account_token")
 
-        /** State of the financial account */
+        /**
+         * State of the financial account
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun financialAccountState(): FinancialAccountState? =
             financialAccountState.getNullable("financial_account_state")
 
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
         fun isSpendBlocked(): Boolean = isSpendBlocked.getRequired("is_spend_blocked")
 
-        /** Tier assigned to the financial account */
+        /**
+         * Tier assigned to the financial account
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun tier(): String? = tier.getNullable("tier")
 
-        /** Reason for the financial account being marked as Charged Off */
+        /**
+         * Returns the raw JSON value of [chargedOffReason].
+         *
+         * Unlike [chargedOffReason], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("charged_off_reason")
         @ExcludeMissing
         fun _chargedOffReason(): JsonField<ChargedOffReason> = chargedOffReason
 
+        /**
+         * Returns the raw JSON value of [creditLimit].
+         *
+         * Unlike [creditLimit], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("credit_limit")
         @ExcludeMissing
         fun _creditLimit(): JsonField<Long> = creditLimit
 
-        /** Globally unique identifier for the credit product */
+        /**
+         * Returns the raw JSON value of [creditProductToken].
+         *
+         * Unlike [creditProductToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("credit_product_token")
         @ExcludeMissing
         fun _creditProductToken(): JsonField<String> = creditProductToken
 
+        /**
+         * Returns the raw JSON value of [externalBankAccountToken].
+         *
+         * Unlike [externalBankAccountToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("external_bank_account_token")
         @ExcludeMissing
         fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
 
-        /** State of the financial account */
+        /**
+         * Returns the raw JSON value of [financialAccountState].
+         *
+         * Unlike [financialAccountState], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
         @JsonProperty("financial_account_state")
         @ExcludeMissing
         fun _financialAccountState(): JsonField<FinancialAccountState> = financialAccountState
 
+        /**
+         * Returns the raw JSON value of [isSpendBlocked].
+         *
+         * Unlike [isSpendBlocked], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
         @JsonProperty("is_spend_blocked")
         @ExcludeMissing
         fun _isSpendBlocked(): JsonField<Boolean> = isSpendBlocked
 
-        /** Tier assigned to the financial account */
+        /**
+         * Returns the raw JSON value of [tier].
+         *
+         * Unlike [tier], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("tier") @ExcludeMissing fun _tier(): JsonField<String> = tier
 
         @JsonAnyGetter
@@ -476,22 +731,46 @@ private constructor(
             fun chargedOffReason(chargedOffReason: ChargedOffReason?) =
                 chargedOffReason(JsonField.ofNullable(chargedOffReason))
 
-            /** Reason for the financial account being marked as Charged Off */
+            /**
+             * Sets [Builder.chargedOffReason] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.chargedOffReason] with a well-typed
+             * [ChargedOffReason] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
             fun chargedOffReason(chargedOffReason: JsonField<ChargedOffReason>) = apply {
                 this.chargedOffReason = chargedOffReason
             }
 
             fun creditLimit(creditLimit: Long?) = creditLimit(JsonField.ofNullable(creditLimit))
 
+            /**
+             * Alias for [Builder.creditLimit].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun creditLimit(creditLimit: Long) = creditLimit(creditLimit as Long?)
 
+            /**
+             * Sets [Builder.creditLimit] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditLimit] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
 
             /** Globally unique identifier for the credit product */
             fun creditProductToken(creditProductToken: String?) =
                 creditProductToken(JsonField.ofNullable(creditProductToken))
 
-            /** Globally unique identifier for the credit product */
+            /**
+             * Sets [Builder.creditProductToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.creditProductToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun creditProductToken(creditProductToken: JsonField<String>) = apply {
                 this.creditProductToken = creditProductToken
             }
@@ -499,6 +778,13 @@ private constructor(
             fun externalBankAccountToken(externalBankAccountToken: String?) =
                 externalBankAccountToken(JsonField.ofNullable(externalBankAccountToken))
 
+            /**
+             * Sets [Builder.externalBankAccountToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalBankAccountToken] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
             fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
                 this.externalBankAccountToken = externalBankAccountToken
             }
@@ -507,7 +793,13 @@ private constructor(
             fun financialAccountState(financialAccountState: FinancialAccountState?) =
                 financialAccountState(JsonField.ofNullable(financialAccountState))
 
-            /** State of the financial account */
+            /**
+             * Sets [Builder.financialAccountState] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.financialAccountState] with a well-typed
+             * [FinancialAccountState] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
             fun financialAccountState(financialAccountState: JsonField<FinancialAccountState>) =
                 apply {
                     this.financialAccountState = financialAccountState
@@ -516,6 +808,13 @@ private constructor(
             fun isSpendBlocked(isSpendBlocked: Boolean) =
                 isSpendBlocked(JsonField.of(isSpendBlocked))
 
+            /**
+             * Sets [Builder.isSpendBlocked] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.isSpendBlocked] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun isSpendBlocked(isSpendBlocked: JsonField<Boolean>) = apply {
                 this.isSpendBlocked = isSpendBlocked
             }
@@ -523,7 +822,13 @@ private constructor(
             /** Tier assigned to the financial account */
             fun tier(tier: String?) = tier(JsonField.ofNullable(tier))
 
-            /** Tier assigned to the financial account */
+            /**
+             * Sets [Builder.tier] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tier] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
             fun tier(tier: JsonField<String>) = apply { this.tier = tier }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {

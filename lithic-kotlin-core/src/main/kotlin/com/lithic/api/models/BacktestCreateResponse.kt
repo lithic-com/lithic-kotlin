@@ -13,6 +13,7 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
+import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Objects
 
 @NoAutoDetect
@@ -25,10 +26,19 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /** Auth Rule Backtest Token */
+    /**
+     * Auth Rule Backtest Token
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun backtestToken(): String? = backtestToken.getNullable("backtest_token")
 
-    /** Auth Rule Backtest Token */
+    /**
+     * Returns the raw JSON value of [backtestToken].
+     *
+     * Unlike [backtestToken], this method doesn't throw if the JSON field has an unexpected type.
+     */
     @JsonProperty("backtest_token")
     @ExcludeMissing
     fun _backtestToken(): JsonField<String> = backtestToken
@@ -70,7 +80,13 @@ private constructor(
         /** Auth Rule Backtest Token */
         fun backtestToken(backtestToken: String) = backtestToken(JsonField.of(backtestToken))
 
-        /** Auth Rule Backtest Token */
+        /**
+         * Sets [Builder.backtestToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.backtestToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun backtestToken(backtestToken: JsonField<String>) = apply {
             this.backtestToken = backtestToken
         }

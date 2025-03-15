@@ -134,6 +134,11 @@ private constructor(
             this.accountTypes = accountTypes?.toMutableList()
         }
 
+        /**
+         * Adds a single [AccountType] to [accountTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addAccountType(accountType: AccountType) = apply {
             accountTypes = (accountTypes ?: mutableListOf()).apply { add(accountType) }
         }
@@ -142,6 +147,11 @@ private constructor(
             this.countries = countries?.toMutableList()
         }
 
+        /**
+         * Adds a single [String] to [countries].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addCountry(country: String) = apply {
             countries = (countries ?: mutableListOf()).apply { add(country) }
         }
@@ -156,6 +166,11 @@ private constructor(
             this.ownerTypes = ownerTypes?.toMutableList()
         }
 
+        /**
+         * Adds a single [OwnerType] to [ownerTypes].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addOwnerType(ownerType: OwnerType) = apply {
             ownerTypes = (ownerTypes ?: mutableListOf()).apply { add(ownerType) }
         }
@@ -163,7 +178,11 @@ private constructor(
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Page size (for pagination). */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**
@@ -174,6 +193,11 @@ private constructor(
 
         fun states(states: List<AccountState>?) = apply { this.states = states?.toMutableList() }
 
+        /**
+         * Adds a single [AccountState] to [states].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addState(state: AccountState) = apply {
             states = (states ?: mutableListOf()).apply { add(state) }
         }
@@ -182,6 +206,11 @@ private constructor(
             this.verificationStates = verificationStates?.toMutableList()
         }
 
+        /**
+         * Adds a single [VerificationState] to [verificationStates].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addVerificationState(verificationState: VerificationState) = apply {
             verificationStates =
                 (verificationStates ?: mutableListOf()).apply { add(verificationState) }

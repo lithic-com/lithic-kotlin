@@ -145,7 +145,11 @@ private constructor(
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Page size (for pagination). */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**

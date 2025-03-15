@@ -144,7 +144,11 @@ private constructor(
         /** Page size (for pagination). */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
-        /** Page size (for pagination). */
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /**
@@ -161,7 +165,11 @@ private constructor(
             this.transactionTokens = transactionTokens?.toMutableList()
         }
 
-        /** Transaction tokens to filter by. */
+        /**
+         * Adds a single [String] to [transactionTokens].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
         fun addTransactionToken(transactionToken: String) = apply {
             transactionTokens =
                 (transactionTokens ?: mutableListOf()).apply { add(transactionToken) }

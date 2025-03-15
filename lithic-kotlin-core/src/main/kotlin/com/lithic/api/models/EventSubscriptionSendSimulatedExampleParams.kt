@@ -32,10 +32,19 @@ private constructor(
 
     fun eventSubscriptionToken(): String = eventSubscriptionToken
 
-    /** Event type to send example message for. */
+    /**
+     * Event type to send example message for.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun eventType(): EventType? = body.eventType()
 
-    /** Event type to send example message for. */
+    /**
+     * Returns the raw JSON value of [eventType].
+     *
+     * Unlike [eventType], this method doesn't throw if the JSON field has an unexpected type.
+     */
     fun _eventType(): JsonField<EventType> = body._eventType()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
@@ -68,10 +77,19 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** Event type to send example message for. */
+        /**
+         * Event type to send example message for.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
         fun eventType(): EventType? = eventType.getNullable("event_type")
 
-        /** Event type to send example message for. */
+        /**
+         * Returns the raw JSON value of [eventType].
+         *
+         * Unlike [eventType], this method doesn't throw if the JSON field has an unexpected type.
+         */
         @JsonProperty("event_type")
         @ExcludeMissing
         fun _eventType(): JsonField<EventType> = eventType
@@ -113,7 +131,13 @@ private constructor(
             /** Event type to send example message for. */
             fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
 
-            /** Event type to send example message for. */
+            /**
+             * Sets [Builder.eventType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.eventType] with a well-typed [EventType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
             fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -200,7 +224,13 @@ private constructor(
         /** Event type to send example message for. */
         fun eventType(eventType: EventType) = apply { body.eventType(eventType) }
 
-        /** Event type to send example message for. */
+        /**
+         * Sets [Builder.eventType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventType] with a well-typed [EventType] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
         fun eventType(eventType: JsonField<EventType>) = apply { body.eventType(eventType) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.80.1 (2025-03-15)
+
+Full Changelog: [v0.80.0...v0.80.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.80.0...v0.80.1)
+
+### Chores
+
+* **internal:** remove extra empty newlines ([#513](https://github.com/lithic-com/lithic-kotlin/issues/513)) ([f0dca85](https://github.com/lithic-com/lithic-kotlin/commit/f0dca8595e54025d0d1c228e985f130e2b407af5))
+
+
+### Documentation
+
+* deduplicate and refine comments ([#515](https://github.com/lithic-com/lithic-kotlin/issues/515)) ([587131c](https://github.com/lithic-com/lithic-kotlin/commit/587131c7236be3f8a524e3787d689dae5cdd4161))
+
 ## 0.80.0 (2025-03-11)
 
 Full Changelog: [v0.79.0...v0.80.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.79.0...v0.80.0)
