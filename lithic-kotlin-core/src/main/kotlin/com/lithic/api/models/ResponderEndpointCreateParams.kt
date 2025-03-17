@@ -190,6 +190,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Body = Body(type, url, additionalProperties.toImmutable())
         }
 
@@ -375,6 +380,11 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ResponderEndpointCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): ResponderEndpointCreateParams =
             ResponderEndpointCreateParams(
                 body.build(),

@@ -210,6 +210,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ManagementOperationActionRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ManagementOperationActionRequest =
                 ManagementOperationActionRequest(
                     checkRequired("effectiveDate", effectiveDate),
@@ -416,6 +428,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ManagementOperationReverseParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .managementOperationToken()
+         * .effectiveDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ManagementOperationReverseParams =
             ManagementOperationReverseParams(
                 checkRequired("managementOperationToken", managementOperationToken),

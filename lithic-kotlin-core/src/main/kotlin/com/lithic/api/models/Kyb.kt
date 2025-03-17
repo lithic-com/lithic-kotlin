@@ -544,6 +544,24 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Kyb].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .beneficialOwnerEntities()
+         * .beneficialOwnerIndividuals()
+         * .businessEntity()
+         * .controlPerson()
+         * .natureOfBusiness()
+         * .tosTimestamp()
+         * .workflow()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Kyb =
             Kyb(
                 checkRequired("beneficialOwnerEntities", beneficialOwnerEntities).map {
@@ -881,6 +899,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [BusinessEntity].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .governmentId()
+             * .legalBusinessName()
+             * .phoneNumbers()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): BusinessEntity =
                 BusinessEntity(
                     checkRequired("address", address),
@@ -1236,6 +1269,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [KybIndividual].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .firstName()
+             * .governmentId()
+             * .lastName()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): KybIndividual =
                 KybIndividual(
                     checkRequired("address", address),

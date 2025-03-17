@@ -957,6 +957,19 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AccountHolder].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountHolder =
             AccountHolder(
                 checkRequired("token", token),
@@ -1343,6 +1356,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountHolderBusinessResponse].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dbaBusinessName()
+             * .entityToken()
+             * .governmentId()
+             * .legalBusinessName()
+             * .phoneNumbers()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountHolderBusinessResponse =
                 AccountHolderBusinessResponse(
                     checkRequired("address", address),
@@ -1689,6 +1719,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountHolderIndividualResponse].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .entityToken()
+             * .firstName()
+             * .lastName()
+             * .phoneNumber()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountHolderIndividualResponse =
                 AccountHolderIndividualResponse(
                     checkRequired("address", address),
@@ -2430,6 +2478,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountHolderVerificationApplication].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AccountHolderVerificationApplication =
                 AccountHolderVerificationApplication(
                     created,

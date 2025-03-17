@@ -254,6 +254,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [DisputeListEvidencesParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .disputeToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): DisputeListEvidencesParams =
             DisputeListEvidencesParams(
                 checkRequired("disputeToken", disputeToken),

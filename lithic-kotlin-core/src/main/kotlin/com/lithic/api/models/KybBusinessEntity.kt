@@ -329,6 +329,21 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [KybBusinessEntity].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .address()
+         * .governmentId()
+         * .legalBusinessName()
+         * .phoneNumbers()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): KybBusinessEntity =
             KybBusinessEntity(
                 checkRequired("address", address),
@@ -626,6 +641,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Address].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address1()
+             * .city()
+             * .country()
+             * .postalCode()
+             * .state()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Address =
                 Address(
                     checkRequired("address1", address1),

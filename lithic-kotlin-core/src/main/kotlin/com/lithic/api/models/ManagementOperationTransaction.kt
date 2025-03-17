@@ -527,6 +527,29 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ManagementOperationTransaction].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .category()
+         * .created()
+         * .currency()
+         * .direction()
+         * .events()
+         * .financialAccountToken()
+         * .pendingAmount()
+         * .result()
+         * .settledAmount()
+         * .status()
+         * .updated()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ManagementOperationTransaction =
             ManagementOperationTransaction(
                 checkRequired("token", token),
@@ -1139,6 +1162,25 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ManagementOperationEvent].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .amount()
+             * .created()
+             * .detailedResults()
+             * .effectiveDate()
+             * .memo()
+             * .result()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ManagementOperationEvent =
                 ManagementOperationEvent(
                     checkRequired("token", token),

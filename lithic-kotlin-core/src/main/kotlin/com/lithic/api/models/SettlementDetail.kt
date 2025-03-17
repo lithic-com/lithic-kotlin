@@ -882,6 +882,37 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [SettlementDetail].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .cardProgramToken()
+         * .cardToken()
+         * .created()
+         * .currency()
+         * .disputesGrossAmount()
+         * .eventTokens()
+         * .institution()
+         * .interchangeFeeExtendedPrecision()
+         * .interchangeGrossAmount()
+         * .network()
+         * .otherFeesDetails()
+         * .otherFeesGrossAmount()
+         * .reportDate()
+         * .settlementDate()
+         * .transactionToken()
+         * .transactionsGrossAmount()
+         * .type()
+         * .updated()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): SettlementDetail =
             SettlementDetail(
                 checkRequired("token", token),
@@ -1113,6 +1144,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [OtherFeesDetails].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): OtherFeesDetails =
                 OtherFeesDetails(isa, additionalProperties.toImmutable())
         }

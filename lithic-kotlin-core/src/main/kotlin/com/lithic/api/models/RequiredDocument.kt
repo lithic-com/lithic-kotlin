@@ -224,6 +224,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [RequiredDocument].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .entityToken()
+         * .statusReasons()
+         * .validDocuments()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): RequiredDocument =
             RequiredDocument(
                 checkRequired("entityToken", entityToken),

@@ -1024,6 +1024,28 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Card].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .cardProgramToken()
+         * .created()
+         * .funding()
+         * .lastFour()
+         * .pinStatus()
+         * .spendLimit()
+         * .spendLimitDuration()
+         * .state()
+         * .type()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Card =
             Card(
                 checkRequired("token", token),
@@ -1385,6 +1407,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [FundingAccount].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .created()
+             * .lastFour()
+             * .state()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): FundingAccount =
                 FundingAccount(
                     checkRequired("token", token),

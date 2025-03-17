@@ -152,6 +152,11 @@ class LithicOkHttpClient private constructor() {
 
         fun fromEnv() = apply { clientOptions.fromEnv() }
 
+        /**
+         * Returns an immutable instance of [LithicClient].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): LithicClient =
             LithicClientImpl(
                 clientOptions

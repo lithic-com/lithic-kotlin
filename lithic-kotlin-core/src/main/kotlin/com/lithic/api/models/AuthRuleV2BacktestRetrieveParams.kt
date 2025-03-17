@@ -193,6 +193,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AuthRuleV2BacktestRetrieveParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .authRuleToken()
+         * .authRuleBacktestToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AuthRuleV2BacktestRetrieveParams =
             AuthRuleV2BacktestRetrieveParams(
                 checkRequired("authRuleToken", authRuleToken),

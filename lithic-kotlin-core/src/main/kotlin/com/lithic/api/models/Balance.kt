@@ -471,6 +471,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Balance].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .availableAmount()
+         * .created()
+         * .currency()
+         * .financialAccountToken()
+         * .financialAccountType()
+         * .lastTransactionEventToken()
+         * .lastTransactionToken()
+         * .pendingAmount()
+         * .totalAmount()
+         * .updated()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Balance =
             Balance(
                 checkRequired("availableAmount", availableAmount),
