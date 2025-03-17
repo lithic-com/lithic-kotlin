@@ -585,6 +585,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Transfer].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): Transfer =
             Transfer(
                 token,
@@ -928,6 +933,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [FinancialEvent].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): FinancialEvent =
                 FinancialEvent(
                     token,

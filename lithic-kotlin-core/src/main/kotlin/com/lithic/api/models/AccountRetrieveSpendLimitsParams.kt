@@ -171,6 +171,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountRetrieveSpendLimitsParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountRetrieveSpendLimitsParams =
             AccountRetrieveSpendLimitsParams(
                 checkRequired("accountToken", accountToken),

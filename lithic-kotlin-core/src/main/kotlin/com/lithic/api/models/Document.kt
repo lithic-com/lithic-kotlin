@@ -285,6 +285,22 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Document].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountHolderToken()
+         * .documentType()
+         * .entityToken()
+         * .requiredDocumentUploads()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Document =
             Document(
                 checkRequired("token", token),
@@ -960,6 +976,26 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [RequiredDocumentUpload].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .acceptedEntityStatusReasons()
+             * .created()
+             * .imageType()
+             * .rejectedEntityStatusReasons()
+             * .status()
+             * .statusReasons()
+             * .updated()
+             * .uploadUrl()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): RequiredDocumentUpload =
                 RequiredDocumentUpload(
                     checkRequired("token", token),

@@ -248,6 +248,18 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [EventSubscriptionReplayMissingParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .eventSubscriptionToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): EventSubscriptionReplayMissingParams =
             EventSubscriptionReplayMissingParams(
                 checkRequired("eventSubscriptionToken", eventSubscriptionToken),

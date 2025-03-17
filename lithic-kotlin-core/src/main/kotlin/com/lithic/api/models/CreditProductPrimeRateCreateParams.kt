@@ -219,6 +219,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InterestRate].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .effectiveDate()
+             * .rate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InterestRate =
                 InterestRate(
                     checkRequired("effectiveDate", effectiveDate),
@@ -428,6 +441,20 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [CreditProductPrimeRateCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .creditProductToken()
+         * .effectiveDate()
+         * .rate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): CreditProductPrimeRateCreateParams =
             CreditProductPrimeRateCreateParams(
                 checkRequired("creditProductToken", creditProductToken),

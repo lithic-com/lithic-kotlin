@@ -289,6 +289,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [VelocityLimitParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .filters()
+         * .period()
+         * .scope()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): VelocityLimitParams =
             VelocityLimitParams(
                 checkRequired("filters", filters),
@@ -577,6 +591,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Filters].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Filters =
                 Filters(
                     (excludeCountries ?: JsonMissing.of()).map { it.toImmutable() },

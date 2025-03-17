@@ -474,6 +474,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [NetworkTotalRetrieveResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .amounts()
+         * .created()
+         * .currency()
+         * .institutionId()
+         * .network()
+         * .reportDate()
+         * .settlementInstitutionId()
+         * .settlementService()
+         * .updated()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): NetworkTotalRetrieveResponse =
             NetworkTotalRetrieveResponse(
                 checkRequired("token", token),
@@ -713,6 +734,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Amounts].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .grossSettlement()
+             * .interchangeFees()
+             * .netSettlement()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Amounts =
                 Amounts(
                     checkRequired("grossSettlement", grossSettlement),

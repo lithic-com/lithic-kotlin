@@ -579,6 +579,27 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Tokenization].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .cardToken()
+         * .createdAt()
+         * .dpan()
+         * .status()
+         * .tokenRequestorName()
+         * .tokenUniqueReference()
+         * .tokenizationChannel()
+         * .updatedAt()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Tokenization =
             Tokenization(
                 checkRequired("token", token),
@@ -1181,6 +1202,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [TokenizationEvent].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): TokenizationEvent =
                 TokenizationEvent(
                     token,
