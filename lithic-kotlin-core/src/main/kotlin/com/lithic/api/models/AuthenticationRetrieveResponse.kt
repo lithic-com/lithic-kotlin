@@ -890,6 +890,28 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AuthenticationRetrieveResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountType()
+         * .authenticationResult()
+         * .cardExpiryCheck()
+         * .cardToken()
+         * .cardholder()
+         * .channel()
+         * .created()
+         * .merchant()
+         * .messageCategory()
+         * .threeDSRequestorChallengeIndicator()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AuthenticationRetrieveResponse =
             AuthenticationRetrieveResponse(
                 checkRequired("token", token),
@@ -1649,6 +1671,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Cardholder].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Cardholder =
                 Cardholder(
                     addressMatch,
@@ -1935,6 +1962,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [ThreeDSAddress].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): ThreeDSAddress =
                     ThreeDSAddress(
                         address1,
@@ -2341,6 +2373,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Merchant].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .country()
+             * .mcc()
+             * .name()
+             * .riskIndicator()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Merchant =
                 Merchant(
                     checkRequired("id", id),
@@ -2827,6 +2875,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [RiskIndicator].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
                 fun build(): RiskIndicator =
                     RiskIndicator(
                         deliveryEmailAddress,
@@ -3782,6 +3835,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AdditionalData].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): AdditionalData =
                 AdditionalData(
                     networkDecision,
@@ -4051,6 +4109,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [App].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): App = App(deviceInfo, ip, additionalProperties.toImmutable())
         }
 
@@ -4536,6 +4599,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Browser].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Browser =
                 Browser(
                     ip,
@@ -4706,6 +4774,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [ChallengeMetadata].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .methodType()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): ChallengeMetadata =
                 ChallengeMetadata(
                     checkRequired("methodType", methodType),
@@ -5521,6 +5601,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Transaction].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .currency()
+             * .currencyExponent()
+             * .dateTime()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Transaction =
                 Transaction(
                     checkRequired("amount", amount),

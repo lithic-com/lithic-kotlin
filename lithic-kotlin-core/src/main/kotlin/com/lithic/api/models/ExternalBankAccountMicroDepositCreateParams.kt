@@ -181,6 +181,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [MicroDepositVerificationRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .microDeposits()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): MicroDepositVerificationRequest =
                 MicroDepositVerificationRequest(
                     checkRequired("microDeposits", microDeposits).map { it.toImmutable() },
@@ -386,6 +398,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ExternalBankAccountMicroDepositCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .externalBankAccountToken()
+         * .microDeposits()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ExternalBankAccountMicroDepositCreateParams =
             ExternalBankAccountMicroDepositCreateParams(
                 checkRequired("externalBankAccountToken", externalBankAccountToken),

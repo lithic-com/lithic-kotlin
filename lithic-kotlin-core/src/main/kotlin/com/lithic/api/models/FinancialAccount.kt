@@ -494,6 +494,26 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [FinancialAccount].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountToken()
+         * .created()
+         * .creditConfiguration()
+         * .isForBenefitOf()
+         * .nickname()
+         * .status()
+         * .type()
+         * .updated()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): FinancialAccount =
             FinancialAccount(
                 checkRequired("token", token),
@@ -850,6 +870,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [FinancialAccountCreditConfig].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .chargedOffReason()
+             * .creditLimit()
+             * .creditProductToken()
+             * .externalBankAccountToken()
+             * .financialAccountState()
+             * .isSpendBlocked()
+             * .tier()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): FinancialAccountCreditConfig =
                 FinancialAccountCreditConfig(
                     checkRequired("chargedOffReason", chargedOffReason),

@@ -165,6 +165,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [ReportSettlementSummaryParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .reportDate()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ReportSettlementSummaryParams =
             ReportSettlementSummaryParams(
                 checkRequired("reportDate", reportDate),
