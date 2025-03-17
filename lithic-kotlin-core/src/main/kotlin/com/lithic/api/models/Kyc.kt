@@ -275,6 +275,20 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Kyc].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .individual()
+         * .tosTimestamp()
+         * .workflow()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Kyc =
             Kyc(
                 checkRequired("individual", individual),
@@ -612,6 +626,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Individual].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address()
+             * .dob()
+             * .email()
+             * .firstName()
+             * .governmentId()
+             * .lastName()
+             * .phoneNumber()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): Individual =
                 Individual(
                     checkRequired("address", address),

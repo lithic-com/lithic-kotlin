@@ -467,6 +467,24 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [ShippingAddress].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .address1()
+         * .city()
+         * .country()
+         * .firstName()
+         * .lastName()
+         * .postalCode()
+         * .state()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): ShippingAddress =
             ShippingAddress(
                 checkRequired("address1", address1),

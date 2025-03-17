@@ -162,6 +162,18 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [SimulateOriginationReleaseRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .paymentToken()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): SimulateOriginationReleaseRequest =
                 SimulateOriginationReleaseRequest(
                     checkRequired("paymentToken", paymentToken),
@@ -348,6 +360,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [PaymentSimulateReleaseParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .paymentToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): PaymentSimulateReleaseParams =
             PaymentSimulateReleaseParams(
                 body.build(),

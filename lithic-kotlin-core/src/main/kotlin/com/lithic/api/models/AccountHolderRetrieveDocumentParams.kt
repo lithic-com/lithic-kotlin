@@ -192,6 +192,19 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountHolderRetrieveDocumentParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountHolderToken()
+         * .documentToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountHolderRetrieveDocumentParams =
             AccountHolderRetrieveDocumentParams(
                 checkRequired("accountHolderToken", accountHolderToken),

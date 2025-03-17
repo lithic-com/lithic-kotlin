@@ -227,6 +227,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [BacktestRequest].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): BacktestRequest =
                 BacktestRequest(end, start, additionalProperties.toImmutable())
         }
@@ -424,6 +429,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AuthRuleV2BacktestCreateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .authRuleToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AuthRuleV2BacktestCreateParams =
             AuthRuleV2BacktestCreateParams(
                 checkRequired("authRuleToken", authRuleToken),

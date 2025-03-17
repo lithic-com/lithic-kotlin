@@ -857,6 +857,35 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Statement].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .accountStanding()
+         * .amountDue()
+         * .availableCredit()
+         * .created()
+         * .creditLimit()
+         * .creditProductToken()
+         * .daysInBillingCycle()
+         * .endingBalance()
+         * .financialAccountToken()
+         * .paymentDueDate()
+         * .periodTotals()
+         * .startingBalance()
+         * .statementEndDate()
+         * .statementStartDate()
+         * .statementType()
+         * .updated()
+         * .ytdTotals()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Statement =
             Statement(
                 checkRequired("token", token),
@@ -1216,6 +1245,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountStanding].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .consecutiveFullPaymentsMade()
+             * .consecutiveMinimumPaymentsMade()
+             * .consecutiveMinimumPaymentsMissed()
+             * .daysPastDue()
+             * .hasGrace()
+             * .periodNumber()
+             * .periodState()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountStanding =
                 AccountStanding(
                     checkRequired("consecutiveFullPaymentsMade", consecutiveFullPaymentsMade),
@@ -1498,6 +1545,19 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AmountDue].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .pastDue()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AmountDue =
                 AmountDue(
                     checkRequired("amount", amount),
@@ -1838,6 +1898,24 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [StatementTotals].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .balanceTransfers()
+             * .cashAdvances()
+             * .credits()
+             * .fees()
+             * .interest()
+             * .payments()
+             * .purchases()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): StatementTotals =
                 StatementTotals(
                     checkRequired("balanceTransfers", balanceTransfers),
@@ -2310,6 +2388,23 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [InterestDetails].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .actualInterestCharged()
+             * .dailyBalanceAmounts()
+             * .effectiveApr()
+             * .interestCalculationMethod()
+             * .interestForPeriod()
+             * .primeRate()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): InterestDetails =
                 InterestDetails(
                     checkRequired("actualInterestCharged", actualInterestCharged),
@@ -2500,6 +2595,20 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [CategoryDetails].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .balanceTransfers()
+                 * .cashAdvances()
+                 * .purchases()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): CategoryDetails =
                     CategoryDetails(
                         checkRequired("balanceTransfers", balanceTransfers),

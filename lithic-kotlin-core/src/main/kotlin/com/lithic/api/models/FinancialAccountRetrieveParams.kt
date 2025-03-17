@@ -166,6 +166,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [FinancialAccountRetrieveParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .financialAccountToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): FinancialAccountRetrieveParams =
             FinancialAccountRetrieveParams(
                 checkRequired("financialAccountToken", financialAccountToken),

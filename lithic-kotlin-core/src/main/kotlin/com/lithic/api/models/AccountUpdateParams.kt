@@ -424,6 +424,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Body].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Body =
                 Body(
                     dailySpendLimit,
@@ -695,6 +700,18 @@ private constructor(
             additionalQueryParams.removeAll(keys)
         }
 
+        /**
+         * Returns an immutable instance of [AccountUpdateParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .accountToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): AccountUpdateParams =
             AccountUpdateParams(
                 checkRequired("accountToken", accountToken),
@@ -1049,6 +1066,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [VerificationAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): VerificationAddress =
                 VerificationAddress(
                     address1,

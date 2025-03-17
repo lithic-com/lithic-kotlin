@@ -425,6 +425,21 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [Account].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .token()
+         * .created()
+         * .spendLimit()
+         * .state()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): Account =
             Account(
                 checkRequired("token", token),
@@ -611,6 +626,20 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [SpendLimit].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .daily()
+             * .lifetime()
+             * .monthly()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): SpendLimit =
                 SpendLimit(
                     checkRequired("daily", daily),
@@ -969,6 +998,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [AccountHolder].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .businessAccountToken()
+             * .email()
+             * .phoneNumber()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): AccountHolder =
                 AccountHolder(
                     checkRequired("token", token),
@@ -1276,6 +1320,22 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [VerificationAddress].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .address1()
+             * .city()
+             * .country()
+             * .postalCode()
+             * .state()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): VerificationAddress =
                 VerificationAddress(
                     checkRequired("address1", address1),

@@ -966,6 +966,11 @@ private constructor(
             keys.forEach(::removeAdditionalProperty)
         }
 
+        /**
+         * Returns an immutable instance of [AccountHolderSimulateEnrollmentReviewResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
         fun build(): AccountHolderSimulateEnrollmentReviewResponse =
             AccountHolderSimulateEnrollmentReviewResponse(
                 token,
@@ -1304,6 +1309,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [Individual].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
             fun build(): Individual =
                 Individual(
                     address,
@@ -1615,6 +1625,22 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
+                /**
+                 * Returns an immutable instance of [Address].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .address1()
+                 * .city()
+                 * .country()
+                 * .postalCode()
+                 * .state()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
                 fun build(): Address =
                     Address(
                         checkRequired("address1", address1),
@@ -2492,6 +2518,21 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
+            /**
+             * Returns an immutable instance of [VerificationApplication].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .created()
+             * .status()
+             * .statusReasons()
+             * .updated()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
             fun build(): VerificationApplication =
                 VerificationApplication(
                     checkRequired("created", created),

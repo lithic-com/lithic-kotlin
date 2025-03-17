@@ -204,6 +204,18 @@ private constructor(
             keys.forEach(::removeAdditionalBodyProperty)
         }
 
+        /**
+         * Returns an immutable instance of [TokenizationUnpauseParams].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .tokenizationToken()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
         fun build(): TokenizationUnpauseParams =
             TokenizationUnpauseParams(
                 checkRequired("tokenizationToken", tokenizationToken),
