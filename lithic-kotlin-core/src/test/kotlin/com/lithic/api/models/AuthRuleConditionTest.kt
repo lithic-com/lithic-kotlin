@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test
 internal class AuthRuleConditionTest {
 
     @Test
-    fun createAuthRuleCondition() {
+    fun create() {
         val authRuleCondition =
             AuthRuleCondition.builder()
                 .attribute(ConditionalAttribute.MCC)
                 .operation(AuthRuleCondition.Operation.IS_ONE_OF)
                 .value("string")
                 .build()
-        assertThat(authRuleCondition).isNotNull
+
         assertThat(authRuleCondition.attribute()).isEqualTo(ConditionalAttribute.MCC)
         assertThat(authRuleCondition.operation()).isEqualTo(AuthRuleCondition.Operation.IS_ONE_OF)
         assertThat(authRuleCondition.value()).isEqualTo(AuthRuleCondition.Value.ofRegex("string"))

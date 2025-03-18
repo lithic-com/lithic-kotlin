@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class TransferTest {
 
     @Test
-    fun createTransfer() {
+    fun create() {
         val transfer =
             Transfer.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -60,7 +60,7 @@ internal class TransferTest {
                 )
                 .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        assertThat(transfer).isNotNull
+
         assertThat(transfer.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(transfer.category()).isEqualTo(Transfer.Category.TRANSFER)
         assertThat(transfer.created()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
