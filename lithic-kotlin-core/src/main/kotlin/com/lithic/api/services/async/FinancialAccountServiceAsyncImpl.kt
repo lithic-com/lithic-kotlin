@@ -179,7 +179,7 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "financial_accounts", params.getPathParam(0))
+                    .addPathSegments("v1", "financial_accounts", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -205,7 +205,7 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
-                    .addPathSegments("v1", "financial_accounts", params.getPathParam(0))
+                    .addPathSegments("v1", "financial_accounts", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -267,12 +267,7 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments(
-                        "v1",
-                        "financial_accounts",
-                        params.getPathParam(0),
-                        "charge_off",
-                    )
+                    .addPathSegments("v1", "financial_accounts", params._pathParam(0), "charge_off")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
