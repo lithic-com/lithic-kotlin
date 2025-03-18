@@ -16,13 +16,12 @@ import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.errors.LithicError
 import com.lithic.api.models.FinancialAccount
-import com.lithic.api.models.FinancialAccountChargeOffParams
 import com.lithic.api.models.FinancialAccountCreateParams
-import com.lithic.api.models.FinancialAccountCreditConfig
 import com.lithic.api.models.FinancialAccountListPageAsync
 import com.lithic.api.models.FinancialAccountListParams
 import com.lithic.api.models.FinancialAccountRetrieveParams
 import com.lithic.api.models.FinancialAccountUpdateParams
+import com.lithic.api.models.FinancialAccountUpdateStatusParams
 import com.lithic.api.services.async.financialAccounts.BalanceServiceAsync
 import com.lithic.api.services.async.financialAccounts.BalanceServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsync
@@ -97,12 +96,12 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
         // get /v1/financial_accounts
         withRawResponse().list(params, requestOptions).parse()
 
-    override suspend fun chargeOff(
-        params: FinancialAccountChargeOffParams,
+    override suspend fun updateStatus(
+        params: FinancialAccountUpdateStatusParams,
         requestOptions: RequestOptions,
-    ): FinancialAccountCreditConfig =
-        // post /v1/financial_accounts/{financial_account_token}/charge_off
-        withRawResponse().chargeOff(params, requestOptions).parse()
+    ): FinancialAccount =
+        // post /v1/financial_accounts/{financial_account_token}/update_status
+        withRawResponse().updateStatus(params, requestOptions).parse()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         FinancialAccountServiceAsync.WithRawResponse {
@@ -256,18 +255,22 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             }
         }
 
-        private val chargeOffHandler: Handler<FinancialAccountCreditConfig> =
-            jsonHandler<FinancialAccountCreditConfig>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val updateStatusHandler: Handler<FinancialAccount> =
+            jsonHandler<FinancialAccount>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-        override suspend fun chargeOff(
-            params: FinancialAccountChargeOffParams,
+        override suspend fun updateStatus(
+            params: FinancialAccountUpdateStatusParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<FinancialAccountCreditConfig> {
+        ): HttpResponseFor<FinancialAccount> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "financial_accounts", params._pathParam(0), "charge_off")
+                    .addPathSegments(
+                        "v1",
+                        "financial_accounts",
+                        params._pathParam(0),
+                        "update_status",
+                    )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -275,7 +278,7 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return response.parseable {
                 response
-                    .use { chargeOffHandler.handle(it) }
+                    .use { updateStatusHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
