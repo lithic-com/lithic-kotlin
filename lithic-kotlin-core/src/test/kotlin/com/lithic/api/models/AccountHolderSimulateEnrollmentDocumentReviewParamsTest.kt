@@ -40,7 +40,7 @@ internal class AccountHolderSimulateEnrollmentDocumentReviewParamsTest {
         assertThat(body.documentUploadToken()).isEqualTo("document_upload_token")
         assertThat(body.status())
             .isEqualTo(AccountHolderSimulateEnrollmentDocumentReviewParams.Status.UPLOADED)
-        assertThat(body.acceptedEntityStatusReasons()).isEqualTo(listOf("string"))
+        assertThat(body.acceptedEntityStatusReasons()).containsExactly("string")
         assertThat(body.statusReason())
             .isEqualTo(
                 AccountHolderSimulateEnrollmentDocumentReviewParams.DocumentUploadStatusReasons

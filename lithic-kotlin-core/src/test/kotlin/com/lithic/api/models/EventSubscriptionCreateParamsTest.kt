@@ -35,7 +35,7 @@ internal class EventSubscriptionCreateParamsTest {
         assertThat(body.description()).isEqualTo("description")
         assertThat(body.disabled()).isEqualTo(true)
         assertThat(body.eventTypes())
-            .isEqualTo(listOf(EventSubscriptionCreateParams.EventType.ACCOUNT_HOLDER_CREATED))
+            .containsExactly(EventSubscriptionCreateParams.EventType.ACCOUNT_HOLDER_CREATED)
     }
 
     @Test

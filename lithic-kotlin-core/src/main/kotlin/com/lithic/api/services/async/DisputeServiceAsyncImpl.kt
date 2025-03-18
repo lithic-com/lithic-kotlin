@@ -147,7 +147,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "disputes", params.getPathParam(0))
+                    .addPathSegments("v1", "disputes", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -173,7 +173,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
-                    .addPathSegments("v1", "disputes", params.getPathParam(0))
+                    .addPathSegments("v1", "disputes", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -230,7 +230,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
-                    .addPathSegments("v1", "disputes", params.getPathParam(0))
+                    .addPathSegments("v1", "disputes", params._pathParam(0))
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -260,9 +260,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments(
                         "v1",
                         "disputes",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "evidences",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -290,7 +290,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "disputes", params.getPathParam(0), "evidences")
+                    .addPathSegments("v1", "disputes", params._pathParam(0), "evidences")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -318,7 +318,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "disputes", params.getPathParam(0), "evidences")
+                    .addPathSegments("v1", "disputes", params._pathParam(0), "evidences")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -354,9 +354,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments(
                         "v1",
                         "disputes",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "evidences",
-                        params.getPathParam(1),
+                        params._pathParam(1),
                     )
                     .build()
                     .prepareAsync(clientOptions, params)
