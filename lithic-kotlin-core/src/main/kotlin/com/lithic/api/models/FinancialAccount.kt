@@ -1281,6 +1281,12 @@ private constructor(
 
             val OPERATING = of("OPERATING")
 
+            val CHARGED_OFF_FEES = of("CHARGED_OFF_FEES")
+
+            val CHARGED_OFF_INTEREST = of("CHARGED_OFF_INTEREST")
+
+            val CHARGED_OFF_PRINCIPAL = of("CHARGED_OFF_PRINCIPAL")
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -1289,6 +1295,9 @@ private constructor(
             ISSUING,
             RESERVE,
             OPERATING,
+            CHARGED_OFF_FEES,
+            CHARGED_OFF_INTEREST,
+            CHARGED_OFF_PRINCIPAL,
         }
 
         /**
@@ -1304,6 +1313,9 @@ private constructor(
             ISSUING,
             RESERVE,
             OPERATING,
+            CHARGED_OFF_FEES,
+            CHARGED_OFF_INTEREST,
+            CHARGED_OFF_PRINCIPAL,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1320,6 +1332,9 @@ private constructor(
                 ISSUING -> Value.ISSUING
                 RESERVE -> Value.RESERVE
                 OPERATING -> Value.OPERATING
+                CHARGED_OFF_FEES -> Value.CHARGED_OFF_FEES
+                CHARGED_OFF_INTEREST -> Value.CHARGED_OFF_INTEREST
+                CHARGED_OFF_PRINCIPAL -> Value.CHARGED_OFF_PRINCIPAL
                 else -> Value._UNKNOWN
             }
 
@@ -1337,6 +1352,9 @@ private constructor(
                 ISSUING -> Known.ISSUING
                 RESERVE -> Known.RESERVE
                 OPERATING -> Known.OPERATING
+                CHARGED_OFF_FEES -> Known.CHARGED_OFF_FEES
+                CHARGED_OFF_INTEREST -> Known.CHARGED_OFF_INTEREST
+                CHARGED_OFF_PRINCIPAL -> Known.CHARGED_OFF_PRINCIPAL
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 
