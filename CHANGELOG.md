@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.81.0 (2025-03-18)
+
+Full Changelog: [v0.80.0...v0.81.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.80.0...v0.81.0)
+
+### Features
+
+* **api:** updates to 2 `FinancialAccounts` endpoints and new `ExpireAuthorization` endpoint ([#525](https://github.com/lithic-com/lithic-kotlin/issues/525)) ([bfe542d](https://github.com/lithic-com/lithic-kotlin/commit/bfe542d7fcbff206f68d05df21c604625d6f4923))
+* **client:** don't require params for some service methods ([#523](https://github.com/lithic-com/lithic-kotlin/issues/523)) ([c4a5726](https://github.com/lithic-com/lithic-kotlin/commit/c4a5726988ce08f6ff582a07c2daa191f9ce4466))
+
+
+### Bug Fixes
+
+* **client:** support kotlin 1.8 runtime ([#526](https://github.com/lithic-com/lithic-kotlin/issues/526)) ([54ad09e](https://github.com/lithic-com/lithic-kotlin/commit/54ad09ec75041e778f59db54c5c8965baa2617a7))
+
+
+### Chores
+
+* **internal:** add generated comment ([#517](https://github.com/lithic-com/lithic-kotlin/issues/517)) ([175ad44](https://github.com/lithic-com/lithic-kotlin/commit/175ad44432ef1e1ba4007c76a112ef72322f321f))
+* **internal:** add some tests for union classes ([#524](https://github.com/lithic-com/lithic-kotlin/issues/524)) ([74d8b0c](https://github.com/lithic-com/lithic-kotlin/commit/74d8b0c6d5eaabc5b53a57506ca338fad2d3c259))
+* **internal:** add tests for `_headers()` ([#521](https://github.com/lithic-com/lithic-kotlin/issues/521)) ([dfab73f](https://github.com/lithic-com/lithic-kotlin/commit/dfab73f1a4a3d9f9c480a31bc1dc5d47f5dfbe76))
+* **internal:** delete duplicate tests ([a55d4bb](https://github.com/lithic-com/lithic-kotlin/commit/a55d4bb4b64a2503015cdfb819153f78b456f048))
+* **internal:** generate more tests ([5bbfd5e](https://github.com/lithic-com/lithic-kotlin/commit/5bbfd5ee501b76a463a7f22013a660674d36c3ef))
+* **internal:** make test classes internal ([#516](https://github.com/lithic-com/lithic-kotlin/issues/516)) ([96e7f68](https://github.com/lithic-com/lithic-kotlin/commit/96e7f680c75e4cb5b7cfa79b61d9eecc9c6c14ed))
+* **internal:** refactor query param serialization impl and tests ([#519](https://github.com/lithic-com/lithic-kotlin/issues/519)) ([4139506](https://github.com/lithic-com/lithic-kotlin/commit/41395060bcb628b6786e3844042d55d7a6903f33))
+* **internal:** refactor some test assertions ([a55d4bb](https://github.com/lithic-com/lithic-kotlin/commit/a55d4bb4b64a2503015cdfb819153f78b456f048))
+* **internal:** reformat some tests ([#522](https://github.com/lithic-com/lithic-kotlin/issues/522)) ([5bbfd5e](https://github.com/lithic-com/lithic-kotlin/commit/5bbfd5ee501b76a463a7f22013a660674d36c3ef))
+* **internal:** remove extra empty newlines ([#513](https://github.com/lithic-com/lithic-kotlin/issues/513)) ([f0dca85](https://github.com/lithic-com/lithic-kotlin/commit/f0dca8595e54025d0d1c228e985f130e2b407af5))
+* **internal:** rename `getPathParam` ([#520](https://github.com/lithic-com/lithic-kotlin/issues/520)) ([a55d4bb](https://github.com/lithic-com/lithic-kotlin/commit/a55d4bb4b64a2503015cdfb819153f78b456f048))
+* **internal:** reorder some params methodsc ([a55d4bb](https://github.com/lithic-com/lithic-kotlin/commit/a55d4bb4b64a2503015cdfb819153f78b456f048))
+
+
+### Documentation
+
+* add `build` method comments ([#518](https://github.com/lithic-com/lithic-kotlin/issues/518)) ([b3906cb](https://github.com/lithic-com/lithic-kotlin/commit/b3906cb7f3dc30984c0187fc4dcfa76b66c337c6))
+* deduplicate and refine comments ([#515](https://github.com/lithic-com/lithic-kotlin/issues/515)) ([587131c](https://github.com/lithic-com/lithic-kotlin/commit/587131c7236be3f8a524e3787d689dae5cdd4161))
+
 ## 0.80.0 (2025-03-11)
 
 Full Changelog: [v0.79.0...v0.80.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.79.0...v0.80.0)
