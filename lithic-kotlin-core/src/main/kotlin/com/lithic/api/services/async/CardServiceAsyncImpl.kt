@@ -195,7 +195,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "cards", params.getPathParam(0))
+                    .addPathSegments("v1", "cards", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -221,7 +221,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
-                    .addPathSegments("v1", "cards", params.getPathParam(0))
+                    .addPathSegments("v1", "cards", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -276,7 +276,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "cards", params.getPathParam(0), "convert_physical")
+                    .addPathSegments("v1", "cards", params._pathParam(0), "convert_physical")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -321,7 +321,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "cards", params.getPathParam(0), "provision")
+                    .addPathSegments("v1", "cards", params._pathParam(0), "provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -348,7 +348,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "cards", params.getPathParam(0), "reissue")
+                    .addPathSegments("v1", "cards", params._pathParam(0), "reissue")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -375,7 +375,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "cards", params.getPathParam(0), "renew")
+                    .addPathSegments("v1", "cards", params._pathParam(0), "renew")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -402,7 +402,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "cards", params.getPathParam(0), "spend_limits")
+                    .addPathSegments("v1", "cards", params._pathParam(0), "spend_limits")
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))

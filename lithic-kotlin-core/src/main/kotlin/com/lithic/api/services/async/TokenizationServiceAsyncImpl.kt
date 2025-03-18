@@ -121,7 +121,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
-                    .addPathSegments("v1", "tokenizations", params.getPathParam(0))
+                    .addPathSegments("v1", "tokenizations", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
@@ -180,7 +180,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "tokenizations", params.getPathParam(0), "activate")
+                    .addPathSegments("v1", "tokenizations", params._pathParam(0), "activate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -199,7 +199,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "tokenizations", params.getPathParam(0), "deactivate")
+                    .addPathSegments("v1", "tokenizations", params._pathParam(0), "deactivate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -217,7 +217,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "tokenizations", params.getPathParam(0), "pause")
+                    .addPathSegments("v1", "tokenizations", params._pathParam(0), "pause")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -239,7 +239,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
                     .addPathSegments(
                         "v1",
                         "tokenizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "resend_activation_code",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
@@ -287,7 +287,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .addPathSegments("v1", "tokenizations", params.getPathParam(0), "unpause")
+                    .addPathSegments("v1", "tokenizations", params._pathParam(0), "unpause")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -310,7 +310,7 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
                     .addPathSegments(
                         "v1",
                         "tokenizations",
-                        params.getPathParam(0),
+                        params._pathParam(0),
                         "update_digital_card_art",
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
