@@ -6,13 +6,12 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.FinancialAccount
-import com.lithic.api.models.FinancialAccountChargeOffParams
 import com.lithic.api.models.FinancialAccountCreateParams
-import com.lithic.api.models.FinancialAccountCreditConfig
 import com.lithic.api.models.FinancialAccountListPageAsync
 import com.lithic.api.models.FinancialAccountListParams
 import com.lithic.api.models.FinancialAccountRetrieveParams
 import com.lithic.api.models.FinancialAccountUpdateParams
+import com.lithic.api.models.FinancialAccountUpdateStatusParams
 import com.lithic.api.services.async.financialAccounts.BalanceServiceAsync
 import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsync
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
@@ -64,11 +63,11 @@ interface FinancialAccountServiceAsync {
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
         list(FinancialAccountListParams.none(), requestOptions)
 
-    /** Update issuing account state to charged off */
-    suspend fun chargeOff(
-        params: FinancialAccountChargeOffParams,
+    /** Update financial account status */
+    suspend fun updateStatus(
+        params: FinancialAccountUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): FinancialAccountCreditConfig
+    ): FinancialAccount
 
     /**
      * A view of [FinancialAccountServiceAsync] that provides access to raw HTTP responses for each
@@ -135,13 +134,13 @@ interface FinancialAccountServiceAsync {
 
         /**
          * Returns a raw HTTP response for `post
-         * /v1/financial_accounts/{financial_account_token}/charge_off`, but is otherwise the same
-         * as [FinancialAccountServiceAsync.chargeOff].
+         * /v1/financial_accounts/{financial_account_token}/update_status`, but is otherwise the
+         * same as [FinancialAccountServiceAsync.updateStatus].
          */
         @MustBeClosed
-        suspend fun chargeOff(
-            params: FinancialAccountChargeOffParams,
+        suspend fun updateStatus(
+            params: FinancialAccountUpdateStatusParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<FinancialAccountCreditConfig>
+        ): HttpResponseFor<FinancialAccount>
     }
 }
