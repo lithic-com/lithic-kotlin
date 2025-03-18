@@ -4,8 +4,10 @@ package com.lithic.api.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Transaction
+import com.lithic.api.models.TransactionExpireAuthorizationParams
 import com.lithic.api.models.TransactionListPage
 import com.lithic.api.models.TransactionListParams
 import com.lithic.api.models.TransactionRetrieveParams
@@ -58,6 +60,12 @@ interface TransactionService {
     /** @see [list] */
     fun list(requestOptions: RequestOptions): TransactionListPage =
         list(TransactionListParams.none(), requestOptions)
+
+    /** Expire authorization */
+    fun expireAuthorization(
+        params: TransactionExpireAuthorizationParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    )
 
     /**
      * Simulates an authorization request from the card network as if it came from a merchant
@@ -164,6 +172,17 @@ interface TransactionService {
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionListPage> =
             list(TransactionListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/transactions/{transaction_token}/expire_authorization`, but is otherwise the same as
+         * [TransactionService.expireAuthorization].
+         */
+        @MustBeClosed
+        fun expireAuthorization(
+            params: TransactionExpireAuthorizationParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
 
         /**
          * Returns a raw HTTP response for `post /v1/simulate/authorize`, but is otherwise the same
