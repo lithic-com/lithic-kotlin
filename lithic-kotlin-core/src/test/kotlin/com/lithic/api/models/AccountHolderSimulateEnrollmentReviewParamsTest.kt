@@ -39,11 +39,9 @@ internal class AccountHolderSimulateEnrollmentReviewParamsTest {
         assertThat(body.status())
             .isEqualTo(AccountHolderSimulateEnrollmentReviewParams.Status.ACCEPTED)
         assertThat(body.statusReasons())
-            .isEqualTo(
-                listOf(
-                    AccountHolderSimulateEnrollmentReviewParams.StatusReason
-                        .PRIMARY_BUSINESS_ENTITY_ID_VERIFICATION_FAILURE
-                )
+            .containsExactly(
+                AccountHolderSimulateEnrollmentReviewParams.StatusReason
+                    .PRIMARY_BUSINESS_ENTITY_ID_VERIFICATION_FAILURE
             )
     }
 
