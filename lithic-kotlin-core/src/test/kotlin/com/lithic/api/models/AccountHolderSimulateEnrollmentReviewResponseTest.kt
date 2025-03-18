@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class AccountHolderSimulateEnrollmentReviewResponseTest {
 
     @Test
-    fun createAccountHolderSimulateEnrollmentReviewResponse() {
+    fun create() {
         val accountHolderSimulateEnrollmentReviewResponse =
             AccountHolderSimulateEnrollmentReviewResponse.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -152,7 +152,7 @@ internal class AccountHolderSimulateEnrollmentReviewResponseTest {
                 )
                 .websiteUrl("website_url")
                 .build()
-        assertThat(accountHolderSimulateEnrollmentReviewResponse).isNotNull
+
         assertThat(accountHolderSimulateEnrollmentReviewResponse.token())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(accountHolderSimulateEnrollmentReviewResponse.accountToken())
