@@ -21,9 +21,13 @@ interface ResponderEndpointServiceAsync {
 
     /** Enroll a responder endpoint */
     suspend fun create(
-        params: ResponderEndpointCreateParams,
+        params: ResponderEndpointCreateParams = ResponderEndpointCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResponderEndpointCreateResponse
+
+    /** @see [create] */
+    suspend fun create(requestOptions: RequestOptions): ResponderEndpointCreateResponse =
+        create(ResponderEndpointCreateParams.none(), requestOptions)
 
     /** Disenroll a responder endpoint */
     suspend fun delete(
@@ -49,9 +53,16 @@ interface ResponderEndpointServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
-            params: ResponderEndpointCreateParams,
+            params: ResponderEndpointCreateParams = ResponderEndpointCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ResponderEndpointCreateResponse>
+
+        /** @see [create] */
+        @MustBeClosed
+        suspend fun create(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<ResponderEndpointCreateResponse> =
+            create(ResponderEndpointCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /v1/responder_endpoints`, but is otherwise the
