@@ -220,6 +220,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ResponderEndpointCreateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [ResponderEndpointCreateParams].

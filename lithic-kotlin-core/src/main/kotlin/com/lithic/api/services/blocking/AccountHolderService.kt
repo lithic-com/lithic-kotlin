@@ -126,9 +126,16 @@ interface AccountHolderService {
      * workflows that may required intervention such as `KYB_BASIC`.
      */
     fun simulateEnrollmentReview(
-        params: AccountHolderSimulateEnrollmentReviewParams,
+        params: AccountHolderSimulateEnrollmentReviewParams =
+            AccountHolderSimulateEnrollmentReviewParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderSimulateEnrollmentReviewResponse
+
+    /** @see [simulateEnrollmentReview] */
+    fun simulateEnrollmentReview(
+        requestOptions: RequestOptions
+    ): AccountHolderSimulateEnrollmentReviewResponse =
+        simulateEnrollmentReview(AccountHolderSimulateEnrollmentReviewParams.none(), requestOptions)
 
     /**
      * Use this endpoint to identify which type of supported government-issued documentation you
@@ -242,9 +249,20 @@ interface AccountHolderService {
          */
         @MustBeClosed
         fun simulateEnrollmentReview(
-            params: AccountHolderSimulateEnrollmentReviewParams,
+            params: AccountHolderSimulateEnrollmentReviewParams =
+                AccountHolderSimulateEnrollmentReviewParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderSimulateEnrollmentReviewResponse>
+
+        /** @see [simulateEnrollmentReview] */
+        @MustBeClosed
+        fun simulateEnrollmentReview(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<AccountHolderSimulateEnrollmentReviewResponse> =
+            simulateEnrollmentReview(
+                AccountHolderSimulateEnrollmentReviewParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post
