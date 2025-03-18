@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class AccountTest {
 
     @Test
-    fun createAccount() {
+    fun create() {
         val account =
             Account.builder()
                 .token("b68b7424-aa69-4cbc-a946-30d90181b621")
@@ -43,7 +43,7 @@ internal class AccountTest {
                         .build()
                 )
                 .build()
-        assertThat(account).isNotNull
+
         assertThat(account.token()).isEqualTo("b68b7424-aa69-4cbc-a946-30d90181b621")
         assertThat(account.created()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(account.spendLimit())
