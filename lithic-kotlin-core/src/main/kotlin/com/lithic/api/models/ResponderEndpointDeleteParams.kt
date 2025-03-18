@@ -40,7 +40,7 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
-                put("type", type.asString())
+                put("type", type.toString())
                 putAll(additionalQueryParams)
             }
             .build()
