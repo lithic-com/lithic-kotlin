@@ -1,21 +1,16 @@
+// File generated from our OpenAPI spec by Stainless.
+
 package com.lithic.api.errors
 
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.http.Headers
 
-abstract class LithicServiceException(
-    private val statusCode: Int,
-    private val headers: Headers,
-    private val body: String,
-    private val error: LithicError,
-    message: String = "$statusCode: $error",
-    cause: Throwable? = null,
-) : LithicException(message, cause) {
+abstract class LithicServiceException
+protected constructor(message: String, cause: Throwable? = null) : LithicException(message, cause) {
 
-    fun statusCode(): Int = statusCode
+    abstract fun statusCode(): Int
 
-    fun headers(): Headers = headers
+    abstract fun headers(): Headers
 
-    fun body(): String = body
-
-    fun error(): LithicError = error
+    abstract fun body(): JsonValue
 }
