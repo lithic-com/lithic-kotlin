@@ -2,7 +2,6 @@
 
 package com.lithic.api.models
 
-import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -36,7 +35,6 @@ internal class AccountHolderSimulateEnrollmentDocumentReviewParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.documentUploadToken()).isEqualTo("document_upload_token")
         assertThat(body.status())
             .isEqualTo(AccountHolderSimulateEnrollmentDocumentReviewParams.Status.UPLOADED)
@@ -58,7 +56,6 @@ internal class AccountHolderSimulateEnrollmentDocumentReviewParamsTest {
 
         val body = params._body()
 
-        assertNotNull(body)
         assertThat(body.documentUploadToken()).isEqualTo("document_upload_token")
         assertThat(body.status())
             .isEqualTo(AccountHolderSimulateEnrollmentDocumentReviewParams.Status.UPLOADED)
