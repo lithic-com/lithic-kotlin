@@ -6,10 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.getRequiredHeader
-import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.http.Headers
-import com.lithic.api.core.http.HttpResponse.Handler
-import com.lithic.api.errors.LithicError
 import com.lithic.api.errors.LithicException
 import java.security.MessageDigest
 import java.time.Duration
@@ -18,10 +15,7 @@ import java.util.Base64
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-class WebhookServiceAsyncImpl constructor(private val clientOptions: ClientOptions) :
-    WebhookServiceAsync {
-
-    private val errorHandler: Handler<LithicError> = errorHandler(clientOptions.jsonMapper)
+class WebhookServiceAsyncImpl(private val clientOptions: ClientOptions) : WebhookServiceAsync {
 
     override suspend fun unwrap(payload: String, headers: Headers, secret: String?): JsonValue {
         verifySignature(payload, headers, secret)
