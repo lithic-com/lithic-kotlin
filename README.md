@@ -194,16 +194,16 @@ The SDK throws custom unchecked exception types:
 
 - [`LithicServiceException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-  | Status | Exception                       |
-  | ------ | ------------------------------- |
-  | 400    | `BadRequestException`           |
-  | 401    | `AuthenticationException`       |
-  | 403    | `PermissionDeniedException`     |
-  | 404    | `NotFoundException`             |
-  | 422    | `UnprocessableEntityException`  |
-  | 429    | `RateLimitException`            |
-  | 5xx    | `InternalServerException`       |
-  | others | `UnexpectedStatusCodeException` |
+  | Status | Exception                                                                                                                    |
+  | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
+  | 400    | [`BadRequestException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/BadRequestException.kt)                     |
+  | 401    | [`UnauthorizedException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnauthorizedException.kt)                 |
+  | 403    | [`PermissionDeniedException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/PermissionDeniedException.kt)         |
+  | 404    | [`NotFoundException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/NotFoundException.kt)                         |
+  | 422    | [`UnprocessableEntityException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnprocessableEntityException.kt)   |
+  | 429    | [`RateLimitException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/RateLimitException.kt)                       |
+  | 5xx    | [`InternalServerException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/InternalServerException.kt)             |
+  | others | [`UnexpectedStatusCodeException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnexpectedStatusCodeException.kt) |
 
 - [`LithicIoException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicIoException.kt): I/O networking errors.
 
