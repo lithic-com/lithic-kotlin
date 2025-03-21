@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.82.0 (2025-03-21)
+
+Full Changelog: [v0.81.0...v0.82.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.81.0...v0.82.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** refactor exception structure and methods ([#531](https://github.com/lithic-com/lithic-kotlin/issues/531))
+
+### Chores
+
+* **client:** refactor exception structure and methods ([#531](https://github.com/lithic-com/lithic-kotlin/issues/531)) ([c5b4020](https://github.com/lithic-com/lithic-kotlin/commit/c5b402091c7e4393e7eb6631844dbc3114f1baf1))
+* **internal:** add missing release please block ([#528](https://github.com/lithic-com/lithic-kotlin/issues/528)) ([ec84e11](https://github.com/lithic-com/lithic-kotlin/commit/ec84e11fce0df443b4b8cfb000fb609be839c262))
+* **internal:** make multipart assertions more robust ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* **internal:** remove unnecessary `assertNotNull` calls ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* **internal:** remove unnecessary import ([#535](https://github.com/lithic-com/lithic-kotlin/issues/535)) ([90e66c6](https://github.com/lithic-com/lithic-kotlin/commit/90e66c6b87ce66c3a513331f34ec2f01a976cd5a))
+* **internal:** update .stats.yml ([#530](https://github.com/lithic-com/lithic-kotlin/issues/530)) ([9b01915](https://github.com/lithic-com/lithic-kotlin/commit/9b01915b5b4f89870256c753fb88e34f3e58c5e2))
+
+
+### Documentation
+
+* refine comments on multipart params ([#534](https://github.com/lithic-com/lithic-kotlin/issues/534)) ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* update readme exception docs ([#536](https://github.com/lithic-com/lithic-kotlin/issues/536)) ([515dc42](https://github.com/lithic-com/lithic-kotlin/commit/515dc42f15be5fc4f2d93345743e7af5edb71c54))
+
 ## 0.81.0 (2025-03-18)
 
 Full Changelog: [v0.80.0...v0.81.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.80.0...v0.81.0)
