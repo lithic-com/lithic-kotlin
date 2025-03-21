@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.81.0)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.81.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.81.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.82.0)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.82.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.82.0)
 
 <!-- x-release-please-end -->
 
@@ -11,7 +11,11 @@ The Lithic Kotlin SDK provides convenient access to the Lithic REST API from app
 
 The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.79.0).
+<!-- x-release-please-start-version -->
+
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.82.0).
+
+<!-- x-release-please-end -->
 
 ## Installation
 
@@ -20,7 +24,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.81.0")
+implementation("com.lithic.api:lithic-kotlin:0.82.0")
 ```
 
 ### Maven
@@ -29,7 +33,7 @@ implementation("com.lithic.api:lithic-kotlin:0.81.0")
 <dependency>
     <groupId>com.lithic.api</groupId>
     <artifactId>lithic-kotlin</artifactId>
-    <version>0.81.0</version>
+    <version>0.82.0</version>
 </dependency>
 ```
 
@@ -190,16 +194,16 @@ The SDK throws custom unchecked exception types:
 
 - [`LithicServiceException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicServiceException.kt): Base class for HTTP errors. See this table for which exception subclass is thrown for each HTTP status code:
 
-  | Status | Exception                       |
-  | ------ | ------------------------------- |
-  | 400    | `BadRequestException`           |
-  | 401    | `AuthenticationException`       |
-  | 403    | `PermissionDeniedException`     |
-  | 404    | `NotFoundException`             |
-  | 422    | `UnprocessableEntityException`  |
-  | 429    | `RateLimitException`            |
-  | 5xx    | `InternalServerException`       |
-  | others | `UnexpectedStatusCodeException` |
+  | Status | Exception                                                                                                                    |
+  | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
+  | 400    | [`BadRequestException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/BadRequestException.kt)                     |
+  | 401    | [`UnauthorizedException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnauthorizedException.kt)                 |
+  | 403    | [`PermissionDeniedException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/PermissionDeniedException.kt)         |
+  | 404    | [`NotFoundException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/NotFoundException.kt)                         |
+  | 422    | [`UnprocessableEntityException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnprocessableEntityException.kt)   |
+  | 429    | [`RateLimitException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/RateLimitException.kt)                       |
+  | 5xx    | [`InternalServerException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/InternalServerException.kt)             |
+  | others | [`UnexpectedStatusCodeException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/UnexpectedStatusCodeException.kt) |
 
 - [`LithicIoException`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/errors/LithicIoException.kt): I/O networking errors.
 
