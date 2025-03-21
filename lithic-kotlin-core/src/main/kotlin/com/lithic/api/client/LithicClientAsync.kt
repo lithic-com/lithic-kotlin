@@ -32,6 +32,7 @@ import com.lithic.api.services.async.TokenizationDecisioningServiceAsync
 import com.lithic.api.services.async.TokenizationServiceAsync
 import com.lithic.api.services.async.TransactionServiceAsync
 import com.lithic.api.services.async.TransferServiceAsync
+import com.lithic.api.services.async.WebhookServiceAsync
 
 /**
  * A client for interacting with the Lithic REST API asynchronously. You can also switch to
@@ -91,6 +92,8 @@ interface LithicClientAsync {
     fun transactions(): TransactionServiceAsync
 
     fun responderEndpoints(): ResponderEndpointServiceAsync
+
+    fun webhooks(): WebhookServiceAsync
 
     fun externalBankAccounts(): ExternalBankAccountServiceAsync
 

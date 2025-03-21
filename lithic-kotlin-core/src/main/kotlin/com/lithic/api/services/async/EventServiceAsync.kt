@@ -3,6 +3,7 @@
 package com.lithic.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Event
@@ -43,6 +44,8 @@ interface EventServiceAsync {
         params: EventListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync
+
+    suspend fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 
     /** A view of [EventServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
