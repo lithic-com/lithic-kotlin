@@ -7,7 +7,7 @@
 
 <!-- x-release-please-end -->
 
-The Lithic Kotlin SDK provides convenient access to the Lithic REST API from applications written in Kotlin.
+The Lithic Kotlin SDK provides convenient access to the [Lithic REST API](https://docs.lithic.com) from applications written in Kotlin.
 
 The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
@@ -31,9 +31,9 @@ implementation("com.lithic.api:lithic-kotlin:0.35.0")
 
 ```xml
 <dependency>
-    <groupId>com.lithic.api</groupId>
-    <artifactId>lithic-kotlin</artifactId>
-    <version>0.35.0</version>
+  <groupId>com.lithic.api</groupId>
+  <artifactId>lithic-kotlin</artifactId>
+  <version>0.35.0</version>
 </dependency>
 ```
 
