@@ -11,88 +11,131 @@ import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
-import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.checkKnown
 import com.lithic.api.core.checkRequired
-import com.lithic.api.core.immutableEmptyMap
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
+import java.util.Collections
 import java.util.Objects
 
-@NoAutoDetect
 class Transaction
-@JsonCreator
 private constructor(
-    @JsonProperty("token") @ExcludeMissing private val token: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("account_token")
-    @ExcludeMissing
-    private val accountToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("acquirer_fee")
-    @ExcludeMissing
-    private val acquirerFee: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("acquirer_reference_number")
-    @ExcludeMissing
-    private val acquirerReferenceNumber: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount") @ExcludeMissing private val amount: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("amounts")
-    @ExcludeMissing
-    private val amounts: JsonField<TransactionAmounts> = JsonMissing.of(),
-    @JsonProperty("authorization_amount")
-    @ExcludeMissing
-    private val authorizationAmount: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("authorization_code")
-    @ExcludeMissing
-    private val authorizationCode: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("avs") @ExcludeMissing private val avs: JsonField<Avs> = JsonMissing.of(),
-    @JsonProperty("card_token")
-    @ExcludeMissing
-    private val cardToken: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("cardholder_authentication")
-    @ExcludeMissing
-    private val cardholderAuthentication: JsonField<CardholderAuthentication> = JsonMissing.of(),
-    @JsonProperty("created")
-    @ExcludeMissing
-    private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("merchant")
-    @ExcludeMissing
-    private val merchant: JsonField<Merchant> = JsonMissing.of(),
-    @JsonProperty("merchant_amount")
-    @ExcludeMissing
-    private val merchantAmount: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("merchant_authorization_amount")
-    @ExcludeMissing
-    private val merchantAuthorizationAmount: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("merchant_currency")
-    @ExcludeMissing
-    private val merchantCurrency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("network")
-    @ExcludeMissing
-    private val network: JsonField<Network> = JsonMissing.of(),
-    @JsonProperty("network_risk_score")
-    @ExcludeMissing
-    private val networkRiskScore: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("pos") @ExcludeMissing private val pos: JsonField<Pos> = JsonMissing.of(),
-    @JsonProperty("result")
-    @ExcludeMissing
-    private val result: JsonField<DeclineResult> = JsonMissing.of(),
-    @JsonProperty("settled_amount")
-    @ExcludeMissing
-    private val settledAmount: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("token_info")
-    @ExcludeMissing
-    private val tokenInfo: JsonField<TokenInfo> = JsonMissing.of(),
-    @JsonProperty("updated")
-    @ExcludeMissing
-    private val updated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("events")
-    @ExcludeMissing
-    private val events: JsonField<List<TransactionEvent>> = JsonMissing.of(),
-    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    private val token: JsonField<String>,
+    private val accountToken: JsonField<String>,
+    private val acquirerFee: JsonField<Long>,
+    private val acquirerReferenceNumber: JsonField<String>,
+    private val amount: JsonField<Long>,
+    private val amounts: JsonField<TransactionAmounts>,
+    private val authorizationAmount: JsonField<Long>,
+    private val authorizationCode: JsonField<String>,
+    private val avs: JsonField<Avs>,
+    private val cardToken: JsonField<String>,
+    private val cardholderAuthentication: JsonField<CardholderAuthentication>,
+    private val created: JsonField<OffsetDateTime>,
+    private val merchant: JsonField<Merchant>,
+    private val merchantAmount: JsonField<Long>,
+    private val merchantAuthorizationAmount: JsonField<Long>,
+    private val merchantCurrency: JsonField<String>,
+    private val network: JsonField<Network>,
+    private val networkRiskScore: JsonField<Long>,
+    private val pos: JsonField<Pos>,
+    private val result: JsonField<DeclineResult>,
+    private val settledAmount: JsonField<Long>,
+    private val status: JsonField<Status>,
+    private val tokenInfo: JsonField<TokenInfo>,
+    private val updated: JsonField<OffsetDateTime>,
+    private val events: JsonField<List<TransactionEvent>>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("account_token")
+        @ExcludeMissing
+        accountToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("acquirer_fee")
+        @ExcludeMissing
+        acquirerFee: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("acquirer_reference_number")
+        @ExcludeMissing
+        acquirerReferenceNumber: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("amounts")
+        @ExcludeMissing
+        amounts: JsonField<TransactionAmounts> = JsonMissing.of(),
+        @JsonProperty("authorization_amount")
+        @ExcludeMissing
+        authorizationAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("authorization_code")
+        @ExcludeMissing
+        authorizationCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("avs") @ExcludeMissing avs: JsonField<Avs> = JsonMissing.of(),
+        @JsonProperty("card_token") @ExcludeMissing cardToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("cardholder_authentication")
+        @ExcludeMissing
+        cardholderAuthentication: JsonField<CardholderAuthentication> = JsonMissing.of(),
+        @JsonProperty("created")
+        @ExcludeMissing
+        created: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("merchant") @ExcludeMissing merchant: JsonField<Merchant> = JsonMissing.of(),
+        @JsonProperty("merchant_amount")
+        @ExcludeMissing
+        merchantAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("merchant_authorization_amount")
+        @ExcludeMissing
+        merchantAuthorizationAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("merchant_currency")
+        @ExcludeMissing
+        merchantCurrency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("network") @ExcludeMissing network: JsonField<Network> = JsonMissing.of(),
+        @JsonProperty("network_risk_score")
+        @ExcludeMissing
+        networkRiskScore: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("pos") @ExcludeMissing pos: JsonField<Pos> = JsonMissing.of(),
+        @JsonProperty("result") @ExcludeMissing result: JsonField<DeclineResult> = JsonMissing.of(),
+        @JsonProperty("settled_amount")
+        @ExcludeMissing
+        settledAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("token_info")
+        @ExcludeMissing
+        tokenInfo: JsonField<TokenInfo> = JsonMissing.of(),
+        @JsonProperty("updated")
+        @ExcludeMissing
+        updated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("events")
+        @ExcludeMissing
+        events: JsonField<List<TransactionEvent>> = JsonMissing.of(),
+    ) : this(
+        token,
+        accountToken,
+        acquirerFee,
+        acquirerReferenceNumber,
+        amount,
+        amounts,
+        authorizationAmount,
+        authorizationCode,
+        avs,
+        cardToken,
+        cardholderAuthentication,
+        created,
+        merchant,
+        merchantAmount,
+        merchantAuthorizationAmount,
+        merchantCurrency,
+        network,
+        networkRiskScore,
+        pos,
+        result,
+        settledAmount,
+        status,
+        tokenInfo,
+        updated,
+        events,
+        mutableMapOf(),
+    )
 
     /**
      * Globally unique identifier.
@@ -511,44 +554,15 @@ private constructor(
     @ExcludeMissing
     fun _events(): JsonField<List<TransactionEvent>> = events
 
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
     @JsonAnyGetter
     @ExcludeMissing
-    fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    private var validated: Boolean = false
-
-    fun validate(): Transaction = apply {
-        if (validated) {
-            return@apply
-        }
-
-        token()
-        accountToken()
-        acquirerFee()
-        acquirerReferenceNumber()
-        amount()
-        amounts().validate()
-        authorizationAmount()
-        authorizationCode()
-        avs()?.validate()
-        cardToken()
-        cardholderAuthentication()?.validate()
-        created()
-        merchant().validate()
-        merchantAmount()
-        merchantAuthorizationAmount()
-        merchantCurrency()
-        network()
-        networkRiskScore()
-        pos().validate()
-        result()
-        settledAmount()
-        status()
-        tokenInfo()?.validate()
-        updated()
-        events()?.forEach { it.validate() }
-        validated = true
-    }
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -1132,27 +1146,67 @@ private constructor(
                 checkRequired("tokenInfo", tokenInfo),
                 checkRequired("updated", updated),
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
-                additionalProperties.toImmutable(),
+                additionalProperties.toMutableMap(),
             )
     }
 
-    @NoAutoDetect
+    private var validated: Boolean = false
+
+    fun validate(): Transaction = apply {
+        if (validated) {
+            return@apply
+        }
+
+        token()
+        accountToken()
+        acquirerFee()
+        acquirerReferenceNumber()
+        amount()
+        amounts().validate()
+        authorizationAmount()
+        authorizationCode()
+        avs()?.validate()
+        cardToken()
+        cardholderAuthentication()?.validate()
+        created()
+        merchant().validate()
+        merchantAmount()
+        merchantAuthorizationAmount()
+        merchantCurrency()
+        network()
+        networkRiskScore()
+        pos().validate()
+        result()
+        settledAmount()
+        status()
+        tokenInfo()?.validate()
+        updated()
+        events()?.forEach { it.validate() }
+        validated = true
+    }
+
     class TransactionAmounts
-    @JsonCreator
     private constructor(
-        @JsonProperty("cardholder")
-        @ExcludeMissing
-        private val cardholder: JsonField<Cardholder> = JsonMissing.of(),
-        @JsonProperty("hold") @ExcludeMissing private val hold: JsonField<Hold> = JsonMissing.of(),
-        @JsonProperty("merchant")
-        @ExcludeMissing
-        private val merchant: JsonField<Merchant> = JsonMissing.of(),
-        @JsonProperty("settlement")
-        @ExcludeMissing
-        private val settlement: JsonField<Settlement> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val cardholder: JsonField<Cardholder>,
+        private val hold: JsonField<Hold>,
+        private val merchant: JsonField<Merchant>,
+        private val settlement: JsonField<Settlement>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("cardholder")
+            @ExcludeMissing
+            cardholder: JsonField<Cardholder> = JsonMissing.of(),
+            @JsonProperty("hold") @ExcludeMissing hold: JsonField<Hold> = JsonMissing.of(),
+            @JsonProperty("merchant")
+            @ExcludeMissing
+            merchant: JsonField<Merchant> = JsonMissing.of(),
+            @JsonProperty("settlement")
+            @ExcludeMissing
+            settlement: JsonField<Settlement> = JsonMissing.of(),
+        ) : this(cardholder, hold, merchant, settlement, mutableMapOf())
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1210,23 +1264,15 @@ private constructor(
         @ExcludeMissing
         fun _settlement(): JsonField<Settlement> = settlement
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): TransactionAmounts = apply {
-            if (validated) {
-                return@apply
-            }
-
-            cardholder().validate()
-            hold().validate()
-            merchant().validate()
-            settlement().validate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -1351,26 +1397,42 @@ private constructor(
                     checkRequired("hold", hold),
                     checkRequired("merchant", merchant),
                     checkRequired("settlement", settlement),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): TransactionAmounts = apply {
+            if (validated) {
+                return@apply
+            }
+
+            cardholder().validate()
+            hold().validate()
+            merchant().validate()
+            settlement().validate()
+            validated = true
+        }
+
         class Cardholder
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
-            private val conversionRate: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Long>,
+            private val conversionRate: JsonField<String>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                conversionRate: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, conversionRate, currency, mutableMapOf())
 
             /**
              * The estimated settled amount of the transaction in the cardholder billing currency.
@@ -1425,22 +1487,15 @@ private constructor(
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Cardholder = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                conversionRate()
-                currency()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1560,8 +1615,21 @@ private constructor(
                         checkRequired("amount", amount),
                         checkRequired("conversionRate", conversionRate),
                         checkRequired("currency", currency),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Cardholder = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                conversionRate()
+                currency()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1582,19 +1650,20 @@ private constructor(
                 "Cardholder{amount=$amount, conversionRate=$conversionRate, currency=$currency, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class Hold
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Long>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, currency, mutableMapOf())
 
             /**
              * The pending amount of the transaction in the anticipated settlement currency.
@@ -1629,21 +1698,15 @@ private constructor(
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Hold = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                currency()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1737,8 +1800,20 @@ private constructor(
                     Hold(
                         checkRequired("amount", amount),
                         checkRequired("currency", currency),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Hold = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                currency()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1759,19 +1834,20 @@ private constructor(
                 "Hold{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class Merchant
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Long>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, currency, mutableMapOf())
 
             /**
              * The settled amount of the transaction in the merchant currency.
@@ -1806,21 +1882,15 @@ private constructor(
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Merchant = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                currency()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -1914,8 +1984,20 @@ private constructor(
                     Merchant(
                         checkRequired("amount", amount),
                         checkRequired("currency", currency),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Merchant = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                currency()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1936,19 +2018,20 @@ private constructor(
                 "Merchant{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class Settlement
-        @JsonCreator
         private constructor(
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("currency")
-            @ExcludeMissing
-            private val currency: JsonField<String> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val amount: JsonField<Long>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, currency, mutableMapOf())
 
             /**
              * The settled amount of the transaction in the settlement currency.
@@ -1983,21 +2066,15 @@ private constructor(
              */
             @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): Settlement = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                amount()
-                currency()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -2091,8 +2168,20 @@ private constructor(
                     Settlement(
                         checkRequired("amount", amount),
                         checkRequired("currency", currency),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Settlement = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                currency()
+                validated = true
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2131,19 +2220,18 @@ private constructor(
             "TransactionAmounts{cardholder=$cardholder, hold=$hold, merchant=$merchant, settlement=$settlement, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class Avs
-    @JsonCreator
     private constructor(
-        @JsonProperty("address")
-        @ExcludeMissing
-        private val address: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("zipcode")
-        @ExcludeMissing
-        private val zipcode: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val address: JsonField<String>,
+        private val zipcode: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("address") @ExcludeMissing address: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("zipcode") @ExcludeMissing zipcode: JsonField<String> = JsonMissing.of(),
+        ) : this(address, zipcode, mutableMapOf())
 
         /**
          * Cardholder address
@@ -2175,21 +2263,15 @@ private constructor(
          */
         @JsonProperty("zipcode") @ExcludeMissing fun _zipcode(): JsonField<String> = zipcode
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Avs = apply {
-            if (validated) {
-                return@apply
-            }
-
-            address()
-            zipcode()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2280,8 +2362,20 @@ private constructor(
                 Avs(
                     checkRequired("address", address),
                     checkRequired("zipcode", zipcode),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Avs = apply {
+            if (validated) {
+                return@apply
+            }
+
+            address()
+            zipcode()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2302,37 +2396,56 @@ private constructor(
             "Avs{address=$address, zipcode=$zipcode, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class CardholderAuthentication
-    @JsonCreator
     private constructor(
-        @JsonProperty("3ds_version")
-        @ExcludeMissing
-        private val _3dsVersion: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("acquirer_exemption")
-        @ExcludeMissing
-        private val acquirerExemption: JsonField<AcquirerExemption> = JsonMissing.of(),
-        @JsonProperty("authentication_result")
-        @ExcludeMissing
-        private val authenticationResult: JsonField<AuthenticationResult> = JsonMissing.of(),
-        @JsonProperty("decision_made_by")
-        @ExcludeMissing
-        private val decisionMadeBy: JsonField<DecisionMadeBy> = JsonMissing.of(),
-        @JsonProperty("liability_shift")
-        @ExcludeMissing
-        private val liabilityShift: JsonField<LiabilityShift> = JsonMissing.of(),
-        @JsonProperty("three_ds_authentication_token")
-        @ExcludeMissing
-        private val threeDSAuthenticationToken: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("verification_attempted")
-        @ExcludeMissing
-        private val verificationAttempted: JsonField<VerificationAttempted> = JsonMissing.of(),
-        @JsonProperty("verification_result")
-        @ExcludeMissing
-        private val verificationResult: JsonField<VerificationResult> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val _3dsVersion: JsonField<String>,
+        private val acquirerExemption: JsonField<AcquirerExemption>,
+        private val authenticationResult: JsonField<AuthenticationResult>,
+        private val decisionMadeBy: JsonField<DecisionMadeBy>,
+        private val liabilityShift: JsonField<LiabilityShift>,
+        private val threeDSAuthenticationToken: JsonField<String>,
+        private val verificationAttempted: JsonField<VerificationAttempted>,
+        private val verificationResult: JsonField<VerificationResult>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("3ds_version")
+            @ExcludeMissing
+            _3dsVersion: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("acquirer_exemption")
+            @ExcludeMissing
+            acquirerExemption: JsonField<AcquirerExemption> = JsonMissing.of(),
+            @JsonProperty("authentication_result")
+            @ExcludeMissing
+            authenticationResult: JsonField<AuthenticationResult> = JsonMissing.of(),
+            @JsonProperty("decision_made_by")
+            @ExcludeMissing
+            decisionMadeBy: JsonField<DecisionMadeBy> = JsonMissing.of(),
+            @JsonProperty("liability_shift")
+            @ExcludeMissing
+            liabilityShift: JsonField<LiabilityShift> = JsonMissing.of(),
+            @JsonProperty("three_ds_authentication_token")
+            @ExcludeMissing
+            threeDSAuthenticationToken: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("verification_attempted")
+            @ExcludeMissing
+            verificationAttempted: JsonField<VerificationAttempted> = JsonMissing.of(),
+            @JsonProperty("verification_result")
+            @ExcludeMissing
+            verificationResult: JsonField<VerificationResult> = JsonMissing.of(),
+        ) : this(
+            _3dsVersion,
+            acquirerExemption,
+            authenticationResult,
+            decisionMadeBy,
+            liabilityShift,
+            threeDSAuthenticationToken,
+            verificationAttempted,
+            verificationResult,
+            mutableMapOf(),
+        )
 
         /**
          * The 3DS version used for the authentication
@@ -2494,27 +2607,15 @@ private constructor(
         @ExcludeMissing
         fun _verificationResult(): JsonField<VerificationResult> = verificationResult
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): CardholderAuthentication = apply {
-            if (validated) {
-                return@apply
-            }
-
-            _3dsVersion()
-            acquirerExemption()
-            authenticationResult()
-            decisionMadeBy()
-            liabilityShift()
-            threeDSAuthenticationToken()
-            verificationAttempted()
-            verificationResult()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -2752,8 +2853,26 @@ private constructor(
                     checkRequired("threeDSAuthenticationToken", threeDSAuthenticationToken),
                     checkRequired("verificationAttempted", verificationAttempted),
                     checkRequired("verificationResult", verificationResult),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CardholderAuthentication = apply {
+            if (validated) {
+                return@apply
+            }
+
+            _3dsVersion()
+            acquirerExemption()
+            authenticationResult()
+            decisionMadeBy()
+            liabilityShift()
+            threeDSAuthenticationToken()
+            verificationAttempted()
+            verificationResult()
+            validated = true
         }
 
         /** Whether an acquirer exemption applied to the transaction. */
@@ -3526,32 +3645,43 @@ private constructor(
             "CardholderAuthentication{_3dsVersion=$_3dsVersion, acquirerExemption=$acquirerExemption, authenticationResult=$authenticationResult, decisionMadeBy=$decisionMadeBy, liabilityShift=$liabilityShift, threeDSAuthenticationToken=$threeDSAuthenticationToken, verificationAttempted=$verificationAttempted, verificationResult=$verificationResult, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class Merchant
-    @JsonCreator
     private constructor(
-        @JsonProperty("acceptor_id")
-        @ExcludeMissing
-        private val acceptorId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("acquiring_institution_id")
-        @ExcludeMissing
-        private val acquiringInstitutionId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("city")
-        @ExcludeMissing
-        private val city: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("country")
-        @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("descriptor")
-        @ExcludeMissing
-        private val descriptor: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("mcc") @ExcludeMissing private val mcc: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("state")
-        @ExcludeMissing
-        private val state: JsonField<String> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val acceptorId: JsonField<String>,
+        private val acquiringInstitutionId: JsonField<String>,
+        private val city: JsonField<String>,
+        private val country: JsonField<String>,
+        private val descriptor: JsonField<String>,
+        private val mcc: JsonField<String>,
+        private val state: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("acceptor_id")
+            @ExcludeMissing
+            acceptorId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("acquiring_institution_id")
+            @ExcludeMissing
+            acquiringInstitutionId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("city") @ExcludeMissing city: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("descriptor")
+            @ExcludeMissing
+            descriptor: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("mcc") @ExcludeMissing mcc: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
+        ) : this(
+            acceptorId,
+            acquiringInstitutionId,
+            city,
+            country,
+            descriptor,
+            mcc,
+            state,
+            mutableMapOf(),
+        )
 
         /**
          * Unique alphanumeric identifier for the payment card acceptor (merchant).
@@ -3669,26 +3799,15 @@ private constructor(
          */
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Merchant = apply {
-            if (validated) {
-                return@apply
-            }
-
-            acceptorId()
-            acquiringInstitutionId()
-            city()
-            country()
-            descriptor()
-            mcc()
-            state()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -3876,8 +3995,25 @@ private constructor(
                     checkRequired("descriptor", descriptor),
                     checkRequired("mcc", mcc),
                     checkRequired("state", state),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Merchant = apply {
+            if (validated) {
+                return@apply
+            }
+
+            acceptorId()
+            acquiringInstitutionId()
+            city()
+            country()
+            descriptor()
+            mcc()
+            state()
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -4019,19 +4155,22 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @NoAutoDetect
     class Pos
-    @JsonCreator
     private constructor(
-        @JsonProperty("entry_mode")
-        @ExcludeMissing
-        private val entryMode: JsonField<PosEntryMode> = JsonMissing.of(),
-        @JsonProperty("terminal")
-        @ExcludeMissing
-        private val terminal: JsonField<PosTerminal> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val entryMode: JsonField<PosEntryMode>,
+        private val terminal: JsonField<PosTerminal>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("entry_mode")
+            @ExcludeMissing
+            entryMode: JsonField<PosEntryMode> = JsonMissing.of(),
+            @JsonProperty("terminal")
+            @ExcludeMissing
+            terminal: JsonField<PosTerminal> = JsonMissing.of(),
+        ) : this(entryMode, terminal, mutableMapOf())
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -4061,21 +4200,15 @@ private constructor(
          */
         @JsonProperty("terminal") @ExcludeMissing fun _terminal(): JsonField<PosTerminal> = terminal
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): Pos = apply {
-            if (validated) {
-                return@apply
-            }
-
-            entryMode().validate()
-            terminal().validate()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -4164,27 +4297,42 @@ private constructor(
                 Pos(
                     checkRequired("entryMode", entryMode),
                     checkRequired("terminal", terminal),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): Pos = apply {
+            if (validated) {
+                return@apply
+            }
+
+            entryMode().validate()
+            terminal().validate()
+            validated = true
+        }
+
         class PosEntryMode
-        @JsonCreator
         private constructor(
-            @JsonProperty("card")
-            @ExcludeMissing
-            private val card: JsonField<Card> = JsonMissing.of(),
-            @JsonProperty("cardholder")
-            @ExcludeMissing
-            private val cardholder: JsonField<Cardholder> = JsonMissing.of(),
-            @JsonProperty("pan") @ExcludeMissing private val pan: JsonField<Pan> = JsonMissing.of(),
-            @JsonProperty("pin_entered")
-            @ExcludeMissing
-            private val pinEntered: JsonField<Boolean> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val card: JsonField<Card>,
+            private val cardholder: JsonField<Cardholder>,
+            private val pan: JsonField<Pan>,
+            private val pinEntered: JsonField<Boolean>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("card") @ExcludeMissing card: JsonField<Card> = JsonMissing.of(),
+                @JsonProperty("cardholder")
+                @ExcludeMissing
+                cardholder: JsonField<Cardholder> = JsonMissing.of(),
+                @JsonProperty("pan") @ExcludeMissing pan: JsonField<Pan> = JsonMissing.of(),
+                @JsonProperty("pin_entered")
+                @ExcludeMissing
+                pinEntered: JsonField<Boolean> = JsonMissing.of(),
+            ) : this(card, cardholder, pan, pinEntered, mutableMapOf())
 
             /**
              * Card presence indicator
@@ -4256,23 +4404,15 @@ private constructor(
             @ExcludeMissing
             fun _pinEntered(): JsonField<Boolean> = pinEntered
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): PosEntryMode = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                card()
-                cardholder()
-                pan()
-                pinEntered()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -4406,8 +4546,22 @@ private constructor(
                         checkRequired("cardholder", cardholder),
                         checkRequired("pan", pan),
                         checkRequired("pinEntered", pinEntered),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): PosEntryMode = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                card()
+                cardholder()
+                pan()
+                pinEntered()
+                validated = true
             }
 
             /** Card presence indicator */
@@ -4874,34 +5028,49 @@ private constructor(
                 "PosEntryMode{card=$card, cardholder=$cardholder, pan=$pan, pinEntered=$pinEntered, additionalProperties=$additionalProperties}"
         }
 
-        @NoAutoDetect
         class PosTerminal
-        @JsonCreator
         private constructor(
-            @JsonProperty("attended")
-            @ExcludeMissing
-            private val attended: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("card_retention_capable")
-            @ExcludeMissing
-            private val cardRetentionCapable: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("on_premise")
-            @ExcludeMissing
-            private val onPremise: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("operator")
-            @ExcludeMissing
-            private val operator: JsonField<Operator> = JsonMissing.of(),
-            @JsonProperty("partial_approval_capable")
-            @ExcludeMissing
-            private val partialApprovalCapable: JsonField<Boolean> = JsonMissing.of(),
-            @JsonProperty("pin_capability")
-            @ExcludeMissing
-            private val pinCapability: JsonField<PinCapability> = JsonMissing.of(),
-            @JsonProperty("type")
-            @ExcludeMissing
-            private val type: JsonField<Type> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val attended: JsonField<Boolean>,
+            private val cardRetentionCapable: JsonField<Boolean>,
+            private val onPremise: JsonField<Boolean>,
+            private val operator: JsonField<Operator>,
+            private val partialApprovalCapable: JsonField<Boolean>,
+            private val pinCapability: JsonField<PinCapability>,
+            private val type: JsonField<Type>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("attended")
+                @ExcludeMissing
+                attended: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("card_retention_capable")
+                @ExcludeMissing
+                cardRetentionCapable: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("on_premise")
+                @ExcludeMissing
+                onPremise: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("operator")
+                @ExcludeMissing
+                operator: JsonField<Operator> = JsonMissing.of(),
+                @JsonProperty("partial_approval_capable")
+                @ExcludeMissing
+                partialApprovalCapable: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("pin_capability")
+                @ExcludeMissing
+                pinCapability: JsonField<PinCapability> = JsonMissing.of(),
+                @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            ) : this(
+                attended,
+                cardRetentionCapable,
+                onPremise,
+                operator,
+                partialApprovalCapable,
+                pinCapability,
+                type,
+                mutableMapOf(),
+            )
 
             /**
              * True if a clerk is present at the sale.
@@ -5037,26 +5206,15 @@ private constructor(
              */
             @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): PosTerminal = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                attended()
-                cardRetentionCapable()
-                onPremise()
-                operator()
-                partialApprovalCapable()
-                pinCapability()
-                type()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -5250,8 +5408,25 @@ private constructor(
                         checkRequired("partialApprovalCapable", partialApprovalCapable),
                         checkRequired("pinCapability", pinCapability),
                         checkRequired("type", type),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): PosTerminal = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                attended()
+                cardRetentionCapable()
+                onPremise()
+                operator()
+                partialApprovalCapable()
+                pinCapability()
+                type()
+                validated = true
             }
 
             /** The person that is designated to swipe the card */
@@ -6101,16 +6276,18 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @NoAutoDetect
     class TokenInfo
-    @JsonCreator
     private constructor(
-        @JsonProperty("wallet_type")
-        @ExcludeMissing
-        private val walletType: JsonField<WalletType> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val walletType: JsonField<WalletType>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("wallet_type")
+            @ExcludeMissing
+            walletType: JsonField<WalletType> = JsonMissing.of()
+        ) : this(walletType, mutableMapOf())
 
         /**
          * The wallet_type field will indicate the source of the token. Possible token sources
@@ -6132,20 +6309,15 @@ private constructor(
         @ExcludeMissing
         fun _walletType(): JsonField<WalletType> = walletType
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): TokenInfo = apply {
-            if (validated) {
-                return@apply
-            }
-
-            walletType()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -6226,8 +6398,19 @@ private constructor(
             fun build(): TokenInfo =
                 TokenInfo(
                     checkRequired("walletType", walletType),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): TokenInfo = apply {
+            if (validated) {
+                return@apply
+            }
+
+            walletType()
+            validated = true
         }
 
         /**
@@ -6380,41 +6563,60 @@ private constructor(
             "TokenInfo{walletType=$walletType, additionalProperties=$additionalProperties}"
     }
 
-    @NoAutoDetect
     class TransactionEvent
-    @JsonCreator
     private constructor(
-        @JsonProperty("token")
-        @ExcludeMissing
-        private val token: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("amount")
-        @ExcludeMissing
-        private val amount: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("amounts")
-        @ExcludeMissing
-        private val amounts: JsonField<TransactionEventAmounts> = JsonMissing.of(),
-        @JsonProperty("created")
-        @ExcludeMissing
-        private val created: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("detailed_results")
-        @ExcludeMissing
-        private val detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of(),
-        @JsonProperty("effective_polarity")
-        @ExcludeMissing
-        private val effectivePolarity: JsonField<EffectivePolarity> = JsonMissing.of(),
-        @JsonProperty("network_info")
-        @ExcludeMissing
-        private val networkInfo: JsonField<NetworkInfo> = JsonMissing.of(),
-        @JsonProperty("result")
-        @ExcludeMissing
-        private val result: JsonField<DeclineResult> = JsonMissing.of(),
-        @JsonProperty("rule_results")
-        @ExcludeMissing
-        private val ruleResults: JsonField<List<RuleResult>> = JsonMissing.of(),
-        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
-        @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val token: JsonField<String>,
+        private val amount: JsonField<Long>,
+        private val amounts: JsonField<TransactionEventAmounts>,
+        private val created: JsonField<OffsetDateTime>,
+        private val detailedResults: JsonField<List<DetailedResult>>,
+        private val effectivePolarity: JsonField<EffectivePolarity>,
+        private val networkInfo: JsonField<NetworkInfo>,
+        private val result: JsonField<DeclineResult>,
+        private val ruleResults: JsonField<List<RuleResult>>,
+        private val type: JsonField<Type>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("amounts")
+            @ExcludeMissing
+            amounts: JsonField<TransactionEventAmounts> = JsonMissing.of(),
+            @JsonProperty("created")
+            @ExcludeMissing
+            created: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("detailed_results")
+            @ExcludeMissing
+            detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of(),
+            @JsonProperty("effective_polarity")
+            @ExcludeMissing
+            effectivePolarity: JsonField<EffectivePolarity> = JsonMissing.of(),
+            @JsonProperty("network_info")
+            @ExcludeMissing
+            networkInfo: JsonField<NetworkInfo> = JsonMissing.of(),
+            @JsonProperty("result")
+            @ExcludeMissing
+            result: JsonField<DeclineResult> = JsonMissing.of(),
+            @JsonProperty("rule_results")
+            @ExcludeMissing
+            ruleResults: JsonField<List<RuleResult>> = JsonMissing.of(),
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+        ) : this(
+            token,
+            amount,
+            amounts,
+            created,
+            detailedResults,
+            effectivePolarity,
+            networkInfo,
+            result,
+            ruleResults,
+            type,
+            mutableMapOf(),
+        )
 
         /**
          * Transaction event identifier.
@@ -6582,29 +6784,15 @@ private constructor(
          */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
         @JsonAnyGetter
         @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        private var validated: Boolean = false
-
-        fun validate(): TransactionEvent = apply {
-            if (validated) {
-                return@apply
-            }
-
-            token()
-            amount()
-            amounts().validate()
-            created()
-            detailedResults()
-            effectivePolarity()
-            networkInfo()?.validate()
-            result()
-            ruleResults().forEach { it.validate() }
-            type()
-            validated = true
-        }
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
 
         fun toBuilder() = Builder().from(this)
 
@@ -6875,26 +7063,50 @@ private constructor(
                     checkRequired("result", result),
                     checkRequired("ruleResults", ruleResults).map { it.toImmutable() },
                     checkRequired("type", type),
-                    additionalProperties.toImmutable(),
+                    additionalProperties.toMutableMap(),
                 )
         }
 
-        @NoAutoDetect
+        private var validated: Boolean = false
+
+        fun validate(): TransactionEvent = apply {
+            if (validated) {
+                return@apply
+            }
+
+            token()
+            amount()
+            amounts().validate()
+            created()
+            detailedResults()
+            effectivePolarity()
+            networkInfo()?.validate()
+            result()
+            ruleResults().forEach { it.validate() }
+            type()
+            validated = true
+        }
+
         class TransactionEventAmounts
-        @JsonCreator
         private constructor(
-            @JsonProperty("cardholder")
-            @ExcludeMissing
-            private val cardholder: JsonField<Cardholder> = JsonMissing.of(),
-            @JsonProperty("merchant")
-            @ExcludeMissing
-            private val merchant: JsonField<Merchant> = JsonMissing.of(),
-            @JsonProperty("settlement")
-            @ExcludeMissing
-            private val settlement: JsonField<Settlement> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val cardholder: JsonField<Cardholder>,
+            private val merchant: JsonField<Merchant>,
+            private val settlement: JsonField<Settlement>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("cardholder")
+                @ExcludeMissing
+                cardholder: JsonField<Cardholder> = JsonMissing.of(),
+                @JsonProperty("merchant")
+                @ExcludeMissing
+                merchant: JsonField<Merchant> = JsonMissing.of(),
+                @JsonProperty("settlement")
+                @ExcludeMissing
+                settlement: JsonField<Settlement> = JsonMissing.of(),
+            ) : this(cardholder, merchant, settlement, mutableMapOf())
 
             /**
              * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -6946,22 +7158,15 @@ private constructor(
             @ExcludeMissing
             fun _settlement(): JsonField<Settlement> = settlement
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): TransactionEventAmounts = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                cardholder().validate()
-                merchant().validate()
-                settlement()?.validate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -7076,26 +7281,43 @@ private constructor(
                         checkRequired("cardholder", cardholder),
                         checkRequired("merchant", merchant),
                         checkRequired("settlement", settlement),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
             }
 
-            @NoAutoDetect
+            private var validated: Boolean = false
+
+            fun validate(): TransactionEventAmounts = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cardholder().validate()
+                merchant().validate()
+                settlement()?.validate()
+                validated = true
+            }
+
             class Cardholder
-            @JsonCreator
             private constructor(
-                @JsonProperty("amount")
-                @ExcludeMissing
-                private val amount: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("conversion_rate")
-                @ExcludeMissing
-                private val conversionRate: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("currency")
-                @ExcludeMissing
-                private val currency: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val amount: JsonField<Long>,
+                private val conversionRate: JsonField<String>,
+                private val currency: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("amount")
+                    @ExcludeMissing
+                    amount: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                ) : this(amount, conversionRate, currency, mutableMapOf())
 
                 /**
                  * Amount of the event in the cardholder billing currency.
@@ -7153,22 +7375,15 @@ private constructor(
                 @ExcludeMissing
                 fun _currency(): JsonField<String> = currency
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Cardholder = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    amount()
-                    conversionRate()
-                    currency()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -7285,8 +7500,21 @@ private constructor(
                             checkRequired("amount", amount),
                             checkRequired("conversionRate", conversionRate),
                             checkRequired("currency", currency),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Cardholder = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    amount()
+                    conversionRate()
+                    currency()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -7307,19 +7535,22 @@ private constructor(
                     "Cardholder{amount=$amount, conversionRate=$conversionRate, currency=$currency, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class Merchant
-            @JsonCreator
             private constructor(
-                @JsonProperty("amount")
-                @ExcludeMissing
-                private val amount: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("currency")
-                @ExcludeMissing
-                private val currency: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val amount: JsonField<Long>,
+                private val currency: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("amount")
+                    @ExcludeMissing
+                    amount: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                ) : this(amount, currency, mutableMapOf())
 
                 /**
                  * Amount of the event in the merchant currency.
@@ -7357,21 +7588,15 @@ private constructor(
                 @ExcludeMissing
                 fun _currency(): JsonField<String> = currency
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Merchant = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    amount()
-                    currency()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -7465,8 +7690,20 @@ private constructor(
                         Merchant(
                             checkRequired("amount", amount),
                             checkRequired("currency", currency),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Merchant = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    amount()
+                    currency()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -7487,22 +7724,26 @@ private constructor(
                     "Merchant{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class Settlement
-            @JsonCreator
             private constructor(
-                @JsonProperty("amount")
-                @ExcludeMissing
-                private val amount: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("conversion_rate")
-                @ExcludeMissing
-                private val conversionRate: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("currency")
-                @ExcludeMissing
-                private val currency: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val amount: JsonField<Long>,
+                private val conversionRate: JsonField<String>,
+                private val currency: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("amount")
+                    @ExcludeMissing
+                    amount: JsonField<Long> = JsonMissing.of(),
+                    @JsonProperty("conversion_rate")
+                    @ExcludeMissing
+                    conversionRate: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("currency")
+                    @ExcludeMissing
+                    currency: JsonField<String> = JsonMissing.of(),
+                ) : this(amount, conversionRate, currency, mutableMapOf())
 
                 /**
                  * Amount of the event, if it is financial, in the settlement currency.
@@ -7560,22 +7801,15 @@ private constructor(
                 @ExcludeMissing
                 fun _currency(): JsonField<String> = currency
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Settlement = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    amount()
-                    conversionRate()
-                    currency()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -7695,8 +7929,21 @@ private constructor(
                             checkRequired("amount", amount),
                             checkRequired("conversionRate", conversionRate),
                             checkRequired("currency", currency),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Settlement = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    amount()
+                    conversionRate()
+                    currency()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -8268,22 +8515,24 @@ private constructor(
          * it through as is unless otherwise specified. Please consult the official network
          * documentation for more details about these fields and how to use them.
          */
-        @NoAutoDetect
         class NetworkInfo
-        @JsonCreator
         private constructor(
-            @JsonProperty("acquirer")
-            @ExcludeMissing
-            private val acquirer: JsonField<Acquirer> = JsonMissing.of(),
-            @JsonProperty("mastercard")
-            @ExcludeMissing
-            private val mastercard: JsonField<Mastercard> = JsonMissing.of(),
-            @JsonProperty("visa")
-            @ExcludeMissing
-            private val visa: JsonField<Visa> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val acquirer: JsonField<Acquirer>,
+            private val mastercard: JsonField<Mastercard>,
+            private val visa: JsonField<Visa>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("acquirer")
+                @ExcludeMissing
+                acquirer: JsonField<Acquirer> = JsonMissing.of(),
+                @JsonProperty("mastercard")
+                @ExcludeMissing
+                mastercard: JsonField<Mastercard> = JsonMissing.of(),
+                @JsonProperty("visa") @ExcludeMissing visa: JsonField<Visa> = JsonMissing.of(),
+            ) : this(acquirer, mastercard, visa, mutableMapOf())
 
             /**
              * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -8330,22 +8579,15 @@ private constructor(
              */
             @JsonProperty("visa") @ExcludeMissing fun _visa(): JsonField<Visa> = visa
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): NetworkInfo = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                acquirer()?.validate()
-                mastercard()?.validate()
-                visa()?.validate()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -8456,23 +8698,39 @@ private constructor(
                         checkRequired("acquirer", acquirer),
                         checkRequired("mastercard", mastercard),
                         checkRequired("visa", visa),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
             }
 
-            @NoAutoDetect
+            private var validated: Boolean = false
+
+            fun validate(): NetworkInfo = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                acquirer()?.validate()
+                mastercard()?.validate()
+                visa()?.validate()
+                validated = true
+            }
+
             class Acquirer
-            @JsonCreator
             private constructor(
-                @JsonProperty("acquirer_reference_number")
-                @ExcludeMissing
-                private val acquirerReferenceNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("retrieval_reference_number")
-                @ExcludeMissing
-                private val retrievalReferenceNumber: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val acquirerReferenceNumber: JsonField<String>,
+                private val retrievalReferenceNumber: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("acquirer_reference_number")
+                    @ExcludeMissing
+                    acquirerReferenceNumber: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("retrieval_reference_number")
+                    @ExcludeMissing
+                    retrievalReferenceNumber: JsonField<String> = JsonMissing.of(),
+                ) : this(acquirerReferenceNumber, retrievalReferenceNumber, mutableMapOf())
 
                 /**
                  * Identifier assigned by the acquirer, applicable to dual-message transactions
@@ -8516,21 +8774,15 @@ private constructor(
                 @ExcludeMissing
                 fun _retrievalReferenceNumber(): JsonField<String> = retrievalReferenceNumber
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Acquirer = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    acquirerReferenceNumber()
-                    retrievalReferenceNumber()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -8638,8 +8890,20 @@ private constructor(
                         Acquirer(
                             checkRequired("acquirerReferenceNumber", acquirerReferenceNumber),
                             checkRequired("retrievalReferenceNumber", retrievalReferenceNumber),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Acquirer = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    acquirerReferenceNumber()
+                    retrievalReferenceNumber()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -8660,25 +8924,36 @@ private constructor(
                     "Acquirer{acquirerReferenceNumber=$acquirerReferenceNumber, retrievalReferenceNumber=$retrievalReferenceNumber, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class Mastercard
-            @JsonCreator
             private constructor(
-                @JsonProperty("banknet_reference_number")
-                @ExcludeMissing
-                private val banknetReferenceNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("original_banknet_reference_number")
-                @ExcludeMissing
-                private val originalBanknetReferenceNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("original_switch_serial_number")
-                @ExcludeMissing
-                private val originalSwitchSerialNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("switch_serial_number")
-                @ExcludeMissing
-                private val switchSerialNumber: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val banknetReferenceNumber: JsonField<String>,
+                private val originalBanknetReferenceNumber: JsonField<String>,
+                private val originalSwitchSerialNumber: JsonField<String>,
+                private val switchSerialNumber: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("banknet_reference_number")
+                    @ExcludeMissing
+                    banknetReferenceNumber: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("original_banknet_reference_number")
+                    @ExcludeMissing
+                    originalBanknetReferenceNumber: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("original_switch_serial_number")
+                    @ExcludeMissing
+                    originalSwitchSerialNumber: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("switch_serial_number")
+                    @ExcludeMissing
+                    switchSerialNumber: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    banknetReferenceNumber,
+                    originalBanknetReferenceNumber,
+                    originalSwitchSerialNumber,
+                    switchSerialNumber,
+                    mutableMapOf(),
+                )
 
                 /**
                  * Identifier assigned by Mastercard. Guaranteed by Mastercard to be unique for any
@@ -8771,23 +9046,15 @@ private constructor(
                 @ExcludeMissing
                 fun _switchSerialNumber(): JsonField<String> = switchSerialNumber
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Mastercard = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    banknetReferenceNumber()
-                    originalBanknetReferenceNumber()
-                    originalSwitchSerialNumber()
-                    switchSerialNumber()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -8957,8 +9224,22 @@ private constructor(
                             ),
                             checkRequired("originalSwitchSerialNumber", originalSwitchSerialNumber),
                             checkRequired("switchSerialNumber", switchSerialNumber),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Mastercard = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    banknetReferenceNumber()
+                    originalBanknetReferenceNumber()
+                    originalSwitchSerialNumber()
+                    switchSerialNumber()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -8979,19 +9260,22 @@ private constructor(
                     "Mastercard{banknetReferenceNumber=$banknetReferenceNumber, originalBanknetReferenceNumber=$originalBanknetReferenceNumber, originalSwitchSerialNumber=$originalSwitchSerialNumber, switchSerialNumber=$switchSerialNumber, additionalProperties=$additionalProperties}"
             }
 
-            @NoAutoDetect
             class Visa
-            @JsonCreator
             private constructor(
-                @JsonProperty("original_transaction_id")
-                @ExcludeMissing
-                private val originalTransactionId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("transaction_id")
-                @ExcludeMissing
-                private val transactionId: JsonField<String> = JsonMissing.of(),
-                @JsonAnySetter
-                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                private val originalTransactionId: JsonField<String>,
+                private val transactionId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
             ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("original_transaction_id")
+                    @ExcludeMissing
+                    originalTransactionId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("transaction_id")
+                    @ExcludeMissing
+                    transactionId: JsonField<String> = JsonMissing.of(),
+                ) : this(originalTransactionId, transactionId, mutableMapOf())
 
                 /**
                  * Identifier assigned by Visa. Matches the `transaction_id` of a prior related
@@ -9035,21 +9319,15 @@ private constructor(
                 @ExcludeMissing
                 fun _transactionId(): JsonField<String> = transactionId
 
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
                 @JsonAnyGetter
                 @ExcludeMissing
-                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-                private var validated: Boolean = false
-
-                fun validate(): Visa = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    originalTransactionId()
-                    transactionId()
-                    validated = true
-                }
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
 
                 fun toBuilder() = Builder().from(this)
 
@@ -9158,8 +9436,20 @@ private constructor(
                         Visa(
                             checkRequired("originalTransactionId", originalTransactionId),
                             checkRequired("transactionId", transactionId),
-                            additionalProperties.toImmutable(),
+                            additionalProperties.toMutableMap(),
                         )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Visa = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    originalTransactionId()
+                    transactionId()
+                    validated = true
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -9426,25 +9716,28 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @NoAutoDetect
         class RuleResult
-        @JsonCreator
         private constructor(
-            @JsonProperty("auth_rule_token")
-            @ExcludeMissing
-            private val authRuleToken: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("explanation")
-            @ExcludeMissing
-            private val explanation: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("name")
-            @ExcludeMissing
-            private val name: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("result")
-            @ExcludeMissing
-            private val result: JsonField<DetailedResult> = JsonMissing.of(),
-            @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val authRuleToken: JsonField<String>,
+            private val explanation: JsonField<String>,
+            private val name: JsonField<String>,
+            private val result: JsonField<DetailedResult>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("auth_rule_token")
+                @ExcludeMissing
+                authRuleToken: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("explanation")
+                @ExcludeMissing
+                explanation: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<DetailedResult> = JsonMissing.of(),
+            ) : this(authRuleToken, explanation, name, result, mutableMapOf())
 
             /**
              * The Auth Rule Token associated with the rule from which the decline originated. If
@@ -9518,23 +9811,15 @@ private constructor(
             @ExcludeMissing
             fun _result(): JsonField<DetailedResult> = result
 
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
             @JsonAnyGetter
             @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            private var validated: Boolean = false
-
-            fun validate(): RuleResult = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                authRuleToken()
-                explanation()
-                name()
-                result()
-                validated = true
-            }
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
 
             fun toBuilder() = Builder().from(this)
 
@@ -9673,8 +9958,22 @@ private constructor(
                         checkRequired("explanation", explanation),
                         checkRequired("name", name),
                         checkRequired("result", result),
-                        additionalProperties.toImmutable(),
+                        additionalProperties.toMutableMap(),
                     )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): RuleResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                authRuleToken()
+                explanation()
+                name()
+                result()
+                validated = true
             }
 
             /** The detailed_result associated with this rule's decline. */

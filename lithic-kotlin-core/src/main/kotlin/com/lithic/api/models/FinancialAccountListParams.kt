@@ -5,7 +5,6 @@ package com.lithic.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
-import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.Params
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
@@ -35,18 +34,6 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                accountToken?.let { put("account_token", it) }
-                businessAccountToken?.let { put("business_account_token", it) }
-                type?.let { put("type", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -60,7 +47,6 @@ private constructor(
     }
 
     /** A builder for [FinancialAccountListParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var accountToken: String? = null
@@ -200,6 +186,18 @@ private constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                accountToken?.let { put("account_token", it) }
+                businessAccountToken?.let { put("business_account_token", it) }
+                type?.let { put("type", it.toString()) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** List financial accounts of a given type */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

@@ -2,17 +2,19 @@
 
 package com.lithic.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
+import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonValue
-import com.lithic.api.core.NoAutoDetect
 import com.lithic.api.core.Params
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
-import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
+import java.util.Collections
 import java.util.Objects
 
 /** Disenroll a responder endpoint */
@@ -21,7 +23,7 @@ private constructor(
     private val type: Type,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+    private val additionalBodyProperties: MutableMap<String, JsonValue>,
 ) : Params {
 
     /** The type of the endpoint. */
@@ -31,19 +33,15 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    @JsonAnySetter
+    private fun putAdditionalBodyProperty(key: String, value: JsonValue) {
+        additionalBodyProperties.put(key, value)
+    }
 
-    internal fun _body(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
-
-    override fun _headers(): Headers = additionalHeaders
-
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                put("type", type.toString())
-                putAll(additionalQueryParams)
-            }
-            .build()
+    @JsonAnyGetter
+    @ExcludeMissing
+    fun _additionalBodyProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalBodyProperties)
 
     fun toBuilder() = Builder().from(this)
 
@@ -62,7 +60,6 @@ private constructor(
     }
 
     /** A builder for [ResponderEndpointDeleteParams]. */
-    @NoAutoDetect
     class Builder internal constructor() {
 
         private var type: Type? = null
@@ -218,9 +215,21 @@ private constructor(
                 checkRequired("type", type),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
+                additionalBodyProperties.toMutableMap(),
             )
     }
+
+    internal fun _body(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
+
+    override fun _headers(): Headers = additionalHeaders
+
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                put("type", type.toString())
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     /** The type of the endpoint. */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
