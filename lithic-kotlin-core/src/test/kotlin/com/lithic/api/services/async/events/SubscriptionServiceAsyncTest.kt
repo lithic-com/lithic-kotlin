@@ -100,7 +100,7 @@ internal class SubscriptionServiceAsyncTest {
         page.response().validate()
     }
 
-    @Disabled("Prism Mock server doesnt want Accept header, but server requires it.")
+    @Disabled("Prism Mock server doesn't want Accept header, but server requires it.")
     @Test
     suspend fun delete() {
         val client =
@@ -136,7 +136,7 @@ internal class SubscriptionServiceAsyncTest {
         page.response().validate()
     }
 
-    @Disabled("Prism Mock server doesnt want Accept header, but server requires it.")
+    @Disabled("Prism Mock server doesn't want Accept header, but server requires it.")
     @Test
     suspend fun recover() {
         val client =
@@ -155,7 +155,7 @@ internal class SubscriptionServiceAsyncTest {
         )
     }
 
-    @Disabled("Prism Mock server doesnt want Accept header, but server requires it.")
+    @Disabled("Prism Mock server doesn't want Accept header, but server requires it.")
     @Test
     suspend fun replayMissing() {
         val client =
@@ -193,7 +193,7 @@ internal class SubscriptionServiceAsyncTest {
         response.validate()
     }
 
-    @Disabled("Prism Mock server doesnt want Accept header, but server requires it.")
+    @Disabled("Prism Mock server doesn't want Accept header, but server requires it.")
     @Test
     suspend fun rotateSecret() {
         val client =
