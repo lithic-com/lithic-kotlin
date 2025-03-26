@@ -52,7 +52,7 @@ internal class TransactionTest {
                 .cardToken("19c22c47-7a75-43ee-9891-595419830f7e")
                 .cardholderAuthentication(
                     Transaction.CardholderAuthentication.builder()
-                        ._3dsVersion("2")
+                        .threeDSVersion("2")
                         .acquirerExemption(
                             Transaction.CardholderAuthentication.AcquirerExemption
                                 .AUTHENTICATION_OUTAGE_EXCEPTION
@@ -252,7 +252,7 @@ internal class TransactionTest {
         assertThat(transaction.cardholderAuthentication())
             .isEqualTo(
                 Transaction.CardholderAuthentication.builder()
-                    ._3dsVersion("2")
+                    .threeDSVersion("2")
                     .acquirerExemption(
                         Transaction.CardholderAuthentication.AcquirerExemption
                             .AUTHENTICATION_OUTAGE_EXCEPTION
