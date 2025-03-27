@@ -51,15 +51,9 @@ private constructor(
         }
 
         return if (params.endingBefore() != null) {
-            FinancialAccountStatementLineItemListParams.builder()
-                .from(params)
-                .endingBefore(data().first().token())
-                .build()
+            params.toBuilder().endingBefore(data().first().token()).build()
         } else {
-            FinancialAccountStatementLineItemListParams.builder()
-                .from(params)
-                .startingAfter(data().last().token())
-                .build()
+            params.toBuilder().startingAfter(data().last().token()).build()
         }
     }
 
