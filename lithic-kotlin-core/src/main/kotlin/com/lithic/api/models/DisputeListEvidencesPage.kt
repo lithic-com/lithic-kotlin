@@ -51,15 +51,9 @@ private constructor(
         }
 
         return if (params.endingBefore() != null) {
-            DisputeListEvidencesParams.builder()
-                .from(params)
-                .endingBefore(data().first().token())
-                .build()
+            params.toBuilder().endingBefore(data().first().token()).build()
         } else {
-            DisputeListEvidencesParams.builder()
-                .from(params)
-                .startingAfter(data().last().token())
-                .build()
+            params.toBuilder().startingAfter(data().last().token()).build()
         }
     }
 

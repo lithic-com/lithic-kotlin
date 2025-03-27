@@ -51,15 +51,9 @@ private constructor(
         }
 
         return if (params.endingBefore() != null) {
-            ExternalPaymentListParams.builder()
-                .from(params)
-                .endingBefore(data().first().token())
-                .build()
+            params.toBuilder().endingBefore(data().first().token()).build()
         } else {
-            ExternalPaymentListParams.builder()
-                .from(params)
-                .startingAfter(data().last().token())
-                .build()
+            params.toBuilder().startingAfter(data().last().token()).build()
         }
     }
 
