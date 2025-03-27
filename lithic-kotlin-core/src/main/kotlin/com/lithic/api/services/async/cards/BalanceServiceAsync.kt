@@ -5,8 +5,8 @@ package com.lithic.api.services.async.cards
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.CardBalanceListPageAsync
-import com.lithic.api.models.CardBalanceListParams
+import com.lithic.api.models.cards.balances.BalanceListPageAsync
+import com.lithic.api.models.cards.balances.BalanceListParams
 
 interface BalanceServiceAsync {
 
@@ -17,9 +17,9 @@ interface BalanceServiceAsync {
 
     /** Get the balances for a given card. */
     suspend fun list(
-        params: CardBalanceListParams,
+        params: BalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CardBalanceListPageAsync
+    ): BalanceListPageAsync
 
     /**
      * A view of [BalanceServiceAsync] that provides access to raw HTTP responses for each method.
@@ -32,8 +32,8 @@ interface BalanceServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
-            params: CardBalanceListParams,
+            params: BalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CardBalanceListPageAsync>
+        ): HttpResponseFor<BalanceListPageAsync>
     }
 }

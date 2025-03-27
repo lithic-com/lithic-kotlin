@@ -5,8 +5,8 @@ package com.lithic.api.services.async.transactions
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.EnhancedCommercialDataRetrieveResponse
-import com.lithic.api.models.TransactionEnhancedCommercialDataRetrieveParams
+import com.lithic.api.models.transactions.enhancedcommercialdata.EnhancedCommercialDataRetrieveParams
+import com.lithic.api.models.transactions.enhancedcommercialdata.EnhancedCommercialDataRetrieveResponse
 
 interface EnhancedCommercialDataServiceAsync {
 
@@ -20,7 +20,7 @@ interface EnhancedCommercialDataServiceAsync {
      * sandbox.
      */
     suspend fun retrieve(
-        params: TransactionEnhancedCommercialDataRetrieveParams,
+        params: EnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedCommercialDataRetrieveResponse
 
@@ -37,7 +37,7 @@ interface EnhancedCommercialDataServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
-            params: TransactionEnhancedCommercialDataRetrieveParams,
+            params: EnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse>
     }

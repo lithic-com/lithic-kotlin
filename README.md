@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.35.0)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.35.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.35.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.81.0)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.81.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.81.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differenc
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.35.0).
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.81.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.35.0")
+implementation("com.lithic.api:lithic-kotlin:0.81.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.lithic.api:lithic-kotlin:0.35.0")
 <dependency>
   <groupId>com.lithic.api</groupId>
   <artifactId>lithic-kotlin</artifactId>
-  <version>0.35.0</version>
+  <version>0.81.0</version>
 </dependency>
 ```
 
@@ -48,8 +48,8 @@ This library requires Java 8 or later.
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 // Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
@@ -128,8 +128,8 @@ The default client is synchronous. To switch to asynchronous execution, call the
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 // Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
@@ -145,8 +145,8 @@ Or create an asynchronous client from the beginning:
 ```kotlin
 import com.lithic.api.client.LithicClientAsync
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 // Configures using the `LITHIC_API_KEY` and `LITHIC_WEBHOOK_SECRET` environment variables
 val client: LithicClientAsync = LithicOkHttpClientAsync.fromEnv()
@@ -168,8 +168,8 @@ To access this data, prefix any HTTP method call on a client or service with `wi
 ```kotlin
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
@@ -183,7 +183,7 @@ val headers: Headers = card.headers()
 You can still deserialize the response into an instance of a Kotlin class if needed:
 
 ```kotlin
-import com.lithic.api.models.Card
+import com.lithic.api.models.cards.Card
 
 val parsedCard: Card = card.parse()
 ```
@@ -222,8 +222,8 @@ To iterate through all results across all pages, you can use `autoPager`, which 
 ### Synchronous
 
 ```kotlin
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardListPage
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardListPage
 
 // As a Sequence:
 client.cards().list(params).autoPager()
@@ -245,8 +245,8 @@ asyncClient.cards().list(params).autoPager()
 If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```kotlin
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardListPage
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardListPage
 
 val page = client.cards().list(params)
 while (page != null) {
@@ -309,8 +309,8 @@ Requests time out after 1 minute by default.
 To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 val card: Card = client.cards().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
@@ -374,7 +374,7 @@ To set undocumented parameters, call the `putAdditionalHeader`, `putAdditionalQu
 
 ```kotlin
 import com.lithic.api.core.JsonValue
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.CardCreateParams
 
 val params: CardCreateParams = CardCreateParams.builder()
     .putAdditionalHeader("Secret-Header", "42")
@@ -389,7 +389,7 @@ To set a documented parameter or property to an undocumented or not yet supporte
 
 ```kotlin
 import com.lithic.api.core.JsonValue
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.CardCreateParams
 
 val params: CardCreateParams = CardCreateParams.builder()
     .type(JsonValue.from(42))
@@ -457,7 +457,7 @@ To access a property's raw JSON value, which may be undocumented, call its `_` p
 
 ```kotlin
 import com.lithic.api.core.JsonField
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.CardCreateParams
 
 val type: JsonField<CardCreateParams.Type> = client.cards().create(params)._type()
 
@@ -484,7 +484,7 @@ By default, the SDK will not throw an exception in this case. It will throw [`Li
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```kotlin
-import com.lithic.api.models.Card
+import com.lithic.api.models.cards.Card
 
 val card: Card = client.cards().create(params).validate()
 ```
@@ -492,8 +492,8 @@ val card: Card = client.cards().create(params).validate()
 Or configure the method call to validate the response using the `responseValidation` method:
 
 ```kotlin
-import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.cards.Card
+import com.lithic.api.models.cards.CardCreateParams
 
 val card: Card = client.cards().create(
   params, RequestOptions.builder().responseValidation(true).build()
