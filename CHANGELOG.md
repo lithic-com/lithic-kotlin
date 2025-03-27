@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.82.0 (2025-03-27)
+
+Full Changelog: [v0.81.0...v0.82.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.81.0...v0.82.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** rename `_3dsVersion` to `threeDSVersion` ([#543](https://github.com/lithic-com/lithic-kotlin/issues/543))
+* **client:** refactor exception structure and methods ([#531](https://github.com/lithic-com/lithic-kotlin/issues/531))
+
+### Features
+
+* **client:** support a lower jackson version ([#539](https://github.com/lithic-com/lithic-kotlin/issues/539)) ([eac8971](https://github.com/lithic-com/lithic-kotlin/commit/eac89719b995af144d3ba113ce05c654501f7f3f))
+* **client:** throw on incompatible jackson version ([eac8971](https://github.com/lithic-com/lithic-kotlin/commit/eac89719b995af144d3ba113ce05c654501f7f3f))
+
+
+### Bug Fixes
+
+* **client:** map deserialization bug ([ac4fa1b](https://github.com/lithic-com/lithic-kotlin/commit/ac4fa1bb430931818a7fa78fc8b90fbbdb2483a5))
+
+
+### Chores
+
+* **api:** new attribute targets for Auth Rules and new Financial Account State schema ([#541](https://github.com/lithic-com/lithic-kotlin/issues/541)) ([b3cda01](https://github.com/lithic-com/lithic-kotlin/commit/b3cda01f5fcc57a8b73bc41f74f2d9515df38a5a))
+* **client:** refactor exception structure and methods ([#531](https://github.com/lithic-com/lithic-kotlin/issues/531)) ([c5b4020](https://github.com/lithic-com/lithic-kotlin/commit/c5b402091c7e4393e7eb6631844dbc3114f1baf1))
+* **client:** rename `_3dsVersion` to `threeDSVersion` ([#543](https://github.com/lithic-com/lithic-kotlin/issues/543)) ([4d0d2e1](https://github.com/lithic-com/lithic-kotlin/commit/4d0d2e125d713b4b7d6a6d9f67cf02f68d64871d))
+* fix typos ([#542](https://github.com/lithic-com/lithic-kotlin/issues/542)) ([1977559](https://github.com/lithic-com/lithic-kotlin/commit/1977559d3db99f772046b837c46626e64ea06804))
+* **internal:** add missing release please block ([#528](https://github.com/lithic-com/lithic-kotlin/issues/528)) ([ec84e11](https://github.com/lithic-com/lithic-kotlin/commit/ec84e11fce0df443b4b8cfb000fb609be839c262))
+* **internal:** delete unused methods and annotations ([#544](https://github.com/lithic-com/lithic-kotlin/issues/544)) ([ac4fa1b](https://github.com/lithic-com/lithic-kotlin/commit/ac4fa1bb430931818a7fa78fc8b90fbbdb2483a5))
+* **internal:** make multipart assertions more robust ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* **internal:** remove unnecessary `assertNotNull` calls ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* **internal:** remove unnecessary import ([#535](https://github.com/lithic-com/lithic-kotlin/issues/535)) ([90e66c6](https://github.com/lithic-com/lithic-kotlin/commit/90e66c6b87ce66c3a513331f34ec2f01a976cd5a))
+* **internal:** remove workflow condition ([#549](https://github.com/lithic-com/lithic-kotlin/issues/549)) ([5f08476](https://github.com/lithic-com/lithic-kotlin/commit/5f08476aff6806d9f5572948aa22746fbd7c0f41))
+* **internal:** swap from `Builder().from(...)` to `toBuilder()` ([#545](https://github.com/lithic-com/lithic-kotlin/issues/545)) ([ef6d1c1](https://github.com/lithic-com/lithic-kotlin/commit/ef6d1c15d250a90ecf794206cd9e5dbde8a6b475))
+* **internal:** update .stats.yml ([#530](https://github.com/lithic-com/lithic-kotlin/issues/530)) ([9b01915](https://github.com/lithic-com/lithic-kotlin/commit/9b01915b5b4f89870256c753fb88e34f3e58c5e2))
+
+
+### Documentation
+
+* minor readme tweak ([#537](https://github.com/lithic-com/lithic-kotlin/issues/537)) ([6369ff9](https://github.com/lithic-com/lithic-kotlin/commit/6369ff99c35a22ca40fd536536051dd0f534d015))
+* refine comments on multipart params ([#534](https://github.com/lithic-com/lithic-kotlin/issues/534)) ([a9a25db](https://github.com/lithic-com/lithic-kotlin/commit/a9a25db641bdc949c5433a0b8d08b5bd9d3a00ae))
+* update readme exception docs ([#536](https://github.com/lithic-com/lithic-kotlin/issues/536)) ([515dc42](https://github.com/lithic-com/lithic-kotlin/commit/515dc42f15be5fc4f2d93345743e7af5edb71c54))
+
 ## 0.81.0 (2025-03-18)
 
 Full Changelog: [v0.80.0...v0.81.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.80.0...v0.81.0)
