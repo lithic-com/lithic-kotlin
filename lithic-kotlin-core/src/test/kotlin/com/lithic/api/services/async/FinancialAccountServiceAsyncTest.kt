@@ -4,10 +4,10 @@ package com.lithic.api.services.async
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
-import com.lithic.api.models.FinancialAccountCreateParams
-import com.lithic.api.models.FinancialAccountRetrieveParams
-import com.lithic.api.models.FinancialAccountUpdateParams
-import com.lithic.api.models.FinancialAccountUpdateStatusParams
+import com.lithic.api.models.financialaccounts.FinancialAccountChargeOffParams
+import com.lithic.api.models.financialaccounts.FinancialAccountCreateParams
+import com.lithic.api.models.financialaccounts.FinancialAccountRetrieveParams
+import com.lithic.api.models.financialaccounts.FinancialAccountUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -91,7 +91,7 @@ internal class FinancialAccountServiceAsyncTest {
     }
 
     @Test
-    suspend fun updateStatus() {
+    suspend fun chargeOff() {
         val client =
             LithicOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -99,18 +99,14 @@ internal class FinancialAccountServiceAsyncTest {
                 .build()
         val financialAccountServiceAsync = client.financialAccounts()
 
-        val financialAccount =
-            financialAccountServiceAsync.updateStatus(
-                FinancialAccountUpdateStatusParams.builder()
+        val financialAccountCreditConfig =
+            financialAccountServiceAsync.chargeOff(
+                FinancialAccountChargeOffParams.builder()
                     .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .status(FinancialAccountUpdateStatusParams.FinancialAccountStatus.OPEN)
-                    .statusChangeReason(
-                        FinancialAccountUpdateStatusParams.UpdateFinancialAccountStatusChangeReason
-                            .CHARGED_OFF_FRAUD
-                    )
+                    .reason(FinancialAccountChargeOffParams.ChargedOffReason.DELINQUENT)
                     .build()
             )
 
-        financialAccount.validate()
+        financialAccountCreditConfig.validate()
     }
 }

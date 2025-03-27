@@ -5,10 +5,10 @@ package com.lithic.api.services.async.cards
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.CardFinancialTransactionListPageAsync
-import com.lithic.api.models.CardFinancialTransactionListParams
-import com.lithic.api.models.CardFinancialTransactionRetrieveParams
-import com.lithic.api.models.FinancialTransaction
+import com.lithic.api.models.cards.financialtransactions.FinancialTransactionListPageAsync
+import com.lithic.api.models.cards.financialtransactions.FinancialTransactionListParams
+import com.lithic.api.models.cards.financialtransactions.FinancialTransactionRetrieveParams
+import com.lithic.api.models.financialaccounts.FinancialTransaction
 
 interface FinancialTransactionServiceAsync {
 
@@ -19,15 +19,15 @@ interface FinancialTransactionServiceAsync {
 
     /** Get the card financial transaction for the provided token. */
     suspend fun retrieve(
-        params: CardFinancialTransactionRetrieveParams,
+        params: FinancialTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransaction
 
     /** List the financial transactions for a given card. */
     suspend fun list(
-        params: CardFinancialTransactionListParams,
+        params: FinancialTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CardFinancialTransactionListPageAsync
+    ): FinancialTransactionListPageAsync
 
     /**
      * A view of [FinancialTransactionServiceAsync] that provides access to raw HTTP responses for
@@ -42,7 +42,7 @@ interface FinancialTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
-            params: CardFinancialTransactionRetrieveParams,
+            params: FinancialTransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialTransaction>
 
@@ -52,8 +52,8 @@ interface FinancialTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
-            params: CardFinancialTransactionListParams,
+            params: FinancialTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CardFinancialTransactionListPageAsync>
+        ): HttpResponseFor<FinancialTransactionListPageAsync>
     }
 }

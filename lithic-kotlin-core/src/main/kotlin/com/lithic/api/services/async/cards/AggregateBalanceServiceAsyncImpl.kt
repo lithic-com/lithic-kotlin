@@ -14,8 +14,8 @@ import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
-import com.lithic.api.models.CardAggregateBalanceListPageAsync
-import com.lithic.api.models.CardAggregateBalanceListParams
+import com.lithic.api.models.cards.aggregatebalances.AggregateBalanceListPageAsync
+import com.lithic.api.models.cards.aggregatebalances.AggregateBalanceListParams
 
 class AggregateBalanceServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : AggregateBalanceServiceAsync {
@@ -27,9 +27,9 @@ internal constructor(private val clientOptions: ClientOptions) : AggregateBalanc
     override fun withRawResponse(): AggregateBalanceServiceAsync.WithRawResponse = withRawResponse
 
     override suspend fun list(
-        params: CardAggregateBalanceListParams,
+        params: AggregateBalanceListParams,
         requestOptions: RequestOptions,
-    ): CardAggregateBalanceListPageAsync =
+    ): AggregateBalanceListPageAsync =
         // get /v1/cards/aggregate_balances
         withRawResponse().list(params, requestOptions).parse()
 
@@ -38,14 +38,14 @@ internal constructor(private val clientOptions: ClientOptions) : AggregateBalanc
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<CardAggregateBalanceListPageAsync.Response> =
-            jsonHandler<CardAggregateBalanceListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<AggregateBalanceListPageAsync.Response> =
+            jsonHandler<AggregateBalanceListPageAsync.Response>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(
-            params: CardAggregateBalanceListParams,
+            params: AggregateBalanceListParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardAggregateBalanceListPageAsync> {
+        ): HttpResponseFor<AggregateBalanceListPageAsync> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -63,7 +63,7 @@ internal constructor(private val clientOptions: ClientOptions) : AggregateBalanc
                         }
                     }
                     .let {
-                        CardAggregateBalanceListPageAsync.of(
+                        AggregateBalanceListPageAsync.of(
                             AggregateBalanceServiceAsyncImpl(clientOptions),
                             params,
                             it,

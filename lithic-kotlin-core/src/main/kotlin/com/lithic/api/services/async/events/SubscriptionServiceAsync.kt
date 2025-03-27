@@ -6,21 +6,21 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.EventSubscription
-import com.lithic.api.models.EventSubscriptionCreateParams
-import com.lithic.api.models.EventSubscriptionDeleteParams
-import com.lithic.api.models.EventSubscriptionListAttemptsPageAsync
-import com.lithic.api.models.EventSubscriptionListAttemptsParams
-import com.lithic.api.models.EventSubscriptionListPageAsync
-import com.lithic.api.models.EventSubscriptionListParams
-import com.lithic.api.models.EventSubscriptionRecoverParams
-import com.lithic.api.models.EventSubscriptionReplayMissingParams
-import com.lithic.api.models.EventSubscriptionRetrieveParams
-import com.lithic.api.models.EventSubscriptionRetrieveSecretParams
-import com.lithic.api.models.EventSubscriptionRotateSecretParams
-import com.lithic.api.models.EventSubscriptionSendSimulatedExampleParams
-import com.lithic.api.models.EventSubscriptionUpdateParams
-import com.lithic.api.models.SubscriptionRetrieveSecretResponse
+import com.lithic.api.models.events.EventSubscription
+import com.lithic.api.models.events.subscriptions.SubscriptionCreateParams
+import com.lithic.api.models.events.subscriptions.SubscriptionDeleteParams
+import com.lithic.api.models.events.subscriptions.SubscriptionListAttemptsPageAsync
+import com.lithic.api.models.events.subscriptions.SubscriptionListAttemptsParams
+import com.lithic.api.models.events.subscriptions.SubscriptionListPageAsync
+import com.lithic.api.models.events.subscriptions.SubscriptionListParams
+import com.lithic.api.models.events.subscriptions.SubscriptionRecoverParams
+import com.lithic.api.models.events.subscriptions.SubscriptionReplayMissingParams
+import com.lithic.api.models.events.subscriptions.SubscriptionRetrieveParams
+import com.lithic.api.models.events.subscriptions.SubscriptionRetrieveSecretParams
+import com.lithic.api.models.events.subscriptions.SubscriptionRetrieveSecretResponse
+import com.lithic.api.models.events.subscriptions.SubscriptionRotateSecretParams
+import com.lithic.api.models.events.subscriptions.SubscriptionSendSimulatedExampleParams
+import com.lithic.api.models.events.subscriptions.SubscriptionUpdateParams
 
 interface SubscriptionServiceAsync {
 
@@ -31,47 +31,47 @@ interface SubscriptionServiceAsync {
 
     /** Create a new event subscription. */
     suspend fun create(
-        params: EventSubscriptionCreateParams,
+        params: SubscriptionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Get an event subscription. */
     suspend fun retrieve(
-        params: EventSubscriptionRetrieveParams,
+        params: SubscriptionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** Update an event subscription. */
     suspend fun update(
-        params: EventSubscriptionUpdateParams,
+        params: SubscriptionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
     /** List all the event subscriptions. */
     suspend fun list(
-        params: EventSubscriptionListParams = EventSubscriptionListParams.none(),
+        params: SubscriptionListParams = SubscriptionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): EventSubscriptionListPageAsync
+    ): SubscriptionListPageAsync
 
     /** @see [list] */
-    suspend fun list(requestOptions: RequestOptions): EventSubscriptionListPageAsync =
-        list(EventSubscriptionListParams.none(), requestOptions)
+    suspend fun list(requestOptions: RequestOptions): SubscriptionListPageAsync =
+        list(SubscriptionListParams.none(), requestOptions)
 
     /** Delete an event subscription. */
     suspend fun delete(
-        params: EventSubscriptionDeleteParams,
+        params: SubscriptionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** List all the message attempts for a given event subscription. */
     suspend fun listAttempts(
-        params: EventSubscriptionListAttemptsParams,
+        params: SubscriptionListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): EventSubscriptionListAttemptsPageAsync
+    ): SubscriptionListAttemptsPageAsync
 
     /** Resend all failed messages since a given time. */
     suspend fun recover(
-        params: EventSubscriptionRecoverParams,
+        params: SubscriptionRecoverParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
@@ -82,13 +82,13 @@ interface SubscriptionServiceAsync {
      * [Retry Schedule](https://docs.lithic.com/docs/events-api#retry-schedule) for details.
      */
     suspend fun replayMissing(
-        params: EventSubscriptionReplayMissingParams,
+        params: SubscriptionReplayMissingParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get the secret for an event subscription. */
     suspend fun retrieveSecret(
-        params: EventSubscriptionRetrieveSecretParams,
+        params: SubscriptionRetrieveSecretParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionRetrieveSecretResponse
 
@@ -97,13 +97,13 @@ interface SubscriptionServiceAsync {
      * 24 hours.
      */
     suspend fun rotateSecret(
-        params: EventSubscriptionRotateSecretParams,
+        params: SubscriptionRotateSecretParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Send an example message for event. */
     suspend fun sendSimulatedExample(
-        params: EventSubscriptionSendSimulatedExampleParams,
+        params: SubscriptionSendSimulatedExampleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
@@ -119,7 +119,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
-            params: EventSubscriptionCreateParams,
+            params: SubscriptionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscription>
 
@@ -129,7 +129,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
-            params: EventSubscriptionRetrieveParams,
+            params: SubscriptionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscription>
 
@@ -140,7 +140,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
-            params: EventSubscriptionUpdateParams,
+            params: SubscriptionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscription>
 
@@ -150,16 +150,16 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
-            params: EventSubscriptionListParams = EventSubscriptionListParams.none(),
+            params: SubscriptionListParams = SubscriptionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<EventSubscriptionListPageAsync>
+        ): HttpResponseFor<SubscriptionListPageAsync>
 
         /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
-        ): HttpResponseFor<EventSubscriptionListPageAsync> =
-            list(EventSubscriptionListParams.none(), requestOptions)
+        ): HttpResponseFor<SubscriptionListPageAsync> =
+            list(SubscriptionListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete
@@ -168,7 +168,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun delete(
-            params: EventSubscriptionDeleteParams,
+            params: SubscriptionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
@@ -179,9 +179,9 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun listAttempts(
-            params: EventSubscriptionListAttemptsParams,
+            params: SubscriptionListAttemptsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<EventSubscriptionListAttemptsPageAsync>
+        ): HttpResponseFor<SubscriptionListAttemptsPageAsync>
 
         /**
          * Returns a raw HTTP response for `post
@@ -190,7 +190,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun recover(
-            params: EventSubscriptionRecoverParams,
+            params: SubscriptionRecoverParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
@@ -201,7 +201,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun replayMissing(
-            params: EventSubscriptionReplayMissingParams,
+            params: SubscriptionReplayMissingParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
@@ -212,7 +212,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieveSecret(
-            params: EventSubscriptionRetrieveSecretParams,
+            params: SubscriptionRetrieveSecretParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionRetrieveSecretResponse>
 
@@ -223,7 +223,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun rotateSecret(
-            params: EventSubscriptionRotateSecretParams,
+            params: SubscriptionRotateSecretParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
@@ -234,7 +234,7 @@ interface SubscriptionServiceAsync {
          */
         @MustBeClosed
         suspend fun sendSimulatedExample(
-            params: EventSubscriptionSendSimulatedExampleParams,
+            params: SubscriptionSendSimulatedExampleParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
     }

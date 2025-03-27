@@ -1,0 +1,359 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.lithic.api.services.async.authrules
+
+import com.lithic.api.core.ClientOptions
+import com.lithic.api.core.JsonValue
+import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.handlers.emptyHandler
+import com.lithic.api.core.handlers.errorHandler
+import com.lithic.api.core.handlers.jsonHandler
+import com.lithic.api.core.handlers.withErrorHandler
+import com.lithic.api.core.http.HttpMethod
+import com.lithic.api.core.http.HttpRequest
+import com.lithic.api.core.http.HttpResponse
+import com.lithic.api.core.http.HttpResponse.Handler
+import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.core.http.json
+import com.lithic.api.core.http.parseable
+import com.lithic.api.core.prepareAsync
+import com.lithic.api.models.authrules.v2.V2ApplyParams
+import com.lithic.api.models.authrules.v2.V2ApplyResponse
+import com.lithic.api.models.authrules.v2.V2CreateParams
+import com.lithic.api.models.authrules.v2.V2CreateResponse
+import com.lithic.api.models.authrules.v2.V2DeleteParams
+import com.lithic.api.models.authrules.v2.V2DraftParams
+import com.lithic.api.models.authrules.v2.V2DraftResponse
+import com.lithic.api.models.authrules.v2.V2ListPageAsync
+import com.lithic.api.models.authrules.v2.V2ListParams
+import com.lithic.api.models.authrules.v2.V2PromoteParams
+import com.lithic.api.models.authrules.v2.V2PromoteResponse
+import com.lithic.api.models.authrules.v2.V2ReportParams
+import com.lithic.api.models.authrules.v2.V2ReportResponse
+import com.lithic.api.models.authrules.v2.V2RetrieveParams
+import com.lithic.api.models.authrules.v2.V2RetrieveResponse
+import com.lithic.api.models.authrules.v2.V2UpdateParams
+import com.lithic.api.models.authrules.v2.V2UpdateResponse
+import com.lithic.api.services.async.authrules.v2.BacktestServiceAsync
+import com.lithic.api.services.async.authrules.v2.BacktestServiceAsyncImpl
+
+class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    V2ServiceAsync {
+
+    private val withRawResponse: V2ServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
+
+    private val backtests: BacktestServiceAsync by lazy { BacktestServiceAsyncImpl(clientOptions) }
+
+    override fun withRawResponse(): V2ServiceAsync.WithRawResponse = withRawResponse
+
+    override fun backtests(): BacktestServiceAsync = backtests
+
+    override suspend fun create(
+        params: V2CreateParams,
+        requestOptions: RequestOptions,
+    ): V2CreateResponse =
+        // post /v2/auth_rules
+        withRawResponse().create(params, requestOptions).parse()
+
+    override suspend fun retrieve(
+        params: V2RetrieveParams,
+        requestOptions: RequestOptions,
+    ): V2RetrieveResponse =
+        // get /v2/auth_rules/{auth_rule_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
+
+    override suspend fun update(
+        params: V2UpdateParams,
+        requestOptions: RequestOptions,
+    ): V2UpdateResponse =
+        // patch /v2/auth_rules/{auth_rule_token}
+        withRawResponse().update(params, requestOptions).parse()
+
+    override suspend fun list(
+        params: V2ListParams,
+        requestOptions: RequestOptions,
+    ): V2ListPageAsync =
+        // get /v2/auth_rules
+        withRawResponse().list(params, requestOptions).parse()
+
+    override suspend fun delete(params: V2DeleteParams, requestOptions: RequestOptions) {
+        // delete /v2/auth_rules/{auth_rule_token}
+        withRawResponse().delete(params, requestOptions)
+    }
+
+    override suspend fun apply(
+        params: V2ApplyParams,
+        requestOptions: RequestOptions,
+    ): V2ApplyResponse =
+        // post /v2/auth_rules/{auth_rule_token}/apply
+        withRawResponse().apply(params, requestOptions).parse()
+
+    override suspend fun draft(
+        params: V2DraftParams,
+        requestOptions: RequestOptions,
+    ): V2DraftResponse =
+        // post /v2/auth_rules/{auth_rule_token}/draft
+        withRawResponse().draft(params, requestOptions).parse()
+
+    override suspend fun promote(
+        params: V2PromoteParams,
+        requestOptions: RequestOptions,
+    ): V2PromoteResponse =
+        // post /v2/auth_rules/{auth_rule_token}/promote
+        withRawResponse().promote(params, requestOptions).parse()
+
+    override suspend fun report(
+        params: V2ReportParams,
+        requestOptions: RequestOptions,
+    ): V2ReportResponse =
+        // post /v2/auth_rules/{auth_rule_token}/report
+        withRawResponse().report(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        V2ServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        private val backtests: BacktestServiceAsync.WithRawResponse by lazy {
+            BacktestServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun backtests(): BacktestServiceAsync.WithRawResponse = backtests
+
+        private val createHandler: Handler<V2CreateResponse> =
+            jsonHandler<V2CreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun create(
+            params: V2CreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2CreateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v2", "auth_rules")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val retrieveHandler: Handler<V2RetrieveResponse> =
+            jsonHandler<V2RetrieveResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: V2RetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2RetrieveResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val updateHandler: Handler<V2UpdateResponse> =
+            jsonHandler<V2UpdateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun update(
+            params: V2UpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2UpdateResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PATCH)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<V2ListPageAsync.Response> =
+            jsonHandler<V2ListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: V2ListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2ListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("v2", "auth_rules")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { V2ListPageAsync.of(V2ServiceAsyncImpl(clientOptions), params, it) }
+            }
+        }
+
+        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+
+        override suspend fun delete(
+            params: V2DeleteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0))
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable { response.use { deleteHandler.handle(it) } }
+        }
+
+        private val applyHandler: Handler<V2ApplyResponse> =
+            jsonHandler<V2ApplyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun apply(
+            params: V2ApplyParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2ApplyResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0), "apply")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { applyHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val draftHandler: Handler<V2DraftResponse> =
+            jsonHandler<V2DraftResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun draft(
+            params: V2DraftParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2DraftResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0), "draft")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { draftHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val promoteHandler: Handler<V2PromoteResponse> =
+            jsonHandler<V2PromoteResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun promote(
+            params: V2PromoteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2PromoteResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0), "promote")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { promoteHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val reportHandler: Handler<V2ReportResponse> =
+            jsonHandler<V2ReportResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun report(
+            params: V2ReportParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2ReportResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0), "report")
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { reportHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+    }
+}

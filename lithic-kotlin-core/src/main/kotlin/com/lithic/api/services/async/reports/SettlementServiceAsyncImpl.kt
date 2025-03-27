@@ -14,12 +14,10 @@ import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
-import com.lithic.api.models.ReportSettlementListDetailsPageAsync
-import com.lithic.api.models.ReportSettlementListDetailsParams
-import com.lithic.api.models.ReportSettlementSummaryParams
-import com.lithic.api.models.SettlementReport
-import com.lithic.api.services.async.reports.settlement.NetworkTotalServiceAsync
-import com.lithic.api.services.async.reports.settlement.NetworkTotalServiceAsyncImpl
+import com.lithic.api.models.reports.SettlementReport
+import com.lithic.api.models.reports.settlement.SettlementListDetailsPageAsync
+import com.lithic.api.models.reports.settlement.SettlementListDetailsParams
+import com.lithic.api.models.reports.settlement.SettlementSummaryParams
 
 class SettlementServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     SettlementServiceAsync {
@@ -28,23 +26,17 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
         WithRawResponseImpl(clientOptions)
     }
 
-    private val networkTotals: NetworkTotalServiceAsync by lazy {
-        NetworkTotalServiceAsyncImpl(clientOptions)
-    }
-
     override fun withRawResponse(): SettlementServiceAsync.WithRawResponse = withRawResponse
 
-    override fun networkTotals(): NetworkTotalServiceAsync = networkTotals
-
     override suspend fun listDetails(
-        params: ReportSettlementListDetailsParams,
+        params: SettlementListDetailsParams,
         requestOptions: RequestOptions,
-    ): ReportSettlementListDetailsPageAsync =
+    ): SettlementListDetailsPageAsync =
         // get /v1/reports/settlement/details/{report_date}
         withRawResponse().listDetails(params, requestOptions).parse()
 
     override suspend fun summary(
-        params: ReportSettlementSummaryParams,
+        params: SettlementSummaryParams,
         requestOptions: RequestOptions,
     ): SettlementReport =
         // get /v1/reports/settlement/summary/{report_date}
@@ -55,20 +47,14 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val networkTotals: NetworkTotalServiceAsync.WithRawResponse by lazy {
-            NetworkTotalServiceAsyncImpl.WithRawResponseImpl(clientOptions)
-        }
-
-        override fun networkTotals(): NetworkTotalServiceAsync.WithRawResponse = networkTotals
-
-        private val listDetailsHandler: Handler<ReportSettlementListDetailsPageAsync.Response> =
-            jsonHandler<ReportSettlementListDetailsPageAsync.Response>(clientOptions.jsonMapper)
+        private val listDetailsHandler: Handler<SettlementListDetailsPageAsync.Response> =
+            jsonHandler<SettlementListDetailsPageAsync.Response>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun listDetails(
-            params: ReportSettlementListDetailsParams,
+            params: SettlementListDetailsParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ReportSettlementListDetailsPageAsync> {
+        ): HttpResponseFor<SettlementListDetailsPageAsync> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -86,7 +72,7 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
                         }
                     }
                     .let {
-                        ReportSettlementListDetailsPageAsync.of(
+                        SettlementListDetailsPageAsync.of(
                             SettlementServiceAsyncImpl(clientOptions),
                             params,
                             it,
@@ -99,7 +85,7 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
             jsonHandler<SettlementReport>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun summary(
-            params: ReportSettlementSummaryParams,
+            params: SettlementSummaryParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SettlementReport> {
             val request =

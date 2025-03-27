@@ -5,11 +5,10 @@ package com.lithic.api.services.async.reports
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.ReportSettlementListDetailsPageAsync
-import com.lithic.api.models.ReportSettlementListDetailsParams
-import com.lithic.api.models.ReportSettlementSummaryParams
-import com.lithic.api.models.SettlementReport
-import com.lithic.api.services.async.reports.settlement.NetworkTotalServiceAsync
+import com.lithic.api.models.reports.SettlementReport
+import com.lithic.api.models.reports.settlement.SettlementListDetailsPageAsync
+import com.lithic.api.models.reports.settlement.SettlementListDetailsParams
+import com.lithic.api.models.reports.settlement.SettlementSummaryParams
 
 interface SettlementServiceAsync {
 
@@ -18,17 +17,15 @@ interface SettlementServiceAsync {
      */
     fun withRawResponse(): WithRawResponse
 
-    fun networkTotals(): NetworkTotalServiceAsync
-
     /** List details. */
     suspend fun listDetails(
-        params: ReportSettlementListDetailsParams,
+        params: SettlementListDetailsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ReportSettlementListDetailsPageAsync
+    ): SettlementListDetailsPageAsync
 
     /** Get the settlement report for a specified report date. Not available in sandbox. */
     suspend fun summary(
-        params: ReportSettlementSummaryParams,
+        params: SettlementSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SettlementReport
 
@@ -38,17 +35,15 @@ interface SettlementServiceAsync {
      */
     interface WithRawResponse {
 
-        fun networkTotals(): NetworkTotalServiceAsync.WithRawResponse
-
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/details/{report_date}`, but
          * is otherwise the same as [SettlementServiceAsync.listDetails].
          */
         @MustBeClosed
         suspend fun listDetails(
-            params: ReportSettlementListDetailsParams,
+            params: SettlementListDetailsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ReportSettlementListDetailsPageAsync>
+        ): HttpResponseFor<SettlementListDetailsPageAsync>
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/summary/{report_date}`, but
@@ -56,7 +51,7 @@ interface SettlementServiceAsync {
          */
         @MustBeClosed
         suspend fun summary(
-            params: ReportSettlementSummaryParams,
+            params: SettlementSummaryParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SettlementReport>
     }

@@ -5,8 +5,8 @@ package com.lithic.api.services.async.cards
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.CardAggregateBalanceListPageAsync
-import com.lithic.api.models.CardAggregateBalanceListParams
+import com.lithic.api.models.cards.aggregatebalances.AggregateBalanceListPageAsync
+import com.lithic.api.models.cards.aggregatebalances.AggregateBalanceListParams
 
 interface AggregateBalanceServiceAsync {
 
@@ -17,13 +17,13 @@ interface AggregateBalanceServiceAsync {
 
     /** Get the aggregated card balance across all end-user accounts. */
     suspend fun list(
-        params: CardAggregateBalanceListParams = CardAggregateBalanceListParams.none(),
+        params: AggregateBalanceListParams = AggregateBalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CardAggregateBalanceListPageAsync
+    ): AggregateBalanceListPageAsync
 
     /** @see [list] */
-    suspend fun list(requestOptions: RequestOptions): CardAggregateBalanceListPageAsync =
-        list(CardAggregateBalanceListParams.none(), requestOptions)
+    suspend fun list(requestOptions: RequestOptions): AggregateBalanceListPageAsync =
+        list(AggregateBalanceListParams.none(), requestOptions)
 
     /**
      * A view of [AggregateBalanceServiceAsync] that provides access to raw HTTP responses for each
@@ -37,15 +37,15 @@ interface AggregateBalanceServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
-            params: CardAggregateBalanceListParams = CardAggregateBalanceListParams.none(),
+            params: AggregateBalanceListParams = AggregateBalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<CardAggregateBalanceListPageAsync>
+        ): HttpResponseFor<AggregateBalanceListPageAsync>
 
         /** @see [list] */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
-        ): HttpResponseFor<CardAggregateBalanceListPageAsync> =
-            list(CardAggregateBalanceListParams.none(), requestOptions)
+        ): HttpResponseFor<AggregateBalanceListPageAsync> =
+            list(AggregateBalanceListParams.none(), requestOptions)
     }
 }

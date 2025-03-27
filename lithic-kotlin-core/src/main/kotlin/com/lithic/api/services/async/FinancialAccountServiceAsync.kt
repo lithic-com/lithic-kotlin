@@ -5,18 +5,19 @@ package com.lithic.api.services.async
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.FinancialAccount
-import com.lithic.api.models.FinancialAccountCreateParams
-import com.lithic.api.models.FinancialAccountListPageAsync
-import com.lithic.api.models.FinancialAccountListParams
-import com.lithic.api.models.FinancialAccountRetrieveParams
-import com.lithic.api.models.FinancialAccountUpdateParams
-import com.lithic.api.models.FinancialAccountUpdateStatusParams
-import com.lithic.api.services.async.financialAccounts.BalanceServiceAsync
-import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsync
-import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
-import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsync
-import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
+import com.lithic.api.models.financialaccounts.FinancialAccount
+import com.lithic.api.models.financialaccounts.FinancialAccountChargeOffParams
+import com.lithic.api.models.financialaccounts.FinancialAccountCreateParams
+import com.lithic.api.models.financialaccounts.FinancialAccountListPageAsync
+import com.lithic.api.models.financialaccounts.FinancialAccountListParams
+import com.lithic.api.models.financialaccounts.FinancialAccountRetrieveParams
+import com.lithic.api.models.financialaccounts.FinancialAccountUpdateParams
+import com.lithic.api.models.financialaccounts.creditconfiguration.FinancialAccountCreditConfig
+import com.lithic.api.services.async.financialaccounts.BalanceServiceAsync
+import com.lithic.api.services.async.financialaccounts.CreditConfigurationServiceAsync
+import com.lithic.api.services.async.financialaccounts.FinancialTransactionServiceAsync
+import com.lithic.api.services.async.financialaccounts.LoanTapeServiceAsync
+import com.lithic.api.services.async.financialaccounts.StatementServiceAsync
 
 interface FinancialAccountServiceAsync {
 
@@ -63,11 +64,11 @@ interface FinancialAccountServiceAsync {
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
         list(FinancialAccountListParams.none(), requestOptions)
 
-    /** Update financial account status */
-    suspend fun updateStatus(
-        params: FinancialAccountUpdateStatusParams,
+    /** Update issuing account state to charged off */
+    suspend fun chargeOff(
+        params: FinancialAccountChargeOffParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): FinancialAccount
+    ): FinancialAccountCreditConfig
 
     /**
      * A view of [FinancialAccountServiceAsync] that provides access to raw HTTP responses for each
@@ -134,13 +135,13 @@ interface FinancialAccountServiceAsync {
 
         /**
          * Returns a raw HTTP response for `post
-         * /v1/financial_accounts/{financial_account_token}/update_status`, but is otherwise the
-         * same as [FinancialAccountServiceAsync.updateStatus].
+         * /v1/financial_accounts/{financial_account_token}/charge_off`, but is otherwise the same
+         * as [FinancialAccountServiceAsync.chargeOff].
          */
         @MustBeClosed
-        suspend fun updateStatus(
-            params: FinancialAccountUpdateStatusParams,
+        suspend fun chargeOff(
+            params: FinancialAccountChargeOffParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<FinancialAccount>
+        ): HttpResponseFor<FinancialAccountCreditConfig>
     }
 }
