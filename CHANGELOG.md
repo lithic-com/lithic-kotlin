@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.82.1 (2025-03-28)
+
+Full Changelog: [v0.82.0...v0.82.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.0...v0.82.1)
+
+### Bug Fixes
+
+* **client:** don't call `validate()` during deserialization if we don't have to ([#551](https://github.com/lithic-com/lithic-kotlin/issues/551)) ([59eba29](https://github.com/lithic-com/lithic-kotlin/commit/59eba29adc291e8b9d7bddaf14fc75089ccef02c))
+
 ## 0.82.0 (2025-03-27)
 
 Full Changelog: [v0.81.0...v0.82.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.81.0...v0.82.0)
