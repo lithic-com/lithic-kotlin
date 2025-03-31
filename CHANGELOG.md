@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.82.2 (2025-03-31)
+
+Full Changelog: [v0.82.1...v0.82.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.1...v0.82.2)
+
+### Bug Fixes
+
+* **client:** limit json deserialization coercion ([#555](https://github.com/lithic-com/lithic-kotlin/issues/555)) ([eceef0e](https://github.com/lithic-com/lithic-kotlin/commit/eceef0e9cb27c3e2bcb38351a69b97aff42863c5))
+
+
+### Chores
+
+* internal codegen changes ([b05d6c6](https://github.com/lithic-com/lithic-kotlin/commit/b05d6c6b080b765f74a13c38a7c0df4c0f1690a9))
+* internal codegen changes ([95aab2f](https://github.com/lithic-com/lithic-kotlin/commit/95aab2f7686a42640648f64972a7010c459d9f20))
+
 ## 0.82.1 (2025-03-28)
 
 Full Changelog: [v0.82.0...v0.82.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.0...v0.82.1)
