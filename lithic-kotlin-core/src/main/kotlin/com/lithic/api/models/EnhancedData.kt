@@ -299,6 +299,26 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (common.asKnown()?.validity() ?: 0) +
+            (if (eventToken.asKnown() == null) 0 else 1) +
+            (fleet.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (transactionToken.asKnown() == null) 0 else 1)
+
     class CommonData
     private constructor(
         private val lineItems: JsonField<List<LineItem>>,
@@ -597,6 +617,27 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (lineItems.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (tax.asKnown()?.validity() ?: 0) +
+                (if (customerReferenceNumber.asKnown() == null) 0 else 1) +
+                (if (merchantReferenceNumber.asKnown() == null) 0 else 1) +
+                (if (orderDate.asKnown() == null) 0 else 1)
+
         /** An L2/L3 enhanced commercial data line item. */
         class LineItem
         private constructor(
@@ -828,6 +869,26 @@ private constructor(
                 validated = true
             }
 
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amount.asKnown() == null) 0 else 1) +
+                    (if (description.asKnown() == null) 0 else 1) +
+                    (if (productCode.asKnown() == null) 0 else 1) +
+                    (if (quantity.asKnown() == null) 0 else 1)
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -1026,10 +1087,29 @@ private constructor(
                 }
 
                 amount()
-                exempt()
+                exempt()?.validate()
                 merchantTaxId()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amount.asKnown() == null) 0 else 1) +
+                    (exempt.asKnown()?.validity() ?: 0) +
+                    (if (merchantTaxId.asKnown() == null) 0 else 1)
 
             /** A flag indicating whether the transaction is tax exempt or not. */
             class TaxExemptIndicator
@@ -1130,6 +1210,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): TaxExemptIndicator = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -1502,10 +1609,32 @@ private constructor(
             fuel().validate()
             driverNumber()
             odometer()
-            serviceType()
+            serviceType()?.validate()
             vehicleNumber()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (amountTotals.asKnown()?.validity() ?: 0) +
+                (fuel.asKnown()?.validity() ?: 0) +
+                (if (driverNumber.asKnown() == null) 0 else 1) +
+                (if (odometer.asKnown() == null) 0 else 1) +
+                (serviceType.asKnown()?.validity() ?: 0) +
+                (if (vehicleNumber.asKnown() == null) 0 else 1)
 
         class AmountTotals
         private constructor(
@@ -1689,6 +1818,25 @@ private constructor(
                 netSale()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (discount.asKnown() == null) 0 else 1) +
+                    (if (grossSale.asKnown() == null) 0 else 1) +
+                    (if (netSale.asKnown() == null) 0 else 1)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1929,11 +2077,31 @@ private constructor(
                 }
 
                 quantity()
-                type()
-                unitOfMeasure()
+                type()?.validate()
+                unitOfMeasure()?.validate()
                 unitPrice()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (quantity.asKnown() == null) 0 else 1) +
+                    (type.asKnown()?.validity() ?: 0) +
+                    (unitOfMeasure.asKnown()?.validity() ?: 0) +
+                    (if (unitPrice.asKnown() == null) 0 else 1)
 
             /** The type of fuel purchased. */
             class FuelType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2841,6 +3009,33 @@ private constructor(
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+                private var validated: Boolean = false
+
+                fun validate(): FuelType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
@@ -2977,6 +3172,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): FuelUnitOfMeasure = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -3116,6 +3338,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): ServiceType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {

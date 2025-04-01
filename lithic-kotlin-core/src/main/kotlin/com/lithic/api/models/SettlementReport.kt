@@ -630,6 +630,32 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (created.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
+            (details.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (disputesGrossAmount.asKnown() == null) 0 else 1) +
+            (if (interchangeGrossAmount.asKnown() == null) 0 else 1) +
+            (if (isComplete.asKnown() == null) 0 else 1) +
+            (if (otherFeesGrossAmount.asKnown() == null) 0 else 1) +
+            (if (reportDate.asKnown() == null) 0 else 1) +
+            (if (settledNetAmount.asKnown() == null) 0 else 1) +
+            (if (transactionsGrossAmount.asKnown() == null) 0 else 1) +
+            (if (updated.asKnown() == null) 0 else 1)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
