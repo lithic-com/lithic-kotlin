@@ -303,11 +303,31 @@ private constructor(
 
         individual().validate()
         tosTimestamp()
-        workflow()
+        workflow().validate()
         externalId()
         kycPassedTimestamp()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (individual.asKnown()?.validity() ?: 0) +
+            (if (tosTimestamp.asKnown() == null) 0 else 1) +
+            (workflow.asKnown()?.validity() ?: 0) +
+            (if (externalId.asKnown() == null) 0 else 1) +
+            (if (kycPassedTimestamp.asKnown() == null) 0 else 1)
 
     /** Information on individual for whom the account is being opened and KYC is being run. */
     class Individual
@@ -685,6 +705,29 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (address.asKnown()?.validity() ?: 0) +
+                (if (dob.asKnown() == null) 0 else 1) +
+                (if (email.asKnown() == null) 0 else 1) +
+                (if (firstName.asKnown() == null) 0 else 1) +
+                (if (governmentId.asKnown() == null) 0 else 1) +
+                (if (lastName.asKnown() == null) 0 else 1) +
+                (if (phoneNumber.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -788,6 +831,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Workflow = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

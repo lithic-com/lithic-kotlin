@@ -587,20 +587,48 @@ private constructor(
         }
 
         token()
-        category()
+        category().validate()
         created()
         currency()
-        direction()
+        direction().validate()
         events().forEach { it.validate() }
         financialAccountToken()
         pendingAmount()
-        result()
+        result().validate()
         settledAmount()
-        status()
+        status().validate()
         updated()
         userDefinedId()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (category.asKnown()?.validity() ?: 0) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
+            (direction.asKnown()?.validity() ?: 0) +
+            (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (financialAccountToken.asKnown() == null) 0 else 1) +
+            (if (pendingAmount.asKnown() == null) 0 else 1) +
+            (result.asKnown()?.validity() ?: 0) +
+            (if (settledAmount.asKnown() == null) 0 else 1) +
+            (status.asKnown()?.validity() ?: 0) +
+            (if (updated.asKnown() == null) 0 else 1) +
+            (if (userDefinedId.asKnown() == null) 0 else 1)
 
     class ManagementOperationCategory
     @JsonCreator
@@ -707,6 +735,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): ManagementOperationCategory = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -812,6 +867,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): ManagementOperationDirection = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1239,14 +1321,39 @@ private constructor(
             token()
             amount()
             created()
-            detailedResults()
+            detailedResults().forEach { it.validate() }
             effectiveDate()
             memo()
-            result()
-            type()
+            result().validate()
+            type().validate()
             subtype()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (token.asKnown() == null) 0 else 1) +
+                (if (amount.asKnown() == null) 0 else 1) +
+                (if (created.asKnown() == null) 0 else 1) +
+                (detailedResults.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (effectiveDate.asKnown() == null) 0 else 1) +
+                (if (memo.asKnown() == null) 0 else 1) +
+                (result.asKnown()?.validity() ?: 0) +
+                (type.asKnown()?.validity() ?: 0) +
+                (if (subtype.asKnown() == null) 0 else 1)
 
         class DetailedResults
         @JsonCreator
@@ -1331,6 +1438,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): DetailedResults = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1435,6 +1569,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): TransactionResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1622,6 +1783,33 @@ private constructor(
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+            private var validated: Boolean = false
+
+            fun validate(): ManagementOperationEventType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
                     return true
@@ -1742,6 +1930,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): TransactionResult = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1861,6 +2076,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): TransactionStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

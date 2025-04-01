@@ -999,16 +999,50 @@ private constructor(
         networkReasonCode()
         prearbitrationDate()
         primaryClaimId()
-        reason()
+        reason().validate()
         representmentDate()
         resolutionAmount()
         resolutionDate()
         resolutionNote()
-        resolutionReason()
-        status()
+        resolutionReason()?.validate()
+        status().validate()
         transactionToken()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (if (amount.asKnown() == null) 0 else 1) +
+            (if (arbitrationDate.asKnown() == null) 0 else 1) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (if (customerFiledDate.asKnown() == null) 0 else 1) +
+            (if (customerNote.asKnown() == null) 0 else 1) +
+            (networkClaimIds.asKnown()?.size ?: 0) +
+            (if (networkFiledDate.asKnown() == null) 0 else 1) +
+            (if (networkReasonCode.asKnown() == null) 0 else 1) +
+            (if (prearbitrationDate.asKnown() == null) 0 else 1) +
+            (if (primaryClaimId.asKnown() == null) 0 else 1) +
+            (reason.asKnown()?.validity() ?: 0) +
+            (if (representmentDate.asKnown() == null) 0 else 1) +
+            (if (resolutionAmount.asKnown() == null) 0 else 1) +
+            (if (resolutionDate.asKnown() == null) 0 else 1) +
+            (if (resolutionNote.asKnown() == null) 0 else 1) +
+            (resolutionReason.asKnown()?.validity() ?: 0) +
+            (status.asKnown()?.validity() ?: 0) +
+            (if (transactionToken.asKnown() == null) 0 else 1)
 
     /**
      * Dispute reason:
@@ -1183,6 +1217,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Reason = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1396,6 +1457,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): ResolutionReason = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1540,6 +1628,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

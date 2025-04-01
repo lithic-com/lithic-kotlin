@@ -375,6 +375,27 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (address.asKnown()?.validity() ?: 0) +
+            (if (governmentId.asKnown() == null) 0 else 1) +
+            (if (legalBusinessName.asKnown() == null) 0 else 1) +
+            (phoneNumbers.asKnown()?.size ?: 0) +
+            (if (dbaBusinessName.asKnown() == null) 0 else 1) +
+            (if (parentCompany.asKnown() == null) 0 else 1)
+
     /**
      * Business''s physical address - PO boxes, UPS drops, and FedEx drops are not acceptable;
      * APO/FPO are acceptable.
@@ -692,6 +713,28 @@ private constructor(
             address2()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (address1.asKnown() == null) 0 else 1) +
+                (if (city.asKnown() == null) 0 else 1) +
+                (if (country.asKnown() == null) 0 else 1) +
+                (if (postalCode.asKnown() == null) 0 else 1) +
+                (if (state.asKnown() == null) 0 else 1) +
+                (if (address2.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

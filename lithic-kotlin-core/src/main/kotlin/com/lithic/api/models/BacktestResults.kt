@@ -219,6 +219,24 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (backtestToken.asKnown() == null) 0 else 1) +
+            (results.asKnown()?.validity() ?: 0) +
+            (simulationParameters.asKnown()?.validity() ?: 0)
+
     class Results
     private constructor(
         private val currentVersion: JsonField<RuleStats>,
@@ -366,6 +384,23 @@ private constructor(
             draftVersion()?.validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (currentVersion.asKnown()?.validity() ?: 0) + (draftVersion.asKnown()?.validity() ?: 0)
 
         class RuleStats
         private constructor(
@@ -620,6 +655,26 @@ private constructor(
                 validated = true
             }
 
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (approved.asKnown() == null) 0 else 1) +
+                    (if (declined.asKnown() == null) 0 else 1) +
+                    (examples.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                    (if (version.asKnown() == null) 0 else 1)
+
             class Example
             private constructor(
                 private val approved: JsonField<Boolean>,
@@ -816,6 +871,25 @@ private constructor(
                     timestamp()
                     validated = true
                 }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (approved.asKnown() == null) 0 else 1) +
+                        (if (eventToken.asKnown() == null) 0 else 1) +
+                        (if (timestamp.asKnown() == null) 0 else 1)
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -1049,6 +1123,25 @@ private constructor(
             start()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (authRuleToken.asKnown() == null) 0 else 1) +
+                (if (end.asKnown() == null) 0 else 1) +
+                (if (start.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

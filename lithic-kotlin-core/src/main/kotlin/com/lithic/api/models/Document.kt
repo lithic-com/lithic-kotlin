@@ -327,11 +327,31 @@ private constructor(
 
         token()
         accountHolderToken()
-        documentType()
+        documentType().validate()
         entityToken()
         requiredDocumentUploads().forEach { it.validate() }
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (if (accountHolderToken.asKnown() == null) 0 else 1) +
+            (documentType.asKnown()?.validity() ?: 0) +
+            (if (entityToken.asKnown() == null) 0 else 1) +
+            (requiredDocumentUploads.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
     /** Type of documentation to be submitted for verification of an account holder */
     class DocumentType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -523,6 +543,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): DocumentType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1050,14 +1097,39 @@ private constructor(
             token()
             acceptedEntityStatusReasons()
             created()
-            imageType()
+            imageType().validate()
             rejectedEntityStatusReasons()
-            status()
-            statusReasons()
+            status().validate()
+            statusReasons().forEach { it.validate() }
             updated()
             uploadUrl()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (token.asKnown() == null) 0 else 1) +
+                (acceptedEntityStatusReasons.asKnown()?.size ?: 0) +
+                (if (created.asKnown() == null) 0 else 1) +
+                (imageType.asKnown()?.validity() ?: 0) +
+                (rejectedEntityStatusReasons.asKnown()?.size ?: 0) +
+                (status.asKnown()?.validity() ?: 0) +
+                (statusReasons.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (updated.asKnown() == null) 0 else 1) +
+                (if (uploadUrl.asKnown() == null) 0 else 1)
 
         /** Type of image to upload. */
         class ImageType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1148,6 +1220,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): ImageType = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1272,6 +1371,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): DocumentUploadStatus = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1438,6 +1564,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): DocumentUploadStatusReasons = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
