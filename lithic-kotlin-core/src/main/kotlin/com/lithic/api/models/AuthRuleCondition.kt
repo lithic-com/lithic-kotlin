@@ -20,6 +20,7 @@ import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
+import com.lithic.api.core.allMaxBy
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
@@ -286,11 +287,29 @@ private constructor(
             return@apply
         }
 
-        attribute()
-        operation()
+        attribute()?.validate()
+        operation()?.validate()
         value()?.validate()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (attribute.asKnown()?.validity() ?: 0) +
+            (operation.asKnown()?.validity() ?: 0) +
+            (value.asKnown()?.validity() ?: 0)
 
     /** The operation to apply to the attribute */
     class Operation @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -404,6 +423,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): Operation = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -454,14 +500,13 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 regex != null -> visitor.visitRegex(regex)
                 number != null -> visitor.visitNumber(number)
                 listOfStrings != null -> visitor.visitListOfStrings(listOfStrings)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -481,6 +526,34 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitRegex(regex: String) = 1
+
+                    override fun visitNumber(number: Long) = 1
+
+                    override fun visitListOfStrings(listOfStrings: List<String>) =
+                        listOfStrings.size
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -545,17 +618,31 @@ private constructor(
             override fun ObjectCodec.deserialize(node: JsonNode): Value {
                 val json = JsonValue.fromJsonNode(node)
 
-                tryDeserialize(node, jacksonTypeRef<String>())?.let {
-                    return Value(regex = it, _json = json)
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<String>())?.let {
+                                Value(regex = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<Long>())?.let {
+                                Value(number = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<List<String>>())?.let {
+                                Value(listOfStrings = it, _json = json)
+                            },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from object).
+                    0 -> Value(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
                 }
-                tryDeserialize(node, jacksonTypeRef<Long>())?.let {
-                    return Value(number = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<List<String>>())?.let {
-                    return Value(listOfStrings = it, _json = json)
-                }
-
-                return Value(_json = json)
             }
         }
 
