@@ -21,6 +21,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
+import com.lithic.api.core.allMaxBy
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.core.http.Headers
@@ -273,8 +274,8 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 bankVerifiedCreateBankAccountApiRequest != null ->
                     visitor.visitBankVerifiedCreateBankAccountApiRequest(
                         bankVerifiedCreateBankAccountApiRequest
@@ -287,7 +288,6 @@ private constructor(
                     )
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -321,6 +321,41 @@ private constructor(
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitBankVerifiedCreateBankAccountApiRequest(
+                        bankVerifiedCreateBankAccountApiRequest:
+                            BankVerifiedCreateBankAccountApiRequest
+                    ) = bankVerifiedCreateBankAccountApiRequest.validity()
+
+                    override fun visitPlaidCreateBankAccountApiRequest(
+                        plaidCreateBankAccountApiRequest: PlaidCreateBankAccountApiRequest
+                    ) = plaidCreateBankAccountApiRequest.validity()
+
+                    override fun visitExternallyVerifiedCreateBankAccountApiRequest(
+                        externallyVerifiedCreateBankAccountApiRequest:
+                            ExternallyVerifiedCreateBankAccountApiRequest
+                    ) = externallyVerifiedCreateBankAccountApiRequest.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -405,30 +440,40 @@ private constructor(
                 val verificationMethod = json.asObject()?.get("verification_method")?.asString()
 
                 if (verificationMethod == "EXTERNALLY_VERIFIED") {
-                    return Body(
-                        externallyVerifiedCreateBankAccountApiRequest =
-                            deserialize(
-                                node,
-                                jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>(),
-                            ),
-                        _json = json,
-                    )
+                    return tryDeserialize(
+                            node,
+                            jacksonTypeRef<ExternallyVerifiedCreateBankAccountApiRequest>(),
+                        )
+                        ?.let {
+                            Body(externallyVerifiedCreateBankAccountApiRequest = it, _json = json)
+                        } ?: Body(_json = json)
                 }
 
-                tryDeserialize(node, jacksonTypeRef<BankVerifiedCreateBankAccountApiRequest>()) {
-                        it.validate()
-                    }
-                    ?.let {
-                        return Body(bankVerifiedCreateBankAccountApiRequest = it, _json = json)
-                    }
-                tryDeserialize(node, jacksonTypeRef<PlaidCreateBankAccountApiRequest>()) {
-                        it.validate()
-                    }
-                    ?.let {
-                        return Body(plaidCreateBankAccountApiRequest = it, _json = json)
-                    }
-
-                return Body(_json = json)
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<BankVerifiedCreateBankAccountApiRequest>(),
+                                )
+                                ?.let {
+                                    Body(bankVerifiedCreateBankAccountApiRequest = it, _json = json)
+                                },
+                            tryDeserialize(node, jacksonTypeRef<PlaidCreateBankAccountApiRequest>())
+                                ?.let { Body(plaidCreateBankAccountApiRequest = it, _json = json) },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from boolean).
+                    0 -> Body(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
+                }
             }
         }
 
@@ -1245,10 +1290,10 @@ private constructor(
                 currency()
                 financialAccountToken()
                 owner()
-                ownerType()
+                ownerType().validate()
                 routingNumber()
-                type()
-                verificationMethod()
+                type().validate()
+                verificationMethod().validate()
                 accountToken()
                 address()?.validate()
                 companyId()
@@ -1259,6 +1304,39 @@ private constructor(
                 verificationEnforcement()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (accountNumber.asKnown() == null) 0 else 1) +
+                    (if (country.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (financialAccountToken.asKnown() == null) 0 else 1) +
+                    (if (owner.asKnown() == null) 0 else 1) +
+                    (ownerType.asKnown()?.validity() ?: 0) +
+                    (if (routingNumber.asKnown() == null) 0 else 1) +
+                    (type.asKnown()?.validity() ?: 0) +
+                    (verificationMethod.asKnown()?.validity() ?: 0) +
+                    (if (accountToken.asKnown() == null) 0 else 1) +
+                    (address.asKnown()?.validity() ?: 0) +
+                    (if (companyId.asKnown() == null) 0 else 1) +
+                    (if (dob.asKnown() == null) 0 else 1) +
+                    (if (doingBusinessAs.asKnown() == null) 0 else 1) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (userDefinedId.asKnown() == null) 0 else 1) +
+                    (if (verificationEnforcement.asKnown() == null) 0 else 1)
 
             /** Account Type */
             class AccountType
@@ -1350,6 +1428,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): AccountType = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -1845,9 +1950,9 @@ private constructor(
                 }
 
                 owner()
-                ownerType()
+                ownerType().validate()
                 processorToken()
-                verificationMethod()
+                verificationMethod().validate()
                 accountToken()
                 companyId()
                 dob()
@@ -1855,6 +1960,31 @@ private constructor(
                 userDefinedId()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (owner.asKnown() == null) 0 else 1) +
+                    (ownerType.asKnown()?.validity() ?: 0) +
+                    (if (processorToken.asKnown() == null) 0 else 1) +
+                    (verificationMethod.asKnown()?.validity() ?: 0) +
+                    (if (accountToken.asKnown() == null) 0 else 1) +
+                    (if (companyId.asKnown() == null) 0 else 1) +
+                    (if (dob.asKnown() == null) 0 else 1) +
+                    (if (doingBusinessAs.asKnown() == null) 0 else 1) +
+                    (if (userDefinedId.asKnown() == null) 0 else 1)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -2582,10 +2712,10 @@ private constructor(
                 country()
                 currency()
                 owner()
-                ownerType()
+                ownerType().validate()
                 routingNumber()
-                type()
-                verificationMethod()
+                type().validate()
+                verificationMethod().validate()
                 accountToken()
                 address()?.validate()
                 companyId()
@@ -2595,6 +2725,37 @@ private constructor(
                 userDefinedId()
                 validated = true
             }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (accountNumber.asKnown() == null) 0 else 1) +
+                    (if (country.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1) +
+                    (if (owner.asKnown() == null) 0 else 1) +
+                    (ownerType.asKnown()?.validity() ?: 0) +
+                    (if (routingNumber.asKnown() == null) 0 else 1) +
+                    (type.asKnown()?.validity() ?: 0) +
+                    (verificationMethod.asKnown()?.validity() ?: 0) +
+                    (if (accountToken.asKnown() == null) 0 else 1) +
+                    (address.asKnown()?.validity() ?: 0) +
+                    (if (companyId.asKnown() == null) 0 else 1) +
+                    (if (dob.asKnown() == null) 0 else 1) +
+                    (if (doingBusinessAs.asKnown() == null) 0 else 1) +
+                    (if (name.asKnown() == null) 0 else 1) +
+                    (if (userDefinedId.asKnown() == null) 0 else 1)
 
             /** Account Type */
             class Type @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2684,6 +2845,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): Type = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -2788,6 +2976,33 @@ private constructor(
                  */
                 fun asString(): String =
                     _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): ExternallyVerifiedVerificationMethod = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {

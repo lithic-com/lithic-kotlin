@@ -1074,9 +1074,35 @@ private constructor(
             merchantCurrency()
             partialApprovalCapable()
             pin()
-            status()
+            status()?.validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (amount.asKnown() == null) 0 else 1) +
+                (if (descriptor.asKnown() == null) 0 else 1) +
+                (if (pan.asKnown() == null) 0 else 1) +
+                (if (mcc.asKnown() == null) 0 else 1) +
+                (if (merchantAcceptorId.asKnown() == null) 0 else 1) +
+                (if (merchantAmount.asKnown() == null) 0 else 1) +
+                (if (merchantCurrency.asKnown() == null) 0 else 1) +
+                (if (partialApprovalCapable.asKnown() == null) 0 else 1) +
+                (if (pin.asKnown() == null) 0 else 1) +
+                (status.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1212,6 +1238,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
