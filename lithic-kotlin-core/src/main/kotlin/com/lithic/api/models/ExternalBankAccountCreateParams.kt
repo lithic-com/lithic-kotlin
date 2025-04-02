@@ -220,7 +220,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body? = body
+    fun _body(): Body? = body
 
     override fun _headers(): Headers = additionalHeaders
 
