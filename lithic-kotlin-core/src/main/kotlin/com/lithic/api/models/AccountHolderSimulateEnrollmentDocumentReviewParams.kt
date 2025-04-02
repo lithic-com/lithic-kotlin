@@ -136,6 +136,20 @@ private constructor(
                     .toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [documentUploadToken]
+         * - [status]
+         * - [acceptedEntityStatusReasons]
+         * - [statusReason]
+         */
+        fun body(body: SimulateEnrollmentDocumentReviewRequest) = apply {
+            this.body = body.toBuilder()
+        }
+
         /** The account holder document upload which to perform the simulation upon. */
         fun documentUploadToken(documentUploadToken: String) = apply {
             body.documentUploadToken(documentUploadToken)
@@ -346,7 +360,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): SimulateEnrollmentDocumentReviewRequest = body
+    fun _body(): SimulateEnrollmentDocumentReviewRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

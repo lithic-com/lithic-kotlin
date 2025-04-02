@@ -115,6 +115,17 @@ private constructor(
                 accountHolderSimulateEnrollmentReviewParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountHolderToken]
+         * - [status]
+         * - [statusReasons]
+         */
+        fun body(body: SimulateEnrollmentReviewRequest) = apply { this.body = body.toBuilder() }
+
         /** The account holder which to perform the simulation upon. */
         fun accountHolderToken(accountHolderToken: String) = apply {
             body.accountHolderToken(accountHolderToken)
@@ -300,7 +311,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): SimulateEnrollmentReviewRequest = body
+    fun _body(): SimulateEnrollmentReviewRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

@@ -181,7 +181,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): ChallengeResponse = challengeResponse
+    fun _body(): ChallengeResponse = challengeResponse
 
     override fun _headers(): Headers = additionalHeaders
 
