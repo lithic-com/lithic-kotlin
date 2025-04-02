@@ -142,6 +142,20 @@ private constructor(
         }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [from]
+         * - [to]
+         * - [token]
+         * - [memo]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Amount to be transferred in the currency’s smallest unit (e.g., cents for USD). This
          * should always be a positive value.
          */
@@ -347,7 +361,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

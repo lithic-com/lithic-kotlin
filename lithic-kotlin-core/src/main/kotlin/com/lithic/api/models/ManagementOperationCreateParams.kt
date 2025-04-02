@@ -202,6 +202,20 @@ private constructor(
                     managementOperationCreateParams.additionalQueryParams.toBuilder()
             }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [category]
+         * - [direction]
+         * - [effectiveDate]
+         * - [eventType]
+         * - etc.
+         */
+        fun body(body: CreateManagementOperationRequest) = apply { this.body = body.toBuilder() }
+
         fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
@@ -464,7 +478,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): CreateManagementOperationRequest = body
+    fun _body(): CreateManagementOperationRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 

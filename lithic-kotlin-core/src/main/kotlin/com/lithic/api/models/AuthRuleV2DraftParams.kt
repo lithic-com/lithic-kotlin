@@ -98,6 +98,15 @@ private constructor(
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [parameters]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Parameters for the Auth Rule */
         fun parameters(parameters: Parameters?) = apply { body.parameters(parameters) }
 
@@ -263,7 +272,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
