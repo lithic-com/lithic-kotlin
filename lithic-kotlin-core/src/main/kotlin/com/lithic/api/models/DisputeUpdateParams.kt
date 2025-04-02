@@ -130,6 +130,18 @@ private constructor(
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [customerFiledDate]
+         * - [customerNote]
+         * - [reason]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Amount to dispute */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
@@ -320,7 +332,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

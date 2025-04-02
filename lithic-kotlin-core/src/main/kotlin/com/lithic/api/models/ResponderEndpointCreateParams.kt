@@ -88,6 +88,16 @@ private constructor(
             additionalQueryParams = responderEndpointCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [type]
+         * - [url]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The type of the endpoint. */
         fun type(type: Type) = apply { body.type(type) }
 
@@ -240,7 +250,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 

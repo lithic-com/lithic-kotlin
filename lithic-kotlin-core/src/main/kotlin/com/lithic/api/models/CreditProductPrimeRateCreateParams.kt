@@ -107,6 +107,16 @@ private constructor(
             this.creditProductToken = creditProductToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [effectiveDate]
+         * - [rate]
+         */
+        fun body(body: InterestRate) = apply { this.body = body.toBuilder() }
+
         /** Date the rate goes into effect */
         fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
@@ -272,7 +282,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): InterestRate = body
+    fun _body(): InterestRate = body
 
     fun _pathParam(index: Int): String =
         when (index) {

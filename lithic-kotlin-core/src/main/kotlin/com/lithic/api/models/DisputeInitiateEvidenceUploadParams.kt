@@ -91,6 +91,15 @@ private constructor(
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [filename]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Filename of the evidence. */
         fun filename(filename: String) = apply { body.filename(filename) }
 
@@ -240,7 +249,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {

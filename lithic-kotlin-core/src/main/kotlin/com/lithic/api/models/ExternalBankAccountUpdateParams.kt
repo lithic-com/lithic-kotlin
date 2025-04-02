@@ -209,6 +209,20 @@ private constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [address]
+         * - [companyId]
+         * - [dob]
+         * - [doingBusinessAs]
+         * - [name]
+         * - etc.
+         */
+        fun body(body: UpdateBankAccountApiRequest) = apply { this.body = body.toBuilder() }
+
         /** Address */
         fun address(address: ExternalBankAccountAddress) = apply { body.address(address) }
 
@@ -462,7 +476,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): UpdateBankAccountApiRequest = body
+    fun _body(): UpdateBankAccountApiRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {

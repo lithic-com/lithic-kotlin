@@ -135,6 +135,18 @@ private constructor(
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [url]
+         * - [description]
+         * - [disabled]
+         * - [eventTypes]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
         fun url(url: String) = apply { body.url(url) }
 
@@ -333,7 +345,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
