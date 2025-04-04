@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.82.2)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.82.2/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.82.2)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.83.0)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.83.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.83.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differenc
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.82.2).
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are also available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.83.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.82.2")
+implementation("com.lithic.api:lithic-kotlin:0.83.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.lithic.api:lithic-kotlin:0.82.2")
 <dependency>
   <groupId>com.lithic.api</groupId>
   <artifactId>lithic-kotlin</artifactId>
-  <version>0.82.2</version>
+  <version>0.83.0</version>
 </dependency>
 ```
 
@@ -439,6 +439,19 @@ val complexValue: JsonValue = JsonValue.from(mapOf(
     3, 4
   )
 ))
+```
+
+Normally a `Builder` class's `build` method will throw [`IllegalStateException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalStateException.html) if any required parameter or property is unset.
+
+To forcibly omit a required parameter or property, pass [`JsonMissing`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/Values.kt):
+
+```kotlin
+import com.lithic.api.core.JsonMissing
+import com.lithic.api.models.CardCreateParams
+
+val params: CardCreateParams = CardCreateParams.builder()
+    .type(JsonMissing.of())
+    .build()
 ```
 
 ### Response properties

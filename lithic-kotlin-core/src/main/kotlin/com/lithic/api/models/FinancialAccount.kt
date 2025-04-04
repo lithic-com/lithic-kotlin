@@ -552,14 +552,41 @@ private constructor(
         creditConfiguration()?.validate()
         isForBenefitOf()
         nickname()
-        status()
-        type()
+        status().validate()
+        type().validate()
         updated()
         accountNumber()
         routingNumber()
-        statusChangeReason()
+        statusChangeReason()?.validate()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (if (accountToken.asKnown() == null) 0 else 1) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (creditConfiguration.asKnown()?.validity() ?: 0) +
+            (if (isForBenefitOf.asKnown() == null) 0 else 1) +
+            (if (nickname.asKnown() == null) 0 else 1) +
+            (status.asKnown()?.validity() ?: 0) +
+            (type.asKnown()?.validity() ?: 0) +
+            (if (updated.asKnown() == null) 0 else 1) +
+            (if (accountNumber.asKnown() == null) 0 else 1) +
+            (if (routingNumber.asKnown() == null) 0 else 1) +
+            (statusChangeReason.asKnown()?.validity() ?: 0)
 
     class FinancialAccountCreditConfig
     private constructor(
@@ -941,15 +968,38 @@ private constructor(
                 return@apply
             }
 
-            chargedOffReason()
+            chargedOffReason()?.validate()
             creditLimit()
             creditProductToken()
             externalBankAccountToken()
-            financialAccountState()
+            financialAccountState()?.validate()
             isSpendBlocked()
             tier()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (chargedOffReason.asKnown()?.validity() ?: 0) +
+                (if (creditLimit.asKnown() == null) 0 else 1) +
+                (if (creditProductToken.asKnown() == null) 0 else 1) +
+                (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+                (financialAccountState.asKnown()?.validity() ?: 0) +
+                (if (isSpendBlocked.asKnown() == null) 0 else 1) +
+                (if (tier.asKnown() == null) 0 else 1)
 
         /** Reason for the financial account being marked as Charged Off */
         class ChargedOffReason
@@ -1042,6 +1092,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): ChargedOffReason = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1161,6 +1238,33 @@ private constructor(
              */
             fun asString(): String =
                 _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): FinancialAccountState = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1298,6 +1402,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): FinancialAccountStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1419,6 +1550,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1546,6 +1704,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): FinancialAccountStatusChangeReason = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

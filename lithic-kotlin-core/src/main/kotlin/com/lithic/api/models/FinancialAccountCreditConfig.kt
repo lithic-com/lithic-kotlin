@@ -429,15 +429,38 @@ private constructor(
         }
 
         accountToken()
-        chargedOffReason()
+        chargedOffReason()?.validate()
         creditLimit()
         creditProductToken()
         externalBankAccountToken()
-        financialAccountState()
+        financialAccountState().validate()
         isSpendBlocked()
         tier()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (accountToken.asKnown() == null) 0 else 1) +
+            (chargedOffReason.asKnown()?.validity() ?: 0) +
+            (if (creditLimit.asKnown() == null) 0 else 1) +
+            (if (creditProductToken.asKnown() == null) 0 else 1) +
+            (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+            (financialAccountState.asKnown()?.validity() ?: 0) +
+            (if (isSpendBlocked.asKnown() == null) 0 else 1) +
+            (if (tier.asKnown() == null) 0 else 1)
 
     /** Reason for the financial account being marked as Charged Off */
     class ChargedOffReason @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -528,6 +551,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): ChargedOffReason = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -645,6 +695,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): FinancialAccountState = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

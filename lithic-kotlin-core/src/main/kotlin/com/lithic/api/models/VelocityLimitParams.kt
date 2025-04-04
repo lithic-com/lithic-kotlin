@@ -20,6 +20,7 @@ import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
+import com.lithic.api.core.allMaxBy
 import com.lithic.api.core.checkKnown
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.getOrThrow
@@ -314,11 +315,31 @@ private constructor(
 
         filters().validate()
         period().validate()
-        scope()
+        scope().validate()
         limitAmount()
         limitCount()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (filters.asKnown()?.validity() ?: 0) +
+            (period.asKnown()?.validity() ?: 0) +
+            (scope.asKnown()?.validity() ?: 0) +
+            (if (limitAmount.asKnown() == null) 0 else 1) +
+            (if (limitCount.asKnown() == null) 0 else 1)
 
     class Filters
     private constructor(
@@ -623,6 +644,26 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (excludeCountries.asKnown()?.size ?: 0) +
+                (excludeMccs.asKnown()?.size ?: 0) +
+                (includeCountries.asKnown()?.size ?: 0) +
+                (includeMccs.asKnown()?.size ?: 0)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -692,14 +733,13 @@ private constructor(
 
         fun _json(): JsonValue? = _json
 
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
+        fun <T> accept(visitor: Visitor<T>): T =
+            when {
                 trailingWindow != null -> visitor.visitTrailingWindow(trailingWindow)
                 velocityLimitParamsPeriodWindow != null ->
                     visitor.visitVelocityLimitParamsPeriodWindow(velocityLimitParamsPeriodWindow)
                 else -> visitor.unknown(_json)
             }
-        }
 
         private var validated: Boolean = false
 
@@ -714,11 +754,40 @@ private constructor(
 
                     override fun visitVelocityLimitParamsPeriodWindow(
                         velocityLimitParamsPeriodWindow: VelocityLimitParamsPeriodWindow
-                    ) {}
+                    ) {
+                        velocityLimitParamsPeriodWindow.validate()
+                    }
                 }
             )
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            accept(
+                object : Visitor<Int> {
+                    override fun visitTrailingWindow(trailingWindow: Long) = 1
+
+                    override fun visitVelocityLimitParamsPeriodWindow(
+                        velocityLimitParamsPeriodWindow: VelocityLimitParamsPeriodWindow
+                    ) = velocityLimitParamsPeriodWindow.validity()
+
+                    override fun unknown(json: JsonValue?) = 0
+                }
+            )
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -801,14 +870,29 @@ private constructor(
             override fun ObjectCodec.deserialize(node: JsonNode): Period {
                 val json = JsonValue.fromJsonNode(node)
 
-                tryDeserialize(node, jacksonTypeRef<Long>())?.let {
-                    return Period(trailingWindow = it, _json = json)
+                val bestMatches =
+                    sequenceOf(
+                            tryDeserialize(node, jacksonTypeRef<VelocityLimitParamsPeriodWindow>())
+                                ?.let {
+                                    Period(velocityLimitParamsPeriodWindow = it, _json = json)
+                                },
+                            tryDeserialize(node, jacksonTypeRef<Long>())?.let {
+                                Period(trailingWindow = it, _json = json)
+                            },
+                        )
+                        .filterNotNull()
+                        .allMaxBy { it.validity() }
+                        .toList()
+                return when (bestMatches.size) {
+                    // This can happen if what we're deserializing is completely incompatible with
+                    // all the possible variants (e.g. deserializing from object).
+                    0 -> Period(_json = json)
+                    1 -> bestMatches.single()
+                    // If there's more than one match with the highest validity, then use the first
+                    // completely valid match, or simply the first match if none are completely
+                    // valid.
+                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
                 }
-                tryDeserialize(node, jacksonTypeRef<VelocityLimitParamsPeriodWindow>())?.let {
-                    return Period(velocityLimitParamsPeriodWindow = it, _json = json)
-                }
-
-                return Period(_json = json)
             }
         }
 
@@ -914,6 +998,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Scope = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

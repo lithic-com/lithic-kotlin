@@ -113,6 +113,17 @@ private constructor(
                     transactionSimulateReturnParams.additionalQueryParams.toBuilder()
             }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [descriptor]
+         * - [pan]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Amount (in cents) to authorize. */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
@@ -286,7 +297,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -488,6 +499,25 @@ private constructor(
             pan()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (amount.asKnown() == null) 0 else 1) +
+                (if (descriptor.asKnown() == null) 0 else 1) +
+                (if (pan.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -176,6 +176,20 @@ private constructor(
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [shippingAddress]
+         * - [carrier]
+         * - [expMonth]
+         * - [expYear]
+         * - [productId]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** The shipping address this card will be sent to. */
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
             body.shippingAddress(shippingAddress)
@@ -412,7 +426,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -769,9 +783,31 @@ private constructor(
             expMonth()
             expYear()
             productId()
-            shippingMethod()
+            shippingMethod()?.validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (shippingAddress.asKnown()?.validity() ?: 0) +
+                (carrier.asKnown()?.validity() ?: 0) +
+                (if (expMonth.asKnown() == null) 0 else 1) +
+                (if (expYear.asKnown() == null) 0 else 1) +
+                (if (productId.asKnown() == null) 0 else 1) +
+                (shippingMethod.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -913,6 +949,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): ShippingMethod = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

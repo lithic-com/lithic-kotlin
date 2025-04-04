@@ -90,6 +90,17 @@ private constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [financialAccountToken]
+         */
+        fun body(body: RetryMicroDepositVerificationRequest) = apply {
+            this.body = body.toBuilder()
+        }
+
         fun financialAccountToken(financialAccountToken: String) = apply {
             body.financialAccountToken(financialAccountToken)
         }
@@ -243,7 +254,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): RetryMicroDepositVerificationRequest = body
+    fun _body(): RetryMicroDepositVerificationRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -375,6 +386,22 @@ private constructor(
             financialAccountToken()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (financialAccountToken.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

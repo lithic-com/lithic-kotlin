@@ -257,6 +257,24 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (entityToken.asKnown() == null) 0 else 1) +
+            (statusReasons.asKnown()?.size ?: 0) +
+            (validDocuments.asKnown()?.size ?: 0)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true

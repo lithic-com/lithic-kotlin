@@ -509,10 +509,35 @@ private constructor(
         lastTransactionToken()
         pendingAmount()
         totalAmount()
-        type()
+        type().validate()
         updated()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (if (availableAmount.asKnown() == null) 0 else 1) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
+            (if (lastTransactionEventToken.asKnown() == null) 0 else 1) +
+            (if (lastTransactionToken.asKnown() == null) 0 else 1) +
+            (if (pendingAmount.asKnown() == null) 0 else 1) +
+            (if (totalAmount.asKnown() == null) 0 else 1) +
+            (type.asKnown()?.validity() ?: 0) +
+            (if (updated.asKnown() == null) 0 else 1)
 
     /** Type of financial account. */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -605,6 +630,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Type = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -602,12 +602,37 @@ private constructor(
         controlPerson().validate()
         natureOfBusiness()
         tosTimestamp()
-        workflow()
+        workflow().validate()
         externalId()
         kybPassedTimestamp()
         websiteUrl()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (beneficialOwnerEntities.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (beneficialOwnerIndividuals.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (businessEntity.asKnown()?.validity() ?: 0) +
+            (controlPerson.asKnown()?.validity() ?: 0) +
+            (if (natureOfBusiness.asKnown() == null) 0 else 1) +
+            (if (tosTimestamp.asKnown() == null) 0 else 1) +
+            (workflow.asKnown()?.validity() ?: 0) +
+            (if (externalId.asKnown() == null) 0 else 1) +
+            (if (kybPassedTimestamp.asKnown() == null) 0 else 1) +
+            (if (websiteUrl.asKnown() == null) 0 else 1)
 
     class BusinessEntity
     private constructor(
@@ -971,6 +996,28 @@ private constructor(
             parentCompany()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (address.asKnown()?.validity() ?: 0) +
+                (if (governmentId.asKnown() == null) 0 else 1) +
+                (if (legalBusinessName.asKnown() == null) 0 else 1) +
+                (phoneNumbers.asKnown()?.size ?: 0) +
+                (if (dbaBusinessName.asKnown() == null) 0 else 1) +
+                (if (parentCompany.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1364,6 +1411,29 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (address.asKnown()?.validity() ?: 0) +
+                (if (dob.asKnown() == null) 0 else 1) +
+                (if (email.asKnown() == null) 0 else 1) +
+                (if (firstName.asKnown() == null) 0 else 1) +
+                (if (governmentId.asKnown() == null) 0 else 1) +
+                (if (lastName.asKnown() == null) 0 else 1) +
+                (if (phoneNumber.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1467,6 +1537,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Workflow = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

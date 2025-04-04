@@ -446,14 +446,38 @@ private constructor(
         address().validate()
         email()
         firstName()
-        kycExemptionType()
+        kycExemptionType().validate()
         lastName()
         phoneNumber()
-        workflow()
+        workflow().validate()
         businessAccountToken()
         externalId()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (address.asKnown()?.validity() ?: 0) +
+            (if (email.asKnown() == null) 0 else 1) +
+            (if (firstName.asKnown() == null) 0 else 1) +
+            (kycExemptionType.asKnown()?.validity() ?: 0) +
+            (if (lastName.asKnown() == null) 0 else 1) +
+            (if (phoneNumber.asKnown() == null) 0 else 1) +
+            (workflow.asKnown()?.validity() ?: 0) +
+            (if (businessAccountToken.asKnown() == null) 0 else 1) +
+            (if (externalId.asKnown() == null) 0 else 1)
 
     /** Specifies the type of KYC Exempt user */
     class KycExemptionType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -544,6 +568,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): KycExemptionType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -637,6 +688,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Workflow = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

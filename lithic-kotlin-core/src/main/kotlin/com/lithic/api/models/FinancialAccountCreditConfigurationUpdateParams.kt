@@ -135,6 +135,18 @@ private constructor(
             this.financialAccountToken = financialAccountToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [creditLimit]
+         * - [creditProductToken]
+         * - [externalBankAccountToken]
+         * - [tier]
+         */
+        fun body(body: FinancialAccountCreditConfigRequest) = apply { this.body = body.toBuilder() }
+
         fun creditLimit(creditLimit: Long) = apply { body.creditLimit(creditLimit) }
 
         /**
@@ -326,7 +338,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): FinancialAccountCreditConfigRequest = body
+    fun _body(): FinancialAccountCreditConfigRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -567,6 +579,26 @@ private constructor(
             tier()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (creditLimit.asKnown() == null) 0 else 1) +
+                (if (creditProductToken.asKnown() == null) 0 else 1) +
+                (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+                (if (tier.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

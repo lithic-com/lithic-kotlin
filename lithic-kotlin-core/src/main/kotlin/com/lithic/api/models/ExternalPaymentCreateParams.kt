@@ -185,6 +185,20 @@ private constructor(
             additionalQueryParams = externalPaymentCreateParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [amount]
+         * - [category]
+         * - [effectiveDate]
+         * - [financialAccountToken]
+         * - [paymentType]
+         * - etc.
+         */
+        fun body(body: CreateExternalPaymentRequest) = apply { this.body = body.toBuilder() }
+
         fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
@@ -440,7 +454,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): CreateExternalPaymentRequest = body
+    fun _body(): CreateExternalPaymentRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -859,16 +873,41 @@ private constructor(
             }
 
             amount()
-            category()
+            category().validate()
             effectiveDate()
             financialAccountToken()
-            paymentType()
+            paymentType().validate()
             token()
             memo()
-            progressTo()
+            progressTo()?.validate()
             userDefinedId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (amount.asKnown() == null) 0 else 1) +
+                (category.asKnown()?.validity() ?: 0) +
+                (if (effectiveDate.asKnown() == null) 0 else 1) +
+                (if (financialAccountToken.asKnown() == null) 0 else 1) +
+                (paymentType.asKnown()?.validity() ?: 0) +
+                (if (token.asKnown() == null) 0 else 1) +
+                (if (memo.asKnown() == null) 0 else 1) +
+                (progressTo.asKnown()?.validity() ?: 0) +
+                (if (userDefinedId.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -992,6 +1031,33 @@ private constructor(
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
 
+        private var validated: Boolean = false
+
+        fun validate(): ExternalPaymentCategory = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -1096,6 +1162,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): ExternalPaymentDirection = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1202,6 +1295,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): ExternalPaymentProgressTo = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

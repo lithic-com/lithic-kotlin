@@ -200,6 +200,20 @@ private constructor(
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [digitalCardArtToken]
+         * - [memo]
+         * - [pin]
+         * - [pinStatus]
+         * - [spendLimit]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Specifies the digital card art to be displayed in the user’s digital wallet after
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
          * use. See
@@ -459,7 +473,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -863,12 +877,35 @@ private constructor(
             digitalCardArtToken()
             memo()
             pin()
-            pinStatus()
+            pinStatus()?.validate()
             spendLimit()
-            spendLimitDuration()
-            state()
+            spendLimitDuration()?.validate()
+            state()?.validate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (digitalCardArtToken.asKnown() == null) 0 else 1) +
+                (if (memo.asKnown() == null) 0 else 1) +
+                (if (pin.asKnown() == null) 0 else 1) +
+                (pinStatus.asKnown()?.validity() ?: 0) +
+                (if (spendLimit.asKnown() == null) 0 else 1) +
+                (spendLimitDuration.asKnown()?.validity() ?: 0) +
+                (state.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -972,6 +1009,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): PinStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1082,6 +1146,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): State = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

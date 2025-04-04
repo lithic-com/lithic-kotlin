@@ -84,6 +84,15 @@ private constructor(
             this.bookTransferToken = bookTransferToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [memo]
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
         /** Optional descriptor for the reversal. */
         fun memo(memo: String) = apply { body.memo(memo) }
 
@@ -233,7 +242,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -349,6 +358,22 @@ private constructor(
             memo()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (memo.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -121,6 +121,16 @@ private constructor(
 
         fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [end]
+         * - [start]
+         */
+        fun body(body: BacktestRequest) = apply { this.body = body.toBuilder() }
+
         /** The end time of the backtest. */
         fun end(end: OffsetDateTime) = apply { body.end(end) }
 
@@ -283,7 +293,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): BacktestRequest = body
+    fun _body(): BacktestRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -434,6 +444,23 @@ private constructor(
             start()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (end.asKnown() == null) 0 else 1) + (if (start.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

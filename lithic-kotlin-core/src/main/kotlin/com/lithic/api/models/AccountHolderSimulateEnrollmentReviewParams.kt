@@ -115,6 +115,17 @@ private constructor(
                 accountHolderSimulateEnrollmentReviewParams.additionalQueryParams.toBuilder()
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountHolderToken]
+         * - [status]
+         * - [statusReasons]
+         */
+        fun body(body: SimulateEnrollmentReviewRequest) = apply { this.body = body.toBuilder() }
+
         /** The account holder which to perform the simulation upon. */
         fun accountHolderToken(accountHolderToken: String) = apply {
             body.accountHolderToken(accountHolderToken)
@@ -300,7 +311,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): SimulateEnrollmentReviewRequest = body
+    fun _body(): SimulateEnrollmentReviewRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -514,10 +525,29 @@ private constructor(
             }
 
             accountHolderToken()
-            status()
-            statusReasons()
+            status()?.validate()
+            statusReasons()?.forEach { it.validate() }
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (accountHolderToken.asKnown() == null) 0 else 1) +
+                (status.asKnown()?.validity() ?: 0) +
+                (statusReasons.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -622,6 +652,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Status = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -861,6 +918,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): StatusReason = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

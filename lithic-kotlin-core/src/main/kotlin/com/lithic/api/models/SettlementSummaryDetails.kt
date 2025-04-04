@@ -409,12 +409,35 @@ private constructor(
         disputesGrossAmount()
         institution()
         interchangeGrossAmount()
-        network()
+        network()?.validate()
         otherFeesGrossAmount()
         settledNetAmount()
         transactionsGrossAmount()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (currency.asKnown() == null) 0 else 1) +
+            (if (disputesGrossAmount.asKnown() == null) 0 else 1) +
+            (if (institution.asKnown() == null) 0 else 1) +
+            (if (interchangeGrossAmount.asKnown() == null) 0 else 1) +
+            (network.asKnown()?.validity() ?: 0) +
+            (if (otherFeesGrossAmount.asKnown() == null) 0 else 1) +
+            (if (settledNetAmount.asKnown() == null) 0 else 1) +
+            (if (transactionsGrossAmount.asKnown() == null) 0 else 1)
 
     /** Card network where the transaction took place */
     class Network @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -519,6 +542,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Network = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

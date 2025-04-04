@@ -191,6 +191,23 @@ private constructor(
         validated = true
     }
 
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (data.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (hasMore.asKnown() == null) 0 else 1)
+
     class InterestRate
     private constructor(
         private val effectiveDate: JsonField<LocalDate>,
@@ -355,6 +372,23 @@ private constructor(
             rate()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (effectiveDate.asKnown() == null) 0 else 1) + (if (rate.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

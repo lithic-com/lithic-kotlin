@@ -209,6 +209,20 @@ private constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
+        /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [address]
+         * - [companyId]
+         * - [dob]
+         * - [doingBusinessAs]
+         * - [name]
+         * - etc.
+         */
+        fun body(body: UpdateBankAccountApiRequest) = apply { this.body = body.toBuilder() }
+
         /** Address */
         fun address(address: ExternalBankAccountAddress) = apply { body.address(address) }
 
@@ -462,7 +476,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): UpdateBankAccountApiRequest = body
+    fun _body(): UpdateBankAccountApiRequest = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -886,11 +900,36 @@ private constructor(
             doingBusinessAs()
             name()
             owner()
-            ownerType()
-            type()
+            ownerType()?.validate()
+            type()?.validate()
             userDefinedId()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (address.asKnown()?.validity() ?: 0) +
+                (if (companyId.asKnown() == null) 0 else 1) +
+                (if (dob.asKnown() == null) 0 else 1) +
+                (if (doingBusinessAs.asKnown() == null) 0 else 1) +
+                (if (name.asKnown() == null) 0 else 1) +
+                (if (owner.asKnown() == null) 0 else 1) +
+                (ownerType.asKnown()?.validity() ?: 0) +
+                (type.asKnown()?.validity() ?: 0) +
+                (if (userDefinedId.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -999,6 +1038,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): AccountTypeExternal = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

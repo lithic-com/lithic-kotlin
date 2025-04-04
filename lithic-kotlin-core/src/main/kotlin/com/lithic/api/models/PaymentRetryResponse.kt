@@ -880,26 +880,60 @@ private constructor(
         }
 
         token()
-        category()
+        category().validate()
         created()
         currency()
         descriptor()
-        direction()
+        direction().validate()
         events().forEach { it.validate() }
         externalBankAccountToken()
         financialAccountToken()
-        method()
+        method().validate()
         methodAttributes().validate()
         pendingAmount()
-        result()
+        result().validate()
         settledAmount()
-        source()
-        status()
+        source().validate()
+        status().validate()
         updated()
         userDefinedId()
         balance()?.validate()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (category.asKnown()?.validity() ?: 0) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
+            (if (descriptor.asKnown() == null) 0 else 1) +
+            (direction.asKnown()?.validity() ?: 0) +
+            (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+            (if (financialAccountToken.asKnown() == null) 0 else 1) +
+            (method.asKnown()?.validity() ?: 0) +
+            (methodAttributes.asKnown()?.validity() ?: 0) +
+            (if (pendingAmount.asKnown() == null) 0 else 1) +
+            (result.asKnown()?.validity() ?: 0) +
+            (if (settledAmount.asKnown() == null) 0 else 1) +
+            (source.asKnown()?.validity() ?: 0) +
+            (status.asKnown()?.validity() ?: 0) +
+            (if (updated.asKnown() == null) 0 else 1) +
+            (if (userDefinedId.asKnown() == null) 0 else 1) +
+            (balance.asKnown()?.validity() ?: 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

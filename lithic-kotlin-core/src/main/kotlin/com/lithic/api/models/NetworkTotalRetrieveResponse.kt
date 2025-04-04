@@ -527,7 +527,7 @@ private constructor(
         created()
         currency()
         institutionId()
-        network()
+        network().validate()
         reportDate()
         settlementInstitutionId()
         settlementService()
@@ -535,6 +535,32 @@ private constructor(
         cycle()
         validated = true
     }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: LithicInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    internal fun validity(): Int =
+        (if (token.asKnown() == null) 0 else 1) +
+            (amounts.asKnown()?.validity() ?: 0) +
+            (if (created.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
+            (if (institutionId.asKnown() == null) 0 else 1) +
+            (network.asKnown()?.validity() ?: 0) +
+            (if (reportDate.asKnown() == null) 0 else 1) +
+            (if (settlementInstitutionId.asKnown() == null) 0 else 1) +
+            (if (settlementService.asKnown() == null) 0 else 1) +
+            (if (updated.asKnown() == null) 0 else 1) +
+            (if (cycle.asKnown() == null) 0 else 1)
 
     class Amounts
     private constructor(
@@ -793,6 +819,26 @@ private constructor(
             validated = true
         }
 
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (grossSettlement.asKnown() == null) 0 else 1) +
+                (if (interchangeFees.asKnown() == null) 0 else 1) +
+                (if (netSettlement.asKnown() == null) 0 else 1) +
+                (if (visaCharges.asKnown() == null) 0 else 1)
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
@@ -908,6 +954,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Network = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

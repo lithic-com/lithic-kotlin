@@ -173,6 +173,20 @@ private constructor(
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
         /**
+         * Sets the entire request body.
+         *
+         * This is generally only useful if you are already constructing the body separately.
+         * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [certificate]
+         * - [clientDeviceId]
+         * - [clientWalletAccountId]
+         * - [digitalWallet]
+         * - [nonce]
+         * - etc.
+         */
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
          * Only applicable if `digital_wallet` is `APPLE_PAY`. Omit to receive only `activationData`
          * in the response. Apple's public leaf certificate. Base64 encoded in PEM format with
          * headers `(-----BEGIN CERTIFICATE-----)` and trailers omitted. Provided by the device's
@@ -410,7 +424,7 @@ private constructor(
             )
     }
 
-    internal fun _body(): Body = body
+    fun _body(): Body = body
 
     fun _pathParam(index: Int): String =
         when (index) {
@@ -763,11 +777,33 @@ private constructor(
             certificate()
             clientDeviceId()
             clientWalletAccountId()
-            digitalWallet()
+            digitalWallet()?.validate()
             nonce()
             nonceSignature()
             validated = true
         }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (if (certificate.asKnown() == null) 0 else 1) +
+                (if (clientDeviceId.asKnown() == null) 0 else 1) +
+                (if (clientWalletAccountId.asKnown() == null) 0 else 1) +
+                (digitalWallet.asKnown()?.validity() ?: 0) +
+                (if (nonce.asKnown() == null) 0 else 1) +
+                (if (nonceSignature.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -882,6 +918,33 @@ private constructor(
          */
         fun asString(): String =
             _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): DigitalWallet = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
