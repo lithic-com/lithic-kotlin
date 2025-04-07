@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.83.0 (2025-04-07)
+
+Full Changelog: [v0.82.2...v0.83.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.2...v0.83.0)
+
+### Features
+
+* **api:** new resend endpoint for Event Subscriptions ([#566](https://github.com/lithic-com/lithic-kotlin/issues/566)) ([0325683](https://github.com/lithic-com/lithic-kotlin/commit/03256833ceaca9fb78d14f7047d4e613169da235))
+* **client:** expose request body setter and getter ([#562](https://github.com/lithic-com/lithic-kotlin/issues/562)) ([c450cfe](https://github.com/lithic-com/lithic-kotlin/commit/c450cfe9575e0e3a0c9f359890316be697b77659))
+
+
+### Performance Improvements
+
+* **client:** cached parsed type in `HttpResponseFor` ([#563](https://github.com/lithic-com/lithic-kotlin/issues/563)) ([6185edc](https://github.com/lithic-com/lithic-kotlin/commit/6185edcbe4c3244d02f990ad110a290906c9a0df))
+
+
+### Chores
+
+* **internal:** codegen related update ([#557](https://github.com/lithic-com/lithic-kotlin/issues/557)) ([0715792](https://github.com/lithic-com/lithic-kotlin/commit/0715792fb76244a7fbe663f825b36d524c797416))
+* **internal:** codegen related update ([#559](https://github.com/lithic-com/lithic-kotlin/issues/559)) ([1fc4e5a](https://github.com/lithic-com/lithic-kotlin/commit/1fc4e5a8077abd1943347bcbf8309d5bee63ad01))
+* **internal:** codegen related update ([#560](https://github.com/lithic-com/lithic-kotlin/issues/560)) ([8e1fff7](https://github.com/lithic-com/lithic-kotlin/commit/8e1fff78f5c25f2786f2a51c7f7d3967050a48aa))
+* **internal:** codegen related update ([#561](https://github.com/lithic-com/lithic-kotlin/issues/561)) ([b200ca8](https://github.com/lithic-com/lithic-kotlin/commit/b200ca82721dc1439e33facf41ea065395d40b9d))
+
+
+### Documentation
+
+* add comments to `JsonField` classes ([#564](https://github.com/lithic-com/lithic-kotlin/issues/564)) ([e9af651](https://github.com/lithic-com/lithic-kotlin/commit/e9af6519553ee8ba541e4463ea992c51962238a5))
+* document how to forcibly omit required field ([e7a4782](https://github.com/lithic-com/lithic-kotlin/commit/e7a4782a89a9c5d67dc2dfc79d889494563fb97f))
+* swap examples used in readme ([#565](https://github.com/lithic-com/lithic-kotlin/issues/565)) ([e7a4782](https://github.com/lithic-com/lithic-kotlin/commit/e7a4782a89a9c5d67dc2dfc79d889494563fb97f))
+
 ## 0.82.2 (2025-03-31)
 
 Full Changelog: [v0.82.1...v0.82.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.1...v0.82.2)
