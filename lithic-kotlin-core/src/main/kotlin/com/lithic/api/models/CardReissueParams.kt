@@ -62,8 +62,8 @@ private constructor(
     fun shippingAddress(): ShippingAddress? = body.shippingAddress()
 
     /**
-     * Shipping method for the card. Use of options besides `STANDARD` require additional
-     * permissions.
+     * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
+     * `STANDARD` require additional permissions.
      * - `STANDARD` - USPS regular mail or similar international option, with no tracking
      * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -198,8 +198,8 @@ private constructor(
         }
 
         /**
-         * Shipping method for the card. Use of options besides `STANDARD` require additional
-         * permissions.
+         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+         * besides `STANDARD` require additional permissions.
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -423,8 +423,8 @@ private constructor(
         fun shippingAddress(): ShippingAddress? = shippingAddress.getNullable("shipping_address")
 
         /**
-         * Shipping method for the card. Use of options besides `STANDARD` require additional
-         * permissions.
+         * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+         * besides `STANDARD` require additional permissions.
          * - `STANDARD` - USPS regular mail or similar international option, with no tracking
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -551,8 +551,8 @@ private constructor(
             }
 
             /**
-             * Shipping method for the card. Use of options besides `STANDARD` require additional
-             * permissions.
+             * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
+             * besides `STANDARD` require additional permissions.
              * - `STANDARD` - USPS regular mail or similar international option, with no tracking
              * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
              *   tracking
@@ -663,8 +663,8 @@ private constructor(
     }
 
     /**
-     * Shipping method for the card. Use of options besides `STANDARD` require additional
-     * permissions.
+     * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
+     * `STANDARD` require additional permissions.
      * - `STANDARD` - USPS regular mail or similar international option, with no tracking
      * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -687,7 +687,7 @@ private constructor(
 
         companion object {
 
-            val _2_DAY = of("2-DAY")
+            val _2_DAY = of("2_DAY")
 
             val EXPEDITED = of("EXPEDITED")
 

@@ -22,6 +22,8 @@ import com.lithic.api.models.EventListAttemptsParams
 import com.lithic.api.models.EventListPageAsync
 import com.lithic.api.models.EventListParams
 import com.lithic.api.models.EventRetrieveParams
+import com.lithic.api.services.async.events.EventSubscriptionServiceAsync
+import com.lithic.api.services.async.events.EventSubscriptionServiceAsyncImpl
 import com.lithic.api.services.async.events.SubscriptionServiceAsync
 import com.lithic.api.services.async.events.SubscriptionServiceAsyncImpl
 
@@ -36,9 +38,15 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
         SubscriptionServiceAsyncImpl(clientOptions)
     }
 
+    private val eventSubscriptions: EventSubscriptionServiceAsync by lazy {
+        EventSubscriptionServiceAsyncImpl(clientOptions)
+    }
+
     override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
 
     override fun subscriptions(): SubscriptionServiceAsync = subscriptions
+
+    override fun eventSubscriptions(): EventSubscriptionServiceAsync = eventSubscriptions
 
     override suspend fun retrieve(
         params: EventRetrieveParams,
@@ -70,7 +78,14 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             SubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val eventSubscriptions: EventSubscriptionServiceAsync.WithRawResponse by lazy {
+            EventSubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
+
+        override fun eventSubscriptions(): EventSubscriptionServiceAsync.WithRawResponse =
+            eventSubscriptions
 
         private val retrieveHandler: Handler<Event> =
             jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
