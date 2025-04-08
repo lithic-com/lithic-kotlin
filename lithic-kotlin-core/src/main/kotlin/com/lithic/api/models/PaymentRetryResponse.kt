@@ -14,6 +14,7 @@ import com.lithic.api.core.checkKnown
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
@@ -38,6 +39,7 @@ private constructor(
     private val status: JsonField<Payment.Status>,
     private val updated: JsonField<OffsetDateTime>,
     private val userDefinedId: JsonField<String>,
+    private val expectedReleaseDate: JsonField<LocalDate>,
     private val balance: JsonField<Balance>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -94,6 +96,9 @@ private constructor(
         @JsonProperty("user_defined_id")
         @ExcludeMissing
         userDefinedId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("expected_release_date")
+        @ExcludeMissing
+        expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("balance") @ExcludeMissing balance: JsonField<Balance> = JsonMissing.of(),
     ) : this(
         token,
@@ -114,6 +119,7 @@ private constructor(
         status,
         updated,
         userDefinedId,
+        expectedReleaseDate,
         balance,
         mutableMapOf(),
     )
@@ -138,6 +144,7 @@ private constructor(
             .status(status)
             .updated(updated)
             .userDefinedId(userDefinedId)
+            .expectedReleaseDate(expectedReleaseDate)
             .build()
 
     /**
@@ -279,6 +286,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun userDefinedId(): String? = userDefinedId.getNullable("user_defined_id")
+
+    /**
+     * Date when the financial transaction expected to be released after settlement
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun expectedReleaseDate(): LocalDate? = expectedReleaseDate.getNullable("expected_release_date")
 
     /**
      * Balance
@@ -436,6 +451,16 @@ private constructor(
     fun _userDefinedId(): JsonField<String> = userDefinedId
 
     /**
+     * Returns the raw JSON value of [expectedReleaseDate].
+     *
+     * Unlike [expectedReleaseDate], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("expected_release_date")
+    @ExcludeMissing
+    fun _expectedReleaseDate(): JsonField<LocalDate> = expectedReleaseDate
+
+    /**
      * Returns the raw JSON value of [balance].
      *
      * Unlike [balance], this method doesn't throw if the JSON field has an unexpected type.
@@ -505,6 +530,7 @@ private constructor(
         private var status: JsonField<Payment.Status>? = null
         private var updated: JsonField<OffsetDateTime>? = null
         private var userDefinedId: JsonField<String>? = null
+        private var expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of()
         private var balance: JsonField<Balance> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -527,6 +553,7 @@ private constructor(
             status = paymentRetryResponse.status
             updated = paymentRetryResponse.updated
             userDefinedId = paymentRetryResponse.userDefinedId
+            expectedReleaseDate = paymentRetryResponse.expectedReleaseDate
             balance = paymentRetryResponse.balance
             additionalProperties = paymentRetryResponse.additionalProperties.toMutableMap()
         }
@@ -788,6 +815,21 @@ private constructor(
             this.userDefinedId = userDefinedId
         }
 
+        /** Date when the financial transaction expected to be released after settlement */
+        fun expectedReleaseDate(expectedReleaseDate: LocalDate) =
+            expectedReleaseDate(JsonField.of(expectedReleaseDate))
+
+        /**
+         * Sets [Builder.expectedReleaseDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expectedReleaseDate] with a well-typed [LocalDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun expectedReleaseDate(expectedReleaseDate: JsonField<LocalDate>) = apply {
+            this.expectedReleaseDate = expectedReleaseDate
+        }
+
         /** Balance */
         fun balance(balance: Balance) = balance(JsonField.of(balance))
 
@@ -867,6 +909,7 @@ private constructor(
                 checkRequired("status", status),
                 checkRequired("updated", updated),
                 checkRequired("userDefinedId", userDefinedId),
+                expectedReleaseDate,
                 balance,
                 additionalProperties.toMutableMap(),
             )
@@ -897,6 +940,7 @@ private constructor(
         status().validate()
         updated()
         userDefinedId()
+        expectedReleaseDate()
         balance()?.validate()
         validated = true
     }
@@ -933,6 +977,7 @@ private constructor(
             (status.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
             (if (userDefinedId.asKnown() == null) 0 else 1) +
+            (if (expectedReleaseDate.asKnown() == null) 0 else 1) +
             (balance.asKnown()?.validity() ?: 0)
 
     override fun equals(other: Any?): Boolean {
@@ -940,15 +985,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentRetryResponse && token == other.token && category == other.category && created == other.created && currency == other.currency && descriptor == other.descriptor && direction == other.direction && events == other.events && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && pendingAmount == other.pendingAmount && result == other.result && settledAmount == other.settledAmount && source == other.source && status == other.status && updated == other.updated && userDefinedId == other.userDefinedId && balance == other.balance && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PaymentRetryResponse && token == other.token && category == other.category && created == other.created && currency == other.currency && descriptor == other.descriptor && direction == other.direction && events == other.events && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && pendingAmount == other.pendingAmount && result == other.result && settledAmount == other.settledAmount && source == other.source && status == other.status && updated == other.updated && userDefinedId == other.userDefinedId && expectedReleaseDate == other.expectedReleaseDate && balance == other.balance && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, category, created, currency, descriptor, direction, events, externalBankAccountToken, financialAccountToken, method, methodAttributes, pendingAmount, result, settledAmount, source, status, updated, userDefinedId, balance, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, category, created, currency, descriptor, direction, events, externalBankAccountToken, financialAccountToken, method, methodAttributes, pendingAmount, result, settledAmount, source, status, updated, userDefinedId, expectedReleaseDate, balance, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentRetryResponse{token=$token, category=$category, created=$created, currency=$currency, descriptor=$descriptor, direction=$direction, events=$events, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, userDefinedId=$userDefinedId, balance=$balance, additionalProperties=$additionalProperties}"
+        "PaymentRetryResponse{token=$token, category=$category, created=$created, currency=$currency, descriptor=$descriptor, direction=$direction, events=$events, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, userDefinedId=$userDefinedId, expectedReleaseDate=$expectedReleaseDate, balance=$balance, additionalProperties=$additionalProperties}"
 }
