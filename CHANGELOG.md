@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.84.0 (2025-04-08)
+
+Full Changelog: [v0.83.0...v0.84.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.83.0...v0.84.0)
+
+### Features
+
+* **api:** introduce TransactionSeries and update ShippingMethod fields ([#568](https://github.com/lithic-com/lithic-kotlin/issues/568)) ([ba71c34](https://github.com/lithic-com/lithic-kotlin/commit/ba71c34008f89f2987b0df56133fa750bfc5efc3))
+
 ## 0.83.0 (2025-04-07)
 
 Full Changelog: [v0.82.2...v0.83.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.82.2...v0.83.0)
