@@ -326,8 +326,7 @@ private constructor(
         fun accountToken(): String? = accountToken.getNullable("account_token")
 
         /**
-         * Only present when user_type == "BUSINESS". List of all entities with >25% ownership in
-         * the company.
+         * Deprecated.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -336,8 +335,11 @@ private constructor(
             beneficialOwnerEntities.getNullable("beneficial_owner_entities")
 
         /**
-         * Only present when user_type == "BUSINESS". List of all individuals with >25% ownership in
-         * the company.
+         * Only present when user_type == "BUSINESS". List of all direct and indirect individuals
+         * with 25% or more ownership in the company. If no individual owns 25% of the company,
+         * please identify the largest shareholder in this field. See
+         * [FinCEN requirements](https://www.fincen.gov/sites/default/files/shared/CDD_Rev6.7_Sept_2017_Certificate.pdf)
+         * (Section I) for more background on individuals that should be included.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -482,9 +484,8 @@ private constructor(
          * be present.
          *
          * If the type is "BUSINESS" then the "business_entity", "control_person",
-         * "beneficial_owner_individuals", "beneficial_owner_entities",
-         *
-         * "nature_of_business", and "website_url" attributes will be present.
+         * "beneficial_owner_individuals", "nature_of_business", and "website_url" attributes will
+         * be present.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -785,10 +786,7 @@ private constructor(
                 this.accountToken = accountToken
             }
 
-            /**
-             * Only present when user_type == "BUSINESS". List of all entities with >25% ownership
-             * in the company.
-             */
+            /** Deprecated. */
             fun beneficialOwnerEntities(beneficialOwnerEntities: List<KybBusinessEntity>) =
                 beneficialOwnerEntities(JsonField.of(beneficialOwnerEntities))
 
@@ -818,8 +816,11 @@ private constructor(
             }
 
             /**
-             * Only present when user_type == "BUSINESS". List of all individuals with >25%
-             * ownership in the company.
+             * Only present when user_type == "BUSINESS". List of all direct and indirect
+             * individuals with 25% or more ownership in the company. If no individual owns 25% of
+             * the company, please identify the largest shareholder in this field. See
+             * [FinCEN requirements](https://www.fincen.gov/sites/default/files/shared/CDD_Rev6.7_Sept_2017_Certificate.pdf)
+             * (Section I) for more background on individuals that should be included.
              */
             fun beneficialOwnerIndividuals(beneficialOwnerIndividuals: List<Individual>) =
                 beneficialOwnerIndividuals(JsonField.of(beneficialOwnerIndividuals))
@@ -1111,9 +1112,8 @@ private constructor(
              * will be present.
              *
              * If the type is "BUSINESS" then the "business_entity", "control_person",
-             * "beneficial_owner_individuals", "beneficial_owner_entities",
-             *
-             * "nature_of_business", and "website_url" attributes will be present.
+             * "beneficial_owner_individuals", "nature_of_business", and "website_url" attributes
+             * will be present.
              */
             fun userType(userType: UserType) = userType(JsonField.of(userType))
 
@@ -2645,9 +2645,8 @@ private constructor(
          * be present.
          *
          * If the type is "BUSINESS" then the "business_entity", "control_person",
-         * "beneficial_owner_individuals", "beneficial_owner_entities",
-         *
-         * "nature_of_business", and "website_url" attributes will be present.
+         * "beneficial_owner_individuals", "nature_of_business", and "website_url" attributes will
+         * be present.
          */
         class UserType @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
