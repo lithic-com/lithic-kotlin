@@ -182,7 +182,11 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                         }
                     }
                     .let {
-                        PaymentListPageAsync.of(PaymentServiceAsyncImpl(clientOptions), params, it)
+                        PaymentListPageAsync.builder()
+                            .service(PaymentServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

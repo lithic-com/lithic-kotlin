@@ -167,11 +167,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
                         }
                     }
                     .let {
-                        ExternalPaymentListPageAsync.of(
-                            ExternalPaymentServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        ExternalPaymentListPageAsync.builder()
+                            .service(ExternalPaymentServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

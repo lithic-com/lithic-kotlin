@@ -2,21 +2,19 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.TokenizationServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List card tokenizations */
+/** @see [TokenizationServiceAsync.list] */
 class TokenizationListPageAsync
 private constructor(
-    private val tokenizationsService: TokenizationServiceAsync,
+    private val service: TokenizationServiceAsync,
     private val params: TokenizationListParams,
     private val response: TokenizationListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): TokenizationListPageResponse = response
 
     /**
      * Delegates to [TokenizationListPageResponse], but gracefully handles missing data.
@@ -32,19 +30,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is TokenizationListPageAsync && tokenizationsService == other.tokenizationsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(tokenizationsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "TokenizationListPageAsync{tokenizationsService=$tokenizationsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): TokenizationListParams? {
@@ -59,19 +44,75 @@ private constructor(
         }
     }
 
-    suspend fun getNextPage(): TokenizationListPageAsync? {
-        return getNextPageParams()?.let { tokenizationsService.list(it) }
-    }
+    suspend fun getNextPage(): TokenizationListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): TokenizationListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): TokenizationListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            tokenizationsService: TokenizationServiceAsync,
-            params: TokenizationListParams,
-            response: TokenizationListPageResponse,
-        ) = TokenizationListPageAsync(tokenizationsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [TokenizationListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [TokenizationListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: TokenizationServiceAsync? = null
+        private var params: TokenizationListParams? = null
+        private var response: TokenizationListPageResponse? = null
+
+        internal fun from(tokenizationListPageAsync: TokenizationListPageAsync) = apply {
+            service = tokenizationListPageAsync.service
+            params = tokenizationListPageAsync.params
+            response = tokenizationListPageAsync.response
+        }
+
+        fun service(service: TokenizationServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: TokenizationListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: TokenizationListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [TokenizationListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): TokenizationListPageAsync =
+            TokenizationListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: TokenizationListPageAsync) : Flow<Tokenization> {
@@ -88,4 +129,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TokenizationListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "TokenizationListPageAsync{service=$service, params=$params, response=$response}"
 }
