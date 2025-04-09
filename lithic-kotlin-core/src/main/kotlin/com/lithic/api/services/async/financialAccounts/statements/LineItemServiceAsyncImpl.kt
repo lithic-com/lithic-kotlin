@@ -16,6 +16,7 @@ import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.models.FinancialAccountStatementLineItemListPageAsync
 import com.lithic.api.models.FinancialAccountStatementLineItemListParams
+import com.lithic.api.models.StatementLineItems
 
 class LineItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     LineItemServiceAsync {
@@ -39,11 +40,8 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<FinancialAccountStatementLineItemListPageAsync.Response> =
-            jsonHandler<FinancialAccountStatementLineItemListPageAsync.Response>(
-                    clientOptions.jsonMapper
-                )
-                .withErrorHandler(errorHandler)
+        private val listHandler: Handler<StatementLineItems> =
+            jsonHandler<StatementLineItems>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: FinancialAccountStatementLineItemListParams,
