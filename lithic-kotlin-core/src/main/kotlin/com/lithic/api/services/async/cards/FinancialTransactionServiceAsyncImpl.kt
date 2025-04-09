@@ -15,6 +15,7 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.models.CardFinancialTransactionListPageAsync
+import com.lithic.api.models.CardFinancialTransactionListPageResponse
 import com.lithic.api.models.CardFinancialTransactionListParams
 import com.lithic.api.models.CardFinancialTransactionRetrieveParams
 import com.lithic.api.models.FinancialTransaction
@@ -81,8 +82,8 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialTransa
             }
         }
 
-        private val listHandler: Handler<CardFinancialTransactionListPageAsync.Response> =
-            jsonHandler<CardFinancialTransactionListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<CardFinancialTransactionListPageResponse> =
+            jsonHandler<CardFinancialTransactionListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(

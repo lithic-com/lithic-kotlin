@@ -2,17 +2,7 @@
 
 package com.lithic.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.lithic.api.core.ExcludeMissing
-import com.lithic.api.core.JsonField
-import com.lithic.api.core.JsonMissing
-import com.lithic.api.core.JsonValue
-import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.services.blocking.TokenizationService
-import java.util.Collections
 import java.util.Objects
 
 /** List card tokenizations */
@@ -20,14 +10,25 @@ class TokenizationListPage
 private constructor(
     private val tokenizationsService: TokenizationService,
     private val params: TokenizationListParams,
-    private val response: Response,
+    private val response: TokenizationListPageResponse,
 ) {
 
-    fun response(): Response = response
+    /** Returns the response that this page was parsed from. */
+    fun response(): TokenizationListPageResponse = response
 
-    fun data(): List<Tokenization> = response().data()
+    /**
+     * Delegates to [TokenizationListPageResponse], but gracefully handles missing data.
+     *
+     * @see [TokenizationListPageResponse.data]
+     */
+    fun data(): List<Tokenization> = response._data().getNullable("data") ?: emptyList()
 
-    fun hasMore(): Boolean = response().hasMore()
+    /**
+     * Delegates to [TokenizationListPageResponse], but gracefully handles missing data.
+     *
+     * @see [TokenizationListPageResponse.hasMore]
+     */
+    fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -42,9 +43,7 @@ private constructor(
     override fun toString() =
         "TokenizationListPage{tokenizationsService=$tokenizationsService, params=$params, response=$response}"
 
-    fun hasNextPage(): Boolean {
-        return !data().isEmpty()
-    }
+    fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): TokenizationListParams? {
         if (!hasNextPage()) {
@@ -52,9 +51,9 @@ private constructor(
         }
 
         return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first().token()).build()
+            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last().token()).build()
+            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
         }
     }
 
@@ -69,112 +68,8 @@ private constructor(
         fun of(
             tokenizationsService: TokenizationService,
             params: TokenizationListParams,
-            response: Response,
+            response: TokenizationListPageResponse,
         ) = TokenizationListPage(tokenizationsService, params, response)
-    }
-
-    class Response(
-        private val data: JsonField<List<Tokenization>>,
-        private val hasMore: JsonField<Boolean>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("data") data: JsonField<List<Tokenization>> = JsonMissing.of(),
-            @JsonProperty("has_more") hasMore: JsonField<Boolean> = JsonMissing.of(),
-        ) : this(data, hasMore, mutableMapOf())
-
-        fun data(): List<Tokenization> = data.getNullable("data") ?: listOf()
-
-        fun hasMore(): Boolean = hasMore.getRequired("has_more")
-
-        @JsonProperty("data") fun _data(): JsonField<List<Tokenization>>? = data
-
-        @JsonProperty("has_more") fun _hasMore(): JsonField<Boolean>? = hasMore
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        private var validated: Boolean = false
-
-        fun validate(): Response = apply {
-            if (validated) {
-                return@apply
-            }
-
-            data().map { it.validate() }
-            hasMore()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Response && data == other.data && hasMore == other.hasMore && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, hasMore, additionalProperties) /* spotless:on */
-
-        override fun toString() =
-            "Response{data=$data, hasMore=$hasMore, additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [TokenizationListPage]. */
-            fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var data: JsonField<List<Tokenization>> = JsonMissing.of()
-            private var hasMore: JsonField<Boolean> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(page: Response) = apply {
-                this.data = page.data
-                this.hasMore = page.hasMore
-                this.additionalProperties.putAll(page.additionalProperties)
-            }
-
-            fun data(data: List<Tokenization>) = data(JsonField.of(data))
-
-            fun data(data: JsonField<List<Tokenization>>) = apply { this.data = data }
-
-            fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
-
-            fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            /**
-             * Returns an immutable instance of [Response].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): Response = Response(data, hasMore, additionalProperties.toMutableMap())
-        }
     }
 
     class AutoPager(private val firstPage: TokenizationListPage) : Sequence<Tokenization> {
