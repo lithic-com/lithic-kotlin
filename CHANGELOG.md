@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.85.0 (2025-04-09)
+
+Full Changelog: [v0.84.0...v0.85.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.84.0...v0.85.0)
+
+### Features
+
+* **client:** make pagination robust to missing data ([b1f9682](https://github.com/lithic-com/lithic-kotlin/commit/b1f968257e51336eec21251405c58dedbfd13996))
+* **client:** support setting base URL via env var ([#572](https://github.com/lithic-com/lithic-kotlin/issues/572)) ([19dbec7](https://github.com/lithic-com/lithic-kotlin/commit/19dbec7f004442fb60b7cc46973f354a10d47850))
+
+
+### Bug Fixes
+
+* **client:** bump to better jackson version ([#574](https://github.com/lithic-com/lithic-kotlin/issues/574)) ([1306afc](https://github.com/lithic-com/lithic-kotlin/commit/1306afc02b8522a37c29a4e69ed7f955a71ba83b))
+
+
+### Chores
+
+* configure new SDK language ([401393a](https://github.com/lithic-com/lithic-kotlin/commit/401393acae309c8f5e4488a36a30a1b2e6dfb807))
+* **internal:** expand CI branch coverage ([#573](https://github.com/lithic-com/lithic-kotlin/issues/573)) ([ed67869](https://github.com/lithic-com/lithic-kotlin/commit/ed67869cc661b309952b5ee68aecf9762e0c34bc))
+* **tests:** improve enum examples ([#570](https://github.com/lithic-com/lithic-kotlin/issues/570)) ([3999089](https://github.com/lithic-com/lithic-kotlin/commit/399908991b96a6240b1b79abe82ca38965278c35))
+
+
+### Documentation
+
+* add comments for page methods ([b1f9682](https://github.com/lithic-com/lithic-kotlin/commit/b1f968257e51336eec21251405c58dedbfd13996))
+
+
+### Refactors
+
+* **client:** deduplicate page response classes ([#575](https://github.com/lithic-com/lithic-kotlin/issues/575)) ([b1f9682](https://github.com/lithic-com/lithic-kotlin/commit/b1f968257e51336eec21251405c58dedbfd13996))
+
 ## 0.84.0 (2025-04-08)
 
 Full Changelog: [v0.83.0...v0.84.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.83.0...v0.84.0)
