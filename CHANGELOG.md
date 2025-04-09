@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.86.1 (2025-04-09)
+
+Full Changelog: [v0.86.0...v0.86.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.86.0...v0.86.1)
+
+### Chores
+
+* **internal:** reduce CI branch coverage ([5b1e470](https://github.com/lithic-com/lithic-kotlin/commit/5b1e470bd3735ba3746be880b2a964e95e7b0ab7))
+
+
+### Refactors
+
+* **client:** migrate pages to builder pattern ([#577](https://github.com/lithic-com/lithic-kotlin/issues/577)) ([2df7de6](https://github.com/lithic-com/lithic-kotlin/commit/2df7de634d10d5256d827e32aa156edd56356a32))
+
 ## 0.86.0 (2025-04-09)
 
 Full Changelog: [v0.85.0...v0.86.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.85.0...v0.86.0)
