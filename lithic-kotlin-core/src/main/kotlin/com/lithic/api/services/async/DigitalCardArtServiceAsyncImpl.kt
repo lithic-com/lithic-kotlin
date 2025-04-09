@@ -99,11 +99,11 @@ internal constructor(private val clientOptions: ClientOptions) : DigitalCardArtS
                         }
                     }
                     .let {
-                        DigitalCardArtListPageAsync.of(
-                            DigitalCardArtServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        DigitalCardArtListPageAsync.builder()
+                            .service(DigitalCardArtServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

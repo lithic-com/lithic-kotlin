@@ -64,11 +64,11 @@ internal constructor(private val clientOptions: ClientOptions) : AggregateBalanc
                         }
                     }
                     .let {
-                        CardAggregateBalanceListPageAsync.of(
-                            AggregateBalanceServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        CardAggregateBalanceListPageAsync.builder()
+                            .service(AggregateBalanceServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

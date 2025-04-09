@@ -2,19 +2,17 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.PaymentService
 import java.util.Objects
 
-/** List all the payments for the provided search criteria. */
+/** @see [PaymentService.list] */
 class PaymentListPage
 private constructor(
-    private val paymentsService: PaymentService,
+    private val service: PaymentService,
     private val params: PaymentListParams,
     private val response: PaymentListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): PaymentListPageResponse = response
 
     /**
      * Delegates to [PaymentListPageResponse], but gracefully handles missing data.
@@ -30,19 +28,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PaymentListPage && paymentsService == other.paymentsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(paymentsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "PaymentListPage{paymentsService=$paymentsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): PaymentListParams? {
@@ -57,19 +42,74 @@ private constructor(
         }
     }
 
-    fun getNextPage(): PaymentListPage? {
-        return getNextPageParams()?.let { paymentsService.list(it) }
-    }
+    fun getNextPage(): PaymentListPage? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): PaymentListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): PaymentListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            paymentsService: PaymentService,
-            params: PaymentListParams,
-            response: PaymentListPageResponse,
-        ) = PaymentListPage(paymentsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [PaymentListPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [PaymentListPage]. */
+    class Builder internal constructor() {
+
+        private var service: PaymentService? = null
+        private var params: PaymentListParams? = null
+        private var response: PaymentListPageResponse? = null
+
+        internal fun from(paymentListPage: PaymentListPage) = apply {
+            service = paymentListPage.service
+            params = paymentListPage.params
+            response = paymentListPage.response
+        }
+
+        fun service(service: PaymentService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: PaymentListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: PaymentListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [PaymentListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): PaymentListPage =
+            PaymentListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: PaymentListPage) : Sequence<Payment> {
@@ -86,4 +126,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PaymentListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "PaymentListPage{service=$service, params=$params, response=$response}"
 }

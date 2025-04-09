@@ -2,19 +2,17 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.DisputeService
 import java.util.Objects
 
-/** List evidence metadata for a dispute. */
+/** @see [DisputeService.listEvidences] */
 class DisputeListEvidencesPage
 private constructor(
-    private val disputesService: DisputeService,
+    private val service: DisputeService,
     private val params: DisputeListEvidencesParams,
     private val response: DisputeListEvidencesPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): DisputeListEvidencesPageResponse = response
 
     /**
      * Delegates to [DisputeListEvidencesPageResponse], but gracefully handles missing data.
@@ -30,19 +28,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is DisputeListEvidencesPage && disputesService == other.disputesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(disputesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "DisputeListEvidencesPage{disputesService=$disputesService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): DisputeListEvidencesParams? {
@@ -57,19 +42,77 @@ private constructor(
         }
     }
 
-    fun getNextPage(): DisputeListEvidencesPage? {
-        return getNextPageParams()?.let { disputesService.listEvidences(it) }
-    }
+    fun getNextPage(): DisputeListEvidencesPage? =
+        getNextPageParams()?.let { service.listEvidences(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): DisputeListEvidencesParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): DisputeListEvidencesPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            disputesService: DisputeService,
-            params: DisputeListEvidencesParams,
-            response: DisputeListEvidencesPageResponse,
-        ) = DisputeListEvidencesPage(disputesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [DisputeListEvidencesPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [DisputeListEvidencesPage]. */
+    class Builder internal constructor() {
+
+        private var service: DisputeService? = null
+        private var params: DisputeListEvidencesParams? = null
+        private var response: DisputeListEvidencesPageResponse? = null
+
+        internal fun from(disputeListEvidencesPage: DisputeListEvidencesPage) = apply {
+            service = disputeListEvidencesPage.service
+            params = disputeListEvidencesPage.params
+            response = disputeListEvidencesPage.response
+        }
+
+        fun service(service: DisputeService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: DisputeListEvidencesParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: DisputeListEvidencesPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [DisputeListEvidencesPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): DisputeListEvidencesPage =
+            DisputeListEvidencesPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: DisputeListEvidencesPage) : Sequence<DisputeEvidence> {
@@ -86,4 +129,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is DisputeListEvidencesPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "DisputeListEvidencesPage{service=$service, params=$params, response=$response}"
 }

@@ -2,21 +2,19 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.CardProgramServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List card programs. */
+/** @see [CardProgramServiceAsync.list] */
 class CardProgramListPageAsync
 private constructor(
-    private val cardProgramsService: CardProgramServiceAsync,
+    private val service: CardProgramServiceAsync,
     private val params: CardProgramListParams,
     private val response: CardProgramListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CardProgramListPageResponse = response
 
     /**
      * Delegates to [CardProgramListPageResponse], but gracefully handles missing data.
@@ -32,19 +30,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardProgramListPageAsync && cardProgramsService == other.cardProgramsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardProgramsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CardProgramListPageAsync{cardProgramsService=$cardProgramsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): CardProgramListParams? {
@@ -59,19 +44,75 @@ private constructor(
         }
     }
 
-    suspend fun getNextPage(): CardProgramListPageAsync? {
-        return getNextPageParams()?.let { cardProgramsService.list(it) }
-    }
+    suspend fun getNextPage(): CardProgramListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CardProgramListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CardProgramListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            cardProgramsService: CardProgramServiceAsync,
-            params: CardProgramListParams,
-            response: CardProgramListPageResponse,
-        ) = CardProgramListPageAsync(cardProgramsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CardProgramListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CardProgramListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: CardProgramServiceAsync? = null
+        private var params: CardProgramListParams? = null
+        private var response: CardProgramListPageResponse? = null
+
+        internal fun from(cardProgramListPageAsync: CardProgramListPageAsync) = apply {
+            service = cardProgramListPageAsync.service
+            params = cardProgramListPageAsync.params
+            response = cardProgramListPageAsync.response
+        }
+
+        fun service(service: CardProgramServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CardProgramListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CardProgramListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [CardProgramListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CardProgramListPageAsync =
+            CardProgramListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CardProgramListPageAsync) : Flow<CardProgram> {
@@ -88,4 +129,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardProgramListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CardProgramListPageAsync{service=$service, params=$params, response=$response}"
 }

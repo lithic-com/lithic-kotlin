@@ -2,19 +2,17 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.cards.BalanceService
 import java.util.Objects
 
-/** Get the balances for a given card. */
+/** @see [BalanceService.list] */
 class CardBalanceListPage
 private constructor(
-    private val balancesService: BalanceService,
+    private val service: BalanceService,
     private val params: CardBalanceListParams,
     private val response: CardBalanceListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): CardBalanceListPageResponse = response
 
     /**
      * Delegates to [CardBalanceListPageResponse], but gracefully handles missing data.
@@ -30,36 +28,78 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CardBalanceListPage && balancesService == other.balancesService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(balancesService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "CardBalanceListPage{balancesService=$balancesService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): CardBalanceListParams? = null
 
-    fun getNextPage(): CardBalanceListPage? {
-        return getNextPageParams()?.let { balancesService.list(it) }
-    }
+    fun getNextPage(): CardBalanceListPage? = getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): CardBalanceListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): CardBalanceListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            balancesService: BalanceService,
-            params: CardBalanceListParams,
-            response: CardBalanceListPageResponse,
-        ) = CardBalanceListPage(balancesService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of [CardBalanceListPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [CardBalanceListPage]. */
+    class Builder internal constructor() {
+
+        private var service: BalanceService? = null
+        private var params: CardBalanceListParams? = null
+        private var response: CardBalanceListPageResponse? = null
+
+        internal fun from(cardBalanceListPage: CardBalanceListPage) = apply {
+            service = cardBalanceListPage.service
+            params = cardBalanceListPage.params
+            response = cardBalanceListPage.response
+        }
+
+        fun service(service: BalanceService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: CardBalanceListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: CardBalanceListPageResponse) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [CardBalanceListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): CardBalanceListPage =
+            CardBalanceListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: CardBalanceListPage) : Sequence<BalanceListResponse> {
@@ -76,4 +116,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CardBalanceListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "CardBalanceListPage{service=$service, params=$params, response=$response}"
 }
