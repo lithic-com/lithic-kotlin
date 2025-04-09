@@ -256,7 +256,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                             it.validate()
                         }
                     }
-                    .let { CardListPageAsync.of(CardServiceAsyncImpl(clientOptions), params, it) }
+                    .let {
+                        CardListPageAsync.builder()
+                            .service(CardServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 

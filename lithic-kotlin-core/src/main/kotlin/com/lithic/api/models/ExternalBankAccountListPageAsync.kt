@@ -2,21 +2,19 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.ExternalBankAccountServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List all the external bank accounts for the provided search criteria. */
+/** @see [ExternalBankAccountServiceAsync.list] */
 class ExternalBankAccountListPageAsync
 private constructor(
-    private val externalBankAccountsService: ExternalBankAccountServiceAsync,
+    private val service: ExternalBankAccountServiceAsync,
     private val params: ExternalBankAccountListParams,
     private val response: ExternalBankAccountListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ExternalBankAccountListPageResponse = response
 
     /**
      * Delegates to [ExternalBankAccountListPageResponse], but gracefully handles missing data.
@@ -33,19 +31,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ExternalBankAccountListPageAsync && externalBankAccountsService == other.externalBankAccountsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalBankAccountsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ExternalBankAccountListPageAsync{externalBankAccountsService=$externalBankAccountsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): ExternalBankAccountListParams? {
@@ -60,19 +45,79 @@ private constructor(
         }
     }
 
-    suspend fun getNextPage(): ExternalBankAccountListPageAsync? {
-        return getNextPageParams()?.let { externalBankAccountsService.list(it) }
-    }
+    suspend fun getNextPage(): ExternalBankAccountListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ExternalBankAccountListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ExternalBankAccountListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            externalBankAccountsService: ExternalBankAccountServiceAsync,
-            params: ExternalBankAccountListParams,
-            response: ExternalBankAccountListPageResponse,
-        ) = ExternalBankAccountListPageAsync(externalBankAccountsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ExternalBankAccountListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [ExternalBankAccountListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: ExternalBankAccountServiceAsync? = null
+        private var params: ExternalBankAccountListParams? = null
+        private var response: ExternalBankAccountListPageResponse? = null
+
+        internal fun from(externalBankAccountListPageAsync: ExternalBankAccountListPageAsync) =
+            apply {
+                service = externalBankAccountListPageAsync.service
+                params = externalBankAccountListPageAsync.params
+                response = externalBankAccountListPageAsync.response
+            }
+
+        fun service(service: ExternalBankAccountServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ExternalBankAccountListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ExternalBankAccountListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ExternalBankAccountListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ExternalBankAccountListPageAsync =
+            ExternalBankAccountListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ExternalBankAccountListPageAsync) :
@@ -90,4 +135,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ExternalBankAccountListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ExternalBankAccountListPageAsync{service=$service, params=$params, response=$response}"
 }

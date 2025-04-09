@@ -2,21 +2,19 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.events.SubscriptionServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List all the event subscriptions. */
+/** @see [SubscriptionServiceAsync.list] */
 class EventSubscriptionListPageAsync
 private constructor(
-    private val subscriptionsService: SubscriptionServiceAsync,
+    private val service: SubscriptionServiceAsync,
     private val params: EventSubscriptionListParams,
     private val response: EventSubscriptionListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): EventSubscriptionListPageResponse = response
 
     /**
      * Delegates to [EventSubscriptionListPageResponse], but gracefully handles missing data.
@@ -32,19 +30,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventSubscriptionListPageAsync && subscriptionsService == other.subscriptionsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "EventSubscriptionListPageAsync{subscriptionsService=$subscriptionsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): EventSubscriptionListParams? {
@@ -59,19 +44,78 @@ private constructor(
         }
     }
 
-    suspend fun getNextPage(): EventSubscriptionListPageAsync? {
-        return getNextPageParams()?.let { subscriptionsService.list(it) }
-    }
+    suspend fun getNextPage(): EventSubscriptionListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): EventSubscriptionListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): EventSubscriptionListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            subscriptionsService: SubscriptionServiceAsync,
-            params: EventSubscriptionListParams,
-            response: EventSubscriptionListPageResponse,
-        ) = EventSubscriptionListPageAsync(subscriptionsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [EventSubscriptionListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [EventSubscriptionListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: SubscriptionServiceAsync? = null
+        private var params: EventSubscriptionListParams? = null
+        private var response: EventSubscriptionListPageResponse? = null
+
+        internal fun from(eventSubscriptionListPageAsync: EventSubscriptionListPageAsync) = apply {
+            service = eventSubscriptionListPageAsync.service
+            params = eventSubscriptionListPageAsync.params
+            response = eventSubscriptionListPageAsync.response
+        }
+
+        fun service(service: SubscriptionServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: EventSubscriptionListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: EventSubscriptionListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [EventSubscriptionListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): EventSubscriptionListPageAsync =
+            EventSubscriptionListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: EventSubscriptionListPageAsync) :
@@ -89,4 +133,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventSubscriptionListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "EventSubscriptionListPageAsync{service=$service, params=$params, response=$response}"
 }

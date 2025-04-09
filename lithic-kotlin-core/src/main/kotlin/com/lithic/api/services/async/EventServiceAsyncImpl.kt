@@ -137,7 +137,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                             it.validate()
                         }
                     }
-                    .let { EventListPageAsync.of(EventServiceAsyncImpl(clientOptions), params, it) }
+                    .let {
+                        EventListPageAsync.builder()
+                            .service(EventServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
+                    }
             }
         }
 
@@ -166,11 +172,11 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                         }
                     }
                     .let {
-                        EventListAttemptsPageAsync.of(
-                            EventServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        EventListAttemptsPageAsync.builder()
+                            .service(EventServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
