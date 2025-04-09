@@ -2,21 +2,19 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.reports.settlement.NetworkTotalServiceAsync
 import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
-/** List network total records with optional filters. Not available in sandbox. */
+/** @see [NetworkTotalServiceAsync.list] */
 class ReportSettlementNetworkTotalListPageAsync
 private constructor(
-    private val networkTotalsService: NetworkTotalServiceAsync,
+    private val service: NetworkTotalServiceAsync,
     private val params: ReportSettlementNetworkTotalListParams,
     private val response: ReportSettlementNetworkTotalListPageResponse,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): ReportSettlementNetworkTotalListPageResponse = response
 
     /**
      * Delegates to [ReportSettlementNetworkTotalListPageResponse], but gracefully handles missing
@@ -34,19 +32,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ReportSettlementNetworkTotalListPageAsync && networkTotalsService == other.networkTotalsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(networkTotalsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "ReportSettlementNetworkTotalListPageAsync{networkTotalsService=$networkTotalsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): ReportSettlementNetworkTotalListParams? {
@@ -61,19 +46,80 @@ private constructor(
         }
     }
 
-    suspend fun getNextPage(): ReportSettlementNetworkTotalListPageAsync? {
-        return getNextPageParams()?.let { networkTotalsService.list(it) }
-    }
+    suspend fun getNextPage(): ReportSettlementNetworkTotalListPageAsync? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): ReportSettlementNetworkTotalListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): ReportSettlementNetworkTotalListPageResponse = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            networkTotalsService: NetworkTotalServiceAsync,
-            params: ReportSettlementNetworkTotalListParams,
-            response: ReportSettlementNetworkTotalListPageResponse,
-        ) = ReportSettlementNetworkTotalListPageAsync(networkTotalsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [ReportSettlementNetworkTotalListPageAsync].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [ReportSettlementNetworkTotalListPageAsync]. */
+    class Builder internal constructor() {
+
+        private var service: NetworkTotalServiceAsync? = null
+        private var params: ReportSettlementNetworkTotalListParams? = null
+        private var response: ReportSettlementNetworkTotalListPageResponse? = null
+
+        internal fun from(
+            reportSettlementNetworkTotalListPageAsync: ReportSettlementNetworkTotalListPageAsync
+        ) = apply {
+            service = reportSettlementNetworkTotalListPageAsync.service
+            params = reportSettlementNetworkTotalListPageAsync.params
+            response = reportSettlementNetworkTotalListPageAsync.response
+        }
+
+        fun service(service: NetworkTotalServiceAsync) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: ReportSettlementNetworkTotalListParams) = apply { this.params = params }
+
+        /** The response that this page was parsed from. */
+        fun response(response: ReportSettlementNetworkTotalListPageResponse) = apply {
+            this.response = response
+        }
+
+        /**
+         * Returns an immutable instance of [ReportSettlementNetworkTotalListPageAsync].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): ReportSettlementNetworkTotalListPageAsync =
+            ReportSettlementNetworkTotalListPageAsync(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: ReportSettlementNetworkTotalListPageAsync) :
@@ -91,4 +137,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ReportSettlementNetworkTotalListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "ReportSettlementNetworkTotalListPageAsync{service=$service, params=$params, response=$response}"
 }

@@ -2,19 +2,17 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.financialAccounts.statements.LineItemService
 import java.util.Objects
 
-/** List the line items for a given statement within a given financial account. */
+/** @see [LineItemService.list] */
 class FinancialAccountStatementLineItemListPage
 private constructor(
-    private val lineItemsService: LineItemService,
+    private val service: LineItemService,
     private val params: FinancialAccountStatementLineItemListParams,
     private val response: StatementLineItems,
 ) {
-
-    /** Returns the response that this page was parsed from. */
-    fun response(): StatementLineItems = response
 
     /**
      * Delegates to [StatementLineItems], but gracefully handles missing data.
@@ -31,19 +29,6 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is FinancialAccountStatementLineItemListPage && lineItemsService == other.lineItemsService && params == other.params && response == other.response /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(lineItemsService, params, response) /* spotless:on */
-
-    override fun toString() =
-        "FinancialAccountStatementLineItemListPage{lineItemsService=$lineItemsService, params=$params, response=$response}"
-
     fun hasNextPage(): Boolean = data().isNotEmpty()
 
     fun getNextPageParams(): FinancialAccountStatementLineItemListParams? {
@@ -58,19 +43,80 @@ private constructor(
         }
     }
 
-    fun getNextPage(): FinancialAccountStatementLineItemListPage? {
-        return getNextPageParams()?.let { lineItemsService.list(it) }
-    }
+    fun getNextPage(): FinancialAccountStatementLineItemListPage? =
+        getNextPageParams()?.let { service.list(it) }
 
     fun autoPager(): AutoPager = AutoPager(this)
 
+    /** The parameters that were used to request this page. */
+    fun params(): FinancialAccountStatementLineItemListParams = params
+
+    /** The response that this page was parsed from. */
+    fun response(): StatementLineItems = response
+
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        fun of(
-            lineItemsService: LineItemService,
-            params: FinancialAccountStatementLineItemListParams,
-            response: StatementLineItems,
-        ) = FinancialAccountStatementLineItemListPage(lineItemsService, params, response)
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [FinancialAccountStatementLineItemListPage].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         */
+        fun builder() = Builder()
+    }
+
+    /** A builder for [FinancialAccountStatementLineItemListPage]. */
+    class Builder internal constructor() {
+
+        private var service: LineItemService? = null
+        private var params: FinancialAccountStatementLineItemListParams? = null
+        private var response: StatementLineItems? = null
+
+        internal fun from(
+            financialAccountStatementLineItemListPage: FinancialAccountStatementLineItemListPage
+        ) = apply {
+            service = financialAccountStatementLineItemListPage.service
+            params = financialAccountStatementLineItemListPage.params
+            response = financialAccountStatementLineItemListPage.response
+        }
+
+        fun service(service: LineItemService) = apply { this.service = service }
+
+        /** The parameters that were used to request this page. */
+        fun params(params: FinancialAccountStatementLineItemListParams) = apply {
+            this.params = params
+        }
+
+        /** The response that this page was parsed from. */
+        fun response(response: StatementLineItems) = apply { this.response = response }
+
+        /**
+         * Returns an immutable instance of [FinancialAccountStatementLineItemListPage].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .service()
+         * .params()
+         * .response()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
+         */
+        fun build(): FinancialAccountStatementLineItemListPage =
+            FinancialAccountStatementLineItemListPage(
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
+            )
     }
 
     class AutoPager(private val firstPage: FinancialAccountStatementLineItemListPage) :
@@ -88,4 +134,17 @@ private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is FinancialAccountStatementLineItemListPage && service == other.service && params == other.params && response == other.response /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+
+    override fun toString() =
+        "FinancialAccountStatementLineItemListPage{service=$service, params=$params, response=$response}"
 }
