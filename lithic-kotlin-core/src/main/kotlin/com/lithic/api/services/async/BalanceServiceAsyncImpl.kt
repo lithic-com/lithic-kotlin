@@ -15,6 +15,7 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.models.BalanceListPageAsync
+import com.lithic.api.models.BalanceListPageResponse
 import com.lithic.api.models.BalanceListParams
 
 class BalanceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -38,8 +39,8 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
 
-        private val listHandler: Handler<BalanceListPageAsync.Response> =
-            jsonHandler<BalanceListPageAsync.Response>(clientOptions.jsonMapper)
+        private val listHandler: Handler<BalanceListPageResponse> =
+            jsonHandler<BalanceListPageResponse>(clientOptions.jsonMapper)
                 .withErrorHandler(errorHandler)
 
         override suspend fun list(
