@@ -105,11 +105,11 @@ class LoanTapeServiceAsyncImpl internal constructor(private val clientOptions: C
                         }
                     }
                     .let {
-                        FinancialAccountLoanTapeListPageAsync.of(
-                            LoanTapeServiceAsyncImpl(clientOptions),
-                            params,
-                            it,
-                        )
+                        FinancialAccountLoanTapeListPageAsync.builder()
+                            .service(LoanTapeServiceAsyncImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }
