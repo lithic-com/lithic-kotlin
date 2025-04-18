@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.87.0 (2025-04-18)
+
+Full Changelog: [v0.86.0...v0.87.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.86.0...v0.87.0)
+
+### Features
+
+* **api:** updates to Card definition for PCI clarity ([e3d87fd](https://github.com/lithic-com/lithic-kotlin/commit/e3d87fd319d5a75836fd5f9fb9ecd1fbbe92b710))
+
+
+### Performance Improvements
+
+* **internal:** improve compilation+test speed ([ffdf2a3](https://github.com/lithic-com/lithic-kotlin/commit/ffdf2a3010c740d99fe5d8513c78053a7a4f1b22))
+
+
+### Chores
+
+* **internal:** codegen related update ([91931dc](https://github.com/lithic-com/lithic-kotlin/commit/91931dc05a0142a1bad2637656e06ace05addf30))
+* **internal:** reduce CI branch coverage ([5b1e470](https://github.com/lithic-com/lithic-kotlin/commit/5b1e470bd3735ba3746be880b2a964e95e7b0ab7))
+
+
+### Documentation
+
+* **client:** update jackson compat error message ([fce618f](https://github.com/lithic-com/lithic-kotlin/commit/fce618f5311b8a7091bd20df4a017300865158ee))
+* explain http client customization ([d9f05ba](https://github.com/lithic-com/lithic-kotlin/commit/d9f05ba3bddb85bb8d941a93cea4b101fd647129))
+* explain jackson compat in readme ([ef51da1](https://github.com/lithic-com/lithic-kotlin/commit/ef51da13f19d4ae6c566f9bff45e05640c94c325))
+* update documentation links to be more uniform ([a7f9e6a](https://github.com/lithic-com/lithic-kotlin/commit/a7f9e6ab345541d26481267dc574c20591919ca7))
+
+
+### Refactors
+
+* **client:** migrate pages to builder pattern ([#577](https://github.com/lithic-com/lithic-kotlin/issues/577)) ([2df7de6](https://github.com/lithic-com/lithic-kotlin/commit/2df7de634d10d5256d827e32aa156edd56356a32))
+
 ## 0.86.0 (2025-04-09)
 
 Full Changelog: [v0.85.0...v0.86.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.85.0...v0.86.0)
