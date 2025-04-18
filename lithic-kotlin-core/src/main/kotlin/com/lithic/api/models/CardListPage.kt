@@ -19,7 +19,7 @@ private constructor(
      *
      * @see [CardListPageResponse.data]
      */
-    fun data(): List<Card> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<CardListResponse> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardListPageResponse], but gracefully handles missing data.
@@ -112,9 +112,9 @@ private constructor(
             )
     }
 
-    class AutoPager(private val firstPage: CardListPage) : Sequence<Card> {
+    class AutoPager(private val firstPage: CardListPage) : Sequence<CardListResponse> {
 
-        override fun iterator(): Iterator<Card> = iterator {
+        override fun iterator(): Iterator<CardListResponse> = iterator {
             var page = firstPage
             var index = 0
             while (true) {

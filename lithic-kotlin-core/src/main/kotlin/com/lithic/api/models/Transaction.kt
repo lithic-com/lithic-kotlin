@@ -5543,6 +5543,7 @@ private constructor(
             private val partialApprovalCapable: JsonField<Boolean>,
             private val pinCapability: JsonField<PinCapability>,
             private val type: JsonField<Type>,
+            private val acceptorTerminalId: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -5567,6 +5568,9 @@ private constructor(
                 @ExcludeMissing
                 pinCapability: JsonField<PinCapability> = JsonMissing.of(),
                 @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+                @JsonProperty("acceptor_terminal_id")
+                @ExcludeMissing
+                acceptorTerminalId: JsonField<String> = JsonMissing.of(),
             ) : this(
                 attended,
                 cardRetentionCapable,
@@ -5575,6 +5579,7 @@ private constructor(
                 partialApprovalCapable,
                 pinCapability,
                 type,
+                acceptorTerminalId,
                 mutableMapOf(),
             )
 
@@ -5648,6 +5653,16 @@ private constructor(
             fun type(): Type = type.getRequired("type")
 
             /**
+             * Uniquely identifies a terminal at the card acceptor location of acquiring
+             * institutions or merchant POS Systems
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun acceptorTerminalId(): String? =
+                acceptorTerminalId.getNullable("acceptor_terminal_id")
+
+            /**
              * Returns the raw JSON value of [attended].
              *
              * Unlike [attended], this method doesn't throw if the JSON field has an unexpected
@@ -5712,6 +5727,16 @@ private constructor(
              */
             @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+            /**
+             * Returns the raw JSON value of [acceptorTerminalId].
+             *
+             * Unlike [acceptorTerminalId], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("acceptor_terminal_id")
+            @ExcludeMissing
+            fun _acceptorTerminalId(): JsonField<String> = acceptorTerminalId
+
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
                 additionalProperties.put(key, value)
@@ -5753,6 +5778,7 @@ private constructor(
                 private var partialApprovalCapable: JsonField<Boolean>? = null
                 private var pinCapability: JsonField<PinCapability>? = null
                 private var type: JsonField<Type>? = null
+                private var acceptorTerminalId: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(posTerminal: PosTerminal) = apply {
@@ -5763,6 +5789,7 @@ private constructor(
                     partialApprovalCapable = posTerminal.partialApprovalCapable
                     pinCapability = posTerminal.pinCapability
                     type = posTerminal.type
+                    acceptorTerminalId = posTerminal.acceptorTerminalId
                     additionalProperties = posTerminal.additionalProperties.toMutableMap()
                 }
 
@@ -5865,6 +5892,24 @@ private constructor(
                  */
                 fun type(type: JsonField<Type>) = apply { this.type = type }
 
+                /**
+                 * Uniquely identifies a terminal at the card acceptor location of acquiring
+                 * institutions or merchant POS Systems
+                 */
+                fun acceptorTerminalId(acceptorTerminalId: String?) =
+                    acceptorTerminalId(JsonField.ofNullable(acceptorTerminalId))
+
+                /**
+                 * Sets [Builder.acceptorTerminalId] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.acceptorTerminalId] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun acceptorTerminalId(acceptorTerminalId: JsonField<String>) = apply {
+                    this.acceptorTerminalId = acceptorTerminalId
+                }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -5914,6 +5959,7 @@ private constructor(
                         checkRequired("partialApprovalCapable", partialApprovalCapable),
                         checkRequired("pinCapability", pinCapability),
                         checkRequired("type", type),
+                        acceptorTerminalId,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -5932,6 +5978,7 @@ private constructor(
                 partialApprovalCapable()
                 pinCapability().validate()
                 type().validate()
+                acceptorTerminalId()
                 validated = true
             }
 
@@ -5956,7 +6003,8 @@ private constructor(
                     (operator.asKnown()?.validity() ?: 0) +
                     (if (partialApprovalCapable.asKnown() == null) 0 else 1) +
                     (pinCapability.asKnown()?.validity() ?: 0) +
-                    (type.asKnown()?.validity() ?: 0)
+                    (type.asKnown()?.validity() ?: 0) +
+                    (if (acceptorTerminalId.asKnown() == null) 0 else 1)
 
             /** The person that is designated to swipe the card */
             class Operator @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -6510,17 +6558,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PosTerminal && attended == other.attended && cardRetentionCapable == other.cardRetentionCapable && onPremise == other.onPremise && operator == other.operator && partialApprovalCapable == other.partialApprovalCapable && pinCapability == other.pinCapability && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is PosTerminal && attended == other.attended && cardRetentionCapable == other.cardRetentionCapable && onPremise == other.onPremise && operator == other.operator && partialApprovalCapable == other.partialApprovalCapable && pinCapability == other.pinCapability && type == other.type && acceptorTerminalId == other.acceptorTerminalId && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(attended, cardRetentionCapable, onPremise, operator, partialApprovalCapable, pinCapability, type, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(attended, cardRetentionCapable, onPremise, operator, partialApprovalCapable, pinCapability, type, acceptorTerminalId, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PosTerminal{attended=$attended, cardRetentionCapable=$cardRetentionCapable, onPremise=$onPremise, operator=$operator, partialApprovalCapable=$partialApprovalCapable, pinCapability=$pinCapability, type=$type, additionalProperties=$additionalProperties}"
+                "PosTerminal{attended=$attended, cardRetentionCapable=$cardRetentionCapable, onPremise=$onPremise, operator=$operator, partialApprovalCapable=$partialApprovalCapable, pinCapability=$pinCapability, type=$type, acceptorTerminalId=$acceptorTerminalId, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -7282,6 +7330,7 @@ private constructor(
         private val result: JsonField<DeclineResult>,
         private val ruleResults: JsonField<List<RuleResult>>,
         private val type: JsonField<Type>,
+        private val networkSpecificData: JsonField<NetworkSpecificData>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -7311,6 +7360,9 @@ private constructor(
             @ExcludeMissing
             ruleResults: JsonField<List<RuleResult>> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("network_specific_data")
+            @ExcludeMissing
+            networkSpecificData: JsonField<NetworkSpecificData> = JsonMissing.of(),
         ) : this(
             token,
             amount,
@@ -7322,6 +7374,7 @@ private constructor(
             result,
             ruleResults,
             type,
+            networkSpecificData,
             mutableMapOf(),
         )
 
@@ -7405,6 +7458,13 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun type(): Type = type.getRequired("type")
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun networkSpecificData(): NetworkSpecificData? =
+            networkSpecificData.getNullable("network_specific_data")
 
         /**
          * Returns the raw JSON value of [token].
@@ -7491,6 +7551,16 @@ private constructor(
          */
         @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
+        /**
+         * Returns the raw JSON value of [networkSpecificData].
+         *
+         * Unlike [networkSpecificData], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("network_specific_data")
+        @ExcludeMissing
+        fun _networkSpecificData(): JsonField<NetworkSpecificData> = networkSpecificData
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -7538,6 +7608,7 @@ private constructor(
             private var result: JsonField<DeclineResult>? = null
             private var ruleResults: JsonField<MutableList<RuleResult>>? = null
             private var type: JsonField<Type>? = null
+            private var networkSpecificData: JsonField<NetworkSpecificData> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(transactionEvent: TransactionEvent) = apply {
@@ -7551,6 +7622,7 @@ private constructor(
                 result = transactionEvent.result
                 ruleResults = transactionEvent.ruleResults.map { it.toMutableList() }
                 type = transactionEvent.type
+                networkSpecificData = transactionEvent.networkSpecificData
                 additionalProperties = transactionEvent.additionalProperties.toMutableMap()
             }
 
@@ -7718,6 +7790,20 @@ private constructor(
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
+            fun networkSpecificData(networkSpecificData: NetworkSpecificData) =
+                networkSpecificData(JsonField.of(networkSpecificData))
+
+            /**
+             * Sets [Builder.networkSpecificData] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.networkSpecificData] with a well-typed
+             * [NetworkSpecificData] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun networkSpecificData(networkSpecificData: JsonField<NetworkSpecificData>) = apply {
+                this.networkSpecificData = networkSpecificData
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -7770,6 +7856,7 @@ private constructor(
                     checkRequired("result", result),
                     checkRequired("ruleResults", ruleResults).map { it.toImmutable() },
                     checkRequired("type", type),
+                    networkSpecificData,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -7791,6 +7878,7 @@ private constructor(
             result().validate()
             ruleResults().forEach { it.validate() }
             type().validate()
+            networkSpecificData()?.validate()
             validated = true
         }
 
@@ -7818,7 +7906,8 @@ private constructor(
                 (networkInfo.asKnown()?.validity() ?: 0) +
                 (result.asKnown()?.validity() ?: 0) +
                 (ruleResults.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-                (type.asKnown()?.validity() ?: 0)
+                (type.asKnown()?.validity() ?: 0) +
+                (networkSpecificData.asKnown()?.validity() ?: 0)
 
         class TransactionEventAmounts
         private constructor(
@@ -11633,22 +11722,976 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        class NetworkSpecificData
+        private constructor(
+            private val mastercard: JsonField<MastercardNetworkSpecificData>,
+            private val visa: JsonField<VisaNetworkSpecificData>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("mastercard")
+                @ExcludeMissing
+                mastercard: JsonField<MastercardNetworkSpecificData> = JsonMissing.of(),
+                @JsonProperty("visa")
+                @ExcludeMissing
+                visa: JsonField<VisaNetworkSpecificData> = JsonMissing.of(),
+            ) : this(mastercard, visa, mutableMapOf())
+
+            /**
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun mastercard(): MastercardNetworkSpecificData = mastercard.getRequired("mastercard")
+
+            /**
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun visa(): VisaNetworkSpecificData = visa.getRequired("visa")
+
+            /**
+             * Returns the raw JSON value of [mastercard].
+             *
+             * Unlike [mastercard], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("mastercard")
+            @ExcludeMissing
+            fun _mastercard(): JsonField<MastercardNetworkSpecificData> = mastercard
+
+            /**
+             * Returns the raw JSON value of [visa].
+             *
+             * Unlike [visa], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("visa")
+            @ExcludeMissing
+            fun _visa(): JsonField<VisaNetworkSpecificData> = visa
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [NetworkSpecificData].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .mastercard()
+                 * .visa()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [NetworkSpecificData]. */
+            class Builder internal constructor() {
+
+                private var mastercard: JsonField<MastercardNetworkSpecificData>? = null
+                private var visa: JsonField<VisaNetworkSpecificData>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(networkSpecificData: NetworkSpecificData) = apply {
+                    mastercard = networkSpecificData.mastercard
+                    visa = networkSpecificData.visa
+                    additionalProperties = networkSpecificData.additionalProperties.toMutableMap()
+                }
+
+                fun mastercard(mastercard: MastercardNetworkSpecificData) =
+                    mastercard(JsonField.of(mastercard))
+
+                /**
+                 * Sets [Builder.mastercard] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.mastercard] with a well-typed
+                 * [MastercardNetworkSpecificData] value instead. This method is primarily for
+                 * setting the field to an undocumented or not yet supported value.
+                 */
+                fun mastercard(mastercard: JsonField<MastercardNetworkSpecificData>) = apply {
+                    this.mastercard = mastercard
+                }
+
+                fun visa(visa: VisaNetworkSpecificData) = visa(JsonField.of(visa))
+
+                /**
+                 * Sets [Builder.visa] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.visa] with a well-typed
+                 * [VisaNetworkSpecificData] value instead. This method is primarily for setting the
+                 * field to an undocumented or not yet supported value.
+                 */
+                fun visa(visa: JsonField<VisaNetworkSpecificData>) = apply { this.visa = visa }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [NetworkSpecificData].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .mastercard()
+                 * .visa()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): NetworkSpecificData =
+                    NetworkSpecificData(
+                        checkRequired("mastercard", mastercard),
+                        checkRequired("visa", visa),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): NetworkSpecificData = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                mastercard().validate()
+                visa().validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (mastercard.asKnown()?.validity() ?: 0) + (visa.asKnown()?.validity() ?: 0)
+
+            class MastercardNetworkSpecificData
+            private constructor(
+                private val ecommerceSecurityLevelIndicator: JsonField<String>,
+                private val onBehalfServiceResult: JsonField<List<OnBehalfServiceResult>>,
+                private val transactionTypeIdentifier: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("ecommerce_security_level_indicator")
+                    @ExcludeMissing
+                    ecommerceSecurityLevelIndicator: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("on_behalf_service_result")
+                    @ExcludeMissing
+                    onBehalfServiceResult: JsonField<List<OnBehalfServiceResult>> =
+                        JsonMissing.of(),
+                    @JsonProperty("transaction_type_identifier")
+                    @ExcludeMissing
+                    transactionTypeIdentifier: JsonField<String> = JsonMissing.of(),
+                ) : this(
+                    ecommerceSecurityLevelIndicator,
+                    onBehalfServiceResult,
+                    transactionTypeIdentifier,
+                    mutableMapOf(),
+                )
+
+                /**
+                 * Indicates the electronic commerce security level and UCAF collection.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun ecommerceSecurityLevelIndicator(): String? =
+                    ecommerceSecurityLevelIndicator.getNullable(
+                        "ecommerce_security_level_indicator"
+                    )
+
+                /**
+                 * The On-behalf Service performed on the transaction and the results. Contains all
+                 * applicable, on-behalf service results that were performed on a given transaction.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun onBehalfServiceResult(): List<OnBehalfServiceResult>? =
+                    onBehalfServiceResult.getNullable("on_behalf_service_result")
+
+                /**
+                 * Indicates the type of additional transaction purpose.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun transactionTypeIdentifier(): String? =
+                    transactionTypeIdentifier.getNullable("transaction_type_identifier")
+
+                /**
+                 * Returns the raw JSON value of [ecommerceSecurityLevelIndicator].
+                 *
+                 * Unlike [ecommerceSecurityLevelIndicator], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("ecommerce_security_level_indicator")
+                @ExcludeMissing
+                fun _ecommerceSecurityLevelIndicator(): JsonField<String> =
+                    ecommerceSecurityLevelIndicator
+
+                /**
+                 * Returns the raw JSON value of [onBehalfServiceResult].
+                 *
+                 * Unlike [onBehalfServiceResult], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("on_behalf_service_result")
+                @ExcludeMissing
+                fun _onBehalfServiceResult(): JsonField<List<OnBehalfServiceResult>> =
+                    onBehalfServiceResult
+
+                /**
+                 * Returns the raw JSON value of [transactionTypeIdentifier].
+                 *
+                 * Unlike [transactionTypeIdentifier], this method doesn't throw if the JSON field
+                 * has an unexpected type.
+                 */
+                @JsonProperty("transaction_type_identifier")
+                @ExcludeMissing
+                fun _transactionTypeIdentifier(): JsonField<String> = transactionTypeIdentifier
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [MastercardNetworkSpecificData].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .ecommerceSecurityLevelIndicator()
+                     * .onBehalfServiceResult()
+                     * .transactionTypeIdentifier()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [MastercardNetworkSpecificData]. */
+                class Builder internal constructor() {
+
+                    private var ecommerceSecurityLevelIndicator: JsonField<String>? = null
+                    private var onBehalfServiceResult:
+                        JsonField<MutableList<OnBehalfServiceResult>>? =
+                        null
+                    private var transactionTypeIdentifier: JsonField<String>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        mastercardNetworkSpecificData: MastercardNetworkSpecificData
+                    ) = apply {
+                        ecommerceSecurityLevelIndicator =
+                            mastercardNetworkSpecificData.ecommerceSecurityLevelIndicator
+                        onBehalfServiceResult =
+                            mastercardNetworkSpecificData.onBehalfServiceResult.map {
+                                it.toMutableList()
+                            }
+                        transactionTypeIdentifier =
+                            mastercardNetworkSpecificData.transactionTypeIdentifier
+                        additionalProperties =
+                            mastercardNetworkSpecificData.additionalProperties.toMutableMap()
+                    }
+
+                    /** Indicates the electronic commerce security level and UCAF collection. */
+                    fun ecommerceSecurityLevelIndicator(ecommerceSecurityLevelIndicator: String?) =
+                        ecommerceSecurityLevelIndicator(
+                            JsonField.ofNullable(ecommerceSecurityLevelIndicator)
+                        )
+
+                    /**
+                     * Sets [Builder.ecommerceSecurityLevelIndicator] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.ecommerceSecurityLevelIndicator] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun ecommerceSecurityLevelIndicator(
+                        ecommerceSecurityLevelIndicator: JsonField<String>
+                    ) = apply {
+                        this.ecommerceSecurityLevelIndicator = ecommerceSecurityLevelIndicator
+                    }
+
+                    /**
+                     * The On-behalf Service performed on the transaction and the results. Contains
+                     * all applicable, on-behalf service results that were performed on a given
+                     * transaction.
+                     */
+                    fun onBehalfServiceResult(onBehalfServiceResult: List<OnBehalfServiceResult>?) =
+                        onBehalfServiceResult(JsonField.ofNullable(onBehalfServiceResult))
+
+                    /**
+                     * Sets [Builder.onBehalfServiceResult] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.onBehalfServiceResult] with a well-typed
+                     * `List<OnBehalfServiceResult>` value instead. This method is primarily for
+                     * setting the field to an undocumented or not yet supported value.
+                     */
+                    fun onBehalfServiceResult(
+                        onBehalfServiceResult: JsonField<List<OnBehalfServiceResult>>
+                    ) = apply {
+                        this.onBehalfServiceResult =
+                            onBehalfServiceResult.map { it.toMutableList() }
+                    }
+
+                    /**
+                     * Adds a single [OnBehalfServiceResult] to [Builder.onBehalfServiceResult].
+                     *
+                     * @throws IllegalStateException if the field was previously set to a non-list.
+                     */
+                    fun addOnBehalfServiceResult(onBehalfServiceResult: OnBehalfServiceResult) =
+                        apply {
+                            this.onBehalfServiceResult =
+                                (this.onBehalfServiceResult ?: JsonField.of(mutableListOf())).also {
+                                    checkKnown("onBehalfServiceResult", it)
+                                        .add(onBehalfServiceResult)
+                                }
+                        }
+
+                    /** Indicates the type of additional transaction purpose. */
+                    fun transactionTypeIdentifier(transactionTypeIdentifier: String?) =
+                        transactionTypeIdentifier(JsonField.ofNullable(transactionTypeIdentifier))
+
+                    /**
+                     * Sets [Builder.transactionTypeIdentifier] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.transactionTypeIdentifier] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun transactionTypeIdentifier(transactionTypeIdentifier: JsonField<String>) =
+                        apply {
+                            this.transactionTypeIdentifier = transactionTypeIdentifier
+                        }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [MastercardNetworkSpecificData].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .ecommerceSecurityLevelIndicator()
+                     * .onBehalfServiceResult()
+                     * .transactionTypeIdentifier()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): MastercardNetworkSpecificData =
+                        MastercardNetworkSpecificData(
+                            checkRequired(
+                                "ecommerceSecurityLevelIndicator",
+                                ecommerceSecurityLevelIndicator,
+                            ),
+                            checkRequired("onBehalfServiceResult", onBehalfServiceResult).map {
+                                it.toImmutable()
+                            },
+                            checkRequired("transactionTypeIdentifier", transactionTypeIdentifier),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): MastercardNetworkSpecificData = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    ecommerceSecurityLevelIndicator()
+                    onBehalfServiceResult()?.forEach { it.validate() }
+                    transactionTypeIdentifier()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (ecommerceSecurityLevelIndicator.asKnown() == null) 0 else 1) +
+                        (onBehalfServiceResult.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                        (if (transactionTypeIdentifier.asKnown() == null) 0 else 1)
+
+                class OnBehalfServiceResult
+                private constructor(
+                    private val result1: JsonField<String>,
+                    private val result2: JsonField<String>,
+                    private val service: JsonField<String>,
+                    private val additionalProperties: MutableMap<String, JsonValue>,
+                ) {
+
+                    @JsonCreator
+                    private constructor(
+                        @JsonProperty("result_1")
+                        @ExcludeMissing
+                        result1: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("result_2")
+                        @ExcludeMissing
+                        result2: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("service")
+                        @ExcludeMissing
+                        service: JsonField<String> = JsonMissing.of(),
+                    ) : this(result1, result2, service, mutableMapOf())
+
+                    /**
+                     * Indicates the results of the service processing.
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   or is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun result1(): String = result1.getRequired("result_1")
+
+                    /**
+                     * Identifies the results of the service processing.
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   or is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun result2(): String = result2.getRequired("result_2")
+
+                    /**
+                     * Indicates the service performed on the transaction.
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   or is unexpectedly missing or null (e.g. if the server responded with an
+                     *   unexpected value).
+                     */
+                    fun service(): String = service.getRequired("service")
+
+                    /**
+                     * Returns the raw JSON value of [result1].
+                     *
+                     * Unlike [result1], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("result_1")
+                    @ExcludeMissing
+                    fun _result1(): JsonField<String> = result1
+
+                    /**
+                     * Returns the raw JSON value of [result2].
+                     *
+                     * Unlike [result2], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("result_2")
+                    @ExcludeMissing
+                    fun _result2(): JsonField<String> = result2
+
+                    /**
+                     * Returns the raw JSON value of [service].
+                     *
+                     * Unlike [service], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("service")
+                    @ExcludeMissing
+                    fun _service(): JsonField<String> = service
+
+                    @JsonAnySetter
+                    private fun putAdditionalProperty(key: String, value: JsonValue) {
+                        additionalProperties.put(key, value)
+                    }
+
+                    @JsonAnyGetter
+                    @ExcludeMissing
+                    fun _additionalProperties(): Map<String, JsonValue> =
+                        Collections.unmodifiableMap(additionalProperties)
+
+                    fun toBuilder() = Builder().from(this)
+
+                    companion object {
+
+                        /**
+                         * Returns a mutable builder for constructing an instance of
+                         * [OnBehalfServiceResult].
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .result1()
+                         * .result2()
+                         * .service()
+                         * ```
+                         */
+                        fun builder() = Builder()
+                    }
+
+                    /** A builder for [OnBehalfServiceResult]. */
+                    class Builder internal constructor() {
+
+                        private var result1: JsonField<String>? = null
+                        private var result2: JsonField<String>? = null
+                        private var service: JsonField<String>? = null
+                        private var additionalProperties: MutableMap<String, JsonValue> =
+                            mutableMapOf()
+
+                        internal fun from(onBehalfServiceResult: OnBehalfServiceResult) = apply {
+                            result1 = onBehalfServiceResult.result1
+                            result2 = onBehalfServiceResult.result2
+                            service = onBehalfServiceResult.service
+                            additionalProperties =
+                                onBehalfServiceResult.additionalProperties.toMutableMap()
+                        }
+
+                        /** Indicates the results of the service processing. */
+                        fun result1(result1: String) = result1(JsonField.of(result1))
+
+                        /**
+                         * Sets [Builder.result1] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.result1] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun result1(result1: JsonField<String>) = apply { this.result1 = result1 }
+
+                        /** Identifies the results of the service processing. */
+                        fun result2(result2: String) = result2(JsonField.of(result2))
+
+                        /**
+                         * Sets [Builder.result2] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.result2] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun result2(result2: JsonField<String>) = apply { this.result2 = result2 }
+
+                        /** Indicates the service performed on the transaction. */
+                        fun service(service: String) = service(JsonField.of(service))
+
+                        /**
+                         * Sets [Builder.service] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.service] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun service(service: JsonField<String>) = apply { this.service = service }
+
+                        fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
+                            apply {
+                                this.additionalProperties.clear()
+                                putAllAdditionalProperties(additionalProperties)
+                            }
+
+                        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                            additionalProperties.put(key, value)
+                        }
+
+                        fun putAllAdditionalProperties(
+                            additionalProperties: Map<String, JsonValue>
+                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+
+                        fun removeAdditionalProperty(key: String) = apply {
+                            additionalProperties.remove(key)
+                        }
+
+                        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                            keys.forEach(::removeAdditionalProperty)
+                        }
+
+                        /**
+                         * Returns an immutable instance of [OnBehalfServiceResult].
+                         *
+                         * Further updates to this [Builder] will not mutate the returned instance.
+                         *
+                         * The following fields are required:
+                         * ```kotlin
+                         * .result1()
+                         * .result2()
+                         * .service()
+                         * ```
+                         *
+                         * @throws IllegalStateException if any required field is unset.
+                         */
+                        fun build(): OnBehalfServiceResult =
+                            OnBehalfServiceResult(
+                                checkRequired("result1", result1),
+                                checkRequired("result2", result2),
+                                checkRequired("service", service),
+                                additionalProperties.toMutableMap(),
+                            )
+                    }
+
+                    private var validated: Boolean = false
+
+                    fun validate(): OnBehalfServiceResult = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        result1()
+                        result2()
+                        service()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: LithicInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int =
+                        (if (result1.asKnown() == null) 0 else 1) +
+                            (if (result2.asKnown() == null) 0 else 1) +
+                            (if (service.asKnown() == null) 0 else 1)
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is OnBehalfServiceResult && result1 == other.result1 && result2 == other.result2 && service == other.service && additionalProperties == other.additionalProperties /* spotless:on */
+                    }
+
+                    /* spotless:off */
+                    private val hashCode: Int by lazy { Objects.hash(result1, result2, service, additionalProperties) }
+                    /* spotless:on */
+
+                    override fun hashCode(): Int = hashCode
+
+                    override fun toString() =
+                        "OnBehalfServiceResult{result1=$result1, result2=$result2, service=$service, additionalProperties=$additionalProperties}"
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is MastercardNetworkSpecificData && ecommerceSecurityLevelIndicator == other.ecommerceSecurityLevelIndicator && onBehalfServiceResult == other.onBehalfServiceResult && transactionTypeIdentifier == other.transactionTypeIdentifier && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(ecommerceSecurityLevelIndicator, onBehalfServiceResult, transactionTypeIdentifier, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "MastercardNetworkSpecificData{ecommerceSecurityLevelIndicator=$ecommerceSecurityLevelIndicator, onBehalfServiceResult=$onBehalfServiceResult, transactionTypeIdentifier=$transactionTypeIdentifier, additionalProperties=$additionalProperties}"
+            }
+
+            class VisaNetworkSpecificData
+            private constructor(
+                private val businessApplicationIdentifier: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("business_application_identifier")
+                    @ExcludeMissing
+                    businessApplicationIdentifier: JsonField<String> = JsonMissing.of()
+                ) : this(businessApplicationIdentifier, mutableMapOf())
+
+                /**
+                 * Identifies the purpose or category of a transaction, used to classify and process
+                 * transactions according to Visa’s rules.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun businessApplicationIdentifier(): String? =
+                    businessApplicationIdentifier.getNullable("business_application_identifier")
+
+                /**
+                 * Returns the raw JSON value of [businessApplicationIdentifier].
+                 *
+                 * Unlike [businessApplicationIdentifier], this method doesn't throw if the JSON
+                 * field has an unexpected type.
+                 */
+                @JsonProperty("business_application_identifier")
+                @ExcludeMissing
+                fun _businessApplicationIdentifier(): JsonField<String> =
+                    businessApplicationIdentifier
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of
+                     * [VisaNetworkSpecificData].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .businessApplicationIdentifier()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [VisaNetworkSpecificData]. */
+                class Builder internal constructor() {
+
+                    private var businessApplicationIdentifier: JsonField<String>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(visaNetworkSpecificData: VisaNetworkSpecificData) = apply {
+                        businessApplicationIdentifier =
+                            visaNetworkSpecificData.businessApplicationIdentifier
+                        additionalProperties =
+                            visaNetworkSpecificData.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * Identifies the purpose or category of a transaction, used to classify and
+                     * process transactions according to Visa’s rules.
+                     */
+                    fun businessApplicationIdentifier(businessApplicationIdentifier: String?) =
+                        businessApplicationIdentifier(
+                            JsonField.ofNullable(businessApplicationIdentifier)
+                        )
+
+                    /**
+                     * Sets [Builder.businessApplicationIdentifier] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.businessApplicationIdentifier] with a
+                     * well-typed [String] value instead. This method is primarily for setting the
+                     * field to an undocumented or not yet supported value.
+                     */
+                    fun businessApplicationIdentifier(
+                        businessApplicationIdentifier: JsonField<String>
+                    ) = apply { this.businessApplicationIdentifier = businessApplicationIdentifier }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [VisaNetworkSpecificData].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .businessApplicationIdentifier()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): VisaNetworkSpecificData =
+                        VisaNetworkSpecificData(
+                            checkRequired(
+                                "businessApplicationIdentifier",
+                                businessApplicationIdentifier,
+                            ),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): VisaNetworkSpecificData = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    businessApplicationIdentifier()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (businessApplicationIdentifier.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is VisaNetworkSpecificData && businessApplicationIdentifier == other.businessApplicationIdentifier && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(businessApplicationIdentifier, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "VisaNetworkSpecificData{businessApplicationIdentifier=$businessApplicationIdentifier, additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is NetworkSpecificData && mastercard == other.mastercard && visa == other.visa && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(mastercard, visa, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "NetworkSpecificData{mastercard=$mastercard, visa=$visa, additionalProperties=$additionalProperties}"
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is TransactionEvent && token == other.token && amount == other.amount && amounts == other.amounts && created == other.created && detailedResults == other.detailedResults && effectivePolarity == other.effectivePolarity && networkInfo == other.networkInfo && result == other.result && ruleResults == other.ruleResults && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TransactionEvent && token == other.token && amount == other.amount && amounts == other.amounts && created == other.created && detailedResults == other.detailedResults && effectivePolarity == other.effectivePolarity && networkInfo == other.networkInfo && result == other.result && ruleResults == other.ruleResults && type == other.type && networkSpecificData == other.networkSpecificData && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(token, amount, amounts, created, detailedResults, effectivePolarity, networkInfo, result, ruleResults, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(token, amount, amounts, created, detailedResults, effectivePolarity, networkInfo, result, ruleResults, type, networkSpecificData, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TransactionEvent{token=$token, amount=$amount, amounts=$amounts, created=$created, detailedResults=$detailedResults, effectivePolarity=$effectivePolarity, networkInfo=$networkInfo, result=$result, ruleResults=$ruleResults, type=$type, additionalProperties=$additionalProperties}"
+            "TransactionEvent{token=$token, amount=$amount, amounts=$amounts, created=$created, detailedResults=$detailedResults, effectivePolarity=$effectivePolarity, networkInfo=$networkInfo, result=$result, ruleResults=$ruleResults, type=$type, networkSpecificData=$networkSpecificData, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

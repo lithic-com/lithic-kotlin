@@ -840,6 +840,8 @@ private constructor(
 
                 val MANAGEMENT_REWARD = of("MANAGEMENT_REWARD")
 
+                val MANAGEMENT_DISBURSEMENT = of("MANAGEMENT_DISBURSEMENT")
+
                 fun of(value: String) = TransactionCategory(JsonField.of(value))
             }
 
@@ -856,6 +858,7 @@ private constructor(
                 MANAGEMENT_DISPUTE,
                 MANAGEMENT_FEE,
                 MANAGEMENT_REWARD,
+                MANAGEMENT_DISBURSEMENT,
             }
 
             /**
@@ -881,6 +884,7 @@ private constructor(
                 MANAGEMENT_DISPUTE,
                 MANAGEMENT_FEE,
                 MANAGEMENT_REWARD,
+                MANAGEMENT_DISBURSEMENT,
                 /**
                  * An enum member indicating that [TransactionCategory] was instantiated with an
                  * unknown value.
@@ -908,6 +912,7 @@ private constructor(
                     MANAGEMENT_DISPUTE -> Value.MANAGEMENT_DISPUTE
                     MANAGEMENT_FEE -> Value.MANAGEMENT_FEE
                     MANAGEMENT_REWARD -> Value.MANAGEMENT_REWARD
+                    MANAGEMENT_DISBURSEMENT -> Value.MANAGEMENT_DISBURSEMENT
                     else -> Value._UNKNOWN
                 }
 
@@ -933,6 +938,7 @@ private constructor(
                     MANAGEMENT_DISPUTE -> Known.MANAGEMENT_DISPUTE
                     MANAGEMENT_FEE -> Known.MANAGEMENT_FEE
                     MANAGEMENT_REWARD -> Known.MANAGEMENT_REWARD
+                    MANAGEMENT_DISBURSEMENT -> Known.MANAGEMENT_DISBURSEMENT
                     else -> throw LithicInvalidDataException("Unknown TransactionCategory: $value")
                 }
 
@@ -1134,6 +1140,8 @@ private constructor(
 
                 val RETURNED_PAYMENT_REVERSAL = of("RETURNED_PAYMENT_REVERSAL")
 
+                val LITHIC_NETWORK_PAYMENT = of("LITHIC_NETWORK_PAYMENT")
+
                 fun of(value: String) = FinancialEventType(JsonField.of(value))
             }
 
@@ -1204,6 +1212,7 @@ private constructor(
                 TRANSFER_INSUFFICIENT_FUNDS,
                 RETURNED_PAYMENT,
                 RETURNED_PAYMENT_REVERSAL,
+                LITHIC_NETWORK_PAYMENT,
             }
 
             /**
@@ -1283,6 +1292,7 @@ private constructor(
                 TRANSFER_INSUFFICIENT_FUNDS,
                 RETURNED_PAYMENT,
                 RETURNED_PAYMENT_REVERSAL,
+                LITHIC_NETWORK_PAYMENT,
                 /**
                  * An enum member indicating that [FinancialEventType] was instantiated with an
                  * unknown value.
@@ -1364,6 +1374,7 @@ private constructor(
                     TRANSFER_INSUFFICIENT_FUNDS -> Value.TRANSFER_INSUFFICIENT_FUNDS
                     RETURNED_PAYMENT -> Value.RETURNED_PAYMENT
                     RETURNED_PAYMENT_REVERSAL -> Value.RETURNED_PAYMENT_REVERSAL
+                    LITHIC_NETWORK_PAYMENT -> Value.LITHIC_NETWORK_PAYMENT
                     else -> Value._UNKNOWN
                 }
 
@@ -1443,6 +1454,7 @@ private constructor(
                     TRANSFER_INSUFFICIENT_FUNDS -> Known.TRANSFER_INSUFFICIENT_FUNDS
                     RETURNED_PAYMENT -> Known.RETURNED_PAYMENT
                     RETURNED_PAYMENT_REVERSAL -> Known.RETURNED_PAYMENT_REVERSAL
+                    LITHIC_NETWORK_PAYMENT -> Known.LITHIC_NETWORK_PAYMENT
                     else -> throw LithicInvalidDataException("Unknown FinancialEventType: $value")
                 }
 
