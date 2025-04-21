@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.87.1 (2025-04-21)
+
+Full Changelog: [v0.87.0...v0.87.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.0...v0.87.1)
+
+### Bug Fixes
+
+* **internal:** refresh schemas ([d6df86b](https://github.com/lithic-com/lithic-kotlin/commit/d6df86bd1f0186a119f314a470ee89be34b8ca6b))
+
 ## 0.87.0 (2025-04-18)
 
 Full Changelog: [v0.86.0...v0.87.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.86.0...v0.87.0)
