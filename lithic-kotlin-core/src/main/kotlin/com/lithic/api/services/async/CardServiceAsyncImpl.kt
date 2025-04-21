@@ -16,10 +16,9 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardConvertPhysicalParams
-import com.lithic.api.models.CardConvertPhysicalResponse
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 import com.lithic.api.models.CardEmbedParams
 import com.lithic.api.models.CardGetEmbedHtmlParams
 import com.lithic.api.models.CardGetEmbedUrlParams
@@ -29,17 +28,12 @@ import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardProvisionResponse
 import com.lithic.api.models.CardReissueParams
-import com.lithic.api.models.CardReissueResponse
 import com.lithic.api.models.CardRenewParams
-import com.lithic.api.models.CardRenewResponse
 import com.lithic.api.models.CardRetrieveParams
-import com.lithic.api.models.CardRetrieveResponse
 import com.lithic.api.models.CardRetrieveSpendLimitsParams
 import com.lithic.api.models.CardSearchByPanParams
-import com.lithic.api.models.CardSearchByPanResponse
 import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
-import com.lithic.api.models.CardUpdateResponse
 import com.lithic.api.services.async.cards.AggregateBalanceServiceAsync
 import com.lithic.api.services.async.cards.AggregateBalanceServiceAsyncImpl
 import com.lithic.api.services.async.cards.BalanceServiceAsync
@@ -77,24 +71,18 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun financialTransactions(): FinancialTransactionServiceAsync = financialTransactions
 
-    override suspend fun create(
-        params: CardCreateParams,
-        requestOptions: RequestOptions,
-    ): CardCreateResponse =
+    override suspend fun create(params: CardCreateParams, requestOptions: RequestOptions): Card =
         // post /v1/cards
         withRawResponse().create(params, requestOptions).parse()
 
     override suspend fun retrieve(
         params: CardRetrieveParams,
         requestOptions: RequestOptions,
-    ): CardRetrieveResponse =
+    ): Card =
         // get /v1/cards/{card_token}
         withRawResponse().retrieve(params, requestOptions).parse()
 
-    override suspend fun update(
-        params: CardUpdateParams,
-        requestOptions: RequestOptions,
-    ): CardUpdateResponse =
+    override suspend fun update(params: CardUpdateParams, requestOptions: RequestOptions): Card =
         // patch /v1/cards/{card_token}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -108,7 +96,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override suspend fun convertPhysical(
         params: CardConvertPhysicalParams,
         requestOptions: RequestOptions,
-    ): CardConvertPhysicalResponse =
+    ): Card =
         // post /v1/cards/{card_token}/convert_physical
         withRawResponse().convertPhysical(params, requestOptions).parse()
 
@@ -123,17 +111,11 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         // post /v1/cards/{card_token}/provision
         withRawResponse().provision(params, requestOptions).parse()
 
-    override suspend fun reissue(
-        params: CardReissueParams,
-        requestOptions: RequestOptions,
-    ): CardReissueResponse =
+    override suspend fun reissue(params: CardReissueParams, requestOptions: RequestOptions): Card =
         // post /v1/cards/{card_token}/reissue
         withRawResponse().reissue(params, requestOptions).parse()
 
-    override suspend fun renew(
-        params: CardRenewParams,
-        requestOptions: RequestOptions,
-    ): CardRenewResponse =
+    override suspend fun renew(params: CardRenewParams, requestOptions: RequestOptions): Card =
         // post /v1/cards/{card_token}/renew
         withRawResponse().renew(params, requestOptions).parse()
 
@@ -147,7 +129,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
     override suspend fun searchByPan(
         params: CardSearchByPanParams,
         requestOptions: RequestOptions,
-    ): CardSearchByPanResponse =
+    ): Card =
         // post /v1/cards/search_by_pan
         withRawResponse().searchByPan(params, requestOptions).parse()
 
@@ -177,13 +159,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         override fun financialTransactions(): FinancialTransactionServiceAsync.WithRawResponse =
             financialTransactions
 
-        private val createHandler: Handler<CardCreateResponse> =
-            jsonHandler<CardCreateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: CardCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardCreateResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -204,14 +186,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val retrieveHandler: Handler<CardRetrieveResponse> =
-            jsonHandler<CardRetrieveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun retrieve(
             params: CardRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardRetrieveResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -231,13 +212,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<CardUpdateResponse> =
-            jsonHandler<CardUpdateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun update(
             params: CardUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardUpdateResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -292,14 +273,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val convertPhysicalHandler: Handler<CardConvertPhysicalResponse> =
-            jsonHandler<CardConvertPhysicalResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val convertPhysicalHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun convertPhysical(
             params: CardConvertPhysicalParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardConvertPhysicalResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -365,14 +345,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val reissueHandler: Handler<CardReissueResponse> =
-            jsonHandler<CardReissueResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val reissueHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun reissue(
             params: CardReissueParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardReissueResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -393,13 +372,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val renewHandler: Handler<CardRenewResponse> =
-            jsonHandler<CardRenewResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val renewHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun renew(
             params: CardRenewParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardRenewResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -446,14 +425,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val searchByPanHandler: Handler<CardSearchByPanResponse> =
-            jsonHandler<CardSearchByPanResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val searchByPanHandler: Handler<Card> =
+            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
         override suspend fun searchByPan(
             params: CardSearchByPanParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<CardSearchByPanResponse> {
+        ): HttpResponseFor<Card> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

@@ -19,8 +19,8 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-/** Card details with potentially PCI sensitive information for Enterprise customers */
-class CardUpdateResponse
+/** Card details without PCI information */
+class NonPciCard
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -35,13 +35,11 @@ private constructor(
     private val type: JsonField<Type>,
     private val authRuleTokens: JsonField<List<String>>,
     private val cardholderCurrency: JsonField<String>,
-    private val cvv: JsonField<String>,
     private val digitalCardArtToken: JsonField<String>,
     private val expMonth: JsonField<String>,
     private val expYear: JsonField<String>,
     private val hostname: JsonField<String>,
     private val memo: JsonField<String>,
-    private val pan: JsonField<String>,
     private val pendingCommands: JsonField<List<String>>,
     private val productId: JsonField<String>,
     private val replacementFor: JsonField<String>,
@@ -79,7 +77,6 @@ private constructor(
         @JsonProperty("cardholder_currency")
         @ExcludeMissing
         cardholderCurrency: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("cvv") @ExcludeMissing cvv: JsonField<String> = JsonMissing.of(),
         @JsonProperty("digital_card_art_token")
         @ExcludeMissing
         digitalCardArtToken: JsonField<String> = JsonMissing.of(),
@@ -87,7 +84,6 @@ private constructor(
         @JsonProperty("exp_year") @ExcludeMissing expYear: JsonField<String> = JsonMissing.of(),
         @JsonProperty("hostname") @ExcludeMissing hostname: JsonField<String> = JsonMissing.of(),
         @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("pan") @ExcludeMissing pan: JsonField<String> = JsonMissing.of(),
         @JsonProperty("pending_commands")
         @ExcludeMissing
         pendingCommands: JsonField<List<String>> = JsonMissing.of(),
@@ -109,13 +105,11 @@ private constructor(
         type,
         authRuleTokens,
         cardholderCurrency,
-        cvv,
         digitalCardArtToken,
         expMonth,
         expYear,
         hostname,
         memo,
-        pan,
         pendingCommands,
         productId,
         replacementFor,
@@ -251,14 +245,6 @@ private constructor(
     fun cardholderCurrency(): String? = cardholderCurrency.getNullable("cardholder_currency")
 
     /**
-     * Three digit cvv printed on the back of the card.
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun cvv(): String? = cvv.getNullable("cvv")
-
-    /**
      * Specifies the digital card art to be displayed in the user's digital wallet after
      * tokenization. This artwork must be approved by Mastercard and configured by Lithic to use.
      *
@@ -298,15 +284,6 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun memo(): String? = memo.getNullable("memo")
-
-    /**
-     * Primary Account Number (PAN) (i.e. the card number). Customers must be PCI compliant to have
-     * PAN returned as a field in production. Please contact support@lithic.com for questions.
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun pan(): String? = pan.getNullable("pan")
 
     /**
      * Indicates if there are offline PIN changes pending card interaction with an offline PIN
@@ -443,13 +420,6 @@ private constructor(
     fun _cardholderCurrency(): JsonField<String> = cardholderCurrency
 
     /**
-     * Returns the raw JSON value of [cvv].
-     *
-     * Unlike [cvv], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("cvv") @ExcludeMissing fun _cvv(): JsonField<String> = cvv
-
-    /**
      * Returns the raw JSON value of [digitalCardArtToken].
      *
      * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an unexpected
@@ -486,13 +456,6 @@ private constructor(
      * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
-
-    /**
-     * Returns the raw JSON value of [pan].
-     *
-     * Unlike [pan], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("pan") @ExcludeMissing fun _pan(): JsonField<String> = pan
 
     /**
      * Returns the raw JSON value of [pendingCommands].
@@ -534,7 +497,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [CardUpdateResponse].
+         * Returns a mutable builder for constructing an instance of [NonPciCard].
          *
          * The following fields are required:
          * ```kotlin
@@ -554,7 +517,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [CardUpdateResponse]. */
+    /** A builder for [NonPciCard]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -570,43 +533,39 @@ private constructor(
         private var type: JsonField<Type>? = null
         private var authRuleTokens: JsonField<MutableList<String>>? = null
         private var cardholderCurrency: JsonField<String> = JsonMissing.of()
-        private var cvv: JsonField<String> = JsonMissing.of()
         private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var expMonth: JsonField<String> = JsonMissing.of()
         private var expYear: JsonField<String> = JsonMissing.of()
         private var hostname: JsonField<String> = JsonMissing.of()
         private var memo: JsonField<String> = JsonMissing.of()
-        private var pan: JsonField<String> = JsonMissing.of()
         private var pendingCommands: JsonField<MutableList<String>>? = null
         private var productId: JsonField<String> = JsonMissing.of()
         private var replacementFor: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(cardUpdateResponse: CardUpdateResponse) = apply {
-            token = cardUpdateResponse.token
-            accountToken = cardUpdateResponse.accountToken
-            cardProgramToken = cardUpdateResponse.cardProgramToken
-            created = cardUpdateResponse.created
-            funding = cardUpdateResponse.funding
-            lastFour = cardUpdateResponse.lastFour
-            pinStatus = cardUpdateResponse.pinStatus
-            spendLimit = cardUpdateResponse.spendLimit
-            spendLimitDuration = cardUpdateResponse.spendLimitDuration
-            state = cardUpdateResponse.state
-            type = cardUpdateResponse.type
-            authRuleTokens = cardUpdateResponse.authRuleTokens.map { it.toMutableList() }
-            cardholderCurrency = cardUpdateResponse.cardholderCurrency
-            cvv = cardUpdateResponse.cvv
-            digitalCardArtToken = cardUpdateResponse.digitalCardArtToken
-            expMonth = cardUpdateResponse.expMonth
-            expYear = cardUpdateResponse.expYear
-            hostname = cardUpdateResponse.hostname
-            memo = cardUpdateResponse.memo
-            pan = cardUpdateResponse.pan
-            pendingCommands = cardUpdateResponse.pendingCommands.map { it.toMutableList() }
-            productId = cardUpdateResponse.productId
-            replacementFor = cardUpdateResponse.replacementFor
-            additionalProperties = cardUpdateResponse.additionalProperties.toMutableMap()
+        internal fun from(nonPciCard: NonPciCard) = apply {
+            token = nonPciCard.token
+            accountToken = nonPciCard.accountToken
+            cardProgramToken = nonPciCard.cardProgramToken
+            created = nonPciCard.created
+            funding = nonPciCard.funding
+            lastFour = nonPciCard.lastFour
+            pinStatus = nonPciCard.pinStatus
+            spendLimit = nonPciCard.spendLimit
+            spendLimitDuration = nonPciCard.spendLimitDuration
+            state = nonPciCard.state
+            type = nonPciCard.type
+            authRuleTokens = nonPciCard.authRuleTokens.map { it.toMutableList() }
+            cardholderCurrency = nonPciCard.cardholderCurrency
+            digitalCardArtToken = nonPciCard.digitalCardArtToken
+            expMonth = nonPciCard.expMonth
+            expYear = nonPciCard.expYear
+            hostname = nonPciCard.hostname
+            memo = nonPciCard.memo
+            pendingCommands = nonPciCard.pendingCommands.map { it.toMutableList() }
+            productId = nonPciCard.productId
+            replacementFor = nonPciCard.replacementFor
+            additionalProperties = nonPciCard.additionalProperties.toMutableMap()
         }
 
         /** Globally unique identifier. */
@@ -824,17 +783,6 @@ private constructor(
             this.cardholderCurrency = cardholderCurrency
         }
 
-        /** Three digit cvv printed on the back of the card. */
-        fun cvv(cvv: String) = cvv(JsonField.of(cvv))
-
-        /**
-         * Sets [Builder.cvv] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.cvv] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun cvv(cvv: JsonField<String>) = apply { this.cvv = cvv }
-
         /**
          * Specifies the digital card art to be displayed in the user's digital wallet after
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
@@ -897,21 +845,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun memo(memo: JsonField<String>) = apply { this.memo = memo }
-
-        /**
-         * Primary Account Number (PAN) (i.e. the card number). Customers must be PCI compliant to
-         * have PAN returned as a field in production. Please contact support@lithic.com for
-         * questions.
-         */
-        fun pan(pan: String) = pan(JsonField.of(pan))
-
-        /**
-         * Sets [Builder.pan] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.pan] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun pan(pan: JsonField<String>) = apply { this.pan = pan }
 
         /**
          * Indicates if there are offline PIN changes pending card interaction with an offline PIN
@@ -998,7 +931,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [CardUpdateResponse].
+         * Returns an immutable instance of [NonPciCard].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -1019,8 +952,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): CardUpdateResponse =
-            CardUpdateResponse(
+        fun build(): NonPciCard =
+            NonPciCard(
                 checkRequired("token", token),
                 checkRequired("accountToken", accountToken),
                 checkRequired("cardProgramToken", cardProgramToken),
@@ -1034,13 +967,11 @@ private constructor(
                 checkRequired("type", type),
                 (authRuleTokens ?: JsonMissing.of()).map { it.toImmutable() },
                 cardholderCurrency,
-                cvv,
                 digitalCardArtToken,
                 expMonth,
                 expYear,
                 hostname,
                 memo,
-                pan,
                 (pendingCommands ?: JsonMissing.of()).map { it.toImmutable() },
                 productId,
                 replacementFor,
@@ -1050,7 +981,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): CardUpdateResponse = apply {
+    fun validate(): NonPciCard = apply {
         if (validated) {
             return@apply
         }
@@ -1068,13 +999,11 @@ private constructor(
         type().validate()
         authRuleTokens()
         cardholderCurrency()
-        cvv()
         digitalCardArtToken()
         expMonth()
         expYear()
         hostname()
         memo()
-        pan()
         pendingCommands()
         productId()
         replacementFor()
@@ -1108,13 +1037,11 @@ private constructor(
             (type.asKnown()?.validity() ?: 0) +
             (authRuleTokens.asKnown()?.size ?: 0) +
             (if (cardholderCurrency.asKnown() == null) 0 else 1) +
-            (if (cvv.asKnown() == null) 0 else 1) +
             (if (digitalCardArtToken.asKnown() == null) 0 else 1) +
             (if (expMonth.asKnown() == null) 0 else 1) +
             (if (expYear.asKnown() == null) 0 else 1) +
             (if (hostname.asKnown() == null) 0 else 1) +
             (if (memo.asKnown() == null) 0 else 1) +
-            (if (pan.asKnown() == null) 0 else 1) +
             (pendingCommands.asKnown()?.size ?: 0) +
             (if (productId.asKnown() == null) 0 else 1) +
             (if (replacementFor.asKnown() == null) 0 else 1)
@@ -2394,15 +2321,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardUpdateResponse && token == other.token && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && created == other.created && funding == other.funding && lastFour == other.lastFour && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && type == other.type && authRuleTokens == other.authRuleTokens && cardholderCurrency == other.cardholderCurrency && cvv == other.cvv && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && hostname == other.hostname && memo == other.memo && pan == other.pan && pendingCommands == other.pendingCommands && productId == other.productId && replacementFor == other.replacementFor && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is NonPciCard && token == other.token && accountToken == other.accountToken && cardProgramToken == other.cardProgramToken && created == other.created && funding == other.funding && lastFour == other.lastFour && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && type == other.type && authRuleTokens == other.authRuleTokens && cardholderCurrency == other.cardholderCurrency && digitalCardArtToken == other.digitalCardArtToken && expMonth == other.expMonth && expYear == other.expYear && hostname == other.hostname && memo == other.memo && pendingCommands == other.pendingCommands && productId == other.productId && replacementFor == other.replacementFor && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardProgramToken, created, funding, lastFour, pinStatus, spendLimit, spendLimitDuration, state, type, authRuleTokens, cardholderCurrency, cvv, digitalCardArtToken, expMonth, expYear, hostname, memo, pan, pendingCommands, productId, replacementFor, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(token, accountToken, cardProgramToken, created, funding, lastFour, pinStatus, spendLimit, spendLimitDuration, state, type, authRuleTokens, cardholderCurrency, digitalCardArtToken, expMonth, expYear, hostname, memo, pendingCommands, productId, replacementFor, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CardUpdateResponse{token=$token, accountToken=$accountToken, cardProgramToken=$cardProgramToken, created=$created, funding=$funding, lastFour=$lastFour, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, authRuleTokens=$authRuleTokens, cardholderCurrency=$cardholderCurrency, cvv=$cvv, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, hostname=$hostname, memo=$memo, pan=$pan, pendingCommands=$pendingCommands, productId=$productId, replacementFor=$replacementFor, additionalProperties=$additionalProperties}"
+        "NonPciCard{token=$token, accountToken=$accountToken, cardProgramToken=$cardProgramToken, created=$created, funding=$funding, lastFour=$lastFour, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, authRuleTokens=$authRuleTokens, cardholderCurrency=$cardholderCurrency, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, hostname=$hostname, memo=$memo, pendingCommands=$pendingCommands, productId=$productId, replacementFor=$replacementFor, additionalProperties=$additionalProperties}"
 }

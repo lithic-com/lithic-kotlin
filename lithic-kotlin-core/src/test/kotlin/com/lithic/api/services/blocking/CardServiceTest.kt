@@ -143,7 +143,7 @@ internal class CardServiceTest {
                 .build()
         val cardService = client.cards()
 
-        val response =
+        val card =
             cardService.convertPhysical(
                 CardConvertPhysicalParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -170,7 +170,7 @@ internal class CardServiceTest {
                     .build()
             )
 
-        response.validate()
+        card.validate()
     }
 
     @Test
@@ -221,7 +221,7 @@ internal class CardServiceTest {
                 .build()
         val cardService = client.cards()
 
-        val response =
+        val card =
             cardService.reissue(
                 CardReissueParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -248,7 +248,7 @@ internal class CardServiceTest {
                     .build()
             )
 
-        response.validate()
+        card.validate()
     }
 
     @Test
@@ -260,7 +260,7 @@ internal class CardServiceTest {
                 .build()
         val cardService = client.cards()
 
-        val response =
+        val card =
             cardService.renew(
                 CardRenewParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -289,7 +289,7 @@ internal class CardServiceTest {
                     .build()
             )
 
-        response.validate()
+        card.validate()
     }
 
     @Test
@@ -320,10 +320,10 @@ internal class CardServiceTest {
                 .build()
         val cardService = client.cards()
 
-        val response =
+        val card =
             cardService.searchByPan(CardSearchByPanParams.builder().pan("4111111289144142").build())
 
-        response.validate()
+        card.validate()
     }
 
     @Test
