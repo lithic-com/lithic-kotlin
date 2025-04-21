@@ -21,7 +21,7 @@ private constructor(
      *
      * @see [CardListPageResponse.data]
      */
-    fun data(): List<CardListResponse> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<NonPciCard> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardListPageResponse], but gracefully handles missing data.
@@ -114,9 +114,9 @@ private constructor(
             )
     }
 
-    class AutoPager(private val firstPage: CardListPageAsync) : Flow<CardListResponse> {
+    class AutoPager(private val firstPage: CardListPageAsync) : Flow<NonPciCard> {
 
-        override suspend fun collect(collector: FlowCollector<CardListResponse>) {
+        override suspend fun collect(collector: FlowCollector<NonPciCard>) {
             var page = firstPage
             var index = 0
             while (true) {

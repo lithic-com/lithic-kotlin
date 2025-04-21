@@ -48,8 +48,8 @@ This library requires Java 8 or later.
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
 // Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
@@ -57,7 +57,7 @@ val client: LithicClient = LithicOkHttpClient.fromEnv()
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
     .build()
-val card: CardCreateResponse = client.cards().create(params)
+val card: Card = client.cards().create(params)
 ```
 
 ## Client configuration
@@ -112,7 +112,7 @@ See this table for the available options:
 
 To send a request to the Lithic API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a Kotlin class.
 
-For example, `client.cards().create(...)` should be called with an instance of `CardCreateParams`, and it will return an instance of `CardCreateResponse`.
+For example, `client.cards().create(...)` should be called with an instance of `CardCreateParams`, and it will return an instance of `Card`.
 
 ## Immutability
 
@@ -129,8 +129,8 @@ The default client is synchronous. To switch to asynchronous execution, call the
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
 // Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
@@ -138,7 +138,7 @@ val client: LithicClient = LithicOkHttpClient.fromEnv()
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
     .build()
-val card: CardCreateResponse = client.async().cards().create(params)
+val card: Card = client.async().cards().create(params)
 ```
 
 Or create an asynchronous client from the beginning:
@@ -146,8 +146,8 @@ Or create an asynchronous client from the beginning:
 ```kotlin
 import com.lithic.api.client.LithicClientAsync
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
 // Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClientAsync = LithicOkHttpClientAsync.fromEnv()
@@ -155,7 +155,7 @@ val client: LithicClientAsync = LithicOkHttpClientAsync.fromEnv()
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
     .build()
-val card: CardCreateResponse = client.cards().create(params)
+val card: Card = client.cards().create(params)
 ```
 
 The asynchronous client supports the same options as the synchronous one, except most methods are [suspending](https://kotlinlang.org/docs/coroutines-guide.html).
@@ -169,13 +169,13 @@ To access this data, prefix any HTTP method call on a client or service with `wi
 ```kotlin
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
 val params: CardCreateParams = CardCreateParams.builder()
     .type(CardCreateParams.Type.SINGLE_USE)
     .build()
-val card: HttpResponseFor<CardCreateResponse> = client.cards().withRawResponse().create(params)
+val card: HttpResponseFor<Card> = client.cards().withRawResponse().create(params)
 
 val statusCode: Int = card.statusCode()
 val headers: Headers = card.headers()
@@ -184,9 +184,9 @@ val headers: Headers = card.headers()
 You can still deserialize the response into an instance of a Kotlin class if needed:
 
 ```kotlin
-import com.lithic.api.models.CardCreateResponse
+import com.lithic.api.models.Card
 
-val parsedCard: CardCreateResponse = card.parse()
+val parsedCard: Card = card.parse()
 ```
 
 ## Error handling
@@ -224,7 +224,7 @@ To iterate through all results across all pages, you can use `autoPager`, which 
 
 ```kotlin
 import com.lithic.api.models.CardListPage
-import com.lithic.api.models.CardListResponse
+import com.lithic.api.models.NonPciCard
 
 // As a Sequence:
 client.cards().list(params).autoPager()
@@ -247,7 +247,7 @@ If none of the above helpers meet your needs, you can also manually request page
 
 ```kotlin
 import com.lithic.api.models.CardListPage
-import com.lithic.api.models.CardListResponse
+import com.lithic.api.models.NonPciCard
 
 val page = client.cards().list(params)
 while (page != null) {
@@ -321,10 +321,10 @@ Requests time out after 1 minute by default.
 To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
-val card: CardCreateResponse = client.cards().create(
+val card: Card = client.cards().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
 )
 ```
@@ -545,18 +545,18 @@ By default, the SDK will not throw an exception in this case. It will throw [`Li
 If you would prefer to check that the response is completely well-typed upfront, then either call `validate()`:
 
 ```kotlin
-import com.lithic.api.models.CardCreateResponse
+import com.lithic.api.models.Card
 
-val card: CardCreateResponse = client.cards().create(params).validate()
+val card: Card = client.cards().create(params).validate()
 ```
 
 Or configure the method call to validate the response using the `responseValidation` method:
 
 ```kotlin
+import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
-import com.lithic.api.models.CardCreateResponse
 
-val card: CardCreateResponse = client.cards().create(
+val card: Card = client.cards().create(
   params, RequestOptions.builder().responseValidation(true).build()
 )
 ```
