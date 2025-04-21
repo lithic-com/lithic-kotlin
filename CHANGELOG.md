@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.87.2 (2025-04-21)
+
+Full Changelog: [v0.87.1...v0.87.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.1...v0.87.2)
+
+### Bug Fixes
+
+* **internals:** fix Card schema definition ([5114701](https://github.com/lithic-com/lithic-kotlin/commit/511470133fb8ad40a310366f252e909e402980ba))
+
 ## 0.87.1 (2025-04-21)
 
 Full Changelog: [v0.87.0...v0.87.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.0...v0.87.1)
