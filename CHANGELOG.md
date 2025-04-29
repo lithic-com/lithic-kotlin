@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.88.0 (2025-04-29)
+
+Full Changelog: [v0.87.2...v0.88.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.2...v0.88.0)
+
+### Features
+
+* **api:** adds new merchant lock Auth Rule ([095801f](https://github.com/lithic-com/lithic-kotlin/commit/095801f592991db0846dd280e15580cd38f6aa5a))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([8f8edaf](https://github.com/lithic-com/lithic-kotlin/commit/8f8edaf77625922d83d9d7a169a7ce67b717fe46))
+* **ci:** only use depot for staging repos ([bfbf076](https://github.com/lithic-com/lithic-kotlin/commit/bfbf07647cd165333dddcbc24589a5890287b504))
+* **ci:** run on more branches and use depot runners ([27310cd](https://github.com/lithic-com/lithic-kotlin/commit/27310cd9a2b18ac0f06fc6f09738c6f110834505))
+* **internal:** java 17 -&gt; 21 on ci ([29c45cb](https://github.com/lithic-com/lithic-kotlin/commit/29c45cb81994fc3c893d71a02ce4c2fa92067a30))
+
 ## 0.87.2 (2025-04-21)
 
 Full Changelog: [v0.87.1...v0.87.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.1...v0.87.2)
