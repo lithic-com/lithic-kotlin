@@ -1323,6 +1323,8 @@ private constructor(
 
                 val PROVISIONAL_CREDIT_REVERSAL = of("PROVISIONAL_CREDIT_REVERSAL")
 
+                val SERVICE = of("SERVICE")
+
                 val RETURN = of("RETURN")
 
                 val RETURN_REVERSAL = of("RETURN_REVERSAL")
@@ -1401,6 +1403,7 @@ private constructor(
                 LOSS_WRITE_OFF,
                 PROVISIONAL_CREDIT,
                 PROVISIONAL_CREDIT_REVERSAL,
+                SERVICE,
                 RETURN,
                 RETURN_REVERSAL,
                 TRANSFER,
@@ -1481,6 +1484,7 @@ private constructor(
                 LOSS_WRITE_OFF,
                 PROVISIONAL_CREDIT,
                 PROVISIONAL_CREDIT_REVERSAL,
+                SERVICE,
                 RETURN,
                 RETURN_REVERSAL,
                 TRANSFER,
@@ -1563,6 +1567,7 @@ private constructor(
                     LOSS_WRITE_OFF -> Value.LOSS_WRITE_OFF
                     PROVISIONAL_CREDIT -> Value.PROVISIONAL_CREDIT
                     PROVISIONAL_CREDIT_REVERSAL -> Value.PROVISIONAL_CREDIT_REVERSAL
+                    SERVICE -> Value.SERVICE
                     RETURN -> Value.RETURN
                     RETURN_REVERSAL -> Value.RETURN_REVERSAL
                     TRANSFER -> Value.TRANSFER
@@ -1643,6 +1648,7 @@ private constructor(
                     LOSS_WRITE_OFF -> Known.LOSS_WRITE_OFF
                     PROVISIONAL_CREDIT -> Known.PROVISIONAL_CREDIT
                     PROVISIONAL_CREDIT_REVERSAL -> Known.PROVISIONAL_CREDIT_REVERSAL
+                    SERVICE -> Known.SERVICE
                     RETURN -> Known.RETURN
                     RETURN_REVERSAL -> Known.RETURN_REVERSAL
                     TRANSFER -> Known.TRANSFER

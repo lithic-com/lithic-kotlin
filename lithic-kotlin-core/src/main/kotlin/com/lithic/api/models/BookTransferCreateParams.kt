@@ -1150,6 +1150,8 @@ private constructor(
 
             val DISPUTE_WON = of("DISPUTE_WON")
 
+            val SERVICE = of("SERVICE")
+
             val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = Type(JsonField.of(value))
@@ -1188,6 +1190,7 @@ private constructor(
             INACTIVITY_FEE_DOWN,
             PROVISIONAL_CREDIT,
             DISPUTE_WON,
+            SERVICE,
             TRANSFER,
         }
 
@@ -1232,6 +1235,7 @@ private constructor(
             INACTIVITY_FEE_DOWN,
             PROVISIONAL_CREDIT,
             DISPUTE_WON,
+            SERVICE,
             TRANSFER,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -1277,6 +1281,7 @@ private constructor(
                 INACTIVITY_FEE_DOWN -> Value.INACTIVITY_FEE_DOWN
                 PROVISIONAL_CREDIT -> Value.PROVISIONAL_CREDIT
                 DISPUTE_WON -> Value.DISPUTE_WON
+                SERVICE -> Value.SERVICE
                 TRANSFER -> Value.TRANSFER
                 else -> Value._UNKNOWN
             }
@@ -1323,6 +1328,7 @@ private constructor(
                 INACTIVITY_FEE_DOWN -> Known.INACTIVITY_FEE_DOWN
                 PROVISIONAL_CREDIT -> Known.PROVISIONAL_CREDIT
                 DISPUTE_WON -> Known.DISPUTE_WON
+                SERVICE -> Known.SERVICE
                 TRANSFER -> Known.TRANSFER
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
