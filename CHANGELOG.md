@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.88.1 (2025-05-05)
+
+Full Changelog: [v0.88.0...v0.88.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.88.0...v0.88.1)
+
+### Bug Fixes
+
+* **internals:** fix servers entry for /v2/auth_rules.get ([b4b4dcf](https://github.com/lithic-com/lithic-kotlin/commit/b4b4dcf287d75928cfaba6ddac9ebc22d01c9cec))
+
+
+### Chores
+
+* **internal:** update java toolchain ([3d8146a](https://github.com/lithic-com/lithic-kotlin/commit/3d8146a1caa48abceae3ef39284b6c96776baa75))
+
 ## 0.88.0 (2025-04-29)
 
 Full Changelog: [v0.87.2...v0.88.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.87.2...v0.88.0)
