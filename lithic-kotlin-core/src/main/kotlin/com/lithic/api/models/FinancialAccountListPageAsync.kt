@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.FinancialAccountServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [FinancialAccountServiceAsync.list] */
 class FinancialAccountListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: FinancialAccountServiceAsync,
     private val params: FinancialAccountListParams,
     private val response: FinancialAccountListPageResponse,
-) {
+) : PageAsync<FinancialAccount> {
 
     /**
      * Delegates to [FinancialAccountListPageResponse], but gracefully handles missing data.
@@ -30,14 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<FinancialAccount> = data()
 
-    fun getNextPageParams(): FinancialAccountListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): FinancialAccountListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): FinancialAccountListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): FinancialAccountListPageAsync = service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<FinancialAccount> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): FinancialAccountListParams = params
@@ -106,21 +108,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: FinancialAccountListPageAsync) : Flow<FinancialAccount> {
-
-        override suspend fun collect(collector: FlowCollector<FinancialAccount>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

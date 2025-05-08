@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.events.SubscriptionService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: SubscriptionService,
     private val params: EventSubscriptionListParams,
     private val response: EventSubscriptionListPageResponse,
-) {
+) : Page<EventSubscription> {
 
     /**
      * Delegates to [EventSubscriptionListPageResponse], but gracefully handles missing data.
@@ -28,23 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<EventSubscription> = data()
 
-    fun getNextPageParams(): EventSubscriptionListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): EventSubscriptionListParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    fun getNextPage(): EventSubscriptionListPage? = getNextPageParams()?.let { service.list(it) }
+    override fun nextPage(): EventSubscriptionListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<EventSubscription> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): EventSubscriptionListParams = params
@@ -112,22 +111,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: EventSubscriptionListPage) :
-        Sequence<EventSubscription> {
-
-        override fun iterator(): Iterator<EventSubscription> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

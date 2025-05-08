@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.reports.SettlementService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: SettlementService,
     private val params: ReportSettlementListDetailsParams,
     private val response: ReportSettlementListDetailsPageResponse,
-) {
+) : Page<SettlementDetail> {
 
     /**
      * Delegates to [ReportSettlementListDetailsPageResponse], but gracefully handles missing data.
@@ -28,24 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<SettlementDetail> = data()
 
-    fun getNextPageParams(): ReportSettlementListDetailsParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): ReportSettlementListDetailsParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    fun getNextPage(): ReportSettlementListDetailsPage? =
-        getNextPageParams()?.let { service.listDetails(it) }
+    override fun nextPage(): ReportSettlementListDetailsPage = service.listDetails(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<SettlementDetail> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): ReportSettlementListDetailsParams = params
@@ -115,22 +113,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: ReportSettlementListDetailsPage) :
-        Sequence<SettlementDetail> {
-
-        override fun iterator(): Iterator<SettlementDetail> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

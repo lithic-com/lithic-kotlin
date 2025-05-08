@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.AccountHolderService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: AccountHolderService,
     private val params: AccountHolderListParams,
     private val response: AccountHolderListPageResponse,
-) {
+) : Page<AccountHolder> {
 
     /**
      * Delegates to [AccountHolderListPageResponse], but gracefully handles missing data.
@@ -28,13 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<AccountHolder> = data()
 
-    fun getNextPageParams(): AccountHolderListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPage(): AccountHolderListPage? = getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): AccountHolderListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override fun nextPage(): AccountHolderListPage = service.list(nextPageParams())
+
+    fun autoPager(): AutoPager<AccountHolder> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): AccountHolderListParams = params
@@ -100,21 +105,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: AccountHolderListPage) : Sequence<AccountHolder> {
-
-        override fun iterator(): Iterator<AccountHolder> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
