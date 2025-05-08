@@ -20,9 +20,25 @@ interface EnhancedCommercialDataService {
      * sandbox.
      */
     fun retrieve(
+        eventToken: String,
+        params: TransactionEventEnhancedCommercialDataRetrieveParams =
+            TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EnhancedData = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: TransactionEventEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedData
+
+    /** @see [retrieve] */
+    fun retrieve(eventToken: String, requestOptions: RequestOptions): EnhancedData =
+        retrieve(
+            eventToken,
+            TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [EnhancedCommercialDataService] that provides access to raw HTTP responses for each
@@ -37,8 +53,30 @@ interface EnhancedCommercialDataService {
          */
         @MustBeClosed
         fun retrieve(
+            eventToken: String,
+            params: TransactionEventEnhancedCommercialDataRetrieveParams =
+                TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EnhancedData> =
+            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: TransactionEventEnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedData>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            eventToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EnhancedData> =
+            retrieve(
+                eventToken,
+                TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

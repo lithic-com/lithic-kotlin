@@ -11,7 +11,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -29,13 +28,13 @@ import java.util.Objects
  */
 class TokenizationUpdateDigitalCardArtParams
 private constructor(
-    private val tokenizationToken: String,
+    private val tokenizationToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun tokenizationToken(): String = tokenizationToken
+    fun tokenizationToken(): String? = tokenizationToken
 
     /**
      * Specifies the digital card art to be displayed in the user’s digital wallet for a
@@ -66,14 +65,11 @@ private constructor(
 
     companion object {
 
+        fun none(): TokenizationUpdateDigitalCardArtParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [TokenizationUpdateDigitalCardArtParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -96,7 +92,7 @@ private constructor(
                 tokenizationUpdateDigitalCardArtParams.additionalQueryParams.toBuilder()
         }
 
-        fun tokenizationToken(tokenizationToken: String) = apply {
+        fun tokenizationToken(tokenizationToken: String?) = apply {
             this.tokenizationToken = tokenizationToken
         }
 
@@ -251,17 +247,10 @@ private constructor(
          * Returns an immutable instance of [TokenizationUpdateDigitalCardArtParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TokenizationUpdateDigitalCardArtParams =
             TokenizationUpdateDigitalCardArtParams(
-                checkRequired("tokenizationToken", tokenizationToken),
+                tokenizationToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -272,7 +261,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> tokenizationToken
+            0 -> tokenizationToken ?: ""
             else -> ""
         }
 

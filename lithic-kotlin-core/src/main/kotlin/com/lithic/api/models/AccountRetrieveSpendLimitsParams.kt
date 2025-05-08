@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -16,12 +15,12 @@ import java.util.Objects
  */
 class AccountRetrieveSpendLimitsParams
 private constructor(
-    private val accountToken: String,
+    private val accountToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun accountToken(): String = accountToken
+    fun accountToken(): String? = accountToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -31,14 +30,11 @@ private constructor(
 
     companion object {
 
+        fun none(): AccountRetrieveSpendLimitsParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [AccountRetrieveSpendLimitsParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .accountToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -58,7 +54,7 @@ private constructor(
                     accountRetrieveSpendLimitsParams.additionalQueryParams.toBuilder()
             }
 
-        fun accountToken(accountToken: String) = apply { this.accountToken = accountToken }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -162,17 +158,10 @@ private constructor(
          * Returns an immutable instance of [AccountRetrieveSpendLimitsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .accountToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AccountRetrieveSpendLimitsParams =
             AccountRetrieveSpendLimitsParams(
-                checkRequired("accountToken", accountToken),
+                accountToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -180,7 +169,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> accountToken
+            0 -> accountToken ?: ""
             else -> ""
         }
 

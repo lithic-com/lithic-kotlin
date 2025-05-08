@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -17,7 +16,7 @@ import java.util.Objects
 /** List all the message attempts for a given event subscription. */
 class EventSubscriptionListAttemptsParams
 private constructor(
-    private val eventSubscriptionToken: String,
+    private val eventSubscriptionToken: String?,
     private val begin: OffsetDateTime?,
     private val end: OffsetDateTime?,
     private val endingBefore: String?,
@@ -28,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun eventSubscriptionToken(): String = eventSubscriptionToken
+    fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     /**
      * Date string in RFC 3339 format. Only entries created after the specified time will be
@@ -67,14 +66,11 @@ private constructor(
 
     companion object {
 
+        fun none(): EventSubscriptionListAttemptsParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [EventSubscriptionListAttemptsParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -107,7 +103,7 @@ private constructor(
                 eventSubscriptionListAttemptsParams.additionalQueryParams.toBuilder()
         }
 
-        fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
+        fun eventSubscriptionToken(eventSubscriptionToken: String?) = apply {
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
@@ -249,17 +245,10 @@ private constructor(
          * Returns an immutable instance of [EventSubscriptionListAttemptsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): EventSubscriptionListAttemptsParams =
             EventSubscriptionListAttemptsParams(
-                checkRequired("eventSubscriptionToken", eventSubscriptionToken),
+                eventSubscriptionToken,
                 begin,
                 end,
                 endingBefore,
@@ -273,7 +262,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventSubscriptionToken
+            0 -> eventSubscriptionToken ?: ""
             else -> ""
         }
 

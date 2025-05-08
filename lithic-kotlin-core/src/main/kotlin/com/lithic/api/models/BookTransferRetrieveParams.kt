@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get book transfer by token */
 class BookTransferRetrieveParams
 private constructor(
-    private val bookTransferToken: String,
+    private val bookTransferToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun bookTransferToken(): String = bookTransferToken
+    fun bookTransferToken(): String? = bookTransferToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,13 +25,10 @@ private constructor(
 
     companion object {
 
+        fun none(): BookTransferRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BookTransferRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .bookTransferToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -50,7 +46,7 @@ private constructor(
             additionalQueryParams = bookTransferRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun bookTransferToken(bookTransferToken: String) = apply {
+        fun bookTransferToken(bookTransferToken: String?) = apply {
             this.bookTransferToken = bookTransferToken
         }
 
@@ -156,17 +152,10 @@ private constructor(
          * Returns an immutable instance of [BookTransferRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .bookTransferToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BookTransferRetrieveParams =
             BookTransferRetrieveParams(
-                checkRequired("bookTransferToken", bookTransferToken),
+                bookTransferToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -174,7 +163,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> bookTransferToken
+            0 -> bookTransferToken ?: ""
             else -> ""
         }
 

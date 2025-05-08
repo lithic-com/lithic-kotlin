@@ -20,9 +20,25 @@ interface EnhancedCommercialDataServiceAsync {
      * sandbox.
      */
     suspend fun retrieve(
+        eventToken: String,
+        params: TransactionEventEnhancedCommercialDataRetrieveParams =
+            TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EnhancedData = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: TransactionEventEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedData
+
+    /** @see [retrieve] */
+    suspend fun retrieve(eventToken: String, requestOptions: RequestOptions): EnhancedData =
+        retrieve(
+            eventToken,
+            TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [EnhancedCommercialDataServiceAsync] that provides access to raw HTTP responses for
@@ -37,8 +53,30 @@ interface EnhancedCommercialDataServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            eventToken: String,
+            params: TransactionEventEnhancedCommercialDataRetrieveParams =
+                TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EnhancedData> =
+            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: TransactionEventEnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedData>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            eventToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EnhancedData> =
+            retrieve(
+                eventToken,
+                TransactionEventEnhancedCommercialDataRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

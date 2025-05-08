@@ -29,9 +29,24 @@ interface BookTransferServiceAsync {
 
     /** Get book transfer by token */
     suspend fun retrieve(
+        bookTransferToken: String,
+        params: BookTransferRetrieveParams = BookTransferRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BookTransferResponse =
+        retrieve(params.toBuilder().bookTransferToken(bookTransferToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: BookTransferRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        bookTransferToken: String,
+        requestOptions: RequestOptions,
+    ): BookTransferResponse =
+        retrieve(bookTransferToken, BookTransferRetrieveParams.none(), requestOptions)
 
     /** List book transfers */
     suspend fun list(
@@ -45,9 +60,24 @@ interface BookTransferServiceAsync {
 
     /** Reverse a book transfer */
     suspend fun reverse(
+        bookTransferToken: String,
+        params: BookTransferReverseParams = BookTransferReverseParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BookTransferResponse =
+        reverse(params.toBuilder().bookTransferToken(bookTransferToken).build(), requestOptions)
+
+    /** @see [reverse] */
+    suspend fun reverse(
         params: BookTransferReverseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BookTransferResponse
+
+    /** @see [reverse] */
+    suspend fun reverse(
+        bookTransferToken: String,
+        requestOptions: RequestOptions,
+    ): BookTransferResponse =
+        reverse(bookTransferToken, BookTransferReverseParams.none(), requestOptions)
 
     /**
      * A view of [BookTransferServiceAsync] that provides access to raw HTTP responses for each
@@ -71,9 +101,29 @@ interface BookTransferServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            bookTransferToken: String,
+            params: BookTransferRetrieveParams = BookTransferRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BookTransferResponse> =
+            retrieve(
+                params.toBuilder().bookTransferToken(bookTransferToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: BookTransferRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BookTransferResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            bookTransferToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BookTransferResponse> =
+            retrieve(bookTransferToken, BookTransferRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/book_transfers`, but is otherwise the same as
@@ -98,8 +148,25 @@ interface BookTransferServiceAsync {
          */
         @MustBeClosed
         suspend fun reverse(
+            bookTransferToken: String,
+            params: BookTransferReverseParams = BookTransferReverseParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BookTransferResponse> =
+            reverse(params.toBuilder().bookTransferToken(bookTransferToken).build(), requestOptions)
+
+        /** @see [reverse] */
+        @MustBeClosed
+        suspend fun reverse(
             params: BookTransferReverseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BookTransferResponse>
+
+        /** @see [reverse] */
+        @MustBeClosed
+        suspend fun reverse(
+            bookTransferToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BookTransferResponse> =
+            reverse(bookTransferToken, BookTransferReverseParams.none(), requestOptions)
     }
 }

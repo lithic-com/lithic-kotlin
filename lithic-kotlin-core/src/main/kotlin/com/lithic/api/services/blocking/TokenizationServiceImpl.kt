@@ -5,6 +5,7 @@ package com.lithic.api.services.blocking
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
@@ -110,6 +111,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TokenizationRetrieveResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -169,6 +173,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationActivateParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -188,6 +195,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationDeactivateParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -206,6 +216,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationPauseParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -225,6 +238,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationResendActivationCodeParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -276,6 +292,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationUnpauseParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -296,6 +315,9 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             params: TokenizationUpdateDigitalCardArtParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("tokenizationToken", params.tokenizationToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

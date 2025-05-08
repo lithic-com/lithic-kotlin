@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get a financial account */
 class FinancialAccountRetrieveParams
 private constructor(
-    private val financialAccountToken: String,
+    private val financialAccountToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun financialAccountToken(): String = financialAccountToken
+    fun financialAccountToken(): String? = financialAccountToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,11 @@ private constructor(
 
     companion object {
 
+        fun none(): FinancialAccountRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [FinancialAccountRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .financialAccountToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -51,7 +47,7 @@ private constructor(
             additionalQueryParams = financialAccountRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun financialAccountToken(financialAccountToken: String) = apply {
+        fun financialAccountToken(financialAccountToken: String?) = apply {
             this.financialAccountToken = financialAccountToken
         }
 
@@ -157,17 +153,10 @@ private constructor(
          * Returns an immutable instance of [FinancialAccountRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .financialAccountToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): FinancialAccountRetrieveParams =
             FinancialAccountRetrieveParams(
-                checkRequired("financialAccountToken", financialAccountToken),
+                financialAccountToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -175,7 +164,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> financialAccountToken
+            0 -> financialAccountToken ?: ""
             else -> ""
         }
 

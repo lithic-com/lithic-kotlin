@@ -12,7 +12,7 @@ import java.util.Objects
 class FinancialAccountLoanTapeRetrieveParams
 private constructor(
     private val financialAccountToken: String,
-    private val loanTapeToken: String,
+    private val loanTapeToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -21,7 +21,7 @@ private constructor(
     fun financialAccountToken(): String = financialAccountToken
 
     /** Globally unique identifier for loan tape. */
-    fun loanTapeToken(): String = loanTapeToken
+    fun loanTapeToken(): String? = loanTapeToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -38,7 +38,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .loanTapeToken()
          * ```
          */
         fun builder() = Builder()
@@ -68,7 +67,7 @@ private constructor(
         }
 
         /** Globally unique identifier for loan tape. */
-        fun loanTapeToken(loanTapeToken: String) = apply { this.loanTapeToken = loanTapeToken }
+        fun loanTapeToken(loanTapeToken: String?) = apply { this.loanTapeToken = loanTapeToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -176,7 +175,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .loanTapeToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -184,7 +182,7 @@ private constructor(
         fun build(): FinancialAccountLoanTapeRetrieveParams =
             FinancialAccountLoanTapeRetrieveParams(
                 checkRequired("financialAccountToken", financialAccountToken),
-                checkRequired("loanTapeToken", loanTapeToken),
+                loanTapeToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -193,7 +191,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> financialAccountToken
-            1 -> loanTapeToken
+            1 -> loanTapeToken ?: ""
             else -> ""
         }
 

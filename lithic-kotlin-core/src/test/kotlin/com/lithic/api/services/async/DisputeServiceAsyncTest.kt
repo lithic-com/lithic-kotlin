@@ -6,11 +6,8 @@ import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
 import com.lithic.api.models.DisputeCreateParams
 import com.lithic.api.models.DisputeDeleteEvidenceParams
-import com.lithic.api.models.DisputeDeleteParams
 import com.lithic.api.models.DisputeInitiateEvidenceUploadParams
-import com.lithic.api.models.DisputeListEvidencesParams
 import com.lithic.api.models.DisputeRetrieveEvidenceParams
-import com.lithic.api.models.DisputeRetrieveParams
 import com.lithic.api.models.DisputeUpdateParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -51,12 +48,7 @@ internal class DisputeServiceAsyncTest {
                 .build()
         val disputeServiceAsync = client.disputes()
 
-        val dispute =
-            disputeServiceAsync.retrieve(
-                DisputeRetrieveParams.builder()
-                    .disputeToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val dispute = disputeServiceAsync.retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         dispute.validate()
     }
@@ -107,12 +99,7 @@ internal class DisputeServiceAsyncTest {
                 .build()
         val disputeServiceAsync = client.disputes()
 
-        val dispute =
-            disputeServiceAsync.delete(
-                DisputeDeleteParams.builder()
-                    .disputeToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val dispute = disputeServiceAsync.delete("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         dispute.validate()
     }
@@ -166,12 +153,7 @@ internal class DisputeServiceAsyncTest {
                 .build()
         val disputeServiceAsync = client.disputes()
 
-        val page =
-            disputeServiceAsync.listEvidences(
-                DisputeListEvidencesParams.builder()
-                    .disputeToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val page = disputeServiceAsync.listEvidences("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         page.response().validate()
     }

@@ -5,6 +5,7 @@ package com.lithic.api.services.async
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.stringHandler
@@ -186,6 +187,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Card> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -212,6 +216,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Card> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -273,6 +280,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardConvertPhysicalParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Card> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -318,6 +328,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardProvisionParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardProvisionResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -345,6 +358,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardReissueParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Card> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -372,6 +388,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardRenewParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Card> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -399,6 +418,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             params: CardRetrieveSpendLimitsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardSpendLimits> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("cardToken", params.cardToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

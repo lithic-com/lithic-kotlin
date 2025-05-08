@@ -19,15 +19,37 @@ interface PrimeRateService {
 
     /** Post Credit Product Prime Rate */
     fun create(
+        creditProductToken: String,
+        params: CreditProductPrimeRateCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = create(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+
+    /** @see [create] */
+    fun create(
         params: CreditProductPrimeRateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get Credit Product Prime Rates */
     fun retrieve(
+        creditProductToken: String,
+        params: CreditProductPrimeRateRetrieveParams = CreditProductPrimeRateRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PrimeRateRetrieveResponse =
+        retrieve(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: CreditProductPrimeRateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PrimeRateRetrieveResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        creditProductToken: String,
+        requestOptions: RequestOptions,
+    ): PrimeRateRetrieveResponse =
+        retrieve(creditProductToken, CreditProductPrimeRateRetrieveParams.none(), requestOptions)
 
     /** A view of [PrimeRateService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -37,6 +59,18 @@ interface PrimeRateService {
          * /v1/credit_products/{credit_product_token}/prime_rates`, but is otherwise the same as
          * [PrimeRateService.create].
          */
+        @MustBeClosed
+        fun create(
+            creditProductToken: String,
+            params: CreditProductPrimeRateCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            create(
+                params.toBuilder().creditProductToken(creditProductToken).build(),
+                requestOptions,
+            )
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: CreditProductPrimeRateCreateParams,
@@ -50,8 +84,33 @@ interface PrimeRateService {
          */
         @MustBeClosed
         fun retrieve(
+            creditProductToken: String,
+            params: CreditProductPrimeRateRetrieveParams =
+                CreditProductPrimeRateRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PrimeRateRetrieveResponse> =
+            retrieve(
+                params.toBuilder().creditProductToken(creditProductToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: CreditProductPrimeRateRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PrimeRateRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            creditProductToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PrimeRateRetrieveResponse> =
+            retrieve(
+                creditProductToken,
+                CreditProductPrimeRateRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

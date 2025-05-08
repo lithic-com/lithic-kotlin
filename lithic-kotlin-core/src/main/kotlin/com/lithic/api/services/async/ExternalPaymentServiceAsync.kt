@@ -30,9 +30,27 @@ interface ExternalPaymentServiceAsync {
 
     /** Get external payment */
     suspend fun retrieve(
+        externalPaymentToken: String,
+        params: ExternalPaymentRetrieveParams = ExternalPaymentRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalPayment =
+        retrieve(
+            params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: ExternalPaymentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        externalPaymentToken: String,
+        requestOptions: RequestOptions,
+    ): ExternalPayment =
+        retrieve(externalPaymentToken, ExternalPaymentRetrieveParams.none(), requestOptions)
 
     /** List external payments */
     suspend fun list(
@@ -46,11 +64,33 @@ interface ExternalPaymentServiceAsync {
 
     /** Cancel external payment */
     suspend fun cancel(
+        externalPaymentToken: String,
+        params: ExternalPaymentCancelParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalPayment =
+        cancel(
+            params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+            requestOptions,
+        )
+
+    /** @see [cancel] */
+    suspend fun cancel(
         params: ExternalPaymentCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Release external payment */
+    suspend fun release(
+        externalPaymentToken: String,
+        params: ExternalPaymentReleaseParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalPayment =
+        release(
+            params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+            requestOptions,
+        )
+
+    /** @see [release] */
     suspend fun release(
         params: ExternalPaymentReleaseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -58,11 +98,33 @@ interface ExternalPaymentServiceAsync {
 
     /** Reverse external payment */
     suspend fun reverse(
+        externalPaymentToken: String,
+        params: ExternalPaymentReverseParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalPayment =
+        reverse(
+            params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+            requestOptions,
+        )
+
+    /** @see [reverse] */
+    suspend fun reverse(
         params: ExternalPaymentReverseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
     /** Settle external payment */
+    suspend fun settle(
+        externalPaymentToken: String,
+        params: ExternalPaymentSettleParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalPayment =
+        settle(
+            params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+            requestOptions,
+        )
+
+    /** @see [settle] */
     suspend fun settle(
         params: ExternalPaymentSettleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -90,9 +152,29 @@ interface ExternalPaymentServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            externalPaymentToken: String,
+            params: ExternalPaymentRetrieveParams = ExternalPaymentRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalPayment> =
+            retrieve(
+                params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: ExternalPaymentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPayment>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            externalPaymentToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ExternalPayment> =
+            retrieve(externalPaymentToken, ExternalPaymentRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/external_payments`, but is otherwise the same as
@@ -118,6 +200,18 @@ interface ExternalPaymentServiceAsync {
          */
         @MustBeClosed
         suspend fun cancel(
+            externalPaymentToken: String,
+            params: ExternalPaymentCancelParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalPayment> =
+            cancel(
+                params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [cancel] */
+        @MustBeClosed
+        suspend fun cancel(
             params: ExternalPaymentCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPayment>
@@ -127,6 +221,18 @@ interface ExternalPaymentServiceAsync {
          * /v1/external_payments/{external_payment_token}/release`, but is otherwise the same as
          * [ExternalPaymentServiceAsync.release].
          */
+        @MustBeClosed
+        suspend fun release(
+            externalPaymentToken: String,
+            params: ExternalPaymentReleaseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalPayment> =
+            release(
+                params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [release] */
         @MustBeClosed
         suspend fun release(
             params: ExternalPaymentReleaseParams,
@@ -140,6 +246,18 @@ interface ExternalPaymentServiceAsync {
          */
         @MustBeClosed
         suspend fun reverse(
+            externalPaymentToken: String,
+            params: ExternalPaymentReverseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalPayment> =
+            reverse(
+                params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [reverse] */
+        @MustBeClosed
+        suspend fun reverse(
             params: ExternalPaymentReverseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPayment>
@@ -149,6 +267,18 @@ interface ExternalPaymentServiceAsync {
          * /v1/external_payments/{external_payment_token}/settle`, but is otherwise the same as
          * [ExternalPaymentServiceAsync.settle].
          */
+        @MustBeClosed
+        suspend fun settle(
+            externalPaymentToken: String,
+            params: ExternalPaymentSettleParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalPayment> =
+            settle(
+                params.toBuilder().externalPaymentToken(externalPaymentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [settle] */
         @MustBeClosed
         suspend fun settle(
             params: ExternalPaymentSettleParams,
