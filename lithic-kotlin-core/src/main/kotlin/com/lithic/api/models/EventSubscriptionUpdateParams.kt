@@ -24,13 +24,13 @@ import java.util.Objects
 /** Update an event subscription. */
 class EventSubscriptionUpdateParams
 private constructor(
-    private val eventSubscriptionToken: String,
+    private val eventSubscriptionToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun eventSubscriptionToken(): String = eventSubscriptionToken
+    fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     /**
      * URL to which event webhooks will be sent. URL must be a valid HTTPS address.
@@ -109,7 +109,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .eventSubscriptionToken()
          * .url()
          * ```
          */
@@ -131,7 +130,7 @@ private constructor(
             additionalQueryParams = eventSubscriptionUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
+        fun eventSubscriptionToken(eventSubscriptionToken: String?) = apply {
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
@@ -330,7 +329,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .eventSubscriptionToken()
          * .url()
          * ```
          *
@@ -338,7 +336,7 @@ private constructor(
          */
         fun build(): EventSubscriptionUpdateParams =
             EventSubscriptionUpdateParams(
-                checkRequired("eventSubscriptionToken", eventSubscriptionToken),
+                eventSubscriptionToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -349,7 +347,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventSubscriptionToken
+            0 -> eventSubscriptionToken ?: ""
             else -> ""
         }
 

@@ -4,7 +4,6 @@ package com.lithic.api.services.async.reports.settlement
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
-import com.lithic.api.models.ReportSettlementNetworkTotalRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -20,12 +19,7 @@ internal class NetworkTotalServiceAsyncTest {
                 .build()
         val networkTotalServiceAsync = client.reports().settlement().networkTotals()
 
-        val networkTotal =
-            networkTotalServiceAsync.retrieve(
-                ReportSettlementNetworkTotalRetrieveParams.builder()
-                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val networkTotal = networkTotalServiceAsync.retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         networkTotal.validate()
     }

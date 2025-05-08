@@ -5,6 +5,7 @@ package com.lithic.api.services.blocking.events
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.withErrorHandler
@@ -45,6 +46,9 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
             params: EventEventSubscriptionResendParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

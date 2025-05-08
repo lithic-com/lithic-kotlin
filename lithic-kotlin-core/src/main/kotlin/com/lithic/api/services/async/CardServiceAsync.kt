@@ -50,9 +50,20 @@ interface CardServiceAsync {
 
     /** Get card configuration such as spend limit and state. */
     suspend fun retrieve(
+        cardToken: String,
+        params: CardRetrieveParams = CardRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = retrieve(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: CardRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
+
+    /** @see [retrieve] */
+    suspend fun retrieve(cardToken: String, requestOptions: RequestOptions): Card =
+        retrieve(cardToken, CardRetrieveParams.none(), requestOptions)
 
     /**
      * Update the specified properties of the card. Unsupplied properties will remain unchanged.
@@ -60,9 +71,20 @@ interface CardServiceAsync {
      * _Note: setting a card to a `CLOSED` state is a final action that cannot be undone._
      */
     suspend fun update(
+        cardToken: String,
+        params: CardUpdateParams = CardUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = update(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: CardUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
+
+    /** @see [update] */
+    suspend fun update(cardToken: String, requestOptions: RequestOptions): Card =
+        update(cardToken, CardUpdateParams.none(), requestOptions)
 
     /** List cards. */
     suspend fun list(
@@ -84,6 +106,13 @@ interface CardServiceAsync {
      * be in an `OPEN` state to be converted. Only applies to cards of type `VIRTUAL` (or existing
      * cards with deprecated types of `DIGITAL_WALLET` and `UNLOCKED`).
      */
+    suspend fun convertPhysical(
+        cardToken: String,
+        params: CardConvertPhysicalParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = convertPhysical(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [convertPhysical] */
     suspend fun convertPhysical(
         params: CardConvertPhysicalParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -129,9 +158,23 @@ interface CardServiceAsync {
      * information.
      */
     suspend fun provision(
+        cardToken: String,
+        params: CardProvisionParams = CardProvisionParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardProvisionResponse =
+        provision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [provision] */
+    suspend fun provision(
         params: CardProvisionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProvisionResponse
+
+    /** @see [provision] */
+    suspend fun provision(
+        cardToken: String,
+        requestOptions: RequestOptions,
+    ): CardProvisionResponse = provision(cardToken, CardProvisionParams.none(), requestOptions)
 
     /**
      * Initiate print and shipment of a duplicate physical card (e.g. card is physically damaged).
@@ -140,9 +183,20 @@ interface CardServiceAsync {
      * reissued or renewed a total of 8 times.
      */
     suspend fun reissue(
+        cardToken: String,
+        params: CardReissueParams = CardReissueParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = reissue(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [reissue] */
+    suspend fun reissue(
         params: CardReissueParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
+
+    /** @see [reissue] */
+    suspend fun reissue(cardToken: String, requestOptions: RequestOptions): Card =
+        reissue(cardToken, CardReissueParams.none(), requestOptions)
 
     /**
      * Applies to card types `PHYSICAL` and `VIRTUAL`. For `PHYSICAL`, creates a new card with the
@@ -155,6 +209,13 @@ interface CardServiceAsync {
      * for renewing `PHYSICAL` cards.
      */
     suspend fun renew(
+        cardToken: String,
+        params: CardRenewParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = renew(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [renew] */
+    suspend fun renew(
         params: CardRenewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
@@ -166,9 +227,24 @@ interface CardServiceAsync {
      * spend limit returned would be $400.
      */
     suspend fun retrieveSpendLimits(
+        cardToken: String,
+        params: CardRetrieveSpendLimitsParams = CardRetrieveSpendLimitsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardSpendLimits =
+        retrieveSpendLimits(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [retrieveSpendLimits] */
+    suspend fun retrieveSpendLimits(
         params: CardRetrieveSpendLimitsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardSpendLimits
+
+    /** @see [retrieveSpendLimits] */
+    suspend fun retrieveSpendLimits(
+        cardToken: String,
+        requestOptions: RequestOptions,
+    ): CardSpendLimits =
+        retrieveSpendLimits(cardToken, CardRetrieveSpendLimitsParams.none(), requestOptions)
 
     /**
      * Get card configuration such as spend limit and state. Customers must be PCI compliant to use
@@ -216,9 +292,25 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            cardToken: String,
+            params: CardRetrieveParams = CardRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            retrieve(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: CardRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Card> = retrieve(cardToken, CardRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/cards/{card_token}`, but is otherwise the same
@@ -226,9 +318,25 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            cardToken: String,
+            params: CardUpdateParams = CardUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            update(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: CardUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Card> = update(cardToken, CardUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/cards`, but is otherwise the same as
@@ -251,6 +359,15 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun convertPhysical(
+            cardToken: String,
+            params: CardConvertPhysicalParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            convertPhysical(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [convertPhysical] */
+        @MustBeClosed
+        suspend fun convertPhysical(
             params: CardConvertPhysicalParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
@@ -271,9 +388,26 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun provision(
+            cardToken: String,
+            params: CardProvisionParams = CardProvisionParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardProvisionResponse> =
+            provision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [provision] */
+        @MustBeClosed
+        suspend fun provision(
             params: CardProvisionParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProvisionResponse>
+
+        /** @see [provision] */
+        @MustBeClosed
+        suspend fun provision(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CardProvisionResponse> =
+            provision(cardToken, CardProvisionParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/cards/{card_token}/reissue`, but is otherwise
@@ -281,14 +415,39 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun reissue(
+            cardToken: String,
+            params: CardReissueParams = CardReissueParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            reissue(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [reissue] */
+        @MustBeClosed
+        suspend fun reissue(
             params: CardReissueParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
+
+        /** @see [reissue] */
+        @MustBeClosed
+        suspend fun reissue(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Card> = reissue(cardToken, CardReissueParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/cards/{card_token}/renew`, but is otherwise the
          * same as [CardServiceAsync.renew].
          */
+        @MustBeClosed
+        suspend fun renew(
+            cardToken: String,
+            params: CardRenewParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            renew(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [renew] */
         @MustBeClosed
         suspend fun renew(
             params: CardRenewParams,
@@ -301,9 +460,26 @@ interface CardServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
+            cardToken: String,
+            params: CardRetrieveSpendLimitsParams = CardRetrieveSpendLimitsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardSpendLimits> =
+            retrieveSpendLimits(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [retrieveSpendLimits] */
+        @MustBeClosed
+        suspend fun retrieveSpendLimits(
             params: CardRetrieveSpendLimitsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardSpendLimits>
+
+        /** @see [retrieveSpendLimits] */
+        @MustBeClosed
+        suspend fun retrieveSpendLimits(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CardSpendLimits> =
+            retrieveSpendLimits(cardToken, CardRetrieveSpendLimitsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/cards/search_by_pan`, but is otherwise the same

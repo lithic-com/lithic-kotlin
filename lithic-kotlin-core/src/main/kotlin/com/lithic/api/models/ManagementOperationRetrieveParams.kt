@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get management operation */
 class ManagementOperationRetrieveParams
 private constructor(
-    private val managementOperationToken: String,
+    private val managementOperationToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun managementOperationToken(): String = managementOperationToken
+    fun managementOperationToken(): String? = managementOperationToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,11 @@ private constructor(
 
     companion object {
 
+        fun none(): ManagementOperationRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [ManagementOperationRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .managementOperationToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -54,7 +50,7 @@ private constructor(
                     managementOperationRetrieveParams.additionalQueryParams.toBuilder()
             }
 
-        fun managementOperationToken(managementOperationToken: String) = apply {
+        fun managementOperationToken(managementOperationToken: String?) = apply {
             this.managementOperationToken = managementOperationToken
         }
 
@@ -160,17 +156,10 @@ private constructor(
          * Returns an immutable instance of [ManagementOperationRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .managementOperationToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ManagementOperationRetrieveParams =
             ManagementOperationRetrieveParams(
-                checkRequired("managementOperationToken", managementOperationToken),
+                managementOperationToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -178,7 +167,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> managementOperationToken
+            0 -> managementOperationToken ?: ""
             else -> ""
         }
 

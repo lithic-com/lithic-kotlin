@@ -22,15 +22,41 @@ interface StatementServiceAsync {
 
     /** Get a specific statement for a given financial account. */
     suspend fun retrieve(
+        statementToken: String,
+        params: FinancialAccountStatementRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Statement =
+        retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: FinancialAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Statement
 
     /** List the statements for a given financial account. */
     suspend fun list(
+        financialAccountToken: String,
+        params: FinancialAccountStatementListParams = FinancialAccountStatementListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountStatementListPageAsync =
+        list(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [list] */
+    suspend fun list(
         params: FinancialAccountStatementListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountStatementListPageAsync =
+        list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
 
     /**
      * A view of [StatementServiceAsync] that provides access to raw HTTP responses for each method.
@@ -46,6 +72,15 @@ interface StatementServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            statementToken: String,
+            params: FinancialAccountStatementRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Statement> =
+            retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: FinancialAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Statement>
@@ -57,8 +92,29 @@ interface StatementServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            financialAccountToken: String,
+            params: FinancialAccountStatementListParams =
+                FinancialAccountStatementListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountStatementListPageAsync> =
+            list(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: FinancialAccountStatementListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountStatementListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountStatementListPageAsync> =
+            list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
     }
 }

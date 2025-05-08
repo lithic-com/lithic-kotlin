@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Fetches a V2 authorization rule by its token */
 class AuthRuleV2RetrieveParams
 private constructor(
-    private val authRuleToken: String,
+    private val authRuleToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun authRuleToken(): String = authRuleToken
+    fun authRuleToken(): String? = authRuleToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [AuthRuleV2RetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .authRuleToken()
-         * ```
-         */
+        fun none(): AuthRuleV2RetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [AuthRuleV2RetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -50,7 +44,7 @@ private constructor(
             additionalQueryParams = authRuleV2RetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
+        fun authRuleToken(authRuleToken: String?) = apply { this.authRuleToken = authRuleToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -154,17 +148,10 @@ private constructor(
          * Returns an immutable instance of [AuthRuleV2RetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .authRuleToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AuthRuleV2RetrieveParams =
             AuthRuleV2RetrieveParams(
-                checkRequired("authRuleToken", authRuleToken),
+                authRuleToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -172,7 +159,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> authRuleToken
+            0 -> authRuleToken ?: ""
             else -> ""
         }
 

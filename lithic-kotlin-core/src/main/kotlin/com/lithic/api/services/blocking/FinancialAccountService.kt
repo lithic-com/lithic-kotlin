@@ -43,15 +43,45 @@ interface FinancialAccountService {
 
     /** Get a financial account */
     fun retrieve(
+        financialAccountToken: String,
+        params: FinancialAccountRetrieveParams = FinancialAccountRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccount =
+        retrieve(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: FinancialAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
+    /** @see [retrieve] */
+    fun retrieve(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
+        retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
+
     /** Update a financial account */
+    fun update(
+        financialAccountToken: String,
+        params: FinancialAccountUpdateParams = FinancialAccountUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccount =
+        update(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [update] */
     fun update(
         params: FinancialAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
+
+    /** @see [update] */
+    fun update(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
+        update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
 
     /** Retrieve information on your financial accounts including routing and account number. */
     fun list(
@@ -64,6 +94,17 @@ interface FinancialAccountService {
         list(FinancialAccountListParams.none(), requestOptions)
 
     /** Update financial account status */
+    fun updateStatus(
+        financialAccountToken: String,
+        params: FinancialAccountUpdateStatusParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccount =
+        updateStatus(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [updateStatus] */
     fun updateStatus(
         params: FinancialAccountUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,9 +142,29 @@ interface FinancialAccountService {
          */
         @MustBeClosed
         fun retrieve(
+            financialAccountToken: String,
+            params: FinancialAccountRetrieveParams = FinancialAccountRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccount> =
+            retrieve(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: FinancialAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccount> =
+            retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/financial_accounts/{financial_account_token}`,
@@ -111,9 +172,29 @@ interface FinancialAccountService {
          */
         @MustBeClosed
         fun update(
+            financialAccountToken: String,
+            params: FinancialAccountUpdateParams = FinancialAccountUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccount> =
+            update(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
             params: FinancialAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
+
+        /** @see [update] */
+        @MustBeClosed
+        fun update(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccount> =
+            update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/financial_accounts`, but is otherwise the same
@@ -135,6 +216,18 @@ interface FinancialAccountService {
          * /v1/financial_accounts/{financial_account_token}/update_status`, but is otherwise the
          * same as [FinancialAccountService.updateStatus].
          */
+        @MustBeClosed
+        fun updateStatus(
+            financialAccountToken: String,
+            params: FinancialAccountUpdateStatusParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccount> =
+            updateStatus(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [updateStatus] */
         @MustBeClosed
         fun updateStatus(
             params: FinancialAccountUpdateStatusParams,

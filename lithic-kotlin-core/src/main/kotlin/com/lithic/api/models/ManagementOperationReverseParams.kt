@@ -22,13 +22,13 @@ import java.util.Objects
 /** Reverse a management operation */
 class ManagementOperationReverseParams
 private constructor(
-    private val managementOperationToken: String,
+    private val managementOperationToken: String?,
     private val body: ManagementOperationActionRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun managementOperationToken(): String = managementOperationToken
+    fun managementOperationToken(): String? = managementOperationToken
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -72,7 +72,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .managementOperationToken()
          * .effectiveDate()
          * ```
          */
@@ -97,7 +96,7 @@ private constructor(
                     managementOperationReverseParams.additionalQueryParams.toBuilder()
             }
 
-        fun managementOperationToken(managementOperationToken: String) = apply {
+        fun managementOperationToken(managementOperationToken: String?) = apply {
             this.managementOperationToken = managementOperationToken
         }
 
@@ -258,7 +257,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .managementOperationToken()
          * .effectiveDate()
          * ```
          *
@@ -266,7 +264,7 @@ private constructor(
          */
         fun build(): ManagementOperationReverseParams =
             ManagementOperationReverseParams(
-                checkRequired("managementOperationToken", managementOperationToken),
+                managementOperationToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -277,7 +275,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> managementOperationToken
+            0 -> managementOperationToken ?: ""
             else -> ""
         }
 

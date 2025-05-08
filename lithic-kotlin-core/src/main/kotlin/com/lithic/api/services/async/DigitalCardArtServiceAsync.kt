@@ -19,9 +19,27 @@ interface DigitalCardArtServiceAsync {
 
     /** Get digital card art by token. */
     suspend fun retrieve(
+        digitalCardArtToken: String,
+        params: DigitalCardArtRetrieveParams = DigitalCardArtRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): DigitalCardArt =
+        retrieve(
+            params.toBuilder().digitalCardArtToken(digitalCardArtToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: DigitalCardArtRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArt
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        digitalCardArtToken: String,
+        requestOptions: RequestOptions,
+    ): DigitalCardArt =
+        retrieve(digitalCardArtToken, DigitalCardArtRetrieveParams.none(), requestOptions)
 
     /** List digital card art. */
     suspend fun list(
@@ -45,9 +63,29 @@ interface DigitalCardArtServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            digitalCardArtToken: String,
+            params: DigitalCardArtRetrieveParams = DigitalCardArtRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DigitalCardArt> =
+            retrieve(
+                params.toBuilder().digitalCardArtToken(digitalCardArtToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: DigitalCardArtRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DigitalCardArt>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            digitalCardArtToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DigitalCardArt> =
+            retrieve(digitalCardArtToken, DigitalCardArtRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/digital_card_art`, but is otherwise the same as

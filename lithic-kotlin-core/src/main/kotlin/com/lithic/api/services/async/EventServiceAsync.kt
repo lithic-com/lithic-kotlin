@@ -28,9 +28,20 @@ interface EventServiceAsync {
 
     /** Get an event. */
     suspend fun retrieve(
+        eventToken: String,
+        params: EventRetrieveParams = EventRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Event = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
+
+    /** @see [retrieve] */
+    suspend fun retrieve(eventToken: String, requestOptions: RequestOptions): Event =
+        retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
 
     /** List all events. */
     suspend fun list(
@@ -44,9 +55,24 @@ interface EventServiceAsync {
 
     /** List all the message attempts for a given event. */
     suspend fun listAttempts(
+        eventToken: String,
+        params: EventListAttemptsParams = EventListAttemptsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventListAttemptsPageAsync =
+        listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [listAttempts] */
+    suspend fun listAttempts(
         params: EventListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync
+
+    /** @see [listAttempts] */
+    suspend fun listAttempts(
+        eventToken: String,
+        requestOptions: RequestOptions,
+    ): EventListAttemptsPageAsync =
+        listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
 
     suspend fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 
@@ -63,9 +89,25 @@ interface EventServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            eventToken: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Event> =
+            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            eventToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Event> = retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/events`, but is otherwise the same as
@@ -88,8 +130,25 @@ interface EventServiceAsync {
          */
         @MustBeClosed
         suspend fun listAttempts(
+            eventToken: String,
+            params: EventListAttemptsParams = EventListAttemptsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventListAttemptsPageAsync> =
+            listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [listAttempts] */
+        @MustBeClosed
+        suspend fun listAttempts(
             params: EventListAttemptsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListAttemptsPageAsync>
+
+        /** @see [listAttempts] */
+        @MustBeClosed
+        suspend fun listAttempts(
+            eventToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventListAttemptsPageAsync> =
+            listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
     }
 }

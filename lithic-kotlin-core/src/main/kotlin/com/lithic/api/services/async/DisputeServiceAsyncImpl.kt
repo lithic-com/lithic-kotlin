@@ -7,6 +7,8 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.MultipartField
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.handlers.emptyHandler
+
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.withErrorHandler
@@ -146,6 +148,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("disputeToken", params.disputeToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -172,6 +177,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("disputeToken", params.disputeToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -233,6 +241,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("disputeToken", params.disputeToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -260,6 +271,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeDeleteEvidenceParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeEvidence> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("evidenceToken", params.evidenceToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -293,6 +307,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeInitiateEvidenceUploadParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeEvidence> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("disputeToken", params.disputeToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -321,6 +338,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeListEvidencesParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeListEvidencesPageAsync> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("disputeToken", params.disputeToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -354,6 +374,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             params: DisputeRetrieveEvidenceParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeEvidence> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("evidenceToken", params.evidenceToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
