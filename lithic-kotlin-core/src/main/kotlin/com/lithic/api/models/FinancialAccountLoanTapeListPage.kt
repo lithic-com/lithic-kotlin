@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: LoanTapeService,
     private val params: FinancialAccountLoanTapeListParams,
     private val response: FinancialAccountLoanTapeListPageResponse,
-) {
+) : Page<LoanTape> {
 
     /**
      * Delegates to [FinancialAccountLoanTapeListPageResponse], but gracefully handles missing data.
@@ -28,24 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<LoanTape> = data()
 
-    fun getNextPageParams(): FinancialAccountLoanTapeListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): FinancialAccountLoanTapeListParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    fun getNextPage(): FinancialAccountLoanTapeListPage? =
-        getNextPageParams()?.let { service.list(it) }
+    override fun nextPage(): FinancialAccountLoanTapeListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<LoanTape> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): FinancialAccountLoanTapeListParams = params
@@ -115,21 +113,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: FinancialAccountLoanTapeListPage) : Sequence<LoanTape> {
-
-        override fun iterator(): Iterator<LoanTape> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

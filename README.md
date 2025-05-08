@@ -214,48 +214,54 @@ The SDK throws custom unchecked exception types:
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
+The SDK defines methods that return a paginated lists of results. It provides convenient ways to access the results either one page at a time or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
+To iterate through all results across all pages, use the `autoPager()` method, which automatically fetches more pages as needed.
 
-### Synchronous
+When using the synchronous client, the method returns a [`Sequence`](https://kotlinlang.org/docs/sequences.html)
 
 ```kotlin
 import com.lithic.api.models.CardListPage
-import com.lithic.api.models.NonPciCard
 
-// As a Sequence:
-client.cards().list(params).autoPager()
+val page: CardListPage = client.cards().list()
+page.autoPager()
     .take(50)
-    .forEach { card -> print(card) }
+    .forEach { card -> println(card) }
 ```
 
-### Asynchronous
+When using the asynchronous client, the method returns a [`Flow`](https://kotlinlang.org/docs/flow.html):
 
 ```kotlin
-// As a Flow:
-asyncClient.cards().list(params).autoPager()
+import com.lithic.api.models.CardListPageAsync
+
+val page: CardListPageAsync = client.async().cards().list()
+page.autoPager()
     .take(50)
-    .collect { card -> print(card) }
+    .forEach { card -> println(card) }
 ```
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+To access individual page items and manually request the next page, use the `items()`,
+`hasNextPage()`, and `nextPage()` methods:
 
 ```kotlin
 import com.lithic.api.models.CardListPage
 import com.lithic.api.models.NonPciCard
 
-val page = client.cards().list(params)
-while (page != null) {
-    for (card in page.data) {
-        print(card)
+val page: CardListPage = client.cards().list()
+while (true) {
+    for (card in page.items()) {
+        println(card)
     }
 
-    page = page.getNextPage()
+    if (!page.hasNextPage()) {
+        break
+    }
+
+    page = page.nextPage()
 }
 ```
 
@@ -332,7 +338,6 @@ To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
 import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
 
 val card: Card = client.cards().create(
   params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
@@ -564,7 +569,6 @@ Or configure the method call to validate the response using the `responseValidat
 
 ```kotlin
 import com.lithic.api.models.Card
-import com.lithic.api.models.CardCreateParams
 
 val card: Card = client.cards().create(
   params, RequestOptions.builder().responseValidation(true).build()
