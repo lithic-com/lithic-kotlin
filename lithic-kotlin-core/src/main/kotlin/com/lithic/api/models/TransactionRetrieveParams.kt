@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -14,12 +13,12 @@ import java.util.Objects
  */
 class TransactionRetrieveParams
 private constructor(
-    private val transactionToken: String,
+    private val transactionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun transactionToken(): String = transactionToken
+    fun transactionToken(): String? = transactionToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -29,13 +28,10 @@ private constructor(
 
     companion object {
 
+        fun none(): TransactionRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [TransactionRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .transactionToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -53,7 +49,7 @@ private constructor(
             additionalQueryParams = transactionRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun transactionToken(transactionToken: String) = apply {
+        fun transactionToken(transactionToken: String?) = apply {
             this.transactionToken = transactionToken
         }
 
@@ -159,17 +155,10 @@ private constructor(
          * Returns an immutable instance of [TransactionRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .transactionToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TransactionRetrieveParams =
             TransactionRetrieveParams(
-                checkRequired("transactionToken", transactionToken),
+                transactionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -177,7 +166,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> transactionToken
+            0 -> transactionToken ?: ""
             else -> ""
         }
 

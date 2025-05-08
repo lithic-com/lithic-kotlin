@@ -21,9 +21,31 @@ interface AuthenticationService {
 
     /** Get 3DS Authentication by token */
     fun retrieve(
+        threeDSAuthenticationToken: String,
+        params: ThreeDSAuthenticationRetrieveParams = ThreeDSAuthenticationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthenticationRetrieveResponse =
+        retrieve(
+            params.toBuilder().threeDSAuthenticationToken(threeDSAuthenticationToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: ThreeDSAuthenticationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthenticationRetrieveResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        threeDSAuthenticationToken: String,
+        requestOptions: RequestOptions,
+    ): AuthenticationRetrieveResponse =
+        retrieve(
+            threeDSAuthenticationToken,
+            ThreeDSAuthenticationRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * Simulates a 3DS authentication request from the payment network as if it came from an ACS. If
@@ -58,9 +80,34 @@ interface AuthenticationService {
          */
         @MustBeClosed
         fun retrieve(
+            threeDSAuthenticationToken: String,
+            params: ThreeDSAuthenticationRetrieveParams =
+                ThreeDSAuthenticationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthenticationRetrieveResponse> =
+            retrieve(
+                params.toBuilder().threeDSAuthenticationToken(threeDSAuthenticationToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: ThreeDSAuthenticationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthenticationRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            threeDSAuthenticationToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AuthenticationRetrieveResponse> =
+            retrieve(
+                threeDSAuthenticationToken,
+                ThreeDSAuthenticationRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/three_ds_authentication/simulate`, but is

@@ -12,14 +12,14 @@ import java.util.Objects
 class FinancialTransactionRetrieveParams
 private constructor(
     private val financialAccountToken: String,
-    private val financialTransactionToken: String,
+    private val financialTransactionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun financialAccountToken(): String = financialAccountToken
 
-    fun financialTransactionToken(): String = financialTransactionToken
+    fun financialTransactionToken(): String? = financialTransactionToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -36,7 +36,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .financialTransactionToken()
          * ```
          */
         fun builder() = Builder()
@@ -64,7 +63,7 @@ private constructor(
             this.financialAccountToken = financialAccountToken
         }
 
-        fun financialTransactionToken(financialTransactionToken: String) = apply {
+        fun financialTransactionToken(financialTransactionToken: String?) = apply {
             this.financialTransactionToken = financialTransactionToken
         }
 
@@ -174,7 +173,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .financialTransactionToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -182,7 +180,7 @@ private constructor(
         fun build(): FinancialTransactionRetrieveParams =
             FinancialTransactionRetrieveParams(
                 checkRequired("financialAccountToken", financialAccountToken),
-                checkRequired("financialTransactionToken", financialTransactionToken),
+                financialTransactionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -191,7 +189,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> financialAccountToken
-            1 -> financialTransactionToken
+            1 -> financialTransactionToken ?: ""
             else -> ""
         }
 

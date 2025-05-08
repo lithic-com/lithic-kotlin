@@ -12,7 +12,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -23,13 +22,13 @@ import java.util.Objects
 /** Update the external bank account by token. */
 class ExternalBankAccountUpdateParams
 private constructor(
-    private val externalBankAccountToken: String,
+    private val externalBankAccountToken: String?,
     private val body: UpdateBankAccountApiRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalBankAccountToken(): String = externalBankAccountToken
+    fun externalBankAccountToken(): String? = externalBankAccountToken
 
     /**
      * Address
@@ -175,14 +174,11 @@ private constructor(
 
     companion object {
 
+        fun none(): ExternalBankAccountUpdateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [ExternalBankAccountUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalBankAccountToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -205,7 +201,7 @@ private constructor(
                     externalBankAccountUpdateParams.additionalQueryParams.toBuilder()
             }
 
-        fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+        fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
             this.externalBankAccountToken = externalBankAccountToken
         }
 
@@ -459,17 +455,10 @@ private constructor(
          * Returns an immutable instance of [ExternalBankAccountUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalBankAccountToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ExternalBankAccountUpdateParams =
             ExternalBankAccountUpdateParams(
-                checkRequired("externalBankAccountToken", externalBankAccountToken),
+                externalBankAccountToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -480,7 +469,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalBankAccountToken
+            0 -> externalBankAccountToken ?: ""
             else -> ""
         }
 

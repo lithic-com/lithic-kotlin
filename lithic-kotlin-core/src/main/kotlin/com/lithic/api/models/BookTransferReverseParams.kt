@@ -11,7 +11,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -21,13 +20,13 @@ import java.util.Objects
 /** Reverse a book transfer */
 class BookTransferReverseParams
 private constructor(
-    private val bookTransferToken: String,
+    private val bookTransferToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun bookTransferToken(): String = bookTransferToken
+    fun bookTransferToken(): String? = bookTransferToken
 
     /**
      * Optional descriptor for the reversal.
@@ -54,13 +53,10 @@ private constructor(
 
     companion object {
 
+        fun none(): BookTransferReverseParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [BookTransferReverseParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .bookTransferToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -80,7 +76,7 @@ private constructor(
             additionalQueryParams = bookTransferReverseParams.additionalQueryParams.toBuilder()
         }
 
-        fun bookTransferToken(bookTransferToken: String) = apply {
+        fun bookTransferToken(bookTransferToken: String?) = apply {
             this.bookTransferToken = bookTransferToken
         }
 
@@ -225,17 +221,10 @@ private constructor(
          * Returns an immutable instance of [BookTransferReverseParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .bookTransferToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BookTransferReverseParams =
             BookTransferReverseParams(
-                checkRequired("bookTransferToken", bookTransferToken),
+                bookTransferToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -246,7 +235,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> bookTransferToken
+            0 -> bookTransferToken ?: ""
             else -> ""
         }
 

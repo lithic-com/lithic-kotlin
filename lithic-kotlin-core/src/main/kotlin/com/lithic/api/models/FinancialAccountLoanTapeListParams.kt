@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
@@ -12,7 +11,7 @@ import java.util.Objects
 /** List the loan tapes for a given financial account. */
 class FinancialAccountLoanTapeListParams
 private constructor(
-    private val financialAccountToken: String,
+    private val financialAccountToken: String?,
     private val begin: LocalDate?,
     private val end: LocalDate?,
     private val endingBefore: String?,
@@ -23,7 +22,7 @@ private constructor(
 ) : Params {
 
     /** Globally unique identifier for financial account. */
-    fun financialAccountToken(): String = financialAccountToken
+    fun financialAccountToken(): String? = financialAccountToken
 
     /**
      * Date string in RFC 3339 format. Only entries created after the specified date will be
@@ -60,14 +59,11 @@ private constructor(
 
     companion object {
 
+        fun none(): FinancialAccountLoanTapeListParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [FinancialAccountLoanTapeListParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .financialAccountToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -98,7 +94,7 @@ private constructor(
             }
 
         /** Globally unique identifier for financial account. */
-        fun financialAccountToken(financialAccountToken: String) = apply {
+        fun financialAccountToken(financialAccountToken: String?) = apply {
             this.financialAccountToken = financialAccountToken
         }
 
@@ -238,17 +234,10 @@ private constructor(
          * Returns an immutable instance of [FinancialAccountLoanTapeListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .financialAccountToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): FinancialAccountLoanTapeListParams =
             FinancialAccountLoanTapeListParams(
-                checkRequired("financialAccountToken", financialAccountToken),
+                financialAccountToken,
                 begin,
                 end,
                 endingBefore,
@@ -261,7 +250,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> financialAccountToken
+            0 -> financialAccountToken ?: ""
             else -> ""
         }
 

@@ -12,7 +12,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -26,13 +25,13 @@ import java.util.Objects
  */
 class CardUpdateParams
 private constructor(
-    private val cardToken: String,
+    private val cardToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun cardToken(): String = cardToken
+    fun cardToken(): String? = cardToken
 
     /**
      * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -171,14 +170,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [CardUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .cardToken()
-         * ```
-         */
+        fun none(): CardUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [CardUpdateParams]. */
         fun builder() = Builder()
     }
 
@@ -197,7 +191,7 @@ private constructor(
             additionalQueryParams = cardUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         /**
          * Sets the entire request body.
@@ -456,17 +450,10 @@ private constructor(
          * Returns an immutable instance of [CardUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .cardToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CardUpdateParams =
             CardUpdateParams(
-                checkRequired("cardToken", cardToken),
+                cardToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -477,7 +464,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> cardToken
+            0 -> cardToken ?: ""
             else -> ""
         }
 

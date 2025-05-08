@@ -39,13 +39,13 @@ import java.util.Objects
  */
 class AccountHolderUploadDocumentParams
 private constructor(
-    private val accountHolderToken: String,
+    private val accountHolderToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun accountHolderToken(): String = accountHolderToken
+    fun accountHolderToken(): String? = accountHolderToken
 
     /**
      * The type of document to upload
@@ -93,7 +93,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .accountHolderToken()
          * .documentType()
          * .entityToken()
          * ```
@@ -118,7 +117,7 @@ private constructor(
                     accountHolderUploadDocumentParams.additionalQueryParams.toBuilder()
             }
 
-        fun accountHolderToken(accountHolderToken: String) = apply {
+        fun accountHolderToken(accountHolderToken: String?) = apply {
             this.accountHolderToken = accountHolderToken
         }
 
@@ -282,7 +281,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .accountHolderToken()
          * .documentType()
          * .entityToken()
          * ```
@@ -291,7 +289,7 @@ private constructor(
          */
         fun build(): AccountHolderUploadDocumentParams =
             AccountHolderUploadDocumentParams(
-                checkRequired("accountHolderToken", accountHolderToken),
+                accountHolderToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -302,7 +300,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> accountHolderToken
+            0 -> accountHolderToken ?: ""
             else -> ""
         }
 

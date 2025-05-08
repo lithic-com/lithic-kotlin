@@ -45,9 +45,24 @@ interface AccountHolderServiceAsync {
 
     /** Get an Individual or Business Account Holder and/or their KYC or KYB evaluation status. */
     suspend fun retrieve(
+        accountHolderToken: String,
+        params: AccountHolderRetrieveParams = AccountHolderRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolder =
+        retrieve(params.toBuilder().accountHolderToken(accountHolderToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: AccountHolderRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolder
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        accountHolderToken: String,
+        requestOptions: RequestOptions,
+    ): AccountHolder =
+        retrieve(accountHolderToken, AccountHolderRetrieveParams.none(), requestOptions)
 
     /**
      * Update the information associated with a particular account holder (including business owners
@@ -60,6 +75,14 @@ interface AccountHolderServiceAsync {
      * endpoint can only be used on existing accounts that are part of the program that the calling
      * API key manages.
      */
+    suspend fun update(
+        accountHolderToken: String,
+        params: AccountHolderUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderUpdateResponse =
+        update(params.toBuilder().accountHolderToken(accountHolderToken).build(), requestOptions)
+
+    /** @see [update] */
     suspend fun update(
         params: AccountHolderUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -93,9 +116,27 @@ interface AccountHolderServiceAsync {
      * corresponding `image_type`.
      */
     suspend fun listDocuments(
+        accountHolderToken: String,
+        params: AccountHolderListDocumentsParams = AccountHolderListDocumentsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderListDocumentsResponse =
+        listDocuments(
+            params.toBuilder().accountHolderToken(accountHolderToken).build(),
+            requestOptions,
+        )
+
+    /** @see [listDocuments] */
+    suspend fun listDocuments(
         params: AccountHolderListDocumentsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListDocumentsResponse
+
+    /** @see [listDocuments] */
+    suspend fun listDocuments(
+        accountHolderToken: String,
+        requestOptions: RequestOptions,
+    ): AccountHolderListDocumentsResponse =
+        listDocuments(accountHolderToken, AccountHolderListDocumentsParams.none(), requestOptions)
 
     /**
      * Check the status of an account holder document upload, or retrieve the upload URLs to process
@@ -112,6 +153,14 @@ interface AccountHolderServiceAsync {
      * will show an additional entry in the `required_document_uploads` array in a `PENDING` state
      * for the corresponding `image_type`.
      */
+    suspend fun retrieveDocument(
+        documentToken: String,
+        params: AccountHolderRetrieveDocumentParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Document =
+        retrieveDocument(params.toBuilder().documentToken(documentToken).build(), requestOptions)
+
+    /** @see [retrieveDocument] */
     suspend fun retrieveDocument(
         params: AccountHolderRetrieveDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -158,6 +207,17 @@ interface AccountHolderServiceAsync {
      * holder document is supported per KYC verification.
      */
     suspend fun uploadDocument(
+        accountHolderToken: String,
+        params: AccountHolderUploadDocumentParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Document =
+        uploadDocument(
+            params.toBuilder().accountHolderToken(accountHolderToken).build(),
+            requestOptions,
+        )
+
+    /** @see [uploadDocument] */
+    suspend fun uploadDocument(
         params: AccountHolderUploadDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Document
@@ -184,14 +244,46 @@ interface AccountHolderServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            accountHolderToken: String,
+            params: AccountHolderRetrieveParams = AccountHolderRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolder> =
+            retrieve(
+                params.toBuilder().accountHolderToken(accountHolderToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: AccountHolderRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolder>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            accountHolderToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AccountHolder> =
+            retrieve(accountHolderToken, AccountHolderRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/account_holders/{account_holder_token}`, but
          * is otherwise the same as [AccountHolderServiceAsync.update].
          */
+        @MustBeClosed
+        suspend fun update(
+            accountHolderToken: String,
+            params: AccountHolderUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderUpdateResponse> =
+            update(
+                params.toBuilder().accountHolderToken(accountHolderToken).build(),
+                requestOptions,
+            )
+
+        /** @see [update] */
         @MustBeClosed
         suspend fun update(
             params: AccountHolderUpdateParams,
@@ -222,15 +314,51 @@ interface AccountHolderServiceAsync {
          */
         @MustBeClosed
         suspend fun listDocuments(
+            accountHolderToken: String,
+            params: AccountHolderListDocumentsParams = AccountHolderListDocumentsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderListDocumentsResponse> =
+            listDocuments(
+                params.toBuilder().accountHolderToken(accountHolderToken).build(),
+                requestOptions,
+            )
+
+        /** @see [listDocuments] */
+        @MustBeClosed
+        suspend fun listDocuments(
             params: AccountHolderListDocumentsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderListDocumentsResponse>
+
+        /** @see [listDocuments] */
+        @MustBeClosed
+        suspend fun listDocuments(
+            accountHolderToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AccountHolderListDocumentsResponse> =
+            listDocuments(
+                accountHolderToken,
+                AccountHolderListDocumentsParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get
          * /v1/account_holders/{account_holder_token}/documents/{document_token}`, but is otherwise
          * the same as [AccountHolderServiceAsync.retrieveDocument].
          */
+        @MustBeClosed
+        suspend fun retrieveDocument(
+            documentToken: String,
+            params: AccountHolderRetrieveDocumentParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document> =
+            retrieveDocument(
+                params.toBuilder().documentToken(documentToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieveDocument] */
         @MustBeClosed
         suspend fun retrieveDocument(
             params: AccountHolderRetrieveDocumentParams,
@@ -274,6 +402,18 @@ interface AccountHolderServiceAsync {
          * /v1/account_holders/{account_holder_token}/documents`, but is otherwise the same as
          * [AccountHolderServiceAsync.uploadDocument].
          */
+        @MustBeClosed
+        suspend fun uploadDocument(
+            accountHolderToken: String,
+            params: AccountHolderUploadDocumentParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Document> =
+            uploadDocument(
+                params.toBuilder().accountHolderToken(accountHolderToken).build(),
+                requestOptions,
+            )
+
+        /** @see [uploadDocument] */
         @MustBeClosed
         suspend fun uploadDocument(
             params: AccountHolderUploadDocumentParams,

@@ -5,6 +5,7 @@ package com.lithic.api.services.async
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.withErrorHandler
@@ -123,6 +124,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
             params: ExternalPaymentRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPaymentToken", params.externalPaymentToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -183,6 +187,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
             params: ExternalPaymentCancelParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPaymentToken", params.externalPaymentToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -210,6 +217,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
             params: ExternalPaymentReleaseParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPaymentToken", params.externalPaymentToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -237,6 +247,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
             params: ExternalPaymentReverseParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPaymentToken", params.externalPaymentToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -264,6 +277,9 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
             params: ExternalPaymentSettleParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("externalPaymentToken", params.externalPaymentToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

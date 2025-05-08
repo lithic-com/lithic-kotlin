@@ -5,6 +5,7 @@ package com.lithic.api.services.async
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
@@ -159,6 +160,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
             params: TransactionRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Transaction> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("transactionToken", params.transactionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -219,6 +223,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
             params: TransactionExpireAuthorizationParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("transactionToken", params.transactionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

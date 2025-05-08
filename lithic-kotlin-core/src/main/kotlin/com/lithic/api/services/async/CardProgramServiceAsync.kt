@@ -19,9 +19,21 @@ interface CardProgramServiceAsync {
 
     /** Get card program. */
     suspend fun retrieve(
+        cardProgramToken: String,
+        params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardProgram =
+        retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: CardProgramRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgram
+
+    /** @see [retrieve] */
+    suspend fun retrieve(cardProgramToken: String, requestOptions: RequestOptions): CardProgram =
+        retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
 
     /** List card programs. */
     suspend fun list(
@@ -45,9 +57,26 @@ interface CardProgramServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            cardProgramToken: String,
+            params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardProgram> =
+            retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: CardProgramRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgram>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            cardProgramToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CardProgram> =
+            retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/card_programs`, but is otherwise the same as

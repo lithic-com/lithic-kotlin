@@ -12,14 +12,14 @@ import java.util.Objects
 class DisputeRetrieveEvidenceParams
 private constructor(
     private val disputeToken: String,
-    private val evidenceToken: String,
+    private val evidenceToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun disputeToken(): String = disputeToken
 
-    fun evidenceToken(): String = evidenceToken
+    fun evidenceToken(): String? = evidenceToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -36,7 +36,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .disputeToken()
-         * .evidenceToken()
          * ```
          */
         fun builder() = Builder()
@@ -59,7 +58,7 @@ private constructor(
 
         fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
 
-        fun evidenceToken(evidenceToken: String) = apply { this.evidenceToken = evidenceToken }
+        fun evidenceToken(evidenceToken: String?) = apply { this.evidenceToken = evidenceToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -167,7 +166,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .disputeToken()
-         * .evidenceToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -175,7 +173,7 @@ private constructor(
         fun build(): DisputeRetrieveEvidenceParams =
             DisputeRetrieveEvidenceParams(
                 checkRequired("disputeToken", disputeToken),
-                checkRequired("evidenceToken", evidenceToken),
+                evidenceToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -184,7 +182,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> disputeToken
-            1 -> evidenceToken
+            1 -> evidenceToken ?: ""
             else -> ""
         }
 

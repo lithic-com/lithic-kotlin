@@ -22,13 +22,13 @@ import java.util.Objects
 /** Update financial account status */
 class FinancialAccountUpdateStatusParams
 private constructor(
-    private val financialAccountToken: String,
+    private val financialAccountToken: String?,
     private val body: UpdateFinancialAccountStatusRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun financialAccountToken(): String = financialAccountToken
+    fun financialAccountToken(): String? = financialAccountToken
 
     /**
      * Status of the financial account
@@ -76,7 +76,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .financialAccountToken()
          * .status()
          * .substatus()
          * ```
@@ -102,7 +101,7 @@ private constructor(
                     financialAccountUpdateStatusParams.additionalQueryParams.toBuilder()
             }
 
-        fun financialAccountToken(financialAccountToken: String) = apply {
+        fun financialAccountToken(financialAccountToken: String?) = apply {
             this.financialAccountToken = financialAccountToken
         }
 
@@ -268,7 +267,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .financialAccountToken()
          * .status()
          * .substatus()
          * ```
@@ -277,7 +275,7 @@ private constructor(
          */
         fun build(): FinancialAccountUpdateStatusParams =
             FinancialAccountUpdateStatusParams(
-                checkRequired("financialAccountToken", financialAccountToken),
+                financialAccountToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -288,7 +286,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> financialAccountToken
+            0 -> financialAccountToken ?: ""
             else -> ""
         }
 
