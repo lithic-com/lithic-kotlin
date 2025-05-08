@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.authRules.V2ServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [V2ServiceAsync.list] */
 class AuthRuleV2ListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: V2ServiceAsync,
     private val params: AuthRuleV2ListParams,
     private val response: AuthRuleV2ListPageResponse,
-) {
+) : PageAsync<V2ListResponse> {
 
     /**
      * Delegates to [AuthRuleV2ListPageResponse], but gracefully handles missing data.
@@ -30,24 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<V2ListResponse> = data()
 
-    fun getNextPageParams(): AuthRuleV2ListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): AuthRuleV2ListParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    suspend fun getNextPage(): AuthRuleV2ListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    override suspend fun nextPage(): AuthRuleV2ListPageAsync = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<V2ListResponse> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): AuthRuleV2ListParams = params
@@ -113,21 +109,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: AuthRuleV2ListPageAsync) : Flow<V2ListResponse> {
-
-        override suspend fun collect(collector: FlowCollector<V2ListResponse>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

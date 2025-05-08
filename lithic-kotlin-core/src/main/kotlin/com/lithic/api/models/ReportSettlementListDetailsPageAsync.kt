@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.reports.SettlementServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [SettlementServiceAsync.listDetails] */
 class ReportSettlementListDetailsPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: SettlementServiceAsync,
     private val params: ReportSettlementListDetailsParams,
     private val response: ReportSettlementListDetailsPageResponse,
-) {
+) : PageAsync<SettlementDetail> {
 
     /**
      * Delegates to [ReportSettlementListDetailsPageResponse], but gracefully handles missing data.
@@ -30,24 +30,21 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<SettlementDetail> = data()
 
-    fun getNextPageParams(): ReportSettlementListDetailsParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): ReportSettlementListDetailsParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    suspend fun getNextPage(): ReportSettlementListDetailsPageAsync? =
-        getNextPageParams()?.let { service.listDetails(it) }
+    override suspend fun nextPage(): ReportSettlementListDetailsPageAsync =
+        service.listDetails(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<SettlementDetail> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): ReportSettlementListDetailsParams = params
@@ -118,22 +115,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: ReportSettlementListDetailsPageAsync) :
-        Flow<SettlementDetail> {
-
-        override suspend fun collect(collector: FlowCollector<SettlementDetail>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {
