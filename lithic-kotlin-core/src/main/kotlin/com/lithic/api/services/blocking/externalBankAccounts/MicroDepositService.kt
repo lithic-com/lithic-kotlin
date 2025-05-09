@@ -17,6 +17,17 @@ interface MicroDepositService {
 
     /** Verify the external bank account by providing the micro deposit amounts. */
     fun create(
+        externalBankAccountToken: String,
+        params: ExternalBankAccountMicroDepositCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): MicroDepositCreateResponse =
+        create(
+            params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [create] */
+    fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MicroDepositCreateResponse
@@ -31,6 +42,18 @@ interface MicroDepositService {
          * /v1/external_bank_accounts/{external_bank_account_token}/micro_deposits`, but is
          * otherwise the same as [MicroDepositService.create].
          */
+        @MustBeClosed
+        fun create(
+            externalBankAccountToken: String,
+            params: ExternalBankAccountMicroDepositCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<MicroDepositCreateResponse> =
+            create(
+                params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [create] */
         @MustBeClosed
         fun create(
             params: ExternalBankAccountMicroDepositCreateParams,

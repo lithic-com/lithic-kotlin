@@ -17,9 +17,27 @@ interface BalanceServiceAsync {
 
     /** Get the balances for a given financial account. */
     suspend fun list(
+        financialAccountToken: String,
+        params: FinancialAccountBalanceListParams = FinancialAccountBalanceListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountBalanceListPageAsync =
+        list(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [list] */
+    suspend fun list(
         params: FinancialAccountBalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountBalanceListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountBalanceListPageAsync =
+        list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
 
     /**
      * A view of [BalanceServiceAsync] that provides access to raw HTTP responses for each method.
@@ -33,8 +51,28 @@ interface BalanceServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            financialAccountToken: String,
+            params: FinancialAccountBalanceListParams = FinancialAccountBalanceListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountBalanceListPageAsync> =
+            list(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: FinancialAccountBalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountBalanceListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountBalanceListPageAsync> =
+            list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
     }
 }

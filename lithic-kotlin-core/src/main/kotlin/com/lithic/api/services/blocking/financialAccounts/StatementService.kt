@@ -22,15 +22,41 @@ interface StatementService {
 
     /** Get a specific statement for a given financial account. */
     fun retrieve(
+        statementToken: String,
+        params: FinancialAccountStatementRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Statement =
+        retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: FinancialAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Statement
 
     /** List the statements for a given financial account. */
     fun list(
+        financialAccountToken: String,
+        params: FinancialAccountStatementListParams = FinancialAccountStatementListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountStatementListPage =
+        list(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [list] */
+    fun list(
         params: FinancialAccountStatementListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementListPage
+
+    /** @see [list] */
+    fun list(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountStatementListPage =
+        list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
 
     /** A view of [StatementService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -44,6 +70,15 @@ interface StatementService {
          */
         @MustBeClosed
         fun retrieve(
+            statementToken: String,
+            params: FinancialAccountStatementRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Statement> =
+            retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: FinancialAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Statement>
@@ -55,8 +90,29 @@ interface StatementService {
          */
         @MustBeClosed
         fun list(
+            financialAccountToken: String,
+            params: FinancialAccountStatementListParams =
+                FinancialAccountStatementListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountStatementListPage> =
+            list(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
             params: FinancialAccountStatementListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountStatementListPage>
+
+        /** @see [list] */
+        @MustBeClosed
+        fun list(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountStatementListPage> =
+            list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
     }
 }

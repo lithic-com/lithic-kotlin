@@ -4,7 +4,6 @@ package com.lithic.api.models
 
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
@@ -16,13 +15,13 @@ import java.util.Objects
  */
 class EventSubscriptionRotateSecretParams
 private constructor(
-    private val eventSubscriptionToken: String,
+    private val eventSubscriptionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun eventSubscriptionToken(): String = eventSubscriptionToken
+    fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -34,14 +33,11 @@ private constructor(
 
     companion object {
 
+        fun none(): EventSubscriptionRotateSecretParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [EventSubscriptionRotateSecretParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -65,7 +61,7 @@ private constructor(
                 eventSubscriptionRotateSecretParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
+        fun eventSubscriptionToken(eventSubscriptionToken: String?) = apply {
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
@@ -193,17 +189,10 @@ private constructor(
          * Returns an immutable instance of [EventSubscriptionRotateSecretParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): EventSubscriptionRotateSecretParams =
             EventSubscriptionRotateSecretParams(
-                checkRequired("eventSubscriptionToken", eventSubscriptionToken),
+                eventSubscriptionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -214,7 +203,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventSubscriptionToken
+            0 -> eventSubscriptionToken ?: ""
             else -> ""
         }
 

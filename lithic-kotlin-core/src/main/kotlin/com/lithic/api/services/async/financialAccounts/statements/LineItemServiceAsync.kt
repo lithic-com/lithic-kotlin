@@ -17,6 +17,14 @@ interface LineItemServiceAsync {
 
     /** List the line items for a given statement within a given financial account. */
     suspend fun list(
+        statementToken: String,
+        params: FinancialAccountStatementLineItemListParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountStatementLineItemListPageAsync =
+        list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: FinancialAccountStatementLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementLineItemListPageAsync
@@ -31,6 +39,15 @@ interface LineItemServiceAsync {
          * /v1/financial_accounts/{financial_account_token}/statements/{statement_token}/line_items`,
          * but is otherwise the same as [LineItemServiceAsync.list].
          */
+        @MustBeClosed
+        suspend fun list(
+            statementToken: String,
+            params: FinancialAccountStatementLineItemListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountStatementLineItemListPageAsync> =
+            list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
+
+        /** @see [list] */
         @MustBeClosed
         suspend fun list(
             params: FinancialAccountStatementLineItemListParams,

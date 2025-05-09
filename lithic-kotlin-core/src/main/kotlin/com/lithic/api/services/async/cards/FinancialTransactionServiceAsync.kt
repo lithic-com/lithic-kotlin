@@ -19,15 +19,41 @@ interface FinancialTransactionServiceAsync {
 
     /** Get the card financial transaction for the provided token. */
     suspend fun retrieve(
+        financialTransactionToken: String,
+        params: CardFinancialTransactionRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialTransaction =
+        retrieve(
+            params.toBuilder().financialTransactionToken(financialTransactionToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: CardFinancialTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransaction
 
     /** List the financial transactions for a given card. */
     suspend fun list(
+        cardToken: String,
+        params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardFinancialTransactionListPageAsync =
+        list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [list] */
+    suspend fun list(
         params: CardFinancialTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardFinancialTransactionListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        cardToken: String,
+        requestOptions: RequestOptions,
+    ): CardFinancialTransactionListPageAsync =
+        list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
 
     /**
      * A view of [FinancialTransactionServiceAsync] that provides access to raw HTTP responses for
@@ -42,6 +68,18 @@ interface FinancialTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            financialTransactionToken: String,
+            params: CardFinancialTransactionRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialTransaction> =
+            retrieve(
+                params.toBuilder().financialTransactionToken(financialTransactionToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: CardFinancialTransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialTransaction>
@@ -52,8 +90,25 @@ interface FinancialTransactionServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            cardToken: String,
+            params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardFinancialTransactionListPageAsync> =
+            list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: CardFinancialTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardFinancialTransactionListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CardFinancialTransactionListPageAsync> =
+            list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
     }
 }

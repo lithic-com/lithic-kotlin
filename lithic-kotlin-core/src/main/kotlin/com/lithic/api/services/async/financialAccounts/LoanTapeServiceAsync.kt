@@ -19,15 +19,40 @@ interface LoanTapeServiceAsync {
 
     /** Get a specific loan tape for a given financial account. */
     suspend fun retrieve(
+        loanTapeToken: String,
+        params: FinancialAccountLoanTapeRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): LoanTape = retrieve(params.toBuilder().loanTapeToken(loanTapeToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LoanTape
 
     /** List the loan tapes for a given financial account. */
     suspend fun list(
+        financialAccountToken: String,
+        params: FinancialAccountLoanTapeListParams = FinancialAccountLoanTapeListParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountLoanTapeListPageAsync =
+        list(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [list] */
+    suspend fun list(
         params: FinancialAccountLoanTapeListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountLoanTapeListPageAsync
+
+    /** @see [list] */
+    suspend fun list(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountLoanTapeListPageAsync =
+        list(financialAccountToken, FinancialAccountLoanTapeListParams.none(), requestOptions)
 
     /**
      * A view of [LoanTapeServiceAsync] that provides access to raw HTTP responses for each method.
@@ -41,6 +66,15 @@ interface LoanTapeServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            loanTapeToken: String,
+            params: FinancialAccountLoanTapeRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<LoanTape> =
+            retrieve(params.toBuilder().loanTapeToken(loanTapeToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: FinancialAccountLoanTapeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<LoanTape>
@@ -52,8 +86,28 @@ interface LoanTapeServiceAsync {
          */
         @MustBeClosed
         suspend fun list(
+            financialAccountToken: String,
+            params: FinancialAccountLoanTapeListParams = FinancialAccountLoanTapeListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountLoanTapeListPageAsync> =
+            list(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
             params: FinancialAccountLoanTapeListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountLoanTapeListPageAsync>
+
+        /** @see [list] */
+        @MustBeClosed
+        suspend fun list(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountLoanTapeListPageAsync> =
+            list(financialAccountToken, FinancialAccountLoanTapeListParams.none(), requestOptions)
     }
 }

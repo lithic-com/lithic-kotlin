@@ -22,14 +22,14 @@ import java.util.Objects
 /** Post Credit Product Prime Rate */
 class CreditProductPrimeRateCreateParams
 private constructor(
-    private val creditProductToken: String,
+    private val creditProductToken: String?,
     private val body: InterestRate,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     /** Globally unique identifier for credit products. */
-    fun creditProductToken(): String = creditProductToken
+    fun creditProductToken(): String? = creditProductToken
 
     /**
      * Date the rate goes into effect
@@ -77,7 +77,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .creditProductToken()
          * .effectiveDate()
          * .rate()
          * ```
@@ -103,7 +102,7 @@ private constructor(
             }
 
         /** Globally unique identifier for credit products. */
-        fun creditProductToken(creditProductToken: String) = apply {
+        fun creditProductToken(creditProductToken: String?) = apply {
             this.creditProductToken = creditProductToken
         }
 
@@ -266,7 +265,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .creditProductToken()
          * .effectiveDate()
          * .rate()
          * ```
@@ -275,7 +273,7 @@ private constructor(
          */
         fun build(): CreditProductPrimeRateCreateParams =
             CreditProductPrimeRateCreateParams(
-                checkRequired("creditProductToken", creditProductToken),
+                creditProductToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -286,7 +284,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> creditProductToken
+            0 -> creditProductToken ?: ""
             else -> ""
         }
 

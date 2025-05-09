@@ -4,7 +4,6 @@ package com.lithic.api.models
 
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
@@ -20,13 +19,13 @@ import java.util.Objects
  */
 class TokenizationPauseParams
 private constructor(
-    private val tokenizationToken: String,
+    private val tokenizationToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun tokenizationToken(): String = tokenizationToken
+    fun tokenizationToken(): String? = tokenizationToken
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -38,14 +37,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [TokenizationPauseParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
-         */
+        fun none(): TokenizationPauseParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [TokenizationPauseParams]. */
         fun builder() = Builder()
     }
 
@@ -65,7 +59,7 @@ private constructor(
                 tokenizationPauseParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun tokenizationToken(tokenizationToken: String) = apply {
+        fun tokenizationToken(tokenizationToken: String?) = apply {
             this.tokenizationToken = tokenizationToken
         }
 
@@ -193,17 +187,10 @@ private constructor(
          * Returns an immutable instance of [TokenizationPauseParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TokenizationPauseParams =
             TokenizationPauseParams(
-                checkRequired("tokenizationToken", tokenizationToken),
+                tokenizationToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -214,7 +201,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> tokenizationToken
+            0 -> tokenizationToken ?: ""
             else -> ""
         }
 

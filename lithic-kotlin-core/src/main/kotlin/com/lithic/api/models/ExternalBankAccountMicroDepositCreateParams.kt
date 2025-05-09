@@ -23,13 +23,13 @@ import java.util.Objects
 /** Verify the external bank account by providing the micro deposit amounts. */
 class ExternalBankAccountMicroDepositCreateParams
 private constructor(
-    private val externalBankAccountToken: String,
+    private val externalBankAccountToken: String?,
     private val body: MicroDepositVerificationRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalBankAccountToken(): String = externalBankAccountToken
+    fun externalBankAccountToken(): String? = externalBankAccountToken
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -60,7 +60,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalBankAccountToken()
          * .microDeposits()
          * ```
          */
@@ -88,7 +87,7 @@ private constructor(
                 externalBankAccountMicroDepositCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+        fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
             this.externalBankAccountToken = externalBankAccountToken
         }
 
@@ -245,7 +244,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalBankAccountToken()
          * .microDeposits()
          * ```
          *
@@ -253,7 +251,7 @@ private constructor(
          */
         fun build(): ExternalBankAccountMicroDepositCreateParams =
             ExternalBankAccountMicroDepositCreateParams(
-                checkRequired("externalBankAccountToken", externalBankAccountToken),
+                externalBankAccountToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -264,7 +262,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalBankAccountToken
+            0 -> externalBankAccountToken ?: ""
             else -> ""
         }
 

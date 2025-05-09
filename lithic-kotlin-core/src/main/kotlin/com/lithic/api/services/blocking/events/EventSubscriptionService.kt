@@ -16,6 +16,17 @@ interface EventSubscriptionService {
 
     /** Resend an event to an event subscription. */
     fun resend(
+        eventSubscriptionToken: String,
+        params: EventEventSubscriptionResendParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) =
+        resend(
+            params.toBuilder().eventSubscriptionToken(eventSubscriptionToken).build(),
+            requestOptions,
+        )
+
+    /** @see [resend] */
+    fun resend(
         params: EventEventSubscriptionResendParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
@@ -31,6 +42,18 @@ interface EventSubscriptionService {
          * /v1/events/{event_token}/event_subscriptions/{event_subscription_token}/resend`, but is
          * otherwise the same as [EventSubscriptionService.resend].
          */
+        @MustBeClosed
+        fun resend(
+            eventSubscriptionToken: String,
+            params: EventEventSubscriptionResendParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            resend(
+                params.toBuilder().eventSubscriptionToken(eventSubscriptionToken).build(),
+                requestOptions,
+            )
+
+        /** @see [resend] */
         @MustBeClosed
         fun resend(
             params: EventEventSubscriptionResendParams,

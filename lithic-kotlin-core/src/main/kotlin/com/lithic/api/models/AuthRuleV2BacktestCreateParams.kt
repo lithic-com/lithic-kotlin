@@ -11,7 +11,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -44,13 +43,13 @@ import java.util.Objects
  */
 class AuthRuleV2BacktestCreateParams
 private constructor(
-    private val authRuleToken: String,
+    private val authRuleToken: String?,
     private val body: BacktestRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun authRuleToken(): String = authRuleToken
+    fun authRuleToken(): String? = authRuleToken
 
     /**
      * The end time of the backtest.
@@ -92,14 +91,11 @@ private constructor(
 
     companion object {
 
+        fun none(): AuthRuleV2BacktestCreateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [AuthRuleV2BacktestCreateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .authRuleToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -119,7 +115,7 @@ private constructor(
             additionalQueryParams = authRuleV2BacktestCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
+        fun authRuleToken(authRuleToken: String?) = apply { this.authRuleToken = authRuleToken }
 
         /**
          * Sets the entire request body.
@@ -276,17 +272,10 @@ private constructor(
          * Returns an immutable instance of [AuthRuleV2BacktestCreateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .authRuleToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AuthRuleV2BacktestCreateParams =
             AuthRuleV2BacktestCreateParams(
-                checkRequired("authRuleToken", authRuleToken),
+                authRuleToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -297,7 +286,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> authRuleToken
+            0 -> authRuleToken ?: ""
             else -> ""
         }
 

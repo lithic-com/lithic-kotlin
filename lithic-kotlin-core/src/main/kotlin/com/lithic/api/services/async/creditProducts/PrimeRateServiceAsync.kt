@@ -19,15 +19,37 @@ interface PrimeRateServiceAsync {
 
     /** Post Credit Product Prime Rate */
     suspend fun create(
+        creditProductToken: String,
+        params: CreditProductPrimeRateCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) = create(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+
+    /** @see [create] */
+    suspend fun create(
         params: CreditProductPrimeRateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** Get Credit Product Prime Rates */
     suspend fun retrieve(
+        creditProductToken: String,
+        params: CreditProductPrimeRateRetrieveParams = CreditProductPrimeRateRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PrimeRateRetrieveResponse =
+        retrieve(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: CreditProductPrimeRateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PrimeRateRetrieveResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        creditProductToken: String,
+        requestOptions: RequestOptions,
+    ): PrimeRateRetrieveResponse =
+        retrieve(creditProductToken, CreditProductPrimeRateRetrieveParams.none(), requestOptions)
 
     /**
      * A view of [PrimeRateServiceAsync] that provides access to raw HTTP responses for each method.
@@ -41,6 +63,18 @@ interface PrimeRateServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
+            creditProductToken: String,
+            params: CreditProductPrimeRateCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            create(
+                params.toBuilder().creditProductToken(creditProductToken).build(),
+                requestOptions,
+            )
+
+        /** @see [create] */
+        @MustBeClosed
+        suspend fun create(
             params: CreditProductPrimeRateCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
@@ -52,8 +86,33 @@ interface PrimeRateServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            creditProductToken: String,
+            params: CreditProductPrimeRateRetrieveParams =
+                CreditProductPrimeRateRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PrimeRateRetrieveResponse> =
+            retrieve(
+                params.toBuilder().creditProductToken(creditProductToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: CreditProductPrimeRateRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PrimeRateRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            creditProductToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PrimeRateRetrieveResponse> =
+            retrieve(
+                creditProductToken,
+                CreditProductPrimeRateRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get an Individual or Business Account Holder and/or their KYC or KYB evaluation status. */
 class AccountHolderRetrieveParams
 private constructor(
-    private val accountHolderToken: String,
+    private val accountHolderToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun accountHolderToken(): String = accountHolderToken
+    fun accountHolderToken(): String? = accountHolderToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,13 +25,10 @@ private constructor(
 
     companion object {
 
+        fun none(): AccountHolderRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [AccountHolderRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .accountHolderToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -50,7 +46,7 @@ private constructor(
             additionalQueryParams = accountHolderRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun accountHolderToken(accountHolderToken: String) = apply {
+        fun accountHolderToken(accountHolderToken: String?) = apply {
             this.accountHolderToken = accountHolderToken
         }
 
@@ -156,17 +152,10 @@ private constructor(
          * Returns an immutable instance of [AccountHolderRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .accountHolderToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AccountHolderRetrieveParams =
             AccountHolderRetrieveParams(
-                checkRequired("accountHolderToken", accountHolderToken),
+                accountHolderToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -174,7 +163,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> accountHolderToken
+            0 -> accountHolderToken ?: ""
             else -> ""
         }
 

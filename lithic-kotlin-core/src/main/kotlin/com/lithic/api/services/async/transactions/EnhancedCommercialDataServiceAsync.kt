@@ -20,9 +20,29 @@ interface EnhancedCommercialDataServiceAsync {
      * sandbox.
      */
     suspend fun retrieve(
+        transactionToken: String,
+        params: TransactionEnhancedCommercialDataRetrieveParams =
+            TransactionEnhancedCommercialDataRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EnhancedCommercialDataRetrieveResponse =
+        retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedCommercialDataRetrieveResponse
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        transactionToken: String,
+        requestOptions: RequestOptions,
+    ): EnhancedCommercialDataRetrieveResponse =
+        retrieve(
+            transactionToken,
+            TransactionEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [EnhancedCommercialDataServiceAsync] that provides access to raw HTTP responses for
@@ -37,8 +57,30 @@ interface EnhancedCommercialDataServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            transactionToken: String,
+            params: TransactionEnhancedCommercialDataRetrieveParams =
+                TransactionEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> =
+            retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: TransactionEnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            transactionToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> =
+            retrieve(
+                transactionToken,
+                TransactionEnhancedCommercialDataRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

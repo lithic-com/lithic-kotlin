@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.time.LocalDate
@@ -12,12 +11,12 @@ import java.util.Objects
 /** Get the settlement report for a specified report date. Not available in sandbox. */
 class ReportSettlementSummaryParams
 private constructor(
-    private val reportDate: LocalDate,
+    private val reportDate: LocalDate?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun reportDate(): LocalDate = reportDate
+    fun reportDate(): LocalDate? = reportDate
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -27,14 +26,11 @@ private constructor(
 
     companion object {
 
+        fun none(): ReportSettlementSummaryParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [ReportSettlementSummaryParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .reportDate()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -52,7 +48,7 @@ private constructor(
             additionalQueryParams = reportSettlementSummaryParams.additionalQueryParams.toBuilder()
         }
 
-        fun reportDate(reportDate: LocalDate) = apply { this.reportDate = reportDate }
+        fun reportDate(reportDate: LocalDate?) = apply { this.reportDate = reportDate }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -156,17 +152,10 @@ private constructor(
          * Returns an immutable instance of [ReportSettlementSummaryParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .reportDate()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ReportSettlementSummaryParams =
             ReportSettlementSummaryParams(
-                checkRequired("reportDate", reportDate),
+                reportDate,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -174,7 +163,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> reportDate.toString()
+            0 -> reportDate?.toString() ?: ""
             else -> ""
         }
 

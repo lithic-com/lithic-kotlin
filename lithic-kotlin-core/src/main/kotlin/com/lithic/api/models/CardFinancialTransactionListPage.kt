@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.cards.FinancialTransactionService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: FinancialTransactionService,
     private val params: CardFinancialTransactionListParams,
     private val response: CardFinancialTransactionListPageResponse,
-) {
+) : Page<FinancialTransaction> {
 
     /**
      * Delegates to [CardFinancialTransactionListPageResponse], but gracefully handles missing data.
@@ -28,14 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<FinancialTransaction> = data()
 
-    fun getNextPageParams(): CardFinancialTransactionListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPage(): CardFinancialTransactionListPage? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): CardFinancialTransactionListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override fun nextPage(): CardFinancialTransactionListPage = service.list(nextPageParams())
+
+    fun autoPager(): AutoPager<FinancialTransaction> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CardFinancialTransactionListParams = params
@@ -105,22 +109,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CardFinancialTransactionListPage) :
-        Sequence<FinancialTransaction> {
-
-        override fun iterator(): Iterator<FinancialTransaction> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

@@ -14,7 +14,7 @@ import java.util.Objects
 class EventEventSubscriptionResendParams
 private constructor(
     private val eventToken: String,
-    private val eventSubscriptionToken: String,
+    private val eventSubscriptionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -22,7 +22,7 @@ private constructor(
 
     fun eventToken(): String = eventToken
 
-    fun eventSubscriptionToken(): String = eventSubscriptionToken
+    fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -41,7 +41,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .eventToken()
-         * .eventSubscriptionToken()
          * ```
          */
         fun builder() = Builder()
@@ -69,7 +68,7 @@ private constructor(
 
         fun eventToken(eventToken: String) = apply { this.eventToken = eventToken }
 
-        fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
+        fun eventSubscriptionToken(eventSubscriptionToken: String?) = apply {
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
@@ -201,7 +200,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .eventToken()
-         * .eventSubscriptionToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -209,7 +207,7 @@ private constructor(
         fun build(): EventEventSubscriptionResendParams =
             EventEventSubscriptionResendParams(
                 checkRequired("eventToken", eventToken),
-                checkRequired("eventSubscriptionToken", eventSubscriptionToken),
+                eventSubscriptionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -221,7 +219,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> eventToken
-            1 -> eventSubscriptionToken
+            1 -> eventSubscriptionToken ?: ""
             else -> ""
         }
 

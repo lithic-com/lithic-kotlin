@@ -5,6 +5,7 @@ package com.lithic.api.services.async.financialAccounts
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.withErrorHandler
@@ -56,6 +57,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditConfigura
             params: FinancialAccountCreditConfigurationRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountCreditConfig> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("financialAccountToken", params.financialAccountToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -88,6 +92,9 @@ internal constructor(private val clientOptions: ClientOptions) : CreditConfigura
             params: FinancialAccountCreditConfigurationUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountCreditConfig> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("financialAccountToken", params.financialAccountToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)

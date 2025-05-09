@@ -18,15 +18,61 @@ interface CreditConfigurationServiceAsync {
 
     /** Get an Account's credit configuration */
     suspend fun retrieve(
+        financialAccountToken: String,
+        params: FinancialAccountCreditConfigurationRetrieveParams =
+            FinancialAccountCreditConfigurationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountCreditConfig =
+        retrieve(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountCreditConfig =
+        retrieve(
+            financialAccountToken,
+            FinancialAccountCreditConfigurationRetrieveParams.none(),
+            requestOptions,
+        )
+
     /** Update an account's credit configuration */
+    suspend fun update(
+        financialAccountToken: String,
+        params: FinancialAccountCreditConfigurationUpdateParams =
+            FinancialAccountCreditConfigurationUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): FinancialAccountCreditConfig =
+        update(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [update] */
     suspend fun update(
         params: FinancialAccountCreditConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
+
+    /** @see [update] */
+    suspend fun update(
+        financialAccountToken: String,
+        requestOptions: RequestOptions,
+    ): FinancialAccountCreditConfig =
+        update(
+            financialAccountToken,
+            FinancialAccountCreditConfigurationUpdateParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [CreditConfigurationServiceAsync] that provides access to raw HTTP responses for
@@ -41,9 +87,34 @@ interface CreditConfigurationServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            financialAccountToken: String,
+            params: FinancialAccountCreditConfigurationRetrieveParams =
+                FinancialAccountCreditConfigurationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountCreditConfig> =
+            retrieve(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: FinancialAccountCreditConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountCreditConfig> =
+            retrieve(
+                financialAccountToken,
+                FinancialAccountCreditConfigurationRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `patch
@@ -52,8 +123,33 @@ interface CreditConfigurationServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            financialAccountToken: String,
+            params: FinancialAccountCreditConfigurationUpdateParams =
+                FinancialAccountCreditConfigurationUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<FinancialAccountCreditConfig> =
+            update(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: FinancialAccountCreditConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            financialAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<FinancialAccountCreditConfig> =
+            update(
+                financialAccountToken,
+                FinancialAccountCreditConfigurationUpdateParams.none(),
+                requestOptions,
+            )
     }
 }

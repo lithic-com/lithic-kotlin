@@ -23,13 +23,13 @@ import java.util.Objects
 /** Settle external payment */
 class ExternalPaymentSettleParams
 private constructor(
-    private val externalPaymentToken: String,
+    private val externalPaymentToken: String?,
     private val body: ExternalPaymentActionWithProgressToRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalPaymentToken(): String = externalPaymentToken
+    fun externalPaymentToken(): String? = externalPaymentToken
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -85,7 +85,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalPaymentToken()
          * .effectiveDate()
          * ```
          */
@@ -108,7 +107,7 @@ private constructor(
             additionalQueryParams = externalPaymentSettleParams.additionalQueryParams.toBuilder()
         }
 
-        fun externalPaymentToken(externalPaymentToken: String) = apply {
+        fun externalPaymentToken(externalPaymentToken: String?) = apply {
             this.externalPaymentToken = externalPaymentToken
         }
 
@@ -287,7 +286,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .externalPaymentToken()
          * .effectiveDate()
          * ```
          *
@@ -295,7 +293,7 @@ private constructor(
          */
         fun build(): ExternalPaymentSettleParams =
             ExternalPaymentSettleParams(
-                checkRequired("externalPaymentToken", externalPaymentToken),
+                externalPaymentToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -306,7 +304,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalPaymentToken
+            0 -> externalPaymentToken ?: ""
             else -> ""
         }
 

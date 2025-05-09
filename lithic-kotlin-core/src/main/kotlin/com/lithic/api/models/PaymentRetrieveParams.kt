@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get the payment by token. */
 class PaymentRetrieveParams
 private constructor(
-    private val paymentToken: String,
+    private val paymentToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun paymentToken(): String = paymentToken
+    fun paymentToken(): String? = paymentToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [PaymentRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .paymentToken()
-         * ```
-         */
+        fun none(): PaymentRetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [PaymentRetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -50,7 +44,7 @@ private constructor(
             additionalQueryParams = paymentRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun paymentToken(paymentToken: String) = apply { this.paymentToken = paymentToken }
+        fun paymentToken(paymentToken: String?) = apply { this.paymentToken = paymentToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -154,17 +148,10 @@ private constructor(
          * Returns an immutable instance of [PaymentRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .paymentToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PaymentRetrieveParams =
             PaymentRetrieveParams(
-                checkRequired("paymentToken", paymentToken),
+                paymentToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -172,7 +159,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> paymentToken
+            0 -> paymentToken ?: ""
             else -> ""
         }
 

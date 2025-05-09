@@ -28,9 +28,20 @@ interface EventService {
 
     /** Get an event. */
     fun retrieve(
+        eventToken: String,
+        params: EventRetrieveParams = EventRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Event = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
+
+    /** @see [retrieve] */
+    fun retrieve(eventToken: String, requestOptions: RequestOptions): Event =
+        retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
 
     /** List all events. */
     fun list(
@@ -44,9 +55,21 @@ interface EventService {
 
     /** List all the message attempts for a given event. */
     fun listAttempts(
+        eventToken: String,
+        params: EventListAttemptsParams = EventListAttemptsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EventListAttemptsPage =
+        listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+    /** @see [listAttempts] */
+    fun listAttempts(
         params: EventListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPage
+
+    /** @see [listAttempts] */
+    fun listAttempts(eventToken: String, requestOptions: RequestOptions): EventListAttemptsPage =
+        listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
 
     fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 
@@ -63,9 +86,23 @@ interface EventService {
          */
         @MustBeClosed
         fun retrieve(
+            eventToken: String,
+            params: EventRetrieveParams = EventRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Event> =
+            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(eventToken: String, requestOptions: RequestOptions): HttpResponseFor<Event> =
+            retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/events`, but is otherwise the same as
@@ -88,8 +125,25 @@ interface EventService {
          */
         @MustBeClosed
         fun listAttempts(
+            eventToken: String,
+            params: EventListAttemptsParams = EventListAttemptsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventListAttemptsPage> =
+            listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+
+        /** @see [listAttempts] */
+        @MustBeClosed
+        fun listAttempts(
             params: EventListAttemptsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListAttemptsPage>
+
+        /** @see [listAttempts] */
+        @MustBeClosed
+        fun listAttempts(
+            eventToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EventListAttemptsPage> =
+            listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
     }
 }

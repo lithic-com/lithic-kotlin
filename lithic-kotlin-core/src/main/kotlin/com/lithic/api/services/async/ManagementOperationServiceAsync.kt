@@ -27,9 +27,27 @@ interface ManagementOperationServiceAsync {
 
     /** Get management operation */
     suspend fun retrieve(
+        managementOperationToken: String,
+        params: ManagementOperationRetrieveParams = ManagementOperationRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ManagementOperationTransaction =
+        retrieve(
+            params.toBuilder().managementOperationToken(managementOperationToken).build(),
+            requestOptions,
+        )
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: ManagementOperationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationTransaction
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
+        managementOperationToken: String,
+        requestOptions: RequestOptions,
+    ): ManagementOperationTransaction =
+        retrieve(managementOperationToken, ManagementOperationRetrieveParams.none(), requestOptions)
 
     /** List management operations */
     suspend fun list(
@@ -42,6 +60,17 @@ interface ManagementOperationServiceAsync {
         list(ManagementOperationListParams.none(), requestOptions)
 
     /** Reverse a management operation */
+    suspend fun reverse(
+        managementOperationToken: String,
+        params: ManagementOperationReverseParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ManagementOperationTransaction =
+        reverse(
+            params.toBuilder().managementOperationToken(managementOperationToken).build(),
+            requestOptions,
+        )
+
+    /** @see [reverse] */
     suspend fun reverse(
         params: ManagementOperationReverseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,9 +99,33 @@ interface ManagementOperationServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            managementOperationToken: String,
+            params: ManagementOperationRetrieveParams = ManagementOperationRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ManagementOperationTransaction> =
+            retrieve(
+                params.toBuilder().managementOperationToken(managementOperationToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: ManagementOperationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ManagementOperationTransaction>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            managementOperationToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ManagementOperationTransaction> =
+            retrieve(
+                managementOperationToken,
+                ManagementOperationRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/management_operations`, but is otherwise the
@@ -96,6 +149,18 @@ interface ManagementOperationServiceAsync {
          * /v1/management_operations/{management_operation_token}/reverse`, but is otherwise the
          * same as [ManagementOperationServiceAsync.reverse].
          */
+        @MustBeClosed
+        suspend fun reverse(
+            managementOperationToken: String,
+            params: ManagementOperationReverseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ManagementOperationTransaction> =
+            reverse(
+                params.toBuilder().managementOperationToken(managementOperationToken).build(),
+                requestOptions,
+            )
+
+        /** @see [reverse] */
         @MustBeClosed
         suspend fun reverse(
             params: ManagementOperationReverseParams,

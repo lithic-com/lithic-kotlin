@@ -4,7 +4,6 @@ package com.lithic.api.services.async.financialAccounts
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
-import com.lithic.api.models.FinancialTransactionListParams
 import com.lithic.api.models.FinancialTransactionRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -41,12 +40,7 @@ internal class FinancialTransactionServiceAsyncTest {
                 .build()
         val financialTransactionServiceAsync = client.financialAccounts().financialTransactions()
 
-        val page =
-            financialTransactionServiceAsync.list(
-                FinancialTransactionListParams.builder()
-                    .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val page = financialTransactionServiceAsync.list("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         page.response().validate()
     }

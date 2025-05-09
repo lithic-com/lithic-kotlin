@@ -12,7 +12,7 @@ import java.util.Objects
 class FinancialAccountStatementRetrieveParams
 private constructor(
     private val financialAccountToken: String,
-    private val statementToken: String,
+    private val statementToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -21,7 +21,7 @@ private constructor(
     fun financialAccountToken(): String = financialAccountToken
 
     /** Globally unique identifier for statements. */
-    fun statementToken(): String = statementToken
+    fun statementToken(): String? = statementToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -38,7 +38,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .statementToken()
          * ```
          */
         fun builder() = Builder()
@@ -69,7 +68,7 @@ private constructor(
         }
 
         /** Globally unique identifier for statements. */
-        fun statementToken(statementToken: String) = apply { this.statementToken = statementToken }
+        fun statementToken(statementToken: String?) = apply { this.statementToken = statementToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -177,7 +176,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .financialAccountToken()
-         * .statementToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -185,7 +183,7 @@ private constructor(
         fun build(): FinancialAccountStatementRetrieveParams =
             FinancialAccountStatementRetrieveParams(
                 checkRequired("financialAccountToken", financialAccountToken),
-                checkRequired("statementToken", statementToken),
+                statementToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -194,7 +192,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> financialAccountToken
-            1 -> statementToken
+            1 -> statementToken ?: ""
             else -> ""
         }
 

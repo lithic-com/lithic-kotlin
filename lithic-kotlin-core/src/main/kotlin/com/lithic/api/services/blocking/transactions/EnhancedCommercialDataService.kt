@@ -20,9 +20,29 @@ interface EnhancedCommercialDataService {
      * sandbox.
      */
     fun retrieve(
+        transactionToken: String,
+        params: TransactionEnhancedCommercialDataRetrieveParams =
+            TransactionEnhancedCommercialDataRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): EnhancedCommercialDataRetrieveResponse =
+        retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedCommercialDataRetrieveResponse
+
+    /** @see [retrieve] */
+    fun retrieve(
+        transactionToken: String,
+        requestOptions: RequestOptions,
+    ): EnhancedCommercialDataRetrieveResponse =
+        retrieve(
+            transactionToken,
+            TransactionEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [EnhancedCommercialDataService] that provides access to raw HTTP responses for each
@@ -37,8 +57,30 @@ interface EnhancedCommercialDataService {
          */
         @MustBeClosed
         fun retrieve(
+            transactionToken: String,
+            params: TransactionEnhancedCommercialDataRetrieveParams =
+                TransactionEnhancedCommercialDataRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> =
+            retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: TransactionEnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            transactionToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> =
+            retrieve(
+                transactionToken,
+                TransactionEnhancedCommercialDataRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }

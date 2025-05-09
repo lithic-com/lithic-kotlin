@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.events.SubscriptionServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [SubscriptionServiceAsync.listAttempts] */
 class EventSubscriptionListAttemptsPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: SubscriptionServiceAsync,
     private val params: EventSubscriptionListAttemptsParams,
     private val response: EventSubscriptionListAttemptsPageResponse,
-) {
+) : PageAsync<MessageAttempt> {
 
     /**
      * Delegates to [EventSubscriptionListAttemptsPageResponse], but gracefully handles missing
@@ -32,24 +32,21 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<MessageAttempt> = data()
 
-    fun getNextPageParams(): EventSubscriptionListAttemptsParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): EventSubscriptionListAttemptsParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    suspend fun getNextPage(): EventSubscriptionListAttemptsPageAsync? =
-        getNextPageParams()?.let { service.listAttempts(it) }
+    override suspend fun nextPage(): EventSubscriptionListAttemptsPageAsync =
+        service.listAttempts(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<MessageAttempt> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): EventSubscriptionListAttemptsParams = params
@@ -120,22 +117,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: EventSubscriptionListAttemptsPageAsync) :
-        Flow<MessageAttempt> {
-
-        override suspend fun collect(collector: FlowCollector<MessageAttempt>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

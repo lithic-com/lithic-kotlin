@@ -5,6 +5,7 @@ package com.lithic.api.services.blocking.events
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
@@ -159,6 +160,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventSubscription> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -185,6 +189,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionUpdateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventSubscription> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
@@ -245,6 +252,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionDeleteParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
@@ -265,6 +275,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionListAttemptsParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventSubscriptionListAttemptsPage> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -297,6 +310,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionRecoverParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -316,6 +332,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionReplayMissingParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -341,6 +360,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionRetrieveSecretParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SubscriptionRetrieveSecretResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
@@ -367,6 +389,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionRotateSecretParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -392,6 +417,9 @@ class SubscriptionServiceImpl internal constructor(private val clientOptions: Cl
             params: EventSubscriptionSendSimulatedExampleParams,
             requestOptions: RequestOptions,
         ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("eventSubscriptionToken", params.eventSubscriptionToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)

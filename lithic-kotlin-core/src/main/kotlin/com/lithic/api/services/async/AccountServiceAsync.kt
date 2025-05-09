@@ -22,9 +22,20 @@ interface AccountServiceAsync {
 
     /** Get account configuration such as spend limits. */
     suspend fun retrieve(
+        accountToken: String,
+        params: AccountRetrieveParams = AccountRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Account = retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+    /** @see [retrieve] */
+    suspend fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
+
+    /** @see [retrieve] */
+    suspend fun retrieve(accountToken: String, requestOptions: RequestOptions): Account =
+        retrieve(accountToken, AccountRetrieveParams.none(), requestOptions)
 
     /**
      * Update account configuration such as state or spend limits. Can only be run on accounts that
@@ -32,9 +43,20 @@ interface AccountServiceAsync {
      * not be able to transact or create new cards.
      */
     suspend fun update(
+        accountToken: String,
+        params: AccountUpdateParams = AccountUpdateParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Account = update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+    /** @see [update] */
+    suspend fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
+
+    /** @see [update] */
+    suspend fun update(accountToken: String, requestOptions: RequestOptions): Account =
+        update(accountToken, AccountUpdateParams.none(), requestOptions)
 
     /** List account configurations. */
     suspend fun list(
@@ -53,9 +75,24 @@ interface AccountServiceAsync {
      * the available spend limit returned would be $400.
      */
     suspend fun retrieveSpendLimits(
+        accountToken: String,
+        params: AccountRetrieveSpendLimitsParams = AccountRetrieveSpendLimitsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountSpendLimits =
+        retrieveSpendLimits(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+    /** @see [retrieveSpendLimits] */
+    suspend fun retrieveSpendLimits(
         params: AccountRetrieveSpendLimitsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSpendLimits
+
+    /** @see [retrieveSpendLimits] */
+    suspend fun retrieveSpendLimits(
+        accountToken: String,
+        requestOptions: RequestOptions,
+    ): AccountSpendLimits =
+        retrieveSpendLimits(accountToken, AccountRetrieveSpendLimitsParams.none(), requestOptions)
 
     /**
      * A view of [AccountServiceAsync] that provides access to raw HTTP responses for each method.
@@ -68,9 +105,26 @@ interface AccountServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieve(
+            accountToken: String,
+            params: AccountRetrieveParams = AccountRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Account> =
+            retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        suspend fun retrieve(
+            accountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Account> =
+            retrieve(accountToken, AccountRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/accounts/{account_token}`, but is otherwise
@@ -78,9 +132,26 @@ interface AccountServiceAsync {
          */
         @MustBeClosed
         suspend fun update(
+            accountToken: String,
+            params: AccountUpdateParams = AccountUpdateParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Account> =
+            update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account>
+
+        /** @see [update] */
+        @MustBeClosed
+        suspend fun update(
+            accountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Account> =
+            update(accountToken, AccountUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/accounts`, but is otherwise the same as
@@ -103,8 +174,32 @@ interface AccountServiceAsync {
          */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
+            accountToken: String,
+            params: AccountRetrieveSpendLimitsParams = AccountRetrieveSpendLimitsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountSpendLimits> =
+            retrieveSpendLimits(
+                params.toBuilder().accountToken(accountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [retrieveSpendLimits] */
+        @MustBeClosed
+        suspend fun retrieveSpendLimits(
             params: AccountRetrieveSpendLimitsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountSpendLimits>
+
+        /** @see [retrieveSpendLimits] */
+        @MustBeClosed
+        suspend fun retrieveSpendLimits(
+            accountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AccountSpendLimits> =
+            retrieveSpendLimits(
+                accountToken,
+                AccountRetrieveSpendLimitsParams.none(),
+                requestOptions,
+            )
     }
 }

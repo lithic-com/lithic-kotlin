@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get the secret for an event subscription. */
 class EventSubscriptionRetrieveSecretParams
 private constructor(
-    private val eventSubscriptionToken: String,
+    private val eventSubscriptionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun eventSubscriptionToken(): String = eventSubscriptionToken
+    fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,11 @@ private constructor(
 
     companion object {
 
+        fun none(): EventSubscriptionRetrieveSecretParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [EventSubscriptionRetrieveSecretParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -54,7 +50,7 @@ private constructor(
                 eventSubscriptionRetrieveSecretParams.additionalQueryParams.toBuilder()
         }
 
-        fun eventSubscriptionToken(eventSubscriptionToken: String) = apply {
+        fun eventSubscriptionToken(eventSubscriptionToken: String?) = apply {
             this.eventSubscriptionToken = eventSubscriptionToken
         }
 
@@ -160,17 +156,10 @@ private constructor(
          * Returns an immutable instance of [EventSubscriptionRetrieveSecretParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventSubscriptionToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): EventSubscriptionRetrieveSecretParams =
             EventSubscriptionRetrieveSecretParams(
-                checkRequired("eventSubscriptionToken", eventSubscriptionToken),
+                eventSubscriptionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -178,7 +167,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventSubscriptionToken
+            0 -> eventSubscriptionToken ?: ""
             else -> ""
         }
 

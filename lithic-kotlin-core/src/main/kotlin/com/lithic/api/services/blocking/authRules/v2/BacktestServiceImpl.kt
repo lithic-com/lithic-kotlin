@@ -5,6 +5,7 @@ package com.lithic.api.services.blocking.authRules.v2
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.withErrorHandler
@@ -56,6 +57,9 @@ class BacktestServiceImpl internal constructor(private val clientOptions: Client
             params: AuthRuleV2BacktestCreateParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BacktestCreateResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("authRuleToken", params.authRuleToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -83,6 +87,9 @@ class BacktestServiceImpl internal constructor(private val clientOptions: Client
             params: AuthRuleV2BacktestRetrieveParams,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BacktestResults> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("authRuleBacktestToken", params.authRuleBacktestToken())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)

@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -16,12 +15,12 @@ import java.util.Objects
  */
 class CardRetrieveSpendLimitsParams
 private constructor(
-    private val cardToken: String,
+    private val cardToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun cardToken(): String = cardToken
+    fun cardToken(): String? = cardToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -31,14 +30,11 @@ private constructor(
 
     companion object {
 
+        fun none(): CardRetrieveSpendLimitsParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [CardRetrieveSpendLimitsParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .cardToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -56,7 +52,7 @@ private constructor(
             additionalQueryParams = cardRetrieveSpendLimitsParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -160,17 +156,10 @@ private constructor(
          * Returns an immutable instance of [CardRetrieveSpendLimitsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .cardToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): CardRetrieveSpendLimitsParams =
             CardRetrieveSpendLimitsParams(
-                checkRequired("cardToken", cardToken),
+                cardToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -178,7 +167,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> cardToken
+            0 -> cardToken ?: ""
             else -> ""
         }
 

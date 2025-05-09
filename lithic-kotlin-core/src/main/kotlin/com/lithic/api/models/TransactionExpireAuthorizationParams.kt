@@ -4,7 +4,6 @@ package com.lithic.api.models
 
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
@@ -13,13 +12,13 @@ import java.util.Objects
 /** Expire authorization */
 class TransactionExpireAuthorizationParams
 private constructor(
-    private val transactionToken: String,
+    private val transactionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun transactionToken(): String = transactionToken
+    fun transactionToken(): String? = transactionToken
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -31,14 +30,11 @@ private constructor(
 
     companion object {
 
+        fun none(): TransactionExpireAuthorizationParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [TransactionExpireAuthorizationParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .transactionToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -62,7 +58,7 @@ private constructor(
                 transactionExpireAuthorizationParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun transactionToken(transactionToken: String) = apply {
+        fun transactionToken(transactionToken: String?) = apply {
             this.transactionToken = transactionToken
         }
 
@@ -190,17 +186,10 @@ private constructor(
          * Returns an immutable instance of [TransactionExpireAuthorizationParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .transactionToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TransactionExpireAuthorizationParams =
             TransactionExpireAuthorizationParams(
-                checkRequired("transactionToken", transactionToken),
+                transactionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -211,7 +200,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> transactionToken
+            0 -> transactionToken ?: ""
             else -> ""
         }
 

@@ -6,8 +6,6 @@ import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.core.JsonString
 import com.lithic.api.models.*
-import com.lithic.api.models.EventListAttemptsParams
-import com.lithic.api.models.EventRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -23,8 +21,7 @@ internal class EventServiceTest {
                 .build()
         val eventService = client.events()
 
-        val event =
-            eventService.retrieve(EventRetrieveParams.builder().eventToken("event_token").build())
+        val event = eventService.retrieve("event_token")
 
         event.validate()
     }
@@ -52,10 +49,7 @@ internal class EventServiceTest {
                 .build()
         val eventService = client.events()
 
-        val page =
-            eventService.listAttempts(
-                EventListAttemptsParams.builder().eventToken("event_token").build()
-            )
+        val page = eventService.listAttempts("event_token")
 
         page.response().validate()
     }

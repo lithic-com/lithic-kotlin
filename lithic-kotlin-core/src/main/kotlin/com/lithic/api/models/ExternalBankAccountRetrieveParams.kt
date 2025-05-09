@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get the external bank account by token. */
 class ExternalBankAccountRetrieveParams
 private constructor(
-    private val externalBankAccountToken: String,
+    private val externalBankAccountToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun externalBankAccountToken(): String = externalBankAccountToken
+    fun externalBankAccountToken(): String? = externalBankAccountToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,11 @@ private constructor(
 
     companion object {
 
+        fun none(): ExternalBankAccountRetrieveParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of
          * [ExternalBankAccountRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalBankAccountToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -54,7 +50,7 @@ private constructor(
                     externalBankAccountRetrieveParams.additionalQueryParams.toBuilder()
             }
 
-        fun externalBankAccountToken(externalBankAccountToken: String) = apply {
+        fun externalBankAccountToken(externalBankAccountToken: String?) = apply {
             this.externalBankAccountToken = externalBankAccountToken
         }
 
@@ -160,17 +156,10 @@ private constructor(
          * Returns an immutable instance of [ExternalBankAccountRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .externalBankAccountToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ExternalBankAccountRetrieveParams =
             ExternalBankAccountRetrieveParams(
-                checkRequired("externalBankAccountToken", externalBankAccountToken),
+                externalBankAccountToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -178,7 +167,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> externalBankAccountToken
+            0 -> externalBankAccountToken ?: ""
             else -> ""
         }
 

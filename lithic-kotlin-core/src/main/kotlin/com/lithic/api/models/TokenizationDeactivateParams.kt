@@ -4,7 +4,6 @@ package com.lithic.api.models
 
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
@@ -21,13 +20,13 @@ import java.util.Objects
  */
 class TokenizationDeactivateParams
 private constructor(
-    private val tokenizationToken: String,
+    private val tokenizationToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) : Params {
 
-    fun tokenizationToken(): String = tokenizationToken
+    fun tokenizationToken(): String? = tokenizationToken
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -39,13 +38,10 @@ private constructor(
 
     companion object {
 
+        fun none(): TokenizationDeactivateParams = builder().build()
+
         /**
          * Returns a mutable builder for constructing an instance of [TokenizationDeactivateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
          */
         fun builder() = Builder()
     }
@@ -66,7 +62,7 @@ private constructor(
                 tokenizationDeactivateParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun tokenizationToken(tokenizationToken: String) = apply {
+        fun tokenizationToken(tokenizationToken: String?) = apply {
             this.tokenizationToken = tokenizationToken
         }
 
@@ -194,17 +190,10 @@ private constructor(
          * Returns an immutable instance of [TokenizationDeactivateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .tokenizationToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TokenizationDeactivateParams =
             TokenizationDeactivateParams(
-                checkRequired("tokenizationToken", tokenizationToken),
+                tokenizationToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -215,7 +204,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> tokenizationToken
+            0 -> tokenizationToken ?: ""
             else -> ""
         }
 

@@ -12,14 +12,14 @@ import java.util.Objects
 class CardFinancialTransactionRetrieveParams
 private constructor(
     private val cardToken: String,
-    private val financialTransactionToken: String,
+    private val financialTransactionToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun cardToken(): String = cardToken
 
-    fun financialTransactionToken(): String = financialTransactionToken
+    fun financialTransactionToken(): String? = financialTransactionToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -36,7 +36,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .cardToken()
-         * .financialTransactionToken()
          * ```
          */
         fun builder() = Builder()
@@ -63,7 +62,7 @@ private constructor(
 
         fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
 
-        fun financialTransactionToken(financialTransactionToken: String) = apply {
+        fun financialTransactionToken(financialTransactionToken: String?) = apply {
             this.financialTransactionToken = financialTransactionToken
         }
 
@@ -173,7 +172,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .cardToken()
-         * .financialTransactionToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -181,7 +179,7 @@ private constructor(
         fun build(): CardFinancialTransactionRetrieveParams =
             CardFinancialTransactionRetrieveParams(
                 checkRequired("cardToken", cardToken),
-                checkRequired("financialTransactionToken", financialTransactionToken),
+                financialTransactionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -190,7 +188,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> cardToken
-            1 -> financialTransactionToken
+            1 -> financialTransactionToken ?: ""
             else -> ""
         }
 

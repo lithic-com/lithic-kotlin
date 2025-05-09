@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.DisputeService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: DisputeService,
     private val params: DisputeListEvidencesParams,
     private val response: DisputeListEvidencesPageResponse,
-) {
+) : Page<DisputeEvidence> {
 
     /**
      * Delegates to [DisputeListEvidencesPageResponse], but gracefully handles missing data.
@@ -28,24 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<DisputeEvidence> = data()
 
-    fun getNextPageParams(): DisputeListEvidencesParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): DisputeListEvidencesParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    fun getNextPage(): DisputeListEvidencesPage? =
-        getNextPageParams()?.let { service.listEvidences(it) }
+    override fun nextPage(): DisputeListEvidencesPage = service.listEvidences(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPager<DisputeEvidence> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): DisputeListEvidencesParams = params
@@ -113,21 +111,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: DisputeListEvidencesPage) : Sequence<DisputeEvidence> {
-
-        override fun iterator(): Iterator<DisputeEvidence> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

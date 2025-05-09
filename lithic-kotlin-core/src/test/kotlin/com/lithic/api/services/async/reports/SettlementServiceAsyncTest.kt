@@ -4,8 +4,6 @@ package com.lithic.api.services.async.reports
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
-import com.lithic.api.models.ReportSettlementListDetailsParams
-import com.lithic.api.models.ReportSettlementSummaryParams
 import java.time.LocalDate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -22,12 +20,7 @@ internal class SettlementServiceAsyncTest {
                 .build()
         val settlementServiceAsync = client.reports().settlement()
 
-        val page =
-            settlementServiceAsync.listDetails(
-                ReportSettlementListDetailsParams.builder()
-                    .reportDate(LocalDate.parse("2023-09-01"))
-                    .build()
-            )
+        val page = settlementServiceAsync.listDetails(LocalDate.parse("2023-09-01"))
 
         page.response().validate()
     }
@@ -41,12 +34,7 @@ internal class SettlementServiceAsyncTest {
                 .build()
         val settlementServiceAsync = client.reports().settlement()
 
-        val settlementReport =
-            settlementServiceAsync.summary(
-                ReportSettlementSummaryParams.builder()
-                    .reportDate(LocalDate.parse("2023-09-01"))
-                    .build()
-            )
+        val settlementReport = settlementServiceAsync.summary(LocalDate.parse("2023-09-01"))
 
         settlementReport.validate()
     }

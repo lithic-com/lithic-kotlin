@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.BalanceServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [BalanceServiceAsync.list] */
 class BalanceListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: BalanceServiceAsync,
     private val params: BalanceListParams,
     private val response: BalanceListPageResponse,
-) {
+) : PageAsync<Balance> {
 
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
@@ -30,13 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<Balance> = data()
 
-    fun getNextPageParams(): BalanceListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): BalanceListPageAsync? = getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): BalanceListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): BalanceListPageAsync = service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<Balance> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): BalanceListParams = params
@@ -102,21 +105,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: BalanceListPageAsync) : Flow<Balance> {
-
-        override suspend fun collect(collector: FlowCollector<Balance>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

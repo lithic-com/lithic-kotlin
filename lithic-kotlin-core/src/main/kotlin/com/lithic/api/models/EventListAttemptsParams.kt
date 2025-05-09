@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.lithic.api.core.Enum
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -17,7 +16,7 @@ import java.util.Objects
 /** List all the message attempts for a given event. */
 class EventListAttemptsParams
 private constructor(
-    private val eventToken: String,
+    private val eventToken: String?,
     private val begin: OffsetDateTime?,
     private val end: OffsetDateTime?,
     private val endingBefore: String?,
@@ -28,7 +27,7 @@ private constructor(
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun eventToken(): String = eventToken
+    fun eventToken(): String? = eventToken
 
     /**
      * Date string in RFC 3339 format. Only entries created after the specified time will be
@@ -67,14 +66,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [EventListAttemptsParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventToken()
-         * ```
-         */
+        fun none(): EventListAttemptsParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [EventListAttemptsParams]. */
         fun builder() = Builder()
     }
 
@@ -103,7 +97,7 @@ private constructor(
             additionalQueryParams = eventListAttemptsParams.additionalQueryParams.toBuilder()
         }
 
-        fun eventToken(eventToken: String) = apply { this.eventToken = eventToken }
+        fun eventToken(eventToken: String?) = apply { this.eventToken = eventToken }
 
         /**
          * Date string in RFC 3339 format. Only entries created after the specified time will be
@@ -243,17 +237,10 @@ private constructor(
          * Returns an immutable instance of [EventListAttemptsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .eventToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): EventListAttemptsParams =
             EventListAttemptsParams(
-                checkRequired("eventToken", eventToken),
+                eventToken,
                 begin,
                 end,
                 endingBefore,
@@ -267,7 +254,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> eventToken
+            0 -> eventToken ?: ""
             else -> ""
         }
 

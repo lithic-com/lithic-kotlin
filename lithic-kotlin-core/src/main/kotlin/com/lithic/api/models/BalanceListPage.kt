@@ -2,6 +2,8 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPager
+import com.lithic.api.core.Page
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.BalanceService
 import java.util.Objects
@@ -12,7 +14,7 @@ private constructor(
     private val service: BalanceService,
     private val params: BalanceListParams,
     private val response: BalanceListPageResponse,
-) {
+) : Page<Balance> {
 
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
@@ -28,13 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<Balance> = data()
 
-    fun getNextPageParams(): BalanceListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    fun getNextPage(): BalanceListPage? = getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): BalanceListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override fun nextPage(): BalanceListPage = service.list(nextPageParams())
+
+    fun autoPager(): AutoPager<Balance> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): BalanceListParams = params
@@ -100,21 +105,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: BalanceListPage) : Sequence<Balance> {
-
-        override fun iterator(): Iterator<Balance> = iterator {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    yield(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

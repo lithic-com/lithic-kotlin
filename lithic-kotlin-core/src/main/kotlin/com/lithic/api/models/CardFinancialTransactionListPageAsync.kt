@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [FinancialTransactionServiceAsync.list] */
 class CardFinancialTransactionListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: FinancialTransactionServiceAsync,
     private val params: CardFinancialTransactionListParams,
     private val response: CardFinancialTransactionListPageResponse,
-) {
+) : PageAsync<FinancialTransaction> {
 
     /**
      * Delegates to [CardFinancialTransactionListPageResponse], but gracefully handles missing data.
@@ -30,14 +30,17 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<FinancialTransaction> = data()
 
-    fun getNextPageParams(): CardFinancialTransactionListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): CardFinancialTransactionListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): CardFinancialTransactionListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): CardFinancialTransactionListPageAsync =
+        service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<FinancialTransaction> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CardFinancialTransactionListParams = params
@@ -108,22 +111,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CardFinancialTransactionListPageAsync) :
-        Flow<FinancialTransaction> {
-
-        override suspend fun collect(collector: FlowCollector<FinancialTransaction>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

@@ -38,13 +38,13 @@ import java.util.Objects
  */
 class AuthRuleV2ApplyParams
 private constructor(
-    private val authRuleToken: String,
+    private val authRuleToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun authRuleToken(): String = authRuleToken
+    fun authRuleToken(): String? = authRuleToken
 
     fun body(): Body = body
 
@@ -61,7 +61,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .authRuleToken()
          * .body()
          * ```
          */
@@ -83,7 +82,7 @@ private constructor(
             additionalQueryParams = authRuleV2ApplyParams.additionalQueryParams.toBuilder()
         }
 
-        fun authRuleToken(authRuleToken: String) = apply { this.authRuleToken = authRuleToken }
+        fun authRuleToken(authRuleToken: String?) = apply { this.authRuleToken = authRuleToken }
 
         fun body(body: Body) = apply { this.body = body }
 
@@ -213,7 +212,6 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .authRuleToken()
          * .body()
          * ```
          *
@@ -221,7 +219,7 @@ private constructor(
          */
         fun build(): AuthRuleV2ApplyParams =
             AuthRuleV2ApplyParams(
-                checkRequired("authRuleToken", authRuleToken),
+                authRuleToken,
                 checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -232,7 +230,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> authRuleToken
+            0 -> authRuleToken ?: ""
             else -> ""
         }
 

@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.AggregateBalanceServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [AggregateBalanceServiceAsync.list] */
 class AggregateBalanceListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: AggregateBalanceServiceAsync,
     private val params: AggregateBalanceListParams,
     private val response: AggregateBalanceListPageResponse,
-) {
+) : PageAsync<AggregateBalance> {
 
     /**
      * Delegates to [AggregateBalanceListPageResponse], but gracefully handles missing data.
@@ -30,14 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<AggregateBalance> = data()
 
-    fun getNextPageParams(): AggregateBalanceListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): AggregateBalanceListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): AggregateBalanceListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): AggregateBalanceListPageAsync = service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<AggregateBalance> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): AggregateBalanceListParams = params
@@ -106,21 +108,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: AggregateBalanceListPageAsync) : Flow<AggregateBalance> {
-
-        override suspend fun collect(collector: FlowCollector<AggregateBalance>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.cards.AggregateBalanceServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [AggregateBalanceServiceAsync.list] */
 class CardAggregateBalanceListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: AggregateBalanceServiceAsync,
     private val params: CardAggregateBalanceListParams,
     private val response: CardAggregateBalanceListPageResponse,
-) {
+) : PageAsync<AggregateBalanceListResponse> {
 
     /**
      * Delegates to [CardAggregateBalanceListPageResponse], but gracefully handles missing data.
@@ -31,14 +31,17 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<AggregateBalanceListResponse> = data()
 
-    fun getNextPageParams(): CardAggregateBalanceListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): CardAggregateBalanceListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): CardAggregateBalanceListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): CardAggregateBalanceListPageAsync =
+        service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<AggregateBalanceListResponse> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CardAggregateBalanceListParams = params
@@ -108,22 +111,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: CardAggregateBalanceListPageAsync) :
-        Flow<AggregateBalanceListResponse> {
-
-        override suspend fun collect(collector: FlowCollector<AggregateBalanceListResponse>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

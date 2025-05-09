@@ -12,7 +12,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
@@ -23,13 +22,13 @@ import java.util.Objects
 /** Update dispute. Can only be modified if status is `NEW`. */
 class DisputeUpdateParams
 private constructor(
-    private val disputeToken: String,
+    private val disputeToken: String?,
     private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun disputeToken(): String = disputeToken
+    fun disputeToken(): String? = disputeToken
 
     /**
      * Amount to dispute
@@ -102,14 +101,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [DisputeUpdateParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .disputeToken()
-         * ```
-         */
+        fun none(): DisputeUpdateParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [DisputeUpdateParams]. */
         fun builder() = Builder()
     }
 
@@ -128,7 +122,7 @@ private constructor(
             additionalQueryParams = disputeUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
+        fun disputeToken(disputeToken: String?) = apply { this.disputeToken = disputeToken }
 
         /**
          * Sets the entire request body.
@@ -315,17 +309,10 @@ private constructor(
          * Returns an immutable instance of [DisputeUpdateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .disputeToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): DisputeUpdateParams =
             DisputeUpdateParams(
-                checkRequired("disputeToken", disputeToken),
+                disputeToken,
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -336,7 +323,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> disputeToken
+            0 -> disputeToken ?: ""
             else -> ""
         }
 

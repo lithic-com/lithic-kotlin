@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.AccountHolderServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [AccountHolderServiceAsync.list] */
 class AccountHolderListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: AccountHolderServiceAsync,
     private val params: AccountHolderListParams,
     private val response: AccountHolderListPageResponse,
-) {
+) : PageAsync<AccountHolder> {
 
     /**
      * Delegates to [AccountHolderListPageResponse], but gracefully handles missing data.
@@ -30,14 +30,16 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<AccountHolder> = data()
 
-    fun getNextPageParams(): AccountHolderListParams? = null
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-    suspend fun getNextPage(): AccountHolderListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    fun nextPageParams(): AccountHolderListParams =
+        throw IllegalStateException("Cannot construct next page params")
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    override suspend fun nextPage(): AccountHolderListPageAsync = service.list(nextPageParams())
+
+    fun autoPager(): AutoPagerAsync<AccountHolder> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): AccountHolderListParams = params
@@ -103,21 +105,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: AccountHolderListPageAsync) : Flow<AccountHolder> {
-
-        override suspend fun collect(collector: FlowCollector<AccountHolder>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

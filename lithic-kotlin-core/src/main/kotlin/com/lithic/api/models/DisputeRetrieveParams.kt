@@ -3,7 +3,6 @@
 package com.lithic.api.models
 
 import com.lithic.api.core.Params
-import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
@@ -11,12 +10,12 @@ import java.util.Objects
 /** Get dispute. */
 class DisputeRetrieveParams
 private constructor(
-    private val disputeToken: String,
+    private val disputeToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun disputeToken(): String = disputeToken
+    fun disputeToken(): String? = disputeToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -26,14 +25,9 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [DisputeRetrieveParams].
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .disputeToken()
-         * ```
-         */
+        fun none(): DisputeRetrieveParams = builder().build()
+
+        /** Returns a mutable builder for constructing an instance of [DisputeRetrieveParams]. */
         fun builder() = Builder()
     }
 
@@ -50,7 +44,7 @@ private constructor(
             additionalQueryParams = disputeRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun disputeToken(disputeToken: String) = apply { this.disputeToken = disputeToken }
+        fun disputeToken(disputeToken: String?) = apply { this.disputeToken = disputeToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -154,17 +148,10 @@ private constructor(
          * Returns an immutable instance of [DisputeRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
-         *
-         * The following fields are required:
-         * ```kotlin
-         * .disputeToken()
-         * ```
-         *
-         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): DisputeRetrieveParams =
             DisputeRetrieveParams(
-                checkRequired("disputeToken", disputeToken),
+                disputeToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -172,7 +159,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> disputeToken
+            0 -> disputeToken ?: ""
             else -> ""
         }
 

@@ -2,11 +2,11 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.AutoPagerAsync
+import com.lithic.api.core.PageAsync
 import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.BookTransferServiceAsync
 import java.util.Objects
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 
 /** @see [BookTransferServiceAsync.list] */
 class BookTransferListPageAsync
@@ -14,7 +14,7 @@ private constructor(
     private val service: BookTransferServiceAsync,
     private val params: BookTransferListParams,
     private val response: BookTransferListPageResponse,
-) {
+) : PageAsync<BookTransferResponse> {
 
     /**
      * Delegates to [BookTransferListPageResponse], but gracefully handles missing data.
@@ -30,24 +30,20 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    fun hasNextPage(): Boolean = data().isNotEmpty()
+    override fun items(): List<BookTransferResponse> = data()
 
-    fun getNextPageParams(): BookTransferListParams? {
-        if (!hasNextPage()) {
-            return null
-        }
+    override fun hasNextPage(): Boolean = items().isNotEmpty()
 
-        return if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(data().first()._token().getNullable("token")).build()
+    fun nextPageParams(): BookTransferListParams =
+        if (params.endingBefore() != null) {
+            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
         } else {
-            params.toBuilder().startingAfter(data().last()._token().getNullable("token")).build()
+            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
         }
-    }
 
-    suspend fun getNextPage(): BookTransferListPageAsync? =
-        getNextPageParams()?.let { service.list(it) }
+    override suspend fun nextPage(): BookTransferListPageAsync = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager = AutoPager(this)
+    fun autoPager(): AutoPagerAsync<BookTransferResponse> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): BookTransferListParams = params
@@ -113,21 +109,6 @@ private constructor(
                 checkRequired("params", params),
                 checkRequired("response", response),
             )
-    }
-
-    class AutoPager(private val firstPage: BookTransferListPageAsync) : Flow<BookTransferResponse> {
-
-        override suspend fun collect(collector: FlowCollector<BookTransferResponse>) {
-            var page = firstPage
-            var index = 0
-            while (true) {
-                while (index < page.data().size) {
-                    collector.emit(page.data()[index++])
-                }
-                page = page.getNextPage() ?: break
-                index = 0
-            }
-        }
     }
 
     override fun equals(other: Any?): Boolean {

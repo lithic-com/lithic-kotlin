@@ -12,8 +12,6 @@ import com.lithic.api.models.CardGetEmbedUrlParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardReissueParams
 import com.lithic.api.models.CardRenewParams
-import com.lithic.api.models.CardRetrieveParams
-import com.lithic.api.models.CardRetrieveSpendLimitsParams
 import com.lithic.api.models.CardSearchByPanParams
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.Carrier
@@ -84,12 +82,7 @@ internal class CardServiceTest {
                 .build()
         val cardService = client.cards()
 
-        val card =
-            cardService.retrieve(
-                CardRetrieveParams.builder()
-                    .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+        val card = cardService.retrieve("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         card.validate()
     }
@@ -302,11 +295,7 @@ internal class CardServiceTest {
         val cardService = client.cards()
 
         val cardSpendLimits =
-            cardService.retrieveSpendLimits(
-                CardRetrieveSpendLimitsParams.builder()
-                    .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                    .build()
-            )
+            cardService.retrieveSpendLimits("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
         cardSpendLimits.validate()
     }

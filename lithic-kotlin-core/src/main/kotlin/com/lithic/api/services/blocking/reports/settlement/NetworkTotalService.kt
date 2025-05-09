@@ -19,9 +19,22 @@ interface NetworkTotalService {
 
     /** Retrieve a specific network total record by token. Not available in sandbox. */
     fun retrieve(
+        token: String,
+        params: ReportSettlementNetworkTotalRetrieveParams =
+            ReportSettlementNetworkTotalRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): NetworkTotalRetrieveResponse =
+        retrieve(params.toBuilder().token(token).build(), requestOptions)
+
+    /** @see [retrieve] */
+    fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkTotalRetrieveResponse
+
+    /** @see [retrieve] */
+    fun retrieve(token: String, requestOptions: RequestOptions): NetworkTotalRetrieveResponse =
+        retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
     /** List network total records with optional filters. Not available in sandbox. */
     fun list(
@@ -45,9 +58,27 @@ interface NetworkTotalService {
          */
         @MustBeClosed
         fun retrieve(
+            token: String,
+            params: ReportSettlementNetworkTotalRetrieveParams =
+                ReportSettlementNetworkTotalRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<NetworkTotalRetrieveResponse> =
+            retrieve(params.toBuilder().token(token).build(), requestOptions)
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
             params: ReportSettlementNetworkTotalRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkTotalRetrieveResponse>
+
+        /** @see [retrieve] */
+        @MustBeClosed
+        fun retrieve(
+            token: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<NetworkTotalRetrieveResponse> =
+            retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals`, but is

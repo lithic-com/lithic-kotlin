@@ -26,14 +26,14 @@ import java.util.Objects
 class AccountHolderRetrieveDocumentParams
 private constructor(
     private val accountHolderToken: String,
-    private val documentToken: String,
+    private val documentToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     fun accountHolderToken(): String = accountHolderToken
 
-    fun documentToken(): String = documentToken
+    fun documentToken(): String? = documentToken
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -50,7 +50,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .accountHolderToken()
-         * .documentToken()
          * ```
          */
         fun builder() = Builder()
@@ -78,7 +77,7 @@ private constructor(
             this.accountHolderToken = accountHolderToken
         }
 
-        fun documentToken(documentToken: String) = apply { this.documentToken = documentToken }
+        fun documentToken(documentToken: String?) = apply { this.documentToken = documentToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -186,7 +185,6 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .accountHolderToken()
-         * .documentToken()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -194,7 +192,7 @@ private constructor(
         fun build(): AccountHolderRetrieveDocumentParams =
             AccountHolderRetrieveDocumentParams(
                 checkRequired("accountHolderToken", accountHolderToken),
-                checkRequired("documentToken", documentToken),
+                documentToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -203,7 +201,7 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> accountHolderToken
-            1 -> documentToken
+            1 -> documentToken ?: ""
             else -> ""
         }
 
