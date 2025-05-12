@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.89.0 (2025-05-12)
+
+Full Changelog: [v0.88.1...v0.89.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.88.1...v0.89.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** improve some class names
+* **client:** extract auto pagination to shared classes
+* **client:** **Migration:** - If you were referencing the `AutoPager` class on a specific `*Page` or `*PageAsync` type, then you should instead reference the shared `AutoPager` and `AutoPagerAsync` types, under the `core` package
+    - If you were referencing `getNextPage` or `getNextPageParams`:
+       - Swap to `nextPage()` and `nextPageParams()`
+       - Note that these both now return non-nullable types (use `hasNextPage()` before calling these, since they will throw if it's impossible to get another page)
+
+### Features
+
+* **api:** manual updates ([27222d0](https://github.com/lithic-com/lithic-kotlin/commit/27222d0f77adefa05b5f82787826166b7f0a267e))
+* **client:** allow providing some params positionally ([b8fa09d](https://github.com/lithic-com/lithic-kotlin/commit/b8fa09dcf254970133839a7a06b06f22e41deed5))
+* **client:** extract auto pagination to shared classes ([bd073ab](https://github.com/lithic-com/lithic-kotlin/commit/bd073abe572c5e9be070f469820f8d4e64a4afff))
+
+
+### Chores
+
+* **internal:** fix custom code ([630ced9](https://github.com/lithic-com/lithic-kotlin/commit/630ced9c73239cd9e8d2c2d7abbdad8e988a633f))
+* **internal:** fix custom code ([0f9f6f5](https://github.com/lithic-com/lithic-kotlin/commit/0f9f6f51baf78385f2e1dbd22556a8d71a9abc28))
+* **internal:** remove flaky `-Xbackend-threads=0` option ([e0195ad](https://github.com/lithic-com/lithic-kotlin/commit/e0195ad92642b1baca203f71c4c59b2aebd3549b))
+
+
+### Refactors
+
+* **client:** improve some class names ([d4c10a2](https://github.com/lithic-com/lithic-kotlin/commit/d4c10a28a868be304baf4255835ee24ebb250bc5))
+
 ## 0.88.1 (2025-05-05)
 
 Full Changelog: [v0.88.0...v0.88.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.88.0...v0.88.1)
