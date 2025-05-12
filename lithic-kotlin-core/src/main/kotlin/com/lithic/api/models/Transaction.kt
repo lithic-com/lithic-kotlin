@@ -272,9 +272,8 @@ private constructor(
     fun merchantCurrency(): String = merchantCurrency.getRequired("merchant_currency")
 
     /**
-     * Card network of the authorization. Can be `INTERLINK`, `MAESTRO`, `MASTERCARD`, `VISA`, or
-     * `UNKNOWN`. Value is `UNKNOWN` when Lithic cannot determine the network code from the upstream
-     * provider.
+     * Card network of the authorization. Value is `UNKNOWN` when Lithic cannot determine the
+     * network code from the upstream provider.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -928,9 +927,8 @@ private constructor(
         }
 
         /**
-         * Card network of the authorization. Can be `INTERLINK`, `MAESTRO`, `MASTERCARD`, `VISA`,
-         * or `UNKNOWN`. Value is `UNKNOWN` when Lithic cannot determine the network code from the
-         * upstream provider.
+         * Card network of the authorization. Value is `UNKNOWN` when Lithic cannot determine the
+         * network code from the upstream provider.
          */
         fun network(network: Network?) = network(JsonField.ofNullable(network))
 
@@ -2556,6 +2554,7 @@ private constructor(
         private val threeDSAuthenticationToken: JsonField<String>,
         private val verificationAttempted: JsonField<VerificationAttempted>,
         private val verificationResult: JsonField<VerificationResult>,
+        private val authenticationMethod: JsonField<AuthenticationMethod>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2585,6 +2584,9 @@ private constructor(
             @JsonProperty("verification_result")
             @ExcludeMissing
             verificationResult: JsonField<VerificationResult> = JsonMissing.of(),
+            @JsonProperty("authentication_method")
+            @ExcludeMissing
+            authenticationMethod: JsonField<AuthenticationMethod> = JsonMissing.of(),
         ) : this(
             threeDSVersion,
             acquirerExemption,
@@ -2594,6 +2596,7 @@ private constructor(
             threeDSAuthenticationToken,
             verificationAttempted,
             verificationResult,
+            authenticationMethod,
             mutableMapOf(),
         )
 
@@ -2679,6 +2682,15 @@ private constructor(
             verificationResult.getRequired("verification_result")
 
         /**
+         * Indicates the method used to authenticate the cardholder.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun authenticationMethod(): AuthenticationMethod? =
+            authenticationMethod.getNullable("authentication_method")
+
+        /**
          * Returns the raw JSON value of [threeDSVersion].
          *
          * Unlike [threeDSVersion], this method doesn't throw if the JSON field has an unexpected
@@ -2758,6 +2770,16 @@ private constructor(
         @ExcludeMissing
         fun _verificationResult(): JsonField<VerificationResult> = verificationResult
 
+        /**
+         * Returns the raw JSON value of [authenticationMethod].
+         *
+         * Unlike [authenticationMethod], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("authentication_method")
+        @ExcludeMissing
+        fun _authenticationMethod(): JsonField<AuthenticationMethod> = authenticationMethod
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -2801,6 +2823,7 @@ private constructor(
             private var threeDSAuthenticationToken: JsonField<String>? = null
             private var verificationAttempted: JsonField<VerificationAttempted>? = null
             private var verificationResult: JsonField<VerificationResult>? = null
+            private var authenticationMethod: JsonField<AuthenticationMethod> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(cardholderAuthentication: CardholderAuthentication) = apply {
@@ -2812,6 +2835,7 @@ private constructor(
                 threeDSAuthenticationToken = cardholderAuthentication.threeDSAuthenticationToken
                 verificationAttempted = cardholderAuthentication.verificationAttempted
                 verificationResult = cardholderAuthentication.verificationResult
+                authenticationMethod = cardholderAuthentication.authenticationMethod
                 additionalProperties = cardholderAuthentication.additionalProperties.toMutableMap()
             }
 
@@ -2957,6 +2981,22 @@ private constructor(
                 this.verificationResult = verificationResult
             }
 
+            /** Indicates the method used to authenticate the cardholder. */
+            fun authenticationMethod(authenticationMethod: AuthenticationMethod) =
+                authenticationMethod(JsonField.of(authenticationMethod))
+
+            /**
+             * Sets [Builder.authenticationMethod] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.authenticationMethod] with a well-typed
+             * [AuthenticationMethod] value instead. This method is primarily for setting the field
+             * to an undocumented or not yet supported value.
+             */
+            fun authenticationMethod(authenticationMethod: JsonField<AuthenticationMethod>) =
+                apply {
+                    this.authenticationMethod = authenticationMethod
+                }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -3005,6 +3045,7 @@ private constructor(
                     checkRequired("threeDSAuthenticationToken", threeDSAuthenticationToken),
                     checkRequired("verificationAttempted", verificationAttempted),
                     checkRequired("verificationResult", verificationResult),
+                    authenticationMethod,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -3024,6 +3065,7 @@ private constructor(
             threeDSAuthenticationToken()
             verificationAttempted().validate()
             verificationResult().validate()
+            authenticationMethod()?.validate()
             validated = true
         }
 
@@ -3049,7 +3091,8 @@ private constructor(
                 (liabilityShift.asKnown()?.validity() ?: 0) +
                 (if (threeDSAuthenticationToken.asKnown() == null) 0 else 1) +
                 (verificationAttempted.asKnown()?.validity() ?: 0) +
-                (verificationResult.asKnown()?.validity() ?: 0)
+                (verificationResult.asKnown()?.validity() ?: 0) +
+                (authenticationMethod.asKnown()?.validity() ?: 0)
 
         /** Whether an acquirer exemption applied to the transaction. */
         class AcquirerExemption
@@ -3965,22 +4008,161 @@ private constructor(
             override fun toString() = value.toString()
         }
 
+        /** Indicates the method used to authenticate the cardholder. */
+        class AuthenticationMethod
+        @JsonCreator
+        private constructor(private val value: JsonField<String>) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val FRICTIONLESS = of("FRICTIONLESS")
+
+                val CHALLENGE = of("CHALLENGE")
+
+                val NONE = of("NONE")
+
+                fun of(value: String) = AuthenticationMethod(JsonField.of(value))
+            }
+
+            /** An enum containing [AuthenticationMethod]'s known values. */
+            enum class Known {
+                FRICTIONLESS,
+                CHALLENGE,
+                NONE,
+            }
+
+            /**
+             * An enum containing [AuthenticationMethod]'s known values, as well as an [_UNKNOWN]
+             * member.
+             *
+             * An instance of [AuthenticationMethod] can contain an unknown value in a couple of
+             * cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                FRICTIONLESS,
+                CHALLENGE,
+                NONE,
+                /**
+                 * An enum member indicating that [AuthenticationMethod] was instantiated with an
+                 * unknown value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    FRICTIONLESS -> Value.FRICTIONLESS
+                    CHALLENGE -> Value.CHALLENGE
+                    NONE -> Value.NONE
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws LithicInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    FRICTIONLESS -> Known.FRICTIONLESS
+                    CHALLENGE -> Known.CHALLENGE
+                    NONE -> Known.NONE
+                    else -> throw LithicInvalidDataException("Unknown AuthenticationMethod: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws LithicInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): AuthenticationMethod = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is AuthenticationMethod && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is CardholderAuthentication && threeDSVersion == other.threeDSVersion && acquirerExemption == other.acquirerExemption && authenticationResult == other.authenticationResult && decisionMadeBy == other.decisionMadeBy && liabilityShift == other.liabilityShift && threeDSAuthenticationToken == other.threeDSAuthenticationToken && verificationAttempted == other.verificationAttempted && verificationResult == other.verificationResult && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CardholderAuthentication && threeDSVersion == other.threeDSVersion && acquirerExemption == other.acquirerExemption && authenticationResult == other.authenticationResult && decisionMadeBy == other.decisionMadeBy && liabilityShift == other.liabilityShift && threeDSAuthenticationToken == other.threeDSAuthenticationToken && verificationAttempted == other.verificationAttempted && verificationResult == other.verificationResult && authenticationMethod == other.authenticationMethod && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(threeDSVersion, acquirerExemption, authenticationResult, decisionMadeBy, liabilityShift, threeDSAuthenticationToken, verificationAttempted, verificationResult, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(threeDSVersion, acquirerExemption, authenticationResult, decisionMadeBy, liabilityShift, threeDSAuthenticationToken, verificationAttempted, verificationResult, authenticationMethod, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CardholderAuthentication{threeDSVersion=$threeDSVersion, acquirerExemption=$acquirerExemption, authenticationResult=$authenticationResult, decisionMadeBy=$decisionMadeBy, liabilityShift=$liabilityShift, threeDSAuthenticationToken=$threeDSAuthenticationToken, verificationAttempted=$verificationAttempted, verificationResult=$verificationResult, additionalProperties=$additionalProperties}"
+            "CardholderAuthentication{threeDSVersion=$threeDSVersion, acquirerExemption=$acquirerExemption, authenticationResult=$authenticationResult, decisionMadeBy=$decisionMadeBy, liabilityShift=$liabilityShift, threeDSAuthenticationToken=$threeDSAuthenticationToken, verificationAttempted=$verificationAttempted, verificationResult=$verificationResult, authenticationMethod=$authenticationMethod, additionalProperties=$additionalProperties}"
     }
 
     class Merchant
@@ -4396,9 +4578,8 @@ private constructor(
     }
 
     /**
-     * Card network of the authorization. Can be `INTERLINK`, `MAESTRO`, `MASTERCARD`, `VISA`, or
-     * `UNKNOWN`. Value is `UNKNOWN` when Lithic cannot determine the network code from the upstream
-     * provider.
+     * Card network of the authorization. Value is `UNKNOWN` when Lithic cannot determine the
+     * network code from the upstream provider.
      */
     class Network @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -4413,6 +4594,8 @@ private constructor(
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         companion object {
+
+            val AMEX = of("AMEX")
 
             val INTERLINK = of("INTERLINK")
 
@@ -4429,6 +4612,7 @@ private constructor(
 
         /** An enum containing [Network]'s known values. */
         enum class Known {
+            AMEX,
             INTERLINK,
             MAESTRO,
             MASTERCARD,
@@ -4446,6 +4630,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            AMEX,
             INTERLINK,
             MAESTRO,
             MASTERCARD,
@@ -4464,6 +4649,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                AMEX -> Value.AMEX
                 INTERLINK -> Value.INTERLINK
                 MAESTRO -> Value.MAESTRO
                 MASTERCARD -> Value.MASTERCARD
@@ -4483,6 +4669,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                AMEX -> Known.AMEX
                 INTERLINK -> Known.INTERLINK
                 MAESTRO -> Known.MAESTRO
                 MASTERCARD -> Known.MASTERCARD
@@ -9469,6 +9656,7 @@ private constructor(
         class NetworkInfo
         private constructor(
             private val acquirer: JsonField<Acquirer>,
+            private val amex: JsonField<Amex>,
             private val mastercard: JsonField<Mastercard>,
             private val visa: JsonField<Visa>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -9479,17 +9667,24 @@ private constructor(
                 @JsonProperty("acquirer")
                 @ExcludeMissing
                 acquirer: JsonField<Acquirer> = JsonMissing.of(),
+                @JsonProperty("amex") @ExcludeMissing amex: JsonField<Amex> = JsonMissing.of(),
                 @JsonProperty("mastercard")
                 @ExcludeMissing
                 mastercard: JsonField<Mastercard> = JsonMissing.of(),
                 @JsonProperty("visa") @ExcludeMissing visa: JsonField<Visa> = JsonMissing.of(),
-            ) : this(acquirer, mastercard, visa, mutableMapOf())
+            ) : this(acquirer, amex, mastercard, visa, mutableMapOf())
 
             /**
              * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
              */
             fun acquirer(): Acquirer? = acquirer.getNullable("acquirer")
+
+            /**
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun amex(): Amex? = amex.getNullable("amex")
 
             /**
              * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
@@ -9512,6 +9707,13 @@ private constructor(
             @JsonProperty("acquirer")
             @ExcludeMissing
             fun _acquirer(): JsonField<Acquirer> = acquirer
+
+            /**
+             * Returns the raw JSON value of [amex].
+             *
+             * Unlike [amex], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("amex") @ExcludeMissing fun _amex(): JsonField<Amex> = amex
 
             /**
              * Returns the raw JSON value of [mastercard].
@@ -9550,6 +9752,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .acquirer()
+                 * .amex()
                  * .mastercard()
                  * .visa()
                  * ```
@@ -9561,12 +9764,14 @@ private constructor(
             class Builder internal constructor() {
 
                 private var acquirer: JsonField<Acquirer>? = null
+                private var amex: JsonField<Amex>? = null
                 private var mastercard: JsonField<Mastercard>? = null
                 private var visa: JsonField<Visa>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(networkInfo: NetworkInfo) = apply {
                     acquirer = networkInfo.acquirer
+                    amex = networkInfo.amex
                     mastercard = networkInfo.mastercard
                     visa = networkInfo.visa
                     additionalProperties = networkInfo.additionalProperties.toMutableMap()
@@ -9582,6 +9787,17 @@ private constructor(
                  * yet supported value.
                  */
                 fun acquirer(acquirer: JsonField<Acquirer>) = apply { this.acquirer = acquirer }
+
+                fun amex(amex: Amex?) = amex(JsonField.ofNullable(amex))
+
+                /**
+                 * Sets [Builder.amex] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amex] with a well-typed [Amex] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun amex(amex: JsonField<Amex>) = apply { this.amex = amex }
 
                 fun mastercard(mastercard: Mastercard?) =
                     mastercard(JsonField.ofNullable(mastercard))
@@ -9638,6 +9854,7 @@ private constructor(
                  * The following fields are required:
                  * ```kotlin
                  * .acquirer()
+                 * .amex()
                  * .mastercard()
                  * .visa()
                  * ```
@@ -9647,6 +9864,7 @@ private constructor(
                 fun build(): NetworkInfo =
                     NetworkInfo(
                         checkRequired("acquirer", acquirer),
+                        checkRequired("amex", amex),
                         checkRequired("mastercard", mastercard),
                         checkRequired("visa", visa),
                         additionalProperties.toMutableMap(),
@@ -9661,6 +9879,7 @@ private constructor(
                 }
 
                 acquirer()?.validate()
+                amex()?.validate()
                 mastercard()?.validate()
                 visa()?.validate()
                 validated = true
@@ -9682,6 +9901,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (acquirer.asKnown()?.validity() ?: 0) +
+                    (amex.asKnown()?.validity() ?: 0) +
                     (mastercard.asKnown()?.validity() ?: 0) +
                     (visa.asKnown()?.validity() ?: 0)
 
@@ -9910,6 +10130,234 @@ private constructor(
 
                 override fun toString() =
                     "Acquirer{acquirerReferenceNumber=$acquirerReferenceNumber, retrievalReferenceNumber=$retrievalReferenceNumber, additionalProperties=$additionalProperties}"
+            }
+
+            class Amex
+            private constructor(
+                private val originalTransactionId: JsonField<String>,
+                private val transactionId: JsonField<String>,
+                private val additionalProperties: MutableMap<String, JsonValue>,
+            ) {
+
+                @JsonCreator
+                private constructor(
+                    @JsonProperty("original_transaction_id")
+                    @ExcludeMissing
+                    originalTransactionId: JsonField<String> = JsonMissing.of(),
+                    @JsonProperty("transaction_id")
+                    @ExcludeMissing
+                    transactionId: JsonField<String> = JsonMissing.of(),
+                ) : this(originalTransactionId, transactionId, mutableMapOf())
+
+                /**
+                 * Identifier assigned by American Express. Matches the `transaction_id` of a prior
+                 * related event. May be populated in incremental authorizations (authorization
+                 * requests that augment a previously authorized amount), authorization advices,
+                 * financial authorizations, and clearings.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun originalTransactionId(): String? =
+                    originalTransactionId.getNullable("original_transaction_id")
+
+                /**
+                 * Identifier assigned by American Express to link original messages to subsequent
+                 * messages. Guaranteed by American Express to be unique for each original
+                 * authorization and financial authorization.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun transactionId(): String? = transactionId.getNullable("transaction_id")
+
+                /**
+                 * Returns the raw JSON value of [originalTransactionId].
+                 *
+                 * Unlike [originalTransactionId], this method doesn't throw if the JSON field has
+                 * an unexpected type.
+                 */
+                @JsonProperty("original_transaction_id")
+                @ExcludeMissing
+                fun _originalTransactionId(): JsonField<String> = originalTransactionId
+
+                /**
+                 * Returns the raw JSON value of [transactionId].
+                 *
+                 * Unlike [transactionId], this method doesn't throw if the JSON field has an
+                 * unexpected type.
+                 */
+                @JsonProperty("transaction_id")
+                @ExcludeMissing
+                fun _transactionId(): JsonField<String> = transactionId
+
+                @JsonAnySetter
+                private fun putAdditionalProperty(key: String, value: JsonValue) {
+                    additionalProperties.put(key, value)
+                }
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> =
+                    Collections.unmodifiableMap(additionalProperties)
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Amex].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .originalTransactionId()
+                     * .transactionId()
+                     * ```
+                     */
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Amex]. */
+                class Builder internal constructor() {
+
+                    private var originalTransactionId: JsonField<String>? = null
+                    private var transactionId: JsonField<String>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(amex: Amex) = apply {
+                        originalTransactionId = amex.originalTransactionId
+                        transactionId = amex.transactionId
+                        additionalProperties = amex.additionalProperties.toMutableMap()
+                    }
+
+                    /**
+                     * Identifier assigned by American Express. Matches the `transaction_id` of a
+                     * prior related event. May be populated in incremental authorizations
+                     * (authorization requests that augment a previously authorized amount),
+                     * authorization advices, financial authorizations, and clearings.
+                     */
+                    fun originalTransactionId(originalTransactionId: String?) =
+                        originalTransactionId(JsonField.ofNullable(originalTransactionId))
+
+                    /**
+                     * Sets [Builder.originalTransactionId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.originalTransactionId] with a well-typed
+                     * [String] value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun originalTransactionId(originalTransactionId: JsonField<String>) = apply {
+                        this.originalTransactionId = originalTransactionId
+                    }
+
+                    /**
+                     * Identifier assigned by American Express to link original messages to
+                     * subsequent messages. Guaranteed by American Express to be unique for each
+                     * original authorization and financial authorization.
+                     */
+                    fun transactionId(transactionId: String?) =
+                        transactionId(JsonField.ofNullable(transactionId))
+
+                    /**
+                     * Sets [Builder.transactionId] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.transactionId] with a well-typed [String]
+                     * value instead. This method is primarily for setting the field to an
+                     * undocumented or not yet supported value.
+                     */
+                    fun transactionId(transactionId: JsonField<String>) = apply {
+                        this.transactionId = transactionId
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    /**
+                     * Returns an immutable instance of [Amex].
+                     *
+                     * Further updates to this [Builder] will not mutate the returned instance.
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .originalTransactionId()
+                     * .transactionId()
+                     * ```
+                     *
+                     * @throws IllegalStateException if any required field is unset.
+                     */
+                    fun build(): Amex =
+                        Amex(
+                            checkRequired("originalTransactionId", originalTransactionId),
+                            checkRequired("transactionId", transactionId),
+                            additionalProperties.toMutableMap(),
+                        )
+                }
+
+                private var validated: Boolean = false
+
+                fun validate(): Amex = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    originalTransactionId()
+                    transactionId()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int =
+                    (if (originalTransactionId.asKnown() == null) 0 else 1) +
+                        (if (transactionId.asKnown() == null) 0 else 1)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Amex && originalTransactionId == other.originalTransactionId && transactionId == other.transactionId && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(originalTransactionId, transactionId, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "Amex{originalTransactionId=$originalTransactionId, transactionId=$transactionId, additionalProperties=$additionalProperties}"
             }
 
             class Mastercard
@@ -10501,17 +10949,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NetworkInfo && acquirer == other.acquirer && mastercard == other.mastercard && visa == other.visa && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is NetworkInfo && acquirer == other.acquirer && amex == other.amex && mastercard == other.mastercard && visa == other.visa && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(acquirer, mastercard, visa, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(acquirer, amex, mastercard, visa, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "NetworkInfo{acquirer=$acquirer, mastercard=$mastercard, visa=$visa, additionalProperties=$additionalProperties}"
+                "NetworkInfo{acquirer=$acquirer, amex=$amex, mastercard=$mastercard, visa=$visa, additionalProperties=$additionalProperties}"
         }
 
         class DeclineResult @JsonCreator private constructor(private val value: JsonField<String>) :

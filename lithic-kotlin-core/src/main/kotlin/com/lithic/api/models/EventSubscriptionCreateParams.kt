@@ -696,6 +696,8 @@ private constructor(
 
             val FINANCIAL_ACCOUNT_UPDATED = of("financial_account.updated")
 
+            val FUNDING_EVENT_CREATED = of("funding_event.created")
+
             val LOAN_TAPE_CREATED = of("loan_tape.created")
 
             val LOAN_TAPE_UPDATED = of("loan_tape.updated")
@@ -762,6 +764,7 @@ private constructor(
             EXTERNAL_PAYMENT_UPDATED,
             FINANCIAL_ACCOUNT_CREATED,
             FINANCIAL_ACCOUNT_UPDATED,
+            FUNDING_EVENT_CREATED,
             LOAN_TAPE_CREATED,
             LOAN_TAPE_UPDATED,
             MANAGEMENT_OPERATION_CREATED,
@@ -816,6 +819,7 @@ private constructor(
             EXTERNAL_PAYMENT_UPDATED,
             FINANCIAL_ACCOUNT_CREATED,
             FINANCIAL_ACCOUNT_UPDATED,
+            FUNDING_EVENT_CREATED,
             LOAN_TAPE_CREATED,
             LOAN_TAPE_UPDATED,
             MANAGEMENT_OPERATION_CREATED,
@@ -876,6 +880,7 @@ private constructor(
                 EXTERNAL_PAYMENT_UPDATED -> Value.EXTERNAL_PAYMENT_UPDATED
                 FINANCIAL_ACCOUNT_CREATED -> Value.FINANCIAL_ACCOUNT_CREATED
                 FINANCIAL_ACCOUNT_UPDATED -> Value.FINANCIAL_ACCOUNT_UPDATED
+                FUNDING_EVENT_CREATED -> Value.FUNDING_EVENT_CREATED
                 LOAN_TAPE_CREATED -> Value.LOAN_TAPE_CREATED
                 LOAN_TAPE_UPDATED -> Value.LOAN_TAPE_UPDATED
                 MANAGEMENT_OPERATION_CREATED -> Value.MANAGEMENT_OPERATION_CREATED
@@ -937,6 +942,7 @@ private constructor(
                 EXTERNAL_PAYMENT_UPDATED -> Known.EXTERNAL_PAYMENT_UPDATED
                 FINANCIAL_ACCOUNT_CREATED -> Known.FINANCIAL_ACCOUNT_CREATED
                 FINANCIAL_ACCOUNT_UPDATED -> Known.FINANCIAL_ACCOUNT_UPDATED
+                FUNDING_EVENT_CREATED -> Known.FUNDING_EVENT_CREATED
                 LOAN_TAPE_CREATED -> Known.LOAN_TAPE_CREATED
                 LOAN_TAPE_UPDATED -> Known.LOAN_TAPE_UPDATED
                 MANAGEMENT_OPERATION_CREATED -> Known.MANAGEMENT_OPERATION_CREATED
