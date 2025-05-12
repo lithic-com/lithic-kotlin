@@ -6128,6 +6128,7 @@ private constructor(
     class Transaction
     private constructor(
         private val amount: JsonField<Double>,
+        private val cardholderAmount: JsonField<Double>,
         private val currency: JsonField<String>,
         private val currencyExponent: JsonField<Double>,
         private val dateTime: JsonField<OffsetDateTime>,
@@ -6138,6 +6139,9 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("cardholder_amount")
+            @ExcludeMissing
+            cardholderAmount: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("currency")
             @ExcludeMissing
             currency: JsonField<String> = JsonMissing.of(),
@@ -6148,7 +6152,15 @@ private constructor(
             @ExcludeMissing
             dateTime: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-        ) : this(amount, currency, currencyExponent, dateTime, type, mutableMapOf())
+        ) : this(
+            amount,
+            cardholderAmount,
+            currency,
+            currencyExponent,
+            dateTime,
+            type,
+            mutableMapOf(),
+        )
 
         /**
          * Amount of the purchase in minor units of currency with all punctuation removed. Maps to
@@ -6158,6 +6170,15 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun amount(): Double = amount.getRequired("amount")
+
+        /**
+         * Approximate amount of the purchase in minor units of cardholder currency. Derived from
+         * `amount` using a daily conversion rate.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun cardholderAmount(): Double? = cardholderAmount.getNullable("cardholder_amount")
 
         /**
          * Currency of the purchase. Maps to EMV 3DS field purchaseCurrency.
@@ -6200,6 +6221,16 @@ private constructor(
          * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
+
+        /**
+         * Returns the raw JSON value of [cardholderAmount].
+         *
+         * Unlike [cardholderAmount], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("cardholder_amount")
+        @ExcludeMissing
+        fun _cardholderAmount(): JsonField<Double> = cardholderAmount
 
         /**
          * Returns the raw JSON value of [currency].
@@ -6254,6 +6285,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .amount()
+             * .cardholderAmount()
              * .currency()
              * .currencyExponent()
              * .dateTime()
@@ -6267,6 +6299,7 @@ private constructor(
         class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
+            private var cardholderAmount: JsonField<Double>? = null
             private var currency: JsonField<String>? = null
             private var currencyExponent: JsonField<Double>? = null
             private var dateTime: JsonField<OffsetDateTime>? = null
@@ -6275,6 +6308,7 @@ private constructor(
 
             internal fun from(transaction: Transaction) = apply {
                 amount = transaction.amount
+                cardholderAmount = transaction.cardholderAmount
                 currency = transaction.currency
                 currencyExponent = transaction.currencyExponent
                 dateTime = transaction.dateTime
@@ -6296,6 +6330,32 @@ private constructor(
              * supported value.
              */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            /**
+             * Approximate amount of the purchase in minor units of cardholder currency. Derived
+             * from `amount` using a daily conversion rate.
+             */
+            fun cardholderAmount(cardholderAmount: Double?) =
+                cardholderAmount(JsonField.ofNullable(cardholderAmount))
+
+            /**
+             * Alias for [Builder.cardholderAmount].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun cardholderAmount(cardholderAmount: Double) =
+                cardholderAmount(cardholderAmount as Double?)
+
+            /**
+             * Sets [Builder.cardholderAmount] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.cardholderAmount] with a well-typed [Double] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun cardholderAmount(cardholderAmount: JsonField<Double>) = apply {
+                this.cardholderAmount = cardholderAmount
+            }
 
             /** Currency of the purchase. Maps to EMV 3DS field purchaseCurrency. */
             fun currency(currency: String) = currency(JsonField.of(currency))
@@ -6384,6 +6444,7 @@ private constructor(
              * The following fields are required:
              * ```kotlin
              * .amount()
+             * .cardholderAmount()
              * .currency()
              * .currencyExponent()
              * .dateTime()
@@ -6395,6 +6456,7 @@ private constructor(
             fun build(): Transaction =
                 Transaction(
                     checkRequired("amount", amount),
+                    checkRequired("cardholderAmount", cardholderAmount),
                     checkRequired("currency", currency),
                     checkRequired("currencyExponent", currencyExponent),
                     checkRequired("dateTime", dateTime),
@@ -6411,6 +6473,7 @@ private constructor(
             }
 
             amount()
+            cardholderAmount()
             currency()
             currencyExponent()
             dateTime()
@@ -6434,6 +6497,7 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (amount.asKnown() == null) 0 else 1) +
+                (if (cardholderAmount.asKnown() == null) 0 else 1) +
                 (if (currency.asKnown() == null) 0 else 1) +
                 (if (currencyExponent.asKnown() == null) 0 else 1) +
                 (if (dateTime.asKnown() == null) 0 else 1) +
@@ -6591,17 +6655,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Transaction && amount == other.amount && currency == other.currency && currencyExponent == other.currencyExponent && dateTime == other.dateTime && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Transaction && amount == other.amount && cardholderAmount == other.cardholderAmount && currency == other.currency && currencyExponent == other.currencyExponent && dateTime == other.dateTime && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, currency, currencyExponent, dateTime, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, cardholderAmount, currency, currencyExponent, dateTime, type, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Transaction{amount=$amount, currency=$currency, currencyExponent=$currencyExponent, dateTime=$dateTime, type=$type, additionalProperties=$additionalProperties}"
+            "Transaction{amount=$amount, cardholderAmount=$cardholderAmount, currency=$currency, currencyExponent=$currencyExponent, dateTime=$dateTime, type=$type, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
