@@ -20,6 +20,8 @@ import com.lithic.api.models.CardRetrieveSpendLimitsParams
 import com.lithic.api.models.CardSearchByPanParams
 import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
+import com.lithic.api.models.CardWebProvisionParams
+import com.lithic.api.models.CardWebProvisionResponse
 import com.lithic.api.services.blocking.cards.AggregateBalanceService
 import com.lithic.api.services.blocking.cards.BalanceService
 import com.lithic.api.services.blocking.cards.FinancialTransactionService
@@ -247,6 +249,31 @@ interface CardService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
+    /**
+     * Allow your cardholders to directly add payment cards to the device's digital wallet from a
+     * browser on the web. Currently only suported for Apple Pay.
+     *
+     * This requires some additional setup and configuration. Please
+     * [Contact Us](https://lithic.com/contact) or your Customer Success representative for more
+     * information.
+     */
+    fun webProvision(
+        cardToken: String,
+        params: CardWebProvisionParams = CardWebProvisionParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardWebProvisionResponse =
+        webProvision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see [webProvision] */
+    fun webProvision(
+        params: CardWebProvisionParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CardWebProvisionResponse
+
+    /** @see [webProvision] */
+    fun webProvision(cardToken: String, requestOptions: RequestOptions): CardWebProvisionResponse =
+        webProvision(cardToken, CardWebProvisionParams.none(), requestOptions)
+
     /** A view of [CardService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -464,5 +491,32 @@ interface CardService {
             params: CardSearchByPanParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/web_provision`, but is
+         * otherwise the same as [CardService.webProvision].
+         */
+        @MustBeClosed
+        fun webProvision(
+            cardToken: String,
+            params: CardWebProvisionParams = CardWebProvisionParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardWebProvisionResponse> =
+            webProvision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see [webProvision] */
+        @MustBeClosed
+        fun webProvision(
+            params: CardWebProvisionParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CardWebProvisionResponse>
+
+        /** @see [webProvision] */
+        @MustBeClosed
+        fun webProvision(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CardWebProvisionResponse> =
+            webProvision(cardToken, CardWebProvisionParams.none(), requestOptions)
     }
 }
