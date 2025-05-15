@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.90.0 (2025-05-15)
+
+Full Changelog: [v0.89.0...v0.90.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.89.0...v0.90.0)
+
+### Features
+
+* **api:** new Funding Events and Card Web Provision API's ([ff72f2c](https://github.com/lithic-com/lithic-kotlin/commit/ff72f2cbf9f8dc141a1827dd251e3100233bafdf))
+
+
+### Chores
+
+* **internal:** fix custom code ([25daf77](https://github.com/lithic-com/lithic-kotlin/commit/25daf774306fe60138abd8983afed10a61a68f44))
+
 ## 0.89.0 (2025-05-12)
 
 Full Changelog: [v0.88.1...v0.89.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.88.1...v0.89.0)
