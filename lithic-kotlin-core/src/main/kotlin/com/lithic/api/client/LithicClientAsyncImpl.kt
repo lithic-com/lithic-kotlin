@@ -49,6 +49,8 @@ import com.lithic.api.services.async.ExternalPaymentServiceAsync
 import com.lithic.api.services.async.ExternalPaymentServiceAsyncImpl
 import com.lithic.api.services.async.FinancialAccountServiceAsync
 import com.lithic.api.services.async.FinancialAccountServiceAsyncImpl
+import com.lithic.api.services.async.FundingEventServiceAsync
+import com.lithic.api.services.async.FundingEventServiceAsyncImpl
 import com.lithic.api.services.async.ManagementOperationServiceAsync
 import com.lithic.api.services.async.ManagementOperationServiceAsyncImpl
 import com.lithic.api.services.async.PaymentServiceAsync
@@ -187,6 +189,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         ManagementOperationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val fundingEvents: FundingEventServiceAsync by lazy {
+        FundingEventServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): LithicClient = sync
 
     override fun withRawResponse(): LithicClientAsync.WithRawResponse = withRawResponse
@@ -243,6 +249,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
     override fun externalPayments(): ExternalPaymentServiceAsync = externalPayments
 
     override fun managementOperations(): ManagementOperationServiceAsync = managementOperations
+
+    override fun fundingEvents(): FundingEventServiceAsync = fundingEvents
 
     override suspend fun apiStatus(
         params: ClientApiStatusParams,
@@ -359,6 +367,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             ManagementOperationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val fundingEvents: FundingEventServiceAsync.WithRawResponse by lazy {
+            FundingEventServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun accounts(): AccountServiceAsync.WithRawResponse = accounts
 
         override fun accountHolders(): AccountHolderServiceAsync.WithRawResponse = accountHolders
@@ -416,6 +428,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
         override fun managementOperations(): ManagementOperationServiceAsync.WithRawResponse =
             managementOperations
+
+        override fun fundingEvents(): FundingEventServiceAsync.WithRawResponse = fundingEvents
 
         private val apiStatusHandler: Handler<ApiStatus> =
             jsonHandler<ApiStatus>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
