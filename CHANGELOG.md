@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.90.1 (2025-05-21)
+
+Full Changelog: [v0.90.0...v0.90.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.90.0...v0.90.1)
+
+### Chores
+
+* **docs:** grammar improvements ([5c449a2](https://github.com/lithic-com/lithic-kotlin/commit/5c449a2076e67fa8178d4c241b719eeec0b55f51))
+
 ## 0.90.0 (2025-05-15)
 
 Full Changelog: [v0.89.0...v0.90.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.89.0...v0.90.0)
