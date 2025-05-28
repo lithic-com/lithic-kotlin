@@ -84,6 +84,7 @@ class V2ServiceImpl internal constructor(private val clientOptions: ClientOption
         withRawResponse().delete(params, requestOptions)
     }
 
+    @Deprecated("deprecated")
     override fun apply(
         params: AuthRuleV2ApplyParams,
         requestOptions: RequestOptions,
@@ -267,6 +268,7 @@ class V2ServiceImpl internal constructor(private val clientOptions: ClientOption
         private val applyHandler: Handler<V2ApplyResponse> =
             jsonHandler<V2ApplyResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
+        @Deprecated("deprecated")
         override fun apply(
             params: AuthRuleV2ApplyParams,
             requestOptions: RequestOptions,
