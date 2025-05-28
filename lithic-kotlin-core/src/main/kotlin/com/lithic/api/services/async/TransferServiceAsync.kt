@@ -16,6 +16,7 @@ interface TransferServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /** Transfer funds between two financial accounts or between a financial account and card */
+    @Deprecated("deprecated")
     suspend fun create(
         params: TransferCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -30,6 +31,7 @@ interface TransferServiceAsync {
          * Returns a raw HTTP response for `post /v1/transfer`, but is otherwise the same as
          * [TransferServiceAsync.create].
          */
+        @Deprecated("deprecated")
         @MustBeClosed
         suspend fun create(
             params: TransferCreateParams,
