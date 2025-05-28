@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 /** Transfer funds between two financial accounts or between a financial account and card */
+@Deprecated("deprecated")
 class TransferCreateParams
 private constructor(
     private val body: Body,

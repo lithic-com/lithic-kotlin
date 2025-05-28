@@ -36,6 +36,7 @@ import java.util.Objects
  *
  * Prefer using the `PATCH` method for this operation.
  */
+@Deprecated("deprecated")
 class AuthRuleV2ApplyParams
 private constructor(
     private val authRuleToken: String?,
