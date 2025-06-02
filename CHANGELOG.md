@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.90.1 (2025-06-02)
+
+Full Changelog: [v0.90.0...v0.90.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.90.0...v0.90.1)
+
+### Bug Fixes
+
+* **client:** `hasNextPage` impl for some classes ([f515fb2](https://github.com/lithic-com/lithic-kotlin/commit/f515fb2af56cd201e1a28dd385402b6ef57e60b2))
+
+
+### Chores
+
+* **api:** mark some methods as deprecated ([b928e1b](https://github.com/lithic-com/lithic-kotlin/commit/b928e1b0e508f57d5755076b6e34e006dea63f22))
+* **docs:** grammar improvements ([5c449a2](https://github.com/lithic-com/lithic-kotlin/commit/5c449a2076e67fa8178d4c241b719eeec0b55f51))
+
 ## 0.90.0 (2025-05-15)
 
 Full Changelog: [v0.89.0...v0.90.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.89.0...v0.90.0)
