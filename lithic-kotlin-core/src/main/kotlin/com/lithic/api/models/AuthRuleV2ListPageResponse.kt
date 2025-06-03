@@ -39,8 +39,7 @@ private constructor(
     fun data(): List<V2ListResponse> = data.getRequired("data")
 
     /**
-     * Indicates whether there are more Authorization Rules to be retrieved by paging through the
-     * results.
+     * Indicates whether there are more Auth Rules to be retrieved by paging through the results.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -126,8 +125,8 @@ private constructor(
         }
 
         /**
-         * Indicates whether there are more Authorization Rules to be retrieved by paging through
-         * the results.
+         * Indicates whether there are more Auth Rules to be retrieved by paging through the
+         * results.
          */
         fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 

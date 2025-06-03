@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.lithic.api.core.Enum
 import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
@@ -405,6 +406,7 @@ private constructor(
         class RuleStats
         private constructor(
             private val approved: JsonField<Long>,
+            private val challenged: JsonField<Long>,
             private val declined: JsonField<Long>,
             private val examples: JsonField<List<Example>>,
             private val version: JsonField<Long>,
@@ -416,6 +418,9 @@ private constructor(
                 @JsonProperty("approved")
                 @ExcludeMissing
                 approved: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("challenged")
+                @ExcludeMissing
+                challenged: JsonField<Long> = JsonMissing.of(),
                 @JsonProperty("declined")
                 @ExcludeMissing
                 declined: JsonField<Long> = JsonMissing.of(),
@@ -423,10 +428,10 @@ private constructor(
                 @ExcludeMissing
                 examples: JsonField<List<Example>> = JsonMissing.of(),
                 @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
-            ) : this(approved, declined, examples, version, mutableMapOf())
+            ) : this(approved, challenged, declined, examples, version, mutableMapOf())
 
             /**
-             * The total number of historical transactions approved by this rule during the backtest
+             * The total number of historical transactions approved by this rule during the relevant
              * period, or the number of transactions that would have been approved if the rule was
              * evaluated in shadow mode.
              *
@@ -436,7 +441,17 @@ private constructor(
             fun approved(): Long? = approved.getNullable("approved")
 
             /**
-             * The total number of historical transactions declined by this rule during the backtest
+             * The total number of historical transactions challenged by this rule during the
+             * relevant period, or the number of transactions that would have been challenged if the
+             * rule was evaluated in shadow mode. Currently applicable only for 3DS Auth Rules.
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun challenged(): Long? = challenged.getNullable("challenged")
+
+            /**
+             * The total number of historical transactions declined by this rule during the relevant
              * period, or the number of transactions that would have been declined if the rule was
              * evaluated in shadow mode.
              *
@@ -446,7 +461,7 @@ private constructor(
             fun declined(): Long? = declined.getNullable("declined")
 
             /**
-             * Example authorization request events that would have been approved or declined.
+             * Example events and their outcomes.
              *
              * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
@@ -468,6 +483,16 @@ private constructor(
              * type.
              */
             @JsonProperty("approved") @ExcludeMissing fun _approved(): JsonField<Long> = approved
+
+            /**
+             * Returns the raw JSON value of [challenged].
+             *
+             * Unlike [challenged], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("challenged")
+            @ExcludeMissing
+            fun _challenged(): JsonField<Long> = challenged
 
             /**
              * Returns the raw JSON value of [declined].
@@ -516,6 +541,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var approved: JsonField<Long> = JsonMissing.of()
+                private var challenged: JsonField<Long> = JsonMissing.of()
                 private var declined: JsonField<Long> = JsonMissing.of()
                 private var examples: JsonField<MutableList<Example>>? = null
                 private var version: JsonField<Long> = JsonMissing.of()
@@ -523,6 +549,7 @@ private constructor(
 
                 internal fun from(ruleStats: RuleStats) = apply {
                     approved = ruleStats.approved
+                    challenged = ruleStats.challenged
                     declined = ruleStats.declined
                     examples = ruleStats.examples.map { it.toMutableList() }
                     version = ruleStats.version
@@ -531,7 +558,7 @@ private constructor(
 
                 /**
                  * The total number of historical transactions approved by this rule during the
-                 * backtest period, or the number of transactions that would have been approved if
+                 * relevant period, or the number of transactions that would have been approved if
                  * the rule was evaluated in shadow mode.
                  */
                 fun approved(approved: Long) = approved(JsonField.of(approved))
@@ -546,8 +573,25 @@ private constructor(
                 fun approved(approved: JsonField<Long>) = apply { this.approved = approved }
 
                 /**
+                 * The total number of historical transactions challenged by this rule during the
+                 * relevant period, or the number of transactions that would have been challenged if
+                 * the rule was evaluated in shadow mode. Currently applicable only for 3DS Auth
+                 * Rules.
+                 */
+                fun challenged(challenged: Long) = challenged(JsonField.of(challenged))
+
+                /**
+                 * Sets [Builder.challenged] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.challenged] with a well-typed [Long] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun challenged(challenged: JsonField<Long>) = apply { this.challenged = challenged }
+
+                /**
                  * The total number of historical transactions declined by this rule during the
-                 * backtest period, or the number of transactions that would have been declined if
+                 * relevant period, or the number of transactions that would have been declined if
                  * the rule was evaluated in shadow mode.
                  */
                 fun declined(declined: Long) = declined(JsonField.of(declined))
@@ -561,9 +605,7 @@ private constructor(
                  */
                 fun declined(declined: JsonField<Long>) = apply { this.declined = declined }
 
-                /**
-                 * Example authorization request events that would have been approved or declined.
-                 */
+                /** Example events and their outcomes. */
                 fun examples(examples: List<Example>) = examples(JsonField.of(examples))
 
                 /**
@@ -634,6 +676,7 @@ private constructor(
                 fun build(): RuleStats =
                     RuleStats(
                         approved,
+                        challenged,
                         declined,
                         (examples ?: JsonMissing.of()).map { it.toImmutable() },
                         version,
@@ -649,6 +692,7 @@ private constructor(
                 }
 
                 approved()
+                challenged()
                 declined()
                 examples()?.forEach { it.validate() }
                 version()
@@ -671,6 +715,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (if (approved.asKnown() == null) 0 else 1) +
+                    (if (challenged.asKnown() == null) 0 else 1) +
                     (if (declined.asKnown() == null) 0 else 1) +
                     (examples.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
                     (if (version.asKnown() == null) 0 else 1)
@@ -678,6 +723,7 @@ private constructor(
             class Example
             private constructor(
                 private val approved: JsonField<Boolean>,
+                private val decision: JsonField<Decision>,
                 private val eventToken: JsonField<String>,
                 private val timestamp: JsonField<OffsetDateTime>,
                 private val additionalProperties: MutableMap<String, JsonValue>,
@@ -688,16 +734,19 @@ private constructor(
                     @JsonProperty("approved")
                     @ExcludeMissing
                     approved: JsonField<Boolean> = JsonMissing.of(),
+                    @JsonProperty("decision")
+                    @ExcludeMissing
+                    decision: JsonField<Decision> = JsonMissing.of(),
                     @JsonProperty("event_token")
                     @ExcludeMissing
                     eventToken: JsonField<String> = JsonMissing.of(),
                     @JsonProperty("timestamp")
                     @ExcludeMissing
                     timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
-                ) : this(approved, eventToken, timestamp, mutableMapOf())
+                ) : this(approved, decision, eventToken, timestamp, mutableMapOf())
 
                 /**
-                 * Whether the rule would have approved the authorization request.
+                 * Whether the rule would have approved the request.
                  *
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
                  *   if the server responded with an unexpected value).
@@ -705,7 +754,15 @@ private constructor(
                 fun approved(): Boolean? = approved.getNullable("approved")
 
                 /**
-                 * The authorization request event token.
+                 * The decision made by the rule for this event.
+                 *
+                 * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
+                 *   if the server responded with an unexpected value).
+                 */
+                fun decision(): Decision? = decision.getNullable("decision")
+
+                /**
+                 * The event token.
                  *
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
                  *   if the server responded with an unexpected value).
@@ -713,7 +770,7 @@ private constructor(
                 fun eventToken(): String? = eventToken.getNullable("event_token")
 
                 /**
-                 * The timestamp of the authorization request event.
+                 * The timestamp of the event.
                  *
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
                  *   if the server responded with an unexpected value).
@@ -729,6 +786,16 @@ private constructor(
                 @JsonProperty("approved")
                 @ExcludeMissing
                 fun _approved(): JsonField<Boolean> = approved
+
+                /**
+                 * Returns the raw JSON value of [decision].
+                 *
+                 * Unlike [decision], this method doesn't throw if the JSON field has an unexpected
+                 * type.
+                 */
+                @JsonProperty("decision")
+                @ExcludeMissing
+                fun _decision(): JsonField<Decision> = decision
 
                 /**
                  * Returns the raw JSON value of [eventToken].
@@ -772,18 +839,20 @@ private constructor(
                 class Builder internal constructor() {
 
                     private var approved: JsonField<Boolean> = JsonMissing.of()
+                    private var decision: JsonField<Decision> = JsonMissing.of()
                     private var eventToken: JsonField<String> = JsonMissing.of()
                     private var timestamp: JsonField<OffsetDateTime> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(example: Example) = apply {
                         approved = example.approved
+                        decision = example.decision
                         eventToken = example.eventToken
                         timestamp = example.timestamp
                         additionalProperties = example.additionalProperties.toMutableMap()
                     }
 
-                    /** Whether the rule would have approved the authorization request. */
+                    /** Whether the rule would have approved the request. */
                     fun approved(approved: Boolean) = approved(JsonField.of(approved))
 
                     /**
@@ -795,7 +864,19 @@ private constructor(
                      */
                     fun approved(approved: JsonField<Boolean>) = apply { this.approved = approved }
 
-                    /** The authorization request event token. */
+                    /** The decision made by the rule for this event. */
+                    fun decision(decision: Decision) = decision(JsonField.of(decision))
+
+                    /**
+                     * Sets [Builder.decision] to an arbitrary JSON value.
+                     *
+                     * You should usually call [Builder.decision] with a well-typed [Decision] value
+                     * instead. This method is primarily for setting the field to an undocumented or
+                     * not yet supported value.
+                     */
+                    fun decision(decision: JsonField<Decision>) = apply { this.decision = decision }
+
+                    /** The event token. */
                     fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
 
                     /**
@@ -809,7 +890,7 @@ private constructor(
                         this.eventToken = eventToken
                     }
 
-                    /** The timestamp of the authorization request event. */
+                    /** The timestamp of the event. */
                     fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
 
                     /**
@@ -853,6 +934,7 @@ private constructor(
                     fun build(): Example =
                         Example(
                             approved,
+                            decision,
                             eventToken,
                             timestamp,
                             additionalProperties.toMutableMap(),
@@ -867,6 +949,7 @@ private constructor(
                     }
 
                     approved()
+                    decision()?.validate()
                     eventToken()
                     timestamp()
                     validated = true
@@ -888,25 +971,166 @@ private constructor(
                  */
                 internal fun validity(): Int =
                     (if (approved.asKnown() == null) 0 else 1) +
+                        (decision.asKnown()?.validity() ?: 0) +
                         (if (eventToken.asKnown() == null) 0 else 1) +
                         (if (timestamp.asKnown() == null) 0 else 1)
+
+                /** The decision made by the rule for this event. */
+                class Decision
+                @JsonCreator
+                private constructor(private val value: JsonField<String>) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val APPROVED = of("APPROVED")
+
+                        val DECLINED = of("DECLINED")
+
+                        val CHALLENGED = of("CHALLENGED")
+
+                        fun of(value: String) = Decision(JsonField.of(value))
+                    }
+
+                    /** An enum containing [Decision]'s known values. */
+                    enum class Known {
+                        APPROVED,
+                        DECLINED,
+                        CHALLENGED,
+                    }
+
+                    /**
+                     * An enum containing [Decision]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [Decision] can contain an unknown value in a couple of cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        APPROVED,
+                        DECLINED,
+                        CHALLENGED,
+                        /**
+                         * An enum member indicating that [Decision] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            APPROVED -> Value.APPROVED
+                            DECLINED -> Value.DECLINED
+                            CHALLENGED -> Value.CHALLENGED
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws LithicInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            APPROVED -> Known.APPROVED
+                            DECLINED -> Known.DECLINED
+                            CHALLENGED -> Known.CHALLENGED
+                            else -> throw LithicInvalidDataException("Unknown Decision: $value")
+                        }
+
+                    /**
+                     * Returns this class instance's primitive wire representation.
+                     *
+                     * This differs from the [toString] method because that method is primarily for
+                     * debugging and generally doesn't throw.
+                     *
+                     * @throws LithicInvalidDataException if this class instance's value does not
+                     *   have the expected primitive type.
+                     */
+                    fun asString(): String =
+                        _value().asString()
+                            ?: throw LithicInvalidDataException("Value is not a String")
+
+                    private var validated: Boolean = false
+
+                    fun validate(): Decision = apply {
+                        if (validated) {
+                            return@apply
+                        }
+
+                        known()
+                        validated = true
+                    }
+
+                    fun isValid(): Boolean =
+                        try {
+                            validate()
+                            true
+                        } catch (e: LithicInvalidDataException) {
+                            false
+                        }
+
+                    /**
+                     * Returns a score indicating how many valid values are contained in this object
+                     * recursively.
+                     *
+                     * Used for best match union deserialization.
+                     */
+                    internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is Decision && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
                         return true
                     }
 
-                    return /* spotless:off */ other is Example && approved == other.approved && eventToken == other.eventToken && timestamp == other.timestamp && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Example && approved == other.approved && decision == other.decision && eventToken == other.eventToken && timestamp == other.timestamp && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(approved, eventToken, timestamp, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(approved, decision, eventToken, timestamp, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "Example{approved=$approved, eventToken=$eventToken, timestamp=$timestamp, additionalProperties=$additionalProperties}"
+                    "Example{approved=$approved, decision=$decision, eventToken=$eventToken, timestamp=$timestamp, additionalProperties=$additionalProperties}"
             }
 
             override fun equals(other: Any?): Boolean {
@@ -914,17 +1138,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is RuleStats && approved == other.approved && declined == other.declined && examples == other.examples && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is RuleStats && approved == other.approved && challenged == other.challenged && declined == other.declined && examples == other.examples && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(approved, declined, examples, version, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(approved, challenged, declined, examples, version, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "RuleStats{approved=$approved, declined=$declined, examples=$examples, version=$version, additionalProperties=$additionalProperties}"
+                "RuleStats{approved=$approved, challenged=$challenged, declined=$declined, examples=$examples, version=$version, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
