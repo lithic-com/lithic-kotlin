@@ -74,8 +74,8 @@ private constructor(
 
     /**
      * Address used during Address Verification Service (AVS) checks during transactions if enabled
-     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
-     * Authorization Rules. The field will be removed from the schema in a future release.
+     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by Auth Rules.
+     * The field will be removed from the schema in a future release.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -242,7 +242,7 @@ private constructor(
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
-         * Authorization Rules. The field will be removed from the schema in a future release.
+         * Auth Rules. The field will be removed from the schema in a future release.
          */
         @Deprecated("deprecated")
         fun verificationAddress(verificationAddress: VerificationAddress) = apply {
@@ -480,7 +480,7 @@ private constructor(
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
-         * Authorization Rules. The field will be removed from the schema in a future release.
+         * Auth Rules. The field will be removed from the schema in a future release.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -648,8 +648,8 @@ private constructor(
             /**
              * Address used during Address Verification Service (AVS) checks during transactions if
              * enabled via Auth Rules. This field is deprecated as AVS checks are no longer
-             * supported by Authorization Rules. The field will be removed from the schema in a
-             * future release.
+             * supported by Auth Rules. The field will be removed from the schema in a future
+             * release.
              */
             @Deprecated("deprecated")
             fun verificationAddress(verificationAddress: VerificationAddress) =
@@ -884,8 +884,8 @@ private constructor(
 
     /**
      * Address used during Address Verification Service (AVS) checks during transactions if enabled
-     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by
-     * Authorization Rules. The field will be removed from the schema in a future release.
+     * via Auth Rules. This field is deprecated as AVS checks are no longer supported by Auth Rules.
+     * The field will be removed from the schema in a future release.
      */
     @Deprecated("deprecated")
     class VerificationAddress

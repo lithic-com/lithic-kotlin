@@ -32,7 +32,7 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * Associates a V2 authorization rule with a card program, the provided account(s) or card(s).
+ * Associates a V2 Auth rule with a card program, the provided account(s) or card(s).
  *
  * Prefer using the `PATCH` method for this operation.
  */
