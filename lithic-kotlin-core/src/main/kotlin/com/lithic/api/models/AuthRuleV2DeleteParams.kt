@@ -9,7 +9,7 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
-/** Deletes a V2 authorization rule */
+/** Deletes a V2 Auth rule */
 class AuthRuleV2DeleteParams
 private constructor(
     private val authRuleToken: String?,
