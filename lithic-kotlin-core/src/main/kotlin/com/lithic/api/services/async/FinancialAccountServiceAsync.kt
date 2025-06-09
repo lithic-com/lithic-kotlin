@@ -4,11 +4,13 @@ package com.lithic.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.FinancialAccount
 import com.lithic.api.models.FinancialAccountCreateParams
 import com.lithic.api.models.FinancialAccountListPageAsync
 import com.lithic.api.models.FinancialAccountListParams
+import com.lithic.api.models.FinancialAccountRegisterAccountNumberParams
 import com.lithic.api.models.FinancialAccountRetrieveParams
 import com.lithic.api.models.FinancialAccountUpdateParams
 import com.lithic.api.models.FinancialAccountUpdateStatusParams
@@ -98,6 +100,23 @@ interface FinancialAccountServiceAsync {
     /** @see [list] */
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
         list(FinancialAccountListParams.none(), requestOptions)
+
+    /** Register account number */
+    suspend fun registerAccountNumber(
+        financialAccountToken: String,
+        params: FinancialAccountRegisterAccountNumberParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ) =
+        registerAccountNumber(
+            params.toBuilder().financialAccountToken(financialAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see [registerAccountNumber] */
+    suspend fun registerAccountNumber(
+        params: FinancialAccountRegisterAccountNumberParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    )
 
     /** Update financial account status */
     suspend fun updateStatus(
@@ -218,6 +237,29 @@ interface FinancialAccountServiceAsync {
             requestOptions: RequestOptions
         ): HttpResponseFor<FinancialAccountListPageAsync> =
             list(FinancialAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/financial_accounts/{financial_account_token}/register_account_number`, but is
+         * otherwise the same as [FinancialAccountServiceAsync.registerAccountNumber].
+         */
+        @MustBeClosed
+        suspend fun registerAccountNumber(
+            financialAccountToken: String,
+            params: FinancialAccountRegisterAccountNumberParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse =
+            registerAccountNumber(
+                params.toBuilder().financialAccountToken(financialAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see [registerAccountNumber] */
+        @MustBeClosed
+        suspend fun registerAccountNumber(
+            params: FinancialAccountRegisterAccountNumberParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
 
         /**
          * Returns a raw HTTP response for `post

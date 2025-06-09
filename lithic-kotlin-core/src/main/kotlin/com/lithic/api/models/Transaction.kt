@@ -3429,6 +3429,8 @@ private constructor(
 
             companion object {
 
+                val CUSTOMER_RULES = of("CUSTOMER_RULES")
+
                 val CUSTOMER_ENDPOINT = of("CUSTOMER_ENDPOINT")
 
                 val LITHIC_DEFAULT = of("LITHIC_DEFAULT")
@@ -3444,6 +3446,7 @@ private constructor(
 
             /** An enum containing [DecisionMadeBy]'s known values. */
             enum class Known {
+                CUSTOMER_RULES,
                 CUSTOMER_ENDPOINT,
                 LITHIC_DEFAULT,
                 LITHIC_RULES,
@@ -3461,6 +3464,7 @@ private constructor(
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
+                CUSTOMER_RULES,
                 CUSTOMER_ENDPOINT,
                 LITHIC_DEFAULT,
                 LITHIC_RULES,
@@ -3482,6 +3486,7 @@ private constructor(
              */
             fun value(): Value =
                 when (this) {
+                    CUSTOMER_RULES -> Value.CUSTOMER_RULES
                     CUSTOMER_ENDPOINT -> Value.CUSTOMER_ENDPOINT
                     LITHIC_DEFAULT -> Value.LITHIC_DEFAULT
                     LITHIC_RULES -> Value.LITHIC_RULES
@@ -3501,6 +3506,7 @@ private constructor(
              */
             fun known(): Known =
                 when (this) {
+                    CUSTOMER_RULES -> Known.CUSTOMER_RULES
                     CUSTOMER_ENDPOINT -> Known.CUSTOMER_ENDPOINT
                     LITHIC_DEFAULT -> Known.LITHIC_DEFAULT
                     LITHIC_RULES -> Known.LITHIC_RULES
