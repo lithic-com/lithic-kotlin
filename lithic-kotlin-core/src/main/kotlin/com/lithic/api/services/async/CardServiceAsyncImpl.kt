@@ -179,6 +179,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -209,6 +210,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -238,6 +240,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -266,6 +269,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -302,6 +306,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "convert_physical")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -328,6 +333,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "embed", "card")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -350,6 +356,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -380,6 +387,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "reissue")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -410,6 +418,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "renew")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -440,6 +449,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "spend_limits")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -466,6 +476,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", "search_by_pan")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -497,6 +508,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "web_provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -534,6 +546,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.GET)
+                .baseUrl(clientOptions.baseUrl())
                 .addPathSegments("v1", "embed", "card")
                 .putQueryParam("embed_request", embed_request)
                 .putQueryParam("hmac", embed_request_hmac)
@@ -559,7 +572,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         val embed_request_hmac =
             Base64.getEncoder().encodeToString(mac.doFinal(embed_request.toByteArray()))
 
-        return URIBuilder(URI.create(clientOptions.baseUrl))
+        return URIBuilder(URI.create(clientOptions.baseUrl()))
             .appendPathSegments("embed", "card")
             .addParameter("embed_request", embed_request)
             .addParameter("hmac", embed_request_hmac)

@@ -77,6 +77,7 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "reports", "settlement", "details", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -113,6 +114,7 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "reports", "settlement", "summary", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
