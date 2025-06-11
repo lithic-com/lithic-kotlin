@@ -123,6 +123,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -156,6 +157,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -186,6 +188,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -214,6 +217,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -251,6 +255,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders", params._pathParam(0), "documents")
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -280,6 +285,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "v1",
                         "account_holders",
@@ -312,6 +318,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "v1",
                         "simulate",
@@ -346,6 +353,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "simulate", "account_holders", "enrollment_review")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -376,6 +384,7 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "account_holders", params._pathParam(0), "documents")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

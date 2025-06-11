@@ -435,6 +435,7 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "status")
                     .build()
                     .prepareAsync(clientOptions, params)

@@ -161,6 +161,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -191,6 +192,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -220,6 +222,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PATCH)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -248,6 +251,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards")
                     .build()
                     .prepare(clientOptions, params)
@@ -284,6 +288,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "convert_physical")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -310,6 +315,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "embed", "card")
                     .build()
                     .prepare(clientOptions, params)
@@ -332,6 +338,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -362,6 +369,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "reissue")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -392,6 +400,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "renew")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -422,6 +431,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "spend_limits")
                     .build()
                     .prepare(clientOptions, params)
@@ -448,6 +458,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", "search_by_pan")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -479,6 +490,7 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "web_provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

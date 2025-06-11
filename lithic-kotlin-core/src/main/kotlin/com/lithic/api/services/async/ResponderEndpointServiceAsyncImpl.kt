@@ -70,6 +70,7 @@ internal constructor(private val clientOptions: ClientOptions) : ResponderEndpoi
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "responder_endpoints")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -96,6 +97,7 @@ internal constructor(private val clientOptions: ClientOptions) : ResponderEndpoi
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "responder_endpoints")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -116,6 +118,7 @@ internal constructor(private val clientOptions: ClientOptions) : ResponderEndpoi
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "responder_endpoints")
                     .build()
                     .prepareAsync(clientOptions, params)
