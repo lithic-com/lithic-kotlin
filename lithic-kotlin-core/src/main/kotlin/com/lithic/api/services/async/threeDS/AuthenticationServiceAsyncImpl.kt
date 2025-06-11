@@ -74,6 +74,7 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "three_ds_authentication", params._pathParam(0))
                     .build()
                     .prepareAsync(clientOptions, params)
@@ -101,6 +102,7 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "three_ds_authentication", "simulate")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -128,6 +130,7 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "three_ds_decisioning", "simulate", "enter_otp")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()

@@ -109,6 +109,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -139,6 +140,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments", params._pathParam(0))
                     .build()
                     .prepare(clientOptions, params)
@@ -166,6 +168,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments")
                     .build()
                     .prepare(clientOptions, params)
@@ -203,6 +206,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments", params._pathParam(0), "retry")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
@@ -234,6 +238,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "simulate", "payments", params._pathParam(0), "action")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -262,6 +267,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "simulate", "payments", "receipt")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -290,6 +296,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "simulate", "payments", "release")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
@@ -318,6 +325,7 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "simulate", "payments", "return")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
