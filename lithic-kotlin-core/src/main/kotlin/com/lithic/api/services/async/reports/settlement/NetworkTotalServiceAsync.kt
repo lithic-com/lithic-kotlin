@@ -3,6 +3,7 @@
 package com.lithic.api.services.async.reports.settlement
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.NetworkTotalRetrieveResponse
@@ -16,6 +17,13 @@ interface NetworkTotalServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NetworkTotalServiceAsync
 
     /** Retrieve a specific network total record by token. Not available in sandbox. */
     suspend fun retrieve(
@@ -55,6 +63,15 @@ interface NetworkTotalServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NetworkTotalServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals/{token}`, but

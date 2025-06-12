@@ -36,6 +36,9 @@ class ExternalPaymentServiceImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): ExternalPaymentService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExternalPaymentService =
+        ExternalPaymentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: ExternalPaymentCreateParams,
         requestOptions: RequestOptions,
@@ -89,6 +92,13 @@ class ExternalPaymentServiceImpl internal constructor(private val clientOptions:
         ExternalPaymentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPaymentService.WithRawResponse =
+            ExternalPaymentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<ExternalPayment> =
             jsonHandler<ExternalPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

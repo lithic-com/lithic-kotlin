@@ -34,6 +34,9 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): StatementServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): StatementServiceAsync =
+        StatementServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun lineItems(): LineItemServiceAsync = lineItems
 
     override suspend fun retrieve(
@@ -58,6 +61,13 @@ class StatementServiceAsyncImpl internal constructor(private val clientOptions: 
         private val lineItems: LineItemServiceAsync.WithRawResponse by lazy {
             LineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): StatementServiceAsync.WithRawResponse =
+            StatementServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun lineItems(): LineItemServiceAsync.WithRawResponse = lineItems
 

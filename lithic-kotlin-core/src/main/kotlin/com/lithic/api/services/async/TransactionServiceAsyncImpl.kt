@@ -58,6 +58,9 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): TransactionServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TransactionServiceAsync =
+        TransactionServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun enhancedCommercialData(): EnhancedCommercialDataServiceAsync =
         enhancedCommercialData
 
@@ -147,6 +150,13 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
         private val events: EventServiceAsync.WithRawResponse by lazy {
             EventServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TransactionServiceAsync.WithRawResponse =
+            TransactionServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun enhancedCommercialData(): EnhancedCommercialDataServiceAsync.WithRawResponse =
             enhancedCommercialData

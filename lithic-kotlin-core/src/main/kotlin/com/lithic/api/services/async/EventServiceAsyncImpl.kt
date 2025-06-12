@@ -47,6 +47,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync =
+        EventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun subscriptions(): SubscriptionServiceAsync = subscriptions
 
     override fun eventSubscriptions(): EventSubscriptionServiceAsync = eventSubscriptions
@@ -84,6 +87,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
         private val eventSubscriptions: EventSubscriptionServiceAsync.WithRawResponse by lazy {
             EventSubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventServiceAsync.WithRawResponse =
+            EventServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
 

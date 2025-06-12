@@ -30,6 +30,9 @@ class DigitalCardArtServiceImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): DigitalCardArtService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DigitalCardArtService =
+        DigitalCardArtServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: DigitalCardArtRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class DigitalCardArtServiceImpl internal constructor(private val clientOptions: 
         DigitalCardArtService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DigitalCardArtService.WithRawResponse =
+            DigitalCardArtServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<DigitalCardArt> =
             jsonHandler<DigitalCardArt>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

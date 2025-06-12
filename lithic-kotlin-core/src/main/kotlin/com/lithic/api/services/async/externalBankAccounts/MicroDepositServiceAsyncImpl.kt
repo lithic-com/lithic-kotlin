@@ -28,6 +28,9 @@ class MicroDepositServiceAsyncImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): MicroDepositServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MicroDepositServiceAsync =
+        MicroDepositServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class MicroDepositServiceAsyncImpl internal constructor(private val clientOption
         MicroDepositServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): MicroDepositServiceAsync.WithRawResponse =
+            MicroDepositServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<MicroDepositCreateResponse> =
             jsonHandler<MicroDepositCreateResponse>(clientOptions.jsonMapper)

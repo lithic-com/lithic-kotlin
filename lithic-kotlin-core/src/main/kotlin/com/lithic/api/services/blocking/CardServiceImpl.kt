@@ -67,6 +67,9 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withRawResponse(): CardService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardService =
+        CardServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun aggregateBalances(): AggregateBalanceService = aggregateBalances
 
     override fun balances(): BalanceService = balances
@@ -149,6 +152,11 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val financialTransactions: FinancialTransactionService.WithRawResponse by lazy {
             FinancialTransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CardService.WithRawResponse =
+            CardServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun aggregateBalances(): AggregateBalanceService.WithRawResponse =
             aggregateBalances

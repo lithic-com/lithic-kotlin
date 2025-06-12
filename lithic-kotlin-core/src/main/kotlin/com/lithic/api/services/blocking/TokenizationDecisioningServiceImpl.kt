@@ -29,6 +29,11 @@ internal constructor(private val clientOptions: ClientOptions) : TokenizationDec
 
     override fun withRawResponse(): TokenizationDecisioningService.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): TokenizationDecisioningService =
+        TokenizationDecisioningServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieveSecret(
         params: TokenizationDecisioningRetrieveSecretParams,
         requestOptions: RequestOptions,
@@ -47,6 +52,13 @@ internal constructor(private val clientOptions: ClientOptions) : TokenizationDec
         TokenizationDecisioningService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TokenizationDecisioningService.WithRawResponse =
+            TokenizationDecisioningServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveSecretHandler: Handler<TokenizationSecret> =
             jsonHandler<TokenizationSecret>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

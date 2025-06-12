@@ -29,6 +29,11 @@ internal constructor(private val clientOptions: ClientOptions) :
     override fun withRawResponse(): EnhancedCommercialDataServiceAsync.WithRawResponse =
         withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): EnhancedCommercialDataServiceAsync =
+        EnhancedCommercialDataServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: TransactionEventEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions,
@@ -40,6 +45,13 @@ internal constructor(private val clientOptions: ClientOptions) :
         EnhancedCommercialDataServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EnhancedCommercialDataServiceAsync.WithRawResponse =
+            EnhancedCommercialDataServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<EnhancedData> =
             jsonHandler<EnhancedData>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

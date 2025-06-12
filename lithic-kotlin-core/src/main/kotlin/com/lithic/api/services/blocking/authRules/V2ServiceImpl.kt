@@ -49,6 +49,9 @@ class V2ServiceImpl internal constructor(private val clientOptions: ClientOption
 
     override fun withRawResponse(): V2Service.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): V2Service =
+        V2ServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun backtests(): BacktestService = backtests
 
     override fun create(
@@ -121,6 +124,11 @@ class V2ServiceImpl internal constructor(private val clientOptions: ClientOption
         private val backtests: BacktestService.WithRawResponse by lazy {
             BacktestServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): V2Service.WithRawResponse =
+            V2ServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun backtests(): BacktestService.WithRawResponse = backtests
 

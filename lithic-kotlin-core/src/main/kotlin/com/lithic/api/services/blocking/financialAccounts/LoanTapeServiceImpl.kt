@@ -30,6 +30,9 @@ class LoanTapeServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): LoanTapeService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LoanTapeService =
+        LoanTapeServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class LoanTapeServiceImpl internal constructor(private val clientOptions: Client
         LoanTapeService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LoanTapeService.WithRawResponse =
+            LoanTapeServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<LoanTape> =
             jsonHandler<LoanTape>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

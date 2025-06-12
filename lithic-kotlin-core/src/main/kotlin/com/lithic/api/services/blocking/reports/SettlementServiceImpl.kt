@@ -36,6 +36,9 @@ class SettlementServiceImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): SettlementService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SettlementService =
+        SettlementServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun networkTotals(): NetworkTotalService = networkTotals
 
     override fun listDetails(
@@ -60,6 +63,13 @@ class SettlementServiceImpl internal constructor(private val clientOptions: Clie
         private val networkTotals: NetworkTotalService.WithRawResponse by lazy {
             NetworkTotalServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SettlementService.WithRawResponse =
+            SettlementServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun networkTotals(): NetworkTotalService.WithRawResponse = networkTotals
 

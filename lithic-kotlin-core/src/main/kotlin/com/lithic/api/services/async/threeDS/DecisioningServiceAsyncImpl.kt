@@ -31,6 +31,9 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): DecisioningServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DecisioningServiceAsync =
+        DecisioningServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun challengeResponse(
         params: ThreeDSDecisioningChallengeResponseParams,
         requestOptions: RequestOptions,
@@ -58,6 +61,13 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
         DecisioningServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DecisioningServiceAsync.WithRawResponse =
+            DecisioningServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val challengeResponseHandler: Handler<Void?> =
             emptyHandler().withErrorHandler(errorHandler)

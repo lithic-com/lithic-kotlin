@@ -30,6 +30,9 @@ class NetworkTotalServiceAsyncImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): NetworkTotalServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NetworkTotalServiceAsync =
+        NetworkTotalServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class NetworkTotalServiceAsyncImpl internal constructor(private val clientOption
         NetworkTotalServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NetworkTotalServiceAsync.WithRawResponse =
+            NetworkTotalServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<NetworkTotalRetrieveResponse> =
             jsonHandler<NetworkTotalRetrieveResponse>(clientOptions.jsonMapper)
