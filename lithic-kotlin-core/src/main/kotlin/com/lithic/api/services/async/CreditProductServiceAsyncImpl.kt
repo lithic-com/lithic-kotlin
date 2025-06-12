@@ -25,6 +25,9 @@ class CreditProductServiceAsyncImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): CreditProductServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditProductServiceAsync =
+        CreditProductServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun extendedCredit(): ExtendedCreditServiceAsync = extendedCredit
 
     override fun primeRates(): PrimeRateServiceAsync = primeRates
@@ -39,6 +42,13 @@ class CreditProductServiceAsyncImpl internal constructor(private val clientOptio
         private val primeRates: PrimeRateServiceAsync.WithRawResponse by lazy {
             PrimeRateServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditProductServiceAsync.WithRawResponse =
+            CreditProductServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun extendedCredit(): ExtendedCreditServiceAsync.WithRawResponse = extendedCredit
 

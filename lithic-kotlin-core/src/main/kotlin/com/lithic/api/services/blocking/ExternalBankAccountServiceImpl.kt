@@ -45,6 +45,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalBankAcc
 
     override fun withRawResponse(): ExternalBankAccountService.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalBankAccountService =
+        ExternalBankAccountServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun microDeposits(): MicroDepositService = microDeposits
 
     override fun create(
@@ -97,6 +102,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalBankAcc
         private val microDeposits: MicroDepositService.WithRawResponse by lazy {
             MicroDepositServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalBankAccountService.WithRawResponse =
+            ExternalBankAccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun microDeposits(): MicroDepositService.WithRawResponse = microDeposits
 

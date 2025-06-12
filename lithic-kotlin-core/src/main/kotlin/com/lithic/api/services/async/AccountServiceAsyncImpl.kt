@@ -34,6 +34,9 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): AccountServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AccountServiceAsync =
+        AccountServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions,
@@ -66,6 +69,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         AccountServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AccountServiceAsync.WithRawResponse =
+            AccountServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<Account> =
             jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

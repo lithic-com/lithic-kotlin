@@ -34,6 +34,11 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
     override fun withRawResponse(): ManagementOperationServiceAsync.WithRawResponse =
         withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ManagementOperationServiceAsync =
+        ManagementOperationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: ManagementOperationCreateParams,
         requestOptions: RequestOptions,
@@ -66,6 +71,13 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
         ManagementOperationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ManagementOperationServiceAsync.WithRawResponse =
+            ManagementOperationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<ManagementOperationTransaction> =
             jsonHandler<ManagementOperationTransaction>(clientOptions.jsonMapper)

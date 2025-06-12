@@ -61,6 +61,9 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): FinancialAccountService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FinancialAccountService =
+        FinancialAccountServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun balances(): BalanceService = balances
 
     override fun financialTransactions(): FinancialTransactionService = financialTransactions
@@ -138,6 +141,13 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
         private val loanTapes: LoanTapeService.WithRawResponse by lazy {
             LoanTapeServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FinancialAccountService.WithRawResponse =
+            FinancialAccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun balances(): BalanceService.WithRawResponse = balances
 

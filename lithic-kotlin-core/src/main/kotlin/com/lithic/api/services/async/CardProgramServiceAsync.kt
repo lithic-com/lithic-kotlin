@@ -3,6 +3,7 @@
 package com.lithic.api.services.async
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.CardProgram
@@ -16,6 +17,13 @@ interface CardProgramServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardProgramServiceAsync
 
     /** Get card program. */
     suspend fun retrieve(
@@ -50,6 +58,15 @@ interface CardProgramServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CardProgramServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /v1/card_programs/{card_program_token}`, but is

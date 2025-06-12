@@ -28,6 +28,9 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): LineItemServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LineItemServiceAsync =
+        LineItemServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: FinancialAccountStatementLineItemListParams,
         requestOptions: RequestOptions,
@@ -40,6 +43,13 @@ class LineItemServiceAsyncImpl internal constructor(private val clientOptions: C
         LineItemServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LineItemServiceAsync.WithRawResponse =
+            LineItemServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<StatementLineItems> =
             jsonHandler<StatementLineItems>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

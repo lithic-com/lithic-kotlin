@@ -30,6 +30,9 @@ class CardProgramServiceAsyncImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): CardProgramServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardProgramServiceAsync =
+        CardProgramServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: CardProgramRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class CardProgramServiceAsyncImpl internal constructor(private val clientOptions
         CardProgramServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CardProgramServiceAsync.WithRawResponse =
+            CardProgramServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<CardProgram> =
             jsonHandler<CardProgram>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

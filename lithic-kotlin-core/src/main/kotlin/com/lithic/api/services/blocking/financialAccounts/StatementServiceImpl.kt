@@ -34,6 +34,9 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): StatementService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): StatementService =
+        StatementServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun lineItems(): LineItemService = lineItems
 
     override fun retrieve(
@@ -58,6 +61,13 @@ class StatementServiceImpl internal constructor(private val clientOptions: Clien
         private val lineItems: LineItemService.WithRawResponse by lazy {
             LineItemServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): StatementService.WithRawResponse =
+            StatementServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun lineItems(): LineItemService.WithRawResponse = lineItems
 

@@ -36,6 +36,9 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): SettlementServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): SettlementServiceAsync =
+        SettlementServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun networkTotals(): NetworkTotalServiceAsync = networkTotals
 
     override suspend fun listDetails(
@@ -60,6 +63,13 @@ class SettlementServiceAsyncImpl internal constructor(private val clientOptions:
         private val networkTotals: NetworkTotalServiceAsync.WithRawResponse by lazy {
             NetworkTotalServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): SettlementServiceAsync.WithRawResponse =
+            SettlementServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun networkTotals(): NetworkTotalServiceAsync.WithRawResponse = networkTotals
 

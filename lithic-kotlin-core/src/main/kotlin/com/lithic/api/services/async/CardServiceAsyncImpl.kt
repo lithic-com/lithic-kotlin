@@ -68,6 +68,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withRawResponse(): CardServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardServiceAsync =
+        CardServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun aggregateBalances(): AggregateBalanceServiceAsync = aggregateBalances
 
     override fun balances(): BalanceServiceAsync = balances
@@ -160,6 +163,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             FinancialTransactionServiceAsync.WithRawResponse by lazy {
             FinancialTransactionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CardServiceAsync.WithRawResponse =
+            CardServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse =
             aggregateBalances

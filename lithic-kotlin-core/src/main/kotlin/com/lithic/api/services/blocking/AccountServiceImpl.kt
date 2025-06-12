@@ -34,6 +34,9 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): AccountService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AccountService =
+        AccountServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(params: AccountRetrieveParams, requestOptions: RequestOptions): Account =
         // get /v1/accounts/{account_token}
         withRawResponse().retrieve(params, requestOptions).parse()
@@ -57,6 +60,13 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
         AccountService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AccountService.WithRawResponse =
+            AccountServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<Account> =
             jsonHandler<Account>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

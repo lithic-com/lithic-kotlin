@@ -27,6 +27,9 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): EventSubscriptionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventSubscriptionService =
+        EventSubscriptionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun resend(
         params: EventEventSubscriptionResendParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
         EventSubscriptionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventSubscriptionService.WithRawResponse =
+            EventSubscriptionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val resendHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
 

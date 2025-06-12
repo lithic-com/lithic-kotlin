@@ -3,6 +3,7 @@
 package com.lithic.api.services.async.transactions
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.EnhancedCommercialDataRetrieveResponse
@@ -14,6 +15,13 @@ interface EnhancedCommercialDataServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EnhancedCommercialDataServiceAsync
 
     /**
      * Get all L2/L3 enhanced commercial data associated with a transaction. Not available in
@@ -49,6 +57,15 @@ interface EnhancedCommercialDataServiceAsync {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EnhancedCommercialDataServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get

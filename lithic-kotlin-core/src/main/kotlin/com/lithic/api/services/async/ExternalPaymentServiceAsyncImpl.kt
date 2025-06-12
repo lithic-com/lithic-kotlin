@@ -36,6 +36,11 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
 
     override fun withRawResponse(): ExternalPaymentServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): ExternalPaymentServiceAsync =
+        ExternalPaymentServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: ExternalPaymentCreateParams,
         requestOptions: RequestOptions,
@@ -89,6 +94,13 @@ internal constructor(private val clientOptions: ClientOptions) : ExternalPayment
         ExternalPaymentServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExternalPaymentServiceAsync.WithRawResponse =
+            ExternalPaymentServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<ExternalPayment> =
             jsonHandler<ExternalPayment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

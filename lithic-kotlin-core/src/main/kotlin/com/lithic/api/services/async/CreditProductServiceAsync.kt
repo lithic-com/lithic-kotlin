@@ -2,6 +2,7 @@
 
 package com.lithic.api.services.async
 
+import com.lithic.api.core.ClientOptions
 import com.lithic.api.services.async.creditProducts.ExtendedCreditServiceAsync
 import com.lithic.api.services.async.creditProducts.PrimeRateServiceAsync
 
@@ -12,6 +13,13 @@ interface CreditProductServiceAsync {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CreditProductServiceAsync
+
     fun extendedCredit(): ExtendedCreditServiceAsync
 
     fun primeRates(): PrimeRateServiceAsync
@@ -21,6 +29,15 @@ interface CreditProductServiceAsync {
      * method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditProductServiceAsync.WithRawResponse
 
         fun extendedCredit(): ExtendedCreditServiceAsync.WithRawResponse
 

@@ -28,6 +28,9 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): BalanceServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BalanceServiceAsync =
+        BalanceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun list(
         params: CardBalanceListParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         BalanceServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceServiceAsync.WithRawResponse =
+            BalanceServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<CardBalanceListPageResponse> =
             jsonHandler<CardBalanceListPageResponse>(clientOptions.jsonMapper)

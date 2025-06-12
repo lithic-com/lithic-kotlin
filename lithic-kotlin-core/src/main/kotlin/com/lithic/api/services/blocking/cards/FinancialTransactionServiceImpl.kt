@@ -30,6 +30,11 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialTransa
 
     override fun withRawResponse(): FinancialTransactionService.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): FinancialTransactionService =
+        FinancialTransactionServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: CardFinancialTransactionRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +53,13 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialTransa
         FinancialTransactionService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FinancialTransactionService.WithRawResponse =
+            FinancialTransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<FinancialTransaction> =
             jsonHandler<FinancialTransaction>(clientOptions.jsonMapper)

@@ -45,6 +45,9 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): DisputeServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DisputeServiceAsync =
+        DisputeServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: DisputeCreateParams,
         requestOptions: RequestOptions,
@@ -112,6 +115,13 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
         DisputeServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): DisputeServiceAsync.WithRawResponse =
+            DisputeServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Dispute> =
             jsonHandler<Dispute>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

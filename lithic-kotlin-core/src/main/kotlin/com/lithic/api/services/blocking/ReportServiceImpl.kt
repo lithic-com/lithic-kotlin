@@ -17,6 +17,9 @@ class ReportServiceImpl internal constructor(private val clientOptions: ClientOp
 
     override fun withRawResponse(): ReportService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ReportService =
+        ReportServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun settlement(): SettlementService = settlement
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -25,6 +28,11 @@ class ReportServiceImpl internal constructor(private val clientOptions: ClientOp
         private val settlement: SettlementService.WithRawResponse by lazy {
             SettlementServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ReportService.WithRawResponse =
+            ReportServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun settlement(): SettlementService.WithRawResponse = settlement
     }

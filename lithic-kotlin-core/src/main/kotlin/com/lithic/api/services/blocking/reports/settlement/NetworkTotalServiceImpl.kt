@@ -30,6 +30,9 @@ class NetworkTotalServiceImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): NetworkTotalService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): NetworkTotalService =
+        NetworkTotalServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class NetworkTotalServiceImpl internal constructor(private val clientOptions: Cl
         NetworkTotalService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): NetworkTotalService.WithRawResponse =
+            NetworkTotalServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<NetworkTotalRetrieveResponse> =
             jsonHandler<NetworkTotalRetrieveResponse>(clientOptions.jsonMapper)
