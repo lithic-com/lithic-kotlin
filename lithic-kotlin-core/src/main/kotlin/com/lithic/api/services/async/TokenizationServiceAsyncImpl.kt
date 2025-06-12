@@ -42,6 +42,9 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): TokenizationServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TokenizationServiceAsync =
+        TokenizationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: TokenizationRetrieveParams,
         requestOptions: RequestOptions,
@@ -111,6 +114,13 @@ class TokenizationServiceAsyncImpl internal constructor(private val clientOption
         TokenizationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TokenizationServiceAsync.WithRawResponse =
+            TokenizationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<TokenizationRetrieveResponse> =
             jsonHandler<TokenizationRetrieveResponse>(clientOptions.jsonMapper)

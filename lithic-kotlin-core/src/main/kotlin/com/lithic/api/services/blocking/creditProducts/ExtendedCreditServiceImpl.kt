@@ -27,6 +27,9 @@ class ExtendedCreditServiceImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): ExtendedCreditService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ExtendedCreditService =
+        ExtendedCreditServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: CreditProductExtendedCreditRetrieveParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class ExtendedCreditServiceImpl internal constructor(private val clientOptions: 
         ExtendedCreditService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ExtendedCreditService.WithRawResponse =
+            ExtendedCreditServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<ExtendedCredit> =
             jsonHandler<ExtendedCredit>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

@@ -27,6 +27,9 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): BalanceService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BalanceService =
+        BalanceServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(params: BalanceListParams, requestOptions: RequestOptions): BalanceListPage =
         // get /v1/balances
         withRawResponse().list(params, requestOptions).parse()
@@ -35,6 +38,13 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
         BalanceService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BalanceService.WithRawResponse =
+            BalanceServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<BalanceListPageResponse> =
             jsonHandler<BalanceListPageResponse>(clientOptions.jsonMapper)

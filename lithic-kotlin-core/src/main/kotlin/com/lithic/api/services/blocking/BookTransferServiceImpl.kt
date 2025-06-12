@@ -33,6 +33,9 @@ class BookTransferServiceImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): BookTransferService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BookTransferService =
+        BookTransferServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: BookTransferCreateParams,
         requestOptions: RequestOptions,
@@ -65,6 +68,13 @@ class BookTransferServiceImpl internal constructor(private val clientOptions: Cl
         BookTransferService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BookTransferService.WithRawResponse =
+            BookTransferServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<BookTransferResponse> =
             jsonHandler<BookTransferResponse>(clientOptions.jsonMapper)

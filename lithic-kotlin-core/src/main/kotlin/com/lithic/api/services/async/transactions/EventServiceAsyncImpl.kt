@@ -19,6 +19,9 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     override fun withRawResponse(): EventServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventServiceAsync =
+        EventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun enhancedCommercialData(): EnhancedCommercialDataServiceAsync =
         enhancedCommercialData
 
@@ -29,6 +32,13 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
             EnhancedCommercialDataServiceAsync.WithRawResponse by lazy {
             EnhancedCommercialDataServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventServiceAsync.WithRawResponse =
+            EventServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun enhancedCommercialData(): EnhancedCommercialDataServiceAsync.WithRawResponse =
             enhancedCommercialData

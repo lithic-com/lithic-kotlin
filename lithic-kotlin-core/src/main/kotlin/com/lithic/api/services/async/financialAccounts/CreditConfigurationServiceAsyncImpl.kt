@@ -30,6 +30,11 @@ internal constructor(private val clientOptions: ClientOptions) : CreditConfigura
     override fun withRawResponse(): CreditConfigurationServiceAsync.WithRawResponse =
         withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): CreditConfigurationServiceAsync =
+        CreditConfigurationServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
         requestOptions: RequestOptions,
@@ -48,6 +53,13 @@ internal constructor(private val clientOptions: ClientOptions) : CreditConfigura
         CreditConfigurationServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): CreditConfigurationServiceAsync.WithRawResponse =
+            CreditConfigurationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<FinancialAccountCreditConfig> =
             jsonHandler<FinancialAccountCreditConfig>(clientOptions.jsonMapper)

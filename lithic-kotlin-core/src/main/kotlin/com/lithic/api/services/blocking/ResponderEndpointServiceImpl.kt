@@ -32,6 +32,9 @@ class ResponderEndpointServiceImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): ResponderEndpointService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ResponderEndpointService =
+        ResponderEndpointServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: ResponderEndpointCreateParams,
         requestOptions: RequestOptions,
@@ -55,6 +58,13 @@ class ResponderEndpointServiceImpl internal constructor(private val clientOption
         ResponderEndpointService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ResponderEndpointService.WithRawResponse =
+            ResponderEndpointServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<ResponderEndpointCreateResponse> =
             jsonHandler<ResponderEndpointCreateResponse>(clientOptions.jsonMapper)

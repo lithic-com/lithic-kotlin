@@ -31,6 +31,9 @@ class PrimeRateServiceAsyncImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): PrimeRateServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PrimeRateServiceAsync =
+        PrimeRateServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: CreditProductPrimeRateCreateParams,
         requestOptions: RequestOptions,
@@ -50,6 +53,13 @@ class PrimeRateServiceAsyncImpl internal constructor(private val clientOptions: 
         PrimeRateServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PrimeRateServiceAsync.WithRawResponse =
+            PrimeRateServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
 

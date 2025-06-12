@@ -30,6 +30,11 @@ internal constructor(private val clientOptions: ClientOptions) : AuthStreamEnrol
 
     override fun withRawResponse(): AuthStreamEnrollmentService.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): AuthStreamEnrollmentService =
+        AuthStreamEnrollmentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieveSecret(
         params: AuthStreamEnrollmentRetrieveSecretParams,
         requestOptions: RequestOptions,
@@ -49,6 +54,13 @@ internal constructor(private val clientOptions: ClientOptions) : AuthStreamEnrol
         AuthStreamEnrollmentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AuthStreamEnrollmentService.WithRawResponse =
+            AuthStreamEnrollmentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveSecretHandler: Handler<AuthStreamSecret> =
             jsonHandler<AuthStreamSecret>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

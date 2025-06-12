@@ -193,6 +193,9 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
     override fun withRawResponse(): LithicClientAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LithicClientAsync =
+        LithicClientAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun accounts(): AccountServiceAsync = accounts
 
     override fun accountHolders(): AccountHolderServiceAsync = accountHolders
@@ -364,6 +367,13 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         private val fundingEvents: FundingEventServiceAsync.WithRawResponse by lazy {
             FundingEventServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LithicClientAsync.WithRawResponse =
+            LithicClientAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun accounts(): AccountServiceAsync.WithRawResponse = accounts
 

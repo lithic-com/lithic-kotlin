@@ -28,6 +28,9 @@ class MicroDepositServiceImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): MicroDepositService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): MicroDepositService =
+        MicroDepositServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
         requestOptions: RequestOptions,
@@ -39,6 +42,13 @@ class MicroDepositServiceImpl internal constructor(private val clientOptions: Cl
         MicroDepositService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): MicroDepositService.WithRawResponse =
+            MicroDepositServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<MicroDepositCreateResponse> =
             jsonHandler<MicroDepositCreateResponse>(clientOptions.jsonMapper)

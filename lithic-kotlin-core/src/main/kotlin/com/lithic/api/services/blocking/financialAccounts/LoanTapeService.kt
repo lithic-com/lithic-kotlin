@@ -3,6 +3,7 @@
 package com.lithic.api.services.blocking.financialAccounts
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.FinancialAccountLoanTapeListPage
@@ -16,6 +17,13 @@ interface LoanTapeService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LoanTapeService
 
     /** Get a specific loan tape for a given financial account. */
     fun retrieve(
@@ -56,6 +64,13 @@ interface LoanTapeService {
 
     /** A view of [LoanTapeService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LoanTapeService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get

@@ -30,6 +30,9 @@ class BacktestServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): BacktestServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): BacktestServiceAsync =
+        BacktestServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: AuthRuleV2BacktestCreateParams,
         requestOptions: RequestOptions,
@@ -48,6 +51,13 @@ class BacktestServiceAsyncImpl internal constructor(private val clientOptions: C
         BacktestServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): BacktestServiceAsync.WithRawResponse =
+            BacktestServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<BacktestCreateResponse> =
             jsonHandler<BacktestCreateResponse>(clientOptions.jsonMapper)

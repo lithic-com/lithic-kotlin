@@ -43,6 +43,9 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): PaymentService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PaymentService =
+        PaymentServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun create(
         params: PaymentCreateParams,
         requestOptions: RequestOptions,
@@ -97,6 +100,13 @@ class PaymentServiceImpl internal constructor(private val clientOptions: ClientO
         PaymentService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): PaymentService.WithRawResponse =
+            PaymentServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<PaymentCreateResponse> =
             jsonHandler<PaymentCreateResponse>(clientOptions.jsonMapper)

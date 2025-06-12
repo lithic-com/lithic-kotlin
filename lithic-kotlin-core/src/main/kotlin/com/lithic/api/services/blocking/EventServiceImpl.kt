@@ -45,6 +45,9 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     override fun withRawResponse(): EventService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): EventService =
+        EventServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun eventSubscriptions(): EventSubscriptionService = eventSubscriptions
@@ -76,6 +79,11 @@ class EventServiceImpl internal constructor(private val clientOptions: ClientOpt
         private val eventSubscriptions: EventSubscriptionService.WithRawResponse by lazy {
             EventSubscriptionServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): EventService.WithRawResponse =
+            EventServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun subscriptions(): SubscriptionService.WithRawResponse = subscriptions
 

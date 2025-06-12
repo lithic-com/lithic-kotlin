@@ -63,6 +63,11 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
 
     override fun withRawResponse(): FinancialAccountServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(
+        modifier: (ClientOptions.Builder) -> Unit
+    ): FinancialAccountServiceAsync =
+        FinancialAccountServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun balances(): BalanceServiceAsync = balances
 
     override fun financialTransactions(): FinancialTransactionServiceAsync = financialTransactions
@@ -141,6 +146,13 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
         private val loanTapes: LoanTapeServiceAsync.WithRawResponse by lazy {
             LoanTapeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FinancialAccountServiceAsync.WithRawResponse =
+            FinancialAccountServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun balances(): BalanceServiceAsync.WithRawResponse = balances
 

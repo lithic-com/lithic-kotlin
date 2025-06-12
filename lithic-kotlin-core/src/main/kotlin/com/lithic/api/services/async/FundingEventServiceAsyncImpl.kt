@@ -32,6 +32,9 @@ class FundingEventServiceAsyncImpl internal constructor(private val clientOption
 
     override fun withRawResponse(): FundingEventServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FundingEventServiceAsync =
+        FundingEventServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun retrieve(
         params: FundingEventRetrieveParams,
         requestOptions: RequestOptions,
@@ -57,6 +60,13 @@ class FundingEventServiceAsyncImpl internal constructor(private val clientOption
         FundingEventServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): FundingEventServiceAsync.WithRawResponse =
+            FundingEventServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<FundingEventRetrieveResponse> =
             jsonHandler<FundingEventRetrieveResponse>(clientOptions.jsonMapper)

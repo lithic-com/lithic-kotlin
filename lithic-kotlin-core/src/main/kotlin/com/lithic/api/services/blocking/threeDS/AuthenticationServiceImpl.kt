@@ -33,6 +33,9 @@ class AuthenticationServiceImpl internal constructor(private val clientOptions: 
 
     override fun withRawResponse(): AuthenticationService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AuthenticationService =
+        AuthenticationServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun retrieve(
         params: ThreeDSAuthenticationRetrieveParams,
         requestOptions: RequestOptions,
@@ -59,6 +62,13 @@ class AuthenticationServiceImpl internal constructor(private val clientOptions: 
         AuthenticationService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AuthenticationService.WithRawResponse =
+            AuthenticationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val retrieveHandler: Handler<AuthenticationRetrieveResponse> =
             jsonHandler<AuthenticationRetrieveResponse>(clientOptions.jsonMapper)

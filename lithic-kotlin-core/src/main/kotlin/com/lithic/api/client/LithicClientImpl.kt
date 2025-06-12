@@ -179,6 +179,9 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
     override fun withRawResponse(): LithicClient.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): LithicClient =
+        LithicClientImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun accounts(): AccountService = accounts
 
     override fun accountHolders(): AccountHolderService = accountHolders
@@ -349,6 +352,11 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         private val fundingEvents: FundingEventService.WithRawResponse by lazy {
             FundingEventServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): LithicClient.WithRawResponse =
+            LithicClientImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
 
         override fun accounts(): AccountService.WithRawResponse = accounts
 

@@ -25,6 +25,9 @@ class ThreeDSServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): ThreeDSServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): ThreeDSServiceAsync =
+        ThreeDSServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun authentication(): AuthenticationServiceAsync = authentication
 
     override fun decisioning(): DecisioningServiceAsync = decisioning
@@ -39,6 +42,13 @@ class ThreeDSServiceAsyncImpl internal constructor(private val clientOptions: Cl
         private val decisioning: DecisioningServiceAsync.WithRawResponse by lazy {
             DecisioningServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): ThreeDSServiceAsync.WithRawResponse =
+            ThreeDSServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun authentication(): AuthenticationServiceAsync.WithRawResponse = authentication
 

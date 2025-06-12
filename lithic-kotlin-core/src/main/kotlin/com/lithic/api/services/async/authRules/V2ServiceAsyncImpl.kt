@@ -50,6 +50,9 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
 
     override fun withRawResponse(): V2ServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): V2ServiceAsync =
+        V2ServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun backtests(): BacktestServiceAsync = backtests
 
     override suspend fun create(
@@ -122,6 +125,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
         private val backtests: BacktestServiceAsync.WithRawResponse by lazy {
             BacktestServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): V2ServiceAsync.WithRawResponse =
+            V2ServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun backtests(): BacktestServiceAsync.WithRawResponse = backtests
 

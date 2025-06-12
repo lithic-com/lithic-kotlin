@@ -17,6 +17,9 @@ class AuthRuleServiceImpl internal constructor(private val clientOptions: Client
 
     override fun withRawResponse(): AuthRuleService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AuthRuleService =
+        AuthRuleServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun v2(): V2Service = v2
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -25,6 +28,13 @@ class AuthRuleServiceImpl internal constructor(private val clientOptions: Client
         private val v2: V2Service.WithRawResponse by lazy {
             V2ServiceImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AuthRuleService.WithRawResponse =
+            AuthRuleServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         override fun v2(): V2Service.WithRawResponse = v2
     }

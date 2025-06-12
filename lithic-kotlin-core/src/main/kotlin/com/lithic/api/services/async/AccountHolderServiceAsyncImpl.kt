@@ -44,6 +44,9 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
 
     override fun withRawResponse(): AccountHolderServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AccountHolderServiceAsync =
+        AccountHolderServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override suspend fun create(
         params: AccountHolderCreateParams,
         requestOptions: RequestOptions,
@@ -111,6 +114,13 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
         AccountHolderServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AccountHolderServiceAsync.WithRawResponse =
+            AccountHolderServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<AccountHolderCreateResponse> =
             jsonHandler<AccountHolderCreateResponse>(clientOptions.jsonMapper)

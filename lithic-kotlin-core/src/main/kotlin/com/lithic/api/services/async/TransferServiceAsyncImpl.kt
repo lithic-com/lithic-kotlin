@@ -27,6 +27,9 @@ class TransferServiceAsyncImpl internal constructor(private val clientOptions: C
 
     override fun withRawResponse(): TransferServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): TransferServiceAsync =
+        TransferServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
     @Deprecated("deprecated")
     override suspend fun create(
         params: TransferCreateParams,
@@ -39,6 +42,13 @@ class TransferServiceAsyncImpl internal constructor(private val clientOptions: C
         TransferServiceAsync.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): TransferServiceAsync.WithRawResponse =
+            TransferServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val createHandler: Handler<Transfer> =
             jsonHandler<Transfer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

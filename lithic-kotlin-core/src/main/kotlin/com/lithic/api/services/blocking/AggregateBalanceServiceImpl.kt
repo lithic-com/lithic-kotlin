@@ -27,6 +27,9 @@ class AggregateBalanceServiceImpl internal constructor(private val clientOptions
 
     override fun withRawResponse(): AggregateBalanceService.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AggregateBalanceService =
+        AggregateBalanceServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
     override fun list(
         params: AggregateBalanceListParams,
         requestOptions: RequestOptions,
@@ -38,6 +41,13 @@ class AggregateBalanceServiceImpl internal constructor(private val clientOptions
         AggregateBalanceService.WithRawResponse {
 
         private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+
+        override fun withOptions(
+            modifier: (ClientOptions.Builder) -> Unit
+        ): AggregateBalanceService.WithRawResponse =
+            AggregateBalanceServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier).build()
+            )
 
         private val listHandler: Handler<AggregateBalanceListPageResponse> =
             jsonHandler<AggregateBalanceListPageResponse>(clientOptions.jsonMapper)
