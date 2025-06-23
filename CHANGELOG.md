@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.91.0 (2025-06-23)
+
+Full Changelog: [v0.90.1...v0.91.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.90.1...v0.91.0)
+
+### Features
+
+* **api:** add CLOSED account state option and UNVERIFIED verification method ([ee3cb9d](https://github.com/lithic-com/lithic-kotlin/commit/ee3cb9d2be30e94c922572538c9349eb689de8ae))
+* **client:** add a `withOptions` method ([c78209a](https://github.com/lithic-com/lithic-kotlin/commit/c78209aa4bf1ac8267cb77f171f573e52d905216))
+* **client:** adds endpoint to register an account number on a Financial Account ([b12b3d6](https://github.com/lithic-com/lithic-kotlin/commit/b12b3d65d9fff5cac77188fa7a60be37ce4fa272))
+* **client:** adds support for 3DS to Auth Rules ([a346bc8](https://github.com/lithic-com/lithic-kotlin/commit/a346bc8ed2f7bff325d9e02fc01a8920122fc0ae))
+* **client:** implement per-endpoint base URL support ([b90f765](https://github.com/lithic-com/lithic-kotlin/commit/b90f765bbc8acfdb8da94d2617a7ace31a169410))
+
+
+### Bug Fixes
+
+* **client:** bump max requests per host to max requests (5 -&gt; 64) ([2635299](https://github.com/lithic-com/lithic-kotlin/commit/26352991a74c16c67198d8b6e1e8dfefdd703868))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([a7fe29a](https://github.com/lithic-com/lithic-kotlin/commit/a7fe29a27a88ed983f8b4d5778a0f84e041ae71a))
+* run formatter ([e505891](https://github.com/lithic-com/lithic-kotlin/commit/e505891c14bc827ae3aa07672ebbe7931e9552a9))
+
 ## 0.90.1 (2025-06-02)
 
 Full Changelog: [v0.90.0...v0.90.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.90.0...v0.90.1)
