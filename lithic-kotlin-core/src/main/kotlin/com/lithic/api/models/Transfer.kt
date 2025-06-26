@@ -1249,6 +1249,8 @@ private constructor(
 
                 val CLEARING = of("CLEARING")
 
+                val COLLECTION = of("COLLECTION")
+
                 val CORRECTION_CREDIT = of("CORRECTION_CREDIT")
 
                 val CORRECTION_DEBIT = of("CORRECTION_DEBIT")
@@ -1366,6 +1368,7 @@ private constructor(
                 CASH_BACK,
                 CASH_BACK_REVERSAL,
                 CLEARING,
+                COLLECTION,
                 CORRECTION_CREDIT,
                 CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
@@ -1447,6 +1450,7 @@ private constructor(
                 CASH_BACK,
                 CASH_BACK_REVERSAL,
                 CLEARING,
+                COLLECTION,
                 CORRECTION_CREDIT,
                 CORRECTION_DEBIT,
                 CREDIT_AUTHORIZATION,
@@ -1530,6 +1534,7 @@ private constructor(
                     CASH_BACK -> Value.CASH_BACK
                     CASH_BACK_REVERSAL -> Value.CASH_BACK_REVERSAL
                     CLEARING -> Value.CLEARING
+                    COLLECTION -> Value.COLLECTION
                     CORRECTION_CREDIT -> Value.CORRECTION_CREDIT
                     CORRECTION_DEBIT -> Value.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Value.CREDIT_AUTHORIZATION
@@ -1611,6 +1616,7 @@ private constructor(
                     CASH_BACK -> Known.CASH_BACK
                     CASH_BACK_REVERSAL -> Known.CASH_BACK_REVERSAL
                     CLEARING -> Known.CLEARING
+                    COLLECTION -> Known.COLLECTION
                     CORRECTION_CREDIT -> Known.CORRECTION_CREDIT
                     CORRECTION_DEBIT -> Known.CORRECTION_DEBIT
                     CREDIT_AUTHORIZATION -> Known.CREDIT_AUTHORIZATION

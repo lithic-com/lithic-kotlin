@@ -66,9 +66,11 @@ private constructor(
      * - `STANDARD` - USPS regular mail or similar international option, with no tracking
      * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-     * - `2_DAY` - FedEx 2-day shipping, with tracking
-     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     * - `EXPRESS` - FedEx or UPS depending on card manufacturer, Express, 3-day shipping, with
+     *   tracking
+     * - `2_DAY` - FedEx or UPS depending on card manufacturer, 2-day shipping, with tracking
+     * - `EXPEDITED` - FedEx or UPS depending on card manufacturer, Standard Overnight or similar
+     *   international option, with tracking
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -198,9 +200,11 @@ private constructor(
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
          * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         * - `EXPRESS` - FedEx or UPS depending on card manufacturer, Express, 3-day shipping, with
+         *   tracking
+         * - `2_DAY` - FedEx or UPS depending on card manufacturer, 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx or UPS depending on card manufacturer, Standard Overnight or
+         *   similar international option, with tracking
          */
         fun shippingMethod(shippingMethod: ShippingMethod) = apply {
             body.shippingMethod(shippingMethod)
@@ -416,9 +420,11 @@ private constructor(
          * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
          * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-         * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-         * - `2_DAY` - FedEx 2-day shipping, with tracking
-         * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+         * - `EXPRESS` - FedEx or UPS depending on card manufacturer, Express, 3-day shipping, with
+         *   tracking
+         * - `2_DAY` - FedEx or UPS depending on card manufacturer, 2-day shipping, with tracking
+         * - `EXPEDITED` - FedEx or UPS depending on card manufacturer, Standard Overnight or
+         *   similar international option, with tracking
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -544,10 +550,12 @@ private constructor(
              * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
              *   tracking
              * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-             * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-             * - `2_DAY` - FedEx 2-day shipping, with tracking
-             * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with
+             * - `EXPRESS` - FedEx or UPS depending on card manufacturer, Express, 3-day shipping,
+             *   with tracking
+             * - `2_DAY` - FedEx or UPS depending on card manufacturer, 2-day shipping, with
              *   tracking
+             * - `EXPEDITED` - FedEx or UPS depending on card manufacturer, Standard Overnight or
+             *   similar international option, with tracking
              */
             fun shippingMethod(shippingMethod: ShippingMethod) =
                 shippingMethod(JsonField.of(shippingMethod))
@@ -655,9 +663,11 @@ private constructor(
      * - `STANDARD` - USPS regular mail or similar international option, with no tracking
      * - `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * - `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
-     * - `EXPRESS` - FedEx Express, 3-day shipping, with tracking
-     * - `2_DAY` - FedEx 2-day shipping, with tracking
-     * - `EXPEDITED` - FedEx Standard Overnight or similar international option, with tracking
+     * - `EXPRESS` - FedEx or UPS depending on card manufacturer, Express, 3-day shipping, with
+     *   tracking
+     * - `2_DAY` - FedEx or UPS depending on card manufacturer, 2-day shipping, with tracking
+     * - `EXPEDITED` - FedEx or UPS depending on card manufacturer, Standard Overnight or similar
+     *   international option, with tracking
      */
     class ShippingMethod @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {

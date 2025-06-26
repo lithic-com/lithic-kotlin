@@ -1057,13 +1057,17 @@ private constructor(
     class PaymentMethodRequestAttributes
     private constructor(
         private val secCode: JsonField<SecCode>,
+        private val addenda: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("sec_code") @ExcludeMissing secCode: JsonField<SecCode> = JsonMissing.of()
-        ) : this(secCode, mutableMapOf())
+            @JsonProperty("sec_code")
+            @ExcludeMissing
+            secCode: JsonField<SecCode> = JsonMissing.of(),
+            @JsonProperty("addenda") @ExcludeMissing addenda: JsonField<String> = JsonMissing.of(),
+        ) : this(secCode, addenda, mutableMapOf())
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1072,11 +1076,24 @@ private constructor(
         fun secCode(): SecCode = secCode.getRequired("sec_code")
 
         /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun addenda(): String? = addenda.getNullable("addenda")
+
+        /**
          * Returns the raw JSON value of [secCode].
          *
          * Unlike [secCode], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("sec_code") @ExcludeMissing fun _secCode(): JsonField<SecCode> = secCode
+
+        /**
+         * Returns the raw JSON value of [addenda].
+         *
+         * Unlike [addenda], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("addenda") @ExcludeMissing fun _addenda(): JsonField<String> = addenda
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1108,11 +1125,13 @@ private constructor(
         class Builder internal constructor() {
 
             private var secCode: JsonField<SecCode>? = null
+            private var addenda: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentMethodRequestAttributes: PaymentMethodRequestAttributes) =
                 apply {
                     secCode = paymentMethodRequestAttributes.secCode
+                    addenda = paymentMethodRequestAttributes.addenda
                     additionalProperties =
                         paymentMethodRequestAttributes.additionalProperties.toMutableMap()
                 }
@@ -1127,6 +1146,17 @@ private constructor(
              * supported value.
              */
             fun secCode(secCode: JsonField<SecCode>) = apply { this.secCode = secCode }
+
+            fun addenda(addenda: String?) = addenda(JsonField.ofNullable(addenda))
+
+            /**
+             * Sets [Builder.addenda] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.addenda] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun addenda(addenda: JsonField<String>) = apply { this.addenda = addenda }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1162,6 +1192,7 @@ private constructor(
             fun build(): PaymentMethodRequestAttributes =
                 PaymentMethodRequestAttributes(
                     checkRequired("secCode", secCode),
+                    addenda,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1174,6 +1205,7 @@ private constructor(
             }
 
             secCode().validate()
+            addenda()
             validated = true
         }
 
@@ -1191,7 +1223,8 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int = (secCode.asKnown()?.validity() ?: 0)
+        internal fun validity(): Int =
+            (secCode.asKnown()?.validity() ?: 0) + (if (addenda.asKnown() == null) 0 else 1)
 
         class SecCode @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -1332,17 +1365,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentMethodRequestAttributes && secCode == other.secCode && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PaymentMethodRequestAttributes && secCode == other.secCode && addenda == other.addenda && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(secCode, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(secCode, addenda, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentMethodRequestAttributes{secCode=$secCode, additionalProperties=$additionalProperties}"
+            "PaymentMethodRequestAttributes{secCode=$secCode, addenda=$addenda, additionalProperties=$additionalProperties}"
     }
 
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {

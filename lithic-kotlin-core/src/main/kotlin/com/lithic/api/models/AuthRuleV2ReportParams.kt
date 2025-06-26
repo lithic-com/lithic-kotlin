@@ -10,10 +10,11 @@ import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 /**
- * Requests a performance report of an Auth rule to be asynchronously generated. Reports can only be
- * run on rules in draft or active mode and will included approved and declined statistics as well
- * as examples. The generated report will be delivered asynchronously through a webhook with
- * `event_type` = `auth_rules.performance_report.created`. See the docs on setting up
+ * This endpoint is deprecated and will be removed in the future. Requests a performance report of
+ * an Auth rule to be asynchronously generated. Reports can only be run on rules in draft or active
+ * mode and will included approved and declined statistics as well as examples. The generated report
+ * will be delivered asynchronously through a webhook with `event_type` =
+ * `auth_rules.performance_report.created`. See the docs on setting up
  * [webhook subscriptions](https://docs.lithic.com/docs/events-api).
  *
  * Reports are generated based on data collected by Lithic's processing system in the trailing week.
@@ -53,6 +54,7 @@ import java.util.Objects
  * processing systems have processed the transaction, and when a transaction will be included in the
  * report.
  */
+@Deprecated("deprecated")
 class AuthRuleV2ReportParams
 private constructor(
     private val authRuleToken: String?,

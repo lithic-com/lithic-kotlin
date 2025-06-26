@@ -26,7 +26,12 @@ interface DecisioningServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DecisioningServiceAsync
 
-    /** Card program's response to a 3DS Challenge Request (CReq) */
+    /**
+     * Card program's response to a 3DS Challenge Request. Challenge Request is emitted as a webhook
+     * [three_ds_authentication.challenge](https://docs.lithic.com/reference/post_three-ds-authentication-challenge)
+     * and your Card Program needs to be configured with Out of Band (OOB) Challenges in order to
+     * receive it (see https://docs.lithic.com/docs/3ds-challenge-flow for more information).
+     */
     suspend fun challengeResponse(
         params: ThreeDSDecisioningChallengeResponseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
