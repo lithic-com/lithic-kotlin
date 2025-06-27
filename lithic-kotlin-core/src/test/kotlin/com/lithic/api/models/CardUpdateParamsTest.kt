@@ -11,7 +11,7 @@ internal class CardUpdateParamsTest {
     fun create() {
         CardUpdateParams.builder()
             .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-            .digitalCardArtToken("00000000-0000-0000-1000-000000000000")
+            .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .memo("Updated Name")
             .pin("pin")
             .pinStatus(CardUpdateParams.PinStatus.OK)
@@ -36,7 +36,7 @@ internal class CardUpdateParamsTest {
         val params =
             CardUpdateParams.builder()
                 .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-                .digitalCardArtToken("00000000-0000-0000-1000-000000000000")
+                .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .memo("Updated Name")
                 .pin("pin")
                 .pinStatus(CardUpdateParams.PinStatus.OK)
@@ -47,7 +47,7 @@ internal class CardUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.digitalCardArtToken()).isEqualTo("00000000-0000-0000-1000-000000000000")
+        assertThat(body.digitalCardArtToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.memo()).isEqualTo("Updated Name")
         assertThat(body.pin()).isEqualTo("pin")
         assertThat(body.pinStatus()).isEqualTo(CardUpdateParams.PinStatus.OK)
