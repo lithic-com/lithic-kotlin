@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.92.0 (2025-06-27)
+
+Full Changelog: [v0.91.0...v0.92.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.91.0...v0.92.0)
+
+### Features
+
+* **api:** introduce dedicated model for SpendLimitDuration ([6bd620f](https://github.com/lithic-com/lithic-kotlin/commit/6bd620fa42aad8c6eab27e861441079fbabac381))
+* **client:** adds support for on-demand Auth Rule Performance Reports ([a9c2060](https://github.com/lithic-com/lithic-kotlin/commit/a9c20602854e6ca68a45a8a7e694cacdb22ef497))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([e8f4483](https://github.com/lithic-com/lithic-kotlin/commit/e8f4483c5035473bcc74821bc7bb86b3dff4f8bf))
+
+
+### Chores
+
+* **internal:** manual updates ([901c8d8](https://github.com/lithic-com/lithic-kotlin/commit/901c8d82b40572966327e0ddfefdb3544d0cbab9))
+
 ## 0.91.0 (2025-06-23)
 
 Full Changelog: [v0.90.1...v0.91.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.90.1...v0.91.0)
