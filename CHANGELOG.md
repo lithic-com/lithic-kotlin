@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.92.1 (2025-06-29)
+
+Full Changelog: [v0.92.0...v0.92.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.92.0...v0.92.1)
+
+### Bug Fixes
+
+* **client:** don't close client on `withOptions` usage when original is gc'd ([ca29f94](https://github.com/lithic-com/lithic-kotlin/commit/ca29f941d560ad990218c4f09eefeb2f7e20b103))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([dfd6d4a](https://github.com/lithic-com/lithic-kotlin/commit/dfd6d4a3c2720489cda46ef7c32f46ffe6166350))
+
 ## 0.92.0 (2025-06-27)
 
 Full Changelog: [v0.91.0...v0.92.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.91.0...v0.92.0)
