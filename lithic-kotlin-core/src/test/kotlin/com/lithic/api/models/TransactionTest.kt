@@ -209,6 +209,7 @@ internal class TransactionTest {
                                 .build()
                         )
                         .type(Transaction.TransactionEvent.Type.CLEARING)
+                        .accountType(Transaction.TransactionEvent.Type.CHECKING)
                         .networkSpecificData(
                             Transaction.TransactionEvent.NetworkSpecificData.builder()
                                 .mastercard(
@@ -440,6 +441,7 @@ internal class TransactionTest {
                             .build()
                     )
                     .type(Transaction.TransactionEvent.Type.CLEARING)
+                    .accountType(Transaction.TransactionEvent.Type.CHECKING)
                     .networkSpecificData(
                         Transaction.TransactionEvent.NetworkSpecificData.builder()
                             .mastercard(
@@ -673,6 +675,7 @@ internal class TransactionTest {
                                 .build()
                         )
                         .type(Transaction.TransactionEvent.Type.CLEARING)
+                        .accountType(Transaction.TransactionEvent.Type.CHECKING)
                         .networkSpecificData(
                             Transaction.TransactionEvent.NetworkSpecificData.builder()
                                 .mastercard(
