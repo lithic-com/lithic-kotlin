@@ -7525,7 +7525,7 @@ private constructor(
         private val result: JsonField<DeclineResult>,
         private val ruleResults: JsonField<List<RuleResult>>,
         private val type: JsonField<Type>,
-        private val accountType: JsonField<Type>,
+        private val accountType: JsonField<AccountType>,
         private val networkSpecificData: JsonField<NetworkSpecificData>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
@@ -7558,7 +7558,7 @@ private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("account_type")
             @ExcludeMissing
-            accountType: JsonField<Type> = JsonMissing.of(),
+            accountType: JsonField<AccountType> = JsonMissing.of(),
             @JsonProperty("network_specific_data")
             @ExcludeMissing
             networkSpecificData: JsonField<NetworkSpecificData> = JsonMissing.of(),
@@ -7663,7 +7663,7 @@ private constructor(
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun accountType(): Type? = accountType.getNullable("account_type")
+        fun accountType(): AccountType? = accountType.getNullable("account_type")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -7764,7 +7764,7 @@ private constructor(
          */
         @JsonProperty("account_type")
         @ExcludeMissing
-        fun _accountType(): JsonField<Type> = accountType
+        fun _accountType(): JsonField<AccountType> = accountType
 
         /**
          * Returns the raw JSON value of [networkSpecificData].
@@ -7823,7 +7823,7 @@ private constructor(
             private var result: JsonField<DeclineResult>? = null
             private var ruleResults: JsonField<MutableList<RuleResult>>? = null
             private var type: JsonField<Type>? = null
-            private var accountType: JsonField<Type> = JsonMissing.of()
+            private var accountType: JsonField<AccountType> = JsonMissing.of()
             private var networkSpecificData: JsonField<NetworkSpecificData> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -8007,16 +8007,18 @@ private constructor(
              */
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
-            fun accountType(accountType: Type) = accountType(JsonField.of(accountType))
+            fun accountType(accountType: AccountType) = accountType(JsonField.of(accountType))
 
             /**
              * Sets [Builder.accountType] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.accountType] with a well-typed [Type] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
+             * You should usually call [Builder.accountType] with a well-typed [AccountType] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun accountType(accountType: JsonField<Type>) = apply { this.accountType = accountType }
+            fun accountType(accountType: JsonField<AccountType>) = apply {
+                this.accountType = accountType
+            }
 
             fun networkSpecificData(networkSpecificData: NetworkSpecificData) =
                 networkSpecificData(JsonField.of(networkSpecificData))
@@ -12214,7 +12216,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+        class AccountType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -12232,19 +12235,19 @@ private constructor(
 
                 val SAVINGS = of("SAVINGS")
 
-                fun of(value: String) = Type(JsonField.of(value))
+                fun of(value: String) = AccountType(JsonField.of(value))
             }
 
-            /** An enum containing [Type]'s known values. */
+            /** An enum containing [AccountType]'s known values. */
             enum class Known {
                 CHECKING,
                 SAVINGS,
             }
 
             /**
-             * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+             * An enum containing [AccountType]'s known values, as well as an [_UNKNOWN] member.
              *
-             * An instance of [Type] can contain an unknown value in a couple of cases:
+             * An instance of [AccountType] can contain an unknown value in a couple of cases:
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
@@ -12253,7 +12256,10 @@ private constructor(
             enum class Value {
                 CHECKING,
                 SAVINGS,
-                /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                /**
+                 * An enum member indicating that [AccountType] was instantiated with an unknown
+                 * value.
+                 */
                 _UNKNOWN,
             }
 
@@ -12284,7 +12290,7 @@ private constructor(
                 when (this) {
                     CHECKING -> Known.CHECKING
                     SAVINGS -> Known.SAVINGS
-                    else -> throw LithicInvalidDataException("Unknown Type: $value")
+                    else -> throw LithicInvalidDataException("Unknown AccountType: $value")
                 }
 
             /**
@@ -12301,7 +12307,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): Type = apply {
+            fun validate(): AccountType = apply {
                 if (validated) {
                     return@apply
                 }
@@ -12331,7 +12337,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
