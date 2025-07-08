@@ -2021,7 +2021,7 @@ private constructor(
             private val owner: JsonField<String>,
             private val ownerType: JsonField<OwnerType>,
             private val routingNumber: JsonField<String>,
-            private val type: JsonField<Type>,
+            private val type: JsonField<AccountType>,
             private val verificationMethod: JsonField<ExternallyVerifiedVerificationMethod>,
             private val accountToken: JsonField<String>,
             private val address: JsonField<ExternalBankAccountAddress>,
@@ -2051,7 +2051,9 @@ private constructor(
                 @JsonProperty("routing_number")
                 @ExcludeMissing
                 routingNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+                @JsonProperty("type")
+                @ExcludeMissing
+                type: JsonField<AccountType> = JsonMissing.of(),
                 @JsonProperty("verification_method")
                 @ExcludeMissing
                 verificationMethod: JsonField<ExternallyVerifiedVerificationMethod> =
@@ -2155,7 +2157,7 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun type(): Type = type.getRequired("type")
+            fun type(): AccountType = type.getRequired("type")
 
             /**
              * Verification Method
@@ -2282,7 +2284,7 @@ private constructor(
              *
              * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
              */
-            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<AccountType> = type
 
             /**
              * Returns the raw JSON value of [verificationMethod].
@@ -2400,7 +2402,7 @@ private constructor(
                 private var owner: JsonField<String>? = null
                 private var ownerType: JsonField<OwnerType>? = null
                 private var routingNumber: JsonField<String>? = null
-                private var type: JsonField<Type>? = null
+                private var type: JsonField<AccountType>? = null
                 private var verificationMethod: JsonField<ExternallyVerifiedVerificationMethod>? =
                     null
                 private var accountToken: JsonField<String> = JsonMissing.of()
@@ -2524,16 +2526,16 @@ private constructor(
                 }
 
                 /** Account Type */
-                fun type(type: Type) = type(JsonField.of(type))
+                fun type(type: AccountType) = type(JsonField.of(type))
 
                 /**
                  * Sets [Builder.type] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.type] with a well-typed [Type] value instead.
-                 * This method is primarily for setting the field to an undocumented or not yet
-                 * supported value.
+                 * You should usually call [Builder.type] with a well-typed [AccountType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
-                fun type(type: JsonField<Type>) = apply { this.type = type }
+                fun type(type: JsonField<AccountType>) = apply { this.type = type }
 
                 /** Verification Method */
                 fun verificationMethod(verificationMethod: ExternallyVerifiedVerificationMethod) =
@@ -2767,8 +2769,9 @@ private constructor(
                     (if (userDefinedId.asKnown() == null) 0 else 1)
 
             /** Account Type */
-            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
+            class AccountType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2786,19 +2789,19 @@ private constructor(
 
                     val SAVINGS = of("SAVINGS")
 
-                    fun of(value: String) = Type(JsonField.of(value))
+                    fun of(value: String) = AccountType(JsonField.of(value))
                 }
 
-                /** An enum containing [Type]'s known values. */
+                /** An enum containing [AccountType]'s known values. */
                 enum class Known {
                     CHECKING,
                     SAVINGS,
                 }
 
                 /**
-                 * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+                 * An enum containing [AccountType]'s known values, as well as an [_UNKNOWN] member.
                  *
-                 * An instance of [Type] can contain an unknown value in a couple of cases:
+                 * An instance of [AccountType] can contain an unknown value in a couple of cases:
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
@@ -2808,7 +2811,8 @@ private constructor(
                     CHECKING,
                     SAVINGS,
                     /**
-                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     * An enum member indicating that [AccountType] was instantiated with an unknown
+                     * value.
                      */
                     _UNKNOWN,
                 }
@@ -2840,7 +2844,7 @@ private constructor(
                     when (this) {
                         CHECKING -> Known.CHECKING
                         SAVINGS -> Known.SAVINGS
-                        else -> throw LithicInvalidDataException("Unknown Type: $value")
+                        else -> throw LithicInvalidDataException("Unknown AccountType: $value")
                     }
 
                 /**
@@ -2857,7 +2861,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): Type = apply {
+                fun validate(): AccountType = apply {
                     if (validated) {
                         return@apply
                     }
@@ -2887,7 +2891,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -3052,7 +3056,7 @@ private constructor(
             private val owner: JsonField<String>,
             private val ownerType: JsonField<OwnerType>,
             private val routingNumber: JsonField<String>,
-            private val type: JsonField<Type>,
+            private val type: JsonField<AccountType>,
             private val verificationMethod: JsonField<UnverifiedVerificationMethod>,
             private val accountToken: JsonField<String>,
             private val address: JsonField<ExternalBankAccountAddress>,
@@ -3082,7 +3086,9 @@ private constructor(
                 @JsonProperty("routing_number")
                 @ExcludeMissing
                 routingNumber: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+                @JsonProperty("type")
+                @ExcludeMissing
+                type: JsonField<AccountType> = JsonMissing.of(),
                 @JsonProperty("verification_method")
                 @ExcludeMissing
                 verificationMethod: JsonField<UnverifiedVerificationMethod> = JsonMissing.of(),
@@ -3185,7 +3191,7 @@ private constructor(
              *   unexpectedly missing or null (e.g. if the server responded with an unexpected
              *   value).
              */
-            fun type(): Type = type.getRequired("type")
+            fun type(): AccountType = type.getRequired("type")
 
             /**
              * Verification Method
@@ -3312,7 +3318,7 @@ private constructor(
              *
              * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
              */
-            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<AccountType> = type
 
             /**
              * Returns the raw JSON value of [verificationMethod].
@@ -3429,7 +3435,7 @@ private constructor(
                 private var owner: JsonField<String>? = null
                 private var ownerType: JsonField<OwnerType>? = null
                 private var routingNumber: JsonField<String>? = null
-                private var type: JsonField<Type>? = null
+                private var type: JsonField<AccountType>? = null
                 private var verificationMethod: JsonField<UnverifiedVerificationMethod>? = null
                 private var accountToken: JsonField<String> = JsonMissing.of()
                 private var address: JsonField<ExternalBankAccountAddress> = JsonMissing.of()
@@ -3549,16 +3555,16 @@ private constructor(
                 }
 
                 /** Account Type */
-                fun type(type: Type) = type(JsonField.of(type))
+                fun type(type: AccountType) = type(JsonField.of(type))
 
                 /**
                  * Sets [Builder.type] to an arbitrary JSON value.
                  *
-                 * You should usually call [Builder.type] with a well-typed [Type] value instead.
-                 * This method is primarily for setting the field to an undocumented or not yet
-                 * supported value.
+                 * You should usually call [Builder.type] with a well-typed [AccountType] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
                  */
-                fun type(type: JsonField<Type>) = apply { this.type = type }
+                fun type(type: JsonField<AccountType>) = apply { this.type = type }
 
                 /** Verification Method */
                 fun verificationMethod(verificationMethod: UnverifiedVerificationMethod) =
@@ -3792,8 +3798,9 @@ private constructor(
                     (if (userDefinedId.asKnown() == null) 0 else 1)
 
             /** Account Type */
-            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
+            class AccountType
+            @JsonCreator
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3811,19 +3818,19 @@ private constructor(
 
                     val SAVINGS = of("SAVINGS")
 
-                    fun of(value: String) = Type(JsonField.of(value))
+                    fun of(value: String) = AccountType(JsonField.of(value))
                 }
 
-                /** An enum containing [Type]'s known values. */
+                /** An enum containing [AccountType]'s known values. */
                 enum class Known {
                     CHECKING,
                     SAVINGS,
                 }
 
                 /**
-                 * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+                 * An enum containing [AccountType]'s known values, as well as an [_UNKNOWN] member.
                  *
-                 * An instance of [Type] can contain an unknown value in a couple of cases:
+                 * An instance of [AccountType] can contain an unknown value in a couple of cases:
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
@@ -3833,7 +3840,8 @@ private constructor(
                     CHECKING,
                     SAVINGS,
                     /**
-                     * An enum member indicating that [Type] was instantiated with an unknown value.
+                     * An enum member indicating that [AccountType] was instantiated with an unknown
+                     * value.
                      */
                     _UNKNOWN,
                 }
@@ -3865,7 +3873,7 @@ private constructor(
                     when (this) {
                         CHECKING -> Known.CHECKING
                         SAVINGS -> Known.SAVINGS
-                        else -> throw LithicInvalidDataException("Unknown Type: $value")
+                        else -> throw LithicInvalidDataException("Unknown AccountType: $value")
                     }
 
                 /**
@@ -3882,7 +3890,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): Type = apply {
+                fun validate(): AccountType = apply {
                     if (validated) {
                         return@apply
                     }
@@ -3912,7 +3920,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                    return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
