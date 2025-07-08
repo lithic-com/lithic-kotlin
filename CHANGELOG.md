@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.93.1 (2025-07-08)
+
+Full Changelog: [v0.93.0...v0.93.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.93.0...v0.93.1)
+
+### Chores
+
+* disable docs generation to fix publishing ([b584b54](https://github.com/lithic-com/lithic-kotlin/commit/b584b5460c2a96c7df0283a1b1886b8baa2adf58))
+* enable zip64 for publishing ([31e1e30](https://github.com/lithic-com/lithic-kotlin/commit/31e1e3014af1d16e4219e71fcf08003f30e34d9b))
+* reenable docs generation ([bbb2365](https://github.com/lithic-com/lithic-kotlin/commit/bbb2365da8259ddd8d29ac78fd0f2f170cddc6e3))
+
 ## 0.93.0 (2025-07-08)
 
 Full Changelog: [v0.92.1...v0.93.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.92.1...v0.93.0)
