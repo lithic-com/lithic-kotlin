@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.93.0 (2025-07-08)
+
+Full Changelog: [v0.92.1...v0.93.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.92.1...v0.93.0)
+
+### Features
+
+* **api:** add models for merchant_lock_parameters and conditional_3ds_action_parameters ([4019723](https://github.com/lithic-com/lithic-kotlin/commit/40197233b7e837fa9ce60f289731f3971da3b1a9))
+* **api:** api update ([03bc4db](https://github.com/lithic-com/lithic-kotlin/commit/03bc4db1a5eda572f46c38706164fc6c76bcfd52))
+* **api:** api update ([4e5d89d](https://github.com/lithic-com/lithic-kotlin/commit/4e5d89deedc14647230c8d7342cc902b32bc6bb3))
+* **api:** api update ([e393449](https://github.com/lithic-com/lithic-kotlin/commit/e393449cc84ef4c674580bb8226bbed0783fbc4f))
+
+
+### Bug Fixes
+
+* **api:** name conflict between type and account type ([8edfa02](https://github.com/lithic-com/lithic-kotlin/commit/8edfa0257474f5b5d747ee8712f8ee050ee8eafa))
+
+
+### Chores
+
+* bump heap size for publishing ([25d8880](https://github.com/lithic-com/lithic-kotlin/commit/25d8880413c8334bfea50cfdc0cafdcecf935f80))
+
+
+### Refactors
+
+* **internal:** minor `ClientOptionsTest` change ([dc3db14](https://github.com/lithic-com/lithic-kotlin/commit/dc3db14568624df0cca3f7a098c6b0890729ab06))
+
 ## 0.92.1 (2025-06-29)
 
 Full Changelog: [v0.92.0...v0.92.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.92.0...v0.92.1)
