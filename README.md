@@ -3,7 +3,6 @@
 <!-- x-release-please-start-version -->
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.93.0)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.93.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.93.0)
 
 <!-- x-release-please-end -->
 
@@ -11,11 +10,7 @@ The Lithic Kotlin SDK provides convenient access to the [Lithic REST API](https:
 
 The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
 
-<!-- x-release-please-start-version -->
-
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.93.0).
-
-<!-- x-release-please-end -->
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com).
 
 ## Installation
 
