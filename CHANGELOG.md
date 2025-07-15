@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.94.0 (2025-07-15)
+
+Full Changelog: [v0.93.1...v0.94.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.93.1...v0.94.0)
+
+### Features
+
+* **api:** adds Network Programs and Account/Card Sub-statuses ([3cf127d](https://github.com/lithic-com/lithic-kotlin/commit/3cf127db8ebf941add9f256449e470fcccce650e))
+
+
+### Chores
+
+* **ci:** bump `actions/setup-java` to v4 ([a553a2b](https://github.com/lithic-com/lithic-kotlin/commit/a553a2b198db9964de700e14ab1649443406ffcc))
+
 ## 0.93.1 (2025-07-08)
 
 Full Changelog: [v0.93.0...v0.93.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.93.0...v0.93.1)
