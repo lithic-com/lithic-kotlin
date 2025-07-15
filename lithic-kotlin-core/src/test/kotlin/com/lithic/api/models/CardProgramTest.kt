@@ -19,6 +19,7 @@ internal class CardProgramTest {
                 .name("My Prepaid Program")
                 .panRangeEnd("52304803")
                 .panRangeStart("52304803")
+                .accountLevelManagementEnabled(true)
                 .cardholderCurrency("USD")
                 .addSettlementCurrency("USD")
                 .addSettlementCurrency("CAD")
@@ -30,6 +31,7 @@ internal class CardProgramTest {
         assertThat(cardProgram.name()).isEqualTo("My Prepaid Program")
         assertThat(cardProgram.panRangeEnd()).isEqualTo("52304803")
         assertThat(cardProgram.panRangeStart()).isEqualTo("52304803")
+        assertThat(cardProgram.accountLevelManagementEnabled()).isEqualTo(true)
         assertThat(cardProgram.cardholderCurrency()).isEqualTo("USD")
         assertThat(cardProgram.settlementCurrencies()).containsExactly("USD", "CAD")
     }
@@ -44,6 +46,7 @@ internal class CardProgramTest {
                 .name("My Prepaid Program")
                 .panRangeEnd("52304803")
                 .panRangeStart("52304803")
+                .accountLevelManagementEnabled(true)
                 .cardholderCurrency("USD")
                 .addSettlementCurrency("USD")
                 .addSettlementCurrency("CAD")

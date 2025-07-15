@@ -34,6 +34,14 @@ private constructor(
     fun accountToken(): String? = accountToken
 
     /**
+     * Additional context or information related to the account.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun comment(): String? = body.comment()
+
+    /**
      * Amount (in cents) for the account's daily spend limit (e.g. 100000 would be a $1,000 limit).
      * By default the daily spend limit is set to $1,250.
      *
@@ -73,6 +81,37 @@ private constructor(
     fun state(): State? = body.state()
 
     /**
+     * Account state substatus values:
+     * - `FRAUD_IDENTIFIED` - The account has been recognized as being created or used with stolen
+     *   or fabricated identity information, encompassing both true identity theft and synthetic
+     *   identities.
+     * - `SUSPICIOUS_ACTIVITY` - The account has exhibited suspicious behavior, such as unauthorized
+     *   access or fraudulent transactions, necessitating further investigation.
+     * - `RISK_VIOLATION` - The account has been involved in deliberate misuse by the legitimate
+     *   account holder. Examples include disputing valid transactions without cause, falsely
+     *   claiming non-receipt of goods, or engaging in intentional bust-out schemes to exploit
+     *   account services.
+     * - `END_USER_REQUEST` - The account holder has voluntarily requested the closure of the
+     *   account for personal reasons. This encompasses situations such as bankruptcy, other
+     *   financial considerations, or the account holder's death.
+     * - `ISSUER_REQUEST` - The issuer has initiated the closure of the account due to business
+     *   strategy, risk management, inactivity, product changes, regulatory concerns, or violations
+     *   of terms and conditions.
+     * - `NOT_ACTIVE` - The account has not had any transactions or payment activity within a
+     *   specified period. This status applies to accounts that are paused or closed due to
+     *   inactivity.
+     * - `INTERNAL_REVIEW` - The account is temporarily paused pending further internal review. In
+     *   future implementations, this status may prevent clients from activating the account via
+     *   APIs until the review is completed.
+     * - `OTHER` - The reason for the account's current status does not fall into any of the above
+     *   categories. A comment should be provided to specify the particular reason.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun substatus(): Substatus? = body.substatus()
+
+    /**
      * Address used during Address Verification Service (AVS) checks during transactions if enabled
      * via Auth Rules. This field is deprecated as AVS checks are no longer supported by Auth Rules.
      * The field will be removed from the schema in a future release.
@@ -82,6 +121,13 @@ private constructor(
      */
     @Deprecated("deprecated")
     fun verificationAddress(): VerificationAddress? = body.verificationAddress()
+
+    /**
+     * Returns the raw JSON value of [comment].
+     *
+     * Unlike [comment], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _comment(): JsonField<String> = body._comment()
 
     /**
      * Returns the raw JSON value of [dailySpendLimit].
@@ -112,6 +158,13 @@ private constructor(
      * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _state(): JsonField<State> = body._state()
+
+    /**
+     * Returns the raw JSON value of [substatus].
+     *
+     * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _substatus(): JsonField<Substatus> = body._substatus()
 
     /**
      * Returns the raw JSON value of [verificationAddress].
@@ -160,14 +213,25 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [comment]
          * - [dailySpendLimit]
          * - [lifetimeSpendLimit]
          * - [monthlySpendLimit]
          * - [state]
-         * - [verificationAddress]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /** Additional context or information related to the account. */
+        fun comment(comment: String) = apply { body.comment(comment) }
+
+        /**
+         * Sets [Builder.comment] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.comment] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun comment(comment: JsonField<String>) = apply { body.comment(comment) }
 
         /**
          * Amount (in cents) for the account's daily spend limit (e.g. 100000 would be a $1,000
@@ -238,6 +302,43 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun state(state: JsonField<State>) = apply { body.state(state) }
+
+        /**
+         * Account state substatus values:
+         * - `FRAUD_IDENTIFIED` - The account has been recognized as being created or used with
+         *   stolen or fabricated identity information, encompassing both true identity theft and
+         *   synthetic identities.
+         * - `SUSPICIOUS_ACTIVITY` - The account has exhibited suspicious behavior, such as
+         *   unauthorized access or fraudulent transactions, necessitating further investigation.
+         * - `RISK_VIOLATION` - The account has been involved in deliberate misuse by the legitimate
+         *   account holder. Examples include disputing valid transactions without cause, falsely
+         *   claiming non-receipt of goods, or engaging in intentional bust-out schemes to exploit
+         *   account services.
+         * - `END_USER_REQUEST` - The account holder has voluntarily requested the closure of the
+         *   account for personal reasons. This encompasses situations such as bankruptcy, other
+         *   financial considerations, or the account holder's death.
+         * - `ISSUER_REQUEST` - The issuer has initiated the closure of the account due to business
+         *   strategy, risk management, inactivity, product changes, regulatory concerns, or
+         *   violations of terms and conditions.
+         * - `NOT_ACTIVE` - The account has not had any transactions or payment activity within a
+         *   specified period. This status applies to accounts that are paused or closed due to
+         *   inactivity.
+         * - `INTERNAL_REVIEW` - The account is temporarily paused pending further internal review.
+         *   In future implementations, this status may prevent clients from activating the account
+         *   via APIs until the review is completed.
+         * - `OTHER` - The reason for the account's current status does not fall into any of the
+         *   above categories. A comment should be provided to specify the particular reason.
+         */
+        fun substatus(substatus: Substatus) = apply { body.substatus(substatus) }
+
+        /**
+         * Sets [Builder.substatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.substatus] with a well-typed [Substatus] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun substatus(substatus: JsonField<Substatus>) = apply { body.substatus(substatus) }
 
         /**
          * Address used during Address Verification Service (AVS) checks during transactions if
@@ -406,16 +507,19 @@ private constructor(
 
     class Body
     private constructor(
+        private val comment: JsonField<String>,
         private val dailySpendLimit: JsonField<Long>,
         private val lifetimeSpendLimit: JsonField<Long>,
         private val monthlySpendLimit: JsonField<Long>,
         private val state: JsonField<State>,
+        private val substatus: JsonField<Substatus>,
         private val verificationAddress: JsonField<VerificationAddress>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("comment") @ExcludeMissing comment: JsonField<String> = JsonMissing.of(),
             @JsonProperty("daily_spend_limit")
             @ExcludeMissing
             dailySpendLimit: JsonField<Long> = JsonMissing.of(),
@@ -426,17 +530,30 @@ private constructor(
             @ExcludeMissing
             monthlySpendLimit: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("state") @ExcludeMissing state: JsonField<State> = JsonMissing.of(),
+            @JsonProperty("substatus")
+            @ExcludeMissing
+            substatus: JsonField<Substatus> = JsonMissing.of(),
             @JsonProperty("verification_address")
             @ExcludeMissing
             verificationAddress: JsonField<VerificationAddress> = JsonMissing.of(),
         ) : this(
+            comment,
             dailySpendLimit,
             lifetimeSpendLimit,
             monthlySpendLimit,
             state,
+            substatus,
             verificationAddress,
             mutableMapOf(),
         )
+
+        /**
+         * Additional context or information related to the account.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun comment(): String? = comment.getNullable("comment")
 
         /**
          * Amount (in cents) for the account's daily spend limit (e.g. 100000 would be a $1,000
@@ -478,6 +595,37 @@ private constructor(
         fun state(): State? = state.getNullable("state")
 
         /**
+         * Account state substatus values:
+         * - `FRAUD_IDENTIFIED` - The account has been recognized as being created or used with
+         *   stolen or fabricated identity information, encompassing both true identity theft and
+         *   synthetic identities.
+         * - `SUSPICIOUS_ACTIVITY` - The account has exhibited suspicious behavior, such as
+         *   unauthorized access or fraudulent transactions, necessitating further investigation.
+         * - `RISK_VIOLATION` - The account has been involved in deliberate misuse by the legitimate
+         *   account holder. Examples include disputing valid transactions without cause, falsely
+         *   claiming non-receipt of goods, or engaging in intentional bust-out schemes to exploit
+         *   account services.
+         * - `END_USER_REQUEST` - The account holder has voluntarily requested the closure of the
+         *   account for personal reasons. This encompasses situations such as bankruptcy, other
+         *   financial considerations, or the account holder's death.
+         * - `ISSUER_REQUEST` - The issuer has initiated the closure of the account due to business
+         *   strategy, risk management, inactivity, product changes, regulatory concerns, or
+         *   violations of terms and conditions.
+         * - `NOT_ACTIVE` - The account has not had any transactions or payment activity within a
+         *   specified period. This status applies to accounts that are paused or closed due to
+         *   inactivity.
+         * - `INTERNAL_REVIEW` - The account is temporarily paused pending further internal review.
+         *   In future implementations, this status may prevent clients from activating the account
+         *   via APIs until the review is completed.
+         * - `OTHER` - The reason for the account's current status does not fall into any of the
+         *   above categories. A comment should be provided to specify the particular reason.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun substatus(): Substatus? = substatus.getNullable("substatus")
+
+        /**
          * Address used during Address Verification Service (AVS) checks during transactions if
          * enabled via Auth Rules. This field is deprecated as AVS checks are no longer supported by
          * Auth Rules. The field will be removed from the schema in a future release.
@@ -488,6 +636,13 @@ private constructor(
         @Deprecated("deprecated")
         fun verificationAddress(): VerificationAddress? =
             verificationAddress.getNullable("verification_address")
+
+        /**
+         * Returns the raw JSON value of [comment].
+         *
+         * Unlike [comment], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("comment") @ExcludeMissing fun _comment(): JsonField<String> = comment
 
         /**
          * Returns the raw JSON value of [dailySpendLimit].
@@ -527,6 +682,15 @@ private constructor(
         @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<State> = state
 
         /**
+         * Returns the raw JSON value of [substatus].
+         *
+         * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("substatus")
+        @ExcludeMissing
+        fun _substatus(): JsonField<Substatus> = substatus
+
+        /**
          * Returns the raw JSON value of [verificationAddress].
          *
          * Unlike [verificationAddress], this method doesn't throw if the JSON field has an
@@ -558,21 +722,37 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
+            private var comment: JsonField<String> = JsonMissing.of()
             private var dailySpendLimit: JsonField<Long> = JsonMissing.of()
             private var lifetimeSpendLimit: JsonField<Long> = JsonMissing.of()
             private var monthlySpendLimit: JsonField<Long> = JsonMissing.of()
             private var state: JsonField<State> = JsonMissing.of()
+            private var substatus: JsonField<Substatus> = JsonMissing.of()
             private var verificationAddress: JsonField<VerificationAddress> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
+                comment = body.comment
                 dailySpendLimit = body.dailySpendLimit
                 lifetimeSpendLimit = body.lifetimeSpendLimit
                 monthlySpendLimit = body.monthlySpendLimit
                 state = body.state
+                substatus = body.substatus
                 verificationAddress = body.verificationAddress
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
+
+            /** Additional context or information related to the account. */
+            fun comment(comment: String) = comment(JsonField.of(comment))
+
+            /**
+             * Sets [Builder.comment] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.comment] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun comment(comment: JsonField<String>) = apply { this.comment = comment }
 
             /**
              * Amount (in cents) for the account's daily spend limit (e.g. 100000 would be a $1,000
@@ -646,6 +826,44 @@ private constructor(
             fun state(state: JsonField<State>) = apply { this.state = state }
 
             /**
+             * Account state substatus values:
+             * - `FRAUD_IDENTIFIED` - The account has been recognized as being created or used with
+             *   stolen or fabricated identity information, encompassing both true identity theft
+             *   and synthetic identities.
+             * - `SUSPICIOUS_ACTIVITY` - The account has exhibited suspicious behavior, such as
+             *   unauthorized access or fraudulent transactions, necessitating further
+             *   investigation.
+             * - `RISK_VIOLATION` - The account has been involved in deliberate misuse by the
+             *   legitimate account holder. Examples include disputing valid transactions without
+             *   cause, falsely claiming non-receipt of goods, or engaging in intentional bust-out
+             *   schemes to exploit account services.
+             * - `END_USER_REQUEST` - The account holder has voluntarily requested the closure of
+             *   the account for personal reasons. This encompasses situations such as bankruptcy,
+             *   other financial considerations, or the account holder's death.
+             * - `ISSUER_REQUEST` - The issuer has initiated the closure of the account due to
+             *   business strategy, risk management, inactivity, product changes, regulatory
+             *   concerns, or violations of terms and conditions.
+             * - `NOT_ACTIVE` - The account has not had any transactions or payment activity within
+             *   a specified period. This status applies to accounts that are paused or closed due
+             *   to inactivity.
+             * - `INTERNAL_REVIEW` - The account is temporarily paused pending further internal
+             *   review. In future implementations, this status may prevent clients from activating
+             *   the account via APIs until the review is completed.
+             * - `OTHER` - The reason for the account's current status does not fall into any of the
+             *   above categories. A comment should be provided to specify the particular reason.
+             */
+            fun substatus(substatus: Substatus) = substatus(JsonField.of(substatus))
+
+            /**
+             * Sets [Builder.substatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.substatus] with a well-typed [Substatus] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun substatus(substatus: JsonField<Substatus>) = apply { this.substatus = substatus }
+
+            /**
              * Address used during Address Verification Service (AVS) checks during transactions if
              * enabled via Auth Rules. This field is deprecated as AVS checks are no longer
              * supported by Auth Rules. The field will be removed from the schema in a future
@@ -693,10 +911,12 @@ private constructor(
              */
             fun build(): Body =
                 Body(
+                    comment,
                     dailySpendLimit,
                     lifetimeSpendLimit,
                     monthlySpendLimit,
                     state,
+                    substatus,
                     verificationAddress,
                     additionalProperties.toMutableMap(),
                 )
@@ -709,10 +929,12 @@ private constructor(
                 return@apply
             }
 
+            comment()
             dailySpendLimit()
             lifetimeSpendLimit()
             monthlySpendLimit()
             state()?.validate()
+            substatus()?.validate()
             verificationAddress()?.validate()
             validated = true
         }
@@ -732,10 +954,12 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (dailySpendLimit.asKnown() == null) 0 else 1) +
+            (if (comment.asKnown() == null) 0 else 1) +
+                (if (dailySpendLimit.asKnown() == null) 0 else 1) +
                 (if (lifetimeSpendLimit.asKnown() == null) 0 else 1) +
                 (if (monthlySpendLimit.asKnown() == null) 0 else 1) +
                 (state.asKnown()?.validity() ?: 0) +
+                (substatus.asKnown()?.validity() ?: 0) +
                 (verificationAddress.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
@@ -743,17 +967,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && dailySpendLimit == other.dailySpendLimit && lifetimeSpendLimit == other.lifetimeSpendLimit && monthlySpendLimit == other.monthlySpendLimit && state == other.state && verificationAddress == other.verificationAddress && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && comment == other.comment && dailySpendLimit == other.dailySpendLimit && lifetimeSpendLimit == other.lifetimeSpendLimit && monthlySpendLimit == other.monthlySpendLimit && state == other.state && substatus == other.substatus && verificationAddress == other.verificationAddress && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(dailySpendLimit, lifetimeSpendLimit, monthlySpendLimit, state, verificationAddress, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(comment, dailySpendLimit, lifetimeSpendLimit, monthlySpendLimit, state, substatus, verificationAddress, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, verificationAddress=$verificationAddress, additionalProperties=$additionalProperties}"
+            "Body{comment=$comment, dailySpendLimit=$dailySpendLimit, lifetimeSpendLimit=$lifetimeSpendLimit, monthlySpendLimit=$monthlySpendLimit, state=$state, substatus=$substatus, verificationAddress=$verificationAddress, additionalProperties=$additionalProperties}"
     }
 
     /** Account states. */
@@ -881,6 +1105,195 @@ private constructor(
             }
 
             return /* spotless:off */ other is State && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
+    /**
+     * Account state substatus values:
+     * - `FRAUD_IDENTIFIED` - The account has been recognized as being created or used with stolen
+     *   or fabricated identity information, encompassing both true identity theft and synthetic
+     *   identities.
+     * - `SUSPICIOUS_ACTIVITY` - The account has exhibited suspicious behavior, such as unauthorized
+     *   access or fraudulent transactions, necessitating further investigation.
+     * - `RISK_VIOLATION` - The account has been involved in deliberate misuse by the legitimate
+     *   account holder. Examples include disputing valid transactions without cause, falsely
+     *   claiming non-receipt of goods, or engaging in intentional bust-out schemes to exploit
+     *   account services.
+     * - `END_USER_REQUEST` - The account holder has voluntarily requested the closure of the
+     *   account for personal reasons. This encompasses situations such as bankruptcy, other
+     *   financial considerations, or the account holder's death.
+     * - `ISSUER_REQUEST` - The issuer has initiated the closure of the account due to business
+     *   strategy, risk management, inactivity, product changes, regulatory concerns, or violations
+     *   of terms and conditions.
+     * - `NOT_ACTIVE` - The account has not had any transactions or payment activity within a
+     *   specified period. This status applies to accounts that are paused or closed due to
+     *   inactivity.
+     * - `INTERNAL_REVIEW` - The account is temporarily paused pending further internal review. In
+     *   future implementations, this status may prevent clients from activating the account via
+     *   APIs until the review is completed.
+     * - `OTHER` - The reason for the account's current status does not fall into any of the above
+     *   categories. A comment should be provided to specify the particular reason.
+     */
+    class Substatus @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val FRAUD_IDENTIFIED = of("FRAUD_IDENTIFIED")
+
+            val SUSPICIOUS_ACTIVITY = of("SUSPICIOUS_ACTIVITY")
+
+            val RISK_VIOLATION = of("RISK_VIOLATION")
+
+            val END_USER_REQUEST = of("END_USER_REQUEST")
+
+            val ISSUER_REQUEST = of("ISSUER_REQUEST")
+
+            val NOT_ACTIVE = of("NOT_ACTIVE")
+
+            val INTERNAL_REVIEW = of("INTERNAL_REVIEW")
+
+            val OTHER = of("OTHER")
+
+            fun of(value: String) = Substatus(JsonField.of(value))
+        }
+
+        /** An enum containing [Substatus]'s known values. */
+        enum class Known {
+            FRAUD_IDENTIFIED,
+            SUSPICIOUS_ACTIVITY,
+            RISK_VIOLATION,
+            END_USER_REQUEST,
+            ISSUER_REQUEST,
+            NOT_ACTIVE,
+            INTERNAL_REVIEW,
+            OTHER,
+        }
+
+        /**
+         * An enum containing [Substatus]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [Substatus] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            FRAUD_IDENTIFIED,
+            SUSPICIOUS_ACTIVITY,
+            RISK_VIOLATION,
+            END_USER_REQUEST,
+            ISSUER_REQUEST,
+            NOT_ACTIVE,
+            INTERNAL_REVIEW,
+            OTHER,
+            /**
+             * An enum member indicating that [Substatus] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                FRAUD_IDENTIFIED -> Value.FRAUD_IDENTIFIED
+                SUSPICIOUS_ACTIVITY -> Value.SUSPICIOUS_ACTIVITY
+                RISK_VIOLATION -> Value.RISK_VIOLATION
+                END_USER_REQUEST -> Value.END_USER_REQUEST
+                ISSUER_REQUEST -> Value.ISSUER_REQUEST
+                NOT_ACTIVE -> Value.NOT_ACTIVE
+                INTERNAL_REVIEW -> Value.INTERNAL_REVIEW
+                OTHER -> Value.OTHER
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
+        fun known(): Known =
+            when (this) {
+                FRAUD_IDENTIFIED -> Known.FRAUD_IDENTIFIED
+                SUSPICIOUS_ACTIVITY -> Known.SUSPICIOUS_ACTIVITY
+                RISK_VIOLATION -> Known.RISK_VIOLATION
+                END_USER_REQUEST -> Known.END_USER_REQUEST
+                ISSUER_REQUEST -> Known.ISSUER_REQUEST
+                NOT_ACTIVE -> Known.NOT_ACTIVE
+                INTERNAL_REVIEW -> Known.INTERNAL_REVIEW
+                OTHER -> Known.OTHER
+                else -> throw LithicInvalidDataException("Unknown Substatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws LithicInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): Substatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Substatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

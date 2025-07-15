@@ -21,7 +21,9 @@ internal class CardCreateParamsTest {
             .pin("pin")
             .productId("1")
             .replacementAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .replacementComment("replacement_comment")
             .replacementFor("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .replacementSubstatus(CardCreateParams.ReplacementSubstatus.LOST)
             .shippingAddress(
                 ShippingAddress.builder()
                     .address1("5 Broad Street")
@@ -59,7 +61,9 @@ internal class CardCreateParamsTest {
                 .pin("pin")
                 .productId("1")
                 .replacementAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .replacementComment("replacement_comment")
                 .replacementFor("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .replacementSubstatus(CardCreateParams.ReplacementSubstatus.LOST)
                 .shippingAddress(
                     ShippingAddress.builder()
                         .address1("5 Broad Street")
@@ -94,7 +98,10 @@ internal class CardCreateParamsTest {
         assertThat(body.pin()).isEqualTo("pin")
         assertThat(body.productId()).isEqualTo("1")
         assertThat(body.replacementAccountToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.replacementComment()).isEqualTo("replacement_comment")
         assertThat(body.replacementFor()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(body.replacementSubstatus())
+            .isEqualTo(CardCreateParams.ReplacementSubstatus.LOST)
         assertThat(body.shippingAddress())
             .isEqualTo(
                 ShippingAddress.builder()

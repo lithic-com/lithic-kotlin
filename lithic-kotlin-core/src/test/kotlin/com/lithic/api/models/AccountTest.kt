@@ -34,6 +34,8 @@ internal class AccountTest {
                 )
                 .addAuthRuleToken("string")
                 .cardholderCurrency("USD")
+                .comment("comment")
+                .substatus(Account.Substatus.FRAUD_IDENTIFIED)
                 .verificationAddress(
                     Account.VerificationAddress.builder()
                         .address1("124 Old Forest Way")
@@ -64,6 +66,8 @@ internal class AccountTest {
             )
         assertThat(account.authRuleTokens()).containsExactly("string")
         assertThat(account.cardholderCurrency()).isEqualTo("USD")
+        assertThat(account.comment()).isEqualTo("comment")
+        assertThat(account.substatus()).isEqualTo(Account.Substatus.FRAUD_IDENTIFIED)
         assertThat(account.verificationAddress())
             .isEqualTo(
                 Account.VerificationAddress.builder()
@@ -102,6 +106,8 @@ internal class AccountTest {
                 )
                 .addAuthRuleToken("string")
                 .cardholderCurrency("USD")
+                .comment("comment")
+                .substatus(Account.Substatus.FRAUD_IDENTIFIED)
                 .verificationAddress(
                     Account.VerificationAddress.builder()
                         .address1("124 Old Forest Way")
