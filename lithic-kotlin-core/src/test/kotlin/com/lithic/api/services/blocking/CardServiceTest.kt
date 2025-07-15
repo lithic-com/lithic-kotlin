@@ -48,7 +48,9 @@ internal class CardServiceTest {
                     .pin("pin")
                     .productId("1")
                     .replacementAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .replacementComment("replacement_comment")
                     .replacementFor("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .replacementSubstatus(CardCreateParams.ReplacementSubstatus.LOST)
                     .shippingAddress(
                         ShippingAddress.builder()
                             .address1("5 Broad Street")
@@ -101,13 +103,16 @@ internal class CardServiceTest {
             cardService.update(
                 CardUpdateParams.builder()
                     .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .comment("comment")
                     .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .memo("Updated Name")
+                    .networkProgramToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .pin("pin")
                     .pinStatus(CardUpdateParams.PinStatus.OK)
                     .spendLimit(100L)
                     .spendLimitDuration(SpendLimitDuration.FOREVER)
                     .state(CardUpdateParams.State.OPEN)
+                    .substatus(CardUpdateParams.Substatus.LOST)
                     .build()
             )
 

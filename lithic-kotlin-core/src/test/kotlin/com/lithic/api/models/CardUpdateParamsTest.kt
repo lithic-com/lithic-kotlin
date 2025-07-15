@@ -11,13 +11,16 @@ internal class CardUpdateParamsTest {
     fun create() {
         CardUpdateParams.builder()
             .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .comment("comment")
             .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .memo("Updated Name")
+            .networkProgramToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
             .pin("pin")
             .pinStatus(CardUpdateParams.PinStatus.OK)
             .spendLimit(100L)
             .spendLimitDuration(SpendLimitDuration.FOREVER)
             .state(CardUpdateParams.State.OPEN)
+            .substatus(CardUpdateParams.Substatus.LOST)
             .build()
     }
 
@@ -36,24 +39,30 @@ internal class CardUpdateParamsTest {
         val params =
             CardUpdateParams.builder()
                 .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .comment("comment")
                 .digitalCardArtToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .memo("Updated Name")
+                .networkProgramToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .pin("pin")
                 .pinStatus(CardUpdateParams.PinStatus.OK)
                 .spendLimit(100L)
                 .spendLimitDuration(SpendLimitDuration.FOREVER)
                 .state(CardUpdateParams.State.OPEN)
+                .substatus(CardUpdateParams.Substatus.LOST)
                 .build()
 
         val body = params._body()
 
+        assertThat(body.comment()).isEqualTo("comment")
         assertThat(body.digitalCardArtToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.memo()).isEqualTo("Updated Name")
+        assertThat(body.networkProgramToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(body.pin()).isEqualTo("pin")
         assertThat(body.pinStatus()).isEqualTo(CardUpdateParams.PinStatus.OK)
         assertThat(body.spendLimit()).isEqualTo(100L)
         assertThat(body.spendLimitDuration()).isEqualTo(SpendLimitDuration.FOREVER)
         assertThat(body.state()).isEqualTo(CardUpdateParams.State.OPEN)
+        assertThat(body.substatus()).isEqualTo(CardUpdateParams.Substatus.LOST)
     }
 
     @Test
