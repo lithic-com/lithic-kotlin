@@ -11,10 +11,12 @@ internal class AccountUpdateParamsTest {
     fun create() {
         AccountUpdateParams.builder()
             .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .comment("comment")
             .dailySpendLimit(1000L)
             .lifetimeSpendLimit(0L)
             .monthlySpendLimit(0L)
             .state(AccountUpdateParams.State.ACTIVE)
+            .substatus(AccountUpdateParams.Substatus.FRAUD_IDENTIFIED)
             .verificationAddress(
                 AccountUpdateParams.VerificationAddress.builder()
                     .address1("address1")
@@ -45,10 +47,12 @@ internal class AccountUpdateParamsTest {
         val params =
             AccountUpdateParams.builder()
                 .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .comment("comment")
                 .dailySpendLimit(1000L)
                 .lifetimeSpendLimit(0L)
                 .monthlySpendLimit(0L)
                 .state(AccountUpdateParams.State.ACTIVE)
+                .substatus(AccountUpdateParams.Substatus.FRAUD_IDENTIFIED)
                 .verificationAddress(
                     AccountUpdateParams.VerificationAddress.builder()
                         .address1("address1")
@@ -63,10 +67,12 @@ internal class AccountUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.comment()).isEqualTo("comment")
         assertThat(body.dailySpendLimit()).isEqualTo(1000L)
         assertThat(body.lifetimeSpendLimit()).isEqualTo(0L)
         assertThat(body.monthlySpendLimit()).isEqualTo(0L)
         assertThat(body.state()).isEqualTo(AccountUpdateParams.State.ACTIVE)
+        assertThat(body.substatus()).isEqualTo(AccountUpdateParams.Substatus.FRAUD_IDENTIFIED)
         assertThat(body.verificationAddress())
             .isEqualTo(
                 AccountUpdateParams.VerificationAddress.builder()

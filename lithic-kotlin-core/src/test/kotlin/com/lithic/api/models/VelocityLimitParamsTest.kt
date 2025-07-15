@@ -37,7 +37,7 @@ internal class VelocityLimitParamsTest {
                     .build()
             )
         assertThat(velocityLimitParams.period())
-            .isEqualTo(VelocityLimitParams.Period.ofTrailingWindow(10L))
+            .isEqualTo(VelocityLimitParamsPeriodWindow.ofTrailing(10L))
         assertThat(velocityLimitParams.scope()).isEqualTo(VelocityLimitParams.Scope.CARD)
         assertThat(velocityLimitParams.limitAmount()).isEqualTo(10000L)
         assertThat(velocityLimitParams.limitCount()).isEqualTo(0L)

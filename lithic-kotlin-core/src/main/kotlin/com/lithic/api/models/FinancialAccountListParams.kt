@@ -220,6 +220,8 @@ private constructor(
 
             val RESERVE = of("RESERVE")
 
+            val SECURITY = of("SECURITY")
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -228,6 +230,7 @@ private constructor(
             ISSUING,
             OPERATING,
             RESERVE,
+            SECURITY,
         }
 
         /**
@@ -243,6 +246,7 @@ private constructor(
             ISSUING,
             OPERATING,
             RESERVE,
+            SECURITY,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -259,6 +263,7 @@ private constructor(
                 ISSUING -> Value.ISSUING
                 OPERATING -> Value.OPERATING
                 RESERVE -> Value.RESERVE
+                SECURITY -> Value.SECURITY
                 else -> Value._UNKNOWN
             }
 
@@ -276,6 +281,7 @@ private constructor(
                 ISSUING -> Known.ISSUING
                 OPERATING -> Known.OPERATING
                 RESERVE -> Known.RESERVE
+                SECURITY -> Known.SECURITY
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 
