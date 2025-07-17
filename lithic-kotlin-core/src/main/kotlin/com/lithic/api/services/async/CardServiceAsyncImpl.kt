@@ -3,15 +3,15 @@
 package com.lithic.api.services.async
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.checkRequired
+import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
 import com.lithic.api.core.handlers.stringHandler
-import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
+import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
@@ -142,7 +142,8 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CardServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val aggregateBalances: AggregateBalanceServiceAsync.WithRawResponse by lazy {
             AggregateBalanceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -172,8 +173,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         override fun financialTransactions(): FinancialTransactionServiceAsync.WithRawResponse =
             financialTransactions
 
-        private val createHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val createHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun create(
             params: CardCreateParams,
@@ -189,7 +189,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -200,8 +200,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val retrieveHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: CardRetrieveParams,
@@ -219,7 +218,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -230,8 +229,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val updateHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: CardUpdateParams,
@@ -250,7 +248,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -263,7 +261,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         private val listHandler: Handler<CardListPageResponse> =
             jsonHandler<CardListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: CardListParams,
@@ -278,7 +275,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -297,7 +294,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         }
 
         private val convertPhysicalHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun convertPhysical(
             params: CardConvertPhysicalParams,
@@ -316,7 +313,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { convertPhysicalHandler.handle(it) }
                     .also {
@@ -327,7 +324,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val embedHandler: Handler<String> = stringHandler().withErrorHandler(errorHandler)
+        private val embedHandler: Handler<String> = stringHandler()
 
         override suspend fun embed(
             params: CardEmbedParams,
@@ -342,12 +339,13 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable { response.use { embedHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { embedHandler.handle(it) }
+            }
         }
 
         private val provisionHandler: Handler<CardProvisionResponse> =
             jsonHandler<CardProvisionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun provision(
             params: CardProvisionParams,
@@ -366,7 +364,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { provisionHandler.handle(it) }
                     .also {
@@ -377,8 +375,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val reissueHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val reissueHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun reissue(
             params: CardReissueParams,
@@ -397,7 +394,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { reissueHandler.handle(it) }
                     .also {
@@ -408,8 +405,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val renewHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val renewHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun renew(
             params: CardRenewParams,
@@ -428,7 +424,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { renewHandler.handle(it) }
                     .also {
@@ -440,7 +436,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         }
 
         private val retrieveSpendLimitsHandler: Handler<CardSpendLimits> =
-            jsonHandler<CardSpendLimits>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<CardSpendLimits>(clientOptions.jsonMapper)
 
         override suspend fun retrieveSpendLimits(
             params: CardRetrieveSpendLimitsParams,
@@ -458,7 +454,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveSpendLimitsHandler.handle(it) }
                     .also {
@@ -469,8 +465,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             }
         }
 
-        private val searchByPanHandler: Handler<Card> =
-            jsonHandler<Card>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val searchByPanHandler: Handler<Card> = jsonHandler<Card>(clientOptions.jsonMapper)
 
         override suspend fun searchByPan(
             params: CardSearchByPanParams,
@@ -486,7 +481,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { searchByPanHandler.handle(it) }
                     .also {
@@ -499,7 +494,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
         private val webProvisionHandler: Handler<CardWebProvisionResponse> =
             jsonHandler<CardWebProvisionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun webProvision(
             params: CardWebProvisionParams,
@@ -518,7 +512,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { webProvisionHandler.handle(it) }
                     .also {

@@ -3,13 +3,12 @@
 package com.lithic.api.services.blocking
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
+import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
-import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse
@@ -139,7 +138,8 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         TransactionService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val enhancedCommercialData: EnhancedCommercialDataService.WithRawResponse by lazy {
             EnhancedCommercialDataServiceImpl.WithRawResponseImpl(clientOptions)
@@ -162,7 +162,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         override fun events(): EventService.WithRawResponse = events
 
         private val retrieveHandler: Handler<Transaction> =
-            jsonHandler<Transaction>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Transaction>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: TransactionRetrieveParams,
@@ -180,7 +180,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -193,7 +193,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val listHandler: Handler<TransactionListPageResponse> =
             jsonHandler<TransactionListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: TransactionListParams,
@@ -208,7 +207,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -226,8 +225,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             }
         }
 
-        private val expireAuthorizationHandler: Handler<Void?> =
-            emptyHandler().withErrorHandler(errorHandler)
+        private val expireAuthorizationHandler: Handler<Void?> = emptyHandler()
 
         override fun expireAuthorization(
             params: TransactionExpireAuthorizationParams,
@@ -251,13 +249,14 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { expireAuthorizationHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { expireAuthorizationHandler.handle(it) }
+            }
         }
 
         private val simulateAuthorizationHandler:
             Handler<TransactionSimulateAuthorizationResponse> =
             jsonHandler<TransactionSimulateAuthorizationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateAuthorization(
             params: TransactionSimulateAuthorizationParams,
@@ -273,7 +272,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateAuthorizationHandler.handle(it) }
                     .also {
@@ -287,7 +286,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         private val simulateAuthorizationAdviceHandler:
             Handler<TransactionSimulateAuthorizationAdviceResponse> =
             jsonHandler<TransactionSimulateAuthorizationAdviceResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateAuthorizationAdvice(
             params: TransactionSimulateAuthorizationAdviceParams,
@@ -303,7 +301,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateAuthorizationAdviceHandler.handle(it) }
                     .also {
@@ -316,7 +314,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val simulateClearingHandler: Handler<TransactionSimulateClearingResponse> =
             jsonHandler<TransactionSimulateClearingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateClearing(
             params: TransactionSimulateClearingParams,
@@ -332,7 +329,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateClearingHandler.handle(it) }
                     .also {
@@ -346,7 +343,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         private val simulateCreditAuthorizationHandler:
             Handler<TransactionSimulateCreditAuthorizationResponse> =
             jsonHandler<TransactionSimulateCreditAuthorizationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateCreditAuthorization(
             params: TransactionSimulateCreditAuthorizationParams,
@@ -362,7 +358,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateCreditAuthorizationHandler.handle(it) }
                     .also {
@@ -375,7 +371,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val simulateReturnHandler: Handler<TransactionSimulateReturnResponse> =
             jsonHandler<TransactionSimulateReturnResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateReturn(
             params: TransactionSimulateReturnParams,
@@ -391,7 +386,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateReturnHandler.handle(it) }
                     .also {
@@ -405,7 +400,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         private val simulateReturnReversalHandler:
             Handler<TransactionSimulateReturnReversalResponse> =
             jsonHandler<TransactionSimulateReturnReversalResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateReturnReversal(
             params: TransactionSimulateReturnReversalParams,
@@ -421,7 +415,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateReturnReversalHandler.handle(it) }
                     .also {
@@ -434,7 +428,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val simulateVoidHandler: Handler<TransactionSimulateVoidResponse> =
             jsonHandler<TransactionSimulateVoidResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun simulateVoid(
             params: TransactionSimulateVoidParams,
@@ -450,7 +443,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateVoidHandler.handle(it) }
                     .also {

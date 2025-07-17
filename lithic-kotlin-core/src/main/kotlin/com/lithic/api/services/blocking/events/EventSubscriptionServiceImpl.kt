@@ -3,12 +3,11 @@
 package com.lithic.api.services.blocking.events
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.emptyHandler
+import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
-import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
 import com.lithic.api.core.http.HttpResponse
@@ -41,7 +40,8 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         EventSubscriptionService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -50,7 +50,7 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
-        private val resendHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+        private val resendHandler: Handler<Void?> = emptyHandler()
 
         override fun resend(
             params: EventEventSubscriptionResendParams,
@@ -76,7 +76,9 @@ class EventSubscriptionServiceImpl internal constructor(private val clientOption
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable { response.use { resendHandler.handle(it) } }
+            return errorHandler.handle(response).parseable {
+                response.use { resendHandler.handle(it) }
+            }
         }
     }
 }

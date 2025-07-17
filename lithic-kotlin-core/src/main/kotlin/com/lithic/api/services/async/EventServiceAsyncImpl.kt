@@ -3,14 +3,14 @@
 package com.lithic.api.services.async
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.checkRequired
+import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
-import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
+import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.parseable
@@ -76,7 +76,8 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         EventServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val subscriptions: SubscriptionServiceAsync.WithRawResponse by lazy {
             SubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -98,8 +99,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
         override fun eventSubscriptions(): EventSubscriptionServiceAsync.WithRawResponse =
             eventSubscriptions
 
-        private val retrieveHandler: Handler<Event> =
-            jsonHandler<Event>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val retrieveHandler: Handler<Event> = jsonHandler<Event>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: EventRetrieveParams,
@@ -117,7 +117,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -130,7 +130,6 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val listHandler: Handler<EventListPageResponse> =
             jsonHandler<EventListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: EventListParams,
@@ -145,7 +144,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -165,7 +164,6 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val listAttemptsHandler: Handler<EventListAttemptsPageResponse> =
             jsonHandler<EventListAttemptsPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun listAttempts(
             params: EventListAttemptsParams,
@@ -183,7 +181,7 @@ class EventServiceAsyncImpl internal constructor(private val clientOptions: Clie
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listAttemptsHandler.handle(it) }
                     .also {
