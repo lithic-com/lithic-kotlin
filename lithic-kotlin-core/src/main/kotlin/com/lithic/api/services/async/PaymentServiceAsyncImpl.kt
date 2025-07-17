@@ -3,14 +3,14 @@
 package com.lithic.api.services.async
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.JsonValue
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.checkRequired
+import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
-import com.lithic.api.core.handlers.withErrorHandler
 import com.lithic.api.core.http.HttpMethod
 import com.lithic.api.core.http.HttpRequest
+import com.lithic.api.core.http.HttpResponse
 import com.lithic.api.core.http.HttpResponse.Handler
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
@@ -105,7 +105,8 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PaymentServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
@@ -116,7 +117,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val createHandler: Handler<PaymentCreateResponse> =
             jsonHandler<PaymentCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun create(
             params: PaymentCreateParams,
@@ -132,7 +132,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -144,7 +144,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<Payment> =
-            jsonHandler<Payment>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Payment>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: PaymentRetrieveParams,
@@ -162,7 +162,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -175,7 +175,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<PaymentListPageResponse> =
             jsonHandler<PaymentListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun list(
             params: PaymentListParams,
@@ -190,7 +189,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -210,7 +209,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val retryHandler: Handler<PaymentRetryResponse> =
             jsonHandler<PaymentRetryResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun retry(
             params: PaymentRetryParams,
@@ -229,7 +227,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retryHandler.handle(it) }
                     .also {
@@ -242,7 +240,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val simulateActionHandler: Handler<PaymentSimulateActionResponse> =
             jsonHandler<PaymentSimulateActionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun simulateAction(
             params: PaymentSimulateActionParams,
@@ -261,7 +258,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateActionHandler.handle(it) }
                     .also {
@@ -274,7 +271,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val simulateReceiptHandler: Handler<PaymentSimulateReceiptResponse> =
             jsonHandler<PaymentSimulateReceiptResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun simulateReceipt(
             params: PaymentSimulateReceiptParams,
@@ -290,7 +286,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateReceiptHandler.handle(it) }
                     .also {
@@ -303,7 +299,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val simulateReleaseHandler: Handler<PaymentSimulateReleaseResponse> =
             jsonHandler<PaymentSimulateReleaseResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun simulateRelease(
             params: PaymentSimulateReleaseParams,
@@ -319,7 +314,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateReleaseHandler.handle(it) }
                     .also {
@@ -332,7 +327,6 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val simulateReturnHandler: Handler<PaymentSimulateReturnResponse> =
             jsonHandler<PaymentSimulateReturnResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override suspend fun simulateReturn(
             params: PaymentSimulateReturnParams,
@@ -348,7 +342,7 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { simulateReturnHandler.handle(it) }
                     .also {
