@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.94.1 (2025-07-18)
+
+Full Changelog: [v0.94.0...v0.94.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.0...v0.94.1)
+
+### Bug Fixes
+
+* **client:** ensure error handling always occurs ([6c81bce](https://github.com/lithic-com/lithic-kotlin/commit/6c81bcedee15331c071b14ab611cf6bfa802513e))
+* Remove extra blank lines in import statements ([b46ae58](https://github.com/lithic-com/lithic-kotlin/commit/b46ae58ebd91090077a2fb52ad029bdcca7bc9d7))
+
+
+### Chores
+
+* fix conflict ([8b7c10d](https://github.com/lithic-com/lithic-kotlin/commit/8b7c10d4cf0ea1277d8d716954950e8bd85e42c6))
+* **internal:** allow running specific example from cli ([f8f878f](https://github.com/lithic-com/lithic-kotlin/commit/f8f878fb212fea5586117f43244b29377238f539))
+
 ## 0.94.0 (2025-07-15)
 
 Full Changelog: [v0.93.1...v0.94.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.93.1...v0.94.0)
