@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.95.0 (2025-07-18)
+
+Full Changelog: [v0.94.1...v0.95.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.1...v0.95.0)
+
+### Features
+
+* **client:** add https config options ([bc31221](https://github.com/lithic-com/lithic-kotlin/commit/bc3122191b4680d164579c4dc75619c7ca06813e))
+
+
+### Chores
+
+* **internal:** refactor delegating from client to options ([4442607](https://github.com/lithic-com/lithic-kotlin/commit/4442607efa9ee84e4fb73ecc98efbebc7adf2911))
+
 ## 0.94.1 (2025-07-18)
 
 Full Changelog: [v0.94.0...v0.94.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.0...v0.94.1)
