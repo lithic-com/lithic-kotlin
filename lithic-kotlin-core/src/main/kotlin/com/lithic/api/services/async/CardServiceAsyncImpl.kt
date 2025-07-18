@@ -531,8 +531,9 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         }
     }
 
-    private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
-    private val embedHandler: Handler<String> = stringHandler().withErrorHandler(errorHandler)
+    private val errorHandler: Handler<HttpResponse> =
+        errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+    private val embedHandler: Handler<String> = stringHandler()
 
     override suspend fun getEmbedHtml(
         params: CardGetEmbedHtmlParams,
@@ -559,7 +560,7 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                 .putHeader("Accept", "text/html")
                 .build()
         return clientOptions.httpClient.executeAsync(request).let { response ->
-            response.let { embedHandler.handle(it) }
+            errorHandler.handle(response).let { embedHandler.handle(it) }
         }
     }
 
