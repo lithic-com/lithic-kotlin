@@ -206,9 +206,8 @@ private constructor(
         controlPerson.getNullable("control_person")
 
     /**
-     * < Deprecated. Use control_person.email when user_type == "BUSINESS". Use
-     * individual.phone_number when user_type == "INDIVIDUAL".
-     * > Primary email of Account Holder.
+     * (Deprecated. Use control_person.email when user_type == "BUSINESS". Use
+     * individual.phone_number when user_type == "INDIVIDUAL".) Primary email of Account Holder.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -250,9 +249,9 @@ private constructor(
     fun natureOfBusiness(): String? = natureOfBusiness.getNullable("nature_of_business")
 
     /**
-     * < Deprecated. Use control_person.phone_number when user_type == "BUSINESS". Use
-     * individual.phone_number when user_type == "INDIVIDUAL".
-     * > Primary phone of Account Holder, entered in E.164 format.
+     * (Deprecated. Use control_person.phone_number when user_type == "BUSINESS". Use
+     * individual.phone_number when user_type == "INDIVIDUAL".) Primary phone of Account Holder,
+     * entered in E.164 format.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -270,7 +269,7 @@ private constructor(
         requiredDocuments.getNullable("required_documents")
 
     /**
-     * <Deprecated. Use verification_application.status instead>
+     * (Deprecated. Use verification_application.status instead)
      *
      * KYC and KYB evaluation states.
      *
@@ -283,7 +282,9 @@ private constructor(
     fun status(): Status? = status.getNullable("status")
 
     /**
-     * <Deprecated. Use verification_application.status_reasons> Reason for the evaluation status.
+     * (Deprecated. Use verification_application.status_reasons)
+     *
+     * Reason for the evaluation status.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -744,9 +745,8 @@ private constructor(
         }
 
         /**
-         * < Deprecated. Use control_person.email when user_type == "BUSINESS". Use
-         * individual.phone_number when user_type == "INDIVIDUAL".
-         * > Primary email of Account Holder.
+         * (Deprecated. Use control_person.email when user_type == "BUSINESS". Use
+         * individual.phone_number when user_type == "INDIVIDUAL".) Primary email of Account Holder.
          */
         fun email(email: String) = email(JsonField.of(email))
 
@@ -823,9 +823,9 @@ private constructor(
         }
 
         /**
-         * < Deprecated. Use control_person.phone_number when user_type == "BUSINESS". Use
-         * individual.phone_number when user_type == "INDIVIDUAL".
-         * > Primary phone of Account Holder, entered in E.164 format.
+         * (Deprecated. Use control_person.phone_number when user_type == "BUSINESS". Use
+         * individual.phone_number when user_type == "INDIVIDUAL".) Primary phone of Account Holder,
+         * entered in E.164 format.
          */
         fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
 
@@ -869,7 +869,7 @@ private constructor(
         }
 
         /**
-         * <Deprecated. Use verification_application.status instead>
+         * (Deprecated. Use verification_application.status instead)
          *
          * KYC and KYB evaluation states.
          *
@@ -887,8 +887,9 @@ private constructor(
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
-         * <Deprecated. Use verification_application.status_reasons> Reason for the evaluation
-         * status.
+         * (Deprecated. Use verification_application.status_reasons)
+         *
+         * Reason for the evaluation status.
          */
         fun statusReasons(statusReasons: List<StatusReason>) =
             statusReasons(JsonField.of(statusReasons))
@@ -2063,7 +2064,7 @@ private constructor(
     }
 
     /**
-     * <Deprecated. Use verification_application.status instead>
+     * (Deprecated. Use verification_application.status instead)
      *
      * KYC and KYB evaluation states.
      *
