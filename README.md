@@ -51,7 +51,8 @@ import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
 
-// Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
+// Configures using the `lithic.apiKey`, `lithic.webhookSecret` and `lithic.baseUrl` system properties
+// Or configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
 
 val params: CardCreateParams = CardCreateParams.builder()
@@ -62,13 +63,14 @@ val card: Card = client.cards().create(params)
 
 ## Client configuration
 
-Configure the client using environment variables:
+Configure the client using system properties or environment variables:
 
 ```kotlin
 import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
-// Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
+// Configures using the `lithic.apiKey`, `lithic.webhookSecret` and `lithic.baseUrl` system properties
+// Or configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
 ```
 
@@ -90,7 +92,8 @@ import com.lithic.api.client.LithicClient
 import com.lithic.api.client.okhttp.LithicOkHttpClient
 
 val client: LithicClient = LithicOkHttpClient.builder()
-    // Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
+    // Configures using the `lithic.apiKey`, `lithic.webhookSecret` and `lithic.baseUrl` system properties
+    Or configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My Lithic API Key")
     .build()
@@ -98,11 +101,13 @@ val client: LithicClient = LithicOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter          | Environment variable    | Required | Default value              |
-| --------------- | ----------------------- | -------- | -------------------------- |
-| `apiKey`        | `LITHIC_API_KEY`        | true     | -                          |
-| `webhookSecret` | `LITHIC_WEBHOOK_SECRET` | false    | -                          |
-| `baseUrl`       | `LITHIC_BASE_URL`       | true     | `"https://api.lithic.com"` |
+| Setter          | System property        | Environment variable    | Required | Default value              |
+| --------------- | ---------------------- | ----------------------- | -------- | -------------------------- |
+| `apiKey`        | `lithic.apiKey`        | `LITHIC_API_KEY`        | true     | -                          |
+| `webhookSecret` | `lithic.webhookSecret` | `LITHIC_WEBHOOK_SECRET` | false    | -                          |
+| `baseUrl`       | `lithic.baseUrl`       | `LITHIC_BASE_URL`       | true     | `"https://api.lithic.com"` |
+
+System properties take precedence over environment variables.
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
@@ -147,7 +152,8 @@ import com.lithic.api.client.okhttp.LithicOkHttpClient
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
 
-// Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
+// Configures using the `lithic.apiKey`, `lithic.webhookSecret` and `lithic.baseUrl` system properties
+// Or configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClient = LithicOkHttpClient.fromEnv()
 
 val params: CardCreateParams = CardCreateParams.builder()
@@ -164,7 +170,8 @@ import com.lithic.api.client.okhttp.LithicOkHttpClientAsync
 import com.lithic.api.models.Card
 import com.lithic.api.models.CardCreateParams
 
-// Configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
+// Configures using the `lithic.apiKey`, `lithic.webhookSecret` and `lithic.baseUrl` system properties
+// Or configures using the `LITHIC_API_KEY`, `LITHIC_WEBHOOK_SECRET` and `LITHIC_BASE_URL` environment variables
 val client: LithicClientAsync = LithicOkHttpClientAsync.fromEnv()
 
 val params: CardCreateParams = CardCreateParams.builder()
