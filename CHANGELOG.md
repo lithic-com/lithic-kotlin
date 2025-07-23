@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.95.0 (2025-07-23)
+
+Full Changelog: [v0.94.1...v0.95.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.1...v0.95.0)
+
+### Features
+
+* **api:** adds new Auth Rules Scope and Settlement Details type ([014bf95](https://github.com/lithic-com/lithic-kotlin/commit/014bf955f04981deb015e5b63a82aeb7e2e5f964))
+* **client:** add `{QueryParams,Headers}#put(String, JsonValue)` methods ([1141a37](https://github.com/lithic-com/lithic-kotlin/commit/1141a375b12a5912c3cb4a996f8e66be5227b029))
+* **client:** add https config options ([bc31221](https://github.com/lithic-com/lithic-kotlin/commit/bc3122191b4680d164579c4dc75619c7ca06813e))
+* **client:** allow configuring env via system properties ([bcb3642](https://github.com/lithic-com/lithic-kotlin/commit/bcb36423c995db1c8dbf6f0a9104da691f66ad9c))
+
+
+### Chores
+
+* **docs:** update Account Holder deprecation formatting ([5e8f806](https://github.com/lithic-com/lithic-kotlin/commit/5e8f8069be7645d3225e3bb01085de2db4dc7938))
+* **internal:** refactor delegating from client to options ([4442607](https://github.com/lithic-com/lithic-kotlin/commit/4442607efa9ee84e4fb73ecc98efbebc7adf2911))
+
+
+### Documentation
+
+* fix missing readme comment ([2a57f11](https://github.com/lithic-com/lithic-kotlin/commit/2a57f112e0af92cbad2b186beffa6d19c394074e))
+
 ## 0.94.1 (2025-07-18)
 
 Full Changelog: [v0.94.0...v0.94.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.0...v0.94.1)
