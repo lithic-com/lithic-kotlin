@@ -1332,6 +1332,8 @@ private constructor(
 
             val CLEARING = of("CLEARING")
 
+            val COLLABORATION = of("COLLABORATION")
+
             val FEE = of("FEE")
 
             val FINANCIAL = of("FINANCIAL")
@@ -1351,6 +1353,7 @@ private constructor(
             ARBITRATION,
             CHARGEBACK,
             CLEARING,
+            COLLABORATION,
             FEE,
             FINANCIAL,
             NON_FINANCIAL,
@@ -1372,6 +1375,7 @@ private constructor(
             ARBITRATION,
             CHARGEBACK,
             CLEARING,
+            COLLABORATION,
             FEE,
             FINANCIAL,
             NON_FINANCIAL,
@@ -1394,6 +1398,7 @@ private constructor(
                 ARBITRATION -> Value.ARBITRATION
                 CHARGEBACK -> Value.CHARGEBACK
                 CLEARING -> Value.CLEARING
+                COLLABORATION -> Value.COLLABORATION
                 FEE -> Value.FEE
                 FINANCIAL -> Value.FINANCIAL
                 NON_FINANCIAL -> Value.NON_FINANCIAL
@@ -1417,6 +1422,7 @@ private constructor(
                 ARBITRATION -> Known.ARBITRATION
                 CHARGEBACK -> Known.CHARGEBACK
                 CLEARING -> Known.CLEARING
+                COLLABORATION -> Known.COLLABORATION
                 FEE -> Known.FEE
                 FINANCIAL -> Known.FINANCIAL
                 NON_FINANCIAL -> Known.NON_FINANCIAL
