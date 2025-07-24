@@ -33,7 +33,7 @@ interface ResponderEndpointServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResponderEndpointCreateResponse
 
-    /** @see [create] */
+    /** @see create */
     suspend fun create(requestOptions: RequestOptions): ResponderEndpointCreateResponse =
         create(ResponderEndpointCreateParams.none(), requestOptions)
 
@@ -74,7 +74,7 @@ interface ResponderEndpointServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ResponderEndpointCreateResponse>
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         suspend fun create(
             requestOptions: RequestOptions

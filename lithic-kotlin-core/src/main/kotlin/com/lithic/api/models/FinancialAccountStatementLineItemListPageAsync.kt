@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.financialAccounts.statements.LineItemServiceAsync
 import java.util.Objects
 
-/** @see [LineItemServiceAsync.list] */
+/** @see LineItemServiceAsync.list */
 class FinancialAccountStatementLineItemListPageAsync
 private constructor(
     private val service: LineItemServiceAsync,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [StatementLineItems], but gracefully handles missing data.
      *
-     * @see [StatementLineItems.data]
+     * @see StatementLineItems.data
      */
     fun data(): List<StatementLineItems.StatementLineItemResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [StatementLineItems], but gracefully handles missing data.
      *
-     * @see [StatementLineItems.hasMore]
+     * @see StatementLineItems.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

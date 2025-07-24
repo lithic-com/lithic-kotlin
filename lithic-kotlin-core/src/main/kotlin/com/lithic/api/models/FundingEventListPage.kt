@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.FundingEventService
 import java.util.Objects
 
-/** @see [FundingEventService.list] */
+/** @see FundingEventService.list */
 class FundingEventListPage
 private constructor(
     private val service: FundingEventService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [FundingEventListPageResponse], but gracefully handles missing data.
      *
-     * @see [FundingEventListPageResponse.data]
+     * @see FundingEventListPageResponse.data
      */
     fun data(): List<FundingEventListResponse> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [FundingEventListPageResponse], but gracefully handles missing data.
      *
-     * @see [FundingEventListPageResponse.hasMore]
+     * @see FundingEventListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

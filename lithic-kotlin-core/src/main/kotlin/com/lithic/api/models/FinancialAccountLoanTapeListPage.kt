@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
 import java.util.Objects
 
-/** @see [LoanTapeService.list] */
+/** @see LoanTapeService.list */
 class FinancialAccountLoanTapeListPage
 private constructor(
     private val service: LoanTapeService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [FinancialAccountLoanTapeListPageResponse], but gracefully handles missing data.
      *
-     * @see [FinancialAccountLoanTapeListPageResponse.data]
+     * @see FinancialAccountLoanTapeListPageResponse.data
      */
     fun data(): List<LoanTape> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [FinancialAccountLoanTapeListPageResponse], but gracefully handles missing data.
      *
-     * @see [FinancialAccountLoanTapeListPageResponse.hasMore]
+     * @see FinancialAccountLoanTapeListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

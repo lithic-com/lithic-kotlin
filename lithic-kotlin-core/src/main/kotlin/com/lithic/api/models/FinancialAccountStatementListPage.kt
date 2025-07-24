@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.financialAccounts.StatementService
 import java.util.Objects
 
-/** @see [StatementService.list] */
+/** @see StatementService.list */
 class FinancialAccountStatementListPage
 private constructor(
     private val service: StatementService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [Statements], but gracefully handles missing data.
      *
-     * @see [Statements.data]
+     * @see Statements.data
      */
     fun data(): List<Statement> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [Statements], but gracefully handles missing data.
      *
-     * @see [Statements.hasMore]
+     * @see Statements.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

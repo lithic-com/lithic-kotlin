@@ -135,7 +135,7 @@ interface LithicClient {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ApiStatus
 
-    /** @see [apiStatus] */
+    /** @see apiStatus */
     fun apiStatus(requestOptions: RequestOptions): ApiStatus =
         apiStatus(ClientApiStatusParams.none(), requestOptions)
 
@@ -228,7 +228,7 @@ interface LithicClient {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ApiStatus>
 
-        /** @see [apiStatus] */
+        /** @see apiStatus */
         @MustBeClosed
         fun apiStatus(requestOptions: RequestOptions): HttpResponseFor<ApiStatus> =
             apiStatus(ClientApiStatusParams.none(), requestOptions)

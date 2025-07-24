@@ -36,7 +36,7 @@ interface FinancialTransactionServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: FinancialTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,13 +53,13 @@ interface FinancialTransactionServiceAsync {
             requestOptions,
         )
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: FinancialTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialTransactionListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -97,7 +97,7 @@ interface FinancialTransactionServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: FinancialTransactionRetrieveParams,
@@ -120,14 +120,14 @@ interface FinancialTransactionServiceAsync {
                 requestOptions,
             )
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: FinancialTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialTransactionListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             financialAccountToken: String,

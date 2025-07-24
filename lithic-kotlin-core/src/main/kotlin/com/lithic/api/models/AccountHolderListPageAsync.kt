@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.AccountHolderServiceAsync
 import java.util.Objects
 
-/** @see [AccountHolderServiceAsync.list] */
+/** @see AccountHolderServiceAsync.list */
 class AccountHolderListPageAsync
 private constructor(
     private val service: AccountHolderServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [AccountHolderListPageResponse], but gracefully handles missing data.
      *
-     * @see [AccountHolderListPageResponse.data]
+     * @see AccountHolderListPageResponse.data
      */
     fun data(): List<AccountHolder> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [AccountHolderListPageResponse], but gracefully handles missing data.
      *
-     * @see [AccountHolderListPageResponse.hasMore]
+     * @see AccountHolderListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

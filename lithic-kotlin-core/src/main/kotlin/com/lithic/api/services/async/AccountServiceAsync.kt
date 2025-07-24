@@ -35,13 +35,13 @@ interface AccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account = retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(accountToken: String, requestOptions: RequestOptions): Account =
         retrieve(accountToken, AccountRetrieveParams.none(), requestOptions)
 
@@ -56,13 +56,13 @@ interface AccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account = update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Account
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(accountToken: String, requestOptions: RequestOptions): Account =
         update(accountToken, AccountUpdateParams.none(), requestOptions)
 
@@ -72,7 +72,7 @@ interface AccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): AccountListPageAsync =
         list(AccountListParams.none(), requestOptions)
 
@@ -89,13 +89,13 @@ interface AccountServiceAsync {
     ): AccountSpendLimits =
         retrieveSpendLimits(params.toBuilder().accountToken(accountToken).build(), requestOptions)
 
-    /** @see [retrieveSpendLimits] */
+    /** @see retrieveSpendLimits */
     suspend fun retrieveSpendLimits(
         params: AccountRetrieveSpendLimitsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSpendLimits
 
-    /** @see [retrieveSpendLimits] */
+    /** @see retrieveSpendLimits */
     suspend fun retrieveSpendLimits(
         accountToken: String,
         requestOptions: RequestOptions,
@@ -128,14 +128,14 @@ interface AccountServiceAsync {
         ): HttpResponseFor<Account> =
             retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             accountToken: String,
@@ -155,14 +155,14 @@ interface AccountServiceAsync {
         ): HttpResponseFor<Account> =
             update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: AccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             accountToken: String,
@@ -180,7 +180,7 @@ interface AccountServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPageAsync> =
             list(AccountListParams.none(), requestOptions)
@@ -200,14 +200,14 @@ interface AccountServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieveSpendLimits] */
+        /** @see retrieveSpendLimits */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
             params: AccountRetrieveSpendLimitsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountSpendLimits>
 
-        /** @see [retrieveSpendLimits] */
+        /** @see retrieveSpendLimits */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
             accountToken: String,

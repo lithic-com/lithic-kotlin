@@ -56,13 +56,13 @@ interface BacktestServiceAsync {
     ): BacktestCreateResponse =
         create(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     suspend fun create(
         params: AuthRuleV2BacktestCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BacktestCreateResponse
 
-    /** @see [create] */
+    /** @see create */
     suspend fun create(
         authRuleToken: String,
         requestOptions: RequestOptions,
@@ -97,7 +97,7 @@ interface BacktestServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: AuthRuleV2BacktestRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -129,14 +129,14 @@ interface BacktestServiceAsync {
         ): HttpResponseFor<BacktestCreateResponse> =
             create(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         suspend fun create(
             params: AuthRuleV2BacktestCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BacktestCreateResponse>
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         suspend fun create(
             authRuleToken: String,
@@ -160,7 +160,7 @@ interface BacktestServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: AuthRuleV2BacktestRetrieveParams,
