@@ -36,13 +36,13 @@ interface CreditConfigurationServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -65,13 +65,13 @@ interface CreditConfigurationServiceAsync {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: FinancialAccountCreditConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -114,14 +114,14 @@ interface CreditConfigurationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: FinancialAccountCreditConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             financialAccountToken: String,
@@ -150,14 +150,14 @@ interface CreditConfigurationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: FinancialAccountCreditConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             financialAccountToken: String,

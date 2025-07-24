@@ -65,13 +65,13 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card = retrieve(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: CardRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(cardToken: String, requestOptions: RequestOptions): Card =
         retrieve(cardToken, CardRetrieveParams.none(), requestOptions)
 
@@ -86,13 +86,13 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card = update(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: CardUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(cardToken: String, requestOptions: RequestOptions): Card =
         update(cardToken, CardUpdateParams.none(), requestOptions)
 
@@ -102,7 +102,7 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): CardListPageAsync =
         list(CardListParams.none(), requestOptions)
 
@@ -122,7 +122,7 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card = convertPhysical(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [convertPhysical] */
+    /** @see convertPhysical */
     suspend fun convertPhysical(
         params: CardConvertPhysicalParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -174,13 +174,13 @@ interface CardServiceAsync {
     ): CardProvisionResponse =
         provision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [provision] */
+    /** @see provision */
     suspend fun provision(
         params: CardProvisionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProvisionResponse
 
-    /** @see [provision] */
+    /** @see provision */
     suspend fun provision(
         cardToken: String,
         requestOptions: RequestOptions,
@@ -198,13 +198,13 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card = reissue(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [reissue] */
+    /** @see reissue */
     suspend fun reissue(
         params: CardReissueParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
 
-    /** @see [reissue] */
+    /** @see reissue */
     suspend fun reissue(cardToken: String, requestOptions: RequestOptions): Card =
         reissue(cardToken, CardReissueParams.none(), requestOptions)
 
@@ -224,7 +224,7 @@ interface CardServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card = renew(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [renew] */
+    /** @see renew */
     suspend fun renew(
         params: CardRenewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -243,13 +243,13 @@ interface CardServiceAsync {
     ): CardSpendLimits =
         retrieveSpendLimits(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [retrieveSpendLimits] */
+    /** @see retrieveSpendLimits */
     suspend fun retrieveSpendLimits(
         params: CardRetrieveSpendLimitsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardSpendLimits
 
-    /** @see [retrieveSpendLimits] */
+    /** @see retrieveSpendLimits */
     suspend fun retrieveSpendLimits(
         cardToken: String,
         requestOptions: RequestOptions,
@@ -282,13 +282,13 @@ interface CardServiceAsync {
     ): CardWebProvisionResponse =
         webProvision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [webProvision] */
+    /** @see webProvision */
     suspend fun webProvision(
         params: CardWebProvisionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardWebProvisionResponse
 
-    /** @see [webProvision] */
+    /** @see webProvision */
     suspend fun webProvision(
         cardToken: String,
         requestOptions: RequestOptions,
@@ -343,14 +343,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<Card> =
             retrieve(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: CardRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             cardToken: String,
@@ -369,14 +369,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<Card> =
             update(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: CardUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             cardToken: String,
@@ -393,7 +393,7 @@ interface CardServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CardListPageAsync> =
             list(CardListParams.none(), requestOptions)
@@ -410,7 +410,7 @@ interface CardServiceAsync {
         ): HttpResponseFor<Card> =
             convertPhysical(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [convertPhysical] */
+        /** @see convertPhysical */
         @MustBeClosed
         suspend fun convertPhysical(
             params: CardConvertPhysicalParams,
@@ -439,14 +439,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<CardProvisionResponse> =
             provision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [provision] */
+        /** @see provision */
         @MustBeClosed
         suspend fun provision(
             params: CardProvisionParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProvisionResponse>
 
-        /** @see [provision] */
+        /** @see provision */
         @MustBeClosed
         suspend fun provision(
             cardToken: String,
@@ -466,14 +466,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<Card> =
             reissue(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [reissue] */
+        /** @see reissue */
         @MustBeClosed
         suspend fun reissue(
             params: CardReissueParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
 
-        /** @see [reissue] */
+        /** @see reissue */
         @MustBeClosed
         suspend fun reissue(
             cardToken: String,
@@ -492,7 +492,7 @@ interface CardServiceAsync {
         ): HttpResponseFor<Card> =
             renew(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [renew] */
+        /** @see renew */
         @MustBeClosed
         suspend fun renew(
             params: CardRenewParams,
@@ -511,14 +511,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<CardSpendLimits> =
             retrieveSpendLimits(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [retrieveSpendLimits] */
+        /** @see retrieveSpendLimits */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
             params: CardRetrieveSpendLimitsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardSpendLimits>
 
-        /** @see [retrieveSpendLimits] */
+        /** @see retrieveSpendLimits */
         @MustBeClosed
         suspend fun retrieveSpendLimits(
             cardToken: String,
@@ -548,14 +548,14 @@ interface CardServiceAsync {
         ): HttpResponseFor<CardWebProvisionResponse> =
             webProvision(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [webProvision] */
+        /** @see webProvision */
         @MustBeClosed
         suspend fun webProvision(
             params: CardWebProvisionParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardWebProvisionResponse>
 
-        /** @see [webProvision] */
+        /** @see webProvision */
         @MustBeClosed
         suspend fun webProvision(
             cardToken: String,

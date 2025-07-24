@@ -59,13 +59,13 @@ interface AccountHolderService {
     ): AccountHolder =
         retrieve(params.toBuilder().accountHolderToken(accountHolderToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountHolderRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolder
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(accountHolderToken: String, requestOptions: RequestOptions): AccountHolder =
         retrieve(accountHolderToken, AccountHolderRetrieveParams.none(), requestOptions)
 
@@ -87,7 +87,7 @@ interface AccountHolderService {
     ): AccountHolderUpdateResponse =
         update(params.toBuilder().accountHolderToken(accountHolderToken).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: AccountHolderUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,7 +101,7 @@ interface AccountHolderService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): AccountHolderListPage =
         list(AccountHolderListParams.none(), requestOptions)
 
@@ -130,13 +130,13 @@ interface AccountHolderService {
             requestOptions,
         )
 
-    /** @see [listDocuments] */
+    /** @see listDocuments */
     fun listDocuments(
         params: AccountHolderListDocumentsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderListDocumentsResponse
 
-    /** @see [listDocuments] */
+    /** @see listDocuments */
     fun listDocuments(
         accountHolderToken: String,
         requestOptions: RequestOptions,
@@ -165,7 +165,7 @@ interface AccountHolderService {
     ): Document =
         retrieveDocument(params.toBuilder().documentToken(documentToken).build(), requestOptions)
 
-    /** @see [retrieveDocument] */
+    /** @see retrieveDocument */
     fun retrieveDocument(
         params: AccountHolderRetrieveDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -187,7 +187,7 @@ interface AccountHolderService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderSimulateEnrollmentReviewResponse
 
-    /** @see [simulateEnrollmentReview] */
+    /** @see simulateEnrollmentReview */
     fun simulateEnrollmentReview(
         requestOptions: RequestOptions
     ): AccountHolderSimulateEnrollmentReviewResponse =
@@ -221,7 +221,7 @@ interface AccountHolderService {
             requestOptions,
         )
 
-    /** @see [uploadDocument] */
+    /** @see uploadDocument */
     fun uploadDocument(
         params: AccountHolderUploadDocumentParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -266,14 +266,14 @@ interface AccountHolderService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: AccountHolderRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolder>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             accountHolderToken: String,
@@ -296,7 +296,7 @@ interface AccountHolderService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: AccountHolderUpdateParams,
@@ -313,7 +313,7 @@ interface AccountHolderService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountHolderListPage> =
             list(AccountHolderListParams.none(), requestOptions)
@@ -334,14 +334,14 @@ interface AccountHolderService {
                 requestOptions,
             )
 
-        /** @see [listDocuments] */
+        /** @see listDocuments */
         @MustBeClosed
         fun listDocuments(
             params: AccountHolderListDocumentsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderListDocumentsResponse>
 
-        /** @see [listDocuments] */
+        /** @see listDocuments */
         @MustBeClosed
         fun listDocuments(
             accountHolderToken: String,
@@ -369,7 +369,7 @@ interface AccountHolderService {
                 requestOptions,
             )
 
-        /** @see [retrieveDocument] */
+        /** @see retrieveDocument */
         @MustBeClosed
         fun retrieveDocument(
             params: AccountHolderRetrieveDocumentParams,
@@ -398,7 +398,7 @@ interface AccountHolderService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderSimulateEnrollmentReviewResponse>
 
-        /** @see [simulateEnrollmentReview] */
+        /** @see simulateEnrollmentReview */
         @MustBeClosed
         fun simulateEnrollmentReview(
             requestOptions: RequestOptions
@@ -424,7 +424,7 @@ interface AccountHolderService {
                 requestOptions,
             )
 
-        /** @see [uploadDocument] */
+        /** @see uploadDocument */
         @MustBeClosed
         fun uploadDocument(
             params: AccountHolderUploadDocumentParams,

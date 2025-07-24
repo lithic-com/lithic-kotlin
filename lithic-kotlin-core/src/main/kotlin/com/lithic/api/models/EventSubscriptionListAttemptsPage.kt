@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.events.SubscriptionService
 import java.util.Objects
 
-/** @see [SubscriptionService.listAttempts] */
+/** @see SubscriptionService.listAttempts */
 class EventSubscriptionListAttemptsPage
 private constructor(
     private val service: SubscriptionService,
@@ -20,7 +20,7 @@ private constructor(
      * Delegates to [EventSubscriptionListAttemptsPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [EventSubscriptionListAttemptsPageResponse.data]
+     * @see EventSubscriptionListAttemptsPageResponse.data
      */
     fun data(): List<MessageAttempt> = response._data().getNullable("data") ?: emptyList()
 
@@ -28,7 +28,7 @@ private constructor(
      * Delegates to [EventSubscriptionListAttemptsPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [EventSubscriptionListAttemptsPageResponse.hasMore]
+     * @see EventSubscriptionListAttemptsPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

@@ -62,13 +62,13 @@ interface FinancialAccountServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: FinancialAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -86,13 +86,13 @@ interface FinancialAccountServiceAsync {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: FinancialAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -105,7 +105,7 @@ interface FinancialAccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
         list(FinancialAccountListParams.none(), requestOptions)
 
@@ -120,7 +120,7 @@ interface FinancialAccountServiceAsync {
             requestOptions,
         )
 
-    /** @see [registerAccountNumber] */
+    /** @see registerAccountNumber */
     suspend fun registerAccountNumber(
         params: FinancialAccountRegisterAccountNumberParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -137,7 +137,7 @@ interface FinancialAccountServiceAsync {
             requestOptions,
         )
 
-    /** @see [updateStatus] */
+    /** @see updateStatus */
     suspend fun updateStatus(
         params: FinancialAccountUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -193,14 +193,14 @@ interface FinancialAccountServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: FinancialAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             financialAccountToken: String,
@@ -223,14 +223,14 @@ interface FinancialAccountServiceAsync {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: FinancialAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             financialAccountToken: String,
@@ -248,7 +248,7 @@ interface FinancialAccountServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -271,7 +271,7 @@ interface FinancialAccountServiceAsync {
                 requestOptions,
             )
 
-        /** @see [registerAccountNumber] */
+        /** @see registerAccountNumber */
         @MustBeClosed
         suspend fun registerAccountNumber(
             params: FinancialAccountRegisterAccountNumberParams,
@@ -294,7 +294,7 @@ interface FinancialAccountServiceAsync {
                 requestOptions,
             )
 
-        /** @see [updateStatus] */
+        /** @see updateStatus */
         @MustBeClosed
         suspend fun updateStatus(
             params: FinancialAccountUpdateStatusParams,

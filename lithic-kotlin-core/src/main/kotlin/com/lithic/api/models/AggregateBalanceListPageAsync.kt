@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.AggregateBalanceServiceAsync
 import java.util.Objects
 
-/** @see [AggregateBalanceServiceAsync.list] */
+/** @see AggregateBalanceServiceAsync.list */
 class AggregateBalanceListPageAsync
 private constructor(
     private val service: AggregateBalanceServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [AggregateBalanceListPageResponse], but gracefully handles missing data.
      *
-     * @see [AggregateBalanceListPageResponse.data]
+     * @see AggregateBalanceListPageResponse.data
      */
     fun data(): List<AggregateBalance> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [AggregateBalanceListPageResponse], but gracefully handles missing data.
      *
-     * @see [AggregateBalanceListPageResponse.hasMore]
+     * @see AggregateBalanceListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

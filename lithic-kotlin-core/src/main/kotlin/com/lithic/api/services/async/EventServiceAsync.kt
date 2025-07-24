@@ -41,13 +41,13 @@ interface EventServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Event
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(eventToken: String, requestOptions: RequestOptions): Event =
         retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
 
@@ -57,7 +57,7 @@ interface EventServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): EventListPageAsync =
         list(EventListParams.none(), requestOptions)
 
@@ -69,13 +69,13 @@ interface EventServiceAsync {
     ): EventListAttemptsPageAsync =
         listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
-    /** @see [listAttempts] */
+    /** @see listAttempts */
     suspend fun listAttempts(
         params: EventListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync
 
-    /** @see [listAttempts] */
+    /** @see listAttempts */
     suspend fun listAttempts(
         eventToken: String,
         requestOptions: RequestOptions,
@@ -112,14 +112,14 @@ interface EventServiceAsync {
         ): HttpResponseFor<Event> =
             retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             eventToken: String,
@@ -136,7 +136,7 @@ interface EventServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPageAsync> =
             list(EventListParams.none(), requestOptions)
@@ -153,14 +153,14 @@ interface EventServiceAsync {
         ): HttpResponseFor<EventListAttemptsPageAsync> =
             listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
-        /** @see [listAttempts] */
+        /** @see listAttempts */
         @MustBeClosed
         suspend fun listAttempts(
             params: EventListAttemptsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListAttemptsPageAsync>
 
-        /** @see [listAttempts] */
+        /** @see listAttempts */
         @MustBeClosed
         suspend fun listAttempts(
             eventToken: String,

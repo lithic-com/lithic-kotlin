@@ -37,13 +37,13 @@ interface SettlementServiceAsync {
     ): ReportSettlementListDetailsPageAsync =
         listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
-    /** @see [listDetails] */
+    /** @see listDetails */
     suspend fun listDetails(
         params: ReportSettlementListDetailsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementListDetailsPageAsync
 
-    /** @see [listDetails] */
+    /** @see listDetails */
     suspend fun listDetails(
         reportDate: LocalDate,
         requestOptions: RequestOptions,
@@ -57,13 +57,13 @@ interface SettlementServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SettlementReport = summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
-    /** @see [summary] */
+    /** @see summary */
     suspend fun summary(
         params: ReportSettlementSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SettlementReport
 
-    /** @see [summary] */
+    /** @see summary */
     suspend fun summary(reportDate: LocalDate, requestOptions: RequestOptions): SettlementReport =
         summary(reportDate, ReportSettlementSummaryParams.none(), requestOptions)
 
@@ -96,14 +96,14 @@ interface SettlementServiceAsync {
         ): HttpResponseFor<ReportSettlementListDetailsPageAsync> =
             listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
-        /** @see [listDetails] */
+        /** @see listDetails */
         @MustBeClosed
         suspend fun listDetails(
             params: ReportSettlementListDetailsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementListDetailsPageAsync>
 
-        /** @see [listDetails] */
+        /** @see listDetails */
         @MustBeClosed
         suspend fun listDetails(
             reportDate: LocalDate,
@@ -123,14 +123,14 @@ interface SettlementServiceAsync {
         ): HttpResponseFor<SettlementReport> =
             summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         suspend fun summary(
             params: ReportSettlementSummaryParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SettlementReport>
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         suspend fun summary(
             reportDate: LocalDate,

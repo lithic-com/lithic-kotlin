@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.TokenizationService
 import java.util.Objects
 
-/** @see [TokenizationService.list] */
+/** @see TokenizationService.list */
 class TokenizationListPage
 private constructor(
     private val service: TokenizationService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [TokenizationListPageResponse], but gracefully handles missing data.
      *
-     * @see [TokenizationListPageResponse.data]
+     * @see TokenizationListPageResponse.data
      */
     fun data(): List<Tokenization> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [TokenizationListPageResponse], but gracefully handles missing data.
      *
-     * @see [TokenizationListPageResponse.hasMore]
+     * @see TokenizationListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

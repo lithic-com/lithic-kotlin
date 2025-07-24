@@ -36,13 +36,13 @@ interface NetworkProgramServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: NetworkProgramRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkProgram
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         networkProgramToken: String,
         requestOptions: RequestOptions,
@@ -55,7 +55,7 @@ interface NetworkProgramServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkProgramListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): NetworkProgramListPageAsync =
         list(NetworkProgramListParams.none(), requestOptions)
 
@@ -89,14 +89,14 @@ interface NetworkProgramServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: NetworkProgramRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkProgram>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             networkProgramToken: String,
@@ -114,7 +114,7 @@ interface NetworkProgramServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkProgramListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

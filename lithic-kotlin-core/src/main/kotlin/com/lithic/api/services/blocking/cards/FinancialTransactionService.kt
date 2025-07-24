@@ -36,7 +36,7 @@ interface FinancialTransactionService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CardFinancialTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,13 +50,13 @@ interface FinancialTransactionService {
     ): CardFinancialTransactionListPage =
         list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CardFinancialTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardFinancialTransactionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(cardToken: String, requestOptions: RequestOptions): CardFinancialTransactionListPage =
         list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
 
@@ -91,7 +91,7 @@ interface FinancialTransactionService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CardFinancialTransactionRetrieveParams,
@@ -110,14 +110,14 @@ interface FinancialTransactionService {
         ): HttpResponseFor<CardFinancialTransactionListPage> =
             list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CardFinancialTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardFinancialTransactionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             cardToken: String,

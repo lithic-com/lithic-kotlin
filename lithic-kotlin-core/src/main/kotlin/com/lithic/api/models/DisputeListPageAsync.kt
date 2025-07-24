@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.DisputeServiceAsync
 import java.util.Objects
 
-/** @see [DisputeServiceAsync.list] */
+/** @see DisputeServiceAsync.list */
 class DisputeListPageAsync
 private constructor(
     private val service: DisputeServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [DisputeListPageResponse], but gracefully handles missing data.
      *
-     * @see [DisputeListPageResponse.data]
+     * @see DisputeListPageResponse.data
      */
     fun data(): List<Dispute> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [DisputeListPageResponse], but gracefully handles missing data.
      *
-     * @see [DisputeListPageResponse.hasMore]
+     * @see DisputeListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

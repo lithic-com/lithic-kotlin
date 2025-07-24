@@ -50,13 +50,13 @@ interface PaymentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Payment = retrieve(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PaymentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Payment
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(paymentToken: String, requestOptions: RequestOptions): Payment =
         retrieve(paymentToken, PaymentRetrieveParams.none(), requestOptions)
 
@@ -66,7 +66,7 @@ interface PaymentService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PaymentListPage =
         list(PaymentListParams.none(), requestOptions)
 
@@ -78,13 +78,13 @@ interface PaymentService {
     ): PaymentRetryResponse =
         retry(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-    /** @see [retry] */
+    /** @see retry */
     fun retry(
         params: PaymentRetryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PaymentRetryResponse
 
-    /** @see [retry] */
+    /** @see retry */
     fun retry(paymentToken: String, requestOptions: RequestOptions): PaymentRetryResponse =
         retry(paymentToken, PaymentRetryParams.none(), requestOptions)
 
@@ -96,7 +96,7 @@ interface PaymentService {
     ): PaymentSimulateActionResponse =
         simulateAction(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-    /** @see [simulateAction] */
+    /** @see simulateAction */
     fun simulateAction(
         params: PaymentSimulateActionParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -152,14 +152,14 @@ interface PaymentService {
         ): HttpResponseFor<Payment> =
             retrieve(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PaymentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Payment>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             paymentToken: String,
@@ -177,7 +177,7 @@ interface PaymentService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentListPage> =
             list(PaymentListParams.none(), requestOptions)
@@ -194,14 +194,14 @@ interface PaymentService {
         ): HttpResponseFor<PaymentRetryResponse> =
             retry(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-        /** @see [retry] */
+        /** @see retry */
         @MustBeClosed
         fun retry(
             params: PaymentRetryParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PaymentRetryResponse>
 
-        /** @see [retry] */
+        /** @see retry */
         @MustBeClosed
         fun retry(
             paymentToken: String,
@@ -221,7 +221,7 @@ interface PaymentService {
         ): HttpResponseFor<PaymentSimulateActionResponse> =
             simulateAction(params.toBuilder().paymentToken(paymentToken).build(), requestOptions)
 
-        /** @see [simulateAction] */
+        /** @see simulateAction */
         @MustBeClosed
         fun simulateAction(
             params: PaymentSimulateActionParams,

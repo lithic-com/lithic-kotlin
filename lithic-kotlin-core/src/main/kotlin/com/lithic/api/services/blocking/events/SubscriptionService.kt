@@ -54,13 +54,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: EventSubscriptionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscription
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         eventSubscriptionToken: String,
         requestOptions: RequestOptions,
@@ -78,7 +78,7 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: EventSubscriptionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -90,7 +90,7 @@ interface SubscriptionService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): EventSubscriptionListPage =
         list(EventSubscriptionListParams.none(), requestOptions)
 
@@ -105,13 +105,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: EventSubscriptionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(eventSubscriptionToken: String, requestOptions: RequestOptions) =
         delete(eventSubscriptionToken, EventSubscriptionDeleteParams.none(), requestOptions)
 
@@ -126,13 +126,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [listAttempts] */
+    /** @see listAttempts */
     fun listAttempts(
         params: EventSubscriptionListAttemptsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSubscriptionListAttemptsPage
 
-    /** @see [listAttempts] */
+    /** @see listAttempts */
     fun listAttempts(
         eventSubscriptionToken: String,
         requestOptions: RequestOptions,
@@ -154,13 +154,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [recover] */
+    /** @see recover */
     fun recover(
         params: EventSubscriptionRecoverParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [recover] */
+    /** @see recover */
     fun recover(eventSubscriptionToken: String, requestOptions: RequestOptions) =
         recover(eventSubscriptionToken, EventSubscriptionRecoverParams.none(), requestOptions)
 
@@ -180,13 +180,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [replayMissing] */
+    /** @see replayMissing */
     fun replayMissing(
         params: EventSubscriptionReplayMissingParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [replayMissing] */
+    /** @see replayMissing */
     fun replayMissing(eventSubscriptionToken: String, requestOptions: RequestOptions) =
         replayMissing(
             eventSubscriptionToken,
@@ -206,13 +206,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [retrieveSecret] */
+    /** @see retrieveSecret */
     fun retrieveSecret(
         params: EventSubscriptionRetrieveSecretParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionRetrieveSecretResponse
 
-    /** @see [retrieveSecret] */
+    /** @see retrieveSecret */
     fun retrieveSecret(
         eventSubscriptionToken: String,
         requestOptions: RequestOptions,
@@ -237,13 +237,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [rotateSecret] */
+    /** @see rotateSecret */
     fun rotateSecret(
         params: EventSubscriptionRotateSecretParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [rotateSecret] */
+    /** @see rotateSecret */
     fun rotateSecret(eventSubscriptionToken: String, requestOptions: RequestOptions) =
         rotateSecret(
             eventSubscriptionToken,
@@ -263,13 +263,13 @@ interface SubscriptionService {
             requestOptions,
         )
 
-    /** @see [sendSimulatedExample] */
+    /** @see sendSimulatedExample */
     fun sendSimulatedExample(
         params: EventSubscriptionSendSimulatedExampleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [sendSimulatedExample] */
+    /** @see sendSimulatedExample */
     fun sendSimulatedExample(eventSubscriptionToken: String, requestOptions: RequestOptions) =
         sendSimulatedExample(
             eventSubscriptionToken,
@@ -316,14 +316,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: EventSubscriptionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscription>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             eventSubscriptionToken: String,
@@ -347,7 +347,7 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: EventSubscriptionUpdateParams,
@@ -364,7 +364,7 @@ interface SubscriptionService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscriptionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<EventSubscriptionListPage> =
             list(EventSubscriptionListParams.none(), requestOptions)
@@ -385,14 +385,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: EventSubscriptionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(eventSubscriptionToken: String, requestOptions: RequestOptions): HttpResponse =
             delete(eventSubscriptionToken, EventSubscriptionDeleteParams.none(), requestOptions)
@@ -414,14 +414,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [listAttempts] */
+        /** @see listAttempts */
         @MustBeClosed
         fun listAttempts(
             params: EventSubscriptionListAttemptsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventSubscriptionListAttemptsPage>
 
-        /** @see [listAttempts] */
+        /** @see listAttempts */
         @MustBeClosed
         fun listAttempts(
             eventSubscriptionToken: String,
@@ -449,14 +449,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [recover] */
+        /** @see recover */
         @MustBeClosed
         fun recover(
             params: EventSubscriptionRecoverParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [recover] */
+        /** @see recover */
         @MustBeClosed
         fun recover(eventSubscriptionToken: String, requestOptions: RequestOptions): HttpResponse =
             recover(eventSubscriptionToken, EventSubscriptionRecoverParams.none(), requestOptions)
@@ -478,14 +478,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [replayMissing] */
+        /** @see replayMissing */
         @MustBeClosed
         fun replayMissing(
             params: EventSubscriptionReplayMissingParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [replayMissing] */
+        /** @see replayMissing */
         @MustBeClosed
         fun replayMissing(
             eventSubscriptionToken: String,
@@ -514,14 +514,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [retrieveSecret] */
+        /** @see retrieveSecret */
         @MustBeClosed
         fun retrieveSecret(
             params: EventSubscriptionRetrieveSecretParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubscriptionRetrieveSecretResponse>
 
-        /** @see [retrieveSecret] */
+        /** @see retrieveSecret */
         @MustBeClosed
         fun retrieveSecret(
             eventSubscriptionToken: String,
@@ -550,14 +550,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [rotateSecret] */
+        /** @see rotateSecret */
         @MustBeClosed
         fun rotateSecret(
             params: EventSubscriptionRotateSecretParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [rotateSecret] */
+        /** @see rotateSecret */
         @MustBeClosed
         fun rotateSecret(
             eventSubscriptionToken: String,
@@ -586,14 +586,14 @@ interface SubscriptionService {
                 requestOptions,
             )
 
-        /** @see [sendSimulatedExample] */
+        /** @see sendSimulatedExample */
         @MustBeClosed
         fun sendSimulatedExample(
             params: EventSubscriptionSendSimulatedExampleParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [sendSimulatedExample] */
+        /** @see sendSimulatedExample */
         @MustBeClosed
         fun sendSimulatedExample(
             eventSubscriptionToken: String,

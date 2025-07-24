@@ -31,7 +31,7 @@ interface LineItemServiceAsync {
     ): FinancialAccountStatementLineItemListPageAsync =
         list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: FinancialAccountStatementLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +64,7 @@ interface LineItemServiceAsync {
         ): HttpResponseFor<FinancialAccountStatementLineItemListPageAsync> =
             list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: FinancialAccountStatementLineItemListParams,

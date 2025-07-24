@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.authRules.V2Service
 import java.util.Objects
 
-/** @see [V2Service.list] */
+/** @see V2Service.list */
 class AuthRuleV2ListPage
 private constructor(
     private val service: V2Service,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [AuthRuleV2ListPageResponse], but gracefully handles missing data.
      *
-     * @see [AuthRuleV2ListPageResponse.data]
+     * @see AuthRuleV2ListPageResponse.data
      */
     fun data(): List<V2ListResponse> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [AuthRuleV2ListPageResponse], but gracefully handles missing data.
      *
-     * @see [AuthRuleV2ListPageResponse.hasMore]
+     * @see AuthRuleV2ListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

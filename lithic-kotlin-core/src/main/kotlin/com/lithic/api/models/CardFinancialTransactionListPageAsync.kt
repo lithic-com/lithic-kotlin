@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 import java.util.Objects
 
-/** @see [FinancialTransactionServiceAsync.list] */
+/** @see FinancialTransactionServiceAsync.list */
 class CardFinancialTransactionListPageAsync
 private constructor(
     private val service: FinancialTransactionServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [CardFinancialTransactionListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardFinancialTransactionListPageResponse.data]
+     * @see CardFinancialTransactionListPageResponse.data
      */
     fun data(): List<FinancialTransaction> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardFinancialTransactionListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardFinancialTransactionListPageResponse.hasMore]
+     * @see CardFinancialTransactionListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

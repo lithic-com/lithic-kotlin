@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.TransactionService
 import java.util.Objects
 
-/** @see [TransactionService.list] */
+/** @see TransactionService.list */
 class TransactionListPage
 private constructor(
     private val service: TransactionService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [TransactionListPageResponse], but gracefully handles missing data.
      *
-     * @see [TransactionListPageResponse.data]
+     * @see TransactionListPageResponse.data
      */
     fun data(): List<Transaction> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [TransactionListPageResponse], but gracefully handles missing data.
      *
-     * @see [TransactionListPageResponse.hasMore]
+     * @see TransactionListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

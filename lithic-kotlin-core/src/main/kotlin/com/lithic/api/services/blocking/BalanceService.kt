@@ -29,7 +29,7 @@ interface BalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BalanceListPage =
         list(BalanceListParams.none(), requestOptions)
 
@@ -53,7 +53,7 @@ interface BalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPage> =
             list(BalanceListParams.none(), requestOptions)

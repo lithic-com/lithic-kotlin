@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.EventServiceAsync
 import java.util.Objects
 
-/** @see [EventServiceAsync.list] */
+/** @see EventServiceAsync.list */
 class EventListPageAsync
 private constructor(
     private val service: EventServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [EventListPageResponse], but gracefully handles missing data.
      *
-     * @see [EventListPageResponse.data]
+     * @see EventListPageResponse.data
      */
     fun data(): List<Event> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [EventListPageResponse], but gracefully handles missing data.
      *
-     * @see [EventListPageResponse.hasMore]
+     * @see EventListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

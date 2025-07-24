@@ -36,13 +36,13 @@ interface CreditConfigurationService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: FinancialAccountCreditConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -65,13 +65,13 @@ interface CreditConfigurationService {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: FinancialAccountCreditConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountCreditConfig
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -114,14 +114,14 @@ interface CreditConfigurationService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: FinancialAccountCreditConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             financialAccountToken: String,
@@ -150,14 +150,14 @@ interface CreditConfigurationService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: FinancialAccountCreditConfigurationUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountCreditConfig>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             financialAccountToken: String,

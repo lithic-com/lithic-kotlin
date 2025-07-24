@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.BookTransferServiceAsync
 import java.util.Objects
 
-/** @see [BookTransferServiceAsync.list] */
+/** @see BookTransferServiceAsync.list */
 class BookTransferListPageAsync
 private constructor(
     private val service: BookTransferServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [BookTransferListPageResponse], but gracefully handles missing data.
      *
-     * @see [BookTransferListPageResponse.data]
+     * @see BookTransferListPageResponse.data
      */
     fun data(): List<BookTransferResponse> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [BookTransferListPageResponse], but gracefully handles missing data.
      *
-     * @see [BookTransferListPageResponse.hasMore]
+     * @see BookTransferListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

@@ -38,7 +38,7 @@ interface TokenizationDecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationSecret
 
-    /** @see [retrieveSecret] */
+    /** @see retrieveSecret */
     suspend fun retrieveSecret(requestOptions: RequestOptions): TokenizationSecret =
         retrieveSecret(TokenizationDecisioningRetrieveSecretParams.none(), requestOptions)
 
@@ -52,7 +52,7 @@ interface TokenizationDecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationDecisioningRotateSecretResponse
 
-    /** @see [rotateSecret] */
+    /** @see rotateSecret */
     suspend fun rotateSecret(
         requestOptions: RequestOptions
     ): TokenizationDecisioningRotateSecretResponse =
@@ -84,7 +84,7 @@ interface TokenizationDecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationSecret>
 
-        /** @see [retrieveSecret] */
+        /** @see retrieveSecret */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -102,7 +102,7 @@ interface TokenizationDecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationDecisioningRotateSecretResponse>
 
-        /** @see [rotateSecret] */
+        /** @see rotateSecret */
         @MustBeClosed
         suspend fun rotateSecret(
             requestOptions: RequestOptions

@@ -31,13 +31,13 @@ interface BalanceServiceAsync {
     ): CardBalanceListPageAsync =
         list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: CardBalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardBalanceListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(cardToken: String, requestOptions: RequestOptions): CardBalanceListPageAsync =
         list(cardToken, CardBalanceListParams.none(), requestOptions)
 
@@ -67,14 +67,14 @@ interface BalanceServiceAsync {
         ): HttpResponseFor<CardBalanceListPageAsync> =
             list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: CardBalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardBalanceListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             cardToken: String,

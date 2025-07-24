@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.PaymentServiceAsync
 import java.util.Objects
 
-/** @see [PaymentServiceAsync.list] */
+/** @see PaymentServiceAsync.list */
 class PaymentListPageAsync
 private constructor(
     private val service: PaymentServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [PaymentListPageResponse], but gracefully handles missing data.
      *
-     * @see [PaymentListPageResponse.data]
+     * @see PaymentListPageResponse.data
      */
     fun data(): List<Payment> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [PaymentListPageResponse], but gracefully handles missing data.
      *
-     * @see [PaymentListPageResponse.hasMore]
+     * @see PaymentListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

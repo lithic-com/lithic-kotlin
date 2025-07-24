@@ -47,13 +47,13 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute = retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: DisputeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(disputeToken: String, requestOptions: RequestOptions): Dispute =
         retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
 
@@ -64,13 +64,13 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute = update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: DisputeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(disputeToken: String, requestOptions: RequestOptions): Dispute =
         update(disputeToken, DisputeUpdateParams.none(), requestOptions)
 
@@ -80,7 +80,7 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
         list(DisputeListParams.none(), requestOptions)
 
@@ -91,13 +91,13 @@ interface DisputeServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute = delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(
         params: DisputeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(disputeToken: String, requestOptions: RequestOptions): Dispute =
         delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
 
@@ -112,7 +112,7 @@ interface DisputeServiceAsync {
     ): DisputeEvidence =
         deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
-    /** @see [deleteEvidence] */
+    /** @see deleteEvidence */
     suspend fun deleteEvidence(
         params: DisputeDeleteEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -135,13 +135,13 @@ interface DisputeServiceAsync {
             requestOptions,
         )
 
-    /** @see [initiateEvidenceUpload] */
+    /** @see initiateEvidenceUpload */
     suspend fun initiateEvidenceUpload(
         params: DisputeInitiateEvidenceUploadParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence
 
-    /** @see [initiateEvidenceUpload] */
+    /** @see initiateEvidenceUpload */
     suspend fun initiateEvidenceUpload(
         disputeToken: String,
         requestOptions: RequestOptions,
@@ -160,13 +160,13 @@ interface DisputeServiceAsync {
     ): DisputeListEvidencesPageAsync =
         listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-    /** @see [listEvidences] */
+    /** @see listEvidences */
     suspend fun listEvidences(
         params: DisputeListEvidencesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListEvidencesPageAsync
 
-    /** @see [listEvidences] */
+    /** @see listEvidences */
     suspend fun listEvidences(
         disputeToken: String,
         requestOptions: RequestOptions,
@@ -181,7 +181,7 @@ interface DisputeServiceAsync {
     ): DisputeEvidence =
         retrieveEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
-    /** @see [retrieveEvidence] */
+    /** @see retrieveEvidence */
     suspend fun retrieveEvidence(
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -225,14 +225,14 @@ interface DisputeServiceAsync {
         ): HttpResponseFor<Dispute> =
             retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: DisputeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             disputeToken: String,
@@ -252,14 +252,14 @@ interface DisputeServiceAsync {
         ): HttpResponseFor<Dispute> =
             update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: DisputeUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             disputeToken: String,
@@ -277,7 +277,7 @@ interface DisputeServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPageAsync> =
             list(DisputeListParams.none(), requestOptions)
@@ -294,14 +294,14 @@ interface DisputeServiceAsync {
         ): HttpResponseFor<Dispute> =
             delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(
             params: DisputeDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(
             disputeToken: String,
@@ -322,7 +322,7 @@ interface DisputeServiceAsync {
         ): HttpResponseFor<DisputeEvidence> =
             deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
-        /** @see [deleteEvidence] */
+        /** @see deleteEvidence */
         @MustBeClosed
         suspend fun deleteEvidence(
             params: DisputeDeleteEvidenceParams,
@@ -345,14 +345,14 @@ interface DisputeServiceAsync {
                 requestOptions,
             )
 
-        /** @see [initiateEvidenceUpload] */
+        /** @see initiateEvidenceUpload */
         @MustBeClosed
         suspend fun initiateEvidenceUpload(
             params: DisputeInitiateEvidenceUploadParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeEvidence>
 
-        /** @see [initiateEvidenceUpload] */
+        /** @see initiateEvidenceUpload */
         @MustBeClosed
         suspend fun initiateEvidenceUpload(
             disputeToken: String,
@@ -376,14 +376,14 @@ interface DisputeServiceAsync {
         ): HttpResponseFor<DisputeListEvidencesPageAsync> =
             listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
-        /** @see [listEvidences] */
+        /** @see listEvidences */
         @MustBeClosed
         suspend fun listEvidences(
             params: DisputeListEvidencesParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListEvidencesPageAsync>
 
-        /** @see [listEvidences] */
+        /** @see listEvidences */
         @MustBeClosed
         suspend fun listEvidences(
             disputeToken: String,
@@ -407,7 +407,7 @@ interface DisputeServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieveEvidence] */
+        /** @see retrieveEvidence */
         @MustBeClosed
         suspend fun retrieveEvidence(
             params: DisputeRetrieveEvidenceParams,

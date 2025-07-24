@@ -36,7 +36,7 @@ interface StatementService {
     ): Statement =
         retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: FinancialAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,13 +53,13 @@ interface StatementService {
             requestOptions,
         )
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: FinancialAccountStatementListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -91,7 +91,7 @@ interface StatementService {
         ): HttpResponseFor<Statement> =
             retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: FinancialAccountStatementRetrieveParams,
@@ -115,14 +115,14 @@ interface StatementService {
                 requestOptions,
             )
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: FinancialAccountStatementListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountStatementListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             financialAccountToken: String,

@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.BalanceService
 import java.util.Objects
 
-/** @see [BalanceService.list] */
+/** @see BalanceService.list */
 class BalanceListPage
 private constructor(
     private val service: BalanceService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
      *
-     * @see [BalanceListPageResponse.data]
+     * @see BalanceListPageResponse.data
      */
     fun data(): List<Balance> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [BalanceListPageResponse], but gracefully handles missing data.
      *
-     * @see [BalanceListPageResponse.hasMore]
+     * @see BalanceListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

@@ -35,13 +35,13 @@ interface EnhancedCommercialDataService {
     ): EnhancedCommercialDataRetrieveResponse =
         retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: TransactionEnhancedCommercialDataRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EnhancedCommercialDataRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         transactionToken: String,
         requestOptions: RequestOptions,
@@ -81,14 +81,14 @@ interface EnhancedCommercialDataService {
         ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse> =
             retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: TransactionEnhancedCommercialDataRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedCommercialDataRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             transactionToken: String,

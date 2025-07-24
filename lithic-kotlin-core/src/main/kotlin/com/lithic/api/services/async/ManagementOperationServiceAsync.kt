@@ -44,13 +44,13 @@ interface ManagementOperationServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: ManagementOperationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationTransaction
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         managementOperationToken: String,
         requestOptions: RequestOptions,
@@ -63,7 +63,7 @@ interface ManagementOperationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ManagementOperationListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): ManagementOperationListPageAsync =
         list(ManagementOperationListParams.none(), requestOptions)
 
@@ -78,7 +78,7 @@ interface ManagementOperationServiceAsync {
             requestOptions,
         )
 
-    /** @see [reverse] */
+    /** @see reverse */
     suspend fun reverse(
         params: ManagementOperationReverseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -125,14 +125,14 @@ interface ManagementOperationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: ManagementOperationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ManagementOperationTransaction>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             managementOperationToken: String,
@@ -154,7 +154,7 @@ interface ManagementOperationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ManagementOperationListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -177,7 +177,7 @@ interface ManagementOperationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [reverse] */
+        /** @see reverse */
         @MustBeClosed
         suspend fun reverse(
             params: ManagementOperationReverseParams,

@@ -29,7 +29,7 @@ interface AggregateBalanceServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardAggregateBalanceListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): CardAggregateBalanceListPageAsync =
         list(CardAggregateBalanceListParams.none(), requestOptions)
 
@@ -58,7 +58,7 @@ interface AggregateBalanceServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardAggregateBalanceListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

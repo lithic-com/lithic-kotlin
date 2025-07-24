@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.CardProgramServiceAsync
 import java.util.Objects
 
-/** @see [CardProgramServiceAsync.list] */
+/** @see CardProgramServiceAsync.list */
 class CardProgramListPageAsync
 private constructor(
     private val service: CardProgramServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [CardProgramListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardProgramListPageResponse.data]
+     * @see CardProgramListPageResponse.data
      */
     fun data(): List<CardProgram> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardProgramListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardProgramListPageResponse.hasMore]
+     * @see CardProgramListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

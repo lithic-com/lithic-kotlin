@@ -58,13 +58,13 @@ interface TransactionServiceAsync {
     ): Transaction =
         retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: TransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(transactionToken: String, requestOptions: RequestOptions): Transaction =
         retrieve(transactionToken, TransactionRetrieveParams.none(), requestOptions)
 
@@ -77,7 +77,7 @@ interface TransactionServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): TransactionListPageAsync =
         list(TransactionListParams.none(), requestOptions)
 
@@ -92,13 +92,13 @@ interface TransactionServiceAsync {
             requestOptions,
         )
 
-    /** @see [expireAuthorization] */
+    /** @see expireAuthorization */
     suspend fun expireAuthorization(
         params: TransactionExpireAuthorizationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [expireAuthorization] */
+    /** @see expireAuthorization */
     suspend fun expireAuthorization(transactionToken: String, requestOptions: RequestOptions) =
         expireAuthorization(
             transactionToken,
@@ -209,14 +209,14 @@ interface TransactionServiceAsync {
         ): HttpResponseFor<Transaction> =
             retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: TransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             transactionToken: String,
@@ -234,7 +234,7 @@ interface TransactionServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -258,14 +258,14 @@ interface TransactionServiceAsync {
                 requestOptions,
             )
 
-        /** @see [expireAuthorization] */
+        /** @see expireAuthorization */
         @MustBeClosed
         suspend fun expireAuthorization(
             params: TransactionExpireAuthorizationParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [expireAuthorization] */
+        /** @see expireAuthorization */
         @MustBeClosed
         suspend fun expireAuthorization(
             transactionToken: String,

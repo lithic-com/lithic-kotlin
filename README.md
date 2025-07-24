@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.95.1)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.95.1/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.95.1)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.95.2)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.95.2/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.95.2)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differenc
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.95.1).
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.95.2).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.95.1")
+implementation("com.lithic.api:lithic-kotlin:0.95.2")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.lithic.api:lithic-kotlin:0.95.1")
 <dependency>
   <groupId>com.lithic.api</groupId>
   <artifactId>lithic-kotlin</artifactId>
-  <version>0.95.1</version>
+  <version>0.95.2</version>
 </dependency>
 ```
 
@@ -328,7 +328,7 @@ If the SDK threw an exception, but you're _certain_ the version is compatible, t
 
 ### Retries
 
-The SDK automatically retries 2 times by default, with a short exponential backoff.
+The SDK automatically retries 2 times by default, with a short exponential backoff between requests.
 
 Only the following error types are retried:
 
@@ -338,7 +338,7 @@ Only the following error types are retried:
 - 429 Rate Limit
 - 5xx Internal
 
-The API may also explicitly instruct the SDK to retry or not retry a response.
+The API may also explicitly instruct the SDK to retry or not retry a request.
 
 To set a custom number of retries, configure the client using the `maxRetries` method:
 

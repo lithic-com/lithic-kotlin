@@ -58,13 +58,13 @@ interface V2ServiceAsync {
     ): V2RetrieveResponse =
         retrieve(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: AuthRuleV2RetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         authRuleToken: String,
         requestOptions: RequestOptions,
@@ -83,7 +83,7 @@ interface V2ServiceAsync {
     ): V2UpdateResponse =
         update(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     suspend fun update(
         params: AuthRuleV2UpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -95,7 +95,7 @@ interface V2ServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRuleV2ListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): AuthRuleV2ListPageAsync =
         list(AuthRuleV2ListParams.none(), requestOptions)
 
@@ -106,13 +106,13 @@ interface V2ServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = delete(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(
         params: AuthRuleV2DeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [delete] */
+    /** @see delete */
     suspend fun delete(authRuleToken: String, requestOptions: RequestOptions) =
         delete(authRuleToken, AuthRuleV2DeleteParams.none(), requestOptions)
 
@@ -129,7 +129,7 @@ interface V2ServiceAsync {
     ): V2ApplyResponse =
         apply(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [apply] */
+    /** @see apply */
     @Deprecated("deprecated")
     suspend fun apply(
         params: AuthRuleV2ApplyParams,
@@ -149,13 +149,13 @@ interface V2ServiceAsync {
     ): V2DraftResponse =
         draft(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [draft] */
+    /** @see draft */
     suspend fun draft(
         params: AuthRuleV2DraftParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2DraftResponse
 
-    /** @see [draft] */
+    /** @see draft */
     suspend fun draft(authRuleToken: String, requestOptions: RequestOptions): V2DraftResponse =
         draft(authRuleToken, AuthRuleV2DraftParams.none(), requestOptions)
 
@@ -170,13 +170,13 @@ interface V2ServiceAsync {
     ): V2PromoteResponse =
         promote(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [promote] */
+    /** @see promote */
     suspend fun promote(
         params: AuthRuleV2PromoteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2PromoteResponse
 
-    /** @see [promote] */
+    /** @see promote */
     suspend fun promote(authRuleToken: String, requestOptions: RequestOptions): V2PromoteResponse =
         promote(authRuleToken, AuthRuleV2PromoteParams.none(), requestOptions)
 
@@ -234,14 +234,14 @@ interface V2ServiceAsync {
     ): V2ReportResponse =
         report(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [report] */
+    /** @see report */
     @Deprecated("deprecated")
     suspend fun report(
         params: AuthRuleV2ReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ReportResponse
 
-    /** @see [report] */
+    /** @see report */
     @Deprecated("deprecated")
     suspend fun report(authRuleToken: String, requestOptions: RequestOptions): V2ReportResponse =
         report(authRuleToken, AuthRuleV2ReportParams.none(), requestOptions)
@@ -266,7 +266,7 @@ interface V2ServiceAsync {
     ): V2RetrieveReportResponse =
         retrieveReport(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-    /** @see [retrieveReport] */
+    /** @see retrieveReport */
     suspend fun retrieveReport(
         params: AuthRuleV2RetrieveReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -306,14 +306,14 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2RetrieveResponse> =
             retrieve(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: AuthRuleV2RetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2RetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             authRuleToken: String,
@@ -333,7 +333,7 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2UpdateResponse> =
             update(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         suspend fun update(
             params: AuthRuleV2UpdateParams,
@@ -350,7 +350,7 @@ interface V2ServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRuleV2ListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AuthRuleV2ListPageAsync> =
             list(AuthRuleV2ListParams.none(), requestOptions)
@@ -367,14 +367,14 @@ interface V2ServiceAsync {
         ): HttpResponse =
             delete(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(
             params: AuthRuleV2DeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         suspend fun delete(authRuleToken: String, requestOptions: RequestOptions): HttpResponse =
             delete(authRuleToken, AuthRuleV2DeleteParams.none(), requestOptions)
@@ -392,7 +392,7 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2ApplyResponse> =
             apply(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [apply] */
+        /** @see apply */
         @Deprecated("deprecated")
         @MustBeClosed
         suspend fun apply(
@@ -412,14 +412,14 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2DraftResponse> =
             draft(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [draft] */
+        /** @see draft */
         @MustBeClosed
         suspend fun draft(
             params: AuthRuleV2DraftParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2DraftResponse>
 
-        /** @see [draft] */
+        /** @see draft */
         @MustBeClosed
         suspend fun draft(
             authRuleToken: String,
@@ -439,14 +439,14 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2PromoteResponse> =
             promote(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [promote] */
+        /** @see promote */
         @MustBeClosed
         suspend fun promote(
             params: AuthRuleV2PromoteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2PromoteResponse>
 
-        /** @see [promote] */
+        /** @see promote */
         @MustBeClosed
         suspend fun promote(
             authRuleToken: String,
@@ -467,7 +467,7 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2ReportResponse> =
             report(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [report] */
+        /** @see report */
         @Deprecated("deprecated")
         @MustBeClosed
         suspend fun report(
@@ -475,7 +475,7 @@ interface V2ServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2ReportResponse>
 
-        /** @see [report] */
+        /** @see report */
         @Deprecated("deprecated")
         @MustBeClosed
         suspend fun report(
@@ -496,7 +496,7 @@ interface V2ServiceAsync {
         ): HttpResponseFor<V2RetrieveReportResponse> =
             retrieveReport(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
-        /** @see [retrieveReport] */
+        /** @see retrieveReport */
         @MustBeClosed
         suspend fun retrieveReport(
             params: AuthRuleV2RetrieveReportParams,

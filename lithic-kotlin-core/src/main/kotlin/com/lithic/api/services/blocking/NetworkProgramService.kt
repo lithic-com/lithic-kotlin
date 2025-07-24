@@ -36,13 +36,13 @@ interface NetworkProgramService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: NetworkProgramRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkProgram
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(networkProgramToken: String, requestOptions: RequestOptions): NetworkProgram =
         retrieve(networkProgramToken, NetworkProgramRetrieveParams.none(), requestOptions)
 
@@ -52,7 +52,7 @@ interface NetworkProgramService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkProgramListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): NetworkProgramListPage =
         list(NetworkProgramListParams.none(), requestOptions)
 
@@ -85,14 +85,14 @@ interface NetworkProgramService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: NetworkProgramRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkProgram>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             networkProgramToken: String,
@@ -110,7 +110,7 @@ interface NetworkProgramService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkProgramListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<NetworkProgramListPage> =
             list(NetworkProgramListParams.none(), requestOptions)

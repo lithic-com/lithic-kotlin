@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.DigitalCardArtServiceAsync
 import java.util.Objects
 
-/** @see [DigitalCardArtServiceAsync.list] */
+/** @see DigitalCardArtServiceAsync.list */
 class DigitalCardArtListPageAsync
 private constructor(
     private val service: DigitalCardArtServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [DigitalCardArtListPageResponse], but gracefully handles missing data.
      *
-     * @see [DigitalCardArtListPageResponse.data]
+     * @see DigitalCardArtListPageResponse.data
      */
     fun data(): List<DigitalCardArt> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [DigitalCardArtListPageResponse], but gracefully handles missing data.
      *
-     * @see [DigitalCardArtListPageResponse.hasMore]
+     * @see DigitalCardArtListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

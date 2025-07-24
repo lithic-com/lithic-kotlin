@@ -33,7 +33,7 @@ interface ResponderEndpointService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ResponderEndpointCreateResponse
 
-    /** @see [create] */
+    /** @see create */
     fun create(requestOptions: RequestOptions): ResponderEndpointCreateResponse =
         create(ResponderEndpointCreateParams.none(), requestOptions)
 
@@ -74,7 +74,7 @@ interface ResponderEndpointService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ResponderEndpointCreateResponse>
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             requestOptions: RequestOptions

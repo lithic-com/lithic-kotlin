@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.DisputeService
 import java.util.Objects
 
-/** @see [DisputeService.listEvidences] */
+/** @see DisputeService.listEvidences */
 class DisputeListEvidencesPage
 private constructor(
     private val service: DisputeService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [DisputeListEvidencesPageResponse], but gracefully handles missing data.
      *
-     * @see [DisputeListEvidencesPageResponse.data]
+     * @see DisputeListEvidencesPageResponse.data
      */
     fun data(): List<DisputeEvidence> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [DisputeListEvidencesPageResponse], but gracefully handles missing data.
      *
-     * @see [DisputeListEvidencesPageResponse.hasMore]
+     * @see DisputeListEvidencesPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

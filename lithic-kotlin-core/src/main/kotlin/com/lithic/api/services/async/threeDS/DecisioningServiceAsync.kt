@@ -51,7 +51,7 @@ interface DecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DecisioningRetrieveSecretResponse
 
-    /** @see [retrieveSecret] */
+    /** @see retrieveSecret */
     suspend fun retrieveSecret(requestOptions: RequestOptions): DecisioningRetrieveSecretResponse =
         retrieveSecret(ThreeDSDecisioningRetrieveSecretParams.none(), requestOptions)
 
@@ -66,7 +66,7 @@ interface DecisioningServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [rotateSecret] */
+    /** @see rotateSecret */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
         rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)
 
@@ -106,7 +106,7 @@ interface DecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DecisioningRetrieveSecretResponse>
 
-        /** @see [retrieveSecret] */
+        /** @see retrieveSecret */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -124,7 +124,7 @@ interface DecisioningServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [rotateSecret] */
+        /** @see rotateSecret */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
             rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)

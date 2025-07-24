@@ -38,7 +38,7 @@ interface AuthStreamEnrollmentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthStreamSecret
 
-    /** @see [retrieveSecret] */
+    /** @see retrieveSecret */
     suspend fun retrieveSecret(requestOptions: RequestOptions): AuthStreamSecret =
         retrieveSecret(AuthStreamEnrollmentRetrieveSecretParams.none(), requestOptions)
 
@@ -54,7 +54,7 @@ interface AuthStreamEnrollmentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [rotateSecret] */
+    /** @see rotateSecret */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
         rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
 
@@ -84,7 +84,7 @@ interface AuthStreamEnrollmentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthStreamSecret>
 
-        /** @see [retrieveSecret] */
+        /** @see retrieveSecret */
         @MustBeClosed
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
@@ -102,7 +102,7 @@ interface AuthStreamEnrollmentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [rotateSecret] */
+        /** @see rotateSecret */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
             rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
