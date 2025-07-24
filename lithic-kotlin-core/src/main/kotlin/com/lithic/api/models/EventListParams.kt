@@ -61,8 +61,10 @@ private constructor(
     /** Whether to include the event payload content in the response. */
     fun withContent(): Boolean? = withContent
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
