@@ -1051,7 +1051,7 @@ private constructor(
 
                 /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
                 fun ofListOfStrings(listOfStrings: List<String>) =
-                    Value(listOfStrings = listOfStrings)
+                    Value(listOfStrings = listOfStrings.toImmutable())
             }
 
             /**
