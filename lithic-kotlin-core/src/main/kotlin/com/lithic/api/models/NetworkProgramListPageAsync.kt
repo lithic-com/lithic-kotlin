@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.NetworkProgramServiceAsync
 import java.util.Objects
 
-/** @see [NetworkProgramServiceAsync.list] */
+/** @see NetworkProgramServiceAsync.list */
 class NetworkProgramListPageAsync
 private constructor(
     private val service: NetworkProgramServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [NetworkProgramListPageResponse], but gracefully handles missing data.
      *
-     * @see [NetworkProgramListPageResponse.data]
+     * @see NetworkProgramListPageResponse.data
      */
     fun data(): List<NetworkProgram> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [NetworkProgramListPageResponse], but gracefully handles missing data.
      *
-     * @see [NetworkProgramListPageResponse.hasMore]
+     * @see NetworkProgramListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

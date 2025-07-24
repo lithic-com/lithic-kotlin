@@ -30,13 +30,13 @@ interface BalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardBalanceListPage = list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CardBalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardBalanceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(cardToken: String, requestOptions: RequestOptions): CardBalanceListPage =
         list(cardToken, CardBalanceListParams.none(), requestOptions)
 
@@ -62,14 +62,14 @@ interface BalanceService {
         ): HttpResponseFor<CardBalanceListPage> =
             list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CardBalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardBalanceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             cardToken: String,

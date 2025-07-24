@@ -34,13 +34,13 @@ interface BalanceServiceAsync {
             requestOptions,
         )
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         params: FinancialAccountBalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountBalanceListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -77,14 +77,14 @@ interface BalanceServiceAsync {
                 requestOptions,
             )
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             params: FinancialAccountBalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountBalanceListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             financialAccountToken: String,

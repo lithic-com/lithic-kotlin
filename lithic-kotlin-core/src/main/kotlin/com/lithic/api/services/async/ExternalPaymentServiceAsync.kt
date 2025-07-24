@@ -47,13 +47,13 @@ interface ExternalPaymentServiceAsync {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: ExternalPaymentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPayment
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         externalPaymentToken: String,
         requestOptions: RequestOptions,
@@ -66,7 +66,7 @@ interface ExternalPaymentServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalPaymentListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): ExternalPaymentListPageAsync =
         list(ExternalPaymentListParams.none(), requestOptions)
 
@@ -81,7 +81,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions,
         )
 
-    /** @see [cancel] */
+    /** @see cancel */
     suspend fun cancel(
         params: ExternalPaymentCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -98,7 +98,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions,
         )
 
-    /** @see [release] */
+    /** @see release */
     suspend fun release(
         params: ExternalPaymentReleaseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,7 +115,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions,
         )
 
-    /** @see [reverse] */
+    /** @see reverse */
     suspend fun reverse(
         params: ExternalPaymentReverseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -132,7 +132,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions,
         )
 
-    /** @see [settle] */
+    /** @see settle */
     suspend fun settle(
         params: ExternalPaymentSettleParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -178,14 +178,14 @@ interface ExternalPaymentServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: ExternalPaymentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPayment>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             externalPaymentToken: String,
@@ -203,7 +203,7 @@ interface ExternalPaymentServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalPaymentListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -226,7 +226,7 @@ interface ExternalPaymentServiceAsync {
                 requestOptions,
             )
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         suspend fun cancel(
             params: ExternalPaymentCancelParams,
@@ -249,7 +249,7 @@ interface ExternalPaymentServiceAsync {
                 requestOptions,
             )
 
-        /** @see [release] */
+        /** @see release */
         @MustBeClosed
         suspend fun release(
             params: ExternalPaymentReleaseParams,
@@ -272,7 +272,7 @@ interface ExternalPaymentServiceAsync {
                 requestOptions,
             )
 
-        /** @see [reverse] */
+        /** @see reverse */
         @MustBeClosed
         suspend fun reverse(
             params: ExternalPaymentReverseParams,
@@ -295,7 +295,7 @@ interface ExternalPaymentServiceAsync {
                 requestOptions,
             )
 
-        /** @see [settle] */
+        /** @see settle */
         @MustBeClosed
         suspend fun settle(
             params: ExternalPaymentSettleParams,

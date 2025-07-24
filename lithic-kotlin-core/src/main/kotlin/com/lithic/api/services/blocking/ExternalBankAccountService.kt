@@ -42,7 +42,7 @@ interface ExternalBankAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
 
-    /** @see [create] */
+    /** @see create */
     fun create(requestOptions: RequestOptions): ExternalBankAccountCreateResponse =
         create(ExternalBankAccountCreateParams.none(), requestOptions)
 
@@ -57,13 +57,13 @@ interface ExternalBankAccountService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ExternalBankAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
@@ -81,13 +81,13 @@ interface ExternalBankAccountService {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ExternalBankAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountUpdateResponse
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
@@ -100,7 +100,7 @@ interface ExternalBankAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ExternalBankAccountListPage =
         list(ExternalBankAccountListParams.none(), requestOptions)
 
@@ -116,13 +116,13 @@ interface ExternalBankAccountService {
             requestOptions,
         )
 
-    /** @see [retryMicroDeposits] */
+    /** @see retryMicroDeposits */
     fun retryMicroDeposits(
         params: ExternalBankAccountRetryMicroDepositsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetryMicroDepositsResponse
 
-    /** @see [retryMicroDeposits] */
+    /** @see retryMicroDeposits */
     fun retryMicroDeposits(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
@@ -145,13 +145,13 @@ interface ExternalBankAccountService {
             requestOptions,
         )
 
-    /** @see [retryPrenote] */
+    /** @see retryPrenote */
     fun retryPrenote(
         params: ExternalBankAccountRetryPrenoteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountRetryPrenoteResponse
 
-    /** @see [retryPrenote] */
+    /** @see retryPrenote */
     fun retryPrenote(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
@@ -189,7 +189,7 @@ interface ExternalBankAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse>
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             requestOptions: RequestOptions
@@ -212,14 +212,14 @@ interface ExternalBankAccountService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: ExternalBankAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             externalBankAccountToken: String,
@@ -247,14 +247,14 @@ interface ExternalBankAccountService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: ExternalBankAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountUpdateResponse>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             externalBankAccountToken: String,
@@ -272,7 +272,7 @@ interface ExternalBankAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ExternalBankAccountListPage> =
             list(ExternalBankAccountListParams.none(), requestOptions)
@@ -294,14 +294,14 @@ interface ExternalBankAccountService {
                 requestOptions,
             )
 
-        /** @see [retryMicroDeposits] */
+        /** @see retryMicroDeposits */
         @MustBeClosed
         fun retryMicroDeposits(
             params: ExternalBankAccountRetryMicroDepositsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountRetryMicroDepositsResponse>
 
-        /** @see [retryMicroDeposits] */
+        /** @see retryMicroDeposits */
         @MustBeClosed
         fun retryMicroDeposits(
             externalBankAccountToken: String,
@@ -330,14 +330,14 @@ interface ExternalBankAccountService {
                 requestOptions,
             )
 
-        /** @see [retryPrenote] */
+        /** @see retryPrenote */
         @MustBeClosed
         fun retryPrenote(
             params: ExternalBankAccountRetryPrenoteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountRetryPrenoteResponse>
 
-        /** @see [retryPrenote] */
+        /** @see retryPrenote */
         @MustBeClosed
         fun retryPrenote(
             externalBankAccountToken: String,

@@ -36,13 +36,13 @@ interface TransactionServiceAsync {
     ): TransactionRetrieveResponse =
         retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: FraudTransactionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         transactionToken: String,
         requestOptions: RequestOptions,
@@ -60,7 +60,7 @@ interface TransactionServiceAsync {
     ): TransactionReportResponse =
         report(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-    /** @see [report] */
+    /** @see report */
     suspend fun report(
         params: FraudTransactionReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -93,14 +93,14 @@ interface TransactionServiceAsync {
         ): HttpResponseFor<TransactionRetrieveResponse> =
             retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: FraudTransactionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             transactionToken: String,
@@ -120,7 +120,7 @@ interface TransactionServiceAsync {
         ): HttpResponseFor<TransactionReportResponse> =
             report(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
-        /** @see [report] */
+        /** @see report */
         @MustBeClosed
         suspend fun report(
             params: FraudTransactionReportParams,

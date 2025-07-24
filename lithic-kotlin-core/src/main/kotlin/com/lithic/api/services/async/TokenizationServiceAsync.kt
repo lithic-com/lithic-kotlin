@@ -43,13 +43,13 @@ interface TokenizationServiceAsync {
     ): TokenizationRetrieveResponse =
         retrieve(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: TokenizationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         tokenizationToken: String,
         requestOptions: RequestOptions,
@@ -62,7 +62,7 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): TokenizationListPageAsync =
         list(TokenizationListParams.none(), requestOptions)
 
@@ -81,13 +81,13 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = activate(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-    /** @see [activate] */
+    /** @see activate */
     suspend fun activate(
         params: TokenizationActivateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [activate] */
+    /** @see activate */
     suspend fun activate(tokenizationToken: String, requestOptions: RequestOptions) =
         activate(tokenizationToken, TokenizationActivateParams.none(), requestOptions)
 
@@ -107,13 +107,13 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = deactivate(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-    /** @see [deactivate] */
+    /** @see deactivate */
     suspend fun deactivate(
         params: TokenizationDeactivateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [deactivate] */
+    /** @see deactivate */
     suspend fun deactivate(tokenizationToken: String, requestOptions: RequestOptions) =
         deactivate(tokenizationToken, TokenizationDeactivateParams.none(), requestOptions)
 
@@ -132,13 +132,13 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = pause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-    /** @see [pause] */
+    /** @see pause */
     suspend fun pause(
         params: TokenizationPauseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [pause] */
+    /** @see pause */
     suspend fun pause(tokenizationToken: String, requestOptions: RequestOptions) =
         pause(tokenizationToken, TokenizationPauseParams.none(), requestOptions)
 
@@ -164,13 +164,13 @@ interface TokenizationServiceAsync {
             requestOptions,
         )
 
-    /** @see [resendActivationCode] */
+    /** @see resendActivationCode */
     suspend fun resendActivationCode(
         params: TokenizationResendActivationCodeParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [resendActivationCode] */
+    /** @see resendActivationCode */
     suspend fun resendActivationCode(tokenizationToken: String, requestOptions: RequestOptions) =
         resendActivationCode(
             tokenizationToken,
@@ -201,13 +201,13 @@ interface TokenizationServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ) = unpause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-    /** @see [unpause] */
+    /** @see unpause */
     suspend fun unpause(
         params: TokenizationUnpauseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     )
 
-    /** @see [unpause] */
+    /** @see unpause */
     suspend fun unpause(tokenizationToken: String, requestOptions: RequestOptions) =
         unpause(tokenizationToken, TokenizationUnpauseParams.none(), requestOptions)
 
@@ -231,13 +231,13 @@ interface TokenizationServiceAsync {
             requestOptions,
         )
 
-    /** @see [updateDigitalCardArt] */
+    /** @see updateDigitalCardArt */
     suspend fun updateDigitalCardArt(
         params: TokenizationUpdateDigitalCardArtParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TokenizationUpdateDigitalCardArtResponse
 
-    /** @see [updateDigitalCardArt] */
+    /** @see updateDigitalCardArt */
     suspend fun updateDigitalCardArt(
         tokenizationToken: String,
         requestOptions: RequestOptions,
@@ -278,14 +278,14 @@ interface TokenizationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: TokenizationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             tokenizationToken: String,
@@ -303,7 +303,7 @@ interface TokenizationServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions
@@ -325,14 +325,14 @@ interface TokenizationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [activate] */
+        /** @see activate */
         @MustBeClosed
         suspend fun activate(
             params: TokenizationActivateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [activate] */
+        /** @see activate */
         @MustBeClosed
         suspend fun activate(
             tokenizationToken: String,
@@ -355,14 +355,14 @@ interface TokenizationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [deactivate] */
+        /** @see deactivate */
         @MustBeClosed
         suspend fun deactivate(
             params: TokenizationDeactivateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [deactivate] */
+        /** @see deactivate */
         @MustBeClosed
         suspend fun deactivate(
             tokenizationToken: String,
@@ -382,14 +382,14 @@ interface TokenizationServiceAsync {
         ): HttpResponse =
             pause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-        /** @see [pause] */
+        /** @see pause */
         @MustBeClosed
         suspend fun pause(
             params: TokenizationPauseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [pause] */
+        /** @see pause */
         @MustBeClosed
         suspend fun pause(tokenizationToken: String, requestOptions: RequestOptions): HttpResponse =
             pause(tokenizationToken, TokenizationPauseParams.none(), requestOptions)
@@ -411,14 +411,14 @@ interface TokenizationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [resendActivationCode] */
+        /** @see resendActivationCode */
         @MustBeClosed
         suspend fun resendActivationCode(
             params: TokenizationResendActivationCodeParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [resendActivationCode] */
+        /** @see resendActivationCode */
         @MustBeClosed
         suspend fun resendActivationCode(
             tokenizationToken: String,
@@ -452,14 +452,14 @@ interface TokenizationServiceAsync {
         ): HttpResponse =
             unpause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
 
-        /** @see [unpause] */
+        /** @see unpause */
         @MustBeClosed
         suspend fun unpause(
             params: TokenizationUnpauseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse
 
-        /** @see [unpause] */
+        /** @see unpause */
         @MustBeClosed
         suspend fun unpause(
             tokenizationToken: String,
@@ -484,14 +484,14 @@ interface TokenizationServiceAsync {
                 requestOptions,
             )
 
-        /** @see [updateDigitalCardArt] */
+        /** @see updateDigitalCardArt */
         @MustBeClosed
         suspend fun updateDigitalCardArt(
             params: TokenizationUpdateDigitalCardArtParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse>
 
-        /** @see [updateDigitalCardArt] */
+        /** @see updateDigitalCardArt */
         @MustBeClosed
         suspend fun updateDigitalCardArt(
             tokenizationToken: String,

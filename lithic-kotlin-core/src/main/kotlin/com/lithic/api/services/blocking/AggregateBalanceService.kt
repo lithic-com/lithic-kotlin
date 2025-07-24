@@ -29,7 +29,7 @@ interface AggregateBalanceService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregateBalanceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): AggregateBalanceListPage =
         list(AggregateBalanceListParams.none(), requestOptions)
 
@@ -58,7 +58,7 @@ interface AggregateBalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AggregateBalanceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AggregateBalanceListPage> =
             list(AggregateBalanceListParams.none(), requestOptions)
