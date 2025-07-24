@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.95.1 (2025-07-24)
+
+Full Changelog: [v0.95.0...v0.95.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.95.0...v0.95.1)
+
+### Bug Fixes
+
+* **client:** accidental mutability of some classes ([1fc47af](https://github.com/lithic-com/lithic-kotlin/commit/1fc47af3e736f727a79ff78346d37fed110c1f90))
+
 ## 0.95.0 (2025-07-23)
 
 Full Changelog: [v0.94.1...v0.95.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.94.1...v0.95.0)
