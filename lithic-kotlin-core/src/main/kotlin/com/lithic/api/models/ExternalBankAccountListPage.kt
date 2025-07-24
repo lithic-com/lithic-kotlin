@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.ExternalBankAccountService
 import java.util.Objects
 
-/** @see [ExternalBankAccountService.list] */
+/** @see ExternalBankAccountService.list */
 class ExternalBankAccountListPage
 private constructor(
     private val service: ExternalBankAccountService,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [ExternalBankAccountListPageResponse], but gracefully handles missing data.
      *
-     * @see [ExternalBankAccountListPageResponse.data]
+     * @see ExternalBankAccountListPageResponse.data
      */
     fun data(): List<ExternalBankAccountListResponse> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [ExternalBankAccountListPageResponse], but gracefully handles missing data.
      *
-     * @see [ExternalBankAccountListPageResponse.hasMore]
+     * @see ExternalBankAccountListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

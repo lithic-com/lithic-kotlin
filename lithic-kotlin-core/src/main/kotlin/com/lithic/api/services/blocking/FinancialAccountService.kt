@@ -62,13 +62,13 @@ interface FinancialAccountService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: FinancialAccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
         retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
 
@@ -83,13 +83,13 @@ interface FinancialAccountService {
             requestOptions,
         )
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: FinancialAccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccount
 
-    /** @see [update] */
+    /** @see update */
     fun update(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
         update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
 
@@ -99,7 +99,7 @@ interface FinancialAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): FinancialAccountListPage =
         list(FinancialAccountListParams.none(), requestOptions)
 
@@ -114,7 +114,7 @@ interface FinancialAccountService {
             requestOptions,
         )
 
-    /** @see [registerAccountNumber] */
+    /** @see registerAccountNumber */
     fun registerAccountNumber(
         params: FinancialAccountRegisterAccountNumberParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -131,7 +131,7 @@ interface FinancialAccountService {
             requestOptions,
         )
 
-    /** @see [updateStatus] */
+    /** @see updateStatus */
     fun updateStatus(
         params: FinancialAccountUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -187,14 +187,14 @@ interface FinancialAccountService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: FinancialAccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             financialAccountToken: String,
@@ -217,14 +217,14 @@ interface FinancialAccountService {
                 requestOptions,
             )
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: FinancialAccountUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccount>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             financialAccountToken: String,
@@ -242,7 +242,7 @@ interface FinancialAccountService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<FinancialAccountListPage> =
             list(FinancialAccountListParams.none(), requestOptions)
@@ -263,7 +263,7 @@ interface FinancialAccountService {
                 requestOptions,
             )
 
-        /** @see [registerAccountNumber] */
+        /** @see registerAccountNumber */
         @MustBeClosed
         fun registerAccountNumber(
             params: FinancialAccountRegisterAccountNumberParams,
@@ -286,7 +286,7 @@ interface FinancialAccountService {
                 requestOptions,
             )
 
-        /** @see [updateStatus] */
+        /** @see updateStatus */
         @MustBeClosed
         fun updateStatus(
             params: FinancialAccountUpdateStatusParams,

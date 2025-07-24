@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.reports.settlement.NetworkTotalServiceAsync
 import java.util.Objects
 
-/** @see [NetworkTotalServiceAsync.list] */
+/** @see NetworkTotalServiceAsync.list */
 class ReportSettlementNetworkTotalListPageAsync
 private constructor(
     private val service: NetworkTotalServiceAsync,
@@ -20,7 +20,7 @@ private constructor(
      * Delegates to [ReportSettlementNetworkTotalListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ReportSettlementNetworkTotalListPageResponse.data]
+     * @see ReportSettlementNetworkTotalListPageResponse.data
      */
     fun data(): List<NetworkTotalListResponse> = response._data().getNullable("data") ?: emptyList()
 
@@ -28,7 +28,7 @@ private constructor(
      * Delegates to [ReportSettlementNetworkTotalListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ReportSettlementNetworkTotalListPageResponse.hasMore]
+     * @see ReportSettlementNetworkTotalListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

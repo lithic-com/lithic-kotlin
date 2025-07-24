@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.CardService
 import java.util.Objects
 
-/** @see [CardService.list] */
+/** @see CardService.list */
 class CardListPage
 private constructor(
     private val service: CardService,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [CardListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardListPageResponse.data]
+     * @see CardListPageResponse.data
      */
     fun data(): List<NonPciCard> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardListPageResponse], but gracefully handles missing data.
      *
-     * @see [CardListPageResponse.hasMore]
+     * @see CardListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

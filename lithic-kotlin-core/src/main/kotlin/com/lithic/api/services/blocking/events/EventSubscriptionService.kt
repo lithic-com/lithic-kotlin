@@ -33,7 +33,7 @@ interface EventSubscriptionService {
             requestOptions,
         )
 
-    /** @see [resend] */
+    /** @see resend */
     fun resend(
         params: EventEventSubscriptionResendParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +70,7 @@ interface EventSubscriptionService {
                 requestOptions,
             )
 
-        /** @see [resend] */
+        /** @see resend */
         @MustBeClosed
         fun resend(
             params: EventEventSubscriptionResendParams,

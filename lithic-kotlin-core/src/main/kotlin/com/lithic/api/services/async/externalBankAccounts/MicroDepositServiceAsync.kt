@@ -34,7 +34,7 @@ interface MicroDepositServiceAsync {
             requestOptions,
         )
 
-    /** @see [create] */
+    /** @see create */
     suspend fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,7 +71,7 @@ interface MicroDepositServiceAsync {
                 requestOptions,
             )
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         suspend fun create(
             params: ExternalBankAccountMicroDepositCreateParams,

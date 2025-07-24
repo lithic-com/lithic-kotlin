@@ -34,13 +34,13 @@ interface BalanceService {
             requestOptions,
         )
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: FinancialAccountBalanceListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountBalanceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -73,14 +73,14 @@ interface BalanceService {
                 requestOptions,
             )
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: FinancialAccountBalanceListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountBalanceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             financialAccountToken: String,

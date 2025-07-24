@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.blocking.ManagementOperationService
 import java.util.Objects
 
-/** @see [ManagementOperationService.list] */
+/** @see ManagementOperationService.list */
 class ManagementOperationListPage
 private constructor(
     private val service: ManagementOperationService,
@@ -19,7 +19,7 @@ private constructor(
     /**
      * Delegates to [ManagementOperationListPageResponse], but gracefully handles missing data.
      *
-     * @see [ManagementOperationListPageResponse.data]
+     * @see ManagementOperationListPageResponse.data
      */
     fun data(): List<ManagementOperationTransaction> =
         response._data().getNullable("data") ?: emptyList()
@@ -27,7 +27,7 @@ private constructor(
     /**
      * Delegates to [ManagementOperationListPageResponse], but gracefully handles missing data.
      *
-     * @see [ManagementOperationListPageResponse.hasMore]
+     * @see ManagementOperationListPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

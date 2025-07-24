@@ -34,7 +34,7 @@ interface MicroDepositService {
             requestOptions,
         )
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ExternalBankAccountMicroDepositCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +70,7 @@ interface MicroDepositService {
                 requestOptions,
             )
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: ExternalBankAccountMicroDepositCreateParams,

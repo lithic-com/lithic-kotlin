@@ -33,7 +33,7 @@ interface EventSubscriptionServiceAsync {
             requestOptions,
         )
 
-    /** @see [resend] */
+    /** @see resend */
     suspend fun resend(
         params: EventEventSubscriptionResendParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +70,7 @@ interface EventSubscriptionServiceAsync {
                 requestOptions,
             )
 
-        /** @see [resend] */
+        /** @see resend */
         @MustBeClosed
         suspend fun resend(
             params: EventEventSubscriptionResendParams,

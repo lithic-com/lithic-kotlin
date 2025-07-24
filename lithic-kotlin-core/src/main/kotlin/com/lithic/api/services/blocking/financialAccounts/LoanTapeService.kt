@@ -32,7 +32,7 @@ interface LoanTapeService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): LoanTape = retrieve(params.toBuilder().loanTapeToken(loanTapeToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: FinancialAccountLoanTapeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -49,13 +49,13 @@ interface LoanTapeService {
             requestOptions,
         )
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: FinancialAccountLoanTapeListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountLoanTapeListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
@@ -85,7 +85,7 @@ interface LoanTapeService {
         ): HttpResponseFor<LoanTape> =
             retrieve(params.toBuilder().loanTapeToken(loanTapeToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: FinancialAccountLoanTapeRetrieveParams,
@@ -108,14 +108,14 @@ interface LoanTapeService {
                 requestOptions,
             )
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: FinancialAccountLoanTapeListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountLoanTapeListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             financialAccountToken: String,

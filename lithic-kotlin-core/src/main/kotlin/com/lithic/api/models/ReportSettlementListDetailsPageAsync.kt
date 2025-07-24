@@ -8,7 +8,7 @@ import com.lithic.api.core.checkRequired
 import com.lithic.api.services.async.reports.SettlementServiceAsync
 import java.util.Objects
 
-/** @see [SettlementServiceAsync.listDetails] */
+/** @see SettlementServiceAsync.listDetails */
 class ReportSettlementListDetailsPageAsync
 private constructor(
     private val service: SettlementServiceAsync,
@@ -19,14 +19,14 @@ private constructor(
     /**
      * Delegates to [ReportSettlementListDetailsPageResponse], but gracefully handles missing data.
      *
-     * @see [ReportSettlementListDetailsPageResponse.data]
+     * @see ReportSettlementListDetailsPageResponse.data
      */
     fun data(): List<SettlementDetail> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [ReportSettlementListDetailsPageResponse], but gracefully handles missing data.
      *
-     * @see [ReportSettlementListDetailsPageResponse.hasMore]
+     * @see ReportSettlementListDetailsPageResponse.hasMore
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 

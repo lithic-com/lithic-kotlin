@@ -33,13 +33,13 @@ interface CardProgramService {
     ): CardProgram =
         retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CardProgramRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgram
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(cardProgramToken: String, requestOptions: RequestOptions): CardProgram =
         retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
 
@@ -49,7 +49,7 @@ interface CardProgramService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgramListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CardProgramListPage =
         list(CardProgramListParams.none(), requestOptions)
 
@@ -79,14 +79,14 @@ interface CardProgramService {
         ): HttpResponseFor<CardProgram> =
             retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CardProgramRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgram>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             cardProgramToken: String,
@@ -104,7 +104,7 @@ interface CardProgramService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgramListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CardProgramListPage> =
             list(CardProgramListParams.none(), requestOptions)

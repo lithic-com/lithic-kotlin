@@ -34,13 +34,13 @@ interface NetworkTotalServiceAsync {
     ): NetworkTotalRetrieveResponse =
         retrieve(params.toBuilder().token(token).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NetworkTotalRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     suspend fun retrieve(
         token: String,
         requestOptions: RequestOptions,
@@ -54,7 +54,7 @@ interface NetworkTotalServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementNetworkTotalListPageAsync
 
-    /** @see [list] */
+    /** @see list */
     suspend fun list(requestOptions: RequestOptions): ReportSettlementNetworkTotalListPageAsync =
         list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
 
@@ -86,14 +86,14 @@ interface NetworkTotalServiceAsync {
         ): HttpResponseFor<NetworkTotalRetrieveResponse> =
             retrieve(params.toBuilder().token(token).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             params: ReportSettlementNetworkTotalRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkTotalRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             token: String,
@@ -112,7 +112,7 @@ interface NetworkTotalServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementNetworkTotalListPageAsync>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         suspend fun list(
             requestOptions: RequestOptions

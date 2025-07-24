@@ -36,13 +36,13 @@ interface DigitalCardArtService {
             requestOptions,
         )
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DigitalCardArtRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArt
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(digitalCardArtToken: String, requestOptions: RequestOptions): DigitalCardArt =
         retrieve(digitalCardArtToken, DigitalCardArtRetrieveParams.none(), requestOptions)
 
@@ -52,7 +52,7 @@ interface DigitalCardArtService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DigitalCardArtListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): DigitalCardArtListPage =
         list(DigitalCardArtListParams.none(), requestOptions)
 
@@ -85,14 +85,14 @@ interface DigitalCardArtService {
                 requestOptions,
             )
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DigitalCardArtRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DigitalCardArt>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             digitalCardArtToken: String,
@@ -110,7 +110,7 @@ interface DigitalCardArtService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DigitalCardArtListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DigitalCardArtListPage> =
             list(DigitalCardArtListParams.none(), requestOptions)
