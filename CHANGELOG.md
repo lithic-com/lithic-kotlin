@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.96.0 (2025-07-28)
+
+Full Changelog: [v0.95.1...v0.96.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.95.1...v0.96.0)
+
+### Features
+
+* **api:** updates Transaction retrieve response to match API ([a84dee5](https://github.com/lithic-com/lithic-kotlin/commit/a84dee568fe41ad2e7af1bec25d6ba490a082040))
+
+
+### Chores
+
+* **internal:** remove unnecessary `[...]` in `[@see](https://github.com/see)` ([de61d07](https://github.com/lithic-com/lithic-kotlin/commit/de61d070ef3c69787b82c1ad495a3529836d1ded))
+
+
+### Documentation
+
+* more code comments ([3811d4c](https://github.com/lithic-com/lithic-kotlin/commit/3811d4c3c193a7feb08db9f326a8680e63a49c35))
+
 ## 0.95.1 (2025-07-24)
 
 Full Changelog: [v0.95.0...v0.95.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.95.0...v0.95.1)
