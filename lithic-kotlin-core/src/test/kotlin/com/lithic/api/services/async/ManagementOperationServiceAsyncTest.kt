@@ -25,7 +25,7 @@ internal class ManagementOperationServiceAsyncTest {
         val managementOperationTransaction =
             managementOperationServiceAsync.create(
                 ManagementOperationCreateParams.builder()
-                    .amount(0L)
+                    .amount(1L)
                     .category(
                         ManagementOperationCreateParams.ManagementOperationCategory.MANAGEMENT_FEE
                     )
