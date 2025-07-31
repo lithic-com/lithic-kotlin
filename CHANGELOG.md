@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.97.0 (2025-07-31)
+
+Full Changelog: [v0.96.0...v0.97.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.96.0...v0.97.0)
+
+### Features
+
+* add retryable exception ([123e3b0](https://github.com/lithic-com/lithic-kotlin/commit/123e3b0411b4ca6def2ae2302bb158101199b1f3))
+* **client:** ensure compat with proguard ([97cc47f](https://github.com/lithic-com/lithic-kotlin/commit/97cc47fbd9f82ed1231a9d0f91b7ad78c0b2d492))
+
+
+### Bug Fixes
+
+* **client:** r8 support ([73e06a9](https://github.com/lithic-com/lithic-kotlin/commit/73e06a9e1ba41c757b7ad3e1aee77e3fa4c3e7c6))
+
+
+### Chores
+
+* **internal:** bump ci test timeout ([320309d](https://github.com/lithic-com/lithic-kotlin/commit/320309d362f58856163b50671660450cc527ff6a))
+* **internal:** reduce proguard ci logging ([b9f8cb8](https://github.com/lithic-com/lithic-kotlin/commit/b9f8cb8518e45dafceaaa48ef7763f8c3832097e))
+
 ## 0.96.0 (2025-07-28)
 
 Full Changelog: [v0.95.1...v0.96.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.95.1...v0.96.0)
