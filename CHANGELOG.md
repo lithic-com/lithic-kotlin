@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.98.0 (2025-08-04)
+
+Full Changelog: [v0.97.0...v0.98.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.97.0...v0.98.0)
+
+### Features
+
+* **api:** adds new Account Activity API ([e503443](https://github.com/lithic-com/lithic-kotlin/commit/e503443fe70d30d348fe684fc7780f10a6117a61))
+
 ## 0.97.0 (2025-07-31)
 
 Full Changelog: [v0.96.0...v0.97.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.96.0...v0.97.0)
