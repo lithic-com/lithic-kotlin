@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.98.1 (2025-08-08)
+
+Full Changelog: [v0.98.0...v0.98.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.98.0...v0.98.1)
+
+### Chores
+
+* **example:** fix run example comment ([cadd2de](https://github.com/lithic-com/lithic-kotlin/commit/cadd2debc71036377def214bd6ca0e1ff10f8d83))
+* increase max gradle JVM heap to 8GB ([1a23d94](https://github.com/lithic-com/lithic-kotlin/commit/1a23d9490ac84c45633a3bb28c18bb29e114054c))
+* **internal:** add lock helper ([c9b4de0](https://github.com/lithic-com/lithic-kotlin/commit/c9b4de02884c0a95199f611d744c4bfba82de141))
+* **internal:** update comment in script ([e92f2ad](https://github.com/lithic-com/lithic-kotlin/commit/e92f2ad9f3686152034c166e03c260ef8027e9a3))
+* update @stainless-api/prism-cli to v5.15.0 ([57e6a27](https://github.com/lithic-com/lithic-kotlin/commit/57e6a271470ae1aa9a9817ace47a8ca6a41a9d71))
+
 ## 0.98.0 (2025-08-04)
 
 Full Changelog: [v0.97.0...v0.98.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.97.0...v0.98.0)
