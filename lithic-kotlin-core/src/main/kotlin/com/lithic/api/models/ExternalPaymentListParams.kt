@@ -454,7 +454,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalPaymentCategory && value == other.value /* spotless:on */
+            return other is ExternalPaymentCategory && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -584,7 +584,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionResult && value == other.value /* spotless:on */
+            return other is TransactionResult && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -732,7 +732,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionStatus && value == other.value /* spotless:on */
+            return other is TransactionStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -745,10 +745,36 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalPaymentListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExternalPaymentListParams &&
+            begin == other.begin &&
+            businessAccountToken == other.businessAccountToken &&
+            category == other.category &&
+            end == other.end &&
+            endingBefore == other.endingBefore &&
+            financialAccountToken == other.financialAccountToken &&
+            pageSize == other.pageSize &&
+            result == other.result &&
+            startingAfter == other.startingAfter &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            begin,
+            businessAccountToken,
+            category,
+            end,
+            endingBefore,
+            financialAccountToken,
+            pageSize,
+            result,
+            startingAfter,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ExternalPaymentListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

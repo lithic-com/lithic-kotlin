@@ -961,10 +961,20 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Parameters && conditionalBlock == other.conditionalBlock && velocityLimitParams == other.velocityLimitParams && merchantLock == other.merchantLock && conditional3dsAction == other.conditional3dsAction /* spotless:on */
+                return other is Parameters &&
+                    conditionalBlock == other.conditionalBlock &&
+                    velocityLimitParams == other.velocityLimitParams &&
+                    merchantLock == other.merchantLock &&
+                    conditional3dsAction == other.conditional3dsAction
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(conditionalBlock, velocityLimitParams, merchantLock, conditional3dsAction) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(
+                    conditionalBlock,
+                    velocityLimitParams,
+                    merchantLock,
+                    conditional3dsAction,
+                )
 
             override fun toString(): String =
                 when {
@@ -1087,12 +1097,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CurrentVersion && parameters == other.parameters && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CurrentVersion &&
+                parameters == other.parameters &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(parameters, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(parameters, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1436,10 +1449,20 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Parameters && conditionalBlock == other.conditionalBlock && velocityLimitParams == other.velocityLimitParams && merchantLock == other.merchantLock && conditional3dsAction == other.conditional3dsAction /* spotless:on */
+                return other is Parameters &&
+                    conditionalBlock == other.conditionalBlock &&
+                    velocityLimitParams == other.velocityLimitParams &&
+                    merchantLock == other.merchantLock &&
+                    conditional3dsAction == other.conditional3dsAction
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(conditionalBlock, velocityLimitParams, merchantLock, conditional3dsAction) /* spotless:on */
+            override fun hashCode(): Int =
+                Objects.hash(
+                    conditionalBlock,
+                    velocityLimitParams,
+                    merchantLock,
+                    conditional3dsAction,
+                )
 
             override fun toString(): String =
                 when {
@@ -1562,12 +1585,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DraftVersion && parameters == other.parameters && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is DraftVersion &&
+                parameters == other.parameters &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(parameters, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(parameters, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1696,7 +1722,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventStream && value == other.value /* spotless:on */
+            return other is EventStream && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1826,7 +1852,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleState && value == other.value /* spotless:on */
+            return other is AuthRuleState && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1974,7 +2000,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AuthRuleType && value == other.value /* spotless:on */
+            return other is AuthRuleType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1987,12 +2013,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is V2ListResponse && token == other.token && accountTokens == other.accountTokens && cardTokens == other.cardTokens && currentVersion == other.currentVersion && draftVersion == other.draftVersion && eventStream == other.eventStream && name == other.name && programLevel == other.programLevel && state == other.state && type == other.type && excludedCardTokens == other.excludedCardTokens && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is V2ListResponse &&
+            token == other.token &&
+            accountTokens == other.accountTokens &&
+            cardTokens == other.cardTokens &&
+            currentVersion == other.currentVersion &&
+            draftVersion == other.draftVersion &&
+            eventStream == other.eventStream &&
+            name == other.name &&
+            programLevel == other.programLevel &&
+            state == other.state &&
+            type == other.type &&
+            excludedCardTokens == other.excludedCardTokens &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, accountTokens, cardTokens, currentVersion, draftVersion, eventStream, name, programLevel, state, type, excludedCardTokens, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            token,
+            accountTokens,
+            cardTokens,
+            currentVersion,
+            draftVersion,
+            eventStream,
+            name,
+            programLevel,
+            state,
+            type,
+            excludedCardTokens,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

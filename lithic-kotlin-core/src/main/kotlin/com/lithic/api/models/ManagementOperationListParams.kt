@@ -451,7 +451,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ManagementOperationCategory && value == other.value /* spotless:on */
+            return other is ManagementOperationCategory && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -599,7 +599,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionStatus && value == other.value /* spotless:on */
+            return other is TransactionStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -612,10 +612,34 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ManagementOperationListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ManagementOperationListParams &&
+            begin == other.begin &&
+            businessAccountToken == other.businessAccountToken &&
+            category == other.category &&
+            end == other.end &&
+            endingBefore == other.endingBefore &&
+            financialAccountToken == other.financialAccountToken &&
+            pageSize == other.pageSize &&
+            startingAfter == other.startingAfter &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            begin,
+            businessAccountToken,
+            category,
+            end,
+            endingBefore,
+            financialAccountToken,
+            pageSize,
+            startingAfter,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ManagementOperationListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

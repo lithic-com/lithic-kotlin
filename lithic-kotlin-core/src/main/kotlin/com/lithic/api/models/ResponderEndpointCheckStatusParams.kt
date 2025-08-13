@@ -315,7 +315,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -328,10 +328,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResponderEndpointCheckStatusParams && type == other.type && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ResponderEndpointCheckStatusParams &&
+            type == other.type &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(type, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(type, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ResponderEndpointCheckStatusParams{type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

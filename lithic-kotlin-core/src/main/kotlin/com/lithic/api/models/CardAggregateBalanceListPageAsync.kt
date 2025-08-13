@@ -118,10 +118,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardAggregateBalanceListPageAsync && service == other.service && params == other.params && response == other.response /* spotless:on */
+        return other is CardAggregateBalanceListPageAsync &&
+            service == other.service &&
+            params == other.params &&
+            response == other.response
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(service, params, response) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(service, params, response)
 
     override fun toString() =
         "CardAggregateBalanceListPageAsync{service=$service, params=$params, response=$response}"

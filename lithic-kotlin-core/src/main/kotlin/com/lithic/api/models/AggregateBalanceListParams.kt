@@ -315,7 +315,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountType && value == other.value /* spotless:on */
+            return other is FinancialAccountType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -328,10 +328,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AggregateBalanceListParams && financialAccountType == other.financialAccountType && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AggregateBalanceListParams &&
+            financialAccountType == other.financialAccountType &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountType, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(financialAccountType, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AggregateBalanceListParams{financialAccountType=$financialAccountType, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
