@@ -150,6 +150,7 @@ internal class AccountHolderSimulateEnrollmentReviewResponseTest {
                                 .ADDRESS_VERIFICATION_FAILURE
                         )
                         .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .kyPassedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .websiteUrl("website_url")
@@ -303,6 +304,7 @@ internal class AccountHolderSimulateEnrollmentReviewResponseTest {
                             .ADDRESS_VERIFICATION_FAILURE
                     )
                     .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .kyPassedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
         assertThat(accountHolderSimulateEnrollmentReviewResponse.websiteUrl())
@@ -450,6 +452,7 @@ internal class AccountHolderSimulateEnrollmentReviewResponseTest {
                                 .ADDRESS_VERIFICATION_FAILURE
                         )
                         .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .kyPassedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
                 .websiteUrl("website_url")
