@@ -521,7 +521,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TransactionCategory && value == other.value /* spotless:on */
+            return other is TransactionCategory && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -646,7 +646,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Result && value == other.value /* spotless:on */
+            return other is Result && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -801,7 +801,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -814,10 +814,36 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountActivityListParams && begin == other.begin && businessAccountToken == other.businessAccountToken && category == other.category && end == other.end && endingBefore == other.endingBefore && financialAccountToken == other.financialAccountToken && pageSize == other.pageSize && result == other.result && startingAfter == other.startingAfter && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountActivityListParams &&
+            begin == other.begin &&
+            businessAccountToken == other.businessAccountToken &&
+            category == other.category &&
+            end == other.end &&
+            endingBefore == other.endingBefore &&
+            financialAccountToken == other.financialAccountToken &&
+            pageSize == other.pageSize &&
+            result == other.result &&
+            startingAfter == other.startingAfter &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(begin, businessAccountToken, category, end, endingBefore, financialAccountToken, pageSize, result, startingAfter, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            begin,
+            businessAccountToken,
+            category,
+            end,
+            endingBefore,
+            financialAccountToken,
+            pageSize,
+            result,
+            startingAfter,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "AccountActivityListParams{begin=$begin, businessAccountToken=$businessAccountToken, category=$category, end=$end, endingBefore=$endingBefore, financialAccountToken=$financialAccountToken, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

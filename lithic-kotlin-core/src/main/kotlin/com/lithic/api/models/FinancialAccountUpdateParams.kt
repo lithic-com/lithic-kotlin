@@ -372,12 +372,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UpdateFinancialAccountRequest && nickname == other.nickname && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is UpdateFinancialAccountRequest &&
+                nickname == other.nickname &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(nickname, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -390,10 +390,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialAccountUpdateParams && financialAccountToken == other.financialAccountToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is FinancialAccountUpdateParams &&
+            financialAccountToken == other.financialAccountToken &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(financialAccountToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(financialAccountToken, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "FinancialAccountUpdateParams{financialAccountToken=$financialAccountToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

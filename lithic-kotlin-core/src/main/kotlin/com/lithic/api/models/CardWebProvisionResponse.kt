@@ -561,12 +561,12 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is WebPushProvisioningResponseHeader && kid == other.kid && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is WebPushProvisioningResponseHeader &&
+                    kid == other.kid &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(kid, additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -579,12 +579,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is WebPushProvisioningResponseJws && header == other.header && payload == other.payload && protected == other.protected && signature == other.signature && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is WebPushProvisioningResponseJws &&
+                header == other.header &&
+                payload == other.payload &&
+                protected == other.protected &&
+                signature == other.signature &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(header, payload, protected, signature, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(header, payload, protected, signature, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -597,12 +602,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardWebProvisionResponse && jws == other.jws && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CardWebProvisionResponse &&
+            jws == other.jws &&
+            state == other.state &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(jws, state, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

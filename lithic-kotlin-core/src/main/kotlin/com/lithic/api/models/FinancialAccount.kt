@@ -1121,7 +1121,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ChargedOffReason && value == other.value /* spotless:on */
+                return other is ChargedOffReason && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1267,7 +1267,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FinancialAccountState && value == other.value /* spotless:on */
+                return other is FinancialAccountState && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1280,12 +1280,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountCreditConfig && chargedOffReason == other.chargedOffReason && creditLimit == other.creditLimit && creditProductToken == other.creditProductToken && externalBankAccountToken == other.externalBankAccountToken && financialAccountState == other.financialAccountState && isSpendBlocked == other.isSpendBlocked && tier == other.tier && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FinancialAccountCreditConfig &&
+                chargedOffReason == other.chargedOffReason &&
+                creditLimit == other.creditLimit &&
+                creditProductToken == other.creditProductToken &&
+                externalBankAccountToken == other.externalBankAccountToken &&
+                financialAccountState == other.financialAccountState &&
+                isSpendBlocked == other.isSpendBlocked &&
+                tier == other.tier &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(chargedOffReason, creditLimit, creditProductToken, externalBankAccountToken, financialAccountState, isSpendBlocked, tier, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                chargedOffReason,
+                creditLimit,
+                creditProductToken,
+                externalBankAccountToken,
+                financialAccountState,
+                isSpendBlocked,
+                tier,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1430,7 +1447,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountStatus && value == other.value /* spotless:on */
+            return other is FinancialAccountStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1597,7 +1614,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1749,7 +1766,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FinancialAccountSubstatus && value == other.value /* spotless:on */
+            return other is FinancialAccountSubstatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1762,12 +1779,39 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FinancialAccount && token == other.token && accountToken == other.accountToken && created == other.created && creditConfiguration == other.creditConfiguration && isForBenefitOf == other.isForBenefitOf && nickname == other.nickname && status == other.status && type == other.type && updated == other.updated && accountNumber == other.accountNumber && routingNumber == other.routingNumber && substatus == other.substatus && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is FinancialAccount &&
+            token == other.token &&
+            accountToken == other.accountToken &&
+            created == other.created &&
+            creditConfiguration == other.creditConfiguration &&
+            isForBenefitOf == other.isForBenefitOf &&
+            nickname == other.nickname &&
+            status == other.status &&
+            type == other.type &&
+            updated == other.updated &&
+            accountNumber == other.accountNumber &&
+            routingNumber == other.routingNumber &&
+            substatus == other.substatus &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, accountToken, created, creditConfiguration, isForBenefitOf, nickname, status, type, updated, accountNumber, routingNumber, substatus, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            token,
+            accountToken,
+            created,
+            creditConfiguration,
+            isForBenefitOf,
+            nickname,
+            status,
+            type,
+            updated,
+            accountNumber,
+            routingNumber,
+            substatus,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

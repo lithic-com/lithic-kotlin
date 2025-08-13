@@ -674,12 +674,23 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SimulateEnrollmentDocumentReviewRequest && documentUploadToken == other.documentUploadToken && status == other.status && acceptedEntityStatusReasons == other.acceptedEntityStatusReasons && statusReason == other.statusReason && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is SimulateEnrollmentDocumentReviewRequest &&
+                documentUploadToken == other.documentUploadToken &&
+                status == other.status &&
+                acceptedEntityStatusReasons == other.acceptedEntityStatusReasons &&
+                statusReason == other.statusReason &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(documentUploadToken, status, acceptedEntityStatusReasons, statusReason, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                documentUploadToken,
+                status,
+                acceptedEntityStatusReasons,
+                statusReason,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -817,7 +828,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1008,7 +1019,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DocumentUploadStatusReasons && value == other.value /* spotless:on */
+            return other is DocumentUploadStatusReasons && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1021,10 +1032,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderSimulateEnrollmentDocumentReviewParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountHolderSimulateEnrollmentDocumentReviewParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AccountHolderSimulateEnrollmentDocumentReviewParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
