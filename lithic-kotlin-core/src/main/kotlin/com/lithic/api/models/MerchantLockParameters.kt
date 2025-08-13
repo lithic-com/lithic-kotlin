@@ -399,12 +399,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Merchant && comment == other.comment && descriptor == other.descriptor && merchantId == other.merchantId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Merchant &&
+                comment == other.comment &&
+                descriptor == other.descriptor &&
+                merchantId == other.merchantId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(comment, descriptor, merchantId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(comment, descriptor, merchantId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -417,12 +421,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MerchantLockParameters && merchants == other.merchants && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MerchantLockParameters &&
+            merchants == other.merchants &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(merchants, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

@@ -438,12 +438,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AvailableSpendLimit && daily == other.daily && lifetime == other.lifetime && monthly == other.monthly && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AvailableSpendLimit &&
+                daily == other.daily &&
+                lifetime == other.lifetime &&
+                monthly == other.monthly &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(daily, lifetime, monthly, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(daily, lifetime, monthly, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -645,12 +649,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SpendLimit && daily == other.daily && lifetime == other.lifetime && monthly == other.monthly && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is SpendLimit &&
+                daily == other.daily &&
+                lifetime == other.lifetime &&
+                monthly == other.monthly &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(daily, lifetime, monthly, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(daily, lifetime, monthly, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -864,12 +872,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SpendVelocity && daily == other.daily && lifetime == other.lifetime && monthly == other.monthly && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is SpendVelocity &&
+                daily == other.daily &&
+                lifetime == other.lifetime &&
+                monthly == other.monthly &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(daily, lifetime, monthly, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(daily, lifetime, monthly, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -882,12 +894,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountSpendLimits && availableSpendLimit == other.availableSpendLimit && spendLimit == other.spendLimit && spendVelocity == other.spendVelocity && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountSpendLimits &&
+            availableSpendLimit == other.availableSpendLimit &&
+            spendLimit == other.spendLimit &&
+            spendVelocity == other.spendVelocity &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(availableSpendLimit, spendLimit, spendVelocity, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(availableSpendLimit, spendLimit, spendVelocity, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

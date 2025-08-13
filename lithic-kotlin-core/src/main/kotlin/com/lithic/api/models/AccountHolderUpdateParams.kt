@@ -344,10 +344,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && kybPatchRequest == other.kybPatchRequest && kycPatchRequest == other.kycPatchRequest && patchRequest == other.patchRequest /* spotless:on */
+            return other is Body &&
+                kybPatchRequest == other.kybPatchRequest &&
+                kycPatchRequest == other.kycPatchRequest &&
+                patchRequest == other.patchRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(kybPatchRequest, kycPatchRequest, patchRequest) /* spotless:on */
+        override fun hashCode(): Int = Objects.hash(kybPatchRequest, kycPatchRequest, patchRequest)
 
         override fun toString(): String =
             when {
@@ -1380,12 +1383,29 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is KybBusinessEntityPatch && entityToken == other.entityToken && address == other.address && dbaBusinessName == other.dbaBusinessName && governmentId == other.governmentId && legalBusinessName == other.legalBusinessName && parentCompany == other.parentCompany && phoneNumbers == other.phoneNumbers && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is KybBusinessEntityPatch &&
+                        entityToken == other.entityToken &&
+                        address == other.address &&
+                        dbaBusinessName == other.dbaBusinessName &&
+                        governmentId == other.governmentId &&
+                        legalBusinessName == other.legalBusinessName &&
+                        parentCompany == other.parentCompany &&
+                        phoneNumbers == other.phoneNumbers &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(entityToken, address, dbaBusinessName, governmentId, legalBusinessName, parentCompany, phoneNumbers, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        entityToken,
+                        address,
+                        dbaBusinessName,
+                        governmentId,
+                        legalBusinessName,
+                        parentCompany,
+                        phoneNumbers,
+                        additionalProperties,
+                    )
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -1859,12 +1879,31 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is IndividualPatch && entityToken == other.entityToken && address == other.address && dob == other.dob && email == other.email && firstName == other.firstName && governmentId == other.governmentId && lastName == other.lastName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is IndividualPatch &&
+                        entityToken == other.entityToken &&
+                        address == other.address &&
+                        dob == other.dob &&
+                        email == other.email &&
+                        firstName == other.firstName &&
+                        governmentId == other.governmentId &&
+                        lastName == other.lastName &&
+                        phoneNumber == other.phoneNumber &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(entityToken, address, dob, email, firstName, governmentId, lastName, phoneNumber, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        entityToken,
+                        address,
+                        dob,
+                        email,
+                        firstName,
+                        governmentId,
+                        lastName,
+                        phoneNumber,
+                        additionalProperties,
+                    )
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -1877,12 +1916,29 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is KybPatchRequest && beneficialOwnerEntities == other.beneficialOwnerEntities && beneficialOwnerIndividuals == other.beneficialOwnerIndividuals && businessEntity == other.businessEntity && controlPerson == other.controlPerson && externalId == other.externalId && natureOfBusiness == other.natureOfBusiness && websiteUrl == other.websiteUrl && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is KybPatchRequest &&
+                    beneficialOwnerEntities == other.beneficialOwnerEntities &&
+                    beneficialOwnerIndividuals == other.beneficialOwnerIndividuals &&
+                    businessEntity == other.businessEntity &&
+                    controlPerson == other.controlPerson &&
+                    externalId == other.externalId &&
+                    natureOfBusiness == other.natureOfBusiness &&
+                    websiteUrl == other.websiteUrl &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(beneficialOwnerEntities, beneficialOwnerIndividuals, businessEntity, controlPerson, externalId, natureOfBusiness, websiteUrl, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    beneficialOwnerEntities,
+                    beneficialOwnerIndividuals,
+                    businessEntity,
+                    controlPerson,
+                    externalId,
+                    natureOfBusiness,
+                    websiteUrl,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2540,12 +2596,31 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is IndividualPatch && entityToken == other.entityToken && address == other.address && dob == other.dob && email == other.email && firstName == other.firstName && governmentId == other.governmentId && lastName == other.lastName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
+                    return other is IndividualPatch &&
+                        entityToken == other.entityToken &&
+                        address == other.address &&
+                        dob == other.dob &&
+                        email == other.email &&
+                        firstName == other.firstName &&
+                        governmentId == other.governmentId &&
+                        lastName == other.lastName &&
+                        phoneNumber == other.phoneNumber &&
+                        additionalProperties == other.additionalProperties
                 }
 
-                /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(entityToken, address, dob, email, firstName, governmentId, lastName, phoneNumber, additionalProperties) }
-                /* spotless:on */
+                private val hashCode: Int by lazy {
+                    Objects.hash(
+                        entityToken,
+                        address,
+                        dob,
+                        email,
+                        firstName,
+                        governmentId,
+                        lastName,
+                        phoneNumber,
+                        additionalProperties,
+                    )
+                }
 
                 override fun hashCode(): Int = hashCode
 
@@ -2558,12 +2633,15 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is KycPatchRequest && externalId == other.externalId && individual == other.individual && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is KycPatchRequest &&
+                    externalId == other.externalId &&
+                    individual == other.individual &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(externalId, individual, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(externalId, individual, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2971,12 +3049,29 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PatchRequest && address == other.address && businessAccountToken == other.businessAccountToken && email == other.email && firstName == other.firstName && lastName == other.lastName && legalBusinessName == other.legalBusinessName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is PatchRequest &&
+                    address == other.address &&
+                    businessAccountToken == other.businessAccountToken &&
+                    email == other.email &&
+                    firstName == other.firstName &&
+                    lastName == other.lastName &&
+                    legalBusinessName == other.legalBusinessName &&
+                    phoneNumber == other.phoneNumber &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(address, businessAccountToken, email, firstName, lastName, legalBusinessName, phoneNumber, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    address,
+                    businessAccountToken,
+                    email,
+                    firstName,
+                    lastName,
+                    legalBusinessName,
+                    phoneNumber,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -2990,10 +3085,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolderUpdateParams && accountHolderToken == other.accountHolderToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountHolderUpdateParams &&
+            accountHolderToken == other.accountHolderToken &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(accountHolderToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(accountHolderToken, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AccountHolderUpdateParams{accountHolderToken=$accountHolderToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

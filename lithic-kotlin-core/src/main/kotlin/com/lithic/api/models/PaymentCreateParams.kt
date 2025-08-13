@@ -918,12 +918,33 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreatePaymentRequest && amount == other.amount && externalBankAccountToken == other.externalBankAccountToken && financialAccountToken == other.financialAccountToken && method == other.method && methodAttributes == other.methodAttributes && type == other.type && token == other.token && memo == other.memo && userDefinedId == other.userDefinedId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CreatePaymentRequest &&
+                amount == other.amount &&
+                externalBankAccountToken == other.externalBankAccountToken &&
+                financialAccountToken == other.financialAccountToken &&
+                method == other.method &&
+                methodAttributes == other.methodAttributes &&
+                type == other.type &&
+                token == other.token &&
+                memo == other.memo &&
+                userDefinedId == other.userDefinedId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, externalBankAccountToken, financialAccountToken, method, methodAttributes, type, token, memo, userDefinedId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                amount,
+                externalBankAccountToken,
+                financialAccountToken,
+                method,
+                methodAttributes,
+                type,
+                token,
+                memo,
+                userDefinedId,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1048,7 +1069,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Method && value == other.value /* spotless:on */
+            return other is Method && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1354,7 +1375,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is SecCode && value == other.value /* spotless:on */
+                return other is SecCode && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1367,12 +1388,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentMethodRequestAttributes && secCode == other.secCode && addenda == other.addenda && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PaymentMethodRequestAttributes &&
+                secCode == other.secCode &&
+                addenda == other.addenda &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(secCode, addenda, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1497,7 +1519,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1510,10 +1532,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PaymentCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PaymentCreateParams &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PaymentCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

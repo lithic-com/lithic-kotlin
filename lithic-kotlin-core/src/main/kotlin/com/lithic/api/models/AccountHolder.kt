@@ -1523,12 +1523,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderBusinessResponse && address == other.address && dbaBusinessName == other.dbaBusinessName && entityToken == other.entityToken && governmentId == other.governmentId && legalBusinessName == other.legalBusinessName && phoneNumbers == other.phoneNumbers && parentCompany == other.parentCompany && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountHolderBusinessResponse &&
+                address == other.address &&
+                dbaBusinessName == other.dbaBusinessName &&
+                entityToken == other.entityToken &&
+                governmentId == other.governmentId &&
+                legalBusinessName == other.legalBusinessName &&
+                phoneNumbers == other.phoneNumbers &&
+                parentCompany == other.parentCompany &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(address, dbaBusinessName, entityToken, governmentId, legalBusinessName, phoneNumbers, parentCompany, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                address,
+                dbaBusinessName,
+                entityToken,
+                governmentId,
+                legalBusinessName,
+                phoneNumbers,
+                parentCompany,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1920,12 +1937,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderIndividualResponse && address == other.address && dob == other.dob && email == other.email && entityToken == other.entityToken && firstName == other.firstName && lastName == other.lastName && phoneNumber == other.phoneNumber && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountHolderIndividualResponse &&
+                address == other.address &&
+                dob == other.dob &&
+                email == other.email &&
+                entityToken == other.entityToken &&
+                firstName == other.firstName &&
+                lastName == other.lastName &&
+                phoneNumber == other.phoneNumber &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(address, dob, email, entityToken, firstName, lastName, phoneNumber, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                address,
+                dob,
+                email,
+                entityToken,
+                firstName,
+                lastName,
+                phoneNumber,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2055,7 +2089,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExemptionType && value == other.value /* spotless:on */
+            return other is ExemptionType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2206,7 +2240,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2388,7 +2422,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is StatusReason && value == other.value /* spotless:on */
+            return other is StatusReason && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2519,7 +2553,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UserType && value == other.value /* spotless:on */
+            return other is UserType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2938,7 +2972,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+                return other is Status && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3121,7 +3155,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StatusReason && value == other.value /* spotless:on */
+                return other is StatusReason && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3134,12 +3168,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountHolderVerificationApplication && created == other.created && status == other.status && statusReasons == other.statusReasons && updated == other.updated && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountHolderVerificationApplication &&
+                created == other.created &&
+                status == other.status &&
+                statusReasons == other.statusReasons &&
+                updated == other.updated &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(created, status, statusReasons, updated, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(created, status, statusReasons, updated, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -3152,12 +3191,55 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountHolder && token == other.token && created == other.created && accountToken == other.accountToken && beneficialOwnerEntities == other.beneficialOwnerEntities && beneficialOwnerIndividuals == other.beneficialOwnerIndividuals && businessAccountToken == other.businessAccountToken && businessEntity == other.businessEntity && controlPerson == other.controlPerson && email == other.email && exemptionType == other.exemptionType && externalId == other.externalId && individual == other.individual && natureOfBusiness == other.natureOfBusiness && phoneNumber == other.phoneNumber && requiredDocuments == other.requiredDocuments && status == other.status && statusReasons == other.statusReasons && userType == other.userType && verificationApplication == other.verificationApplication && websiteUrl == other.websiteUrl && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountHolder &&
+            token == other.token &&
+            created == other.created &&
+            accountToken == other.accountToken &&
+            beneficialOwnerEntities == other.beneficialOwnerEntities &&
+            beneficialOwnerIndividuals == other.beneficialOwnerIndividuals &&
+            businessAccountToken == other.businessAccountToken &&
+            businessEntity == other.businessEntity &&
+            controlPerson == other.controlPerson &&
+            email == other.email &&
+            exemptionType == other.exemptionType &&
+            externalId == other.externalId &&
+            individual == other.individual &&
+            natureOfBusiness == other.natureOfBusiness &&
+            phoneNumber == other.phoneNumber &&
+            requiredDocuments == other.requiredDocuments &&
+            status == other.status &&
+            statusReasons == other.statusReasons &&
+            userType == other.userType &&
+            verificationApplication == other.verificationApplication &&
+            websiteUrl == other.websiteUrl &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, created, accountToken, beneficialOwnerEntities, beneficialOwnerIndividuals, businessAccountToken, businessEntity, controlPerson, email, exemptionType, externalId, individual, natureOfBusiness, phoneNumber, requiredDocuments, status, statusReasons, userType, verificationApplication, websiteUrl, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            token,
+            created,
+            accountToken,
+            beneficialOwnerEntities,
+            beneficialOwnerIndividuals,
+            businessAccountToken,
+            businessEntity,
+            controlPerson,
+            email,
+            exemptionType,
+            externalId,
+            individual,
+            natureOfBusiness,
+            phoneNumber,
+            requiredDocuments,
+            status,
+            statusReasons,
+            userType,
+            verificationApplication,
+            websiteUrl,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

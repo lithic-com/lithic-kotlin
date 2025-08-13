@@ -338,7 +338,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Action && value == other.value /* spotless:on */
+            return other is Action && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -768,7 +768,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Attribute && value == other.value /* spotless:on */
+                return other is Attribute && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -922,7 +922,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Operation && value == other.value /* spotless:on */
+                return other is Operation && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1027,10 +1027,13 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Value && regex == other.regex && number == other.number && listOfStrings == other.listOfStrings /* spotless:on */
+                return other is Value &&
+                    regex == other.regex &&
+                    number == other.number &&
+                    listOfStrings == other.listOfStrings
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(regex, number, listOfStrings) /* spotless:on */
+            override fun hashCode(): Int = Objects.hash(regex, number, listOfStrings)
 
             override fun toString(): String =
                 when {
@@ -1139,12 +1142,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Condition && attribute == other.attribute && operation == other.operation && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Condition &&
+                attribute == other.attribute &&
+                operation == other.operation &&
+                value == other.value &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(attribute, operation, value, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(attribute, operation, value, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1157,12 +1164,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Conditional3dsActionParameters && action == other.action && conditions == other.conditions && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Conditional3dsActionParameters &&
+            action == other.action &&
+            conditions == other.conditions &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(action, conditions, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

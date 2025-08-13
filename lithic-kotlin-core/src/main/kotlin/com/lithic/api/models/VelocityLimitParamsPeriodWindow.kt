@@ -236,10 +236,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is VelocityLimitParamsPeriodWindow && trailing == other.trailing && fixed == other.fixed && trailingWindowObject == other.trailingWindowObject && fixedWindowDay == other.fixedWindowDay && fixedWindowWeek == other.fixedWindowWeek && fixedWindowMonth == other.fixedWindowMonth && fixedWindowYear == other.fixedWindowYear /* spotless:on */
+        return other is VelocityLimitParamsPeriodWindow &&
+            trailing == other.trailing &&
+            fixed == other.fixed &&
+            trailingWindowObject == other.trailingWindowObject &&
+            fixedWindowDay == other.fixedWindowDay &&
+            fixedWindowWeek == other.fixedWindowWeek &&
+            fixedWindowMonth == other.fixedWindowMonth &&
+            fixedWindowYear == other.fixedWindowYear
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(trailing, fixed, trailingWindowObject, fixedWindowDay, fixedWindowWeek, fixedWindowMonth, fixedWindowYear) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            trailing,
+            fixed,
+            trailingWindowObject,
+            fixedWindowDay,
+            fixedWindowWeek,
+            fixedWindowMonth,
+            fixedWindowYear,
+        )
 
     override fun toString(): String =
         when {
@@ -580,7 +596,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedWindow && value == other.value /* spotless:on */
+            return other is FixedWindow && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -855,7 +871,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -868,12 +884,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TrailingWindowObject && duration == other.duration && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is TrailingWindowObject &&
+                duration == other.duration &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(duration, type, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1111,7 +1128,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1124,12 +1141,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedWindowDay && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FixedWindowDay &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(type, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1409,7 +1426,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1422,12 +1439,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedWindowWeek && dayOfWeek == other.dayOfWeek && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FixedWindowWeek &&
+                dayOfWeek == other.dayOfWeek &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(dayOfWeek, type, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1712,7 +1730,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1725,12 +1743,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedWindowMonth && dayOfMonth == other.dayOfMonth && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FixedWindowMonth &&
+                dayOfMonth == other.dayOfMonth &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(dayOfMonth, type, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2052,7 +2071,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -2065,12 +2084,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedWindowYear && dayOfMonth == other.dayOfMonth && month == other.month && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FixedWindowYear &&
+                dayOfMonth == other.dayOfMonth &&
+                month == other.month &&
+                type == other.type &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(dayOfMonth, month, type, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(dayOfMonth, month, type, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 

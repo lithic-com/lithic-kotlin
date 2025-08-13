@@ -1202,12 +1202,35 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && comment == other.comment && digitalCardArtToken == other.digitalCardArtToken && memo == other.memo && networkProgramToken == other.networkProgramToken && pin == other.pin && pinStatus == other.pinStatus && spendLimit == other.spendLimit && spendLimitDuration == other.spendLimitDuration && state == other.state && substatus == other.substatus && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                comment == other.comment &&
+                digitalCardArtToken == other.digitalCardArtToken &&
+                memo == other.memo &&
+                networkProgramToken == other.networkProgramToken &&
+                pin == other.pin &&
+                pinStatus == other.pinStatus &&
+                spendLimit == other.spendLimit &&
+                spendLimitDuration == other.spendLimitDuration &&
+                state == other.state &&
+                substatus == other.substatus &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(comment, digitalCardArtToken, memo, networkProgramToken, pin, pinStatus, spendLimit, spendLimitDuration, state, substatus, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                comment,
+                digitalCardArtToken,
+                memo,
+                networkProgramToken,
+                pin,
+                pinStatus,
+                spendLimit,
+                spendLimitDuration,
+                state,
+                substatus,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1332,7 +1355,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PinStatus && value == other.value /* spotless:on */
+            return other is PinStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1469,7 +1492,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is State && value == other.value /* spotless:on */
+            return other is State && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1673,7 +1696,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Substatus && value == other.value /* spotless:on */
+            return other is Substatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1686,10 +1709,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CardUpdateParams && cardToken == other.cardToken && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CardUpdateParams &&
+            cardToken == other.cardToken &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cardToken, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(cardToken, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CardUpdateParams{cardToken=$cardToken, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

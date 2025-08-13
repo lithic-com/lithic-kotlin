@@ -1140,7 +1140,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is OwnerType && value == other.value /* spotless:on */
+            return other is OwnerType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1272,7 +1272,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is State && value == other.value /* spotless:on */
+            return other is State && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1401,7 +1401,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountType && value == other.value /* spotless:on */
+            return other is AccountType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1544,7 +1544,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is VerificationMethod && value == other.value /* spotless:on */
+            return other is VerificationMethod && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1686,7 +1686,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is VerificationState && value == other.value /* spotless:on */
+            return other is VerificationState && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1699,12 +1699,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalBankAccountListResponse && token == other.token && country == other.country && created == other.created && currency == other.currency && lastFour == other.lastFour && owner == other.owner && ownerType == other.ownerType && routingNumber == other.routingNumber && state == other.state && type == other.type && verificationAttempts == other.verificationAttempts && verificationMethod == other.verificationMethod && verificationState == other.verificationState && accountToken == other.accountToken && address == other.address && companyId == other.companyId && dob == other.dob && doingBusinessAs == other.doingBusinessAs && financialAccountToken == other.financialAccountToken && name == other.name && userDefinedId == other.userDefinedId && verificationFailedReason == other.verificationFailedReason && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ExternalBankAccountListResponse &&
+            token == other.token &&
+            country == other.country &&
+            created == other.created &&
+            currency == other.currency &&
+            lastFour == other.lastFour &&
+            owner == other.owner &&
+            ownerType == other.ownerType &&
+            routingNumber == other.routingNumber &&
+            state == other.state &&
+            type == other.type &&
+            verificationAttempts == other.verificationAttempts &&
+            verificationMethod == other.verificationMethod &&
+            verificationState == other.verificationState &&
+            accountToken == other.accountToken &&
+            address == other.address &&
+            companyId == other.companyId &&
+            dob == other.dob &&
+            doingBusinessAs == other.doingBusinessAs &&
+            financialAccountToken == other.financialAccountToken &&
+            name == other.name &&
+            userDefinedId == other.userDefinedId &&
+            verificationFailedReason == other.verificationFailedReason &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(token, country, created, currency, lastFour, owner, ownerType, routingNumber, state, type, verificationAttempts, verificationMethod, verificationState, accountToken, address, companyId, dob, doingBusinessAs, financialAccountToken, name, userDefinedId, verificationFailedReason, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            token,
+            country,
+            created,
+            currency,
+            lastFour,
+            owner,
+            ownerType,
+            routingNumber,
+            state,
+            type,
+            verificationAttempts,
+            verificationMethod,
+            verificationState,
+            accountToken,
+            address,
+            companyId,
+            dob,
+            doingBusinessAs,
+            financialAccountToken,
+            name,
+            userDefinedId,
+            verificationFailedReason,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
