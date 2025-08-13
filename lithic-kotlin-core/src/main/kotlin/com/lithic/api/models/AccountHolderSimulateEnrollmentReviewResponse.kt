@@ -2584,6 +2584,7 @@ private constructor(
         private val status: JsonField<Status>,
         private val statusReasons: JsonField<List<StatusReasons>>,
         private val updated: JsonField<OffsetDateTime>,
+        private val kyPassedAt: JsonField<OffsetDateTime>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2599,7 +2600,10 @@ private constructor(
             @JsonProperty("updated")
             @ExcludeMissing
             updated: JsonField<OffsetDateTime> = JsonMissing.of(),
-        ) : this(created, status, statusReasons, updated, mutableMapOf())
+            @JsonProperty("ky_passed_at")
+            @ExcludeMissing
+            kyPassedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        ) : this(created, status, statusReasons, updated, kyPassedAt, mutableMapOf())
 
         /**
          * Timestamp of when the application was created.
@@ -2637,6 +2641,15 @@ private constructor(
         fun updated(): OffsetDateTime = updated.getRequired("updated")
 
         /**
+         * Timestamp of when the application passed the verification process. Only present if
+         * `status` is `ACCEPTED`
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun kyPassedAt(): OffsetDateTime? = kyPassedAt.getNullable("ky_passed_at")
+
+        /**
          * Returns the raw JSON value of [created].
          *
          * Unlike [created], this method doesn't throw if the JSON field has an unexpected type.
@@ -2666,6 +2679,15 @@ private constructor(
          * Unlike [updated], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
+
+        /**
+         * Returns the raw JSON value of [kyPassedAt].
+         *
+         * Unlike [kyPassedAt], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("ky_passed_at")
+        @ExcludeMissing
+        fun _kyPassedAt(): JsonField<OffsetDateTime> = kyPassedAt
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2702,6 +2724,7 @@ private constructor(
             private var status: JsonField<Status>? = null
             private var statusReasons: JsonField<MutableList<StatusReasons>>? = null
             private var updated: JsonField<OffsetDateTime>? = null
+            private var kyPassedAt: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(verificationApplication: VerificationApplication) = apply {
@@ -2709,6 +2732,7 @@ private constructor(
                 status = verificationApplication.status
                 statusReasons = verificationApplication.statusReasons.map { it.toMutableList() }
                 updated = verificationApplication.updated
+                kyPassedAt = verificationApplication.kyPassedAt
                 additionalProperties = verificationApplication.additionalProperties.toMutableMap()
             }
 
@@ -2780,6 +2804,23 @@ private constructor(
              */
             fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
+            /**
+             * Timestamp of when the application passed the verification process. Only present if
+             * `status` is `ACCEPTED`
+             */
+            fun kyPassedAt(kyPassedAt: OffsetDateTime) = kyPassedAt(JsonField.of(kyPassedAt))
+
+            /**
+             * Sets [Builder.kyPassedAt] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.kyPassedAt] with a well-typed [OffsetDateTime] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun kyPassedAt(kyPassedAt: JsonField<OffsetDateTime>) = apply {
+                this.kyPassedAt = kyPassedAt
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -2820,6 +2861,7 @@ private constructor(
                     checkRequired("status", status),
                     checkRequired("statusReasons", statusReasons).map { it.toImmutable() },
                     checkRequired("updated", updated),
+                    kyPassedAt,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -2835,6 +2877,7 @@ private constructor(
             status().validate()
             statusReasons().forEach { it.validate() }
             updated()
+            kyPassedAt()
             validated = true
         }
 
@@ -2856,7 +2899,8 @@ private constructor(
             (if (created.asKnown() == null) 0 else 1) +
                 (status.asKnown()?.validity() ?: 0) +
                 (statusReasons.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-                (if (updated.asKnown() == null) 0 else 1)
+                (if (updated.asKnown() == null) 0 else 1) +
+                (if (kyPassedAt.asKnown() == null) 0 else 1)
 
         /**
          * KYC and KYB evaluation states.
@@ -3314,17 +3358,18 @@ private constructor(
                 status == other.status &&
                 statusReasons == other.statusReasons &&
                 updated == other.updated &&
+                kyPassedAt == other.kyPassedAt &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(created, status, statusReasons, updated, additionalProperties)
+            Objects.hash(created, status, statusReasons, updated, kyPassedAt, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VerificationApplication{created=$created, status=$status, statusReasons=$statusReasons, updated=$updated, additionalProperties=$additionalProperties}"
+            "VerificationApplication{created=$created, status=$status, statusReasons=$statusReasons, updated=$updated, kyPassedAt=$kyPassedAt, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
