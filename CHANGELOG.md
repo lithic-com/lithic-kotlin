@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.99.0 (2025-08-13)
+
+Full Changelog: [v0.98.0...v0.99.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.98.0...v0.99.0)
+
+### Features
+
+* **api:** adds detailed 3DS challenge statuses ([c140d64](https://github.com/lithic-com/lithic-kotlin/commit/c140d6411f24b06de46a268bb437a65681ac0f6a))
+
+
+### Chores
+
+* **example:** fix run example comment ([cadd2de](https://github.com/lithic-com/lithic-kotlin/commit/cadd2debc71036377def214bd6ca0e1ff10f8d83))
+* increase max gradle JVM heap to 8GB ([1a23d94](https://github.com/lithic-com/lithic-kotlin/commit/1a23d9490ac84c45633a3bb28c18bb29e114054c))
+* **internal:** add lock helper ([c9b4de0](https://github.com/lithic-com/lithic-kotlin/commit/c9b4de02884c0a95199f611d744c4bfba82de141))
+* **internal:** dynamically determine included projects ([326e268](https://github.com/lithic-com/lithic-kotlin/commit/326e2689564640f21f665eac577a6bd0777c4bd0))
+* **internal:** format identity methods ([2f494ac](https://github.com/lithic-com/lithic-kotlin/commit/2f494acb1d9bb701668536f9a559cb069f4bb28f))
+* **internal:** support passing arguments to test script ([30fdc8f](https://github.com/lithic-com/lithic-kotlin/commit/30fdc8f0803733808ae5160d32f39f30f062fb48))
+* **internal:** update comment in script ([e92f2ad](https://github.com/lithic-com/lithic-kotlin/commit/e92f2ad9f3686152034c166e03c260ef8027e9a3))
+* update @stainless-api/prism-cli to v5.15.0 ([57e6a27](https://github.com/lithic-com/lithic-kotlin/commit/57e6a271470ae1aa9a9817ace47a8ca6a41a9d71))
+
 ## 0.98.0 (2025-08-04)
 
 Full Changelog: [v0.97.0...v0.98.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.97.0...v0.98.0)
