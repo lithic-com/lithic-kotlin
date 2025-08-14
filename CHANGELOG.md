@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.99.1 (2025-08-14)
+
+Full Changelog: [v0.99.0...v0.99.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.99.0...v0.99.1)
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([4754cf9](https://github.com/lithic-com/lithic-kotlin/commit/4754cf91f1ec40f386a1e0fef6caa6b2d11d8d97))
+
+
+### Chores
+
+* **ci:** add build job ([06d2c8e](https://github.com/lithic-com/lithic-kotlin/commit/06d2c8e9daff272927bfc89b86c65fd7f9bb21d9))
+
 ## 0.99.0 (2025-08-13)
 
 Full Changelog: [v0.98.0...v0.99.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.98.0...v0.99.0)
