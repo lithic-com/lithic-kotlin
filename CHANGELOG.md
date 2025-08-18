@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.100.0 (2025-08-18)
+
+Full Changelog: [v0.99.0...v0.100.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.99.0...v0.100.0)
+
+### Features
+
+* **api:** adds Event types for additional API resources ([7fae21f](https://github.com/lithic-com/lithic-kotlin/commit/7fae21f666cfedd5593aacee4e2a9f7fd5396ebd))
+
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([4754cf9](https://github.com/lithic-com/lithic-kotlin/commit/4754cf91f1ec40f386a1e0fef6caa6b2d11d8d97))
+
+
+### Chores
+
+* **ci:** add build job ([06d2c8e](https://github.com/lithic-com/lithic-kotlin/commit/06d2c8e9daff272927bfc89b86c65fd7f9bb21d9))
+
 ## 0.99.0 (2025-08-13)
 
 Full Changelog: [v0.98.0...v0.99.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.98.0...v0.99.0)
