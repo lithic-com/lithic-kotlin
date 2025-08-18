@@ -748,6 +748,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Financial Event */
     class FinancialEvent
     private constructor(
         private val token: JsonField<String>,
