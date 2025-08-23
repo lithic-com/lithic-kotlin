@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.100.1 (2025-08-23)
+
+Full Changelog: [v0.100.0...v0.100.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.0...v0.100.1)
+
+### Bug Fixes
+
+* fix casing issue ([9acb065](https://github.com/lithic-com/lithic-kotlin/commit/9acb0658adf765cea9035003a10538ed2c99218a))
+* update singularization rules ([5d32171](https://github.com/lithic-com/lithic-kotlin/commit/5d32171b357c281378b654d33fab8a6317847514))
+
+
+### Chores
+
+* **ci:** reduce log noise ([9fd01a3](https://github.com/lithic-com/lithic-kotlin/commit/9fd01a390d3634f94dd924ee7a3e471433594fd3))
+* **client:** refactor closing / shutdown ([6edadb9](https://github.com/lithic-com/lithic-kotlin/commit/6edadb9d89cc5a94fe31ba3da215492a180b037e))
+* **internal:** support running ktfmt directly ([0ae965a](https://github.com/lithic-com/lithic-kotlin/commit/0ae965a48512ba7bf3eb72c363c0d42b3dfcb2d6))
+* remove memory upper bound from publishing step ([3fad20a](https://github.com/lithic-com/lithic-kotlin/commit/3fad20a8d470b894b0187dd65771f9638675d3f7))
+
 ## 0.100.0 (2025-08-18)
 
 Full Changelog: [v0.99.0...v0.100.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.99.0...v0.100.0)
