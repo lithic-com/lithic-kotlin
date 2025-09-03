@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.100.2 (2025-09-03)
+
+Full Changelog: [v0.100.1...v0.100.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.1...v0.100.2)
+
+### Bug Fixes
+
+* **ci:** use java-version 21 for publish step ([f1eff63](https://github.com/lithic-com/lithic-kotlin/commit/f1eff634ffa53b3ac21940c8d7effcd7fb98cda8))
+
 ## 0.100.1 (2025-08-23)
 
 Full Changelog: [v0.100.0...v0.100.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.0...v0.100.1)
