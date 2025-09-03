@@ -1487,7 +1487,7 @@ private constructor(
 
             val COLLECTION = of("COLLECTION")
 
-            val BANK_ACCOUNTS_PAYABLE = of("BANK_ACCOUNTS_PAYABLE")
+            val PROGRAM_BANK_ACCOUNTS_PAYABLE = of("PROGRAM_BANK_ACCOUNTS_PAYABLE")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -1503,7 +1503,7 @@ private constructor(
             SECURITY,
             PROGRAM_RECEIVABLES,
             COLLECTION,
-            BANK_ACCOUNTS_PAYABLE,
+            PROGRAM_BANK_ACCOUNTS_PAYABLE,
         }
 
         /**
@@ -1525,7 +1525,7 @@ private constructor(
             SECURITY,
             PROGRAM_RECEIVABLES,
             COLLECTION,
-            BANK_ACCOUNTS_PAYABLE,
+            PROGRAM_BANK_ACCOUNTS_PAYABLE,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1548,7 +1548,7 @@ private constructor(
                 SECURITY -> Value.SECURITY
                 PROGRAM_RECEIVABLES -> Value.PROGRAM_RECEIVABLES
                 COLLECTION -> Value.COLLECTION
-                BANK_ACCOUNTS_PAYABLE -> Value.BANK_ACCOUNTS_PAYABLE
+                PROGRAM_BANK_ACCOUNTS_PAYABLE -> Value.PROGRAM_BANK_ACCOUNTS_PAYABLE
                 else -> Value._UNKNOWN
             }
 
@@ -1572,7 +1572,7 @@ private constructor(
                 SECURITY -> Known.SECURITY
                 PROGRAM_RECEIVABLES -> Known.PROGRAM_RECEIVABLES
                 COLLECTION -> Known.COLLECTION
-                BANK_ACCOUNTS_PAYABLE -> Known.BANK_ACCOUNTS_PAYABLE
+                PROGRAM_BANK_ACCOUNTS_PAYABLE -> Known.PROGRAM_BANK_ACCOUNTS_PAYABLE
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 

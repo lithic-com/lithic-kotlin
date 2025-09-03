@@ -27,7 +27,7 @@ private constructor(
      */
     fun endingBefore(): String? = endingBefore
 
-    /** Page size (for pagination). */
+    /** Number of records per page. */
     fun pageSize(): Long? = pageSize
 
     /**
@@ -84,7 +84,7 @@ private constructor(
          */
         fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
-        /** Page size (for pagination). */
+        /** Number of records per page. */
         fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
         /**

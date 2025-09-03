@@ -335,9 +335,17 @@ private constructor(
 
             val DOES_NOT_MATCH = of("DOES_NOT_MATCH")
 
+            val IS_EQUAL_TO = of("IS_EQUAL_TO")
+
+            val IS_NOT_EQUAL_TO = of("IS_NOT_EQUAL_TO")
+
             val IS_GREATER_THAN = of("IS_GREATER_THAN")
 
+            val IS_GREATER_THAN_OR_EQUAL_TO = of("IS_GREATER_THAN_OR_EQUAL_TO")
+
             val IS_LESS_THAN = of("IS_LESS_THAN")
+
+            val IS_LESS_THAN_OR_EQUAL_TO = of("IS_LESS_THAN_OR_EQUAL_TO")
 
             fun of(value: String) = Operation(JsonField.of(value))
         }
@@ -348,8 +356,12 @@ private constructor(
             IS_NOT_ONE_OF,
             MATCHES,
             DOES_NOT_MATCH,
+            IS_EQUAL_TO,
+            IS_NOT_EQUAL_TO,
             IS_GREATER_THAN,
+            IS_GREATER_THAN_OR_EQUAL_TO,
             IS_LESS_THAN,
+            IS_LESS_THAN_OR_EQUAL_TO,
         }
 
         /**
@@ -366,8 +378,12 @@ private constructor(
             IS_NOT_ONE_OF,
             MATCHES,
             DOES_NOT_MATCH,
+            IS_EQUAL_TO,
+            IS_NOT_EQUAL_TO,
             IS_GREATER_THAN,
+            IS_GREATER_THAN_OR_EQUAL_TO,
             IS_LESS_THAN,
+            IS_LESS_THAN_OR_EQUAL_TO,
             /**
              * An enum member indicating that [Operation] was instantiated with an unknown value.
              */
@@ -387,8 +403,12 @@ private constructor(
                 IS_NOT_ONE_OF -> Value.IS_NOT_ONE_OF
                 MATCHES -> Value.MATCHES
                 DOES_NOT_MATCH -> Value.DOES_NOT_MATCH
+                IS_EQUAL_TO -> Value.IS_EQUAL_TO
+                IS_NOT_EQUAL_TO -> Value.IS_NOT_EQUAL_TO
                 IS_GREATER_THAN -> Value.IS_GREATER_THAN
+                IS_GREATER_THAN_OR_EQUAL_TO -> Value.IS_GREATER_THAN_OR_EQUAL_TO
                 IS_LESS_THAN -> Value.IS_LESS_THAN
+                IS_LESS_THAN_OR_EQUAL_TO -> Value.IS_LESS_THAN_OR_EQUAL_TO
                 else -> Value._UNKNOWN
             }
 
@@ -407,8 +427,12 @@ private constructor(
                 IS_NOT_ONE_OF -> Known.IS_NOT_ONE_OF
                 MATCHES -> Known.MATCHES
                 DOES_NOT_MATCH -> Known.DOES_NOT_MATCH
+                IS_EQUAL_TO -> Known.IS_EQUAL_TO
+                IS_NOT_EQUAL_TO -> Known.IS_NOT_EQUAL_TO
                 IS_GREATER_THAN -> Known.IS_GREATER_THAN
+                IS_GREATER_THAN_OR_EQUAL_TO -> Known.IS_GREATER_THAN_OR_EQUAL_TO
                 IS_LESS_THAN -> Known.IS_LESS_THAN
+                IS_LESS_THAN_OR_EQUAL_TO -> Known.IS_LESS_THAN_OR_EQUAL_TO
                 else -> throw LithicInvalidDataException("Unknown Operation: $value")
             }
 
@@ -478,7 +502,10 @@ private constructor(
         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
         fun regex(): String? = regex
 
-        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+        /**
+         * A number, to be used with `IS_GREATER_THAN`, `IS_GREATER_THAN_OR_EQUAL_TO`,
+         * `IS_LESS_THAN`, `IS_LESS_THAN_OR_EQUAL_TO`, `IS_EQUAL_TO`, or `IS_NOT_EQUAL_TO`
+         */
         fun number(): Long? = number
 
         /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
@@ -493,7 +520,10 @@ private constructor(
         /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
         fun asRegex(): String = regex.getOrThrow("regex")
 
-        /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+        /**
+         * A number, to be used with `IS_GREATER_THAN`, `IS_GREATER_THAN_OR_EQUAL_TO`,
+         * `IS_LESS_THAN`, `IS_LESS_THAN_OR_EQUAL_TO`, `IS_EQUAL_TO`, or `IS_NOT_EQUAL_TO`
+         */
         fun asNumber(): Long = number.getOrThrow("number")
 
         /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
@@ -583,7 +613,10 @@ private constructor(
             /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
             fun ofRegex(regex: String) = Value(regex = regex)
 
-            /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+            /**
+             * A number, to be used with `IS_GREATER_THAN`, `IS_GREATER_THAN_OR_EQUAL_TO`,
+             * `IS_LESS_THAN`, `IS_LESS_THAN_OR_EQUAL_TO`, `IS_EQUAL_TO`, or `IS_NOT_EQUAL_TO`
+             */
             fun ofNumber(number: Long) = Value(number = number)
 
             /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
@@ -597,7 +630,10 @@ private constructor(
             /** A regex string, to be used with `MATCHES` or `DOES_NOT_MATCH` */
             fun visitRegex(regex: String): T
 
-            /** A number, to be used with `IS_GREATER_THAN` or `IS_LESS_THAN` */
+            /**
+             * A number, to be used with `IS_GREATER_THAN`, `IS_GREATER_THAN_OR_EQUAL_TO`,
+             * `IS_LESS_THAN`, `IS_LESS_THAN_OR_EQUAL_TO`, `IS_EQUAL_TO`, or `IS_NOT_EQUAL_TO`
+             */
             fun visitNumber(number: Long): T
 
             /** An array of strings, to be used with `IS_ONE_OF` or `IS_NOT_ONE_OF` */
