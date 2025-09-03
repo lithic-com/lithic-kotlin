@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.101.0 (2025-09-03)
+
+Full Changelog: [v0.100.2...v0.101.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.2...v0.101.0)
+
+### Features
+
+* **api:** adds support for delegated KYB onboarding and more device details in 3DS Authentications ([656d2ee](https://github.com/lithic-com/lithic-kotlin/commit/656d2eeda185265b9f225db385463424502d2eea))
+
 ## 0.100.2 (2025-09-03)
 
 Full Changelog: [v0.100.1...v0.100.2](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.1...v0.100.2)
