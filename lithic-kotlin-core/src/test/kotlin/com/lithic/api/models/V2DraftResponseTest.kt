@@ -15,6 +15,7 @@ internal class V2DraftResponseTest {
             V2DraftResponse.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addBusinessAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addCardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .currentVersion(
                     V2DraftResponse.CurrentVersion.builder()
@@ -58,6 +59,8 @@ internal class V2DraftResponseTest {
 
         assertThat(v2DraftResponse.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(v2DraftResponse.accountTokens())
+            .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(v2DraftResponse.businessAccountTokens())
             .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(v2DraftResponse.cardTokens())
             .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -112,6 +115,7 @@ internal class V2DraftResponseTest {
             V2DraftResponse.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addBusinessAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addCardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .currentVersion(
                     V2DraftResponse.CurrentVersion.builder()

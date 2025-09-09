@@ -8,7 +8,6 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.Params
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
-import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -25,9 +24,9 @@ private constructor(
     private val endingBefore: String?,
     private val financialAccountToken: String?,
     private val pageSize: Long?,
-    private val result: List<Result>?,
+    private val result: Result?,
     private val startingAfter: String?,
-    private val status: List<Status>?,
+    private val status: Status?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -66,7 +65,7 @@ private constructor(
     fun pageSize(): Long? = pageSize
 
     /** Filter by transaction result */
-    fun result(): List<Result>? = result
+    fun result(): Result? = result
 
     /**
      * A cursor representing an item's token after which a page of results should begin. Used to
@@ -75,7 +74,7 @@ private constructor(
     fun startingAfter(): String? = startingAfter
 
     /** Filter by transaction status */
-    fun status(): List<Status>? = status
+    fun status(): Status? = status
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -106,9 +105,9 @@ private constructor(
         private var endingBefore: String? = null
         private var financialAccountToken: String? = null
         private var pageSize: Long? = null
-        private var result: MutableList<Result>? = null
+        private var result: Result? = null
         private var startingAfter: String? = null
-        private var status: MutableList<Status>? = null
+        private var status: Status? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -121,9 +120,9 @@ private constructor(
             endingBefore = accountActivityListParams.endingBefore
             financialAccountToken = accountActivityListParams.financialAccountToken
             pageSize = accountActivityListParams.pageSize
-            result = accountActivityListParams.result?.toMutableList()
+            result = accountActivityListParams.result
             startingAfter = accountActivityListParams.startingAfter
-            status = accountActivityListParams.status?.toMutableList()
+            status = accountActivityListParams.status
             additionalHeaders = accountActivityListParams.additionalHeaders.toBuilder()
             additionalQueryParams = accountActivityListParams.additionalQueryParams.toBuilder()
         }
@@ -173,16 +172,7 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Filter by transaction result */
-        fun result(result: List<Result>?) = apply { this.result = result?.toMutableList() }
-
-        /**
-         * Adds a single [Result] to [Builder.result].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addResult(result: Result) = apply {
-            this.result = (this.result ?: mutableListOf()).apply { add(result) }
-        }
+        fun result(result: Result?) = apply { this.result = result }
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
@@ -191,16 +181,7 @@ private constructor(
         fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         /** Filter by transaction status */
-        fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
-
-        /**
-         * Adds a single [Status] to [Builder.status].
-         *
-         * @throws IllegalStateException if the field was previously set to a non-list.
-         */
-        fun addStatus(status: Status) = apply {
-            this.status = (this.status ?: mutableListOf()).apply { add(status) }
-        }
+        fun status(status: Status?) = apply { this.status = status }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -315,9 +296,9 @@ private constructor(
                 endingBefore,
                 financialAccountToken,
                 pageSize,
-                result?.toImmutable(),
+                result,
                 startingAfter,
-                status?.toImmutable(),
+                status,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -336,9 +317,9 @@ private constructor(
                 endingBefore?.let { put("ending_before", it) }
                 financialAccountToken?.let { put("financial_account_token", it) }
                 pageSize?.let { put("page_size", it.toString()) }
-                result?.let { put("result", it.joinToString(",") { it.toString() }) }
+                result?.let { put("result", it.toString()) }
                 startingAfter?.let { put("starting_after", it) }
-                status?.let { put("status", it.joinToString(",") { it.toString() }) }
+                status?.let { put("status", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -540,6 +521,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Filter by transaction result */
     class Result @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -665,6 +647,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Filter by transaction status */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -685,13 +668,13 @@ private constructor(
 
             val PENDING = of("PENDING")
 
-            val SETTLED = of("SETTLED")
-
-            val VOIDED = of("VOIDED")
-
             val RETURNED = of("RETURNED")
 
             val REVERSED = of("REVERSED")
+
+            val SETTLED = of("SETTLED")
+
+            val VOIDED = of("VOIDED")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -701,10 +684,10 @@ private constructor(
             DECLINED,
             EXPIRED,
             PENDING,
-            SETTLED,
-            VOIDED,
             RETURNED,
             REVERSED,
+            SETTLED,
+            VOIDED,
         }
 
         /**
@@ -720,10 +703,10 @@ private constructor(
             DECLINED,
             EXPIRED,
             PENDING,
-            SETTLED,
-            VOIDED,
             RETURNED,
             REVERSED,
+            SETTLED,
+            VOIDED,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -740,10 +723,10 @@ private constructor(
                 DECLINED -> Value.DECLINED
                 EXPIRED -> Value.EXPIRED
                 PENDING -> Value.PENDING
-                SETTLED -> Value.SETTLED
-                VOIDED -> Value.VOIDED
                 RETURNED -> Value.RETURNED
                 REVERSED -> Value.REVERSED
+                SETTLED -> Value.SETTLED
+                VOIDED -> Value.VOIDED
                 else -> Value._UNKNOWN
             }
 
@@ -761,10 +744,10 @@ private constructor(
                 DECLINED -> Known.DECLINED
                 EXPIRED -> Known.EXPIRED
                 PENDING -> Known.PENDING
-                SETTLED -> Known.SETTLED
-                VOIDED -> Known.VOIDED
                 RETURNED -> Known.RETURNED
                 REVERSED -> Known.REVERSED
+                SETTLED -> Known.SETTLED
+                VOIDED -> Known.VOIDED
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
             }
 
