@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.102.0 (2025-09-09)
+
+Full Changelog: [v0.101.0...v0.102.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.101.0...v0.102.0)
+
+### Features
+
+* **api:** adds support for unpauseing external bank accounts ([cd12987](https://github.com/lithic-com/lithic-kotlin/commit/cd12987df3d3e8b17a0e2249cb3d6912b72a4e36))
+
 ## 0.101.0 (2025-09-03)
 
 Full Changelog: [v0.100.2...v0.101.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.100.2...v0.101.0)
