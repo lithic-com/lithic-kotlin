@@ -90,9 +90,11 @@ private constructor(
 
         fun body(body: Body) = apply { this.body = body }
 
-        /** Alias for calling [body] with `Body.ofAccountLevelRule(accountLevelRule)`. */
-        fun body(accountLevelRule: Body.AccountLevelRule) =
-            body(Body.ofAccountLevelRule(accountLevelRule))
+        /** Alias for calling [body] with `Body.ofUnionMember0(unionMember0)`. */
+        fun body(unionMember0: Body.UnionMember0) = body(Body.ofUnionMember0(unionMember0))
+
+        /** Alias for calling [body] with `Body.ofUnionMember1(unionMember1)`. */
+        fun body(unionMember1: Body.UnionMember1) = body(Body.ofUnionMember1(unionMember1))
 
         /** Alias for calling [body] with `Body.ofCardLevelRule(cardLevelRule)`. */
         fun body(cardLevelRule: Body.CardLevelRule) = body(Body.ofCardLevelRule(cardLevelRule))
@@ -236,25 +238,32 @@ private constructor(
     @JsonSerialize(using = Body.Serializer::class)
     class Body
     private constructor(
-        private val accountLevelRule: AccountLevelRule? = null,
+        private val unionMember0: UnionMember0? = null,
+        private val unionMember1: UnionMember1? = null,
         private val cardLevelRule: CardLevelRule? = null,
         private val programLevelRule: ProgramLevelRule? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun accountLevelRule(): AccountLevelRule? = accountLevelRule
+        fun unionMember0(): UnionMember0? = unionMember0
+
+        fun unionMember1(): UnionMember1? = unionMember1
 
         fun cardLevelRule(): CardLevelRule? = cardLevelRule
 
         fun programLevelRule(): ProgramLevelRule? = programLevelRule
 
-        fun isAccountLevelRule(): Boolean = accountLevelRule != null
+        fun isUnionMember0(): Boolean = unionMember0 != null
+
+        fun isUnionMember1(): Boolean = unionMember1 != null
 
         fun isCardLevelRule(): Boolean = cardLevelRule != null
 
         fun isProgramLevelRule(): Boolean = programLevelRule != null
 
-        fun asAccountLevelRule(): AccountLevelRule = accountLevelRule.getOrThrow("accountLevelRule")
+        fun asUnionMember0(): UnionMember0 = unionMember0.getOrThrow("unionMember0")
+
+        fun asUnionMember1(): UnionMember1 = unionMember1.getOrThrow("unionMember1")
 
         fun asCardLevelRule(): CardLevelRule = cardLevelRule.getOrThrow("cardLevelRule")
 
@@ -264,7 +273,8 @@ private constructor(
 
         fun <T> accept(visitor: Visitor<T>): T =
             when {
-                accountLevelRule != null -> visitor.visitAccountLevelRule(accountLevelRule)
+                unionMember0 != null -> visitor.visitUnionMember0(unionMember0)
+                unionMember1 != null -> visitor.visitUnionMember1(unionMember1)
                 cardLevelRule != null -> visitor.visitCardLevelRule(cardLevelRule)
                 programLevelRule != null -> visitor.visitProgramLevelRule(programLevelRule)
                 else -> visitor.unknown(_json)
@@ -279,8 +289,12 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitAccountLevelRule(accountLevelRule: AccountLevelRule) {
-                        accountLevelRule.validate()
+                    override fun visitUnionMember0(unionMember0: UnionMember0) {
+                        unionMember0.validate()
+                    }
+
+                    override fun visitUnionMember1(unionMember1: UnionMember1) {
+                        unionMember1.validate()
                     }
 
                     override fun visitCardLevelRule(cardLevelRule: CardLevelRule) {
@@ -312,8 +326,11 @@ private constructor(
         internal fun validity(): Int =
             accept(
                 object : Visitor<Int> {
-                    override fun visitAccountLevelRule(accountLevelRule: AccountLevelRule) =
-                        accountLevelRule.validity()
+                    override fun visitUnionMember0(unionMember0: UnionMember0) =
+                        unionMember0.validity()
+
+                    override fun visitUnionMember1(unionMember1: UnionMember1) =
+                        unionMember1.validity()
 
                     override fun visitCardLevelRule(cardLevelRule: CardLevelRule) =
                         cardLevelRule.validity()
@@ -331,17 +348,19 @@ private constructor(
             }
 
             return other is Body &&
-                accountLevelRule == other.accountLevelRule &&
+                unionMember0 == other.unionMember0 &&
+                unionMember1 == other.unionMember1 &&
                 cardLevelRule == other.cardLevelRule &&
                 programLevelRule == other.programLevelRule
         }
 
         override fun hashCode(): Int =
-            Objects.hash(accountLevelRule, cardLevelRule, programLevelRule)
+            Objects.hash(unionMember0, unionMember1, cardLevelRule, programLevelRule)
 
         override fun toString(): String =
             when {
-                accountLevelRule != null -> "Body{accountLevelRule=$accountLevelRule}"
+                unionMember0 != null -> "Body{unionMember0=$unionMember0}"
+                unionMember1 != null -> "Body{unionMember1=$unionMember1}"
                 cardLevelRule != null -> "Body{cardLevelRule=$cardLevelRule}"
                 programLevelRule != null -> "Body{programLevelRule=$programLevelRule}"
                 _json != null -> "Body{_unknown=$_json}"
@@ -350,8 +369,9 @@ private constructor(
 
         companion object {
 
-            fun ofAccountLevelRule(accountLevelRule: AccountLevelRule) =
-                Body(accountLevelRule = accountLevelRule)
+            fun ofUnionMember0(unionMember0: UnionMember0) = Body(unionMember0 = unionMember0)
+
+            fun ofUnionMember1(unionMember1: UnionMember1) = Body(unionMember1 = unionMember1)
 
             fun ofCardLevelRule(cardLevelRule: CardLevelRule) = Body(cardLevelRule = cardLevelRule)
 
@@ -362,7 +382,9 @@ private constructor(
         /** An interface that defines how to map each variant of [Body] to a value of type [T]. */
         interface Visitor<out T> {
 
-            fun visitAccountLevelRule(accountLevelRule: AccountLevelRule): T
+            fun visitUnionMember0(unionMember0: UnionMember0): T
+
+            fun visitUnionMember1(unionMember1: UnionMember1): T
 
             fun visitCardLevelRule(cardLevelRule: CardLevelRule): T
 
@@ -389,8 +411,11 @@ private constructor(
 
                 val bestMatches =
                     sequenceOf(
-                            tryDeserialize(node, jacksonTypeRef<AccountLevelRule>())?.let {
-                                Body(accountLevelRule = it, _json = json)
+                            tryDeserialize(node, jacksonTypeRef<UnionMember0>())?.let {
+                                Body(unionMember0 = it, _json = json)
+                            },
+                            tryDeserialize(node, jacksonTypeRef<UnionMember1>())?.let {
+                                Body(unionMember1 = it, _json = json)
                             },
                             tryDeserialize(node, jacksonTypeRef<CardLevelRule>())?.let {
                                 Body(cardLevelRule = it, _json = json)
@@ -423,7 +448,8 @@ private constructor(
                 provider: SerializerProvider,
             ) {
                 when {
-                    value.accountLevelRule != null -> generator.writeObject(value.accountLevelRule)
+                    value.unionMember0 != null -> generator.writeObject(value.unionMember0)
+                    value.unionMember1 != null -> generator.writeObject(value.unionMember1)
                     value.cardLevelRule != null -> generator.writeObject(value.cardLevelRule)
                     value.programLevelRule != null -> generator.writeObject(value.programLevelRule)
                     value._json != null -> generator.writeObject(value._json)
@@ -432,9 +458,8 @@ private constructor(
             }
         }
 
-        class AccountLevelRule
+        class UnionMember0
         private constructor(
-            private val accountTokens: JsonField<List<String>>,
             private val name: JsonField<String>,
             private val state: JsonField<State>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -442,20 +467,9 @@ private constructor(
 
             @JsonCreator
             private constructor(
-                @JsonProperty("account_tokens")
-                @ExcludeMissing
-                accountTokens: JsonField<List<String>> = JsonMissing.of(),
                 @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("state") @ExcludeMissing state: JsonField<State> = JsonMissing.of(),
-            ) : this(accountTokens, name, state, mutableMapOf())
-
-            /**
-             * Account tokens to which the Auth Rule applies.
-             *
-             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
-             *   the server responded with an unexpected value).
-             */
-            fun accountTokens(): List<String>? = accountTokens.getNullable("account_tokens")
+            ) : this(name, state, mutableMapOf())
 
             /**
              * Auth Rule Name
@@ -476,16 +490,6 @@ private constructor(
              *   the server responded with an unexpected value).
              */
             fun state(): State? = state.getNullable("state")
-
-            /**
-             * Returns the raw JSON value of [accountTokens].
-             *
-             * Unlike [accountTokens], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("account_tokens")
-            @ExcludeMissing
-            fun _accountTokens(): JsonField<List<String>> = accountTokens
 
             /**
              * Returns the raw JSON value of [name].
@@ -515,50 +519,21 @@ private constructor(
 
             companion object {
 
-                /** Returns a mutable builder for constructing an instance of [AccountLevelRule]. */
+                /** Returns a mutable builder for constructing an instance of [UnionMember0]. */
                 fun builder() = Builder()
             }
 
-            /** A builder for [AccountLevelRule]. */
+            /** A builder for [UnionMember0]. */
             class Builder internal constructor() {
 
-                private var accountTokens: JsonField<MutableList<String>>? = null
                 private var name: JsonField<String> = JsonMissing.of()
                 private var state: JsonField<State> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(accountLevelRule: AccountLevelRule) = apply {
-                    accountTokens = accountLevelRule.accountTokens.map { it.toMutableList() }
-                    name = accountLevelRule.name
-                    state = accountLevelRule.state
-                    additionalProperties = accountLevelRule.additionalProperties.toMutableMap()
-                }
-
-                /** Account tokens to which the Auth Rule applies. */
-                fun accountTokens(accountTokens: List<String>) =
-                    accountTokens(JsonField.of(accountTokens))
-
-                /**
-                 * Sets [Builder.accountTokens] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.accountTokens] with a well-typed `List<String>`
-                 * value instead. This method is primarily for setting the field to an undocumented
-                 * or not yet supported value.
-                 */
-                fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
-                    this.accountTokens = accountTokens.map { it.toMutableList() }
-                }
-
-                /**
-                 * Adds a single [String] to [accountTokens].
-                 *
-                 * @throws IllegalStateException if the field was previously set to a non-list.
-                 */
-                fun addAccountToken(accountToken: String) = apply {
-                    accountTokens =
-                        (accountTokens ?: JsonField.of(mutableListOf())).also {
-                            checkKnown("accountTokens", it).add(accountToken)
-                        }
+                internal fun from(unionMember0: UnionMember0) = apply {
+                    name = unionMember0.name
+                    state = unionMember0.state
+                    additionalProperties = unionMember0.additionalProperties.toMutableMap()
                 }
 
                 /** Auth Rule Name */
@@ -614,27 +589,21 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [AccountLevelRule].
+                 * Returns an immutable instance of [UnionMember0].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
-                fun build(): AccountLevelRule =
-                    AccountLevelRule(
-                        (accountTokens ?: JsonMissing.of()).map { it.toImmutable() },
-                        name,
-                        state,
-                        additionalProperties.toMutableMap(),
-                    )
+                fun build(): UnionMember0 =
+                    UnionMember0(name, state, additionalProperties.toMutableMap())
             }
 
             private var validated: Boolean = false
 
-            fun validate(): AccountLevelRule = apply {
+            fun validate(): UnionMember0 = apply {
                 if (validated) {
                     return@apply
                 }
 
-                accountTokens()
                 name()
                 state()?.validate()
                 validated = true
@@ -655,9 +624,7 @@ private constructor(
              * Used for best match union deserialization.
              */
             internal fun validity(): Int =
-                (accountTokens.asKnown()?.size ?: 0) +
-                    (if (name.asKnown() == null) 0 else 1) +
-                    (state.asKnown()?.validity() ?: 0)
+                (if (name.asKnown() == null) 0 else 1) + (state.asKnown()?.validity() ?: 0)
 
             /**
              * The desired state of the Auth Rule.
@@ -794,21 +761,335 @@ private constructor(
                     return true
                 }
 
-                return other is AccountLevelRule &&
-                    accountTokens == other.accountTokens &&
+                return other is UnionMember0 &&
                     name == other.name &&
                     state == other.state &&
                     additionalProperties == other.additionalProperties
             }
 
-            private val hashCode: Int by lazy {
-                Objects.hash(accountTokens, name, state, additionalProperties)
-            }
+            private val hashCode: Int by lazy { Objects.hash(name, state, additionalProperties) }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AccountLevelRule{accountTokens=$accountTokens, name=$name, state=$state, additionalProperties=$additionalProperties}"
+                "UnionMember0{name=$name, state=$state, additionalProperties=$additionalProperties}"
+        }
+
+        class UnionMember1
+        private constructor(
+            private val name: JsonField<String>,
+            private val state: JsonField<State>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("state") @ExcludeMissing state: JsonField<State> = JsonMissing.of(),
+            ) : this(name, state, mutableMapOf())
+
+            /**
+             * Auth Rule Name
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun name(): String? = name.getNullable("name")
+
+            /**
+             * The desired state of the Auth Rule.
+             *
+             * Note that only deactivating an Auth Rule through this endpoint is supported at this
+             * time. If you need to (re-)activate an Auth Rule the /promote endpoint should be used
+             * to promote a draft to the currently active version.
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun state(): State? = state.getNullable("state")
+
+            /**
+             * Returns the raw JSON value of [name].
+             *
+             * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            /**
+             * Returns the raw JSON value of [state].
+             *
+             * Unlike [state], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<State> = state
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /** Returns a mutable builder for constructing an instance of [UnionMember1]. */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [UnionMember1]. */
+            class Builder internal constructor() {
+
+                private var name: JsonField<String> = JsonMissing.of()
+                private var state: JsonField<State> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(unionMember1: UnionMember1) = apply {
+                    name = unionMember1.name
+                    state = unionMember1.state
+                    additionalProperties = unionMember1.additionalProperties.toMutableMap()
+                }
+
+                /** Auth Rule Name */
+                fun name(name: String?) = name(JsonField.ofNullable(name))
+
+                /**
+                 * Sets [Builder.name] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.name] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                /**
+                 * The desired state of the Auth Rule.
+                 *
+                 * Note that only deactivating an Auth Rule through this endpoint is supported at
+                 * this time. If you need to (re-)activate an Auth Rule the /promote endpoint should
+                 * be used to promote a draft to the currently active version.
+                 */
+                fun state(state: State) = state(JsonField.of(state))
+
+                /**
+                 * Sets [Builder.state] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.state] with a well-typed [State] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun state(state: JsonField<State>) = apply { this.state = state }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [UnionMember1].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 */
+                fun build(): UnionMember1 =
+                    UnionMember1(name, state, additionalProperties.toMutableMap())
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): UnionMember1 = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                name()
+                state()?.validate()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (name.asKnown() == null) 0 else 1) + (state.asKnown()?.validity() ?: 0)
+
+            /**
+             * The desired state of the Auth Rule.
+             *
+             * Note that only deactivating an Auth Rule through this endpoint is supported at this
+             * time. If you need to (re-)activate an Auth Rule the /promote endpoint should be used
+             * to promote a draft to the currently active version.
+             */
+            class State @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val INACTIVE = of("INACTIVE")
+
+                    fun of(value: String) = State(JsonField.of(value))
+                }
+
+                /** An enum containing [State]'s known values. */
+                enum class Known {
+                    INACTIVE
+                }
+
+                /**
+                 * An enum containing [State]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [State] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    INACTIVE,
+                    /**
+                     * An enum member indicating that [State] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        INACTIVE -> Value.INACTIVE
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws LithicInvalidDataException if this class instance's value is a not a
+                 *   known member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        INACTIVE -> Known.INACTIVE
+                        else -> throw LithicInvalidDataException("Unknown State: $value")
+                    }
+
+                /**
+                 * Returns this class instance's primitive wire representation.
+                 *
+                 * This differs from the [toString] method because that method is primarily for
+                 * debugging and generally doesn't throw.
+                 *
+                 * @throws LithicInvalidDataException if this class instance's value does not have
+                 *   the expected primitive type.
+                 */
+                fun asString(): String =
+                    _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+                private var validated: Boolean = false
+
+                fun validate(): State = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    known()
+                    validated = true
+                }
+
+                fun isValid(): Boolean =
+                    try {
+                        validate()
+                        true
+                    } catch (e: LithicInvalidDataException) {
+                        false
+                    }
+
+                /**
+                 * Returns a score indicating how many valid values are contained in this object
+                 * recursively.
+                 *
+                 * Used for best match union deserialization.
+                 */
+                internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is State && value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is UnionMember1 &&
+                    name == other.name &&
+                    state == other.state &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy { Objects.hash(name, state, additionalProperties) }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "UnionMember1{name=$name, state=$state, additionalProperties=$additionalProperties}"
         }
 
         class CardLevelRule

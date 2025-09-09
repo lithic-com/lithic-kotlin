@@ -487,6 +487,7 @@ private constructor(
         class ApplyAuthRuleRequestAccountTokens
         private constructor(
             private val accountTokens: JsonField<List<String>>,
+            private val businessAccountTokens: JsonField<List<String>>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -494,17 +495,28 @@ private constructor(
             private constructor(
                 @JsonProperty("account_tokens")
                 @ExcludeMissing
-                accountTokens: JsonField<List<String>> = JsonMissing.of()
-            ) : this(accountTokens, mutableMapOf())
+                accountTokens: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("business_account_tokens")
+                @ExcludeMissing
+                businessAccountTokens: JsonField<List<String>> = JsonMissing.of(),
+            ) : this(accountTokens, businessAccountTokens, mutableMapOf())
 
             /**
              * Account tokens to which the Auth Rule applies.
              *
-             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
              */
-            fun accountTokens(): List<String> = accountTokens.getRequired("account_tokens")
+            fun accountTokens(): List<String>? = accountTokens.getNullable("account_tokens")
+
+            /**
+             * Business Account tokens to which the Auth Rule applies.
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun businessAccountTokens(): List<String>? =
+                businessAccountTokens.getNullable("business_account_tokens")
 
             /**
              * Returns the raw JSON value of [accountTokens].
@@ -515,6 +527,16 @@ private constructor(
             @JsonProperty("account_tokens")
             @ExcludeMissing
             fun _accountTokens(): JsonField<List<String>> = accountTokens
+
+            /**
+             * Returns the raw JSON value of [businessAccountTokens].
+             *
+             * Unlike [businessAccountTokens], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("business_account_tokens")
+            @ExcludeMissing
+            fun _businessAccountTokens(): JsonField<List<String>> = businessAccountTokens
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -533,11 +555,6 @@ private constructor(
                 /**
                  * Returns a mutable builder for constructing an instance of
                  * [ApplyAuthRuleRequestAccountTokens].
-                 *
-                 * The following fields are required:
-                 * ```kotlin
-                 * .accountTokens()
-                 * ```
                  */
                 fun builder() = Builder()
             }
@@ -546,6 +563,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var accountTokens: JsonField<MutableList<String>>? = null
+                private var businessAccountTokens: JsonField<MutableList<String>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(
@@ -553,6 +571,10 @@ private constructor(
                 ) = apply {
                     accountTokens =
                         applyAuthRuleRequestAccountTokens.accountTokens.map { it.toMutableList() }
+                    businessAccountTokens =
+                        applyAuthRuleRequestAccountTokens.businessAccountTokens.map {
+                            it.toMutableList()
+                        }
                     additionalProperties =
                         applyAuthRuleRequestAccountTokens.additionalProperties.toMutableMap()
                 }
@@ -584,6 +606,33 @@ private constructor(
                         }
                 }
 
+                /** Business Account tokens to which the Auth Rule applies. */
+                fun businessAccountTokens(businessAccountTokens: List<String>) =
+                    businessAccountTokens(JsonField.of(businessAccountTokens))
+
+                /**
+                 * Sets [Builder.businessAccountTokens] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.businessAccountTokens] with a well-typed
+                 * `List<String>` value instead. This method is primarily for setting the field to
+                 * an undocumented or not yet supported value.
+                 */
+                fun businessAccountTokens(businessAccountTokens: JsonField<List<String>>) = apply {
+                    this.businessAccountTokens = businessAccountTokens.map { it.toMutableList() }
+                }
+
+                /**
+                 * Adds a single [String] to [businessAccountTokens].
+                 *
+                 * @throws IllegalStateException if the field was previously set to a non-list.
+                 */
+                fun addBusinessAccountToken(businessAccountToken: String) = apply {
+                    businessAccountTokens =
+                        (businessAccountTokens ?: JsonField.of(mutableListOf())).also {
+                            checkKnown("businessAccountTokens", it).add(businessAccountToken)
+                        }
+                }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -610,17 +659,11 @@ private constructor(
                  * Returns an immutable instance of [ApplyAuthRuleRequestAccountTokens].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
-                 *
-                 * The following fields are required:
-                 * ```kotlin
-                 * .accountTokens()
-                 * ```
-                 *
-                 * @throws IllegalStateException if any required field is unset.
                  */
                 fun build(): ApplyAuthRuleRequestAccountTokens =
                     ApplyAuthRuleRequestAccountTokens(
-                        checkRequired("accountTokens", accountTokens).map { it.toImmutable() },
+                        (accountTokens ?: JsonMissing.of()).map { it.toImmutable() },
+                        (businessAccountTokens ?: JsonMissing.of()).map { it.toImmutable() },
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -633,6 +676,7 @@ private constructor(
                 }
 
                 accountTokens()
+                businessAccountTokens()
                 validated = true
             }
 
@@ -650,7 +694,8 @@ private constructor(
              *
              * Used for best match union deserialization.
              */
-            internal fun validity(): Int = (accountTokens.asKnown()?.size ?: 0)
+            internal fun validity(): Int =
+                (accountTokens.asKnown()?.size ?: 0) + (businessAccountTokens.asKnown()?.size ?: 0)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -659,15 +704,18 @@ private constructor(
 
                 return other is ApplyAuthRuleRequestAccountTokens &&
                     accountTokens == other.accountTokens &&
+                    businessAccountTokens == other.businessAccountTokens &&
                     additionalProperties == other.additionalProperties
             }
 
-            private val hashCode: Int by lazy { Objects.hash(accountTokens, additionalProperties) }
+            private val hashCode: Int by lazy {
+                Objects.hash(accountTokens, businessAccountTokens, additionalProperties)
+            }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ApplyAuthRuleRequestAccountTokens{accountTokens=$accountTokens, additionalProperties=$additionalProperties}"
+                "ApplyAuthRuleRequestAccountTokens{accountTokens=$accountTokens, businessAccountTokens=$businessAccountTokens, additionalProperties=$additionalProperties}"
         }
 
         class ApplyAuthRuleRequestCardTokens

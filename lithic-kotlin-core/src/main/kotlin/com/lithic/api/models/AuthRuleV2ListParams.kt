@@ -15,6 +15,7 @@ import java.util.Objects
 class AuthRuleV2ListParams
 private constructor(
     private val accountToken: String?,
+    private val businessAccountToken: String?,
     private val cardToken: String?,
     private val endingBefore: String?,
     private val eventStream: EventStream?,
@@ -27,6 +28,9 @@ private constructor(
 
     /** Only return Auth Rules that are bound to the provided account token. */
     fun accountToken(): String? = accountToken
+
+    /** Only return Auth Rules that are bound to the provided business account token. */
+    fun businessAccountToken(): String? = businessAccountToken
 
     /** Only return Auth Rules that are bound to the provided card token. */
     fun cardToken(): String? = cardToken
@@ -72,6 +76,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var accountToken: String? = null
+        private var businessAccountToken: String? = null
         private var cardToken: String? = null
         private var endingBefore: String? = null
         private var eventStream: EventStream? = null
@@ -83,6 +88,7 @@ private constructor(
 
         internal fun from(authRuleV2ListParams: AuthRuleV2ListParams) = apply {
             accountToken = authRuleV2ListParams.accountToken
+            businessAccountToken = authRuleV2ListParams.businessAccountToken
             cardToken = authRuleV2ListParams.cardToken
             endingBefore = authRuleV2ListParams.endingBefore
             eventStream = authRuleV2ListParams.eventStream
@@ -95,6 +101,11 @@ private constructor(
 
         /** Only return Auth Rules that are bound to the provided account token. */
         fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
+
+        /** Only return Auth Rules that are bound to the provided business account token. */
+        fun businessAccountToken(businessAccountToken: String?) = apply {
+            this.businessAccountToken = businessAccountToken
+        }
 
         /** Only return Auth Rules that are bound to the provided card token. */
         fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
@@ -233,6 +244,7 @@ private constructor(
         fun build(): AuthRuleV2ListParams =
             AuthRuleV2ListParams(
                 accountToken,
+                businessAccountToken,
                 cardToken,
                 endingBefore,
                 eventStream,
@@ -250,6 +262,7 @@ private constructor(
         QueryParams.builder()
             .apply {
                 accountToken?.let { put("account_token", it) }
+                businessAccountToken?.let { put("business_account_token", it) }
                 cardToken?.let { put("card_token", it) }
                 endingBefore?.let { put("ending_before", it) }
                 eventStream?.let { put("event_stream", it.toString()) }
@@ -408,6 +421,8 @@ private constructor(
 
             val ACCOUNT = of("ACCOUNT")
 
+            val BUSINESS_ACCOUNT = of("BUSINESS_ACCOUNT")
+
             val CARD = of("CARD")
 
             val ANY = of("ANY")
@@ -419,6 +434,7 @@ private constructor(
         enum class Known {
             PROGRAM,
             ACCOUNT,
+            BUSINESS_ACCOUNT,
             CARD,
             ANY,
         }
@@ -435,6 +451,7 @@ private constructor(
         enum class Value {
             PROGRAM,
             ACCOUNT,
+            BUSINESS_ACCOUNT,
             CARD,
             ANY,
             /** An enum member indicating that [Scope] was instantiated with an unknown value. */
@@ -452,6 +469,7 @@ private constructor(
             when (this) {
                 PROGRAM -> Value.PROGRAM
                 ACCOUNT -> Value.ACCOUNT
+                BUSINESS_ACCOUNT -> Value.BUSINESS_ACCOUNT
                 CARD -> Value.CARD
                 ANY -> Value.ANY
                 else -> Value._UNKNOWN
@@ -470,6 +488,7 @@ private constructor(
             when (this) {
                 PROGRAM -> Known.PROGRAM
                 ACCOUNT -> Known.ACCOUNT
+                BUSINESS_ACCOUNT -> Known.BUSINESS_ACCOUNT
                 CARD -> Known.CARD
                 ANY -> Known.ANY
                 else -> throw LithicInvalidDataException("Unknown Scope: $value")
@@ -534,6 +553,7 @@ private constructor(
 
         return other is AuthRuleV2ListParams &&
             accountToken == other.accountToken &&
+            businessAccountToken == other.businessAccountToken &&
             cardToken == other.cardToken &&
             endingBefore == other.endingBefore &&
             eventStream == other.eventStream &&
@@ -547,6 +567,7 @@ private constructor(
     override fun hashCode(): Int =
         Objects.hash(
             accountToken,
+            businessAccountToken,
             cardToken,
             endingBefore,
             eventStream,
@@ -558,5 +579,5 @@ private constructor(
         )
 
     override fun toString() =
-        "AuthRuleV2ListParams{accountToken=$accountToken, cardToken=$cardToken, endingBefore=$endingBefore, eventStream=$eventStream, pageSize=$pageSize, scope=$scope, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "AuthRuleV2ListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, cardToken=$cardToken, endingBefore=$endingBefore, eventStream=$eventStream, pageSize=$pageSize, scope=$scope, startingAfter=$startingAfter, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
