@@ -6903,6 +6903,8 @@ private constructor(
 
         companion object {
 
+            val ACCOUNT_PAUSED = of("ACCOUNT_PAUSED")
+
             val ACCOUNT_STATE_TRANSACTION_FAIL = of("ACCOUNT_STATE_TRANSACTION_FAIL")
 
             val APPROVED = of("APPROVED")
@@ -6954,6 +6956,7 @@ private constructor(
 
         /** An enum containing [DeclineResult]'s known values. */
         enum class Known {
+            ACCOUNT_PAUSED,
             ACCOUNT_STATE_TRANSACTION_FAIL,
             APPROVED,
             BANK_CONNECTION_ERROR,
@@ -6989,6 +6992,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            ACCOUNT_PAUSED,
             ACCOUNT_STATE_TRANSACTION_FAIL,
             APPROVED,
             BANK_CONNECTION_ERROR,
@@ -7028,6 +7032,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                ACCOUNT_PAUSED -> Value.ACCOUNT_PAUSED
                 ACCOUNT_STATE_TRANSACTION_FAIL -> Value.ACCOUNT_STATE_TRANSACTION_FAIL
                 APPROVED -> Value.APPROVED
                 BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
@@ -7065,6 +7070,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                ACCOUNT_PAUSED -> Known.ACCOUNT_PAUSED
                 ACCOUNT_STATE_TRANSACTION_FAIL -> Known.ACCOUNT_STATE_TRANSACTION_FAIL
                 APPROVED -> Known.APPROVED
                 BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
@@ -9259,6 +9265,8 @@ private constructor(
                 val ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED =
                     of("ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED")
 
+                val ACCOUNT_PAUSED = of("ACCOUNT_PAUSED")
+
                 val ACCOUNT_UNDER_REVIEW = of("ACCOUNT_UNDER_REVIEW")
 
                 val ADDRESS_INCORRECT = of("ADDRESS_INCORRECT")
@@ -9366,6 +9374,7 @@ private constructor(
                 ACCOUNT_INACTIVE,
                 ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                 ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_PAUSED,
                 ACCOUNT_UNDER_REVIEW,
                 ADDRESS_INCORRECT,
                 APPROVED,
@@ -9430,6 +9439,7 @@ private constructor(
                 ACCOUNT_INACTIVE,
                 ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                 ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                ACCOUNT_PAUSED,
                 ACCOUNT_UNDER_REVIEW,
                 ADDRESS_INCORRECT,
                 APPROVED,
@@ -9500,6 +9510,7 @@ private constructor(
                         Value.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
                     ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
                         Value.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_PAUSED -> Value.ACCOUNT_PAUSED
                     ACCOUNT_UNDER_REVIEW -> Value.ACCOUNT_UNDER_REVIEW
                     ADDRESS_INCORRECT -> Value.ADDRESS_INCORRECT
                     APPROVED -> Value.APPROVED
@@ -9571,6 +9582,7 @@ private constructor(
                         Known.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
                     ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
                         Known.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                    ACCOUNT_PAUSED -> Known.ACCOUNT_PAUSED
                     ACCOUNT_UNDER_REVIEW -> Known.ACCOUNT_UNDER_REVIEW
                     ADDRESS_INCORRECT -> Known.ADDRESS_INCORRECT
                     APPROVED -> Known.APPROVED
@@ -11171,6 +11183,8 @@ private constructor(
 
             companion object {
 
+                val ACCOUNT_PAUSED = of("ACCOUNT_PAUSED")
+
                 val ACCOUNT_STATE_TRANSACTION_FAIL = of("ACCOUNT_STATE_TRANSACTION_FAIL")
 
                 val APPROVED = of("APPROVED")
@@ -11222,6 +11236,7 @@ private constructor(
 
             /** An enum containing [DeclineResult]'s known values. */
             enum class Known {
+                ACCOUNT_PAUSED,
                 ACCOUNT_STATE_TRANSACTION_FAIL,
                 APPROVED,
                 BANK_CONNECTION_ERROR,
@@ -11257,6 +11272,7 @@ private constructor(
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
+                ACCOUNT_PAUSED,
                 ACCOUNT_STATE_TRANSACTION_FAIL,
                 APPROVED,
                 BANK_CONNECTION_ERROR,
@@ -11296,6 +11312,7 @@ private constructor(
              */
             fun value(): Value =
                 when (this) {
+                    ACCOUNT_PAUSED -> Value.ACCOUNT_PAUSED
                     ACCOUNT_STATE_TRANSACTION_FAIL -> Value.ACCOUNT_STATE_TRANSACTION_FAIL
                     APPROVED -> Value.APPROVED
                     BANK_CONNECTION_ERROR -> Value.BANK_CONNECTION_ERROR
@@ -11333,6 +11350,7 @@ private constructor(
              */
             fun known(): Known =
                 when (this) {
+                    ACCOUNT_PAUSED -> Known.ACCOUNT_PAUSED
                     ACCOUNT_STATE_TRANSACTION_FAIL -> Known.ACCOUNT_STATE_TRANSACTION_FAIL
                     APPROVED -> Known.APPROVED
                     BANK_CONNECTION_ERROR -> Known.BANK_CONNECTION_ERROR
@@ -11721,6 +11739,8 @@ private constructor(
                     val ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED =
                         of("ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED")
 
+                    val ACCOUNT_PAUSED = of("ACCOUNT_PAUSED")
+
                     val ACCOUNT_UNDER_REVIEW = of("ACCOUNT_UNDER_REVIEW")
 
                     val ADDRESS_INCORRECT = of("ADDRESS_INCORRECT")
@@ -11830,6 +11850,7 @@ private constructor(
                     ACCOUNT_INACTIVE,
                     ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                     ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                    ACCOUNT_PAUSED,
                     ACCOUNT_UNDER_REVIEW,
                     ADDRESS_INCORRECT,
                     APPROVED,
@@ -11896,6 +11917,7 @@ private constructor(
                     ACCOUNT_INACTIVE,
                     ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED,
                     ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED,
+                    ACCOUNT_PAUSED,
                     ACCOUNT_UNDER_REVIEW,
                     ADDRESS_INCORRECT,
                     APPROVED,
@@ -11967,6 +11989,7 @@ private constructor(
                             Value.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
                         ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
                             Value.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                        ACCOUNT_PAUSED -> Value.ACCOUNT_PAUSED
                         ACCOUNT_UNDER_REVIEW -> Value.ACCOUNT_UNDER_REVIEW
                         ADDRESS_INCORRECT -> Value.ADDRESS_INCORRECT
                         APPROVED -> Value.APPROVED
@@ -12041,6 +12064,7 @@ private constructor(
                             Known.ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED
                         ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED ->
                             Known.ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED
+                        ACCOUNT_PAUSED -> Known.ACCOUNT_PAUSED
                         ACCOUNT_UNDER_REVIEW -> Known.ACCOUNT_UNDER_REVIEW
                         ADDRESS_INCORRECT -> Known.ADDRESS_INCORRECT
                         APPROVED -> Known.APPROVED
