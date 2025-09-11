@@ -109,7 +109,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         // post /v1/simulate/clearing
         withRawResponse().simulateClearing(params, requestOptions).parse()
 
-    @Deprecated("use `simulate_credit_authorization_advice` instead")
+    @Deprecated("use `simulateCreditAuthorizationAdvice` instead")
     override fun simulateCreditAuthorization(
         params: TransactionSimulateCreditAuthorizationParams,
         requestOptions: RequestOptions,
@@ -354,7 +354,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             Handler<TransactionSimulateCreditAuthorizationResponse> =
             jsonHandler<TransactionSimulateCreditAuthorizationResponse>(clientOptions.jsonMapper)
 
-        @Deprecated("use `simulate_credit_authorization_advice` instead")
+        @Deprecated("use `simulateCreditAuthorizationAdvice` instead")
         override fun simulateCreditAuthorization(
             params: TransactionSimulateCreditAuthorizationParams,
             requestOptions: RequestOptions,

@@ -22,7 +22,7 @@ import java.util.Objects
  * Simulates a credit authorization advice from the card network. This message indicates that the
  * network approved a credit authorization on your behalf.
  */
-@Deprecated("use `simulate_credit_authorization_advice` instead")
+@Deprecated("use `simulateCreditAuthorizationAdvice` instead")
 class TransactionSimulateCreditAuthorizationParams
 private constructor(
     private val body: Body,
