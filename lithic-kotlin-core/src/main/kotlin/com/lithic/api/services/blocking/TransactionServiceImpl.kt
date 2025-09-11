@@ -29,6 +29,8 @@ import com.lithic.api.models.TransactionSimulateAuthorizationParams
 import com.lithic.api.models.TransactionSimulateAuthorizationResponse
 import com.lithic.api.models.TransactionSimulateClearingParams
 import com.lithic.api.models.TransactionSimulateClearingResponse
+import com.lithic.api.models.TransactionSimulateCreditAuthorizationAdviceParams
+import com.lithic.api.models.TransactionSimulateCreditAuthorizationAdviceResponse
 import com.lithic.api.models.TransactionSimulateCreditAuthorizationParams
 import com.lithic.api.models.TransactionSimulateCreditAuthorizationResponse
 import com.lithic.api.models.TransactionSimulateReturnParams
@@ -107,12 +109,20 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
         // post /v1/simulate/clearing
         withRawResponse().simulateClearing(params, requestOptions).parse()
 
+    @Deprecated("use `simulate_credit_authorization_advice` instead")
     override fun simulateCreditAuthorization(
         params: TransactionSimulateCreditAuthorizationParams,
         requestOptions: RequestOptions,
     ): TransactionSimulateCreditAuthorizationResponse =
         // post /v1/simulate/credit_authorization_advice
         withRawResponse().simulateCreditAuthorization(params, requestOptions).parse()
+
+    override fun simulateCreditAuthorizationAdvice(
+        params: TransactionSimulateCreditAuthorizationAdviceParams,
+        requestOptions: RequestOptions,
+    ): TransactionSimulateCreditAuthorizationAdviceResponse =
+        // post /v1/simulate/credit_authorization_advice
+        withRawResponse().simulateCreditAuthorizationAdvice(params, requestOptions).parse()
 
     override fun simulateReturn(
         params: TransactionSimulateReturnParams,
@@ -344,6 +354,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             Handler<TransactionSimulateCreditAuthorizationResponse> =
             jsonHandler<TransactionSimulateCreditAuthorizationResponse>(clientOptions.jsonMapper)
 
+        @Deprecated("use `simulate_credit_authorization_advice` instead")
         override fun simulateCreditAuthorization(
             params: TransactionSimulateCreditAuthorizationParams,
             requestOptions: RequestOptions,
@@ -361,6 +372,37 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             return errorHandler.handle(response).parseable {
                 response
                     .use { simulateCreditAuthorizationHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val simulateCreditAuthorizationAdviceHandler:
+            Handler<TransactionSimulateCreditAuthorizationAdviceResponse> =
+            jsonHandler<TransactionSimulateCreditAuthorizationAdviceResponse>(
+                clientOptions.jsonMapper
+            )
+
+        override fun simulateCreditAuthorizationAdvice(
+            params: TransactionSimulateCreditAuthorizationAdviceParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<TransactionSimulateCreditAuthorizationAdviceResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("v1", "simulate", "credit_authorization_advice")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { simulateCreditAuthorizationAdviceHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
