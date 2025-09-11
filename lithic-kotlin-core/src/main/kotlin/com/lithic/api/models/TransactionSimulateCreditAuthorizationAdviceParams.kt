@@ -22,8 +22,7 @@ import java.util.Objects
  * Simulates a credit authorization advice from the card network. This message indicates that the
  * network approved a credit authorization on your behalf.
  */
-@Deprecated("use `simulate_credit_authorization_advice` instead")
-class TransactionSimulateCreditAuthorizationParams
+class TransactionSimulateCreditAuthorizationAdviceParams
 private constructor(
     private val body: Body,
     private val additionalHeaders: Headers,
@@ -124,7 +123,7 @@ private constructor(
 
         /**
          * Returns a mutable builder for constructing an instance of
-         * [TransactionSimulateCreditAuthorizationParams].
+         * [TransactionSimulateCreditAuthorizationAdviceParams].
          *
          * The following fields are required:
          * ```kotlin
@@ -136,7 +135,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [TransactionSimulateCreditAuthorizationParams]. */
+    /** A builder for [TransactionSimulateCreditAuthorizationAdviceParams]. */
     class Builder internal constructor() {
 
         private var body: Body.Builder = Body.builder()
@@ -144,14 +143,14 @@ private constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(
-            transactionSimulateCreditAuthorizationParams:
-                TransactionSimulateCreditAuthorizationParams
+            transactionSimulateCreditAuthorizationAdviceParams:
+                TransactionSimulateCreditAuthorizationAdviceParams
         ) = apply {
-            body = transactionSimulateCreditAuthorizationParams.body.toBuilder()
+            body = transactionSimulateCreditAuthorizationAdviceParams.body.toBuilder()
             additionalHeaders =
-                transactionSimulateCreditAuthorizationParams.additionalHeaders.toBuilder()
+                transactionSimulateCreditAuthorizationAdviceParams.additionalHeaders.toBuilder()
             additionalQueryParams =
-                transactionSimulateCreditAuthorizationParams.additionalQueryParams.toBuilder()
+                transactionSimulateCreditAuthorizationAdviceParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -355,7 +354,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [TransactionSimulateCreditAuthorizationParams].
+         * Returns an immutable instance of [TransactionSimulateCreditAuthorizationAdviceParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -368,8 +367,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): TransactionSimulateCreditAuthorizationParams =
-            TransactionSimulateCreditAuthorizationParams(
+        fun build(): TransactionSimulateCreditAuthorizationAdviceParams =
+            TransactionSimulateCreditAuthorizationAdviceParams(
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -715,7 +714,7 @@ private constructor(
             return true
         }
 
-        return other is TransactionSimulateCreditAuthorizationParams &&
+        return other is TransactionSimulateCreditAuthorizationAdviceParams &&
             body == other.body &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
@@ -724,5 +723,5 @@ private constructor(
     override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "TransactionSimulateCreditAuthorizationParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "TransactionSimulateCreditAuthorizationAdviceParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
