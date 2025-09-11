@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.103.0 (2025-09-11)
+
+Full Changelog: [v0.102.0...v0.103.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.102.0...v0.103.0)
+
+### Features
+
+* **api:** manual updates ([fefd97b](https://github.com/lithic-com/lithic-kotlin/commit/fefd97b10a89820d8fe9514fada681da1694df40))
+
 ## 0.102.0 (2025-09-09)
 
 Full Changelog: [v0.101.0...v0.102.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.101.0...v0.102.0)
