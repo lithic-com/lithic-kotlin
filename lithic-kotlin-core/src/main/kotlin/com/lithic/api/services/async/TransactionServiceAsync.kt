@@ -146,7 +146,7 @@ interface TransactionServiceAsync {
      * Simulates a credit authorization advice from the card network. This message indicates that
      * the network approved a credit authorization on your behalf.
      */
-    @Deprecated("use `simulate_credit_authorization_advice` instead")
+    @Deprecated("use `simulateCreditAuthorizationAdvice` instead")
     suspend fun simulateCreditAuthorization(
         params: TransactionSimulateCreditAuthorizationParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -323,7 +323,7 @@ interface TransactionServiceAsync {
          * Returns a raw HTTP response for `post /v1/simulate/credit_authorization_advice`, but is
          * otherwise the same as [TransactionServiceAsync.simulateCreditAuthorization].
          */
-        @Deprecated("use `simulate_credit_authorization_advice` instead")
+        @Deprecated("use `simulateCreditAuthorizationAdvice` instead")
         @MustBeClosed
         suspend fun simulateCreditAuthorization(
             params: TransactionSimulateCreditAuthorizationParams,
