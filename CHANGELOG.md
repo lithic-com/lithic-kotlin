@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.104.1 (2025-09-15)
+
+Full Changelog: [v0.104.0...v0.104.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.104.0...v0.104.1)
+
+### Bug Fixes
+
+* **client:** incorrect `getPackageVersion` impl ([ace0400](https://github.com/lithic-com/lithic-kotlin/commit/ace040006f68043fda498e83527293702758f7e0))
+
 ## 0.104.0 (2025-09-11)
 
 Full Changelog: [v0.103.0...v0.104.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.103.0...v0.104.0)
