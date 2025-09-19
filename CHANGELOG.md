@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.105.0 (2025-09-19)
+
+Full Changelog: [v0.104.1...v0.105.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.104.1...v0.105.0)
+
+### Features
+
+* **client:** add convenience overloads for some methods ([a8ee1f0](https://github.com/lithic-com/lithic-kotlin/commit/a8ee1f0eadb32d244a79d858b557ca7fec8e0c50))
+* **client:** expose sleeper option ([298c7b4](https://github.com/lithic-com/lithic-kotlin/commit/298c7b401b4bb3a4b3aa8f724b6c21378a0c0f9f))
+
+
+### Bug Fixes
+
+* **client:** ensure single timer is created per client ([298c7b4](https://github.com/lithic-com/lithic-kotlin/commit/298c7b401b4bb3a4b3aa8f724b6c21378a0c0f9f))
+
 ## 0.104.1 (2025-09-15)
 
 Full Changelog: [v0.104.0...v0.104.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.104.0...v0.104.1)
