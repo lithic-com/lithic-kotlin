@@ -315,6 +315,9 @@ private constructor(
             node: JsonNode
         ): AccountActivityRetrieveTransactionResponse {
             val json = JsonValue.fromJsonNode(node)
+            val family = json.asObject()?.get("family")?.asString()
+
+            when (family) {}
 
             val bestMatches =
                 sequenceOf(
