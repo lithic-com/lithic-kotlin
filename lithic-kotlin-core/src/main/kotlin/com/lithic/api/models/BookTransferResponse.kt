@@ -194,9 +194,9 @@ private constructor(
 
     /**
      * Status types:
-     * - `DECLINED` - The transfer was declined.
-     * - `REVERSED` - The transfer was reversed
-     * - `SETTLED` - The transfer is completed.
+     * * `DECLINED` - The transfer was declined.
+     * * `REVERSED` - The transfer was reversed
+     * * `SETTLED` - The transfer is completed.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -603,9 +603,9 @@ private constructor(
 
         /**
          * Status types:
-         * - `DECLINED` - The transfer was declined.
-         * - `REVERSED` - The transfer was reversed
-         * - `SETTLED` - The transfer is completed.
+         * * `DECLINED` - The transfer was declined.
+         * * `REVERSED` - The transfer was reversed
+         * * `SETTLED` - The transfer is completed.
          */
         fun status(status: Status) = status(JsonField.of(status))
 
@@ -2124,9 +2124,9 @@ private constructor(
 
     /**
      * Status types:
-     * - `DECLINED` - The transfer was declined.
-     * - `REVERSED` - The transfer was reversed
-     * - `SETTLED` - The transfer is completed.
+     * * `DECLINED` - The transfer was declined.
+     * * `REVERSED` - The transfer was reversed
+     * * `SETTLED` - The transfer is completed.
      */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 

@@ -78,7 +78,7 @@ interface CardServiceAsync {
     /**
      * Update the specified properties of the card. Unsupplied properties will remain unchanged.
      *
-     * _Note: setting a card to a `CLOSED` state is a final action that cannot be undone._
+     * *Note: setting a card to a `CLOSED` state is a final action that cannot be undone.*
      */
     suspend fun update(
         cardToken: String,
@@ -142,12 +142,9 @@ interface CardServiceAsync {
      * attribute of an iframe.
      *
      * ```html
-     * <iframe
-     *   id="card-iframe"
-     *   src="https://sandbox.lithic.com/v1/embed/card?embed_request=eyJjc3MiO...;hmac=r8tx1..."
-     *   allow="clipboard-write"
-     *   class="content"
-     * ></iframe>
+     * <iframe id="card-iframe"
+     *         src="https://sandbox.lithic.com/v1/embed/card?embed_request=eyJjc3MiO...;hmac=r8tx1..."
+     *         allow="clipboard-write" class="content"></iframe>
      * ```
      *
      * You should compute the request payload on the server side. You can render it (or the whole
@@ -259,8 +256,8 @@ interface CardServiceAsync {
     /**
      * Get card configuration such as spend limit and state. Customers must be PCI compliant to use
      * this endpoint. Please contact [support@lithic.com](mailto:support@lithic.com) for questions.
-     * _Note: this is a `POST` endpoint because it is more secure to send sensitive data in a
-     * request body than in a URL._
+     * *Note: this is a `POST` endpoint because it is more secure to send sensitive data in a
+     * request body than in a URL.*
      */
     suspend fun searchByPan(
         params: CardSearchByPanParams,
