@@ -52,11 +52,11 @@ private constructor(
 
     /**
      * The window of time to calculate Spend Velocity over.
-     * - `DAY`: Velocity over the current day since midnight Eastern Time.
-     * - `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * - `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
+     * * `DAY`: Velocity over the current day since midnight Eastern Time.
+     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
+     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
      *   Eastern Time.
-     * - `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
+     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
      */
     fun fixed(): FixedWindow? = fixed
 
@@ -106,11 +106,11 @@ private constructor(
 
     /**
      * The window of time to calculate Spend Velocity over.
-     * - `DAY`: Velocity over the current day since midnight Eastern Time.
-     * - `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * - `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
+     * * `DAY`: Velocity over the current day since midnight Eastern Time.
+     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
+     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
      *   Eastern Time.
-     * - `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
+     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
      */
     fun asFixed(): FixedWindow = fixed.getOrThrow("fixed")
 
@@ -285,11 +285,11 @@ private constructor(
 
         /**
          * The window of time to calculate Spend Velocity over.
-         * - `DAY`: Velocity over the current day since midnight Eastern Time.
-         * - `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-         * - `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
+         * * `DAY`: Velocity over the current day since midnight Eastern Time.
+         * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
+         * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
          *   in Eastern Time.
-         * - `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
+         * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
          *   Time.
          */
         fun ofFixed(fixed: FixedWindow) = VelocityLimitParamsPeriodWindow(fixed = fixed)
@@ -339,11 +339,11 @@ private constructor(
 
         /**
          * The window of time to calculate Spend Velocity over.
-         * - `DAY`: Velocity over the current day since midnight Eastern Time.
-         * - `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-         * - `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
+         * * `DAY`: Velocity over the current day since midnight Eastern Time.
+         * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
+         * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
          *   in Eastern Time.
-         * - `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
+         * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
          *   Time.
          */
         fun visitFixed(fixed: FixedWindow): T
@@ -458,11 +458,11 @@ private constructor(
 
     /**
      * The window of time to calculate Spend Velocity over.
-     * - `DAY`: Velocity over the current day since midnight Eastern Time.
-     * - `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * - `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
+     * * `DAY`: Velocity over the current day since midnight Eastern Time.
+     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
+     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
      *   Eastern Time.
-     * - `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
+     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
      */
     class FixedWindow @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
