@@ -2661,11 +2661,11 @@ private constructor(
         /**
          * Indicates whether chargeback liability shift applies to the transaction. Possible enum
          * values:
-         * - `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure flow,
+         * * `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure flow,
          *   chargeback liability shift applies.
-         * - `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant is
+         * * `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant is
          *   liable.
-         * - `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
+         * * `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
          *   cryptography, possibly recurring. Chargeback liability shift to the issuer applies.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -2940,11 +2940,11 @@ private constructor(
             /**
              * Indicates whether chargeback liability shift applies to the transaction. Possible
              * enum values:
-             * - `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure
+             * * `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure
              *   flow, chargeback liability shift applies.
-             * - `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant
+             * * `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant
              *   is liable.
-             * - `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
+             * * `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
              *   cryptography, possibly recurring. Chargeback liability shift to the issuer applies.
              */
             fun liabilityShift(liabilityShift: LiabilityShift) =
@@ -3613,11 +3613,11 @@ private constructor(
         /**
          * Indicates whether chargeback liability shift applies to the transaction. Possible enum
          * values:
-         * - `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure flow,
+         * * `3DS_AUTHENTICATED`: The transaction was fully authenticated through a 3-D Secure flow,
          *   chargeback liability shift applies.
-         * - `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant is
+         * * `NONE`: Chargeback liability shift has not shifted to the issuer, i.e. the merchant is
          *   liable.
-         * - `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
+         * * `TOKEN_AUTHENTICATED`: The transaction was a tokenized payment with validated
          *   cryptography, possibly recurring. Chargeback liability shift to the issuer applies.
          */
         class LiabilityShift

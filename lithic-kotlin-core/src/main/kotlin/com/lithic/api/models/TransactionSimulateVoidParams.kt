@@ -52,8 +52,8 @@ private constructor(
 
     /**
      * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
-     * - `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
-     * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
+     * * `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
+     * * `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -157,8 +157,8 @@ private constructor(
 
         /**
          * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
-         * - `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
-         * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
+         * * `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
+         * * `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
          */
         fun type(type: Type) = apply { body.type(type) }
 
@@ -348,8 +348,8 @@ private constructor(
 
         /**
          * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
-         * - `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
-         * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
+         * * `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
+         * * `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -447,9 +447,9 @@ private constructor(
 
             /**
              * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
-             * - `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by
+             * * `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by
              *   Lithic.
-             * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
+             * * `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
              */
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -558,8 +558,8 @@ private constructor(
 
     /**
      * Type of event to simulate. Defaults to `AUTHORIZATION_REVERSAL`.
-     * - `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
-     * - `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
+     * * `AUTHORIZATION_EXPIRY` indicates authorization has expired and been reversed by Lithic.
+     * * `AUTHORIZATION_REVERSAL` indicates authorization was reversed by the merchant.
      */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 

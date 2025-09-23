@@ -196,13 +196,13 @@ private constructor(
 
     /**
      * Spend limit duration values:
-     * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
-     * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
-     * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
+     * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
+     * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
+     * * `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
      *   support recurring monthly payments, which can occur on different day every month, the time
      *   window we consider for monthly velocity starts 6 days after the current calendar date one
      *   month prior.
-     * - `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
+     * * `TRANSACTION` - Card will authorize multiple transactions if each individual transaction is
      *   under the spend limit.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -212,14 +212,14 @@ private constructor(
         spendLimitDuration.getRequired("spend_limit_duration")
 
     /**
-     * Card state values: _ `CLOSED` - Card will no longer approve authorizations. Closing a card
-     * cannot be undone. _ `OPEN` - Card will approve authorizations (if they match card and account
-     * parameters). _ `PAUSED` - Card will decline authorizations, but can be resumed at a later
-     * time. _ `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
+     * Card state values: * `CLOSED` - Card will no longer approve authorizations. Closing a card
+     * cannot be undone. * `OPEN` - Card will approve authorizations (if they match card and account
+     * parameters). * `PAUSED` - Card will decline authorizations, but can be resumed at a later
+     * time. * `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
      * provisioned pending manufacturing and fulfillment. Cards in this state can accept
      * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-     * physical card itself is present. \* `PENDING_ACTIVATION` - At regular intervals, cards of
-     * type `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+     * physical card itself is present. * `PENDING_ACTIVATION` - At regular intervals, cards of type
+     * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
      * updated to state `PENDING_ACTIVATION`. Similar to `PENDING_FULFILLMENT`, cards in this state
      * can be used for e-commerce transactions or can be added to mobile wallets. API clients should
      * update the card's state to `OPEN` only after the cardholder confirms receipt of the card. In
@@ -231,14 +231,14 @@ private constructor(
     fun state(): State = state.getRequired("state")
 
     /**
-     * Card types: _ `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
-     * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled). _
+     * Card types: * `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
+     * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled). *
      * `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding, credit,
-     * ATM, PIN debit, chip/EMV, NFC and magstripe functionality. _ `SINGLE_USE` - Card is closed
-     * upon first successful authorization. _ `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to
-     * the first merchant that successfully authorizes the card. _ `UNLOCKED` - _[Deprecated]_
-     * Similar behavior to VIRTUAL cards, please use VIRTUAL instead. _ `DIGITAL_WALLET` -
-     * _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
+     * ATM, PIN debit, chip/EMV, NFC and magstripe functionality. * `SINGLE_USE` - Card is closed
+     * upon first successful authorization. * `MERCHANT_LOCKED` - *[Deprecated]* Card is locked to
+     * the first merchant that successfully authorizes the card. * `UNLOCKED` - *[Deprecated]*
+     * Similar behavior to VIRTUAL cards, please use VIRTUAL instead. * `DIGITAL_WALLET` -
+     * *[Deprecated]* Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -354,22 +354,22 @@ private constructor(
     fun replacementFor(): String? = replacementFor.getNullable("replacement_for")
 
     /**
-     * Card state substatus values: _ `LOST` - The physical card is no longer in the cardholder's
-     * possession due to being lost or never received by the cardholder. _ `COMPROMISED` - Card
+     * Card state substatus values: * `LOST` - The physical card is no longer in the cardholder's
+     * possession due to being lost or never received by the cardholder. * `COMPROMISED` - Card
      * information has been exposed, potentially leading to unauthorized access. This may involve
-     * physical card theft, cloning, or online data breaches. _ `DAMAGED` - The physical card is not
-     * functioning properly, such as having chip failures or a demagnetized magnetic stripe. _
+     * physical card theft, cloning, or online data breaches. * `DAMAGED` - The physical card is not
+     * functioning properly, such as having chip failures or a demagnetized magnetic stripe. *
      * `END_USER_REQUEST` - The cardholder requested the closure of the card for reasons unrelated
-     * to fraud or damage, such as switching to a different product or closing the account. _
+     * to fraud or damage, such as switching to a different product or closing the account. *
      * `ISSUER_REQUEST` - The issuer closed the card for reasons unrelated to fraud or damage, such
-     * as account inactivity, product or policy changes, or technology upgrades. _ `NOT_ACTIVE` -
+     * as account inactivity, product or policy changes, or technology upgrades. * `NOT_ACTIVE` -
      * The card hasn’t had any transaction activity for a specified period, applicable to statuses
-     * like `PAUSED` or `CLOSED`. _ `SUSPICIOUS_ACTIVITY` - The card has one or more suspicious
+     * like `PAUSED` or `CLOSED`. * `SUSPICIOUS_ACTIVITY` - The card has one or more suspicious
      * transactions or activities that require review. This can involve prompting the cardholder to
-     * confirm legitimate use or report confirmed fraud. _ `INTERNAL_REVIEW` - The card is
-     * temporarily paused pending further internal review. _ `EXPIRED` - The card has expired and
-     * has been closed without being reissued. _ `UNDELIVERABLE` - The card cannot be delivered to
-     * the cardholder and has been returned. \* `OTHER` - The reason for the status does not fall
+     * confirm legitimate use or report confirmed fraud. * `INTERNAL_REVIEW` - The card is
+     * temporarily paused pending further internal review. * `EXPIRED` - The card has expired and
+     * has been closed without being reissued. * `UNDELIVERABLE` - The card cannot be delivered to
+     * the cardholder and has been returned. * `OTHER` - The reason for the status does not fall
      * into any of the above categories. A comment can be provided to specify the reason.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -767,14 +767,14 @@ private constructor(
 
         /**
          * Spend limit duration values:
-         * - `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
-         * - `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
+         * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
+         * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
          *   card.
-         * - `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
+         * * `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month.
          *   To support recurring monthly payments, which can occur on different day every month,
          *   the time window we consider for monthly velocity starts 6 days after the current
          *   calendar date one month prior.
-         * - `TRANSACTION` - Card will authorize multiple transactions if each individual
+         * * `TRANSACTION` - Card will authorize multiple transactions if each individual
          *   transaction is under the spend limit.
          */
         fun spendLimitDuration(spendLimitDuration: SpendLimitDuration) =
@@ -792,13 +792,13 @@ private constructor(
         }
 
         /**
-         * Card state values: _ `CLOSED` - Card will no longer approve authorizations. Closing a
-         * card cannot be undone. _ `OPEN` - Card will approve authorizations (if they match card
-         * and account parameters). _ `PAUSED` - Card will decline authorizations, but can be
-         * resumed at a later time. _ `PENDING_FULFILLMENT` - The initial state for cards of type
+         * Card state values: * `CLOSED` - Card will no longer approve authorizations. Closing a
+         * card cannot be undone. * `OPEN` - Card will approve authorizations (if they match card
+         * and account parameters). * `PAUSED` - Card will decline authorizations, but can be
+         * resumed at a later time. * `PENDING_FULFILLMENT` - The initial state for cards of type
          * `PHYSICAL`. The card is provisioned pending manufacturing and fulfillment. Cards in this
          * state can accept authorizations for e-commerce purchases, but not for "Card Present"
-         * purchases where the physical card itself is present. \* `PENDING_ACTIVATION` - At regular
+         * purchases where the physical card itself is present. * `PENDING_ACTIVATION` - At regular
          * intervals, cards of type `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card
          * production warehouse and updated to state `PENDING_ACTIVATION`. Similar to
          * `PENDING_FULFILLMENT`, cards in this state can be used for e-commerce transactions or can
@@ -817,14 +817,14 @@ private constructor(
         fun state(state: JsonField<State>) = apply { this.state = state }
 
         /**
-         * Card types: _ `VIRTUAL` - Card will authorize at any merchant and can be added to a
+         * Card types: * `VIRTUAL` - Card will authorize at any merchant and can be added to a
          * digital wallet like Apple Pay or Google Pay (if the card program is digital
-         * wallet-enabled). _ `PHYSICAL` - Manufactured and sent to the cardholder. We offer white
-         * label branding, credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. _
-         * `SINGLE_USE` - Card is closed upon first successful authorization. _ `MERCHANT_LOCKED` -
-         * _[Deprecated]_ Card is locked to the first merchant that successfully authorizes the
-         * card. _ `UNLOCKED` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL
-         * instead. _ `DIGITAL_WALLET` - _[Deprecated]_ Similar behavior to VIRTUAL cards, please
+         * wallet-enabled). * `PHYSICAL` - Manufactured and sent to the cardholder. We offer white
+         * label branding, credit, ATM, PIN debit, chip/EMV, NFC and magstripe functionality. *
+         * `SINGLE_USE` - Card is closed upon first successful authorization. * `MERCHANT_LOCKED` -
+         * *[Deprecated]* Card is locked to the first merchant that successfully authorizes the
+         * card. * `UNLOCKED` - *[Deprecated]* Similar behavior to VIRTUAL cards, please use VIRTUAL
+         * instead. * `DIGITAL_WALLET` - *[Deprecated]* Similar behavior to VIRTUAL cards, please
          * use VIRTUAL instead.
          */
         fun type(type: Type) = type(JsonField.of(type))
@@ -1046,23 +1046,23 @@ private constructor(
         }
 
         /**
-         * Card state substatus values: _ `LOST` - The physical card is no longer in the
-         * cardholder's possession due to being lost or never received by the cardholder. _
+         * Card state substatus values: * `LOST` - The physical card is no longer in the
+         * cardholder's possession due to being lost or never received by the cardholder. *
          * `COMPROMISED` - Card information has been exposed, potentially leading to unauthorized
-         * access. This may involve physical card theft, cloning, or online data breaches. _
+         * access. This may involve physical card theft, cloning, or online data breaches. *
          * `DAMAGED` - The physical card is not functioning properly, such as having chip failures
-         * or a demagnetized magnetic stripe. _ `END_USER_REQUEST` - The cardholder requested the
+         * or a demagnetized magnetic stripe. * `END_USER_REQUEST` - The cardholder requested the
          * closure of the card for reasons unrelated to fraud or damage, such as switching to a
-         * different product or closing the account. _ `ISSUER_REQUEST` - The issuer closed the card
+         * different product or closing the account. * `ISSUER_REQUEST` - The issuer closed the card
          * for reasons unrelated to fraud or damage, such as account inactivity, product or policy
-         * changes, or technology upgrades. _ `NOT_ACTIVE` - The card hasn’t had any transaction
-         * activity for a specified period, applicable to statuses like `PAUSED` or `CLOSED`. _
+         * changes, or technology upgrades. * `NOT_ACTIVE` - The card hasn’t had any transaction
+         * activity for a specified period, applicable to statuses like `PAUSED` or `CLOSED`. *
          * `SUSPICIOUS_ACTIVITY` - The card has one or more suspicious transactions or activities
          * that require review. This can involve prompting the cardholder to confirm legitimate use
-         * or report confirmed fraud. _ `INTERNAL_REVIEW` - The card is temporarily paused pending
-         * further internal review. _ `EXPIRED` - The card has expired and has been closed without
-         * being reissued. _ `UNDELIVERABLE` - The card cannot be delivered to the cardholder and
-         * has been returned. \* `OTHER` - The reason for the status does not fall into any of the
+         * or report confirmed fraud. * `INTERNAL_REVIEW` - The card is temporarily paused pending
+         * further internal review. * `EXPIRED` - The card has expired and has been closed without
+         * being reissued. * `UNDELIVERABLE` - The card cannot be delivered to the cardholder and
+         * has been returned. * `OTHER` - The reason for the status does not fall into any of the
          * above categories. A comment can be provided to specify the reason.
          */
         fun substatus(substatus: Substatus) = substatus(JsonField.of(substatus))
@@ -1277,9 +1277,9 @@ private constructor(
         fun lastFour(): String = lastFour.getRequired("last_four")
 
         /**
-         * State of funding source. Funding source states: _ `ENABLED` - The funding account is
-         * available to use for card creation and transactions. _ `PENDING` - The funding account is
-         * still being verified e.g. bank micro-deposits verification. \* `DELETED` - The founding
+         * State of funding source. Funding source states: * `ENABLED` - The funding account is
+         * available to use for card creation and transactions. * `PENDING` - The funding account is
+         * still being verified e.g. bank micro-deposits verification. * `DELETED` - The founding
          * account has been deleted.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1288,7 +1288,7 @@ private constructor(
         fun state(): State = state.getRequired("state")
 
         /**
-         * Types of funding source: _ `DEPOSITORY_CHECKING` - Bank checking account. _
+         * Types of funding source: * `DEPOSITORY_CHECKING` - Bank checking account. *
          * `DEPOSITORY_SAVINGS` - Bank savings account.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1458,9 +1458,9 @@ private constructor(
             fun lastFour(lastFour: JsonField<String>) = apply { this.lastFour = lastFour }
 
             /**
-             * State of funding source. Funding source states: _ `ENABLED` - The funding account is
-             * available to use for card creation and transactions. _ `PENDING` - The funding
-             * account is still being verified e.g. bank micro-deposits verification. \* `DELETED` -
+             * State of funding source. Funding source states: * `ENABLED` - The funding account is
+             * available to use for card creation and transactions. * `PENDING` - The funding
+             * account is still being verified e.g. bank micro-deposits verification. * `DELETED` -
              * The founding account has been deleted.
              */
             fun state(state: State) = state(JsonField.of(state))
@@ -1475,7 +1475,7 @@ private constructor(
             fun state(state: JsonField<State>) = apply { this.state = state }
 
             /**
-             * Types of funding source: _ `DEPOSITORY_CHECKING` - Bank checking account. _
+             * Types of funding source: * `DEPOSITORY_CHECKING` - Bank checking account. *
              * `DEPOSITORY_SAVINGS` - Bank savings account.
              */
             fun type(type: Type) = type(JsonField.of(type))
@@ -1604,9 +1604,9 @@ private constructor(
                 (if (nickname.asKnown() == null) 0 else 1)
 
         /**
-         * State of funding source. Funding source states: _ `ENABLED` - The funding account is
-         * available to use for card creation and transactions. _ `PENDING` - The funding account is
-         * still being verified e.g. bank micro-deposits verification. \* `DELETED` - The founding
+         * State of funding source. Funding source states: * `ENABLED` - The funding account is
+         * available to use for card creation and transactions. * `PENDING` - The funding account is
+         * still being verified e.g. bank micro-deposits verification. * `DELETED` - The founding
          * account has been deleted.
          */
         class State @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1743,7 +1743,7 @@ private constructor(
         }
 
         /**
-         * Types of funding source: _ `DEPOSITORY_CHECKING` - Bank checking account. _
+         * Types of funding source: * `DEPOSITORY_CHECKING` - Bank checking account. *
          * `DEPOSITORY_SAVINGS` - Bank savings account.
          */
         class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -2043,14 +2043,14 @@ private constructor(
     }
 
     /**
-     * Card state values: _ `CLOSED` - Card will no longer approve authorizations. Closing a card
-     * cannot be undone. _ `OPEN` - Card will approve authorizations (if they match card and account
-     * parameters). _ `PAUSED` - Card will decline authorizations, but can be resumed at a later
-     * time. _ `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
+     * Card state values: * `CLOSED` - Card will no longer approve authorizations. Closing a card
+     * cannot be undone. * `OPEN` - Card will approve authorizations (if they match card and account
+     * parameters). * `PAUSED` - Card will decline authorizations, but can be resumed at a later
+     * time. * `PENDING_FULFILLMENT` - The initial state for cards of type `PHYSICAL`. The card is
      * provisioned pending manufacturing and fulfillment. Cards in this state can accept
      * authorizations for e-commerce purchases, but not for "Card Present" purchases where the
-     * physical card itself is present. \* `PENDING_ACTIVATION` - At regular intervals, cards of
-     * type `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
+     * physical card itself is present. * `PENDING_ACTIVATION` - At regular intervals, cards of type
+     * `PHYSICAL` in state `PENDING_FULFILLMENT` are sent to the card production warehouse and
      * updated to state `PENDING_ACTIVATION`. Similar to `PENDING_FULFILLMENT`, cards in this state
      * can be used for e-commerce transactions or can be added to mobile wallets. API clients should
      * update the card's state to `OPEN` only after the cardholder confirms receipt of the card. In
@@ -2200,14 +2200,14 @@ private constructor(
     }
 
     /**
-     * Card types: _ `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
-     * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled). _
+     * Card types: * `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
+     * wallet like Apple Pay or Google Pay (if the card program is digital wallet-enabled). *
      * `PHYSICAL` - Manufactured and sent to the cardholder. We offer white label branding, credit,
-     * ATM, PIN debit, chip/EMV, NFC and magstripe functionality. _ `SINGLE_USE` - Card is closed
-     * upon first successful authorization. _ `MERCHANT_LOCKED` - _[Deprecated]_ Card is locked to
-     * the first merchant that successfully authorizes the card. _ `UNLOCKED` - _[Deprecated]_
-     * Similar behavior to VIRTUAL cards, please use VIRTUAL instead. _ `DIGITAL_WALLET` -
-     * _[Deprecated]_ Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
+     * ATM, PIN debit, chip/EMV, NFC and magstripe functionality. * `SINGLE_USE` - Card is closed
+     * upon first successful authorization. * `MERCHANT_LOCKED` - *[Deprecated]* Card is locked to
+     * the first merchant that successfully authorizes the card. * `UNLOCKED` - *[Deprecated]*
+     * Similar behavior to VIRTUAL cards, please use VIRTUAL instead. * `DIGITAL_WALLET` -
+     * *[Deprecated]* Similar behavior to VIRTUAL cards, please use VIRTUAL instead.
      */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -2359,22 +2359,22 @@ private constructor(
     }
 
     /**
-     * Card state substatus values: _ `LOST` - The physical card is no longer in the cardholder's
-     * possession due to being lost or never received by the cardholder. _ `COMPROMISED` - Card
+     * Card state substatus values: * `LOST` - The physical card is no longer in the cardholder's
+     * possession due to being lost or never received by the cardholder. * `COMPROMISED` - Card
      * information has been exposed, potentially leading to unauthorized access. This may involve
-     * physical card theft, cloning, or online data breaches. _ `DAMAGED` - The physical card is not
-     * functioning properly, such as having chip failures or a demagnetized magnetic stripe. _
+     * physical card theft, cloning, or online data breaches. * `DAMAGED` - The physical card is not
+     * functioning properly, such as having chip failures or a demagnetized magnetic stripe. *
      * `END_USER_REQUEST` - The cardholder requested the closure of the card for reasons unrelated
-     * to fraud or damage, such as switching to a different product or closing the account. _
+     * to fraud or damage, such as switching to a different product or closing the account. *
      * `ISSUER_REQUEST` - The issuer closed the card for reasons unrelated to fraud or damage, such
-     * as account inactivity, product or policy changes, or technology upgrades. _ `NOT_ACTIVE` -
+     * as account inactivity, product or policy changes, or technology upgrades. * `NOT_ACTIVE` -
      * The card hasn’t had any transaction activity for a specified period, applicable to statuses
-     * like `PAUSED` or `CLOSED`. _ `SUSPICIOUS_ACTIVITY` - The card has one or more suspicious
+     * like `PAUSED` or `CLOSED`. * `SUSPICIOUS_ACTIVITY` - The card has one or more suspicious
      * transactions or activities that require review. This can involve prompting the cardholder to
-     * confirm legitimate use or report confirmed fraud. _ `INTERNAL_REVIEW` - The card is
-     * temporarily paused pending further internal review. _ `EXPIRED` - The card has expired and
-     * has been closed without being reissued. _ `UNDELIVERABLE` - The card cannot be delivered to
-     * the cardholder and has been returned. \* `OTHER` - The reason for the status does not fall
+     * confirm legitimate use or report confirmed fraud. * `INTERNAL_REVIEW` - The card is
+     * temporarily paused pending further internal review. * `EXPIRED` - The card has expired and
+     * has been closed without being reissued. * `UNDELIVERABLE` - The card cannot be delivered to
+     * the cardholder and has been returned. * `OTHER` - The reason for the status does not fall
      * into any of the above categories. A comment can be provided to specify the reason.
      */
     class Substatus @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
