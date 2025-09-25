@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ConditionalBlockParameters
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val conditions: JsonField<List<AuthRuleCondition>>,
     private val additionalProperties: MutableMap<String, JsonValue>,

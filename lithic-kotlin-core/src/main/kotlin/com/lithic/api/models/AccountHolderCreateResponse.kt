@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AccountHolderCreateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,

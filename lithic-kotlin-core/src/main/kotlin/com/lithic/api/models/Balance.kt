@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Balance */
 class Balance
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val availableAmount: JsonField<Long>,
     private val created: JsonField<OffsetDateTime>,

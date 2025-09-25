@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TokenizationUpdateDigitalCardArtResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<Tokenization>,
     private val additionalProperties: MutableMap<String, JsonValue>,

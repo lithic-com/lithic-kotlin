@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class SettlementDetail
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -1173,6 +1174,7 @@ private constructor(
 
     /** The total gross amount of other fees by type. */
     class OtherFeesDetails
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val isa: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,

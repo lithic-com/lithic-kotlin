@@ -520,6 +520,7 @@ private constructor(
         }
 
         class BankVerifiedCreateBankAccountApiRequest
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val accountNumber: JsonField<String>,
             private val country: JsonField<String>,
@@ -1547,6 +1548,7 @@ private constructor(
         }
 
         class PlaidCreateBankAccountApiRequest
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val owner: JsonField<String>,
             private val ownerType: JsonField<OwnerType>,
@@ -2085,6 +2087,7 @@ private constructor(
         }
 
         class ExternallyVerifiedCreateBankAccountApiRequest
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val accountNumber: JsonField<String>,
             private val country: JsonField<String>,
@@ -3153,6 +3156,7 @@ private constructor(
         }
 
         class UnverifiedCreateBankAccountApiRequest
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val accountNumber: JsonField<String>,
             private val country: JsonField<String>,

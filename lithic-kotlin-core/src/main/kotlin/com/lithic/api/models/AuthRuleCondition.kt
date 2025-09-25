@@ -28,6 +28,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AuthRuleCondition
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val attribute: JsonField<ConditionalAttribute>,
     private val operation: JsonField<Operation>,

@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CardAggregateBalanceListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<AggregateBalanceListResponse>>,
     private val hasMore: JsonField<Boolean>,

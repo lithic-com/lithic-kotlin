@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class FinancialTransaction
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val category: JsonField<Category>,
@@ -750,6 +751,7 @@ private constructor(
 
     /** Financial Event */
     class FinancialEvent
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val amount: JsonField<Long>,

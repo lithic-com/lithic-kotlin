@@ -299,6 +299,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val parameters: JsonField<Parameters>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -774,6 +775,7 @@ private constructor(
         }
 
         class ConditionalAuthorizationActionParameters
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val action: JsonField<Action>,
             private val conditions: JsonField<List<Condition>>,
@@ -1111,6 +1113,7 @@ private constructor(
             }
 
             class Condition
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val attribute: JsonField<Attribute>,
                 private val operation: JsonField<Operation>,
