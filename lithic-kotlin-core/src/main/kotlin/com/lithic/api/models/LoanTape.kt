@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class LoanTape
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountStanding: JsonField<AccountStanding>,
@@ -1016,6 +1017,7 @@ private constructor(
             (if (tier.asKnown() == null) 0 else 1)
 
     class AccountStanding
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val consecutiveFullPaymentsMade: JsonField<Long>,
         private val consecutiveMinimumPaymentsMade: JsonField<Long>,
@@ -1476,6 +1478,7 @@ private constructor(
 
         /** Information about the financial account state */
         class FinancialAccountState
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val status: JsonField<FinancialAccountStatus>,
             private val substatus: JsonField<FinancialAccountSubstatus>,
@@ -2163,6 +2166,7 @@ private constructor(
     }
 
     class Balances
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val due: JsonField<CategoryBalances>,
         private val nextStatementDue: JsonField<CategoryBalances>,
@@ -2447,6 +2451,7 @@ private constructor(
          * will be considered past due the next day
          */
         class CategoryBalances
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val fees: JsonField<Long>,
             private val interest: JsonField<Long>,
@@ -2707,6 +2712,7 @@ private constructor(
     }
 
     class StatementTotals
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val balanceTransfers: JsonField<Long>,
         private val cashAdvances: JsonField<Long>,
@@ -3125,6 +3131,7 @@ private constructor(
     }
 
     class InterestDetails
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val actualInterestCharged: JsonField<Long>,
         private val dailyBalanceAmounts: JsonField<CategoryDetails>,
@@ -3539,6 +3546,7 @@ private constructor(
                 (if (minimumInterestCharged.asKnown() == null) 0 else 1)
 
         class CategoryDetails
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val balanceTransfers: JsonField<String>,
             private val cashAdvances: JsonField<String>,
@@ -3960,6 +3968,7 @@ private constructor(
     }
 
     class BalanceDetails
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val remaining: JsonField<Long>,
@@ -4148,6 +4157,7 @@ private constructor(
     }
 
     class CategoryBalances
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fees: JsonField<Long>,
         private val interest: JsonField<Long>,

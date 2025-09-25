@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Statement
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountStanding: JsonField<AccountStanding>,
@@ -1001,6 +1002,7 @@ private constructor(
             (if (nextStatementEndDate.asKnown() == null) 0 else 1)
 
     class AccountStanding
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val consecutiveFullPaymentsMade: JsonField<Long>,
         private val consecutiveMinimumPaymentsMade: JsonField<Long>,
@@ -1461,6 +1463,7 @@ private constructor(
 
         /** Information about the financial account state */
         class FinancialAccountState
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val status: JsonField<FinancialAccountStatus>,
             private val substatus: JsonField<FinancialAccountSubstatus>,
@@ -2148,6 +2151,7 @@ private constructor(
     }
 
     class AmountDue
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val pastDue: JsonField<Long>,
@@ -2350,6 +2354,7 @@ private constructor(
     }
 
     class StatementTotals
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val balanceTransfers: JsonField<Long>,
         private val cashAdvances: JsonField<Long>,
@@ -2903,6 +2908,7 @@ private constructor(
     }
 
     class InterestDetails
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val actualInterestCharged: JsonField<Long>,
         private val dailyBalanceAmounts: JsonField<CategoryDetails>,
@@ -3317,6 +3323,7 @@ private constructor(
                 (if (minimumInterestCharged.asKnown() == null) 0 else 1)
 
         class CategoryDetails
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val balanceTransfers: JsonField<String>,
             private val cashAdvances: JsonField<String>,

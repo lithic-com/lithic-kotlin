@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CardWebProvisionResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val jws: JsonField<WebPushProvisioningResponseJws>,
     private val state: JsonField<String>,
@@ -171,6 +172,7 @@ private constructor(
 
     /** JWS object required for handoff to Apple's script. */
     class WebPushProvisioningResponseJws
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val header: JsonField<WebPushProvisioningResponseHeader>,
         private val payload: JsonField<String>,
@@ -426,6 +428,7 @@ private constructor(
          * the JWS signature.
          */
         class WebPushProvisioningResponseHeader
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val kid: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,

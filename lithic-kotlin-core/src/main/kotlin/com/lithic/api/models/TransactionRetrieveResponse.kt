@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TransactionRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val fraudStatus: JsonField<FraudStatus>,
     private val transactionToken: JsonField<String>,

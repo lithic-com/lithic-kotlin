@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Tokenization
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -1151,6 +1152,7 @@ private constructor(
     }
 
     class TokenizationEvent
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val createdAt: JsonField<OffsetDateTime>,

@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Account
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
@@ -625,6 +626,7 @@ private constructor(
      * limit of 0 indicates that the lifetime limit feature is disabled.
      */
     class SpendLimit
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val daily: JsonField<Long>,
         private val lifetime: JsonField<Long>,
@@ -1001,6 +1003,7 @@ private constructor(
     }
 
     class AccountHolder
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val businessAccountToken: JsonField<String>,
@@ -1483,6 +1486,7 @@ private constructor(
 
     @Deprecated("deprecated")
     class VerificationAddress
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address1: JsonField<String>,
         private val city: JsonField<String>,

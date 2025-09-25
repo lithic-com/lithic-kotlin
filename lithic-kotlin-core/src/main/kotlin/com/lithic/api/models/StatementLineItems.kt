@@ -21,6 +21,7 @@ import java.util.Collections
 import java.util.Objects
 
 class StatementLineItems
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<StatementLineItemResponse>>,
     private val hasMore: JsonField<Boolean>,
@@ -207,6 +208,7 @@ private constructor(
             (if (hasMore.asKnown() == null) 0 else 1)
 
     class StatementLineItemResponse
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val amount: JsonField<Long>,

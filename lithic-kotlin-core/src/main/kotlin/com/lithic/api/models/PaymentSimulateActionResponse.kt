@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PaymentSimulateActionResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val debuggingRequestId: JsonField<String>,
     private val result: JsonField<Result>,

@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PrimeRateRetrieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<InterestRate>>,
     private val hasMore: JsonField<Boolean>,
@@ -209,6 +210,7 @@ private constructor(
             (if (hasMore.asKnown() == null) 0 else 1)
 
     class InterestRate
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val effectiveDate: JsonField<LocalDate>,
         private val rate: JsonField<String>,

@@ -18,6 +18,7 @@ import java.util.Objects
 
 /** A response containing a list of transactions */
 class AccountActivityListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<AccountActivityListResponse>>,
     private val hasMore: JsonField<Boolean>,

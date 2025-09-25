@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class V2RetrieveReportResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val authRuleToken: JsonField<String>,
     private val begin: JsonField<LocalDate>,
@@ -289,6 +290,7 @@ private constructor(
             (if (end.asKnown() == null) 0 else 1)
 
     class DailyStatistic
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val currentVersionStatistics: JsonField<RuleStats>,
         private val date: JsonField<LocalDate>,

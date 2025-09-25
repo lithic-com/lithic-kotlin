@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Dispute evidence. */
 class DisputeEvidence
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,

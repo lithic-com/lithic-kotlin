@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class WirePartyDetails
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val accountNumber: JsonField<String>,
     private val agentId: JsonField<String>,

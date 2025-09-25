@@ -20,6 +20,7 @@ import java.util.Objects
 
 /** A single event that affects the transaction state and lifecycle. */
 class Event
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,

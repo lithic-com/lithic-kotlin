@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class FinancialAccountCreditConfig
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val accountToken: JsonField<String>,
     private val chargedOffReason: JsonField<ChargedOffReason>,

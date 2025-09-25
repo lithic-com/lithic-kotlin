@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AccountHolderListDocumentsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<Document>>,
     private val additionalProperties: MutableMap<String, JsonValue>,

@@ -352,6 +352,7 @@ private constructor(
 
     /** Request object for simulating a 3DS authentication */
     class SimulateAuthenticationRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val merchant: JsonField<Merchant>,
         private val pan: JsonField<String>,
@@ -645,6 +646,7 @@ private constructor(
 
     /** Merchant information for the simulated transaction */
     class Merchant
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val country: JsonField<String>,
@@ -934,6 +936,7 @@ private constructor(
 
     /** Transaction details for the simulation */
     class Transaction
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val currency: JsonField<String>,

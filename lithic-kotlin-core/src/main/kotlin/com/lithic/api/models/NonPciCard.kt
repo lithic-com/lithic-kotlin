@@ -21,6 +21,7 @@ import java.util.Objects
 
 /** Card details without PCI information */
 class NonPciCard
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -1222,6 +1223,7 @@ private constructor(
 
     /** Deprecated: Funding account for the card. */
     class FundingAccount
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val created: JsonField<OffsetDateTime>,

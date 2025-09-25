@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Aggregate Balance across all end-user accounts */
 class AggregateBalance
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val availableAmount: JsonField<Long>,
     private val created: JsonField<OffsetDateTime>,

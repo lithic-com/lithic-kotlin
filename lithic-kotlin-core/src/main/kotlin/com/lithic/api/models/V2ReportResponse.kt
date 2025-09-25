@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class V2ReportResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val reportToken: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

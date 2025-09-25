@@ -20,6 +20,7 @@ import java.util.Objects
 
 /** Card details with potentially PCI sensitive information for Enterprise customers */
 class Card
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,

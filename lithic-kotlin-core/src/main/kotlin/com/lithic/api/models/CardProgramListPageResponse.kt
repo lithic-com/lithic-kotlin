@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CardProgramListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<CardProgram>>,
     private val hasMore: JsonField<Boolean>,

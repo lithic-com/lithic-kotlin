@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Kyb
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val beneficialOwnerIndividuals: JsonField<List<KybIndividual>>,
     private val businessEntity: JsonField<BusinessEntity>,
@@ -619,6 +620,7 @@ private constructor(
 
     /** Individuals associated with a KYB application. Phone number is optional. */
     class KybIndividual
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address: JsonField<Address>,
         private val dob: JsonField<String>,
@@ -1051,6 +1053,7 @@ private constructor(
 
     /** Information for business for which the account is being opened and KYB is being run. */
     class BusinessEntity
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address: JsonField<Address>,
         private val governmentId: JsonField<String>,

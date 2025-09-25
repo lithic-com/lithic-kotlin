@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class PaymentRetryResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val category: JsonField<Payment.Category>,
