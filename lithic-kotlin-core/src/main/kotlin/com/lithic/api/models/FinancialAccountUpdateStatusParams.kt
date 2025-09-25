@@ -297,6 +297,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class UpdateFinancialAccountStatusRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val status: JsonField<FinancialAccountStatus>,
         private val substatus: JsonField<UpdateFinancialAccountSubstatus>,

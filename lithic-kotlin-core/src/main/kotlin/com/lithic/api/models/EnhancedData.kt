@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class EnhancedData
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val common: JsonField<CommonData>,
@@ -320,6 +321,7 @@ private constructor(
             (if (transactionToken.asKnown() == null) 0 else 1)
 
     class CommonData
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val lineItems: JsonField<List<LineItem>>,
         private val tax: JsonField<TaxData>,
@@ -640,6 +642,7 @@ private constructor(
 
         /** An L2/L3 enhanced commercial data line item. */
         class LineItem
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Double>,
             private val description: JsonField<String>,
@@ -913,6 +916,7 @@ private constructor(
         }
 
         class TaxData
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Long>,
             private val exempt: JsonField<TaxExemptIndicator>,
@@ -1310,6 +1314,7 @@ private constructor(
     }
 
     class Fleet
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amountTotals: JsonField<AmountTotals>,
         private val fuel: JsonField<FuelData>,
@@ -1659,6 +1664,7 @@ private constructor(
                 (if (vehicleNumber.asKnown() == null) 0 else 1)
 
         class AmountTotals
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val discount: JsonField<Long>,
             private val grossSale: JsonField<Long>,
@@ -1883,6 +1889,7 @@ private constructor(
         }
 
         class FuelData
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val quantity: JsonField<Double>,
             private val type: JsonField<FuelType>,

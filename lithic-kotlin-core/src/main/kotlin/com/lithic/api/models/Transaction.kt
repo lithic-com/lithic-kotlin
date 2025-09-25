@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Transaction
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -1226,6 +1227,7 @@ private constructor(
             (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
 
     class TransactionAmounts
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val cardholder: JsonField<Cardholder>,
         private val hold: JsonField<Hold>,
@@ -1476,6 +1478,7 @@ private constructor(
                 (settlement.asKnown()?.validity() ?: 0)
 
         class Cardholder
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Long>,
             private val conversionRate: JsonField<String>,
@@ -1734,6 +1737,7 @@ private constructor(
         }
 
         class Hold
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Long>,
             private val currency: JsonField<String>,
@@ -1939,6 +1943,7 @@ private constructor(
         }
 
         class Merchant
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Long>,
             private val currency: JsonField<String>,
@@ -2144,6 +2149,7 @@ private constructor(
         }
 
         class Settlement
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val amount: JsonField<Long>,
             private val currency: JsonField<String>,
@@ -2372,6 +2378,7 @@ private constructor(
     }
 
     class Avs
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address: JsonField<String>,
         private val zipcode: JsonField<String>,
@@ -2566,6 +2573,7 @@ private constructor(
     }
 
     class CardholderAuthentication
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val threeDSVersion: JsonField<String>,
         private val acquirerExemption: JsonField<AcquirerExemption>,
@@ -4234,6 +4242,7 @@ private constructor(
     }
 
     class Merchant
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val acceptorId: JsonField<String>,
         private val acquiringInstitutionId: JsonField<String>,
@@ -4816,6 +4825,7 @@ private constructor(
     }
 
     class Pos
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val entryMode: JsonField<PosEntryMode>,
         private val terminal: JsonField<PosTerminal>,
@@ -4991,6 +5001,7 @@ private constructor(
             (entryMode.asKnown()?.validity() ?: 0) + (terminal.asKnown()?.validity() ?: 0)
 
         class PosEntryMode
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val card: JsonField<Card>,
             private val cardholder: JsonField<Cardholder>,
@@ -5812,6 +5823,7 @@ private constructor(
         }
 
         class PosTerminal
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val attended: JsonField<Boolean>,
             private val cardRetentionCapable: JsonField<Boolean>,
@@ -7294,6 +7306,7 @@ private constructor(
     }
 
     class TokenInfo
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val walletType: JsonField<WalletType>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -7624,6 +7637,7 @@ private constructor(
     }
 
     class TransactionEvent
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val amount: JsonField<Long>,
@@ -8253,6 +8267,7 @@ private constructor(
                 (networkSpecificData.asKnown()?.validity() ?: 0)
 
         class TransactionEventAmounts
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val cardholder: JsonField<Cardholder>,
             private val merchant: JsonField<Merchant>,
@@ -8483,6 +8498,7 @@ private constructor(
                     (settlement.asKnown()?.validity() ?: 0)
 
             class Cardholder
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val amount: JsonField<Long>,
                 private val conversionRate: JsonField<String>,
@@ -8743,6 +8759,7 @@ private constructor(
             }
 
             class Merchant
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val amount: JsonField<Long>,
                 private val currency: JsonField<String>,
@@ -8953,6 +8970,7 @@ private constructor(
             }
 
             class Settlement
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val amount: JsonField<Long>,
                 private val conversionRate: JsonField<String>,
@@ -9831,6 +9849,7 @@ private constructor(
          * documentation for more details about these fields and how to use them.
          */
         class NetworkInfo
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val acquirer: JsonField<Acquirer>,
             private val amex: JsonField<Amex>,
@@ -10083,6 +10102,7 @@ private constructor(
                     (visa.asKnown()?.validity() ?: 0)
 
             class Acquirer
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val acquirerReferenceNumber: JsonField<String>,
                 private val retrievalReferenceNumber: JsonField<String>,
@@ -10317,6 +10337,7 @@ private constructor(
             }
 
             class Amex
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val originalTransactionId: JsonField<String>,
                 private val transactionId: JsonField<String>,
@@ -10548,6 +10569,7 @@ private constructor(
             }
 
             class Mastercard
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val banknetReferenceNumber: JsonField<String>,
                 private val originalBanknetReferenceNumber: JsonField<String>,
@@ -10915,6 +10937,7 @@ private constructor(
             }
 
             class Visa
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val originalTransactionId: JsonField<String>,
                 private val transactionId: JsonField<String>,
@@ -11430,6 +11453,7 @@ private constructor(
         }
 
         class RuleResult
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val authRuleToken: JsonField<String>,
             private val explanation: JsonField<String>,
@@ -12523,6 +12547,7 @@ private constructor(
         }
 
         class NetworkSpecificData
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val mastercard: JsonField<MastercardNetworkSpecificData>,
             private val visa: JsonField<VisaNetworkSpecificData>,
@@ -12709,6 +12734,7 @@ private constructor(
                 (mastercard.asKnown()?.validity() ?: 0) + (visa.asKnown()?.validity() ?: 0)
 
             class MastercardNetworkSpecificData
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val ecommerceSecurityLevelIndicator: JsonField<String>,
                 private val onBehalfServiceResult: JsonField<List<OnBehalfServiceResult>>,
@@ -13004,6 +13030,7 @@ private constructor(
                         (if (transactionTypeIdentifier.asKnown() == null) 0 else 1)
 
                 class OnBehalfServiceResult
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val result1: JsonField<String>,
                     private val result2: JsonField<String>,
@@ -13289,6 +13316,7 @@ private constructor(
             }
 
             class VisaNetworkSpecificData
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val businessApplicationIdentifier: JsonField<String>,
                 private val additionalProperties: MutableMap<String, JsonValue>,

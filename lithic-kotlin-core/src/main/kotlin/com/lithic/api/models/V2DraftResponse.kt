@@ -30,6 +30,7 @@ import java.util.Collections
 import java.util.Objects
 
 class V2DraftResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountTokens: JsonField<List<String>>,
@@ -688,6 +689,7 @@ private constructor(
             (excludedCardTokens.asKnown()?.size ?: 0)
 
     class CurrentVersion
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val parameters: JsonField<Parameters>,
         private val version: JsonField<Long>,
@@ -1211,6 +1213,7 @@ private constructor(
             }
 
             class ConditionalAuthorizationActionParameters
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val action: JsonField<Action>,
                 private val conditions: JsonField<List<Condition>>,
@@ -1554,6 +1557,7 @@ private constructor(
                 }
 
                 class Condition
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val attribute: JsonField<Attribute>,
                     private val operation: JsonField<Operation>,
@@ -2639,6 +2643,7 @@ private constructor(
     }
 
     class DraftVersion
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val parameters: JsonField<Parameters>,
         private val version: JsonField<Long>,
@@ -3162,6 +3167,7 @@ private constructor(
             }
 
             class ConditionalAuthorizationActionParameters
+            @JsonCreator(mode = JsonCreator.Mode.DISABLED)
             private constructor(
                 private val action: JsonField<Action>,
                 private val conditions: JsonField<List<Condition>>,
@@ -3505,6 +3511,7 @@ private constructor(
                 }
 
                 class Condition
+                @JsonCreator(mode = JsonCreator.Mode.DISABLED)
                 private constructor(
                     private val attribute: JsonField<Attribute>,
                     private val operation: JsonField<Operation>,

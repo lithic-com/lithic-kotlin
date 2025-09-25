@@ -21,6 +21,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ManagementOperationTransaction
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
@@ -1337,6 +1338,7 @@ private constructor(
     }
 
     class ManagementOperationEvent
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val amount: JsonField<Long>,
@@ -2450,6 +2452,7 @@ private constructor(
     }
 
     class TransactionSeries
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val relatedTransactionEventToken: JsonField<String>,
         private val relatedTransactionToken: JsonField<String>,

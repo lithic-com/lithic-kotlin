@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** Balance of a Financial Account */
 class BalanceListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val availableAmount: JsonField<Long>,

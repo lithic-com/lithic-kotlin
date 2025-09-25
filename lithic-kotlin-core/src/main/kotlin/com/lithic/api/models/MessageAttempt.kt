@@ -19,6 +19,7 @@ import java.util.Objects
 
 /** A subscription to specific event types. */
 class MessageAttempt
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,

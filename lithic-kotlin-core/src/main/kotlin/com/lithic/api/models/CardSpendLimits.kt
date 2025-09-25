@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CardSpendLimits
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val availableSpendLimit: JsonField<AvailableSpendLimit>,
     private val spendLimit: JsonField<SpendLimit>,
@@ -233,6 +234,7 @@ private constructor(
             (spendVelocity.asKnown()?.validity() ?: 0)
 
     class AvailableSpendLimit
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val annually: JsonField<Long>,
         private val forever: JsonField<Long>,
@@ -456,6 +458,7 @@ private constructor(
     }
 
     class SpendLimit
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val annually: JsonField<Long>,
         private val forever: JsonField<Long>,
@@ -667,6 +670,7 @@ private constructor(
     }
 
     class SpendVelocity
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val annually: JsonField<Long>,
         private val forever: JsonField<Long>,

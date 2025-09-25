@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class RuleStats
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val approved: JsonField<Long>,
     private val challenged: JsonField<Long>,
@@ -310,6 +311,7 @@ private constructor(
             (if (version.asKnown() == null) 0 else 1)
 
     class Example
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val approved: JsonField<Boolean>,
         private val decision: JsonField<Decision>,

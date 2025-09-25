@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class VelocityLimitParams
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val filters: JsonField<Filters>,
     private val period: JsonField<VelocityLimitParamsPeriodWindow>,
@@ -372,6 +373,7 @@ private constructor(
             (if (limitCount.asKnown() == null) 0 else 1)
 
     class Filters
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val excludeCountries: JsonField<List<String>>,
         private val excludeMccs: JsonField<List<String>>,

@@ -16,6 +16,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ExternalBankAccountAddress
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val address1: JsonField<String>,
     private val city: JsonField<String>,

@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class KycExempt
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val address: JsonField<Address>,
     private val email: JsonField<String>,

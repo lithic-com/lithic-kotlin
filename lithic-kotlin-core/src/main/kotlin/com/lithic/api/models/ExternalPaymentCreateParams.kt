@@ -463,6 +463,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class CreateExternalPaymentRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val category: JsonField<ExternalPaymentCategory>,

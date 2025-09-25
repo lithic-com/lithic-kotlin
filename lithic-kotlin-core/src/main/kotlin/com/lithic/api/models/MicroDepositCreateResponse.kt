@@ -19,6 +19,7 @@ import java.util.Collections
 import java.util.Objects
 
 class MicroDepositCreateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val country: JsonField<String>,

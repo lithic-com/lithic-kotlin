@@ -20,6 +20,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AccountHolderSimulateEnrollmentReviewResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountToken: JsonField<String>,
@@ -1074,6 +1075,7 @@ private constructor(
             (if (websiteUrl.asKnown() == null) 0 else 1)
 
     class Individual
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address: JsonField<Address>,
         private val dob: JsonField<String>,
@@ -1450,6 +1452,7 @@ private constructor(
          * APO/FPO are acceptable. Only USA addresses are currently supported.
          */
         class Address
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val address1: JsonField<String>,
             private val city: JsonField<String>,
@@ -2579,6 +2582,7 @@ private constructor(
 
     /** Information about the most recent identity verification attempt */
     class VerificationApplication
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val created: JsonField<OffsetDateTime>,
         private val status: JsonField<Status>,

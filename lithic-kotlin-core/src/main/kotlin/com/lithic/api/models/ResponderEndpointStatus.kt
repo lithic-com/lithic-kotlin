@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ResponderEndpointStatus
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val enrolled: JsonField<Boolean>,
     private val url: JsonField<String>,

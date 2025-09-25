@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class AuthenticationSimulateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

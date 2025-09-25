@@ -15,6 +15,7 @@ import java.util.Collections
 import java.util.Objects
 
 class ApiStatus
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val message: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

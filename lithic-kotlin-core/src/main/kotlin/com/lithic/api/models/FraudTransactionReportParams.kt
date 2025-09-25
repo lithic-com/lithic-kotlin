@@ -376,6 +376,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class FraudReportRequest
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fraudStatus: JsonField<FraudStatus>,
         private val comment: JsonField<String>,

@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class Kyc
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val individual: JsonField<Individual>,
     private val tosTimestamp: JsonField<String>,
@@ -331,6 +332,7 @@ private constructor(
 
     /** Information on individual for whom the account is being opened and KYC is being run. */
     class Individual
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address: JsonField<Address>,
         private val dob: JsonField<String>,

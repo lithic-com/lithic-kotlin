@@ -17,6 +17,7 @@ import java.util.Collections
 import java.util.Objects
 
 class TokenizationListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<Tokenization>>,
     private val hasMore: JsonField<Boolean>,

@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class KybBusinessEntity
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val address: JsonField<Address>,
     private val governmentId: JsonField<String>,
@@ -401,6 +402,7 @@ private constructor(
      * APO/FPO are acceptable.
      */
     class Address
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val address1: JsonField<String>,
         private val city: JsonField<String>,

@@ -21,6 +21,7 @@ import java.util.Objects
 
 /** Describes the document and the required document image uploads required to re-run KYC */
 class Document
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
     private val accountHolderToken: JsonField<String>,
@@ -586,6 +587,7 @@ private constructor(
 
     /** Represents a single image of the document to upload. */
     class RequiredDocumentUpload
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
         private val acceptedEntityStatusReasons: JsonField<List<String>>,
