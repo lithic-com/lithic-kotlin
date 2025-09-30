@@ -15,6 +15,7 @@ import com.lithic.api.models.AuthRuleV2ListPageAsync
 import com.lithic.api.models.AuthRuleV2ListParams
 import com.lithic.api.models.AuthRuleV2PromoteParams
 import com.lithic.api.models.AuthRuleV2ReportParams
+import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveParams
 import com.lithic.api.models.AuthRuleV2RetrieveReportParams
 import com.lithic.api.models.AuthRuleV2UpdateParams
@@ -23,6 +24,7 @@ import com.lithic.api.models.V2CreateResponse
 import com.lithic.api.models.V2DraftResponse
 import com.lithic.api.models.V2PromoteResponse
 import com.lithic.api.models.V2ReportResponse
+import com.lithic.api.models.V2RetrieveFeaturesResponse
 import com.lithic.api.models.V2RetrieveReportResponse
 import com.lithic.api.models.V2RetrieveResponse
 import com.lithic.api.models.V2UpdateResponse
@@ -245,6 +247,35 @@ interface V2ServiceAsync {
     @Deprecated("deprecated")
     suspend fun report(authRuleToken: String, requestOptions: RequestOptions): V2ReportResponse =
         report(authRuleToken, AuthRuleV2ReportParams.none(), requestOptions)
+
+    /**
+     * Fetches the current calculated Feature values for the given Auth Rule
+     *
+     * This only calculates the features for the active version.
+     * - VelocityLimit Rules calculates the current Velocity Feature data. This requires a
+     *   `card_token` or `account_token` matching what the rule is Scoped to.
+     * - ConditionalBlock Rules calculates the CARD_TRANSACTION_COUNT_* attributes on the rule. This
+     *   requires a `card_token`
+     */
+    suspend fun retrieveFeatures(
+        authRuleToken: String,
+        params: AuthRuleV2RetrieveFeaturesParams = AuthRuleV2RetrieveFeaturesParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): V2RetrieveFeaturesResponse =
+        retrieveFeatures(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
+
+    /** @see retrieveFeatures */
+    suspend fun retrieveFeatures(
+        params: AuthRuleV2RetrieveFeaturesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): V2RetrieveFeaturesResponse
+
+    /** @see retrieveFeatures */
+    suspend fun retrieveFeatures(
+        authRuleToken: String,
+        requestOptions: RequestOptions,
+    ): V2RetrieveFeaturesResponse =
+        retrieveFeatures(authRuleToken, AuthRuleV2RetrieveFeaturesParams.none(), requestOptions)
 
     /**
      * Retrieves a performance report for an Auth rule containing daily statistics and evaluation
@@ -483,6 +514,36 @@ interface V2ServiceAsync {
             requestOptions: RequestOptions,
         ): HttpResponseFor<V2ReportResponse> =
             report(authRuleToken, AuthRuleV2ReportParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}/features`, but is
+         * otherwise the same as [V2ServiceAsync.retrieveFeatures].
+         */
+        @MustBeClosed
+        suspend fun retrieveFeatures(
+            authRuleToken: String,
+            params: AuthRuleV2RetrieveFeaturesParams = AuthRuleV2RetrieveFeaturesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2RetrieveFeaturesResponse> =
+            retrieveFeatures(
+                params.toBuilder().authRuleToken(authRuleToken).build(),
+                requestOptions,
+            )
+
+        /** @see retrieveFeatures */
+        @MustBeClosed
+        suspend fun retrieveFeatures(
+            params: AuthRuleV2RetrieveFeaturesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<V2RetrieveFeaturesResponse>
+
+        /** @see retrieveFeatures */
+        @MustBeClosed
+        suspend fun retrieveFeatures(
+            authRuleToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2RetrieveFeaturesResponse> =
+            retrieveFeatures(authRuleToken, AuthRuleV2RetrieveFeaturesParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}/report`, but is
