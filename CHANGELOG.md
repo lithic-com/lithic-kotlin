@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.106.0 (2025-09-30)
+
+Full Changelog: [v0.105.0...v0.106.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.105.0...v0.106.0)
+
+### Features
+
+* **api:** adds support for Auth Rule features ([28bae52](https://github.com/lithic-com/lithic-kotlin/commit/28bae5268e233a74a4bcd8287f9a1299a47a6d04))
+
 ## 0.105.0 (2025-09-25)
 
 Full Changelog: [v0.104.1...v0.105.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.104.1...v0.105.0)
