@@ -8,6 +8,7 @@ import com.lithic.api.models.AuthRuleCondition
 import com.lithic.api.models.AuthRuleV2ApplyParams
 import com.lithic.api.models.AuthRuleV2CreateParams
 import com.lithic.api.models.AuthRuleV2DraftParams
+import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveReportParams
 import com.lithic.api.models.AuthRuleV2UpdateParams
 import com.lithic.api.models.ConditionalAttribute
@@ -209,6 +210,27 @@ internal class V2ServiceAsyncTest {
         val v2ServiceAsync = client.authRules().v2()
 
         val response = v2ServiceAsync.report("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+
+        response.validate()
+    }
+
+    @Test
+    suspend fun retrieveFeatures() {
+        val client =
+            LithicOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My Lithic API Key")
+                .build()
+        val v2ServiceAsync = client.authRules().v2()
+
+        val response =
+            v2ServiceAsync.retrieveFeatures(
+                AuthRuleV2RetrieveFeaturesParams.builder()
+                    .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .accountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .cardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .build()
+            )
 
         response.validate()
     }
