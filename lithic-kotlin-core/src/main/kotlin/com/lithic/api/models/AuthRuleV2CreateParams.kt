@@ -1753,6 +1753,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -1894,6 +1897,9 @@ private constructor(
                              *   currency. This is the amount the issuer should authorize against
                              *   unless the issuer is paying the acquirer fee on behalf of the
                              *   cardholder.
+                             * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                             *   (cents). This represents the amount of cash being withdrawn or
+                             *   advanced.
                              * * `RISK_SCORE`: Network-provided score assessing risk level
                              *   associated with a given authorization. Scores are on a range of
                              *   0-999, with 0 representing the lowest risk and 999 representing the
@@ -2069,6 +2075,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -2127,6 +2136,8 @@ private constructor(
 
                                 val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
+                                val CASH_AMOUNT = of("CASH_AMOUNT")
+
                                 val RISK_SCORE = of("RISK_SCORE")
 
                                 val CARD_TRANSACTION_COUNT_15_M = of("CARD_TRANSACTION_COUNT_15M")
@@ -2158,6 +2169,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -2189,6 +2201,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -2223,6 +2236,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Value.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Value.CASH_AMOUNT
                                     RISK_SCORE -> Value.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Value.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
@@ -2254,6 +2268,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Known.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Known.CASH_AMOUNT
                                     RISK_SCORE -> Known.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Known.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H
@@ -4209,6 +4224,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -4350,6 +4368,9 @@ private constructor(
                              *   currency. This is the amount the issuer should authorize against
                              *   unless the issuer is paying the acquirer fee on behalf of the
                              *   cardholder.
+                             * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                             *   (cents). This represents the amount of cash being withdrawn or
+                             *   advanced.
                              * * `RISK_SCORE`: Network-provided score assessing risk level
                              *   associated with a given authorization. Scores are on a range of
                              *   0-999, with 0 representing the lowest risk and 999 representing the
@@ -4525,6 +4546,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -4583,6 +4607,8 @@ private constructor(
 
                                 val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
+                                val CASH_AMOUNT = of("CASH_AMOUNT")
+
                                 val RISK_SCORE = of("RISK_SCORE")
 
                                 val CARD_TRANSACTION_COUNT_15_M = of("CARD_TRANSACTION_COUNT_15M")
@@ -4614,6 +4640,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -4645,6 +4672,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -4679,6 +4707,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Value.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Value.CASH_AMOUNT
                                     RISK_SCORE -> Value.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Value.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
@@ -4710,6 +4739,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Known.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Known.CASH_AMOUNT
                                     RISK_SCORE -> Known.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Known.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H
@@ -6709,6 +6739,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -6850,6 +6883,9 @@ private constructor(
                              *   currency. This is the amount the issuer should authorize against
                              *   unless the issuer is paying the acquirer fee on behalf of the
                              *   cardholder.
+                             * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                             *   (cents). This represents the amount of cash being withdrawn or
+                             *   advanced.
                              * * `RISK_SCORE`: Network-provided score assessing risk level
                              *   associated with a given authorization. Scores are on a range of
                              *   0-999, with 0 representing the lowest risk and 999 representing the
@@ -7025,6 +7061,9 @@ private constructor(
                          *   acquirer fee field in the settlement/cardholder billing currency. This
                          *   is the amount the issuer should authorize against unless the issuer is
                          *   paying the acquirer fee on behalf of the cardholder.
+                         * * `CASH_AMOUNT`: The cash amount of the transaction in minor units
+                         *   (cents). This represents the amount of cash being withdrawn or
+                         *   advanced.
                          * * `RISK_SCORE`: Network-provided score assessing risk level associated
                          *   with a given authorization. Scores are on a range of 0-999, with 0
                          *   representing the lowest risk and 999 representing the highest risk. For
@@ -7083,6 +7122,8 @@ private constructor(
 
                                 val TRANSACTION_AMOUNT = of("TRANSACTION_AMOUNT")
 
+                                val CASH_AMOUNT = of("CASH_AMOUNT")
+
                                 val RISK_SCORE = of("RISK_SCORE")
 
                                 val CARD_TRANSACTION_COUNT_15_M = of("CARD_TRANSACTION_COUNT_15M")
@@ -7114,6 +7155,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -7145,6 +7187,7 @@ private constructor(
                                 LIABILITY_SHIFT,
                                 PAN_ENTRY_MODE,
                                 TRANSACTION_AMOUNT,
+                                CASH_AMOUNT,
                                 RISK_SCORE,
                                 CARD_TRANSACTION_COUNT_15_M,
                                 CARD_TRANSACTION_COUNT_1_H,
@@ -7179,6 +7222,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Value.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Value.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Value.CASH_AMOUNT
                                     RISK_SCORE -> Value.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Value.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Value.CARD_TRANSACTION_COUNT_1_H
@@ -7210,6 +7254,7 @@ private constructor(
                                     LIABILITY_SHIFT -> Known.LIABILITY_SHIFT
                                     PAN_ENTRY_MODE -> Known.PAN_ENTRY_MODE
                                     TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
+                                    CASH_AMOUNT -> Known.CASH_AMOUNT
                                     RISK_SCORE -> Known.RISK_SCORE
                                     CARD_TRANSACTION_COUNT_15_M -> Known.CARD_TRANSACTION_COUNT_15_M
                                     CARD_TRANSACTION_COUNT_1_H -> Known.CARD_TRANSACTION_COUNT_1_H

@@ -26,6 +26,7 @@ import com.lithic.api.models.AuthRuleV2ListPageResponse
 import com.lithic.api.models.AuthRuleV2ListParams
 import com.lithic.api.models.AuthRuleV2PromoteParams
 import com.lithic.api.models.AuthRuleV2ReportParams
+import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveParams
 import com.lithic.api.models.AuthRuleV2RetrieveReportParams
 import com.lithic.api.models.AuthRuleV2UpdateParams
@@ -34,6 +35,7 @@ import com.lithic.api.models.V2CreateResponse
 import com.lithic.api.models.V2DraftResponse
 import com.lithic.api.models.V2PromoteResponse
 import com.lithic.api.models.V2ReportResponse
+import com.lithic.api.models.V2RetrieveFeaturesResponse
 import com.lithic.api.models.V2RetrieveReportResponse
 import com.lithic.api.models.V2RetrieveResponse
 import com.lithic.api.models.V2UpdateResponse
@@ -118,6 +120,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
     ): V2ReportResponse =
         // post /v2/auth_rules/{auth_rule_token}/report
         withRawResponse().report(params, requestOptions).parse()
+
+    override suspend fun retrieveFeatures(
+        params: AuthRuleV2RetrieveFeaturesParams,
+        requestOptions: RequestOptions,
+    ): V2RetrieveFeaturesResponse =
+        // get /v2/auth_rules/{auth_rule_token}/features
+        withRawResponse().retrieveFeatures(params, requestOptions).parse()
 
     override suspend fun retrieveReport(
         params: AuthRuleV2RetrieveReportParams,
@@ -410,6 +419,36 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
             return errorHandler.handle(response).parseable {
                 response
                     .use { reportHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val retrieveFeaturesHandler: Handler<V2RetrieveFeaturesResponse> =
+            jsonHandler<V2RetrieveFeaturesResponse>(clientOptions.jsonMapper)
+
+        override suspend fun retrieveFeatures(
+            params: AuthRuleV2RetrieveFeaturesParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<V2RetrieveFeaturesResponse> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("authRuleToken", params.authRuleToken())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("v2", "auth_rules", params._pathParam(0), "features")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { retrieveFeaturesHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
