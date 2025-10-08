@@ -135,7 +135,7 @@ private constructor(
     fun token(): String = token.getRequired("token")
 
     /**
-     * The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa).
+     * Globally unique identifier denoting the account that the associated transaction occurred on.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -143,7 +143,7 @@ private constructor(
     fun accountToken(): String = accountToken.getRequired("account_token")
 
     /**
-     * Globally unique identifier denoting the card program that the associated Transaction occurred
+     * Globally unique identifier denoting the card program that the associated transaction occurred
      * on.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -152,7 +152,7 @@ private constructor(
     fun cardProgramToken(): String = cardProgramToken.getRequired("card_program_token")
 
     /**
-     * Globally unique identifier denoting the card that the associated Transaction occurred on.
+     * Globally unique identifier denoting the card that the associated transaction occurred on.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -587,7 +587,8 @@ private constructor(
         fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
-         * The most granular ID the network settles with (e.g., ICA for Mastercard, FTSRE for Visa).
+         * Globally unique identifier denoting the account that the associated transaction occurred
+         * on.
          */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
 
@@ -603,7 +604,7 @@ private constructor(
         }
 
         /**
-         * Globally unique identifier denoting the card program that the associated Transaction
+         * Globally unique identifier denoting the card program that the associated transaction
          * occurred on.
          */
         fun cardProgramToken(cardProgramToken: String) =
@@ -621,7 +622,7 @@ private constructor(
         }
 
         /**
-         * Globally unique identifier denoting the card that the associated Transaction occurred on.
+         * Globally unique identifier denoting the card that the associated transaction occurred on.
          */
         fun cardToken(cardToken: String) = cardToken(JsonField.of(cardToken))
 

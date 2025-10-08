@@ -34,6 +34,7 @@ private constructor(
     private val cardToken: JsonField<String>,
     private val cardholderAuthentication: JsonField<CardholderAuthentication>,
     private val created: JsonField<OffsetDateTime>,
+    private val financialAccountToken: JsonField<String>,
     private val merchant: JsonField<Merchant>,
     private val merchantAmount: JsonField<Long>,
     private val merchantAuthorizationAmount: JsonField<Long>,
@@ -80,6 +81,9 @@ private constructor(
         @JsonProperty("created")
         @ExcludeMissing
         created: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("financial_account_token")
+        @ExcludeMissing
+        financialAccountToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("merchant") @ExcludeMissing merchant: JsonField<Merchant> = JsonMissing.of(),
         @JsonProperty("merchant_amount")
         @ExcludeMissing
@@ -122,6 +126,7 @@ private constructor(
         cardToken,
         cardholderAuthentication,
         created,
+        financialAccountToken,
         merchant,
         merchantAmount,
         merchantAuthorizationAmount,
@@ -238,6 +243,13 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun created(): OffsetDateTime = created.getRequired("created")
+
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun financialAccountToken(): String? =
+        financialAccountToken.getNullable("financial_account_token")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -446,6 +458,16 @@ private constructor(
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
     /**
+     * Returns the raw JSON value of [financialAccountToken].
+     *
+     * Unlike [financialAccountToken], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("financial_account_token")
+    @ExcludeMissing
+    fun _financialAccountToken(): JsonField<String> = financialAccountToken
+
+    /**
      * Returns the raw JSON value of [merchant].
      *
      * Unlike [merchant], this method doesn't throw if the JSON field has an unexpected type.
@@ -586,6 +608,7 @@ private constructor(
          * .cardToken()
          * .cardholderAuthentication()
          * .created()
+         * .financialAccountToken()
          * .merchant()
          * .merchantAmount()
          * .merchantAuthorizationAmount()
@@ -618,6 +641,7 @@ private constructor(
         private var cardToken: JsonField<String>? = null
         private var cardholderAuthentication: JsonField<CardholderAuthentication>? = null
         private var created: JsonField<OffsetDateTime>? = null
+        private var financialAccountToken: JsonField<String>? = null
         private var merchant: JsonField<Merchant>? = null
         private var merchantAmount: JsonField<Long>? = null
         private var merchantAuthorizationAmount: JsonField<Long>? = null
@@ -646,6 +670,7 @@ private constructor(
             cardToken = transaction.cardToken
             cardholderAuthentication = transaction.cardholderAuthentication
             created = transaction.created
+            financialAccountToken = transaction.financialAccountToken
             merchant = transaction.merchant
             merchantAmount = transaction.merchantAmount
             merchantAuthorizationAmount = transaction.merchantAuthorizationAmount
@@ -849,6 +874,20 @@ private constructor(
          * supported value.
          */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
+        fun financialAccountToken(financialAccountToken: String?) =
+            financialAccountToken(JsonField.ofNullable(financialAccountToken))
+
+        /**
+         * Sets [Builder.financialAccountToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.financialAccountToken] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun financialAccountToken(financialAccountToken: JsonField<String>) = apply {
+            this.financialAccountToken = financialAccountToken
+        }
 
         fun merchant(merchant: Merchant) = merchant(JsonField.of(merchant))
 
@@ -1104,6 +1143,7 @@ private constructor(
          * .cardToken()
          * .cardholderAuthentication()
          * .created()
+         * .financialAccountToken()
          * .merchant()
          * .merchantAmount()
          * .merchantAuthorizationAmount()
@@ -1134,6 +1174,7 @@ private constructor(
                 checkRequired("cardToken", cardToken),
                 checkRequired("cardholderAuthentication", cardholderAuthentication),
                 checkRequired("created", created),
+                checkRequired("financialAccountToken", financialAccountToken),
                 checkRequired("merchant", merchant),
                 checkRequired("merchantAmount", merchantAmount),
                 checkRequired("merchantAuthorizationAmount", merchantAuthorizationAmount),
@@ -1170,6 +1211,7 @@ private constructor(
         cardToken()
         cardholderAuthentication()?.validate()
         created()
+        financialAccountToken()
         merchant().validate()
         merchantAmount()
         merchantAuthorizationAmount()
@@ -1212,6 +1254,7 @@ private constructor(
             (if (cardToken.asKnown() == null) 0 else 1) +
             (cardholderAuthentication.asKnown()?.validity() ?: 0) +
             (if (created.asKnown() == null) 0 else 1) +
+            (if (financialAccountToken.asKnown() == null) 0 else 1) +
             (merchant.asKnown()?.validity() ?: 0) +
             (if (merchantAmount.asKnown() == null) 0 else 1) +
             (if (merchantAuthorizationAmount.asKnown() == null) 0 else 1) +
@@ -6935,6 +6978,8 @@ private constructor(
 
             val IGNORED_TTL_EXPIRY = of("IGNORED_TTL_EXPIRY")
 
+            val SUSPECTED_FRAUD = of("SUSPECTED_FRAUD")
+
             val INACTIVE_ACCOUNT = of("INACTIVE_ACCOUNT")
 
             val INCORRECT_PIN = of("INCORRECT_PIN")
@@ -6978,6 +7023,7 @@ private constructor(
             DECLINED,
             FRAUD_ADVICE,
             IGNORED_TTL_EXPIRY,
+            SUSPECTED_FRAUD,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
             INVALID_CARD_DETAILS,
@@ -7014,6 +7060,7 @@ private constructor(
             DECLINED,
             FRAUD_ADVICE,
             IGNORED_TTL_EXPIRY,
+            SUSPECTED_FRAUD,
             INACTIVE_ACCOUNT,
             INCORRECT_PIN,
             INVALID_CARD_DETAILS,
@@ -7054,6 +7101,7 @@ private constructor(
                 DECLINED -> Value.DECLINED
                 FRAUD_ADVICE -> Value.FRAUD_ADVICE
                 IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
+                SUSPECTED_FRAUD -> Value.SUSPECTED_FRAUD
                 INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Value.INCORRECT_PIN
                 INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
@@ -7092,6 +7140,7 @@ private constructor(
                 DECLINED -> Known.DECLINED
                 FRAUD_ADVICE -> Known.FRAUD_ADVICE
                 IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
+                SUSPECTED_FRAUD -> Known.SUSPECTED_FRAUD
                 INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                 INCORRECT_PIN -> Known.INCORRECT_PIN
                 INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
@@ -9368,6 +9417,8 @@ private constructor(
 
                 val SINGLE_USE_CARD_REATTEMPTED = of("SINGLE_USE_CARD_REATTEMPTED")
 
+                val SUSPECTED_FRAUD = of("SUSPECTED_FRAUD")
+
                 val TRANSACTION_INVALID = of("TRANSACTION_INVALID")
 
                 val TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL =
@@ -9434,6 +9485,7 @@ private constructor(
                 REVERSAL_UNMATCHED,
                 SECURITY_VIOLATION,
                 SINGLE_USE_CARD_REATTEMPTED,
+                SUSPECTED_FRAUD,
                 TRANSACTION_INVALID,
                 TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
                 TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
@@ -9499,6 +9551,7 @@ private constructor(
                 REVERSAL_UNMATCHED,
                 SECURITY_VIOLATION,
                 SINGLE_USE_CARD_REATTEMPTED,
+                SUSPECTED_FRAUD,
                 TRANSACTION_INVALID,
                 TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
                 TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
@@ -9571,6 +9624,7 @@ private constructor(
                     REVERSAL_UNMATCHED -> Value.REVERSAL_UNMATCHED
                     SECURITY_VIOLATION -> Value.SECURITY_VIOLATION
                     SINGLE_USE_CARD_REATTEMPTED -> Value.SINGLE_USE_CARD_REATTEMPTED
+                    SUSPECTED_FRAUD -> Value.SUSPECTED_FRAUD
                     TRANSACTION_INVALID -> Value.TRANSACTION_INVALID
                     TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
                         Value.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
@@ -9643,6 +9697,7 @@ private constructor(
                     REVERSAL_UNMATCHED -> Known.REVERSAL_UNMATCHED
                     SECURITY_VIOLATION -> Known.SECURITY_VIOLATION
                     SINGLE_USE_CARD_REATTEMPTED -> Known.SINGLE_USE_CARD_REATTEMPTED
+                    SUSPECTED_FRAUD -> Known.SUSPECTED_FRAUD
                     TRANSACTION_INVALID -> Known.TRANSACTION_INVALID
                     TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
                         Known.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
@@ -11226,6 +11281,8 @@ private constructor(
 
                 val IGNORED_TTL_EXPIRY = of("IGNORED_TTL_EXPIRY")
 
+                val SUSPECTED_FRAUD = of("SUSPECTED_FRAUD")
+
                 val INACTIVE_ACCOUNT = of("INACTIVE_ACCOUNT")
 
                 val INCORRECT_PIN = of("INCORRECT_PIN")
@@ -11269,6 +11326,7 @@ private constructor(
                 DECLINED,
                 FRAUD_ADVICE,
                 IGNORED_TTL_EXPIRY,
+                SUSPECTED_FRAUD,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INVALID_CARD_DETAILS,
@@ -11305,6 +11363,7 @@ private constructor(
                 DECLINED,
                 FRAUD_ADVICE,
                 IGNORED_TTL_EXPIRY,
+                SUSPECTED_FRAUD,
                 INACTIVE_ACCOUNT,
                 INCORRECT_PIN,
                 INVALID_CARD_DETAILS,
@@ -11345,6 +11404,7 @@ private constructor(
                     DECLINED -> Value.DECLINED
                     FRAUD_ADVICE -> Value.FRAUD_ADVICE
                     IGNORED_TTL_EXPIRY -> Value.IGNORED_TTL_EXPIRY
+                    SUSPECTED_FRAUD -> Value.SUSPECTED_FRAUD
                     INACTIVE_ACCOUNT -> Value.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Value.INCORRECT_PIN
                     INVALID_CARD_DETAILS -> Value.INVALID_CARD_DETAILS
@@ -11383,6 +11443,7 @@ private constructor(
                     DECLINED -> Known.DECLINED
                     FRAUD_ADVICE -> Known.FRAUD_ADVICE
                     IGNORED_TTL_EXPIRY -> Known.IGNORED_TTL_EXPIRY
+                    SUSPECTED_FRAUD -> Known.SUSPECTED_FRAUD
                     INACTIVE_ACCOUNT -> Known.INACTIVE_ACCOUNT
                     INCORRECT_PIN -> Known.INCORRECT_PIN
                     INVALID_CARD_DETAILS -> Known.INVALID_CARD_DETAILS
@@ -11850,6 +11911,8 @@ private constructor(
 
                     val SINGLE_USE_CARD_REATTEMPTED = of("SINGLE_USE_CARD_REATTEMPTED")
 
+                    val SUSPECTED_FRAUD = of("SUSPECTED_FRAUD")
+
                     val TRANSACTION_INVALID = of("TRANSACTION_INVALID")
 
                     val TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL =
@@ -11916,6 +11979,7 @@ private constructor(
                     REVERSAL_UNMATCHED,
                     SECURITY_VIOLATION,
                     SINGLE_USE_CARD_REATTEMPTED,
+                    SUSPECTED_FRAUD,
                     TRANSACTION_INVALID,
                     TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
                     TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
@@ -11983,6 +12047,7 @@ private constructor(
                     REVERSAL_UNMATCHED,
                     SECURITY_VIOLATION,
                     SINGLE_USE_CARD_REATTEMPTED,
+                    SUSPECTED_FRAUD,
                     TRANSACTION_INVALID,
                     TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL,
                     TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER,
@@ -12058,6 +12123,7 @@ private constructor(
                         REVERSAL_UNMATCHED -> Value.REVERSAL_UNMATCHED
                         SECURITY_VIOLATION -> Value.SECURITY_VIOLATION
                         SINGLE_USE_CARD_REATTEMPTED -> Value.SINGLE_USE_CARD_REATTEMPTED
+                        SUSPECTED_FRAUD -> Value.SUSPECTED_FRAUD
                         TRANSACTION_INVALID -> Value.TRANSACTION_INVALID
                         TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
                             Value.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
@@ -12133,6 +12199,7 @@ private constructor(
                         REVERSAL_UNMATCHED -> Known.REVERSAL_UNMATCHED
                         SECURITY_VIOLATION -> Known.SECURITY_VIOLATION
                         SINGLE_USE_CARD_REATTEMPTED -> Known.SINGLE_USE_CARD_REATTEMPTED
+                        SUSPECTED_FRAUD -> Known.SUSPECTED_FRAUD
                         TRANSACTION_INVALID -> Known.TRANSACTION_INVALID
                         TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL ->
                             Known.TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL
@@ -13585,6 +13652,7 @@ private constructor(
             cardToken == other.cardToken &&
             cardholderAuthentication == other.cardholderAuthentication &&
             created == other.created &&
+            financialAccountToken == other.financialAccountToken &&
             merchant == other.merchant &&
             merchantAmount == other.merchantAmount &&
             merchantAuthorizationAmount == other.merchantAuthorizationAmount &&
@@ -13615,6 +13683,7 @@ private constructor(
             cardToken,
             cardholderAuthentication,
             created,
+            financialAccountToken,
             merchant,
             merchantAmount,
             merchantAuthorizationAmount,
@@ -13635,5 +13704,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Transaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tokenInfo=$tokenInfo, updated=$updated, events=$events, additionalProperties=$additionalProperties}"
+        "Transaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, financialAccountToken=$financialAccountToken, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tokenInfo=$tokenInfo, updated=$updated, events=$events, additionalProperties=$additionalProperties}"
 }
