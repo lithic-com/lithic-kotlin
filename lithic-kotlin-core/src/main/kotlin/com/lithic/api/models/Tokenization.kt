@@ -26,6 +26,7 @@ private constructor(
     private val accountToken: JsonField<String>,
     private val cardToken: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
+    private val deviceId: JsonField<String>,
     private val dpan: JsonField<String>,
     private val status: JsonField<Status>,
     private val tokenRequestorName: JsonField<TokenRequestorName>,
@@ -48,6 +49,7 @@ private constructor(
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("device_id") @ExcludeMissing deviceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dpan") @ExcludeMissing dpan: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("token_requestor_name")
@@ -76,6 +78,7 @@ private constructor(
         accountToken,
         cardToken,
         createdAt,
+        deviceId,
         dpan,
         status,
         tokenRequestorName,
@@ -119,6 +122,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * The device identifier associated with the tokenization.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun deviceId(): String? = deviceId.getNullable("device_id")
 
     /**
      * The dynamic pan assigned to the token by the network.
@@ -230,6 +241,13 @@ private constructor(
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
+     * Returns the raw JSON value of [deviceId].
+     *
+     * Unlike [deviceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("device_id") @ExcludeMissing fun _deviceId(): JsonField<String> = deviceId
+
+    /**
      * Returns the raw JSON value of [dpan].
      *
      * Unlike [dpan], this method doesn't throw if the JSON field has an unexpected type.
@@ -334,6 +352,7 @@ private constructor(
          * .accountToken()
          * .cardToken()
          * .createdAt()
+         * .deviceId()
          * .dpan()
          * .status()
          * .tokenRequestorName()
@@ -352,6 +371,7 @@ private constructor(
         private var accountToken: JsonField<String>? = null
         private var cardToken: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
+        private var deviceId: JsonField<String>? = null
         private var dpan: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var tokenRequestorName: JsonField<TokenRequestorName>? = null
@@ -368,6 +388,7 @@ private constructor(
             accountToken = tokenization.accountToken
             cardToken = tokenization.cardToken
             createdAt = tokenization.createdAt
+            deviceId = tokenization.deviceId
             dpan = tokenization.dpan
             status = tokenization.status
             tokenRequestorName = tokenization.tokenRequestorName
@@ -428,6 +449,17 @@ private constructor(
          * supported value.
          */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /** The device identifier associated with the tokenization. */
+        fun deviceId(deviceId: String?) = deviceId(JsonField.ofNullable(deviceId))
+
+        /**
+         * Sets [Builder.deviceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.deviceId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun deviceId(deviceId: JsonField<String>) = apply { this.deviceId = deviceId }
 
         /** The dynamic pan assigned to the token by the network. */
         fun dpan(dpan: String?) = dpan(JsonField.ofNullable(dpan))
@@ -599,6 +631,7 @@ private constructor(
          * .accountToken()
          * .cardToken()
          * .createdAt()
+         * .deviceId()
          * .dpan()
          * .status()
          * .tokenRequestorName()
@@ -615,6 +648,7 @@ private constructor(
                 checkRequired("accountToken", accountToken),
                 checkRequired("cardToken", cardToken),
                 checkRequired("createdAt", createdAt),
+                checkRequired("deviceId", deviceId),
                 checkRequired("dpan", dpan),
                 checkRequired("status", status),
                 checkRequired("tokenRequestorName", tokenRequestorName),
@@ -639,6 +673,7 @@ private constructor(
         accountToken()
         cardToken()
         createdAt()
+        deviceId()
         dpan()
         status().validate()
         tokenRequestorName().validate()
@@ -669,6 +704,7 @@ private constructor(
             (if (accountToken.asKnown() == null) 0 else 1) +
             (if (cardToken.asKnown() == null) 0 else 1) +
             (if (createdAt.asKnown() == null) 0 else 1) +
+            (if (deviceId.asKnown() == null) 0 else 1) +
             (if (dpan.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
             (tokenRequestorName.asKnown()?.validity() ?: 0) +
@@ -1745,6 +1781,7 @@ private constructor(
             accountToken == other.accountToken &&
             cardToken == other.cardToken &&
             createdAt == other.createdAt &&
+            deviceId == other.deviceId &&
             dpan == other.dpan &&
             status == other.status &&
             tokenRequestorName == other.tokenRequestorName &&
@@ -1763,6 +1800,7 @@ private constructor(
             accountToken,
             cardToken,
             createdAt,
+            deviceId,
             dpan,
             status,
             tokenRequestorName,
@@ -1779,5 +1817,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, paymentAccountReferenceId=$paymentAccountReferenceId, additionalProperties=$additionalProperties}"
+        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, deviceId=$deviceId, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, paymentAccountReferenceId=$paymentAccountReferenceId, additionalProperties=$additionalProperties}"
 }

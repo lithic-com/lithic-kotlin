@@ -80,6 +80,7 @@ internal class TransactionTest {
                         .build()
                 )
                 .created(OffsetDateTime.parse("2023-09-26T21:14:28.637Z"))
+                .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .merchant(
                     Transaction.Merchant.builder()
                         .acceptorId("333301802529120")
@@ -311,6 +312,8 @@ internal class TransactionTest {
             )
         assertThat(transaction.created())
             .isEqualTo(OffsetDateTime.parse("2023-09-26T21:14:28.637Z"))
+        assertThat(transaction.financialAccountToken())
+            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(transaction.merchant())
             .isEqualTo(
                 Transaction.Merchant.builder()
@@ -546,6 +549,7 @@ internal class TransactionTest {
                         .build()
                 )
                 .created(OffsetDateTime.parse("2023-09-26T21:14:28.637Z"))
+                .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .merchant(
                     Transaction.Merchant.builder()
                         .acceptorId("333301802529120")
