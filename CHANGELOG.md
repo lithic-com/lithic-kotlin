@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.107.0 (2025-10-08)
+
+Full Changelog: [v0.106.0...v0.107.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.106.0...v0.107.0)
+
+### Features
+
+* **api:** adds support for Auto-Collections ([7109e49](https://github.com/lithic-com/lithic-kotlin/commit/7109e49dd312bc3bd143e3b3b8c397b7984aab6a))
+
 ## 0.106.0 (2025-09-30)
 
 Full Changelog: [v0.105.0...v0.106.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.105.0...v0.106.0)
