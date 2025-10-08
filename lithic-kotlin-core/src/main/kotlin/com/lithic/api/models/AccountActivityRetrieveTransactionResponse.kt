@@ -1075,6 +1075,16 @@ private constructor(
 
                 val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
+                val FEE = of("FEE")
+
+                val REWARD = of("REWARD")
+
+                val ADJUSTMENT = of("ADJUSTMENT")
+
+                val DERECOGNITION = of("DERECOGNITION")
+
+                val DISPUTE = of("DISPUTE")
+
                 val CARD = of("CARD")
 
                 val EXTERNAL_ACH = of("EXTERNAL_ACH")
@@ -1104,6 +1114,11 @@ private constructor(
             enum class Known {
                 ACH,
                 BALANCE_OR_FUNDING,
+                FEE,
+                REWARD,
+                ADJUSTMENT,
+                DERECOGNITION,
+                DISPUTE,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -1131,6 +1146,11 @@ private constructor(
             enum class Value {
                 ACH,
                 BALANCE_OR_FUNDING,
+                FEE,
+                REWARD,
+                ADJUSTMENT,
+                DERECOGNITION,
+                DISPUTE,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -1160,6 +1180,11 @@ private constructor(
                 when (this) {
                     ACH -> Value.ACH
                     BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
+                    FEE -> Value.FEE
+                    REWARD -> Value.REWARD
+                    ADJUSTMENT -> Value.ADJUSTMENT
+                    DERECOGNITION -> Value.DERECOGNITION
+                    DISPUTE -> Value.DISPUTE
                     CARD -> Value.CARD
                     EXTERNAL_ACH -> Value.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
@@ -1187,6 +1212,11 @@ private constructor(
                 when (this) {
                     ACH -> Known.ACH
                     BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
+                    FEE -> Known.FEE
+                    REWARD -> Known.REWARD
+                    ADJUSTMENT -> Known.ADJUSTMENT
+                    DERECOGNITION -> Known.DERECOGNITION
+                    DISPUTE -> Known.DISPUTE
                     CARD -> Known.CARD
                     EXTERNAL_ACH -> Known.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
@@ -1690,6 +1720,8 @@ private constructor(
 
                     val ACH_ORIGINATION_RELEASED = of("ACH_ORIGINATION_RELEASED")
 
+                    val ACH_ORIGINATION_REJECTED = of("ACH_ORIGINATION_REJECTED")
+
                     val ACH_ORIGINATION_REVIEWED = of("ACH_ORIGINATION_REVIEWED")
 
                     val ACH_ORIGINATION_SETTLED = of("ACH_ORIGINATION_SETTLED")
@@ -1701,6 +1733,8 @@ private constructor(
                     val ACH_RETURN_INITIATED = of("ACH_RETURN_INITIATED")
 
                     val ACH_RETURN_PROCESSED = of("ACH_RETURN_PROCESSED")
+
+                    val ACH_RETURN_REJECTED = of("ACH_RETURN_REJECTED")
 
                     val ACH_RETURN_SETTLED = of("ACH_RETURN_SETTLED")
 
@@ -1827,12 +1861,14 @@ private constructor(
                     ACH_ORIGINATION_INITIATED,
                     ACH_ORIGINATION_PROCESSED,
                     ACH_ORIGINATION_RELEASED,
+                    ACH_ORIGINATION_REJECTED,
                     ACH_ORIGINATION_REVIEWED,
                     ACH_ORIGINATION_SETTLED,
                     ACH_RECEIPT_PROCESSED,
                     ACH_RECEIPT_SETTLED,
                     ACH_RETURN_INITIATED,
                     ACH_RETURN_PROCESSED,
+                    ACH_RETURN_REJECTED,
                     ACH_RETURN_SETTLED,
                     AUTHORIZATION,
                     AUTHORIZATION_ADVICE,
@@ -1909,12 +1945,14 @@ private constructor(
                     ACH_ORIGINATION_INITIATED,
                     ACH_ORIGINATION_PROCESSED,
                     ACH_ORIGINATION_RELEASED,
+                    ACH_ORIGINATION_REJECTED,
                     ACH_ORIGINATION_REVIEWED,
                     ACH_ORIGINATION_SETTLED,
                     ACH_RECEIPT_PROCESSED,
                     ACH_RECEIPT_SETTLED,
                     ACH_RETURN_INITIATED,
                     ACH_RETURN_PROCESSED,
+                    ACH_RETURN_REJECTED,
                     ACH_RETURN_SETTLED,
                     AUTHORIZATION,
                     AUTHORIZATION_ADVICE,
@@ -1993,12 +2031,14 @@ private constructor(
                         ACH_ORIGINATION_INITIATED -> Value.ACH_ORIGINATION_INITIATED
                         ACH_ORIGINATION_PROCESSED -> Value.ACH_ORIGINATION_PROCESSED
                         ACH_ORIGINATION_RELEASED -> Value.ACH_ORIGINATION_RELEASED
+                        ACH_ORIGINATION_REJECTED -> Value.ACH_ORIGINATION_REJECTED
                         ACH_ORIGINATION_REVIEWED -> Value.ACH_ORIGINATION_REVIEWED
                         ACH_ORIGINATION_SETTLED -> Value.ACH_ORIGINATION_SETTLED
                         ACH_RECEIPT_PROCESSED -> Value.ACH_RECEIPT_PROCESSED
                         ACH_RECEIPT_SETTLED -> Value.ACH_RECEIPT_SETTLED
                         ACH_RETURN_INITIATED -> Value.ACH_RETURN_INITIATED
                         ACH_RETURN_PROCESSED -> Value.ACH_RETURN_PROCESSED
+                        ACH_RETURN_REJECTED -> Value.ACH_RETURN_REJECTED
                         ACH_RETURN_SETTLED -> Value.ACH_RETURN_SETTLED
                         AUTHORIZATION -> Value.AUTHORIZATION
                         AUTHORIZATION_ADVICE -> Value.AUTHORIZATION_ADVICE
@@ -2075,12 +2115,14 @@ private constructor(
                         ACH_ORIGINATION_INITIATED -> Known.ACH_ORIGINATION_INITIATED
                         ACH_ORIGINATION_PROCESSED -> Known.ACH_ORIGINATION_PROCESSED
                         ACH_ORIGINATION_RELEASED -> Known.ACH_ORIGINATION_RELEASED
+                        ACH_ORIGINATION_REJECTED -> Known.ACH_ORIGINATION_REJECTED
                         ACH_ORIGINATION_REVIEWED -> Known.ACH_ORIGINATION_REVIEWED
                         ACH_ORIGINATION_SETTLED -> Known.ACH_ORIGINATION_SETTLED
                         ACH_RECEIPT_PROCESSED -> Known.ACH_RECEIPT_PROCESSED
                         ACH_RECEIPT_SETTLED -> Known.ACH_RECEIPT_SETTLED
                         ACH_RETURN_INITIATED -> Known.ACH_RETURN_INITIATED
                         ACH_RETURN_PROCESSED -> Known.ACH_RETURN_PROCESSED
+                        ACH_RETURN_REJECTED -> Known.ACH_RETURN_REJECTED
                         ACH_RETURN_SETTLED -> Known.ACH_RETURN_SETTLED
                         AUTHORIZATION -> Known.AUTHORIZATION
                         AUTHORIZATION_ADVICE -> Known.AUTHORIZATION_ADVICE
@@ -2710,7 +2752,7 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
-        private val category: JsonField<TransactionCategory>,
+        private val category: JsonField<BookTransferCategory>,
         private val created: JsonField<OffsetDateTime>,
         private val currency: JsonField<String>,
         private val events: JsonField<List<BookTransferEvent>>,
@@ -2733,7 +2775,7 @@ private constructor(
             @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
             @JsonProperty("category")
             @ExcludeMissing
-            category: JsonField<TransactionCategory> = JsonMissing.of(),
+            category: JsonField<BookTransferCategory> = JsonMissing.of(),
             @JsonProperty("created")
             @ExcludeMissing
             created: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -2808,7 +2850,7 @@ private constructor(
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun category(): TransactionCategory = category.getRequired("category")
+        fun category(): BookTransferCategory = category.getRequired("category")
 
         /**
          * ISO 8601 timestamp of when the transaction was created
@@ -2934,7 +2976,7 @@ private constructor(
          */
         @JsonProperty("category")
         @ExcludeMissing
-        fun _category(): JsonField<TransactionCategory> = category
+        fun _category(): JsonField<BookTransferCategory> = category
 
         /**
          * Returns the raw JSON value of [created].
@@ -3099,7 +3141,7 @@ private constructor(
         class Builder internal constructor() {
 
             private var token: JsonField<String>? = null
-            private var category: JsonField<TransactionCategory>? = null
+            private var category: JsonField<BookTransferCategory>? = null
             private var created: JsonField<OffsetDateTime>? = null
             private var currency: JsonField<String>? = null
             private var events: JsonField<MutableList<BookTransferEvent>>? = null
@@ -3148,16 +3190,16 @@ private constructor(
              */
             fun token(token: JsonField<String>) = apply { this.token = token }
 
-            fun category(category: TransactionCategory) = category(JsonField.of(category))
+            fun category(category: BookTransferCategory) = category(JsonField.of(category))
 
             /**
              * Sets [Builder.category] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.category] with a well-typed [TransactionCategory]
+             * You should usually call [Builder.category] with a well-typed [BookTransferCategory]
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun category(category: JsonField<TransactionCategory>) = apply {
+            fun category(category: JsonField<BookTransferCategory>) = apply {
                 this.category = category
             }
 
@@ -3479,7 +3521,7 @@ private constructor(
                 (externalResource.asKnown()?.validity() ?: 0) +
                 (transactionSeries.asKnown()?.validity() ?: 0)
 
-        class TransactionCategory
+        class BookTransferCategory
         @JsonCreator
         private constructor(private val value: JsonField<String>) : Enum {
 
@@ -3495,57 +3537,45 @@ private constructor(
 
             companion object {
 
-                val ACH = of("ACH")
+                val ADJUSTMENT = of("ADJUSTMENT")
 
                 val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
-                val CARD = of("CARD")
+                val DERECOGNITION = of("DERECOGNITION")
 
-                val EXTERNAL_ACH = of("EXTERNAL_ACH")
+                val DISPUTE = of("DISPUTE")
 
-                val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
+                val FEE = of("FEE")
 
-                val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
+                val INTERNAL = of("INTERNAL")
 
-                val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
-
-                val MANAGEMENT_ADJUSTMENT = of("MANAGEMENT_ADJUSTMENT")
-
-                val MANAGEMENT_DISPUTE = of("MANAGEMENT_DISPUTE")
-
-                val MANAGEMENT_FEE = of("MANAGEMENT_FEE")
-
-                val MANAGEMENT_REWARD = of("MANAGEMENT_REWARD")
-
-                val MANAGEMENT_DISBURSEMENT = of("MANAGEMENT_DISBURSEMENT")
+                val REWARD = of("REWARD")
 
                 val PROGRAM_FUNDING = of("PROGRAM_FUNDING")
 
-                fun of(value: String) = TransactionCategory(JsonField.of(value))
+                val TRANSFER = of("TRANSFER")
+
+                fun of(value: String) = BookTransferCategory(JsonField.of(value))
             }
 
-            /** An enum containing [TransactionCategory]'s known values. */
+            /** An enum containing [BookTransferCategory]'s known values. */
             enum class Known {
-                ACH,
+                ADJUSTMENT,
                 BALANCE_OR_FUNDING,
-                CARD,
-                EXTERNAL_ACH,
-                EXTERNAL_CHECK,
-                EXTERNAL_TRANSFER,
-                EXTERNAL_WIRE,
-                MANAGEMENT_ADJUSTMENT,
-                MANAGEMENT_DISPUTE,
-                MANAGEMENT_FEE,
-                MANAGEMENT_REWARD,
-                MANAGEMENT_DISBURSEMENT,
+                DERECOGNITION,
+                DISPUTE,
+                FEE,
+                INTERNAL,
+                REWARD,
                 PROGRAM_FUNDING,
+                TRANSFER,
             }
 
             /**
-             * An enum containing [TransactionCategory]'s known values, as well as an [_UNKNOWN]
+             * An enum containing [BookTransferCategory]'s known values, as well as an [_UNKNOWN]
              * member.
              *
-             * An instance of [TransactionCategory] can contain an unknown value in a couple of
+             * An instance of [BookTransferCategory] can contain an unknown value in a couple of
              * cases:
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
@@ -3553,21 +3583,17 @@ private constructor(
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
-                ACH,
+                ADJUSTMENT,
                 BALANCE_OR_FUNDING,
-                CARD,
-                EXTERNAL_ACH,
-                EXTERNAL_CHECK,
-                EXTERNAL_TRANSFER,
-                EXTERNAL_WIRE,
-                MANAGEMENT_ADJUSTMENT,
-                MANAGEMENT_DISPUTE,
-                MANAGEMENT_FEE,
-                MANAGEMENT_REWARD,
-                MANAGEMENT_DISBURSEMENT,
+                DERECOGNITION,
+                DISPUTE,
+                FEE,
+                INTERNAL,
+                REWARD,
                 PROGRAM_FUNDING,
+                TRANSFER,
                 /**
-                 * An enum member indicating that [TransactionCategory] was instantiated with an
+                 * An enum member indicating that [BookTransferCategory] was instantiated with an
                  * unknown value.
                  */
                 _UNKNOWN,
@@ -3582,19 +3608,15 @@ private constructor(
              */
             fun value(): Value =
                 when (this) {
-                    ACH -> Value.ACH
+                    ADJUSTMENT -> Value.ADJUSTMENT
                     BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
-                    CARD -> Value.CARD
-                    EXTERNAL_ACH -> Value.EXTERNAL_ACH
-                    EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
-                    EXTERNAL_TRANSFER -> Value.EXTERNAL_TRANSFER
-                    EXTERNAL_WIRE -> Value.EXTERNAL_WIRE
-                    MANAGEMENT_ADJUSTMENT -> Value.MANAGEMENT_ADJUSTMENT
-                    MANAGEMENT_DISPUTE -> Value.MANAGEMENT_DISPUTE
-                    MANAGEMENT_FEE -> Value.MANAGEMENT_FEE
-                    MANAGEMENT_REWARD -> Value.MANAGEMENT_REWARD
-                    MANAGEMENT_DISBURSEMENT -> Value.MANAGEMENT_DISBURSEMENT
+                    DERECOGNITION -> Value.DERECOGNITION
+                    DISPUTE -> Value.DISPUTE
+                    FEE -> Value.FEE
+                    INTERNAL -> Value.INTERNAL
+                    REWARD -> Value.REWARD
                     PROGRAM_FUNDING -> Value.PROGRAM_FUNDING
+                    TRANSFER -> Value.TRANSFER
                     else -> Value._UNKNOWN
                 }
 
@@ -3609,20 +3631,16 @@ private constructor(
              */
             fun known(): Known =
                 when (this) {
-                    ACH -> Known.ACH
+                    ADJUSTMENT -> Known.ADJUSTMENT
                     BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
-                    CARD -> Known.CARD
-                    EXTERNAL_ACH -> Known.EXTERNAL_ACH
-                    EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
-                    EXTERNAL_TRANSFER -> Known.EXTERNAL_TRANSFER
-                    EXTERNAL_WIRE -> Known.EXTERNAL_WIRE
-                    MANAGEMENT_ADJUSTMENT -> Known.MANAGEMENT_ADJUSTMENT
-                    MANAGEMENT_DISPUTE -> Known.MANAGEMENT_DISPUTE
-                    MANAGEMENT_FEE -> Known.MANAGEMENT_FEE
-                    MANAGEMENT_REWARD -> Known.MANAGEMENT_REWARD
-                    MANAGEMENT_DISBURSEMENT -> Known.MANAGEMENT_DISBURSEMENT
+                    DERECOGNITION -> Known.DERECOGNITION
+                    DISPUTE -> Known.DISPUTE
+                    FEE -> Known.FEE
+                    INTERNAL -> Known.INTERNAL
+                    REWARD -> Known.REWARD
                     PROGRAM_FUNDING -> Known.PROGRAM_FUNDING
-                    else -> throw LithicInvalidDataException("Unknown TransactionCategory: $value")
+                    TRANSFER -> Known.TRANSFER
+                    else -> throw LithicInvalidDataException("Unknown BookTransferCategory: $value")
                 }
 
             /**
@@ -3639,7 +3657,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): TransactionCategory = apply {
+            fun validate(): BookTransferCategory = apply {
                 if (validated) {
                     return@apply
                 }
@@ -3669,7 +3687,7 @@ private constructor(
                     return true
                 }
 
-                return other is TransactionCategory && value == other.value
+                return other is BookTransferCategory && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -4402,6 +4420,8 @@ private constructor(
 
                 companion object {
 
+                    val ATM_BALANCE_INQUIRY = of("ATM_BALANCE_INQUIRY")
+
                     val ATM_WITHDRAWAL = of("ATM_WITHDRAWAL")
 
                     val ATM_DECLINE = of("ATM_DECLINE")
@@ -4475,6 +4495,7 @@ private constructor(
 
                 /** An enum containing [BookTransferType]'s known values. */
                 enum class Known {
+                    ATM_BALANCE_INQUIRY,
                     ATM_WITHDRAWAL,
                     ATM_DECLINE,
                     INTERNATIONAL_ATM_WITHDRAWAL,
@@ -4523,6 +4544,7 @@ private constructor(
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
+                    ATM_BALANCE_INQUIRY,
                     ATM_WITHDRAWAL,
                     ATM_DECLINE,
                     INTERNATIONAL_ATM_WITHDRAWAL,
@@ -4573,6 +4595,7 @@ private constructor(
                  */
                 fun value(): Value =
                     when (this) {
+                        ATM_BALANCE_INQUIRY -> Value.ATM_BALANCE_INQUIRY
                         ATM_WITHDRAWAL -> Value.ATM_WITHDRAWAL
                         ATM_DECLINE -> Value.ATM_DECLINE
                         INTERNATIONAL_ATM_WITHDRAWAL -> Value.INTERNATIONAL_ATM_WITHDRAWAL
@@ -4621,6 +4644,7 @@ private constructor(
                  */
                 fun known(): Known =
                     when (this) {
+                        ATM_BALANCE_INQUIRY -> Known.ATM_BALANCE_INQUIRY
                         ATM_WITHDRAWAL -> Known.ATM_WITHDRAWAL
                         ATM_DECLINE -> Known.ATM_DECLINE
                         INTERNATIONAL_ATM_WITHDRAWAL -> Known.INTERNATIONAL_ATM_WITHDRAWAL
@@ -5508,6 +5532,7 @@ private constructor(
         private val cardToken: JsonField<String>,
         private val cardholderAuthentication: JsonField<Transaction.CardholderAuthentication>,
         private val created: JsonField<OffsetDateTime>,
+        private val financialAccountToken: JsonField<String>,
         private val merchant: JsonField<Transaction.Merchant>,
         private val merchantAmount: JsonField<Long>,
         private val merchantAuthorizationAmount: JsonField<Long>,
@@ -5558,6 +5583,9 @@ private constructor(
             @JsonProperty("created")
             @ExcludeMissing
             created: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("financial_account_token")
+            @ExcludeMissing
+            financialAccountToken: JsonField<String> = JsonMissing.of(),
             @JsonProperty("merchant")
             @ExcludeMissing
             merchant: JsonField<Transaction.Merchant> = JsonMissing.of(),
@@ -5611,6 +5639,7 @@ private constructor(
             cardToken,
             cardholderAuthentication,
             created,
+            financialAccountToken,
             merchant,
             merchantAmount,
             merchantAuthorizationAmount,
@@ -5642,6 +5671,7 @@ private constructor(
                 .cardToken(cardToken)
                 .cardholderAuthentication(cardholderAuthentication)
                 .created(created)
+                .financialAccountToken(financialAccountToken)
                 .merchant(merchant)
                 .merchantAmount(merchantAmount)
                 .merchantAuthorizationAmount(merchantAuthorizationAmount)
@@ -5757,6 +5787,13 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun created(): OffsetDateTime = created.getRequired("created")
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun financialAccountToken(): String? =
+            financialAccountToken.getNullable("financial_account_token")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -5977,6 +6014,16 @@ private constructor(
         @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
         /**
+         * Returns the raw JSON value of [financialAccountToken].
+         *
+         * Unlike [financialAccountToken], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("financial_account_token")
+        @ExcludeMissing
+        fun _financialAccountToken(): JsonField<String> = financialAccountToken
+
+        /**
          * Returns the raw JSON value of [merchant].
          *
          * Unlike [merchant], this method doesn't throw if the JSON field has an unexpected type.
@@ -6138,6 +6185,7 @@ private constructor(
              * .cardToken()
              * .cardholderAuthentication()
              * .created()
+             * .financialAccountToken()
              * .merchant()
              * .merchantAmount()
              * .merchantAuthorizationAmount()
@@ -6172,6 +6220,7 @@ private constructor(
             private var cardholderAuthentication: JsonField<Transaction.CardholderAuthentication>? =
                 null
             private var created: JsonField<OffsetDateTime>? = null
+            private var financialAccountToken: JsonField<String>? = null
             private var merchant: JsonField<Transaction.Merchant>? = null
             private var merchantAmount: JsonField<Long>? = null
             private var merchantAuthorizationAmount: JsonField<Long>? = null
@@ -6201,6 +6250,7 @@ private constructor(
                 cardToken = cardTransaction.cardToken
                 cardholderAuthentication = cardTransaction.cardholderAuthentication
                 created = cardTransaction.created
+                financialAccountToken = cardTransaction.financialAccountToken
                 merchant = cardTransaction.merchant
                 merchantAmount = cardTransaction.merchantAmount
                 merchantAuthorizationAmount = cardTransaction.merchantAuthorizationAmount
@@ -6413,6 +6463,20 @@ private constructor(
              * supported value.
              */
             fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
+            fun financialAccountToken(financialAccountToken: String?) =
+                financialAccountToken(JsonField.ofNullable(financialAccountToken))
+
+            /**
+             * Sets [Builder.financialAccountToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.financialAccountToken] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun financialAccountToken(financialAccountToken: JsonField<String>) = apply {
+                this.financialAccountToken = financialAccountToken
+            }
 
             fun merchant(merchant: Transaction.Merchant) = merchant(JsonField.of(merchant))
 
@@ -6690,6 +6754,7 @@ private constructor(
              * .cardToken()
              * .cardholderAuthentication()
              * .created()
+             * .financialAccountToken()
              * .merchant()
              * .merchantAmount()
              * .merchantAuthorizationAmount()
@@ -6721,6 +6786,7 @@ private constructor(
                     checkRequired("cardToken", cardToken),
                     checkRequired("cardholderAuthentication", cardholderAuthentication),
                     checkRequired("created", created),
+                    checkRequired("financialAccountToken", financialAccountToken),
                     checkRequired("merchant", merchant),
                     checkRequired("merchantAmount", merchantAmount),
                     checkRequired("merchantAuthorizationAmount", merchantAuthorizationAmount),
@@ -6758,6 +6824,7 @@ private constructor(
             cardToken()
             cardholderAuthentication()?.validate()
             created()
+            financialAccountToken()
             merchant().validate()
             merchantAmount()
             merchantAuthorizationAmount()
@@ -6802,6 +6869,7 @@ private constructor(
                 (if (cardToken.asKnown() == null) 0 else 1) +
                 (cardholderAuthentication.asKnown()?.validity() ?: 0) +
                 (if (created.asKnown() == null) 0 else 1) +
+                (if (financialAccountToken.asKnown() == null) 0 else 1) +
                 (merchant.asKnown()?.validity() ?: 0) +
                 (if (merchantAmount.asKnown() == null) 0 else 1) +
                 (if (merchantAuthorizationAmount.asKnown() == null) 0 else 1) +
@@ -7142,6 +7210,7 @@ private constructor(
                 cardToken == other.cardToken &&
                 cardholderAuthentication == other.cardholderAuthentication &&
                 created == other.created &&
+                financialAccountToken == other.financialAccountToken &&
                 merchant == other.merchant &&
                 merchantAmount == other.merchantAmount &&
                 merchantAuthorizationAmount == other.merchantAuthorizationAmount &&
@@ -7173,6 +7242,7 @@ private constructor(
                 cardToken,
                 cardholderAuthentication,
                 created,
+                financialAccountToken,
                 merchant,
                 merchantAmount,
                 merchantAuthorizationAmount,
@@ -7194,7 +7264,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CardTransaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tokenInfo=$tokenInfo, updated=$updated, events=$events, family=$family, additionalProperties=$additionalProperties}"
+            "CardTransaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, financialAccountToken=$financialAccountToken, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tokenInfo=$tokenInfo, updated=$updated, events=$events, family=$family, additionalProperties=$additionalProperties}"
     }
 
     /** Payment transaction */
@@ -8245,6 +8315,16 @@ private constructor(
 
                 val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
+                val FEE = of("FEE")
+
+                val REWARD = of("REWARD")
+
+                val ADJUSTMENT = of("ADJUSTMENT")
+
+                val DERECOGNITION = of("DERECOGNITION")
+
+                val DISPUTE = of("DISPUTE")
+
                 val CARD = of("CARD")
 
                 val EXTERNAL_ACH = of("EXTERNAL_ACH")
@@ -8274,6 +8354,11 @@ private constructor(
             enum class Known {
                 ACH,
                 BALANCE_OR_FUNDING,
+                FEE,
+                REWARD,
+                ADJUSTMENT,
+                DERECOGNITION,
+                DISPUTE,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -8301,6 +8386,11 @@ private constructor(
             enum class Value {
                 ACH,
                 BALANCE_OR_FUNDING,
+                FEE,
+                REWARD,
+                ADJUSTMENT,
+                DERECOGNITION,
+                DISPUTE,
                 CARD,
                 EXTERNAL_ACH,
                 EXTERNAL_CHECK,
@@ -8330,6 +8420,11 @@ private constructor(
                 when (this) {
                     ACH -> Value.ACH
                     BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
+                    FEE -> Value.FEE
+                    REWARD -> Value.REWARD
+                    ADJUSTMENT -> Value.ADJUSTMENT
+                    DERECOGNITION -> Value.DERECOGNITION
+                    DISPUTE -> Value.DISPUTE
                     CARD -> Value.CARD
                     EXTERNAL_ACH -> Value.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
@@ -8357,6 +8452,11 @@ private constructor(
                 when (this) {
                     ACH -> Known.ACH
                     BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
+                    FEE -> Known.FEE
+                    REWARD -> Known.REWARD
+                    ADJUSTMENT -> Known.ADJUSTMENT
+                    DERECOGNITION -> Known.DERECOGNITION
+                    DISPUTE -> Known.DISPUTE
                     CARD -> Known.CARD
                     EXTERNAL_ACH -> Known.EXTERNAL_ACH
                     EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
