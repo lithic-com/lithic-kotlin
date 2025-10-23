@@ -44,33 +44,28 @@ private constructor(
                         .first()
                         .accept(
                             object : AccountActivityListResponse.Visitor<String?> {
-                                override fun visitFinancialTransaction(
-                                    financialTransaction:
-                                        AccountActivityListResponse.FinancialTransaction
-                                ): String? = financialTransaction._token().getNullable("token")
+                                override fun visitInternal(
+                                    internal_: AccountActivityListResponse.FinancialTransaction
+                                ): String? = internal_._token().getNullable("token")
 
-                                override fun visitBookTransferTransaction(
-                                    bookTransferTransaction:
-                                        AccountActivityListResponse.BookTransferTransaction
-                                ): String? = bookTransferTransaction._token().getNullable("token")
+                                override fun visitTransfer(
+                                    transfer: BookTransferResponse
+                                ): String? = transfer._token().getNullable("token")
 
-                                override fun visitCardTransaction(
-                                    cardTransaction: AccountActivityListResponse.CardTransaction
-                                ): String? = cardTransaction._token().getNullable("token")
+                                override fun visitCard(
+                                    card: AccountActivityListResponse.CardTransaction
+                                ): String? = card._token().getNullable("token")
 
-                                override fun visitPaymentTransaction(
-                                    paymentTransaction:
-                                        AccountActivityListResponse.PaymentTransaction
-                                ): String? = paymentTransaction._token().getNullable("token")
+                                override fun visitPayment(payment: Payment): String? =
+                                    payment._token().getNullable("token")
 
                                 override fun visitExternalPayment(
                                     externalPayment: ExternalPayment
                                 ): String? = externalPayment._token().getNullable("token")
 
-                                override fun visitManagementOperationTransaction(
-                                    managementOperationTransaction: ManagementOperationTransaction
-                                ): String? =
-                                    managementOperationTransaction._token().getNullable("token")
+                                override fun visitManagementOperation(
+                                    managementOperation: ManagementOperationTransaction
+                                ): String? = managementOperation._token().getNullable("token")
                             }
                         )
                 )
@@ -83,33 +78,28 @@ private constructor(
                         .last()
                         .accept(
                             object : AccountActivityListResponse.Visitor<String?> {
-                                override fun visitFinancialTransaction(
-                                    financialTransaction:
-                                        AccountActivityListResponse.FinancialTransaction
-                                ): String? = financialTransaction._token().getNullable("token")
+                                override fun visitInternal(
+                                    internal_: AccountActivityListResponse.FinancialTransaction
+                                ): String? = internal_._token().getNullable("token")
 
-                                override fun visitBookTransferTransaction(
-                                    bookTransferTransaction:
-                                        AccountActivityListResponse.BookTransferTransaction
-                                ): String? = bookTransferTransaction._token().getNullable("token")
+                                override fun visitTransfer(
+                                    transfer: BookTransferResponse
+                                ): String? = transfer._token().getNullable("token")
 
-                                override fun visitCardTransaction(
-                                    cardTransaction: AccountActivityListResponse.CardTransaction
-                                ): String? = cardTransaction._token().getNullable("token")
+                                override fun visitCard(
+                                    card: AccountActivityListResponse.CardTransaction
+                                ): String? = card._token().getNullable("token")
 
-                                override fun visitPaymentTransaction(
-                                    paymentTransaction:
-                                        AccountActivityListResponse.PaymentTransaction
-                                ): String? = paymentTransaction._token().getNullable("token")
+                                override fun visitPayment(payment: Payment): String? =
+                                    payment._token().getNullable("token")
 
                                 override fun visitExternalPayment(
                                     externalPayment: ExternalPayment
                                 ): String? = externalPayment._token().getNullable("token")
 
-                                override fun visitManagementOperationTransaction(
-                                    managementOperationTransaction: ManagementOperationTransaction
-                                ): String? =
-                                    managementOperationTransaction._token().getNullable("token")
+                                override fun visitManagementOperation(
+                                    managementOperation: ManagementOperationTransaction
+                                ): String? = managementOperation._token().getNullable("token")
                             }
                         )
                 )

@@ -32,7 +32,9 @@ internal class TokenizationListPageResponseTest {
                             Tokenization.TokenizationEvent.builder()
                                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .result(Tokenization.TokenizationEvent.Result.APPROVED)
+                                .result(
+                                    Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
+                                )
                                 .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                                 .build()
                         )
@@ -61,7 +63,9 @@ internal class TokenizationListPageResponseTest {
                         Tokenization.TokenizationEvent.builder()
                             .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .result(Tokenization.TokenizationEvent.Result.APPROVED)
+                            .result(
+                                Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
+                            )
                             .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                             .build()
                     )
@@ -94,7 +98,9 @@ internal class TokenizationListPageResponseTest {
                             Tokenization.TokenizationEvent.builder()
                                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .result(Tokenization.TokenizationEvent.Result.APPROVED)
+                                .result(
+                                    Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
+                                )
                                 .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                                 .build()
                         )

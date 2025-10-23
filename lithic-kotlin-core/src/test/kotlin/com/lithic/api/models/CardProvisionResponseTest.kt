@@ -12,16 +12,17 @@ internal class CardProvisionResponseTest {
     @Test
     fun create() {
         val cardProvisionResponse =
-            CardProvisionResponse.builder().provisioningPayload("provisioning_payload").build()
+            CardProvisionResponse.builder().provisioningPayload("string").build()
 
-        assertThat(cardProvisionResponse.provisioningPayload()).isEqualTo("provisioning_payload")
+        assertThat(cardProvisionResponse.provisioningPayload())
+            .isEqualTo(CardProvisionResponse.ProvisioningPayload.ofString("string"))
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
         val cardProvisionResponse =
-            CardProvisionResponse.builder().provisioningPayload("provisioning_payload").build()
+            CardProvisionResponse.builder().provisioningPayload("string").build()
 
         val roundtrippedCardProvisionResponse =
             jsonMapper.readValue(

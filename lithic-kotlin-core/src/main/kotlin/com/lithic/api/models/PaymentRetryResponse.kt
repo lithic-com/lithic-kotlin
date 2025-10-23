@@ -19,30 +19,32 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
+/** Payment transaction */
 class PaymentRetryResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
-    private val category: JsonField<Payment.Category>,
+    private val category: JsonField<Payment.TransactionCategory>,
     private val created: JsonField<OffsetDateTime>,
-    private val currency: JsonField<String>,
     private val descriptor: JsonField<String>,
     private val direction: JsonField<Payment.Direction>,
     private val events: JsonField<List<Payment.PaymentEvent>>,
-    private val externalBankAccountToken: JsonField<String>,
+    private val family: JsonField<Payment.Family>,
     private val financialAccountToken: JsonField<String>,
     private val method: JsonField<Payment.Method>,
-    private val methodAttributes: JsonField<Payment.PaymentMethodAttributes>,
+    private val methodAttributes: JsonField<Payment.MethodAttributes>,
     private val pendingAmount: JsonField<Long>,
     private val relatedAccountTokens: JsonField<Payment.RelatedAccountTokens>,
-    private val result: JsonField<Payment.Result>,
+    private val result: JsonField<Payment.TransactionResult>,
     private val settledAmount: JsonField<Long>,
     private val source: JsonField<Payment.Source>,
-    private val status: JsonField<Payment.Status>,
+    private val status: JsonField<Payment.TransactionStatus>,
     private val updated: JsonField<OffsetDateTime>,
-    private val userDefinedId: JsonField<String>,
+    private val currency: JsonField<String>,
     private val expectedReleaseDate: JsonField<LocalDate>,
+    private val externalBankAccountToken: JsonField<String>,
     private val type: JsonField<Payment.TransferType>,
+    private val userDefinedId: JsonField<String>,
     private val balance: JsonField<Balance>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -52,11 +54,10 @@ private constructor(
         @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
         @JsonProperty("category")
         @ExcludeMissing
-        category: JsonField<Payment.Category> = JsonMissing.of(),
+        category: JsonField<Payment.TransactionCategory> = JsonMissing.of(),
         @JsonProperty("created")
         @ExcludeMissing
         created: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("descriptor")
         @ExcludeMissing
         descriptor: JsonField<String> = JsonMissing.of(),
@@ -66,9 +67,9 @@ private constructor(
         @JsonProperty("events")
         @ExcludeMissing
         events: JsonField<List<Payment.PaymentEvent>> = JsonMissing.of(),
-        @JsonProperty("external_bank_account_token")
+        @JsonProperty("family")
         @ExcludeMissing
-        externalBankAccountToken: JsonField<String> = JsonMissing.of(),
+        family: JsonField<Payment.Family> = JsonMissing.of(),
         @JsonProperty("financial_account_token")
         @ExcludeMissing
         financialAccountToken: JsonField<String> = JsonMissing.of(),
@@ -77,7 +78,7 @@ private constructor(
         method: JsonField<Payment.Method> = JsonMissing.of(),
         @JsonProperty("method_attributes")
         @ExcludeMissing
-        methodAttributes: JsonField<Payment.PaymentMethodAttributes> = JsonMissing.of(),
+        methodAttributes: JsonField<Payment.MethodAttributes> = JsonMissing.of(),
         @JsonProperty("pending_amount")
         @ExcludeMissing
         pendingAmount: JsonField<Long> = JsonMissing.of(),
@@ -86,7 +87,7 @@ private constructor(
         relatedAccountTokens: JsonField<Payment.RelatedAccountTokens> = JsonMissing.of(),
         @JsonProperty("result")
         @ExcludeMissing
-        result: JsonField<Payment.Result> = JsonMissing.of(),
+        result: JsonField<Payment.TransactionResult> = JsonMissing.of(),
         @JsonProperty("settled_amount")
         @ExcludeMissing
         settledAmount: JsonField<Long> = JsonMissing.of(),
@@ -95,29 +96,32 @@ private constructor(
         source: JsonField<Payment.Source> = JsonMissing.of(),
         @JsonProperty("status")
         @ExcludeMissing
-        status: JsonField<Payment.Status> = JsonMissing.of(),
+        status: JsonField<Payment.TransactionStatus> = JsonMissing.of(),
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("user_defined_id")
-        @ExcludeMissing
-        userDefinedId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("expected_release_date")
         @ExcludeMissing
         expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("external_bank_account_token")
+        @ExcludeMissing
+        externalBankAccountToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("type")
         @ExcludeMissing
         type: JsonField<Payment.TransferType> = JsonMissing.of(),
+        @JsonProperty("user_defined_id")
+        @ExcludeMissing
+        userDefinedId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("balance") @ExcludeMissing balance: JsonField<Balance> = JsonMissing.of(),
     ) : this(
         token,
         category,
         created,
-        currency,
         descriptor,
         direction,
         events,
-        externalBankAccountToken,
+        family,
         financialAccountToken,
         method,
         methodAttributes,
@@ -128,9 +132,11 @@ private constructor(
         source,
         status,
         updated,
-        userDefinedId,
+        currency,
         expectedReleaseDate,
+        externalBankAccountToken,
         type,
+        userDefinedId,
         balance,
         mutableMapOf(),
     )
@@ -140,11 +146,10 @@ private constructor(
             .token(token)
             .category(category)
             .created(created)
-            .currency(currency)
             .descriptor(descriptor)
             .direction(direction)
             .events(events)
-            .externalBankAccountToken(externalBankAccountToken)
+            .family(family)
             .financialAccountToken(financialAccountToken)
             .method(method)
             .methodAttributes(methodAttributes)
@@ -155,13 +160,15 @@ private constructor(
             .source(source)
             .status(status)
             .updated(updated)
-            .userDefinedId(userDefinedId)
+            .currency(currency)
             .expectedReleaseDate(expectedReleaseDate)
+            .externalBankAccountToken(externalBankAccountToken)
             .type(type)
+            .userDefinedId(userDefinedId)
             .build()
 
     /**
-     * Globally unique identifier.
+     * Unique identifier for the transaction
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -169,15 +176,15 @@ private constructor(
     fun token(): String = token.getRequired("token")
 
     /**
-     * Payment category
+     * Transaction category
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun category(): Payment.Category = category.getRequired("category")
+    fun category(): Payment.TransactionCategory = category.getRequired("category")
 
     /**
-     * Date and time when the payment first occurred. UTC time zone.
+     * ISO 8601 timestamp of when the transaction was created
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -185,15 +192,7 @@ private constructor(
     fun created(): OffsetDateTime = created.getRequired("created")
 
     /**
-     * 3-character alphabetic ISO 4217 code for the settling currency of the payment.
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun currency(): String = currency.getRequired("currency")
-
-    /**
-     * A string that provides a description of the payment; may be useful to display to users.
+     * Transaction descriptor
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -201,13 +200,15 @@ private constructor(
     fun descriptor(): String = descriptor.getRequired("descriptor")
 
     /**
+     * Transfer direction
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun direction(): Payment.Direction = direction.getRequired("direction")
 
     /**
-     * A list of all payment events that have modified this payment.
+     * List of transaction events
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -215,13 +216,16 @@ private constructor(
     fun events(): List<Payment.PaymentEvent> = events.getRequired("events")
 
     /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * PAYMENT - Payment Transaction
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun externalBankAccountToken(): String? =
-        externalBankAccountToken.getNullable("external_bank_account_token")
+    fun family(): Payment.Family = family.getRequired("family")
 
     /**
+     * Financial account token
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -229,21 +233,24 @@ private constructor(
         financialAccountToken.getRequired("financial_account_token")
 
     /**
+     * Transfer method
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun method(): Payment.Method = method.getRequired("method")
 
     /**
+     * Method-specific attributes
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun methodAttributes(): Payment.PaymentMethodAttributes =
+    fun methodAttributes(): Payment.MethodAttributes =
         methodAttributes.getRequired("method_attributes")
 
     /**
-     * Pending amount of the payment in the currency's smallest unit (e.g., cents). The value of
-     * this field will go to zero over time once the payment is settled.
+     * Pending amount in cents
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -251,7 +258,7 @@ private constructor(
     fun pendingAmount(): Long = pendingAmount.getRequired("pending_amount")
 
     /**
-     * Account tokens related to a payment transaction
+     * Related account tokens for the transaction
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -260,16 +267,15 @@ private constructor(
         relatedAccountTokens.getRequired("related_account_tokens")
 
     /**
-     * APPROVED payments were successful while DECLINED payments were declined by Lithic or
-     * returned.
+     * Transaction result
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun result(): Payment.Result = result.getRequired("result")
+    fun result(): Payment.TransactionResult = result.getRequired("result")
 
     /**
-     * Amount of the payment that has been settled in the currency's smallest unit (e.g., cents).
+     * Settled amount in cents
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -277,26 +283,23 @@ private constructor(
     fun settledAmount(): Long = settledAmount.getRequired("settled_amount")
 
     /**
+     * Transaction source
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun source(): Payment.Source = source.getRequired("source")
 
     /**
-     * Status types:
-     * * `DECLINED` - The payment was declined.
-     * * `PENDING` - The payment is being processed and has yet to settle or release (origination
-     *   debit).
-     * * `RETURNED` - The payment has been returned.
-     * * `SETTLED` - The payment is completed.
+     * The status of the transaction
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun status(): Payment.Status = status.getRequired("status")
+    fun status(): Payment.TransactionStatus = status.getRequired("status")
 
     /**
-     * Date and time when the financial transaction was last updated. UTC time zone.
+     * ISO 8601 timestamp of when the transaction was last updated
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -304,13 +307,15 @@ private constructor(
     fun updated(): OffsetDateTime = updated.getRequired("updated")
 
     /**
+     * Currency of the transaction in ISO 4217 format
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun userDefinedId(): String? = userDefinedId.getNullable("user_defined_id")
+    fun currency(): String? = currency.getNullable("currency")
 
     /**
-     * Date when the financial transaction expected to be released after settlement
+     * Expected release date for the transaction
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -318,12 +323,27 @@ private constructor(
     fun expectedReleaseDate(): LocalDate? = expectedReleaseDate.getNullable("expected_release_date")
 
     /**
-     * Payment type indicating the specific ACH message or Fedwire transfer type
+     * External bank account token
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    fun externalBankAccountToken(): String? =
+        externalBankAccountToken.getNullable("external_bank_account_token")
+
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
     fun type(): Payment.TransferType? = type.getNullable("type")
+
+    /**
+     * User-defined identifier
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun userDefinedId(): String? = userDefinedId.getNullable("user_defined_id")
 
     /**
      * Balance
@@ -347,7 +367,7 @@ private constructor(
      */
     @JsonProperty("category")
     @ExcludeMissing
-    fun _category(): JsonField<Payment.Category> = category
+    fun _category(): JsonField<Payment.TransactionCategory> = category
 
     /**
      * Returns the raw JSON value of [created].
@@ -355,13 +375,6 @@ private constructor(
      * Unlike [created], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
-
-    /**
-     * Returns the raw JSON value of [currency].
-     *
-     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /**
      * Returns the raw JSON value of [descriptor].
@@ -389,14 +402,11 @@ private constructor(
     fun _events(): JsonField<List<Payment.PaymentEvent>> = events
 
     /**
-     * Returns the raw JSON value of [externalBankAccountToken].
+     * Returns the raw JSON value of [family].
      *
-     * Unlike [externalBankAccountToken], this method doesn't throw if the JSON field has an
-     * unexpected type.
+     * Unlike [family], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("external_bank_account_token")
-    @ExcludeMissing
-    fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
+    @JsonProperty("family") @ExcludeMissing fun _family(): JsonField<Payment.Family> = family
 
     /**
      * Returns the raw JSON value of [financialAccountToken].
@@ -423,7 +433,7 @@ private constructor(
      */
     @JsonProperty("method_attributes")
     @ExcludeMissing
-    fun _methodAttributes(): JsonField<Payment.PaymentMethodAttributes> = methodAttributes
+    fun _methodAttributes(): JsonField<Payment.MethodAttributes> = methodAttributes
 
     /**
      * Returns the raw JSON value of [pendingAmount].
@@ -449,7 +459,9 @@ private constructor(
      *
      * Unlike [result], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<Payment.Result> = result
+    @JsonProperty("result")
+    @ExcludeMissing
+    fun _result(): JsonField<Payment.TransactionResult> = result
 
     /**
      * Returns the raw JSON value of [settledAmount].
@@ -472,7 +484,9 @@ private constructor(
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Payment.Status> = status
+    @JsonProperty("status")
+    @ExcludeMissing
+    fun _status(): JsonField<Payment.TransactionStatus> = status
 
     /**
      * Returns the raw JSON value of [updated].
@@ -482,13 +496,11 @@ private constructor(
     @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
 
     /**
-     * Returns the raw JSON value of [userDefinedId].
+     * Returns the raw JSON value of [currency].
      *
-     * Unlike [userDefinedId], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("user_defined_id")
-    @ExcludeMissing
-    fun _userDefinedId(): JsonField<String> = userDefinedId
+    @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /**
      * Returns the raw JSON value of [expectedReleaseDate].
@@ -501,11 +513,30 @@ private constructor(
     fun _expectedReleaseDate(): JsonField<LocalDate> = expectedReleaseDate
 
     /**
+     * Returns the raw JSON value of [externalBankAccountToken].
+     *
+     * Unlike [externalBankAccountToken], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("external_bank_account_token")
+    @ExcludeMissing
+    fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
+
+    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Payment.TransferType> = type
+
+    /**
+     * Returns the raw JSON value of [userDefinedId].
+     *
+     * Unlike [userDefinedId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("user_defined_id")
+    @ExcludeMissing
+    fun _userDefinedId(): JsonField<String> = userDefinedId
 
     /**
      * Returns the raw JSON value of [balance].
@@ -536,11 +567,10 @@ private constructor(
          * .token()
          * .category()
          * .created()
-         * .currency()
          * .descriptor()
          * .direction()
          * .events()
-         * .externalBankAccountToken()
+         * .family()
          * .financialAccountToken()
          * .method()
          * .methodAttributes()
@@ -551,7 +581,6 @@ private constructor(
          * .source()
          * .status()
          * .updated()
-         * .userDefinedId()
          * ```
          */
         fun builder() = Builder()
@@ -561,26 +590,27 @@ private constructor(
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
-        private var category: JsonField<Payment.Category>? = null
+        private var category: JsonField<Payment.TransactionCategory>? = null
         private var created: JsonField<OffsetDateTime>? = null
-        private var currency: JsonField<String>? = null
         private var descriptor: JsonField<String>? = null
         private var direction: JsonField<Payment.Direction>? = null
         private var events: JsonField<MutableList<Payment.PaymentEvent>>? = null
-        private var externalBankAccountToken: JsonField<String>? = null
+        private var family: JsonField<Payment.Family>? = null
         private var financialAccountToken: JsonField<String>? = null
         private var method: JsonField<Payment.Method>? = null
-        private var methodAttributes: JsonField<Payment.PaymentMethodAttributes>? = null
+        private var methodAttributes: JsonField<Payment.MethodAttributes>? = null
         private var pendingAmount: JsonField<Long>? = null
         private var relatedAccountTokens: JsonField<Payment.RelatedAccountTokens>? = null
-        private var result: JsonField<Payment.Result>? = null
+        private var result: JsonField<Payment.TransactionResult>? = null
         private var settledAmount: JsonField<Long>? = null
         private var source: JsonField<Payment.Source>? = null
-        private var status: JsonField<Payment.Status>? = null
+        private var status: JsonField<Payment.TransactionStatus>? = null
         private var updated: JsonField<OffsetDateTime>? = null
-        private var userDefinedId: JsonField<String>? = null
+        private var currency: JsonField<String> = JsonMissing.of()
         private var expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of()
+        private var externalBankAccountToken: JsonField<String> = JsonMissing.of()
         private var type: JsonField<Payment.TransferType> = JsonMissing.of()
+        private var userDefinedId: JsonField<String> = JsonMissing.of()
         private var balance: JsonField<Balance> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -588,11 +618,10 @@ private constructor(
             token = paymentRetryResponse.token
             category = paymentRetryResponse.category
             created = paymentRetryResponse.created
-            currency = paymentRetryResponse.currency
             descriptor = paymentRetryResponse.descriptor
             direction = paymentRetryResponse.direction
             events = paymentRetryResponse.events.map { it.toMutableList() }
-            externalBankAccountToken = paymentRetryResponse.externalBankAccountToken
+            family = paymentRetryResponse.family
             financialAccountToken = paymentRetryResponse.financialAccountToken
             method = paymentRetryResponse.method
             methodAttributes = paymentRetryResponse.methodAttributes
@@ -603,14 +632,16 @@ private constructor(
             source = paymentRetryResponse.source
             status = paymentRetryResponse.status
             updated = paymentRetryResponse.updated
-            userDefinedId = paymentRetryResponse.userDefinedId
+            currency = paymentRetryResponse.currency
             expectedReleaseDate = paymentRetryResponse.expectedReleaseDate
+            externalBankAccountToken = paymentRetryResponse.externalBankAccountToken
             type = paymentRetryResponse.type
+            userDefinedId = paymentRetryResponse.userDefinedId
             balance = paymentRetryResponse.balance
             additionalProperties = paymentRetryResponse.additionalProperties.toMutableMap()
         }
 
-        /** Globally unique identifier. */
+        /** Unique identifier for the transaction */
         fun token(token: String) = token(JsonField.of(token))
 
         /**
@@ -621,19 +652,21 @@ private constructor(
          */
         fun token(token: JsonField<String>) = apply { this.token = token }
 
-        /** Payment category */
-        fun category(category: Payment.Category) = category(JsonField.of(category))
+        /** Transaction category */
+        fun category(category: Payment.TransactionCategory) = category(JsonField.of(category))
 
         /**
          * Sets [Builder.category] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.category] with a well-typed [Payment.Category] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.category] with a well-typed
+         * [Payment.TransactionCategory] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
          */
-        fun category(category: JsonField<Payment.Category>) = apply { this.category = category }
+        fun category(category: JsonField<Payment.TransactionCategory>) = apply {
+            this.category = category
+        }
 
-        /** Date and time when the payment first occurred. UTC time zone. */
+        /** ISO 8601 timestamp of when the transaction was created */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
         /**
@@ -645,20 +678,7 @@ private constructor(
          */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
-        /** 3-character alphabetic ISO 4217 code for the settling currency of the payment. */
-        fun currency(currency: String) = currency(JsonField.of(currency))
-
-        /**
-         * Sets [Builder.currency] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-        /**
-         * A string that provides a description of the payment; may be useful to display to users.
-         */
+        /** Transaction descriptor */
         fun descriptor(descriptor: String) = descriptor(JsonField.of(descriptor))
 
         /**
@@ -670,6 +690,7 @@ private constructor(
          */
         fun descriptor(descriptor: JsonField<String>) = apply { this.descriptor = descriptor }
 
+        /** Transfer direction */
         fun direction(direction: Payment.Direction) = direction(JsonField.of(direction))
 
         /**
@@ -683,7 +704,7 @@ private constructor(
             this.direction = direction
         }
 
-        /** A list of all payment events that have modified this payment. */
+        /** List of transaction events */
         fun events(events: List<Payment.PaymentEvent>) = events(JsonField.of(events))
 
         /**
@@ -709,20 +730,19 @@ private constructor(
                 }
         }
 
-        fun externalBankAccountToken(externalBankAccountToken: String?) =
-            externalBankAccountToken(JsonField.ofNullable(externalBankAccountToken))
+        /** PAYMENT - Payment Transaction */
+        fun family(family: Payment.Family) = family(JsonField.of(family))
 
         /**
-         * Sets [Builder.externalBankAccountToken] to an arbitrary JSON value.
+         * Sets [Builder.family] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.externalBankAccountToken] with a well-typed [String]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
+         * You should usually call [Builder.family] with a well-typed [Payment.Family] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
          */
-        fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
-            this.externalBankAccountToken = externalBankAccountToken
-        }
+        fun family(family: JsonField<Payment.Family>) = apply { this.family = family }
 
+        /** Financial account token */
         fun financialAccountToken(financialAccountToken: String) =
             financialAccountToken(JsonField.of(financialAccountToken))
 
@@ -737,6 +757,7 @@ private constructor(
             this.financialAccountToken = financialAccountToken
         }
 
+        /** Transfer method */
         fun method(method: Payment.Method) = method(JsonField.of(method))
 
         /**
@@ -748,24 +769,30 @@ private constructor(
          */
         fun method(method: JsonField<Payment.Method>) = apply { this.method = method }
 
-        fun methodAttributes(methodAttributes: Payment.PaymentMethodAttributes) =
+        /** Method-specific attributes */
+        fun methodAttributes(methodAttributes: Payment.MethodAttributes) =
             methodAttributes(JsonField.of(methodAttributes))
 
         /**
          * Sets [Builder.methodAttributes] to an arbitrary JSON value.
          *
          * You should usually call [Builder.methodAttributes] with a well-typed
-         * [Payment.PaymentMethodAttributes] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
+         * [Payment.MethodAttributes] value instead. This method is primarily for setting the field
+         * to an undocumented or not yet supported value.
          */
-        fun methodAttributes(methodAttributes: JsonField<Payment.PaymentMethodAttributes>) = apply {
+        fun methodAttributes(methodAttributes: JsonField<Payment.MethodAttributes>) = apply {
             this.methodAttributes = methodAttributes
         }
 
-        /**
-         * Pending amount of the payment in the currency's smallest unit (e.g., cents). The value of
-         * this field will go to zero over time once the payment is settled.
-         */
+        /** Alias for calling [methodAttributes] with `Payment.MethodAttributes.ofAch(ach)`. */
+        fun methodAttributes(ach: Payment.MethodAttributes.AchMethodAttributes) =
+            methodAttributes(Payment.MethodAttributes.ofAch(ach))
+
+        /** Alias for calling [methodAttributes] with `Payment.MethodAttributes.ofWire(wire)`. */
+        fun methodAttributes(wire: Payment.MethodAttributes.WireMethodAttributes) =
+            methodAttributes(Payment.MethodAttributes.ofWire(wire))
+
+        /** Pending amount in cents */
         fun pendingAmount(pendingAmount: Long) = pendingAmount(JsonField.of(pendingAmount))
 
         /**
@@ -779,7 +806,7 @@ private constructor(
             this.pendingAmount = pendingAmount
         }
 
-        /** Account tokens related to a payment transaction */
+        /** Related account tokens for the transaction */
         fun relatedAccountTokens(relatedAccountTokens: Payment.RelatedAccountTokens) =
             relatedAccountTokens(JsonField.of(relatedAccountTokens))
 
@@ -795,25 +822,19 @@ private constructor(
                 this.relatedAccountTokens = relatedAccountTokens
             }
 
-        /**
-         * APPROVED payments were successful while DECLINED payments were declined by Lithic or
-         * returned.
-         */
-        fun result(result: Payment.Result) = result(JsonField.of(result))
+        /** Transaction result */
+        fun result(result: Payment.TransactionResult) = result(JsonField.of(result))
 
         /**
          * Sets [Builder.result] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.result] with a well-typed [Payment.Result] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.result] with a well-typed [Payment.TransactionResult]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun result(result: JsonField<Payment.Result>) = apply { this.result = result }
+        fun result(result: JsonField<Payment.TransactionResult>) = apply { this.result = result }
 
-        /**
-         * Amount of the payment that has been settled in the currency's smallest unit (e.g.,
-         * cents).
-         */
+        /** Settled amount in cents */
         fun settledAmount(settledAmount: Long) = settledAmount(JsonField.of(settledAmount))
 
         /**
@@ -827,6 +848,7 @@ private constructor(
             this.settledAmount = settledAmount
         }
 
+        /** Transaction source */
         fun source(source: Payment.Source) = source(JsonField.of(source))
 
         /**
@@ -838,26 +860,19 @@ private constructor(
          */
         fun source(source: JsonField<Payment.Source>) = apply { this.source = source }
 
-        /**
-         * Status types:
-         * * `DECLINED` - The payment was declined.
-         * * `PENDING` - The payment is being processed and has yet to settle or release
-         *   (origination debit).
-         * * `RETURNED` - The payment has been returned.
-         * * `SETTLED` - The payment is completed.
-         */
-        fun status(status: Payment.Status) = status(JsonField.of(status))
+        /** The status of the transaction */
+        fun status(status: Payment.TransactionStatus) = status(JsonField.of(status))
 
         /**
          * Sets [Builder.status] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.status] with a well-typed [Payment.Status] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
+         * You should usually call [Builder.status] with a well-typed [Payment.TransactionStatus]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun status(status: JsonField<Payment.Status>) = apply { this.status = status }
+        fun status(status: JsonField<Payment.TransactionStatus>) = apply { this.status = status }
 
-        /** Date and time when the financial transaction was last updated. UTC time zone. */
+        /** ISO 8601 timestamp of when the transaction was last updated */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
 
         /**
@@ -869,6 +884,59 @@ private constructor(
          */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
+        /** Currency of the transaction in ISO 4217 format */
+        fun currency(currency: String) = currency(JsonField.of(currency))
+
+        /**
+         * Sets [Builder.currency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.currency] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+        /** Expected release date for the transaction */
+        fun expectedReleaseDate(expectedReleaseDate: LocalDate?) =
+            expectedReleaseDate(JsonField.ofNullable(expectedReleaseDate))
+
+        /**
+         * Sets [Builder.expectedReleaseDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expectedReleaseDate] with a well-typed [LocalDate] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun expectedReleaseDate(expectedReleaseDate: JsonField<LocalDate>) = apply {
+            this.expectedReleaseDate = expectedReleaseDate
+        }
+
+        /** External bank account token */
+        fun externalBankAccountToken(externalBankAccountToken: String?) =
+            externalBankAccountToken(JsonField.ofNullable(externalBankAccountToken))
+
+        /**
+         * Sets [Builder.externalBankAccountToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.externalBankAccountToken] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
+            this.externalBankAccountToken = externalBankAccountToken
+        }
+
+        fun type(type: Payment.TransferType) = type(JsonField.of(type))
+
+        /**
+         * Sets [Builder.type] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.type] with a well-typed [Payment.TransferType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun type(type: JsonField<Payment.TransferType>) = apply { this.type = type }
+
+        /** User-defined identifier */
         fun userDefinedId(userDefinedId: String?) =
             userDefinedId(JsonField.ofNullable(userDefinedId))
 
@@ -882,33 +950,6 @@ private constructor(
         fun userDefinedId(userDefinedId: JsonField<String>) = apply {
             this.userDefinedId = userDefinedId
         }
-
-        /** Date when the financial transaction expected to be released after settlement */
-        fun expectedReleaseDate(expectedReleaseDate: LocalDate) =
-            expectedReleaseDate(JsonField.of(expectedReleaseDate))
-
-        /**
-         * Sets [Builder.expectedReleaseDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.expectedReleaseDate] with a well-typed [LocalDate] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun expectedReleaseDate(expectedReleaseDate: JsonField<LocalDate>) = apply {
-            this.expectedReleaseDate = expectedReleaseDate
-        }
-
-        /** Payment type indicating the specific ACH message or Fedwire transfer type */
-        fun type(type: Payment.TransferType) = type(JsonField.of(type))
-
-        /**
-         * Sets [Builder.type] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.type] with a well-typed [Payment.TransferType] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun type(type: JsonField<Payment.TransferType>) = apply { this.type = type }
 
         /** Balance */
         fun balance(balance: Balance) = balance(JsonField.of(balance))
@@ -950,11 +991,10 @@ private constructor(
          * .token()
          * .category()
          * .created()
-         * .currency()
          * .descriptor()
          * .direction()
          * .events()
-         * .externalBankAccountToken()
+         * .family()
          * .financialAccountToken()
          * .method()
          * .methodAttributes()
@@ -965,7 +1005,6 @@ private constructor(
          * .source()
          * .status()
          * .updated()
-         * .userDefinedId()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -975,11 +1014,10 @@ private constructor(
                 checkRequired("token", token),
                 checkRequired("category", category),
                 checkRequired("created", created),
-                checkRequired("currency", currency),
                 checkRequired("descriptor", descriptor),
                 checkRequired("direction", direction),
                 checkRequired("events", events).map { it.toImmutable() },
-                checkRequired("externalBankAccountToken", externalBankAccountToken),
+                checkRequired("family", family),
                 checkRequired("financialAccountToken", financialAccountToken),
                 checkRequired("method", method),
                 checkRequired("methodAttributes", methodAttributes),
@@ -990,9 +1028,11 @@ private constructor(
                 checkRequired("source", source),
                 checkRequired("status", status),
                 checkRequired("updated", updated),
-                checkRequired("userDefinedId", userDefinedId),
+                currency,
                 expectedReleaseDate,
+                externalBankAccountToken,
                 type,
+                userDefinedId,
                 balance,
                 additionalProperties.toMutableMap(),
             )
@@ -1008,11 +1048,10 @@ private constructor(
         token()
         category().validate()
         created()
-        currency()
         descriptor()
         direction().validate()
         events().forEach { it.validate() }
-        externalBankAccountToken()
+        family().validate()
         financialAccountToken()
         method().validate()
         methodAttributes().validate()
@@ -1023,9 +1062,11 @@ private constructor(
         source().validate()
         status().validate()
         updated()
-        userDefinedId()
+        currency()
         expectedReleaseDate()
+        externalBankAccountToken()
         type()?.validate()
+        userDefinedId()
         balance()?.validate()
         validated = true
     }
@@ -1047,11 +1088,10 @@ private constructor(
         (if (token.asKnown() == null) 0 else 1) +
             (category.asKnown()?.validity() ?: 0) +
             (if (created.asKnown() == null) 0 else 1) +
-            (if (currency.asKnown() == null) 0 else 1) +
             (if (descriptor.asKnown() == null) 0 else 1) +
             (direction.asKnown()?.validity() ?: 0) +
             (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
-            (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+            (family.asKnown()?.validity() ?: 0) +
             (if (financialAccountToken.asKnown() == null) 0 else 1) +
             (method.asKnown()?.validity() ?: 0) +
             (methodAttributes.asKnown()?.validity() ?: 0) +
@@ -1062,9 +1102,11 @@ private constructor(
             (source.asKnown()?.validity() ?: 0) +
             (status.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
-            (if (userDefinedId.asKnown() == null) 0 else 1) +
+            (if (currency.asKnown() == null) 0 else 1) +
             (if (expectedReleaseDate.asKnown() == null) 0 else 1) +
+            (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
             (type.asKnown()?.validity() ?: 0) +
+            (if (userDefinedId.asKnown() == null) 0 else 1) +
             (balance.asKnown()?.validity() ?: 0)
 
     override fun equals(other: Any?): Boolean {
@@ -1076,11 +1118,10 @@ private constructor(
             token == other.token &&
             category == other.category &&
             created == other.created &&
-            currency == other.currency &&
             descriptor == other.descriptor &&
             direction == other.direction &&
             events == other.events &&
-            externalBankAccountToken == other.externalBankAccountToken &&
+            family == other.family &&
             financialAccountToken == other.financialAccountToken &&
             method == other.method &&
             methodAttributes == other.methodAttributes &&
@@ -1091,9 +1132,11 @@ private constructor(
             source == other.source &&
             status == other.status &&
             updated == other.updated &&
-            userDefinedId == other.userDefinedId &&
+            currency == other.currency &&
             expectedReleaseDate == other.expectedReleaseDate &&
+            externalBankAccountToken == other.externalBankAccountToken &&
             type == other.type &&
+            userDefinedId == other.userDefinedId &&
             balance == other.balance &&
             additionalProperties == other.additionalProperties
     }
@@ -1103,11 +1146,10 @@ private constructor(
             token,
             category,
             created,
-            currency,
             descriptor,
             direction,
             events,
-            externalBankAccountToken,
+            family,
             financialAccountToken,
             method,
             methodAttributes,
@@ -1118,9 +1160,11 @@ private constructor(
             source,
             status,
             updated,
-            userDefinedId,
+            currency,
             expectedReleaseDate,
+            externalBankAccountToken,
             type,
+            userDefinedId,
             balance,
             additionalProperties,
         )
@@ -1129,5 +1173,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentRetryResponse{token=$token, category=$category, created=$created, currency=$currency, descriptor=$descriptor, direction=$direction, events=$events, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, userDefinedId=$userDefinedId, expectedReleaseDate=$expectedReleaseDate, type=$type, balance=$balance, additionalProperties=$additionalProperties}"
+        "PaymentRetryResponse{token=$token, category=$category, created=$created, descriptor=$descriptor, direction=$direction, events=$events, family=$family, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, currency=$currency, expectedReleaseDate=$expectedReleaseDate, externalBankAccountToken=$externalBankAccountToken, type=$type, userDefinedId=$userDefinedId, balance=$balance, additionalProperties=$additionalProperties}"
 }

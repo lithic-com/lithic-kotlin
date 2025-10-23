@@ -1468,6 +1468,7 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val addressMatch: JsonField<Boolean>,
+        private val addressOnFileMatch: JsonField<AddressMatchResult>,
         private val billingAddress: JsonField<BillingAddress>,
         private val email: JsonField<String>,
         private val name: JsonField<String>,
@@ -1483,6 +1484,9 @@ private constructor(
             @JsonProperty("address_match")
             @ExcludeMissing
             addressMatch: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("address_on_file_match")
+            @ExcludeMissing
+            addressOnFileMatch: JsonField<AddressMatchResult> = JsonMissing.of(),
             @JsonProperty("billing_address")
             @ExcludeMissing
             billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
@@ -1502,6 +1506,7 @@ private constructor(
             shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
         ) : this(
             addressMatch,
+            addressOnFileMatch,
             billingAddress,
             email,
             name,
@@ -1522,6 +1527,17 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun addressMatch(): Boolean? = addressMatch.getNullable("address_match")
+
+        /**
+         * Lithic's evaluation result comparing the transaction's address data with the cardholder
+         * KYC data if it exists. In the event Lithic does not have any Cardholder KYC data, or the
+         * transaction does not contain any address data, NOT_PRESENT will be returned
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun addressOnFileMatch(): AddressMatchResult? =
+            addressOnFileMatch.getNullable("address_on_file_match")
 
         /**
          * Object containing data on the billing address provided during the transaction.
@@ -1592,6 +1608,16 @@ private constructor(
         @JsonProperty("address_match")
         @ExcludeMissing
         fun _addressMatch(): JsonField<Boolean> = addressMatch
+
+        /**
+         * Returns the raw JSON value of [addressOnFileMatch].
+         *
+         * Unlike [addressOnFileMatch], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("address_on_file_match")
+        @ExcludeMissing
+        fun _addressOnFileMatch(): JsonField<AddressMatchResult> = addressOnFileMatch
 
         /**
          * Returns the raw JSON value of [billingAddress].
@@ -1679,6 +1705,7 @@ private constructor(
         class Builder internal constructor() {
 
             private var addressMatch: JsonField<Boolean> = JsonMissing.of()
+            private var addressOnFileMatch: JsonField<AddressMatchResult> = JsonMissing.of()
             private var billingAddress: JsonField<BillingAddress> = JsonMissing.of()
             private var email: JsonField<String> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
@@ -1690,6 +1717,7 @@ private constructor(
 
             internal fun from(cardholder: Cardholder) = apply {
                 addressMatch = cardholder.addressMatch
+                addressOnFileMatch = cardholder.addressOnFileMatch
                 billingAddress = cardholder.billingAddress
                 email = cardholder.email
                 name = cardholder.name
@@ -1725,6 +1753,26 @@ private constructor(
              */
             fun addressMatch(addressMatch: JsonField<Boolean>) = apply {
                 this.addressMatch = addressMatch
+            }
+
+            /**
+             * Lithic's evaluation result comparing the transaction's address data with the
+             * cardholder KYC data if it exists. In the event Lithic does not have any Cardholder
+             * KYC data, or the transaction does not contain any address data, NOT_PRESENT will be
+             * returned
+             */
+            fun addressOnFileMatch(addressOnFileMatch: AddressMatchResult) =
+                addressOnFileMatch(JsonField.of(addressOnFileMatch))
+
+            /**
+             * Sets [Builder.addressOnFileMatch] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.addressOnFileMatch] with a well-typed
+             * [AddressMatchResult] value instead. This method is primarily for setting the field to
+             * an undocumented or not yet supported value.
+             */
+            fun addressOnFileMatch(addressOnFileMatch: JsonField<AddressMatchResult>) = apply {
+                this.addressOnFileMatch = addressOnFileMatch
             }
 
             /** Object containing data on the billing address provided during the transaction. */
@@ -1865,6 +1913,7 @@ private constructor(
             fun build(): Cardholder =
                 Cardholder(
                     addressMatch,
+                    addressOnFileMatch,
                     billingAddress,
                     email,
                     name,
@@ -1884,6 +1933,7 @@ private constructor(
             }
 
             addressMatch()
+            addressOnFileMatch()?.validate()
             billingAddress()?.validate()
             email()
             name()
@@ -1910,6 +1960,7 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (addressMatch.asKnown() == null) 0 else 1) +
+                (addressOnFileMatch.asKnown()?.validity() ?: 0) +
                 (billingAddress.asKnown()?.validity() ?: 0) +
                 (if (email.asKnown() == null) 0 else 1) +
                 (if (name.asKnown() == null) 0 else 1) +
@@ -1917,6 +1968,161 @@ private constructor(
                 (if (phoneNumberMobile.asKnown() == null) 0 else 1) +
                 (if (phoneNumberWork.asKnown() == null) 0 else 1) +
                 (shippingAddress.asKnown()?.validity() ?: 0)
+
+        /**
+         * Lithic's evaluation result comparing the transaction's address data with the cardholder
+         * KYC data if it exists. In the event Lithic does not have any Cardholder KYC data, or the
+         * transaction does not contain any address data, NOT_PRESENT will be returned
+         */
+        class AddressMatchResult
+        @JsonCreator
+        private constructor(private val value: JsonField<String>) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val MATCH = of("MATCH")
+
+                val MATCH_ADDRESS_ONLY = of("MATCH_ADDRESS_ONLY")
+
+                val MATCH_ZIP_ONLY = of("MATCH_ZIP_ONLY")
+
+                val MISMATCH = of("MISMATCH")
+
+                val NOT_PRESENT = of("NOT_PRESENT")
+
+                fun of(value: String) = AddressMatchResult(JsonField.of(value))
+            }
+
+            /** An enum containing [AddressMatchResult]'s known values. */
+            enum class Known {
+                MATCH,
+                MATCH_ADDRESS_ONLY,
+                MATCH_ZIP_ONLY,
+                MISMATCH,
+                NOT_PRESENT,
+            }
+
+            /**
+             * An enum containing [AddressMatchResult]'s known values, as well as an [_UNKNOWN]
+             * member.
+             *
+             * An instance of [AddressMatchResult] can contain an unknown value in a couple of
+             * cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                MATCH,
+                MATCH_ADDRESS_ONLY,
+                MATCH_ZIP_ONLY,
+                MISMATCH,
+                NOT_PRESENT,
+                /**
+                 * An enum member indicating that [AddressMatchResult] was instantiated with an
+                 * unknown value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    MATCH -> Value.MATCH
+                    MATCH_ADDRESS_ONLY -> Value.MATCH_ADDRESS_ONLY
+                    MATCH_ZIP_ONLY -> Value.MATCH_ZIP_ONLY
+                    MISMATCH -> Value.MISMATCH
+                    NOT_PRESENT -> Value.NOT_PRESENT
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws LithicInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    MATCH -> Known.MATCH
+                    MATCH_ADDRESS_ONLY -> Known.MATCH_ADDRESS_ONLY
+                    MATCH_ZIP_ONLY -> Known.MATCH_ZIP_ONLY
+                    MISMATCH -> Known.MISMATCH
+                    NOT_PRESENT -> Known.NOT_PRESENT
+                    else -> throw LithicInvalidDataException("Unknown AddressMatchResult: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws LithicInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            fun validate(): AddressMatchResult = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is AddressMatchResult && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
 
         /** Object containing data on the billing address provided during the transaction. */
         class BillingAddress
@@ -2637,6 +2843,7 @@ private constructor(
 
             return other is Cardholder &&
                 addressMatch == other.addressMatch &&
+                addressOnFileMatch == other.addressOnFileMatch &&
                 billingAddress == other.billingAddress &&
                 email == other.email &&
                 name == other.name &&
@@ -2650,6 +2857,7 @@ private constructor(
         private val hashCode: Int by lazy {
             Objects.hash(
                 addressMatch,
+                addressOnFileMatch,
                 billingAddress,
                 email,
                 name,
@@ -2664,7 +2872,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Cardholder{addressMatch=$addressMatch, billingAddress=$billingAddress, email=$email, name=$name, phoneNumberHome=$phoneNumberHome, phoneNumberMobile=$phoneNumberMobile, phoneNumberWork=$phoneNumberWork, shippingAddress=$shippingAddress, additionalProperties=$additionalProperties}"
+            "Cardholder{addressMatch=$addressMatch, addressOnFileMatch=$addressOnFileMatch, billingAddress=$billingAddress, email=$email, name=$name, phoneNumberHome=$phoneNumberHome, phoneNumberMobile=$phoneNumberMobile, phoneNumberWork=$phoneNumberWork, shippingAddress=$shippingAddress, additionalProperties=$additionalProperties}"
     }
 
     /** Channel in which the authentication occurs. Maps to EMV 3DS field `deviceChannel`. */
