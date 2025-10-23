@@ -21,13 +21,13 @@ class FinancialAccountCreditConfig
 private constructor(
     private val accountToken: JsonField<String>,
     private val autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse>,
-    private val chargedOffReason: JsonField<ChargedOffReason>,
     private val creditLimit: JsonField<Long>,
     private val creditProductToken: JsonField<String>,
     private val externalBankAccountToken: JsonField<String>,
+    private val tier: JsonField<String>,
+    private val chargedOffReason: JsonField<ChargedOffReason>,
     private val financialAccountState: JsonField<FinancialAccountState>,
     private val isSpendBlocked: JsonField<Boolean>,
-    private val tier: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -40,9 +40,6 @@ private constructor(
         @ExcludeMissing
         autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse> =
             JsonMissing.of(),
-        @JsonProperty("charged_off_reason")
-        @ExcludeMissing
-        chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of(),
         @JsonProperty("credit_limit")
         @ExcludeMissing
         creditLimit: JsonField<Long> = JsonMissing.of(),
@@ -52,23 +49,26 @@ private constructor(
         @JsonProperty("external_bank_account_token")
         @ExcludeMissing
         externalBankAccountToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tier") @ExcludeMissing tier: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("charged_off_reason")
+        @ExcludeMissing
+        chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of(),
         @JsonProperty("financial_account_state")
         @ExcludeMissing
         financialAccountState: JsonField<FinancialAccountState> = JsonMissing.of(),
         @JsonProperty("is_spend_blocked")
         @ExcludeMissing
         isSpendBlocked: JsonField<Boolean> = JsonMissing.of(),
-        @JsonProperty("tier") @ExcludeMissing tier: JsonField<String> = JsonMissing.of(),
     ) : this(
         accountToken,
         autoCollectionConfiguration,
-        chargedOffReason,
         creditLimit,
         creditProductToken,
         externalBankAccountToken,
+        tier,
+        chargedOffReason,
         financialAccountState,
         isSpendBlocked,
-        tier,
         mutableMapOf(),
     )
 
@@ -86,14 +86,6 @@ private constructor(
      */
     fun autoCollectionConfiguration(): AutoCollectionConfigurationResponse =
         autoCollectionConfiguration.getRequired("auto_collection_configuration")
-
-    /**
-     * Reason for the financial account being marked as Charged Off
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun chargedOffReason(): ChargedOffReason? = chargedOffReason.getNullable("charged_off_reason")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -117,27 +109,38 @@ private constructor(
         externalBankAccountToken.getNullable("external_bank_account_token")
 
     /**
-     * State of the financial account
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun financialAccountState(): FinancialAccountState =
-        financialAccountState.getRequired("financial_account_state")
-
-    /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun isSpendBlocked(): Boolean = isSpendBlocked.getRequired("is_spend_blocked")
-
-    /**
      * Tier assigned to the financial account
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun tier(): String? = tier.getNullable("tier")
+
+    /**
+     * Reason for the financial account being marked as Charged Off
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun chargedOffReason(): ChargedOffReason? = chargedOffReason.getNullable("charged_off_reason")
+
+    /**
+     * State of the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun financialAccountState(): FinancialAccountState? =
+        financialAccountState.getNullable("financial_account_state")
+
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
+    fun isSpendBlocked(): Boolean? = isSpendBlocked.getNullable("is_spend_blocked")
 
     /**
      * Returns the raw JSON value of [accountToken].
@@ -158,16 +161,6 @@ private constructor(
     @ExcludeMissing
     fun _autoCollectionConfiguration(): JsonField<AutoCollectionConfigurationResponse> =
         autoCollectionConfiguration
-
-    /**
-     * Returns the raw JSON value of [chargedOffReason].
-     *
-     * Unlike [chargedOffReason], this method doesn't throw if the JSON field has an unexpected
-     * type.
-     */
-    @JsonProperty("charged_off_reason")
-    @ExcludeMissing
-    fun _chargedOffReason(): JsonField<ChargedOffReason> = chargedOffReason
 
     /**
      * Returns the raw JSON value of [creditLimit].
@@ -197,11 +190,30 @@ private constructor(
     fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
 
     /**
+     * Returns the raw JSON value of [tier].
+     *
+     * Unlike [tier], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("tier") @ExcludeMissing fun _tier(): JsonField<String> = tier
+
+    /**
+     * Returns the raw JSON value of [chargedOffReason].
+     *
+     * Unlike [chargedOffReason], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @Deprecated("deprecated")
+    @JsonProperty("charged_off_reason")
+    @ExcludeMissing
+    fun _chargedOffReason(): JsonField<ChargedOffReason> = chargedOffReason
+
+    /**
      * Returns the raw JSON value of [financialAccountState].
      *
      * Unlike [financialAccountState], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("financial_account_state")
     @ExcludeMissing
     fun _financialAccountState(): JsonField<FinancialAccountState> = financialAccountState
@@ -211,16 +223,10 @@ private constructor(
      *
      * Unlike [isSpendBlocked], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("is_spend_blocked")
     @ExcludeMissing
     fun _isSpendBlocked(): JsonField<Boolean> = isSpendBlocked
-
-    /**
-     * Returns the raw JSON value of [tier].
-     *
-     * Unlike [tier], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("tier") @ExcludeMissing fun _tier(): JsonField<String> = tier
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -243,12 +249,9 @@ private constructor(
          * ```kotlin
          * .accountToken()
          * .autoCollectionConfiguration()
-         * .chargedOffReason()
          * .creditLimit()
          * .creditProductToken()
          * .externalBankAccountToken()
-         * .financialAccountState()
-         * .isSpendBlocked()
          * .tier()
          * ```
          */
@@ -261,25 +264,25 @@ private constructor(
         private var accountToken: JsonField<String>? = null
         private var autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse>? =
             null
-        private var chargedOffReason: JsonField<ChargedOffReason>? = null
         private var creditLimit: JsonField<Long>? = null
         private var creditProductToken: JsonField<String>? = null
         private var externalBankAccountToken: JsonField<String>? = null
-        private var financialAccountState: JsonField<FinancialAccountState>? = null
-        private var isSpendBlocked: JsonField<Boolean>? = null
         private var tier: JsonField<String>? = null
+        private var chargedOffReason: JsonField<ChargedOffReason> = JsonMissing.of()
+        private var financialAccountState: JsonField<FinancialAccountState> = JsonMissing.of()
+        private var isSpendBlocked: JsonField<Boolean> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccountCreditConfig: FinancialAccountCreditConfig) = apply {
             accountToken = financialAccountCreditConfig.accountToken
             autoCollectionConfiguration = financialAccountCreditConfig.autoCollectionConfiguration
-            chargedOffReason = financialAccountCreditConfig.chargedOffReason
             creditLimit = financialAccountCreditConfig.creditLimit
             creditProductToken = financialAccountCreditConfig.creditProductToken
             externalBankAccountToken = financialAccountCreditConfig.externalBankAccountToken
+            tier = financialAccountCreditConfig.tier
+            chargedOffReason = financialAccountCreditConfig.chargedOffReason
             financialAccountState = financialAccountCreditConfig.financialAccountState
             isSpendBlocked = financialAccountCreditConfig.isSpendBlocked
-            tier = financialAccountCreditConfig.tier
             additionalProperties = financialAccountCreditConfig.additionalProperties.toMutableMap()
         }
 
@@ -311,21 +314,6 @@ private constructor(
         fun autoCollectionConfiguration(
             autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse>
         ) = apply { this.autoCollectionConfiguration = autoCollectionConfiguration }
-
-        /** Reason for the financial account being marked as Charged Off */
-        fun chargedOffReason(chargedOffReason: ChargedOffReason?) =
-            chargedOffReason(JsonField.ofNullable(chargedOffReason))
-
-        /**
-         * Sets [Builder.chargedOffReason] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.chargedOffReason] with a well-typed [ChargedOffReason]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun chargedOffReason(chargedOffReason: JsonField<ChargedOffReason>) = apply {
-            this.chargedOffReason = chargedOffReason
-        }
 
         fun creditLimit(creditLimit: Long?) = creditLimit(JsonField.ofNullable(creditLimit))
 
@@ -374,34 +362,6 @@ private constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
-        /** State of the financial account */
-        fun financialAccountState(financialAccountState: FinancialAccountState) =
-            financialAccountState(JsonField.of(financialAccountState))
-
-        /**
-         * Sets [Builder.financialAccountState] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.financialAccountState] with a well-typed
-         * [FinancialAccountState] value instead. This method is primarily for setting the field to
-         * an undocumented or not yet supported value.
-         */
-        fun financialAccountState(financialAccountState: JsonField<FinancialAccountState>) = apply {
-            this.financialAccountState = financialAccountState
-        }
-
-        fun isSpendBlocked(isSpendBlocked: Boolean) = isSpendBlocked(JsonField.of(isSpendBlocked))
-
-        /**
-         * Sets [Builder.isSpendBlocked] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.isSpendBlocked] with a well-typed [Boolean] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun isSpendBlocked(isSpendBlocked: JsonField<Boolean>) = apply {
-            this.isSpendBlocked = isSpendBlocked
-        }
-
         /** Tier assigned to the financial account */
         fun tier(tier: String?) = tier(JsonField.ofNullable(tier))
 
@@ -412,6 +372,55 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun tier(tier: JsonField<String>) = apply { this.tier = tier }
+
+        /** Reason for the financial account being marked as Charged Off */
+        @Deprecated("deprecated")
+        fun chargedOffReason(chargedOffReason: ChargedOffReason?) =
+            chargedOffReason(JsonField.ofNullable(chargedOffReason))
+
+        /**
+         * Sets [Builder.chargedOffReason] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.chargedOffReason] with a well-typed [ChargedOffReason]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        @Deprecated("deprecated")
+        fun chargedOffReason(chargedOffReason: JsonField<ChargedOffReason>) = apply {
+            this.chargedOffReason = chargedOffReason
+        }
+
+        /** State of the financial account */
+        @Deprecated("deprecated")
+        fun financialAccountState(financialAccountState: FinancialAccountState) =
+            financialAccountState(JsonField.of(financialAccountState))
+
+        /**
+         * Sets [Builder.financialAccountState] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.financialAccountState] with a well-typed
+         * [FinancialAccountState] value instead. This method is primarily for setting the field to
+         * an undocumented or not yet supported value.
+         */
+        @Deprecated("deprecated")
+        fun financialAccountState(financialAccountState: JsonField<FinancialAccountState>) = apply {
+            this.financialAccountState = financialAccountState
+        }
+
+        @Deprecated("deprecated")
+        fun isSpendBlocked(isSpendBlocked: Boolean) = isSpendBlocked(JsonField.of(isSpendBlocked))
+
+        /**
+         * Sets [Builder.isSpendBlocked] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.isSpendBlocked] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        @Deprecated("deprecated")
+        fun isSpendBlocked(isSpendBlocked: JsonField<Boolean>) = apply {
+            this.isSpendBlocked = isSpendBlocked
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -441,12 +450,9 @@ private constructor(
          * ```kotlin
          * .accountToken()
          * .autoCollectionConfiguration()
-         * .chargedOffReason()
          * .creditLimit()
          * .creditProductToken()
          * .externalBankAccountToken()
-         * .financialAccountState()
-         * .isSpendBlocked()
          * .tier()
          * ```
          *
@@ -456,13 +462,13 @@ private constructor(
             FinancialAccountCreditConfig(
                 checkRequired("accountToken", accountToken),
                 checkRequired("autoCollectionConfiguration", autoCollectionConfiguration),
-                checkRequired("chargedOffReason", chargedOffReason),
                 checkRequired("creditLimit", creditLimit),
                 checkRequired("creditProductToken", creditProductToken),
                 checkRequired("externalBankAccountToken", externalBankAccountToken),
-                checkRequired("financialAccountState", financialAccountState),
-                checkRequired("isSpendBlocked", isSpendBlocked),
                 checkRequired("tier", tier),
+                chargedOffReason,
+                financialAccountState,
+                isSpendBlocked,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -476,13 +482,13 @@ private constructor(
 
         accountToken()
         autoCollectionConfiguration().validate()
-        chargedOffReason()?.validate()
         creditLimit()
         creditProductToken()
         externalBankAccountToken()
-        financialAccountState().validate()
-        isSpendBlocked()
         tier()
+        chargedOffReason()?.validate()
+        financialAccountState()?.validate()
+        isSpendBlocked()
         validated = true
     }
 
@@ -502,13 +508,13 @@ private constructor(
     internal fun validity(): Int =
         (if (accountToken.asKnown() == null) 0 else 1) +
             (autoCollectionConfiguration.asKnown()?.validity() ?: 0) +
-            (chargedOffReason.asKnown()?.validity() ?: 0) +
             (if (creditLimit.asKnown() == null) 0 else 1) +
             (if (creditProductToken.asKnown() == null) 0 else 1) +
             (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+            (if (tier.asKnown() == null) 0 else 1) +
+            (chargedOffReason.asKnown()?.validity() ?: 0) +
             (financialAccountState.asKnown()?.validity() ?: 0) +
-            (if (isSpendBlocked.asKnown() == null) 0 else 1) +
-            (if (tier.asKnown() == null) 0 else 1)
+            (if (isSpendBlocked.asKnown() == null) 0 else 1)
 
     class AutoCollectionConfigurationResponse
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -684,6 +690,7 @@ private constructor(
     }
 
     /** Reason for the financial account being marked as Charged Off */
+    @Deprecated("deprecated")
     class ChargedOffReason @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
 
@@ -814,6 +821,7 @@ private constructor(
     }
 
     /** State of the financial account */
+    @Deprecated("deprecated")
     class FinancialAccountState
     @JsonCreator
     private constructor(private val value: JsonField<String>) : Enum {
@@ -965,13 +973,13 @@ private constructor(
         return other is FinancialAccountCreditConfig &&
             accountToken == other.accountToken &&
             autoCollectionConfiguration == other.autoCollectionConfiguration &&
-            chargedOffReason == other.chargedOffReason &&
             creditLimit == other.creditLimit &&
             creditProductToken == other.creditProductToken &&
             externalBankAccountToken == other.externalBankAccountToken &&
+            tier == other.tier &&
+            chargedOffReason == other.chargedOffReason &&
             financialAccountState == other.financialAccountState &&
             isSpendBlocked == other.isSpendBlocked &&
-            tier == other.tier &&
             additionalProperties == other.additionalProperties
     }
 
@@ -979,13 +987,13 @@ private constructor(
         Objects.hash(
             accountToken,
             autoCollectionConfiguration,
-            chargedOffReason,
             creditLimit,
             creditProductToken,
             externalBankAccountToken,
+            tier,
+            chargedOffReason,
             financialAccountState,
             isSpendBlocked,
-            tier,
             additionalProperties,
         )
     }
@@ -993,5 +1001,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FinancialAccountCreditConfig{accountToken=$accountToken, autoCollectionConfiguration=$autoCollectionConfiguration, chargedOffReason=$chargedOffReason, creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, financialAccountState=$financialAccountState, isSpendBlocked=$isSpendBlocked, tier=$tier, additionalProperties=$additionalProperties}"
+        "FinancialAccountCreditConfig{accountToken=$accountToken, autoCollectionConfiguration=$autoCollectionConfiguration, creditLimit=$creditLimit, creditProductToken=$creditProductToken, externalBankAccountToken=$externalBankAccountToken, tier=$tier, chargedOffReason=$chargedOffReason, financialAccountState=$financialAccountState, isSpendBlocked=$isSpendBlocked, additionalProperties=$additionalProperties}"
 }
