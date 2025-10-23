@@ -673,8 +673,6 @@ private constructor(
 
             val ACCOUNT_HOLDER_VERIFICATION = of("account_holder.verification")
 
-            val AUTH_RULES_PERFORMANCE_REPORT_CREATED = of("auth_rules.performance_report.created")
-
             val BALANCE_UPDATED = of("balance.updated")
 
             val BOOK_TRANSFER_TRANSACTION_CREATED = of("book_transfer_transaction.created")
@@ -774,7 +772,6 @@ private constructor(
             ACCOUNT_HOLDER_CREATED,
             ACCOUNT_HOLDER_UPDATED,
             ACCOUNT_HOLDER_VERIFICATION,
-            AUTH_RULES_PERFORMANCE_REPORT_CREATED,
             BALANCE_UPDATED,
             BOOK_TRANSFER_TRANSACTION_CREATED,
             CARD_CREATED,
@@ -833,7 +830,6 @@ private constructor(
             ACCOUNT_HOLDER_CREATED,
             ACCOUNT_HOLDER_UPDATED,
             ACCOUNT_HOLDER_VERIFICATION,
-            AUTH_RULES_PERFORMANCE_REPORT_CREATED,
             BALANCE_UPDATED,
             BOOK_TRANSFER_TRANSACTION_CREATED,
             CARD_CREATED,
@@ -895,7 +891,6 @@ private constructor(
                 ACCOUNT_HOLDER_CREATED -> Value.ACCOUNT_HOLDER_CREATED
                 ACCOUNT_HOLDER_UPDATED -> Value.ACCOUNT_HOLDER_UPDATED
                 ACCOUNT_HOLDER_VERIFICATION -> Value.ACCOUNT_HOLDER_VERIFICATION
-                AUTH_RULES_PERFORMANCE_REPORT_CREATED -> Value.AUTH_RULES_PERFORMANCE_REPORT_CREATED
                 BALANCE_UPDATED -> Value.BALANCE_UPDATED
                 BOOK_TRANSFER_TRANSACTION_CREATED -> Value.BOOK_TRANSFER_TRANSACTION_CREATED
                 CARD_CREATED -> Value.CARD_CREATED
@@ -961,7 +956,6 @@ private constructor(
                 ACCOUNT_HOLDER_CREATED -> Known.ACCOUNT_HOLDER_CREATED
                 ACCOUNT_HOLDER_UPDATED -> Known.ACCOUNT_HOLDER_UPDATED
                 ACCOUNT_HOLDER_VERIFICATION -> Known.ACCOUNT_HOLDER_VERIFICATION
-                AUTH_RULES_PERFORMANCE_REPORT_CREATED -> Known.AUTH_RULES_PERFORMANCE_REPORT_CREATED
                 BALANCE_UPDATED -> Known.BALANCE_UPDATED
                 BOOK_TRANSFER_TRANSACTION_CREATED -> Known.BOOK_TRANSFER_TRANSACTION_CREATED
                 CARD_CREATED -> Known.CARD_CREATED

@@ -203,20 +203,6 @@ internal class V2ServiceAsyncTest {
     }
 
     @Test
-    suspend fun report() {
-        val client =
-            LithicOkHttpClientAsync.builder()
-                .baseUrl(TestServerExtension.BASE_URL)
-                .apiKey("My Lithic API Key")
-                .build()
-        val v2ServiceAsync = client.authRules().v2()
-
-        val response = v2ServiceAsync.report("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-
-        response.validate()
-    }
-
-    @Test
     suspend fun retrieveFeatures() {
         val client =
             LithicOkHttpClientAsync.builder()
