@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.108.0 (2025-10-23)
+
+Full Changelog: [v0.107.0...v0.108.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.107.0...v0.108.0)
+
+### Features
+
+* **api:** updates to Auth Rules and Card provisioning ([610f5b9](https://github.com/lithic-com/lithic-kotlin/commit/610f5b9cdfe683198e93fa8a5a6c0344022fc325))
+
 ## 0.107.0 (2025-10-08)
 
 Full Changelog: [v0.106.0...v0.107.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.106.0...v0.107.0)
