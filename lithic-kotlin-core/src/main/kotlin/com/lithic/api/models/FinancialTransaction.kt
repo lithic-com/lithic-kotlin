@@ -1185,6 +1185,8 @@ private constructor(
 
                 val ACH_RECEIPT_PROCESSED = of("ACH_RECEIPT_PROCESSED")
 
+                val ACH_RECEIPT_RELEASED = of("ACH_RECEIPT_RELEASED")
+
                 val ACH_RECEIPT_SETTLED = of("ACH_RECEIPT_SETTLED")
 
                 val ACH_RETURN_INITIATED = of("ACH_RETURN_INITIATED")
@@ -1322,6 +1324,7 @@ private constructor(
                 ACH_ORIGINATION_REVIEWED,
                 ACH_ORIGINATION_SETTLED,
                 ACH_RECEIPT_PROCESSED,
+                ACH_RECEIPT_RELEASED,
                 ACH_RECEIPT_SETTLED,
                 ACH_RETURN_INITIATED,
                 ACH_RETURN_PROCESSED,
@@ -1406,6 +1409,7 @@ private constructor(
                 ACH_ORIGINATION_REVIEWED,
                 ACH_ORIGINATION_SETTLED,
                 ACH_RECEIPT_PROCESSED,
+                ACH_RECEIPT_RELEASED,
                 ACH_RECEIPT_SETTLED,
                 ACH_RETURN_INITIATED,
                 ACH_RETURN_PROCESSED,
@@ -1492,6 +1496,7 @@ private constructor(
                     ACH_ORIGINATION_REVIEWED -> Value.ACH_ORIGINATION_REVIEWED
                     ACH_ORIGINATION_SETTLED -> Value.ACH_ORIGINATION_SETTLED
                     ACH_RECEIPT_PROCESSED -> Value.ACH_RECEIPT_PROCESSED
+                    ACH_RECEIPT_RELEASED -> Value.ACH_RECEIPT_RELEASED
                     ACH_RECEIPT_SETTLED -> Value.ACH_RECEIPT_SETTLED
                     ACH_RETURN_INITIATED -> Value.ACH_RETURN_INITIATED
                     ACH_RETURN_PROCESSED -> Value.ACH_RETURN_PROCESSED
@@ -1576,6 +1581,7 @@ private constructor(
                     ACH_ORIGINATION_REVIEWED -> Known.ACH_ORIGINATION_REVIEWED
                     ACH_ORIGINATION_SETTLED -> Known.ACH_ORIGINATION_SETTLED
                     ACH_RECEIPT_PROCESSED -> Known.ACH_RECEIPT_PROCESSED
+                    ACH_RECEIPT_RELEASED -> Known.ACH_RECEIPT_RELEASED
                     ACH_RECEIPT_SETTLED -> Known.ACH_RECEIPT_SETTLED
                     ACH_RETURN_INITIATED -> Known.ACH_RETURN_INITIATED
                     ACH_RETURN_PROCESSED -> Known.ACH_RETURN_PROCESSED
