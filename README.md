@@ -367,11 +367,9 @@ Requests time out after 1 minute by default.
 To set a custom timeout, configure the method call using the `timeout` method:
 
 ```kotlin
-import com.lithic.api.models.Card
+import com.lithic.api.models.CardListPage
 
-val card: Card = client.cards().create(
-  params, RequestOptions.builder().timeout(Duration.ofSeconds(30)).build()
-)
+val page: CardListPage = client.cards().list(RequestOptions.builder().timeout(Duration.ofSeconds(30)).build())
 ```
 
 Or configure the default for all method calls at the client level:
