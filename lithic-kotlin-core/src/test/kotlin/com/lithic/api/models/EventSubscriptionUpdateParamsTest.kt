@@ -14,7 +14,7 @@ internal class EventSubscriptionUpdateParamsTest {
             .url("https://example.com")
             .description("description")
             .disabled(true)
-            .addEventType(EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_CREATED)
+            .addEventType(EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_DOCUMENT_UPDATED)
             .build()
     }
 
@@ -39,7 +39,9 @@ internal class EventSubscriptionUpdateParamsTest {
                 .url("https://example.com")
                 .description("description")
                 .disabled(true)
-                .addEventType(EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_CREATED)
+                .addEventType(
+                    EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_DOCUMENT_UPDATED
+                )
                 .build()
 
         val body = params._body()
@@ -48,7 +50,9 @@ internal class EventSubscriptionUpdateParamsTest {
         assertThat(body.description()).isEqualTo("description")
         assertThat(body.disabled()).isEqualTo(true)
         assertThat(body.eventTypes())
-            .containsExactly(EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_CREATED)
+            .containsExactly(
+                EventSubscriptionUpdateParams.EventType.ACCOUNT_HOLDER_DOCUMENT_UPDATED
+            )
     }
 
     @Test

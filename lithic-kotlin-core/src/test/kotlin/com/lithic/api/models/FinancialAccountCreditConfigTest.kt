@@ -23,9 +23,6 @@ internal class FinancialAccountCreditConfigTest {
                 .creditProductToken("credit_product_token")
                 .externalBankAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .tier("tier")
-                .chargedOffReason(FinancialAccountCreditConfig.ChargedOffReason.DELINQUENT)
-                .financialAccountState(FinancialAccountCreditConfig.FinancialAccountState.PENDING)
-                .isSpendBlocked(true)
                 .build()
 
         assertThat(financialAccountCreditConfig.accountToken())
@@ -42,11 +39,6 @@ internal class FinancialAccountCreditConfigTest {
         assertThat(financialAccountCreditConfig.externalBankAccountToken())
             .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(financialAccountCreditConfig.tier()).isEqualTo("tier")
-        assertThat(financialAccountCreditConfig.chargedOffReason())
-            .isEqualTo(FinancialAccountCreditConfig.ChargedOffReason.DELINQUENT)
-        assertThat(financialAccountCreditConfig.financialAccountState())
-            .isEqualTo(FinancialAccountCreditConfig.FinancialAccountState.PENDING)
-        assertThat(financialAccountCreditConfig.isSpendBlocked()).isEqualTo(true)
     }
 
     @Test
@@ -64,9 +56,6 @@ internal class FinancialAccountCreditConfigTest {
                 .creditProductToken("credit_product_token")
                 .externalBankAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .tier("tier")
-                .chargedOffReason(FinancialAccountCreditConfig.ChargedOffReason.DELINQUENT)
-                .financialAccountState(FinancialAccountCreditConfig.FinancialAccountState.PENDING)
-                .isSpendBlocked(true)
                 .build()
 
         val roundtrippedFinancialAccountCreditConfig =
