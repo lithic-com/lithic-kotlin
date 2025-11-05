@@ -673,8 +673,8 @@ private constructor(
          * businesses. Pass the account_token of the enrolled business associated with the
          * AUTHORIZED_USER in this field.
          */
-        fun businessAccountToken(businessAccountToken: String) =
-            businessAccountToken(JsonField.of(businessAccountToken))
+        fun businessAccountToken(businessAccountToken: String?) =
+            businessAccountToken(JsonField.ofNullable(businessAccountToken))
 
         /**
          * Sets [Builder.businessAccountToken] to an arbitrary JSON value.

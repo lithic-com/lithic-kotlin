@@ -14,14 +14,14 @@ private constructor(
     private val service: DisputeServiceAsync,
     private val params: DisputeListParams,
     private val response: DisputeListPageResponse,
-) : PageAsync<Dispute> {
+) : PageAsync<DisputeListResponse> {
 
     /**
      * Delegates to [DisputeListPageResponse], but gracefully handles missing data.
      *
      * @see DisputeListPageResponse.data
      */
-    fun data(): List<Dispute> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<DisputeListResponse> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [DisputeListPageResponse], but gracefully handles missing data.
@@ -30,7 +30,7 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun items(): List<Dispute> = data()
+    override fun items(): List<DisputeListResponse> = data()
 
     override fun hasNextPage(): Boolean = items().isNotEmpty()
 
@@ -43,7 +43,7 @@ private constructor(
 
     override suspend fun nextPage(): DisputeListPageAsync = service.list(nextPageParams())
 
-    fun autoPager(): AutoPagerAsync<Dispute> = AutoPagerAsync.from(this)
+    fun autoPager(): AutoPagerAsync<DisputeListResponse> = AutoPagerAsync.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): DisputeListParams = params

@@ -21,23 +21,17 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.allMaxBy
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.getOrThrow
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
-/**
- * DEPRECATED: This has been deprecated in favor of the Trailing Window Objects
- *
- * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum value is
- * 10 seconds, and the maximum value is 2678400 seconds (31 days).
- */
+/** Velocity over the current day since 00:00 / 12 AM in Eastern Time */
 @JsonDeserialize(using = VelocityLimitParamsPeriodWindow.Deserializer::class)
 @JsonSerialize(using = VelocityLimitParamsPeriodWindow.Serializer::class)
 class VelocityLimitParamsPeriodWindow
 private constructor(
-    private val trailing: Long? = null,
-    private val fixed: FixedWindow? = null,
     private val trailingWindowObject: TrailingWindowObject? = null,
     private val fixedWindowDay: FixedWindowDay? = null,
     private val fixedWindowWeek: FixedWindowWeek? = null,
@@ -45,26 +39,6 @@ private constructor(
     private val fixedWindowYear: FixedWindowYear? = null,
     private val _json: JsonValue? = null,
 ) {
-
-    /**
-     * DEPRECATED: This has been deprecated in favor of the Trailing Window Objects
-     *
-     * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
-     * value is 10 seconds, and the maximum value is 2678400 seconds (31 days).
-     */
-    @Deprecated("deprecated") fun trailing(): Long? = trailing
-
-    /**
-     * DEPRECATED: This has been deprecated in favor of the other Fixed Window Objects
-     *
-     * The window of time to calculate Spend Velocity over.
-     * * `DAY`: Velocity over the current day since midnight Eastern Time.
-     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
-     *   Eastern Time.
-     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
-     */
-    @Deprecated("deprecated") fun fixed(): FixedWindow? = fixed
 
     fun trailingWindowObject(): TrailingWindowObject? = trailingWindowObject
 
@@ -90,10 +64,6 @@ private constructor(
      */
     fun fixedWindowYear(): FixedWindowYear? = fixedWindowYear
 
-    @Deprecated("deprecated") fun isTrailing(): Boolean = trailing != null
-
-    @Deprecated("deprecated") fun isFixed(): Boolean = fixed != null
-
     fun isTrailingWindowObject(): Boolean = trailingWindowObject != null
 
     fun isFixedWindowDay(): Boolean = fixedWindowDay != null
@@ -103,26 +73,6 @@ private constructor(
     fun isFixedWindowMonth(): Boolean = fixedWindowMonth != null
 
     fun isFixedWindowYear(): Boolean = fixedWindowYear != null
-
-    /**
-     * DEPRECATED: This has been deprecated in favor of the Trailing Window Objects
-     *
-     * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
-     * value is 10 seconds, and the maximum value is 2678400 seconds (31 days).
-     */
-    @Deprecated("deprecated") fun asTrailing(): Long = trailing.getOrThrow("trailing")
-
-    /**
-     * DEPRECATED: This has been deprecated in favor of the other Fixed Window Objects
-     *
-     * The window of time to calculate Spend Velocity over.
-     * * `DAY`: Velocity over the current day since midnight Eastern Time.
-     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
-     *   Eastern Time.
-     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
-     */
-    @Deprecated("deprecated") fun asFixed(): FixedWindow = fixed.getOrThrow("fixed")
 
     fun asTrailingWindowObject(): TrailingWindowObject =
         trailingWindowObject.getOrThrow("trailingWindowObject")
@@ -153,8 +103,6 @@ private constructor(
 
     fun <T> accept(visitor: Visitor<T>): T =
         when {
-            trailing != null -> visitor.visitTrailing(trailing)
-            fixed != null -> visitor.visitFixed(fixed)
             trailingWindowObject != null -> visitor.visitTrailingWindowObject(trailingWindowObject)
             fixedWindowDay != null -> visitor.visitFixedWindowDay(fixedWindowDay)
             fixedWindowWeek != null -> visitor.visitFixedWindowWeek(fixedWindowWeek)
@@ -172,12 +120,6 @@ private constructor(
 
         accept(
             object : Visitor<Unit> {
-                override fun visitTrailing(trailing: Long) {}
-
-                override fun visitFixed(fixed: FixedWindow) {
-                    fixed.validate()
-                }
-
                 override fun visitTrailingWindowObject(trailingWindowObject: TrailingWindowObject) {
                     trailingWindowObject.validate()
                 }
@@ -218,10 +160,6 @@ private constructor(
     internal fun validity(): Int =
         accept(
             object : Visitor<Int> {
-                override fun visitTrailing(trailing: Long) = 1
-
-                override fun visitFixed(fixed: FixedWindow) = fixed.validity()
-
                 override fun visitTrailingWindowObject(trailingWindowObject: TrailingWindowObject) =
                     trailingWindowObject.validity()
 
@@ -247,8 +185,6 @@ private constructor(
         }
 
         return other is VelocityLimitParamsPeriodWindow &&
-            trailing == other.trailing &&
-            fixed == other.fixed &&
             trailingWindowObject == other.trailingWindowObject &&
             fixedWindowDay == other.fixedWindowDay &&
             fixedWindowWeek == other.fixedWindowWeek &&
@@ -258,8 +194,6 @@ private constructor(
 
     override fun hashCode(): Int =
         Objects.hash(
-            trailing,
-            fixed,
             trailingWindowObject,
             fixedWindowDay,
             fixedWindowWeek,
@@ -269,8 +203,6 @@ private constructor(
 
     override fun toString(): String =
         when {
-            trailing != null -> "VelocityLimitParamsPeriodWindow{trailing=$trailing}"
-            fixed != null -> "VelocityLimitParamsPeriodWindow{fixed=$fixed}"
             trailingWindowObject != null ->
                 "VelocityLimitParamsPeriodWindow{trailingWindowObject=$trailingWindowObject}"
             fixedWindowDay != null ->
@@ -286,29 +218,6 @@ private constructor(
         }
 
     companion object {
-
-        /**
-         * DEPRECATED: This has been deprecated in favor of the Trailing Window Objects
-         *
-         * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
-         * value is 10 seconds, and the maximum value is 2678400 seconds (31 days).
-         */
-        @Deprecated("deprecated")
-        fun ofTrailing(trailing: Long) = VelocityLimitParamsPeriodWindow(trailing = trailing)
-
-        /**
-         * DEPRECATED: This has been deprecated in favor of the other Fixed Window Objects
-         *
-         * The window of time to calculate Spend Velocity over.
-         * * `DAY`: Velocity over the current day since midnight Eastern Time.
-         * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-         * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
-         *   in Eastern Time.
-         * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
-         *   Time.
-         */
-        @Deprecated("deprecated")
-        fun ofFixed(fixed: FixedWindow) = VelocityLimitParamsPeriodWindow(fixed = fixed)
 
         fun ofTrailingWindowObject(trailingWindowObject: TrailingWindowObject) =
             VelocityLimitParamsPeriodWindow(trailingWindowObject = trailingWindowObject)
@@ -346,27 +255,6 @@ private constructor(
      * value of type [T].
      */
     interface Visitor<out T> {
-
-        /**
-         * DEPRECATED: This has been deprecated in favor of the Trailing Window Objects
-         *
-         * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
-         * value is 10 seconds, and the maximum value is 2678400 seconds (31 days).
-         */
-        @Deprecated("deprecated") fun visitTrailing(trailing: Long): T
-
-        /**
-         * DEPRECATED: This has been deprecated in favor of the other Fixed Window Objects
-         *
-         * The window of time to calculate Spend Velocity over.
-         * * `DAY`: Velocity over the current day since midnight Eastern Time.
-         * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-         * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month
-         *   in Eastern Time.
-         * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern
-         *   Time.
-         */
-        @Deprecated("deprecated") fun visitFixed(fixed: FixedWindow): T
 
         fun visitTrailingWindowObject(trailingWindowObject: TrailingWindowObject): T
 
@@ -416,9 +304,6 @@ private constructor(
 
             val bestMatches =
                 sequenceOf(
-                        tryDeserialize(node, jacksonTypeRef<FixedWindow>())?.let {
-                            VelocityLimitParamsPeriodWindow(fixed = it, _json = json)
-                        },
                         tryDeserialize(node, jacksonTypeRef<TrailingWindowObject>())?.let {
                             VelocityLimitParamsPeriodWindow(trailingWindowObject = it, _json = json)
                         },
@@ -434,16 +319,13 @@ private constructor(
                         tryDeserialize(node, jacksonTypeRef<FixedWindowYear>())?.let {
                             VelocityLimitParamsPeriodWindow(fixedWindowYear = it, _json = json)
                         },
-                        tryDeserialize(node, jacksonTypeRef<Long>())?.let {
-                            VelocityLimitParamsPeriodWindow(trailing = it, _json = json)
-                        },
                     )
                     .filterNotNull()
                     .allMaxBy { it.validity() }
                     .toList()
             return when (bestMatches.size) {
                 // This can happen if what we're deserializing is completely incompatible with all
-                // the possible variants (e.g. deserializing from array).
+                // the possible variants (e.g. deserializing from boolean).
                 0 -> VelocityLimitParamsPeriodWindow(_json = json)
                 1 -> bestMatches.single()
                 // If there's more than one match with the highest validity, then use the first
@@ -462,8 +344,6 @@ private constructor(
             provider: SerializerProvider,
         ) {
             when {
-                value.trailing != null -> generator.writeObject(value.trailing)
-                value.fixed != null -> generator.writeObject(value.fixed)
                 value.trailingWindowObject != null ->
                     generator.writeObject(value.trailingWindowObject)
                 value.fixedWindowDay != null -> generator.writeObject(value.fixedWindowDay)
@@ -474,157 +354,6 @@ private constructor(
                 else -> throw IllegalStateException("Invalid VelocityLimitParamsPeriodWindow")
             }
         }
-    }
-
-    /**
-     * DEPRECATED: This has been deprecated in favor of the other Fixed Window Objects
-     *
-     * The window of time to calculate Spend Velocity over.
-     * * `DAY`: Velocity over the current day since midnight Eastern Time.
-     * * `WEEK`: Velocity over the current week since 00:00 / 12 AM on Monday in Eastern Time.
-     * * `MONTH`: Velocity over the current month since 00:00 / 12 AM on the first of the month in
-     *   Eastern Time.
-     * * `YEAR`: Velocity over the current year since 00:00 / 12 AM on January 1st in Eastern Time.
-     */
-    @Deprecated("deprecated")
-    class FixedWindow @JsonCreator private constructor(private val value: JsonField<String>) :
-        Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            val DAY = of("DAY")
-
-            val WEEK = of("WEEK")
-
-            val MONTH = of("MONTH")
-
-            val YEAR = of("YEAR")
-
-            fun of(value: String) = FixedWindow(JsonField.of(value))
-        }
-
-        /** An enum containing [FixedWindow]'s known values. */
-        enum class Known {
-            DAY,
-            WEEK,
-            MONTH,
-            YEAR,
-        }
-
-        /**
-         * An enum containing [FixedWindow]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [FixedWindow] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            DAY,
-            WEEK,
-            MONTH,
-            YEAR,
-            /**
-             * An enum member indicating that [FixedWindow] was instantiated with an unknown value.
-             */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                DAY -> Value.DAY
-                WEEK -> Value.WEEK
-                MONTH -> Value.MONTH
-                YEAR -> Value.YEAR
-                else -> Value._UNKNOWN
-            }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws LithicInvalidDataException if this class instance's value is a not a known
-         *   member.
-         */
-        fun known(): Known =
-            when (this) {
-                DAY -> Known.DAY
-                WEEK -> Known.WEEK
-                MONTH -> Known.MONTH
-                YEAR -> Known.YEAR
-                else -> throw LithicInvalidDataException("Unknown FixedWindow: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws LithicInvalidDataException if this class instance's value does not have the
-         *   expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
-
-        private var validated: Boolean = false
-
-        fun validate(): FixedWindow = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is FixedWindow && value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
     }
 
     class TrailingWindowObject
@@ -645,16 +374,16 @@ private constructor(
          * The size of the trailing window to calculate Spend Velocity over in seconds. The minimum
          * value is 10 seconds, and the maximum value is 2678400 seconds (31 days).
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun duration(): Long? = duration.getNullable("duration")
+        fun duration(): Long = duration.getRequired("duration")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun type(): Type? = type.getNullable("type")
+        fun type(): Type = type.getRequired("type")
 
         /**
          * Returns the raw JSON value of [duration].
@@ -684,15 +413,23 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [TrailingWindowObject]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [TrailingWindowObject].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .duration()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [TrailingWindowObject]. */
         class Builder internal constructor() {
 
-            private var duration: JsonField<Long> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
+            private var duration: JsonField<Long>? = null
+            private var type: JsonField<Type>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(trailingWindowObject: TrailingWindowObject) = apply {
@@ -750,9 +487,21 @@ private constructor(
              * Returns an immutable instance of [TrailingWindowObject].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .duration()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): TrailingWindowObject =
-                TrailingWindowObject(duration, type, additionalProperties.toMutableMap())
+                TrailingWindowObject(
+                    checkRequired("duration", duration),
+                    checkRequired("type", type),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -763,7 +512,7 @@ private constructor(
             }
 
             duration()
-            type()?.validate()
+            type().validate()
             validated = true
         }
 
@@ -936,10 +685,10 @@ private constructor(
         ) : this(type, mutableMapOf())
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun type(): Type? = type.getNullable("type")
+        fun type(): Type = type.getRequired("type")
 
         /**
          * Returns the raw JSON value of [type].
@@ -962,14 +711,21 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [FixedWindowDay]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [FixedWindowDay].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [FixedWindowDay]. */
         class Builder internal constructor() {
 
-            private var type: JsonField<Type> = JsonMissing.of()
+            private var type: JsonField<Type>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(fixedWindowDay: FixedWindowDay) = apply {
@@ -1011,8 +767,16 @@ private constructor(
              * Returns an immutable instance of [FixedWindowDay].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): FixedWindowDay = FixedWindowDay(type, additionalProperties.toMutableMap())
+            fun build(): FixedWindowDay =
+                FixedWindowDay(checkRequired("type", type), additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -1022,7 +786,7 @@ private constructor(
                 return@apply
             }
 
-            type()?.validate()
+            type().validate()
             validated = true
         }
 
@@ -1185,18 +949,24 @@ private constructor(
     class FixedWindowWeek
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val dayOfWeek: JsonField<Long>,
         private val type: JsonField<Type>,
+        private val dayOfWeek: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("day_of_week")
             @ExcludeMissing
             dayOfWeek: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-        ) : this(dayOfWeek, type, mutableMapOf())
+        ) : this(type, dayOfWeek, mutableMapOf())
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
 
         /**
          * The day of the week to start the week from. Following ISO-8601, 1 is Monday and 7 is
@@ -1208,10 +978,11 @@ private constructor(
         fun dayOfWeek(): Long? = dayOfWeek.getNullable("day_of_week")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
          */
-        fun type(): Type? = type.getNullable("type")
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
          * Returns the raw JSON value of [dayOfWeek].
@@ -1219,13 +990,6 @@ private constructor(
          * Unlike [dayOfWeek], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("day_of_week") @ExcludeMissing fun _dayOfWeek(): JsonField<Long> = dayOfWeek
-
-        /**
-         * Returns the raw JSON value of [type].
-         *
-         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1241,22 +1005,40 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [FixedWindowWeek]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [FixedWindowWeek].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [FixedWindowWeek]. */
         class Builder internal constructor() {
 
+            private var type: JsonField<Type>? = null
             private var dayOfWeek: JsonField<Long> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(fixedWindowWeek: FixedWindowWeek) = apply {
-                dayOfWeek = fixedWindowWeek.dayOfWeek
                 type = fixedWindowWeek.type
+                dayOfWeek = fixedWindowWeek.dayOfWeek
                 additionalProperties = fixedWindowWeek.additionalProperties.toMutableMap()
             }
+
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
              * The day of the week to start the week from. Following ISO-8601, 1 is Monday and 7 is
@@ -1272,17 +1054,6 @@ private constructor(
              * supported value.
              */
             fun dayOfWeek(dayOfWeek: JsonField<Long>) = apply { this.dayOfWeek = dayOfWeek }
-
-            fun type(type: Type) = type(JsonField.of(type))
-
-            /**
-             * Sets [Builder.type] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1307,9 +1078,20 @@ private constructor(
              * Returns an immutable instance of [FixedWindowWeek].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): FixedWindowWeek =
-                FixedWindowWeek(dayOfWeek, type, additionalProperties.toMutableMap())
+                FixedWindowWeek(
+                    checkRequired("type", type),
+                    dayOfWeek,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1319,8 +1101,8 @@ private constructor(
                 return@apply
             }
 
+            type().validate()
             dayOfWeek()
-            type()?.validate()
             validated = true
         }
 
@@ -1339,7 +1121,7 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (dayOfWeek.asKnown() == null) 0 else 1) + (type.asKnown()?.validity() ?: 0)
+            (type.asKnown()?.validity() ?: 0) + (if (dayOfWeek.asKnown() == null) 0 else 1)
 
         class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1466,17 +1248,17 @@ private constructor(
             }
 
             return other is FixedWindowWeek &&
-                dayOfWeek == other.dayOfWeek &&
                 type == other.type &&
+                dayOfWeek == other.dayOfWeek &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(dayOfWeek, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(type, dayOfWeek, additionalProperties) }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FixedWindowWeek{dayOfWeek=$dayOfWeek, type=$type, additionalProperties=$additionalProperties}"
+            "FixedWindowWeek{type=$type, dayOfWeek=$dayOfWeek, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1486,18 +1268,24 @@ private constructor(
     class FixedWindowMonth
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val dayOfMonth: JsonField<Long>,
         private val type: JsonField<Type>,
+        private val dayOfMonth: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("day_of_month")
             @ExcludeMissing
             dayOfMonth: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-        ) : this(dayOfMonth, type, mutableMapOf())
+        ) : this(type, dayOfMonth, mutableMapOf())
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
 
         /**
          * The day of the month to start from. Accepts values from 1 to 31, and will reset at the
@@ -1510,10 +1298,11 @@ private constructor(
         fun dayOfMonth(): Long? = dayOfMonth.getNullable("day_of_month")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
          */
-        fun type(): Type? = type.getNullable("type")
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
          * Returns the raw JSON value of [dayOfMonth].
@@ -1523,13 +1312,6 @@ private constructor(
         @JsonProperty("day_of_month")
         @ExcludeMissing
         fun _dayOfMonth(): JsonField<Long> = dayOfMonth
-
-        /**
-         * Returns the raw JSON value of [type].
-         *
-         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1545,22 +1327,40 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [FixedWindowMonth]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [FixedWindowMonth].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [FixedWindowMonth]. */
         class Builder internal constructor() {
 
+            private var type: JsonField<Type>? = null
             private var dayOfMonth: JsonField<Long> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(fixedWindowMonth: FixedWindowMonth) = apply {
-                dayOfMonth = fixedWindowMonth.dayOfMonth
                 type = fixedWindowMonth.type
+                dayOfMonth = fixedWindowMonth.dayOfMonth
                 additionalProperties = fixedWindowMonth.additionalProperties.toMutableMap()
             }
+
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
              * The day of the month to start from. Accepts values from 1 to 31, and will reset at
@@ -1577,17 +1377,6 @@ private constructor(
              * supported value.
              */
             fun dayOfMonth(dayOfMonth: JsonField<Long>) = apply { this.dayOfMonth = dayOfMonth }
-
-            fun type(type: Type) = type(JsonField.of(type))
-
-            /**
-             * Sets [Builder.type] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1612,9 +1401,20 @@ private constructor(
              * Returns an immutable instance of [FixedWindowMonth].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): FixedWindowMonth =
-                FixedWindowMonth(dayOfMonth, type, additionalProperties.toMutableMap())
+                FixedWindowMonth(
+                    checkRequired("type", type),
+                    dayOfMonth,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1624,8 +1424,8 @@ private constructor(
                 return@apply
             }
 
+            type().validate()
             dayOfMonth()
-            type()?.validate()
             validated = true
         }
 
@@ -1644,7 +1444,7 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (dayOfMonth.asKnown() == null) 0 else 1) + (type.asKnown()?.validity() ?: 0)
+            (type.asKnown()?.validity() ?: 0) + (if (dayOfMonth.asKnown() == null) 0 else 1)
 
         class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1771,17 +1571,17 @@ private constructor(
             }
 
             return other is FixedWindowMonth &&
-                dayOfMonth == other.dayOfMonth &&
                 type == other.type &&
+                dayOfMonth == other.dayOfMonth &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(dayOfMonth, type, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(type, dayOfMonth, additionalProperties) }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FixedWindowMonth{dayOfMonth=$dayOfMonth, type=$type, additionalProperties=$additionalProperties}"
+            "FixedWindowMonth{type=$type, dayOfMonth=$dayOfMonth, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1793,20 +1593,26 @@ private constructor(
     class FixedWindowYear
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val type: JsonField<Type>,
         private val dayOfMonth: JsonField<Long>,
         private val month: JsonField<Long>,
-        private val type: JsonField<Type>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("day_of_month")
             @ExcludeMissing
             dayOfMonth: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("month") @ExcludeMissing month: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-        ) : this(dayOfMonth, month, type, mutableMapOf())
+        ) : this(type, dayOfMonth, month, mutableMapOf())
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
 
         /**
          * The day of the month to start from. Defaults to the 1st of the month if not specified.
@@ -1826,10 +1632,11 @@ private constructor(
         fun month(): Long? = month.getNullable("month")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
          */
-        fun type(): Type? = type.getNullable("type")
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
         /**
          * Returns the raw JSON value of [dayOfMonth].
@@ -1847,13 +1654,6 @@ private constructor(
          */
         @JsonProperty("month") @ExcludeMissing fun _month(): JsonField<Long> = month
 
-        /**
-         * Returns the raw JSON value of [type].
-         *
-         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
-
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -1868,24 +1668,42 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [FixedWindowYear]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [FixedWindowYear].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [FixedWindowYear]. */
         class Builder internal constructor() {
 
+            private var type: JsonField<Type>? = null
             private var dayOfMonth: JsonField<Long> = JsonMissing.of()
             private var month: JsonField<Long> = JsonMissing.of()
-            private var type: JsonField<Type> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(fixedWindowYear: FixedWindowYear) = apply {
+                type = fixedWindowYear.type
                 dayOfMonth = fixedWindowYear.dayOfMonth
                 month = fixedWindowYear.month
-                type = fixedWindowYear.type
                 additionalProperties = fixedWindowYear.additionalProperties.toMutableMap()
             }
+
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /**
              * The day of the month to start from. Defaults to the 1st of the month if not
@@ -1917,17 +1735,6 @@ private constructor(
              */
             fun month(month: JsonField<Long>) = apply { this.month = month }
 
-            fun type(type: Type) = type(JsonField.of(type))
-
-            /**
-             * Sets [Builder.type] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
-             * method is primarily for setting the field to an undocumented or not yet supported
-             * value.
-             */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
-
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1951,9 +1758,21 @@ private constructor(
              * Returns an immutable instance of [FixedWindowYear].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): FixedWindowYear =
-                FixedWindowYear(dayOfMonth, month, type, additionalProperties.toMutableMap())
+                FixedWindowYear(
+                    checkRequired("type", type),
+                    dayOfMonth,
+                    month,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -1963,9 +1782,9 @@ private constructor(
                 return@apply
             }
 
+            type().validate()
             dayOfMonth()
             month()
-            type()?.validate()
             validated = true
         }
 
@@ -1984,9 +1803,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (dayOfMonth.asKnown() == null) 0 else 1) +
-                (if (month.asKnown() == null) 0 else 1) +
-                (type.asKnown()?.validity() ?: 0)
+            (type.asKnown()?.validity() ?: 0) +
+                (if (dayOfMonth.asKnown() == null) 0 else 1) +
+                (if (month.asKnown() == null) 0 else 1)
 
         class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -2113,19 +1932,19 @@ private constructor(
             }
 
             return other is FixedWindowYear &&
+                type == other.type &&
                 dayOfMonth == other.dayOfMonth &&
                 month == other.month &&
-                type == other.type &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(dayOfMonth, month, type, additionalProperties)
+            Objects.hash(type, dayOfMonth, month, additionalProperties)
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FixedWindowYear{dayOfMonth=$dayOfMonth, month=$month, type=$type, additionalProperties=$additionalProperties}"
+            "FixedWindowYear{type=$type, dayOfMonth=$dayOfMonth, month=$month, additionalProperties=$additionalProperties}"
     }
 }
