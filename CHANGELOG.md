@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.109.0 (2025-11-10)
+
+Full Changelog: [v0.108.0...v0.109.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.108.0...v0.109.0)
+
+### Features
+
+* **api:** add payment_details ([0ca7fa1](https://github.com/lithic-com/lithic-kotlin/commit/0ca7fa1118b396055c938891b236e341d75d557b))
+* **api:** deprecate auth rule apply endpoint and fix several schemas ([17a981a](https://github.com/lithic-com/lithic-kotlin/commit/17a981a4f1e379a54a81624dd809d01c15e11d79))
+* **api:** new fields in Statements APIs ([d15df25](https://github.com/lithic-com/lithic-kotlin/commit/d15df25c8970d70cf06a00369cac1d1db7fc46da))
+
+
+### Bug Fixes
+
+* **api:** fix oneOf -&gt; anyOf in account holder update ([0ca7fa1](https://github.com/lithic-com/lithic-kotlin/commit/0ca7fa1118b396055c938891b236e341d75d557b))
+* **api:** fixing spec for Tokenizations and Enhanced data ([d15df25](https://github.com/lithic-com/lithic-kotlin/commit/d15df25c8970d70cf06a00369cac1d1db7fc46da))
+
+
+### Chores
+
+* **api:** adds support for new ACH_RECEIPT_RELEASED event ([215adab](https://github.com/lithic-com/lithic-kotlin/commit/215adab2ea06884f08b94e5317dc28c4a2c2e0bc))
+
+
+### Documentation
+
+* **client:** update readme timeout snippet ([25c46e1](https://github.com/lithic-com/lithic-kotlin/commit/25c46e1dc527d3da9b7bbec4c36b65faf9ba29c6))
+
 ## 0.108.0 (2025-10-23)
 
 Full Changelog: [v0.107.0...v0.108.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.107.0...v0.108.0)
