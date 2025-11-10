@@ -26,13 +26,13 @@ private constructor(
     private val accountToken: JsonField<String>,
     private val cardToken: JsonField<String>,
     private val createdAt: JsonField<OffsetDateTime>,
-    private val deviceId: JsonField<String>,
     private val dpan: JsonField<String>,
     private val status: JsonField<Status>,
     private val tokenRequestorName: JsonField<TokenRequestorName>,
     private val tokenUniqueReference: JsonField<String>,
     private val tokenizationChannel: JsonField<TokenizationChannel>,
     private val updatedAt: JsonField<OffsetDateTime>,
+    private val deviceId: JsonField<String>,
     private val digitalCardArtToken: JsonField<String>,
     private val events: JsonField<List<TokenizationEvent>>,
     private val paymentAccountReferenceId: JsonField<String>,
@@ -49,7 +49,6 @@ private constructor(
         @JsonProperty("created_at")
         @ExcludeMissing
         createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("device_id") @ExcludeMissing deviceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dpan") @ExcludeMissing dpan: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("token_requestor_name")
@@ -64,6 +63,7 @@ private constructor(
         @JsonProperty("updated_at")
         @ExcludeMissing
         updatedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("device_id") @ExcludeMissing deviceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("digital_card_art_token")
         @ExcludeMissing
         digitalCardArtToken: JsonField<String> = JsonMissing.of(),
@@ -78,13 +78,13 @@ private constructor(
         accountToken,
         cardToken,
         createdAt,
-        deviceId,
         dpan,
         status,
         tokenRequestorName,
         tokenUniqueReference,
         tokenizationChannel,
         updatedAt,
+        deviceId,
         digitalCardArtToken,
         events,
         paymentAccountReferenceId,
@@ -124,14 +124,6 @@ private constructor(
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
-     * The device identifier associated with the tokenization.
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun deviceId(): String? = deviceId.getNullable("device_id")
-
-    /**
      * The dynamic pan assigned to the token by the network.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -148,7 +140,9 @@ private constructor(
     fun status(): Status = status.getRequired("status")
 
     /**
-     * The entity that requested the tokenization. Represents a Digital Wallet or merchant.
+     * The entity that requested the tokenization. For digital wallets, this will be one of the
+     * defined wallet types. For merchant tokenizations, this will be a free-form merchant name
+     * string.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -182,7 +176,15 @@ private constructor(
     fun updatedAt(): OffsetDateTime = updatedAt.getRequired("updated_at")
 
     /**
-     * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+     * The device identifier associated with the tokenization.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun deviceId(): String? = deviceId.getNullable("device_id")
+
+    /**
+     * Specifies the digital card art displayed in the user's digital wallet after tokenization.
      * This will be null if the tokenization was created without an associated digital card art. See
      * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
      *
@@ -241,13 +243,6 @@ private constructor(
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
-     * Returns the raw JSON value of [deviceId].
-     *
-     * Unlike [deviceId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("device_id") @ExcludeMissing fun _deviceId(): JsonField<String> = deviceId
-
-    /**
      * Returns the raw JSON value of [dpan].
      *
      * Unlike [dpan], this method doesn't throw if the JSON field has an unexpected type.
@@ -301,6 +296,13 @@ private constructor(
     fun _updatedAt(): JsonField<OffsetDateTime> = updatedAt
 
     /**
+     * Returns the raw JSON value of [deviceId].
+     *
+     * Unlike [deviceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("device_id") @ExcludeMissing fun _deviceId(): JsonField<String> = deviceId
+
+    /**
      * Returns the raw JSON value of [digitalCardArtToken].
      *
      * Unlike [digitalCardArtToken], this method doesn't throw if the JSON field has an unexpected
@@ -352,7 +354,6 @@ private constructor(
          * .accountToken()
          * .cardToken()
          * .createdAt()
-         * .deviceId()
          * .dpan()
          * .status()
          * .tokenRequestorName()
@@ -371,13 +372,13 @@ private constructor(
         private var accountToken: JsonField<String>? = null
         private var cardToken: JsonField<String>? = null
         private var createdAt: JsonField<OffsetDateTime>? = null
-        private var deviceId: JsonField<String>? = null
         private var dpan: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var tokenRequestorName: JsonField<TokenRequestorName>? = null
         private var tokenUniqueReference: JsonField<String>? = null
         private var tokenizationChannel: JsonField<TokenizationChannel>? = null
         private var updatedAt: JsonField<OffsetDateTime>? = null
+        private var deviceId: JsonField<String> = JsonMissing.of()
         private var digitalCardArtToken: JsonField<String> = JsonMissing.of()
         private var events: JsonField<MutableList<TokenizationEvent>>? = null
         private var paymentAccountReferenceId: JsonField<String> = JsonMissing.of()
@@ -388,13 +389,13 @@ private constructor(
             accountToken = tokenization.accountToken
             cardToken = tokenization.cardToken
             createdAt = tokenization.createdAt
-            deviceId = tokenization.deviceId
             dpan = tokenization.dpan
             status = tokenization.status
             tokenRequestorName = tokenization.tokenRequestorName
             tokenUniqueReference = tokenization.tokenUniqueReference
             tokenizationChannel = tokenization.tokenizationChannel
             updatedAt = tokenization.updatedAt
+            deviceId = tokenization.deviceId
             digitalCardArtToken = tokenization.digitalCardArtToken
             events = tokenization.events.map { it.toMutableList() }
             paymentAccountReferenceId = tokenization.paymentAccountReferenceId
@@ -450,17 +451,6 @@ private constructor(
          */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        /** The device identifier associated with the tokenization. */
-        fun deviceId(deviceId: String?) = deviceId(JsonField.ofNullable(deviceId))
-
-        /**
-         * Sets [Builder.deviceId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.deviceId] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun deviceId(deviceId: JsonField<String>) = apply { this.deviceId = deviceId }
-
         /** The dynamic pan assigned to the token by the network. */
         fun dpan(dpan: String?) = dpan(JsonField.ofNullable(dpan))
 
@@ -483,7 +473,11 @@ private constructor(
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
-        /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
+        /**
+         * The entity that requested the tokenization. For digital wallets, this will be one of the
+         * defined wallet types. For merchant tokenizations, this will be a free-form merchant name
+         * string.
+         */
         fun tokenRequestorName(tokenRequestorName: TokenRequestorName) =
             tokenRequestorName(JsonField.of(tokenRequestorName))
 
@@ -497,6 +491,15 @@ private constructor(
         fun tokenRequestorName(tokenRequestorName: JsonField<TokenRequestorName>) = apply {
             this.tokenRequestorName = tokenRequestorName
         }
+
+        /**
+         * Sets [tokenRequestorName] to an arbitrary [String].
+         *
+         * You should usually call [tokenRequestorName] with a well-typed [TokenRequestorName]
+         * constant instead. This method is primarily for setting the field to an undocumented or
+         * not yet supported value.
+         */
+        fun tokenRequestorName(value: String) = tokenRequestorName(TokenRequestorName.of(value))
 
         /** The network's unique reference for the tokenization. */
         fun tokenUniqueReference(tokenUniqueReference: String) =
@@ -540,14 +543,25 @@ private constructor(
          */
         fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
 
+        /** The device identifier associated with the tokenization. */
+        fun deviceId(deviceId: String?) = deviceId(JsonField.ofNullable(deviceId))
+
         /**
-         * Specifies the digital card art displayed in the user’s digital wallet after tokenization.
+         * Sets [Builder.deviceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.deviceId] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun deviceId(deviceId: JsonField<String>) = apply { this.deviceId = deviceId }
+
+        /**
+         * Specifies the digital card art displayed in the user's digital wallet after tokenization.
          * This will be null if the tokenization was created without an associated digital card art.
          * See
          * [Flexible Card Art Guide](https://docs.lithic.com/docs/about-digital-wallets#flexible-card-art).
          */
-        fun digitalCardArtToken(digitalCardArtToken: String) =
-            digitalCardArtToken(JsonField.of(digitalCardArtToken))
+        fun digitalCardArtToken(digitalCardArtToken: String?) =
+            digitalCardArtToken(JsonField.ofNullable(digitalCardArtToken))
 
         /**
          * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
@@ -631,7 +645,6 @@ private constructor(
          * .accountToken()
          * .cardToken()
          * .createdAt()
-         * .deviceId()
          * .dpan()
          * .status()
          * .tokenRequestorName()
@@ -648,13 +661,13 @@ private constructor(
                 checkRequired("accountToken", accountToken),
                 checkRequired("cardToken", cardToken),
                 checkRequired("createdAt", createdAt),
-                checkRequired("deviceId", deviceId),
                 checkRequired("dpan", dpan),
                 checkRequired("status", status),
                 checkRequired("tokenRequestorName", tokenRequestorName),
                 checkRequired("tokenUniqueReference", tokenUniqueReference),
                 checkRequired("tokenizationChannel", tokenizationChannel),
                 checkRequired("updatedAt", updatedAt),
+                deviceId,
                 digitalCardArtToken,
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
                 paymentAccountReferenceId,
@@ -673,13 +686,13 @@ private constructor(
         accountToken()
         cardToken()
         createdAt()
-        deviceId()
         dpan()
         status().validate()
-        tokenRequestorName().validate()
+        tokenRequestorName()
         tokenUniqueReference()
         tokenizationChannel().validate()
         updatedAt()
+        deviceId()
         digitalCardArtToken()
         events()?.forEach { it.validate() }
         paymentAccountReferenceId()
@@ -704,13 +717,13 @@ private constructor(
             (if (accountToken.asKnown() == null) 0 else 1) +
             (if (cardToken.asKnown() == null) 0 else 1) +
             (if (createdAt.asKnown() == null) 0 else 1) +
-            (if (deviceId.asKnown() == null) 0 else 1) +
             (if (dpan.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
-            (tokenRequestorName.asKnown()?.validity() ?: 0) +
+            (if (tokenRequestorName.asKnown() == null) 0 else 1) +
             (if (tokenUniqueReference.asKnown() == null) 0 else 1) +
             (tokenizationChannel.asKnown()?.validity() ?: 0) +
             (if (updatedAt.asKnown() == null) 0 else 1) +
+            (if (deviceId.asKnown() == null) 0 else 1) +
             (if (digitalCardArtToken.asKnown() == null) 0 else 1) +
             (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (paymentAccountReferenceId.asKnown() == null) 0 else 1)
@@ -871,7 +884,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** The entity that requested the tokenization. Represents a Digital Wallet or merchant. */
+    /** Digital wallet type */
     class TokenRequestorName
     @JsonCreator
     private constructor(private val value: JsonField<String>) : Enum {
@@ -900,6 +913,8 @@ private constructor(
 
             val GARMIN_PAY = of("GARMIN_PAY")
 
+            val GOOGLE_PAY = of("GOOGLE_PAY")
+
             val MICROSOFT_PAY = of("MICROSOFT_PAY")
 
             val NETFLIX = of("NETFLIX")
@@ -921,6 +936,7 @@ private constructor(
             FACEBOOK,
             FITBIT_PAY,
             GARMIN_PAY,
+            GOOGLE_PAY,
             MICROSOFT_PAY,
             NETFLIX,
             SAMSUNG_PAY,
@@ -944,6 +960,7 @@ private constructor(
             FACEBOOK,
             FITBIT_PAY,
             GARMIN_PAY,
+            GOOGLE_PAY,
             MICROSOFT_PAY,
             NETFLIX,
             SAMSUNG_PAY,
@@ -971,6 +988,7 @@ private constructor(
                 FACEBOOK -> Value.FACEBOOK
                 FITBIT_PAY -> Value.FITBIT_PAY
                 GARMIN_PAY -> Value.GARMIN_PAY
+                GOOGLE_PAY -> Value.GOOGLE_PAY
                 MICROSOFT_PAY -> Value.MICROSOFT_PAY
                 NETFLIX -> Value.NETFLIX
                 SAMSUNG_PAY -> Value.SAMSUNG_PAY
@@ -996,6 +1014,7 @@ private constructor(
                 FACEBOOK -> Known.FACEBOOK
                 FITBIT_PAY -> Known.FITBIT_PAY
                 GARMIN_PAY -> Known.GARMIN_PAY
+                GOOGLE_PAY -> Known.GOOGLE_PAY
                 MICROSOFT_PAY -> Known.MICROSOFT_PAY
                 NETFLIX -> Known.NETFLIX
                 SAMSUNG_PAY -> Known.SAMSUNG_PAY
@@ -1797,13 +1816,13 @@ private constructor(
             accountToken == other.accountToken &&
             cardToken == other.cardToken &&
             createdAt == other.createdAt &&
-            deviceId == other.deviceId &&
             dpan == other.dpan &&
             status == other.status &&
             tokenRequestorName == other.tokenRequestorName &&
             tokenUniqueReference == other.tokenUniqueReference &&
             tokenizationChannel == other.tokenizationChannel &&
             updatedAt == other.updatedAt &&
+            deviceId == other.deviceId &&
             digitalCardArtToken == other.digitalCardArtToken &&
             events == other.events &&
             paymentAccountReferenceId == other.paymentAccountReferenceId &&
@@ -1816,13 +1835,13 @@ private constructor(
             accountToken,
             cardToken,
             createdAt,
-            deviceId,
             dpan,
             status,
             tokenRequestorName,
             tokenUniqueReference,
             tokenizationChannel,
             updatedAt,
+            deviceId,
             digitalCardArtToken,
             events,
             paymentAccountReferenceId,
@@ -1833,5 +1852,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, deviceId=$deviceId, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, digitalCardArtToken=$digitalCardArtToken, events=$events, paymentAccountReferenceId=$paymentAccountReferenceId, additionalProperties=$additionalProperties}"
+        "Tokenization{token=$token, accountToken=$accountToken, cardToken=$cardToken, createdAt=$createdAt, dpan=$dpan, status=$status, tokenRequestorName=$tokenRequestorName, tokenUniqueReference=$tokenUniqueReference, tokenizationChannel=$tokenizationChannel, updatedAt=$updatedAt, deviceId=$deviceId, digitalCardArtToken=$digitalCardArtToken, events=$events, paymentAccountReferenceId=$paymentAccountReferenceId, additionalProperties=$additionalProperties}"
 }
