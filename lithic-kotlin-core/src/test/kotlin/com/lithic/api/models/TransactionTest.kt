@@ -54,9 +54,8 @@ internal class TransactionTest {
                 .cardToken("19c22c47-7a75-43ee-9891-595419830f7e")
                 .cardholderAuthentication(
                     Transaction.CardholderAuthentication.builder()
-                        .threeDSVersion("2")
-                        .acquirerExemption(
-                            Transaction.CardholderAuthentication.AcquirerExemption.NONE
+                        .authenticationMethod(
+                            Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
                         )
                         .authenticationResult(
                             Transaction.CardholderAuthentication.AuthenticationResult.SUCCESS
@@ -68,15 +67,6 @@ internal class TransactionTest {
                             Transaction.CardholderAuthentication.LiabilityShift._3DS_AUTHENTICATED
                         )
                         .threeDSAuthenticationToken("a6e372d0-b40a-43eb-b0d1-4e1aebef5875")
-                        .verificationAttempted(
-                            Transaction.CardholderAuthentication.VerificationAttempted.NONE
-                        )
-                        .verificationResult(
-                            Transaction.CardholderAuthentication.VerificationResult.FRICTIONLESS
-                        )
-                        .authenticationMethod(
-                            Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
-                        )
                         .build()
                 )
                 .created(OffsetDateTime.parse("2023-09-26T21:14:28.637Z"))
@@ -287,8 +277,9 @@ internal class TransactionTest {
         assertThat(transaction.cardholderAuthentication())
             .isEqualTo(
                 Transaction.CardholderAuthentication.builder()
-                    .threeDSVersion("2")
-                    .acquirerExemption(Transaction.CardholderAuthentication.AcquirerExemption.NONE)
+                    .authenticationMethod(
+                        Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
+                    )
                     .authenticationResult(
                         Transaction.CardholderAuthentication.AuthenticationResult.SUCCESS
                     )
@@ -299,15 +290,6 @@ internal class TransactionTest {
                         Transaction.CardholderAuthentication.LiabilityShift._3DS_AUTHENTICATED
                     )
                     .threeDSAuthenticationToken("a6e372d0-b40a-43eb-b0d1-4e1aebef5875")
-                    .verificationAttempted(
-                        Transaction.CardholderAuthentication.VerificationAttempted.NONE
-                    )
-                    .verificationResult(
-                        Transaction.CardholderAuthentication.VerificationResult.FRICTIONLESS
-                    )
-                    .authenticationMethod(
-                        Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
-                    )
                     .build()
             )
         assertThat(transaction.created())
@@ -523,9 +505,8 @@ internal class TransactionTest {
                 .cardToken("19c22c47-7a75-43ee-9891-595419830f7e")
                 .cardholderAuthentication(
                     Transaction.CardholderAuthentication.builder()
-                        .threeDSVersion("2")
-                        .acquirerExemption(
-                            Transaction.CardholderAuthentication.AcquirerExemption.NONE
+                        .authenticationMethod(
+                            Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
                         )
                         .authenticationResult(
                             Transaction.CardholderAuthentication.AuthenticationResult.SUCCESS
@@ -537,15 +518,6 @@ internal class TransactionTest {
                             Transaction.CardholderAuthentication.LiabilityShift._3DS_AUTHENTICATED
                         )
                         .threeDSAuthenticationToken("a6e372d0-b40a-43eb-b0d1-4e1aebef5875")
-                        .verificationAttempted(
-                            Transaction.CardholderAuthentication.VerificationAttempted.NONE
-                        )
-                        .verificationResult(
-                            Transaction.CardholderAuthentication.VerificationResult.FRICTIONLESS
-                        )
-                        .authenticationMethod(
-                            Transaction.CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
-                        )
                         .build()
                 )
                 .created(OffsetDateTime.parse("2023-09-26T21:14:28.637Z"))

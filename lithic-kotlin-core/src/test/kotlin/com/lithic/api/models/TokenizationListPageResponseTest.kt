@@ -35,6 +35,26 @@ internal class TokenizationListPageResponseTest {
                                 .result(
                                     Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
                                 )
+                                .addRuleResult(
+                                    Tokenization.TokenizationEvent.TokenizationRuleResult.builder()
+                                        .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                                        .explanation("explanation")
+                                        .name("name")
+                                        .result(
+                                            Tokenization.TokenizationEvent.TokenizationRuleResult
+                                                .Result
+                                                .APPROVED
+                                        )
+                                        .build()
+                                )
+                                .addTokenizationDeclineReason(
+                                    Tokenization.TokenizationEvent.TokenizationDeclineReason
+                                        .ACCOUNT_SCORE_1
+                                )
+                                .addTokenizationTfaReason(
+                                    Tokenization.TokenizationEvent.TokenizationTfaReason
+                                        .WALLET_RECOMMENDED_TFA
+                                )
                                 .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                                 .build()
                         )
@@ -65,6 +85,25 @@ internal class TokenizationListPageResponseTest {
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .result(
                                 Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
+                            )
+                            .addRuleResult(
+                                Tokenization.TokenizationEvent.TokenizationRuleResult.builder()
+                                    .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                                    .explanation("explanation")
+                                    .name("name")
+                                    .result(
+                                        Tokenization.TokenizationEvent.TokenizationRuleResult.Result
+                                            .APPROVED
+                                    )
+                                    .build()
+                            )
+                            .addTokenizationDeclineReason(
+                                Tokenization.TokenizationEvent.TokenizationDeclineReason
+                                    .ACCOUNT_SCORE_1
+                            )
+                            .addTokenizationTfaReason(
+                                Tokenization.TokenizationEvent.TokenizationTfaReason
+                                    .WALLET_RECOMMENDED_TFA
                             )
                             .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                             .build()
@@ -100,6 +139,26 @@ internal class TokenizationListPageResponseTest {
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .result(
                                     Tokenization.TokenizationEvent.TokenizationEventOutcome.APPROVED
+                                )
+                                .addRuleResult(
+                                    Tokenization.TokenizationEvent.TokenizationRuleResult.builder()
+                                        .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                                        .explanation("explanation")
+                                        .name("name")
+                                        .result(
+                                            Tokenization.TokenizationEvent.TokenizationRuleResult
+                                                .Result
+                                                .APPROVED
+                                        )
+                                        .build()
+                                )
+                                .addTokenizationDeclineReason(
+                                    Tokenization.TokenizationEvent.TokenizationDeclineReason
+                                        .ACCOUNT_SCORE_1
+                                )
+                                .addTokenizationTfaReason(
+                                    Tokenization.TokenizationEvent.TokenizationTfaReason
+                                        .WALLET_RECOMMENDED_TFA
                                 )
                                 .type(Tokenization.TokenizationEvent.Type.TOKENIZATION_2_FA)
                                 .build()
