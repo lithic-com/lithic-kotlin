@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.110.0 (2025-11-13)
+
+Full Changelog: [v0.109.0...v0.110.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.109.0...v0.110.0)
+
+### Features
+
+* **api:** re-add rules metadata to tokenization events ([c5306e4](https://github.com/lithic-com/lithic-kotlin/commit/c5306e4e06d88b9c90dda8fe8b6f010ac06b2ead))
+* **api:** remove deprecated fields from Cardholder Authentication object ([c5306e4](https://github.com/lithic-com/lithic-kotlin/commit/c5306e4e06d88b9c90dda8fe8b6f010ac06b2ead))
+
+
+### Bug Fixes
+
+* **api:** adjust Auth Rules spec for better SDK structure ([c5306e4](https://github.com/lithic-com/lithic-kotlin/commit/c5306e4e06d88b9c90dda8fe8b6f010ac06b2ead))
+* **client:** multi-value header serialization ([dd7cc8a](https://github.com/lithic-com/lithic-kotlin/commit/dd7cc8ae7580f7033010600736fcae09b533dabc))
+
 ## 0.109.0 (2025-11-10)
 
 Full Changelog: [v0.108.0...v0.109.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.108.0...v0.109.0)
