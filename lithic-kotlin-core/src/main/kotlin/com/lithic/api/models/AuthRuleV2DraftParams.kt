@@ -152,6 +152,23 @@ private constructor(
                 body.parameters(conditionalAuthorizationAction)
             }
 
+        /**
+         * Alias for calling [parameters] with
+         * `Parameters.ofConditionalAchAction(conditionalAchAction)`.
+         */
+        fun parameters(conditionalAchAction: ConditionalAchActionParameters) = apply {
+            body.parameters(conditionalAchAction)
+        }
+
+        /**
+         * Alias for calling [parameters] with
+         * `Parameters.ofConditionalTokenizationAction(conditionalTokenizationAction)`.
+         */
+        fun parameters(conditionalTokenizationAction: ConditionalTokenizationActionParameters) =
+            apply {
+                body.parameters(conditionalTokenizationAction)
+            }
+
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
@@ -405,6 +422,22 @@ private constructor(
                     Parameters.ofConditionalAuthorizationAction(conditionalAuthorizationAction)
                 )
 
+            /**
+             * Alias for calling [parameters] with
+             * `Parameters.ofConditionalAchAction(conditionalAchAction)`.
+             */
+            fun parameters(conditionalAchAction: ConditionalAchActionParameters) =
+                parameters(Parameters.ofConditionalAchAction(conditionalAchAction))
+
+            /**
+             * Alias for calling [parameters] with
+             * `Parameters.ofConditionalTokenizationAction(conditionalTokenizationAction)`.
+             */
+            fun parameters(conditionalTokenizationAction: ConditionalTokenizationActionParameters) =
+                parameters(
+                    Parameters.ofConditionalTokenizationAction(conditionalTokenizationAction)
+                )
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -488,6 +521,8 @@ private constructor(
         private val conditional3dsAction: Conditional3dsActionParameters? = null,
         private val conditionalAuthorizationAction: ConditionalAuthorizationActionParameters? =
             null,
+        private val conditionalAchAction: ConditionalAchActionParameters? = null,
+        private val conditionalTokenizationAction: ConditionalTokenizationActionParameters? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -502,6 +537,11 @@ private constructor(
         fun conditionalAuthorizationAction(): ConditionalAuthorizationActionParameters? =
             conditionalAuthorizationAction
 
+        fun conditionalAchAction(): ConditionalAchActionParameters? = conditionalAchAction
+
+        fun conditionalTokenizationAction(): ConditionalTokenizationActionParameters? =
+            conditionalTokenizationAction
+
         fun isConditionalBlock(): Boolean = conditionalBlock != null
 
         fun isVelocityLimitParams(): Boolean = velocityLimitParams != null
@@ -511,6 +551,10 @@ private constructor(
         fun isConditional3dsAction(): Boolean = conditional3dsAction != null
 
         fun isConditionalAuthorizationAction(): Boolean = conditionalAuthorizationAction != null
+
+        fun isConditionalAchAction(): Boolean = conditionalAchAction != null
+
+        fun isConditionalTokenizationAction(): Boolean = conditionalTokenizationAction != null
 
         fun asConditionalBlock(): ConditionalBlockParameters =
             conditionalBlock.getOrThrow("conditionalBlock")
@@ -526,6 +570,12 @@ private constructor(
         fun asConditionalAuthorizationAction(): ConditionalAuthorizationActionParameters =
             conditionalAuthorizationAction.getOrThrow("conditionalAuthorizationAction")
 
+        fun asConditionalAchAction(): ConditionalAchActionParameters =
+            conditionalAchAction.getOrThrow("conditionalAchAction")
+
+        fun asConditionalTokenizationAction(): ConditionalTokenizationActionParameters =
+            conditionalTokenizationAction.getOrThrow("conditionalTokenizationAction")
+
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T =
@@ -537,6 +587,10 @@ private constructor(
                     visitor.visitConditional3dsAction(conditional3dsAction)
                 conditionalAuthorizationAction != null ->
                     visitor.visitConditionalAuthorizationAction(conditionalAuthorizationAction)
+                conditionalAchAction != null ->
+                    visitor.visitConditionalAchAction(conditionalAchAction)
+                conditionalTokenizationAction != null ->
+                    visitor.visitConditionalTokenizationAction(conditionalTokenizationAction)
                 else -> visitor.unknown(_json)
             }
 
@@ -575,6 +629,18 @@ private constructor(
                         conditionalAuthorizationAction: ConditionalAuthorizationActionParameters
                     ) {
                         conditionalAuthorizationAction.validate()
+                    }
+
+                    override fun visitConditionalAchAction(
+                        conditionalAchAction: ConditionalAchActionParameters
+                    ) {
+                        conditionalAchAction.validate()
+                    }
+
+                    override fun visitConditionalTokenizationAction(
+                        conditionalTokenizationAction: ConditionalTokenizationActionParameters
+                    ) {
+                        conditionalTokenizationAction.validate()
                     }
                 }
             )
@@ -617,6 +683,14 @@ private constructor(
                         conditionalAuthorizationAction: ConditionalAuthorizationActionParameters
                     ) = conditionalAuthorizationAction.validity()
 
+                    override fun visitConditionalAchAction(
+                        conditionalAchAction: ConditionalAchActionParameters
+                    ) = conditionalAchAction.validity()
+
+                    override fun visitConditionalTokenizationAction(
+                        conditionalTokenizationAction: ConditionalTokenizationActionParameters
+                    ) = conditionalTokenizationAction.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -631,7 +705,9 @@ private constructor(
                 velocityLimitParams == other.velocityLimitParams &&
                 merchantLock == other.merchantLock &&
                 conditional3dsAction == other.conditional3dsAction &&
-                conditionalAuthorizationAction == other.conditionalAuthorizationAction
+                conditionalAuthorizationAction == other.conditionalAuthorizationAction &&
+                conditionalAchAction == other.conditionalAchAction &&
+                conditionalTokenizationAction == other.conditionalTokenizationAction
         }
 
         override fun hashCode(): Int =
@@ -641,6 +717,8 @@ private constructor(
                 merchantLock,
                 conditional3dsAction,
                 conditionalAuthorizationAction,
+                conditionalAchAction,
+                conditionalTokenizationAction,
             )
 
         override fun toString(): String =
@@ -653,6 +731,10 @@ private constructor(
                     "Parameters{conditional3dsAction=$conditional3dsAction}"
                 conditionalAuthorizationAction != null ->
                     "Parameters{conditionalAuthorizationAction=$conditionalAuthorizationAction}"
+                conditionalAchAction != null ->
+                    "Parameters{conditionalAchAction=$conditionalAchAction}"
+                conditionalTokenizationAction != null ->
+                    "Parameters{conditionalTokenizationAction=$conditionalTokenizationAction}"
                 _json != null -> "Parameters{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Parameters")
             }
@@ -674,6 +756,13 @@ private constructor(
             fun ofConditionalAuthorizationAction(
                 conditionalAuthorizationAction: ConditionalAuthorizationActionParameters
             ) = Parameters(conditionalAuthorizationAction = conditionalAuthorizationAction)
+
+            fun ofConditionalAchAction(conditionalAchAction: ConditionalAchActionParameters) =
+                Parameters(conditionalAchAction = conditionalAchAction)
+
+            fun ofConditionalTokenizationAction(
+                conditionalTokenizationAction: ConditionalTokenizationActionParameters
+            ) = Parameters(conditionalTokenizationAction = conditionalTokenizationAction)
         }
 
         /**
@@ -691,6 +780,12 @@ private constructor(
 
             fun visitConditionalAuthorizationAction(
                 conditionalAuthorizationAction: ConditionalAuthorizationActionParameters
+            ): T
+
+            fun visitConditionalAchAction(conditionalAchAction: ConditionalAchActionParameters): T
+
+            fun visitConditionalTokenizationAction(
+                conditionalTokenizationAction: ConditionalTokenizationActionParameters
             ): T
 
             /**
@@ -732,6 +827,15 @@ private constructor(
                                 ?.let {
                                     Parameters(conditionalAuthorizationAction = it, _json = json)
                                 },
+                            tryDeserialize(node, jacksonTypeRef<ConditionalAchActionParameters>())
+                                ?.let { Parameters(conditionalAchAction = it, _json = json) },
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<ConditionalTokenizationActionParameters>(),
+                                )
+                                ?.let {
+                                    Parameters(conditionalTokenizationAction = it, _json = json)
+                                },
                         )
                         .filterNotNull()
                         .allMaxBy { it.validity() }
@@ -765,6 +869,10 @@ private constructor(
                         generator.writeObject(value.conditional3dsAction)
                     value.conditionalAuthorizationAction != null ->
                         generator.writeObject(value.conditionalAuthorizationAction)
+                    value.conditionalAchAction != null ->
+                        generator.writeObject(value.conditionalAchAction)
+                    value.conditionalTokenizationAction != null ->
+                        generator.writeObject(value.conditionalTokenizationAction)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Parameters")
                 }

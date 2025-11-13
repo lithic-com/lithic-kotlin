@@ -43,6 +43,8 @@ import com.lithic.api.services.async.DigitalCardArtServiceAsync
 import com.lithic.api.services.async.DigitalCardArtServiceAsyncImpl
 import com.lithic.api.services.async.DisputeServiceAsync
 import com.lithic.api.services.async.DisputeServiceAsyncImpl
+import com.lithic.api.services.async.DisputesV2ServiceAsync
+import com.lithic.api.services.async.DisputesV2ServiceAsyncImpl
 import com.lithic.api.services.async.EventServiceAsync
 import com.lithic.api.services.async.EventServiceAsyncImpl
 import com.lithic.api.services.async.ExternalBankAccountServiceAsync
@@ -129,6 +131,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
     private val disputes: DisputeServiceAsync by lazy {
         DisputeServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val disputesV2: DisputesV2ServiceAsync by lazy {
+        DisputesV2ServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val events: EventServiceAsync by lazy {
@@ -235,6 +241,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
     override fun disputes(): DisputeServiceAsync = disputes
 
+    override fun disputesV2(): DisputesV2ServiceAsync = disputesV2
+
     override fun events(): EventServiceAsync = events
 
     override fun transfers(): TransferServiceAsync = transfers
@@ -327,6 +335,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
         private val disputes: DisputeServiceAsync.WithRawResponse by lazy {
             DisputeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val disputesV2: DisputesV2ServiceAsync.WithRawResponse by lazy {
+            DisputesV2ServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val events: EventServiceAsync.WithRawResponse by lazy {
@@ -434,6 +446,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             aggregateBalances
 
         override fun disputes(): DisputeServiceAsync.WithRawResponse = disputes
+
+        override fun disputesV2(): DisputesV2ServiceAsync.WithRawResponse = disputesV2
 
         override fun events(): EventServiceAsync.WithRawResponse = events
 

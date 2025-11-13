@@ -16,11 +16,10 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
+import com.lithic.api.models.Dispute
 import com.lithic.api.models.DisputeCreateParams
-import com.lithic.api.models.DisputeCreateResponse
 import com.lithic.api.models.DisputeDeleteEvidenceParams
 import com.lithic.api.models.DisputeDeleteParams
-import com.lithic.api.models.DisputeDeleteResponse
 import com.lithic.api.models.DisputeEvidence
 import com.lithic.api.models.DisputeInitiateEvidenceUploadParams
 import com.lithic.api.models.DisputeListEvidencesPageAsync
@@ -31,9 +30,7 @@ import com.lithic.api.models.DisputeListPageResponse
 import com.lithic.api.models.DisputeListParams
 import com.lithic.api.models.DisputeRetrieveEvidenceParams
 import com.lithic.api.models.DisputeRetrieveParams
-import com.lithic.api.models.DisputeRetrieveResponse
 import com.lithic.api.models.DisputeUpdateParams
-import com.lithic.api.models.DisputeUpdateResponse
 
 class DisputeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DisputeServiceAsync {
@@ -50,21 +47,21 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override suspend fun create(
         params: DisputeCreateParams,
         requestOptions: RequestOptions,
-    ): DisputeCreateResponse =
+    ): Dispute =
         // post /v1/disputes
         withRawResponse().create(params, requestOptions).parse()
 
     override suspend fun retrieve(
         params: DisputeRetrieveParams,
         requestOptions: RequestOptions,
-    ): DisputeRetrieveResponse =
+    ): Dispute =
         // get /v1/disputes/{dispute_token}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override suspend fun update(
         params: DisputeUpdateParams,
         requestOptions: RequestOptions,
-    ): DisputeUpdateResponse =
+    ): Dispute =
         // patch /v1/disputes/{dispute_token}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -78,7 +75,7 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override suspend fun delete(
         params: DisputeDeleteParams,
         requestOptions: RequestOptions,
-    ): DisputeDeleteResponse =
+    ): Dispute =
         // delete /v1/disputes/{dispute_token}
         withRawResponse().delete(params, requestOptions).parse()
 
@@ -123,13 +120,12 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
-        private val createHandler: Handler<DisputeCreateResponse> =
-            jsonHandler<DisputeCreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<Dispute> = jsonHandler<Dispute>(clientOptions.jsonMapper)
 
         override suspend fun create(
             params: DisputeCreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DisputeCreateResponse> {
+        ): HttpResponseFor<Dispute> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -151,13 +147,13 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val retrieveHandler: Handler<DisputeRetrieveResponse> =
-            jsonHandler<DisputeRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<Dispute> =
+            jsonHandler<Dispute>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: DisputeRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DisputeRetrieveResponse> {
+        ): HttpResponseFor<Dispute> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("disputeToken", params.disputeToken())
@@ -181,13 +177,12 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val updateHandler: Handler<DisputeUpdateResponse> =
-            jsonHandler<DisputeUpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<Dispute> = jsonHandler<Dispute>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: DisputeUpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DisputeUpdateResponse> {
+        ): HttpResponseFor<Dispute> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("disputeToken", params.disputeToken())
@@ -246,13 +241,12 @@ class DisputeServiceAsyncImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val deleteHandler: Handler<DisputeDeleteResponse> =
-            jsonHandler<DisputeDeleteResponse>(clientOptions.jsonMapper)
+        private val deleteHandler: Handler<Dispute> = jsonHandler<Dispute>(clientOptions.jsonMapper)
 
         override suspend fun delete(
             params: DisputeDeleteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<DisputeDeleteResponse> {
+        ): HttpResponseFor<Dispute> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("disputeToken", params.disputeToken())

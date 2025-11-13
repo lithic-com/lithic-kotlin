@@ -21,6 +21,7 @@ import com.lithic.api.services.async.CardServiceAsync
 import com.lithic.api.services.async.CreditProductServiceAsync
 import com.lithic.api.services.async.DigitalCardArtServiceAsync
 import com.lithic.api.services.async.DisputeServiceAsync
+import com.lithic.api.services.async.DisputesV2ServiceAsync
 import com.lithic.api.services.async.EventServiceAsync
 import com.lithic.api.services.async.ExternalBankAccountServiceAsync
 import com.lithic.api.services.async.ExternalPaymentServiceAsync
@@ -93,6 +94,8 @@ interface LithicClientAsync {
     fun aggregateBalances(): AggregateBalanceServiceAsync
 
     fun disputes(): DisputeServiceAsync
+
+    fun disputesV2(): DisputesV2ServiceAsync
 
     fun events(): EventServiceAsync
 
@@ -186,6 +189,8 @@ interface LithicClientAsync {
         fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse
 
         fun disputes(): DisputeServiceAsync.WithRawResponse
+
+        fun disputesV2(): DisputesV2ServiceAsync.WithRawResponse
 
         fun events(): EventServiceAsync.WithRawResponse
 
