@@ -232,13 +232,13 @@ private constructor(
     fun pendingAmount(): Long = pendingAmount.getRequired("pending_amount")
 
     /**
-     * Related account tokens for the transaction
+     * Account tokens related to a payment transaction
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun relatedAccountTokens(): RelatedAccountTokens =
-        relatedAccountTokens.getRequired("related_account_tokens")
+    fun relatedAccountTokens(): RelatedAccountTokens? =
+        relatedAccountTokens.getNullable("related_account_tokens")
 
     /**
      * Transaction result
@@ -749,9 +749,9 @@ private constructor(
             this.pendingAmount = pendingAmount
         }
 
-        /** Related account tokens for the transaction */
-        fun relatedAccountTokens(relatedAccountTokens: RelatedAccountTokens) =
-            relatedAccountTokens(JsonField.of(relatedAccountTokens))
+        /** Account tokens related to a payment transaction */
+        fun relatedAccountTokens(relatedAccountTokens: RelatedAccountTokens?) =
+            relatedAccountTokens(JsonField.ofNullable(relatedAccountTokens))
 
         /**
          * Sets [Builder.relatedAccountTokens] to an arbitrary JSON value.
@@ -985,7 +985,7 @@ private constructor(
         method().validate()
         methodAttributes().validate()
         pendingAmount()
-        relatedAccountTokens().validate()
+        relatedAccountTokens()?.validate()
         result().validate()
         settledAmount()
         source().validate()
@@ -2164,6 +2164,8 @@ private constructor(
 
                 val APPROVED = of("APPROVED")
 
+                val DECLINED = of("DECLINED")
+
                 val FUNDS_INSUFFICIENT = of("FUNDS_INSUFFICIENT")
 
                 val ACCOUNT_INVALID = of("ACCOUNT_INVALID")
@@ -2180,6 +2182,7 @@ private constructor(
             /** An enum containing [DetailedResult]'s known values. */
             enum class Known {
                 APPROVED,
+                DECLINED,
                 FUNDS_INSUFFICIENT,
                 ACCOUNT_INVALID,
                 PROGRAM_TRANSACTION_LIMIT_EXCEEDED,
@@ -2198,6 +2201,7 @@ private constructor(
              */
             enum class Value {
                 APPROVED,
+                DECLINED,
                 FUNDS_INSUFFICIENT,
                 ACCOUNT_INVALID,
                 PROGRAM_TRANSACTION_LIMIT_EXCEEDED,
@@ -2220,6 +2224,7 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     APPROVED -> Value.APPROVED
+                    DECLINED -> Value.DECLINED
                     FUNDS_INSUFFICIENT -> Value.FUNDS_INSUFFICIENT
                     ACCOUNT_INVALID -> Value.ACCOUNT_INVALID
                     PROGRAM_TRANSACTION_LIMIT_EXCEEDED -> Value.PROGRAM_TRANSACTION_LIMIT_EXCEEDED
@@ -2240,6 +2245,7 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     APPROVED -> Known.APPROVED
+                    DECLINED -> Known.DECLINED
                     FUNDS_INSUFFICIENT -> Known.FUNDS_INSUFFICIENT
                     ACCOUNT_INVALID -> Known.ACCOUNT_INVALID
                     PROGRAM_TRANSACTION_LIMIT_EXCEEDED -> Known.PROGRAM_TRANSACTION_LIMIT_EXCEEDED
@@ -3888,7 +3894,7 @@ private constructor(
         }
     }
 
-    /** Related account tokens for the transaction */
+    /** Account tokens related to a payment transaction */
     class RelatedAccountTokens
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -4392,6 +4398,8 @@ private constructor(
 
             val CANCELED = of("CANCELED")
 
+            val RETURNED = of("RETURNED")
+
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }
 
@@ -4402,6 +4410,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
         }
 
         /**
@@ -4419,6 +4428,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
             /**
              * An enum member indicating that [TransactionStatus] was instantiated with an unknown
              * value.
@@ -4440,6 +4450,7 @@ private constructor(
                 DECLINED -> Value.DECLINED
                 REVERSED -> Value.REVERSED
                 CANCELED -> Value.CANCELED
+                RETURNED -> Value.RETURNED
                 else -> Value._UNKNOWN
             }
 
@@ -4459,6 +4470,7 @@ private constructor(
                 DECLINED -> Known.DECLINED
                 REVERSED -> Known.REVERSED
                 CANCELED -> Known.CANCELED
+                RETURNED -> Known.RETURNED
                 else -> throw LithicInvalidDataException("Unknown TransactionStatus: $value")
             }
 

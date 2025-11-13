@@ -43,6 +43,8 @@ import com.lithic.api.services.blocking.DigitalCardArtService
 import com.lithic.api.services.blocking.DigitalCardArtServiceImpl
 import com.lithic.api.services.blocking.DisputeService
 import com.lithic.api.services.blocking.DisputeServiceImpl
+import com.lithic.api.services.blocking.DisputesV2Service
+import com.lithic.api.services.blocking.DisputesV2ServiceImpl
 import com.lithic.api.services.blocking.EventService
 import com.lithic.api.services.blocking.EventServiceImpl
 import com.lithic.api.services.blocking.ExternalBankAccountService
@@ -126,6 +128,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
     }
 
     private val disputes: DisputeService by lazy { DisputeServiceImpl(clientOptionsWithUserAgent) }
+
+    private val disputesV2: DisputesV2Service by lazy {
+        DisputesV2ServiceImpl(clientOptionsWithUserAgent)
+    }
 
     private val events: EventService by lazy { EventServiceImpl(clientOptionsWithUserAgent) }
 
@@ -222,6 +228,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
     override fun disputes(): DisputeService = disputes
 
+    override fun disputesV2(): DisputesV2Service = disputesV2
+
     override fun events(): EventService = events
 
     override fun transfers(): TransferService = transfers
@@ -316,6 +324,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
         private val disputes: DisputeService.WithRawResponse by lazy {
             DisputeServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val disputesV2: DisputesV2Service.WithRawResponse by lazy {
+            DisputesV2ServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val events: EventService.WithRawResponse by lazy {
@@ -421,6 +433,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
             aggregateBalances
 
         override fun disputes(): DisputeService.WithRawResponse = disputes
+
+        override fun disputesV2(): DisputesV2Service.WithRawResponse = disputesV2
 
         override fun events(): EventService.WithRawResponse = events
 

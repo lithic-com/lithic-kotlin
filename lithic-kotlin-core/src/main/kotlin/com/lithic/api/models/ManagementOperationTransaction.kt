@@ -619,7 +619,8 @@ private constructor(
             this.transactionSeries = transactionSeries
         }
 
-        fun userDefinedId(userDefinedId: String) = userDefinedId(JsonField.of(userDefinedId))
+        fun userDefinedId(userDefinedId: String?) =
+            userDefinedId(JsonField.ofNullable(userDefinedId))
 
         /**
          * Sets [Builder.userDefinedId] to an arbitrary JSON value.
@@ -771,6 +772,8 @@ private constructor(
 
             val CANCELED = of("CANCELED")
 
+            val RETURNED = of("RETURNED")
+
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }
 
@@ -781,6 +784,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
         }
 
         /**
@@ -798,6 +802,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
             /**
              * An enum member indicating that [TransactionStatus] was instantiated with an unknown
              * value.
@@ -819,6 +824,7 @@ private constructor(
                 DECLINED -> Value.DECLINED
                 REVERSED -> Value.REVERSED
                 CANCELED -> Value.CANCELED
+                RETURNED -> Value.RETURNED
                 else -> Value._UNKNOWN
             }
 
@@ -838,6 +844,7 @@ private constructor(
                 DECLINED -> Known.DECLINED
                 REVERSED -> Known.REVERSED
                 CANCELED -> Known.CANCELED
+                RETURNED -> Known.RETURNED
                 else -> throw LithicInvalidDataException("Unknown TransactionStatus: $value")
             }
 
@@ -1517,7 +1524,7 @@ private constructor(
              */
             fun type(type: JsonField<ManagementOperationEventType>) = apply { this.type = type }
 
-            fun subtype(subtype: String) = subtype(JsonField.of(subtype))
+            fun subtype(subtype: String?) = subtype(JsonField.ofNullable(subtype))
 
             /**
              * Sets [Builder.subtype] to an arbitrary JSON value.

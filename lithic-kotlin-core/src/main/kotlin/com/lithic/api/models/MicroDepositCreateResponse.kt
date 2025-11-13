@@ -754,7 +754,7 @@ private constructor(
          * Indicates which Lithic account the external account is associated with. For external
          * accounts that are associated with the program, account_token field returned will be null
          */
-        fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
+        fun accountToken(accountToken: String?) = accountToken(JsonField.ofNullable(accountToken))
 
         /**
          * Sets [Builder.accountToken] to an arbitrary JSON value.
@@ -768,7 +768,7 @@ private constructor(
         }
 
         /** Address */
-        fun address(address: ExternalBankAccountAddress) = address(JsonField.of(address))
+        fun address(address: ExternalBankAccountAddress?) = address(JsonField.ofNullable(address))
 
         /**
          * Sets [Builder.address] to an arbitrary JSON value.
@@ -782,7 +782,7 @@ private constructor(
         }
 
         /** Optional field that helps identify bank accounts in receipts */
-        fun companyId(companyId: String) = companyId(JsonField.of(companyId))
+        fun companyId(companyId: String?) = companyId(JsonField.ofNullable(companyId))
 
         /**
          * Sets [Builder.companyId] to an arbitrary JSON value.
@@ -794,7 +794,7 @@ private constructor(
         fun companyId(companyId: JsonField<String>) = apply { this.companyId = companyId }
 
         /** Date of Birth of the Individual that owns the external bank account */
-        fun dob(dob: LocalDate) = dob(JsonField.of(dob))
+        fun dob(dob: LocalDate?) = dob(JsonField.ofNullable(dob))
 
         /**
          * Sets [Builder.dob] to an arbitrary JSON value.
@@ -805,8 +805,8 @@ private constructor(
         fun dob(dob: JsonField<LocalDate>) = apply { this.dob = dob }
 
         /** Doing Business As */
-        fun doingBusinessAs(doingBusinessAs: String) =
-            doingBusinessAs(JsonField.of(doingBusinessAs))
+        fun doingBusinessAs(doingBusinessAs: String?) =
+            doingBusinessAs(JsonField.ofNullable(doingBusinessAs))
 
         /**
          * Sets [Builder.doingBusinessAs] to an arbitrary JSON value.
@@ -820,8 +820,8 @@ private constructor(
         }
 
         /** The financial account token of the operating account to fund the micro deposits */
-        fun financialAccountToken(financialAccountToken: String) =
-            financialAccountToken(JsonField.of(financialAccountToken))
+        fun financialAccountToken(financialAccountToken: String?) =
+            financialAccountToken(JsonField.ofNullable(financialAccountToken))
 
         /**
          * Sets [Builder.financialAccountToken] to an arbitrary JSON value.
@@ -835,7 +835,7 @@ private constructor(
         }
 
         /** The nickname for this External Bank Account */
-        fun name(name: String) = name(JsonField.of(name))
+        fun name(name: String?) = name(JsonField.ofNullable(name))
 
         /**
          * Sets [Builder.name] to an arbitrary JSON value.
@@ -846,7 +846,8 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** User Defined ID */
-        fun userDefinedId(userDefinedId: String) = userDefinedId(JsonField.of(userDefinedId))
+        fun userDefinedId(userDefinedId: String?) =
+            userDefinedId(JsonField.ofNullable(userDefinedId))
 
         /**
          * Sets [Builder.userDefinedId] to an arbitrary JSON value.
@@ -864,8 +865,8 @@ private constructor(
          * micro-deposits returned, this field will display the reason return code sent by the ACH
          * network
          */
-        fun verificationFailedReason(verificationFailedReason: String) =
-            verificationFailedReason(JsonField.of(verificationFailedReason))
+        fun verificationFailedReason(verificationFailedReason: String?) =
+            verificationFailedReason(JsonField.ofNullable(verificationFailedReason))
 
         /**
          * Sets [Builder.verificationFailedReason] to an arbitrary JSON value.

@@ -520,8 +520,8 @@ private constructor(
             fun tax(tax: JsonField<TaxData>) = apply { this.tax = tax }
 
             /** A customer identifier. */
-            fun customerReferenceNumber(customerReferenceNumber: String) =
-                customerReferenceNumber(JsonField.of(customerReferenceNumber))
+            fun customerReferenceNumber(customerReferenceNumber: String?) =
+                customerReferenceNumber(JsonField.ofNullable(customerReferenceNumber))
 
             /**
              * Sets [Builder.customerReferenceNumber] to an arbitrary JSON value.
@@ -535,8 +535,8 @@ private constructor(
             }
 
             /** A merchant identifier. */
-            fun merchantReferenceNumber(merchantReferenceNumber: String) =
-                merchantReferenceNumber(JsonField.of(merchantReferenceNumber))
+            fun merchantReferenceNumber(merchantReferenceNumber: String?) =
+                merchantReferenceNumber(JsonField.ofNullable(merchantReferenceNumber))
 
             /**
              * Sets [Builder.merchantReferenceNumber] to an arbitrary JSON value.
@@ -550,7 +550,7 @@ private constructor(
             }
 
             /** The date of the order. */
-            fun orderDate(orderDate: LocalDate) = orderDate(JsonField.of(orderDate))
+            fun orderDate(orderDate: LocalDate?) = orderDate(JsonField.ofNullable(orderDate))
 
             /**
              * Sets [Builder.orderDate] to an arbitrary JSON value.
@@ -770,7 +770,7 @@ private constructor(
                 }
 
                 /** The price of the item purchased in merchant currency. */
-                fun amount(amount: String) = amount(JsonField.of(amount))
+                fun amount(amount: String?) = amount(JsonField.ofNullable(amount))
 
                 /**
                  * Sets [Builder.amount] to an arbitrary JSON value.
@@ -782,7 +782,8 @@ private constructor(
                 fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** A human-readable description of the item. */
-                fun description(description: String) = description(JsonField.of(description))
+                fun description(description: String?) =
+                    description(JsonField.ofNullable(description))
 
                 /**
                  * Sets [Builder.description] to an arbitrary JSON value.
@@ -796,7 +797,8 @@ private constructor(
                 }
 
                 /** An identifier for the item purchased. */
-                fun productCode(productCode: String) = productCode(JsonField.of(productCode))
+                fun productCode(productCode: String?) =
+                    productCode(JsonField.ofNullable(productCode))
 
                 /**
                  * Sets [Builder.productCode] to an arbitrary JSON value.
@@ -810,7 +812,7 @@ private constructor(
                 }
 
                 /** The quantity of the item purchased. */
-                fun quantity(quantity: String) = quantity(JsonField.of(quantity))
+                fun quantity(quantity: String?) = quantity(JsonField.ofNullable(quantity))
 
                 /**
                  * Sets [Builder.quantity] to an arbitrary JSON value.
@@ -1019,7 +1021,14 @@ private constructor(
                 }
 
                 /** The amount of tax collected. */
-                fun amount(amount: Long) = amount(JsonField.of(amount))
+                fun amount(amount: Long?) = amount(JsonField.ofNullable(amount))
+
+                /**
+                 * Alias for [Builder.amount].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun amount(amount: Long) = amount(amount as Long?)
 
                 /**
                  * Sets [Builder.amount] to an arbitrary JSON value.
@@ -1031,7 +1040,7 @@ private constructor(
                 fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
                 /** A flag indicating whether the transaction is tax exempt or not. */
-                fun exempt(exempt: TaxExemptIndicator) = exempt(JsonField.of(exempt))
+                fun exempt(exempt: TaxExemptIndicator?) = exempt(JsonField.ofNullable(exempt))
 
                 /**
                  * Sets [Builder.exempt] to an arbitrary JSON value.
@@ -1043,8 +1052,8 @@ private constructor(
                 fun exempt(exempt: JsonField<TaxExemptIndicator>) = apply { this.exempt = exempt }
 
                 /** The tax ID of the merchant. */
-                fun merchantTaxId(merchantTaxId: String) =
-                    merchantTaxId(JsonField.of(merchantTaxId))
+                fun merchantTaxId(merchantTaxId: String?) =
+                    merchantTaxId(JsonField.ofNullable(merchantTaxId))
 
                 /**
                  * Sets [Builder.merchantTaxId] to an arbitrary JSON value.
@@ -1525,7 +1534,8 @@ private constructor(
              * The driver number entered into the terminal at the time of sale, with leading zeros
              * stripped.
              */
-            fun driverNumber(driverNumber: String) = driverNumber(JsonField.of(driverNumber))
+            fun driverNumber(driverNumber: String?) =
+                driverNumber(JsonField.ofNullable(driverNumber))
 
             /**
              * Sets [Builder.driverNumber] to an arbitrary JSON value.
@@ -1539,7 +1549,14 @@ private constructor(
             }
 
             /** The odometer reading entered into the terminal at the time of sale. */
-            fun odometer(odometer: Long) = odometer(JsonField.of(odometer))
+            fun odometer(odometer: Long?) = odometer(JsonField.ofNullable(odometer))
+
+            /**
+             * Alias for [Builder.odometer].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
+            fun odometer(odometer: Long) = odometer(odometer as Long?)
 
             /**
              * Sets [Builder.odometer] to an arbitrary JSON value.
@@ -1568,7 +1585,8 @@ private constructor(
              * The vehicle number entered into the terminal at the time of sale, with leading zeros
              * stripped.
              */
-            fun vehicleNumber(vehicleNumber: String) = vehicleNumber(JsonField.of(vehicleNumber))
+            fun vehicleNumber(vehicleNumber: String?) =
+                vehicleNumber(JsonField.ofNullable(vehicleNumber))
 
             /**
              * Sets [Builder.vehicleNumber] to an arbitrary JSON value.
@@ -1768,7 +1786,14 @@ private constructor(
                 }
 
                 /** The discount applied to the gross sale amount. */
-                fun discount(discount: Long) = discount(JsonField.of(discount))
+                fun discount(discount: Long?) = discount(JsonField.ofNullable(discount))
+
+                /**
+                 * Alias for [Builder.discount].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun discount(discount: Long) = discount(discount as Long?)
 
                 /**
                  * Sets [Builder.discount] to an arbitrary JSON value.
@@ -1780,7 +1805,14 @@ private constructor(
                 fun discount(discount: JsonField<Long>) = apply { this.discount = discount }
 
                 /** The gross sale amount. */
-                fun grossSale(grossSale: Long) = grossSale(JsonField.of(grossSale))
+                fun grossSale(grossSale: Long?) = grossSale(JsonField.ofNullable(grossSale))
+
+                /**
+                 * Alias for [Builder.grossSale].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun grossSale(grossSale: Long) = grossSale(grossSale as Long?)
 
                 /**
                  * Sets [Builder.grossSale] to an arbitrary JSON value.
@@ -1792,7 +1824,14 @@ private constructor(
                 fun grossSale(grossSale: JsonField<Long>) = apply { this.grossSale = grossSale }
 
                 /** The amount after discount. */
-                fun netSale(netSale: Long) = netSale(JsonField.of(netSale))
+                fun netSale(netSale: Long?) = netSale(JsonField.ofNullable(netSale))
+
+                /**
+                 * Alias for [Builder.netSale].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun netSale(netSale: Long) = netSale(netSale as Long?)
 
                 /**
                  * Sets [Builder.netSale] to an arbitrary JSON value.
@@ -2015,7 +2054,7 @@ private constructor(
                 }
 
                 /** The quantity of fuel purchased. */
-                fun quantity(quantity: String) = quantity(JsonField.of(quantity))
+                fun quantity(quantity: String?) = quantity(JsonField.ofNullable(quantity))
 
                 /**
                  * Sets [Builder.quantity] to an arbitrary JSON value.
@@ -2027,7 +2066,7 @@ private constructor(
                 fun quantity(quantity: JsonField<String>) = apply { this.quantity = quantity }
 
                 /** The type of fuel purchased. */
-                fun type(type: FuelType) = type(JsonField.of(type))
+                fun type(type: FuelType?) = type(JsonField.ofNullable(type))
 
                 /**
                  * Sets [Builder.type] to an arbitrary JSON value.
@@ -2039,8 +2078,8 @@ private constructor(
                 fun type(type: JsonField<FuelType>) = apply { this.type = type }
 
                 /** Unit of measure for fuel disbursement. */
-                fun unitOfMeasure(unitOfMeasure: FuelUnitOfMeasure) =
-                    unitOfMeasure(JsonField.of(unitOfMeasure))
+                fun unitOfMeasure(unitOfMeasure: FuelUnitOfMeasure?) =
+                    unitOfMeasure(JsonField.ofNullable(unitOfMeasure))
 
                 /**
                  * Sets [Builder.unitOfMeasure] to an arbitrary JSON value.
@@ -2054,7 +2093,14 @@ private constructor(
                 }
 
                 /** The price per unit of fuel. */
-                fun unitPrice(unitPrice: Long) = unitPrice(JsonField.of(unitPrice))
+                fun unitPrice(unitPrice: Long?) = unitPrice(JsonField.ofNullable(unitPrice))
+
+                /**
+                 * Alias for [Builder.unitPrice].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun unitPrice(unitPrice: Long) = unitPrice(unitPrice as Long?)
 
                 /**
                  * Sets [Builder.unitPrice] to an arbitrary JSON value.
