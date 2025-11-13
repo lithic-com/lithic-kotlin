@@ -2318,6 +2318,8 @@ private constructor(
 
             val CANCELED = of("CANCELED")
 
+            val RETURNED = of("RETURNED")
+
             fun of(value: String) = TransactionStatus(JsonField.of(value))
         }
 
@@ -2328,6 +2330,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
         }
 
         /**
@@ -2345,6 +2348,7 @@ private constructor(
             DECLINED,
             REVERSED,
             CANCELED,
+            RETURNED,
             /**
              * An enum member indicating that [TransactionStatus] was instantiated with an unknown
              * value.
@@ -2366,6 +2370,7 @@ private constructor(
                 DECLINED -> Value.DECLINED
                 REVERSED -> Value.REVERSED
                 CANCELED -> Value.CANCELED
+                RETURNED -> Value.RETURNED
                 else -> Value._UNKNOWN
             }
 
@@ -2385,6 +2390,7 @@ private constructor(
                 DECLINED -> Known.DECLINED
                 REVERSED -> Known.REVERSED
                 CANCELED -> Known.CANCELED
+                RETURNED -> Known.RETURNED
                 else -> throw LithicInvalidDataException("Unknown TransactionStatus: $value")
             }
 

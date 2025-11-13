@@ -218,7 +218,7 @@ private constructor(
          */
         fun state(state: JsonField<String>) = apply { this.state = state }
 
-        fun address2(address2: String) = address2(JsonField.of(address2))
+        fun address2(address2: String?) = address2(JsonField.ofNullable(address2))
 
         /**
          * Sets [Builder.address2] to an arbitrary JSON value.

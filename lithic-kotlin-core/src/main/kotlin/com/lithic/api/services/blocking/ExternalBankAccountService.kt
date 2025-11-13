@@ -16,6 +16,8 @@ import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsParams
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsResponse
 import com.lithic.api.models.ExternalBankAccountRetryPrenoteParams
 import com.lithic.api.models.ExternalBankAccountRetryPrenoteResponse
+import com.lithic.api.models.ExternalBankAccountUnpauseParams
+import com.lithic.api.models.ExternalBankAccountUnpauseResponse
 import com.lithic.api.models.ExternalBankAccountUpdateParams
 import com.lithic.api.models.ExternalBankAccountUpdateResponse
 import com.lithic.api.services.blocking.externalBankAccounts.MicroDepositService
@@ -161,6 +163,30 @@ interface ExternalBankAccountService {
             ExternalBankAccountRetryPrenoteParams.none(),
             requestOptions,
         )
+
+    /** Unpause an external bank account */
+    fun unpause(
+        externalBankAccountToken: String,
+        params: ExternalBankAccountUnpauseParams = ExternalBankAccountUnpauseParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountUnpauseResponse =
+        unpause(
+            params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see unpause */
+    fun unpause(
+        params: ExternalBankAccountUnpauseParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountUnpauseResponse
+
+    /** @see unpause */
+    fun unpause(
+        externalBankAccountToken: String,
+        requestOptions: RequestOptions,
+    ): ExternalBankAccountUnpauseResponse =
+        unpause(externalBankAccountToken, ExternalBankAccountUnpauseParams.none(), requestOptions)
 
     /**
      * A view of [ExternalBankAccountService] that provides access to raw HTTP responses for each
@@ -346,6 +372,41 @@ interface ExternalBankAccountService {
             retryPrenote(
                 externalBankAccountToken,
                 ExternalBankAccountRetryPrenoteParams.none(),
+                requestOptions,
+            )
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/external_bank_accounts/{external_bank_account_token}/unpause`, but is otherwise the
+         * same as [ExternalBankAccountService.unpause].
+         */
+        @MustBeClosed
+        fun unpause(
+            externalBankAccountToken: String,
+            params: ExternalBankAccountUnpauseParams = ExternalBankAccountUnpauseParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountUnpauseResponse> =
+            unpause(
+                params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see unpause */
+        @MustBeClosed
+        fun unpause(
+            params: ExternalBankAccountUnpauseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountUnpauseResponse>
+
+        /** @see unpause */
+        @MustBeClosed
+        fun unpause(
+            externalBankAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ExternalBankAccountUnpauseResponse> =
+            unpause(
+                externalBankAccountToken,
+                ExternalBankAccountUnpauseParams.none(),
                 requestOptions,
             )
     }

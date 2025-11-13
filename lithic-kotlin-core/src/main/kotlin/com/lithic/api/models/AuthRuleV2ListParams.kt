@@ -293,6 +293,12 @@ private constructor(
 
             val THREE_DS_AUTHENTICATION = of("THREE_DS_AUTHENTICATION")
 
+            val TOKENIZATION = of("TOKENIZATION")
+
+            val ACH_CREDIT_RECEIPT = of("ACH_CREDIT_RECEIPT")
+
+            val ACH_DEBIT_RECEIPT = of("ACH_DEBIT_RECEIPT")
+
             fun of(value: String) = EventStream(JsonField.of(value))
         }
 
@@ -300,6 +306,9 @@ private constructor(
         enum class Known {
             AUTHORIZATION,
             THREE_DS_AUTHENTICATION,
+            TOKENIZATION,
+            ACH_CREDIT_RECEIPT,
+            ACH_DEBIT_RECEIPT,
         }
 
         /**
@@ -314,6 +323,9 @@ private constructor(
         enum class Value {
             AUTHORIZATION,
             THREE_DS_AUTHENTICATION,
+            TOKENIZATION,
+            ACH_CREDIT_RECEIPT,
+            ACH_DEBIT_RECEIPT,
             /**
              * An enum member indicating that [EventStream] was instantiated with an unknown value.
              */
@@ -331,6 +343,9 @@ private constructor(
             when (this) {
                 AUTHORIZATION -> Value.AUTHORIZATION
                 THREE_DS_AUTHENTICATION -> Value.THREE_DS_AUTHENTICATION
+                TOKENIZATION -> Value.TOKENIZATION
+                ACH_CREDIT_RECEIPT -> Value.ACH_CREDIT_RECEIPT
+                ACH_DEBIT_RECEIPT -> Value.ACH_DEBIT_RECEIPT
                 else -> Value._UNKNOWN
             }
 
@@ -347,6 +362,9 @@ private constructor(
             when (this) {
                 AUTHORIZATION -> Known.AUTHORIZATION
                 THREE_DS_AUTHENTICATION -> Known.THREE_DS_AUTHENTICATION
+                TOKENIZATION -> Known.TOKENIZATION
+                ACH_CREDIT_RECEIPT -> Known.ACH_CREDIT_RECEIPT
+                ACH_DEBIT_RECEIPT -> Known.ACH_DEBIT_RECEIPT
                 else -> throw LithicInvalidDataException("Unknown EventStream: $value")
             }
 

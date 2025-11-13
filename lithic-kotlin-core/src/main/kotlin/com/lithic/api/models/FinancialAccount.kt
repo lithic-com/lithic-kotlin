@@ -622,11 +622,11 @@ private constructor(
         )
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun autoCollectionConfiguration(): AutoCollectionConfigurationResponse =
-            autoCollectionConfiguration.getRequired("auto_collection_configuration")
+        fun autoCollectionConfiguration(): AutoCollectionConfigurationResponse? =
+            autoCollectionConfiguration.getNullable("auto_collection_configuration")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -758,8 +758,8 @@ private constructor(
             }
 
             fun autoCollectionConfiguration(
-                autoCollectionConfiguration: AutoCollectionConfigurationResponse
-            ) = autoCollectionConfiguration(JsonField.of(autoCollectionConfiguration))
+                autoCollectionConfiguration: AutoCollectionConfigurationResponse?
+            ) = autoCollectionConfiguration(JsonField.ofNullable(autoCollectionConfiguration))
 
             /**
              * Sets [Builder.autoCollectionConfiguration] to an arbitrary JSON value.
@@ -884,7 +884,7 @@ private constructor(
                 return@apply
             }
 
-            autoCollectionConfiguration().validate()
+            autoCollectionConfiguration()?.validate()
             creditLimit()
             creditProductToken()
             externalBankAccountToken()

@@ -1565,8 +1565,8 @@ private constructor(
         fun name(): String? = name.getNullable("name")
 
         /**
-         * Home phone number provided by the cardholder. Maps to EMV 3DS fields `homePhone.cc` and
-         * `homePhone.subscriber`.
+         * Home phone number in E.164 format provided by the cardholder. Maps to EMV 3DS fields
+         * `homePhone.cc` and `homePhone.subscriber`.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1574,8 +1574,8 @@ private constructor(
         fun phoneNumberHome(): String? = phoneNumberHome.getNullable("phone_number_home")
 
         /**
-         * Mobile/cell phone number provided by the cardholder. Maps to EMV 3DS fields
-         * `mobilePhone.cc` and `mobilePhone.subscriber`.
+         * Mobile/cell phone number in E.164 format provided by the cardholder. Maps to EMV 3DS
+         * fields `mobilePhone.cc` and `mobilePhone.subscriber`.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1583,8 +1583,8 @@ private constructor(
         fun phoneNumberMobile(): String? = phoneNumberMobile.getNullable("phone_number_mobile")
 
         /**
-         * Work phone number provided by the cardholder. Maps to EMV 3DS fields `workPhone.cc` and
-         * `workPhone.subscriber`.
+         * Work phone number in E.164 format provided by the cardholder. Maps to EMV 3DS fields
+         * `workPhone.cc` and `workPhone.subscriber`.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1818,8 +1818,8 @@ private constructor(
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
-             * Home phone number provided by the cardholder. Maps to EMV 3DS fields `homePhone.cc`
-             * and `homePhone.subscriber`.
+             * Home phone number in E.164 format provided by the cardholder. Maps to EMV 3DS fields
+             * `homePhone.cc` and `homePhone.subscriber`.
              */
             fun phoneNumberHome(phoneNumberHome: String?) =
                 phoneNumberHome(JsonField.ofNullable(phoneNumberHome))
@@ -1836,8 +1836,8 @@ private constructor(
             }
 
             /**
-             * Mobile/cell phone number provided by the cardholder. Maps to EMV 3DS fields
-             * `mobilePhone.cc` and `mobilePhone.subscriber`.
+             * Mobile/cell phone number in E.164 format provided by the cardholder. Maps to EMV 3DS
+             * fields `mobilePhone.cc` and `mobilePhone.subscriber`.
              */
             fun phoneNumberMobile(phoneNumberMobile: String?) =
                 phoneNumberMobile(JsonField.ofNullable(phoneNumberMobile))
@@ -1854,8 +1854,8 @@ private constructor(
             }
 
             /**
-             * Work phone number provided by the cardholder. Maps to EMV 3DS fields `workPhone.cc`
-             * and `workPhone.subscriber`.
+             * Work phone number in E.164 format provided by the cardholder. Maps to EMV 3DS fields
+             * `workPhone.cc` and `workPhone.subscriber`.
              */
             fun phoneNumberWork(phoneNumberWork: String?) =
                 phoneNumberWork(JsonField.ofNullable(phoneNumberWork))
