@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.111.0 (2025-11-13)
+
+Full Changelog: [v0.110.0...v0.111.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.110.0...v0.111.0)
+
+### Features
+
+* **api:** add disputes V2 endpoints ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+* **api:** add return payment method ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+* **api:** add Tokenization and ACH Rules ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+* **api:** add unpause external_bank_accounts API method ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+* **api:** extract some common schemas into models ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+
+
+### Bug Fixes
+
+* **api:** change allowed phone number length from 18 to 16 ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+* **api:** mark certain optional fields as nullable ([4fc19de](https://github.com/lithic-com/lithic-kotlin/commit/4fc19dee4a2bc22d09fd14ea2d836116b55e7893))
+
 ## 0.110.0 (2025-11-13)
 
 Full Changelog: [v0.109.0...v0.110.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.109.0...v0.110.0)
