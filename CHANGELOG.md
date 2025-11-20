@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.112.0 (2025-11-20)
+
+Full Changelog: [v0.111.0...v0.112.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.111.0...v0.112.0)
+
+### Features
+
+* **api:** Add Payoff Details ([253927d](https://github.com/lithic-com/lithic-kotlin/commit/253927d587f265435bd0cd499ee66df481f54daa))
+
+
+### Bug Fixes
+
+* **api:** Modify return type of returns API to payment-transaction ([253927d](https://github.com/lithic-com/lithic-kotlin/commit/253927d587f265435bd0cd499ee66df481f54daa))
+
 ## 0.111.0 (2025-11-17)
 
 Full Changelog: [v0.110.0...v0.111.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.110.0...v0.111.0)
