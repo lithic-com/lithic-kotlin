@@ -27,10 +27,8 @@ import com.lithic.api.models.TokenizationPauseParams
 import com.lithic.api.models.TokenizationResendActivationCodeParams
 import com.lithic.api.models.TokenizationRetrieveParams
 import com.lithic.api.models.TokenizationSimulateParams
-import com.lithic.api.models.TokenizationSimulateResponse
 import com.lithic.api.models.TokenizationUnpauseParams
 import com.lithic.api.models.TokenizationUpdateDigitalCardArtParams
-import com.lithic.api.models.TokenizationUpdateDigitalCardArtResponse
 
 class TokenizationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     TokenizationService {
@@ -84,7 +82,7 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
     override fun simulate(
         params: TokenizationSimulateParams,
         requestOptions: RequestOptions,
-    ): TokenizationSimulateResponse =
+    ): Tokenization =
         // post /v1/simulate/tokenizations
         withRawResponse().simulate(params, requestOptions).parse()
 
@@ -96,7 +94,7 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
     override fun updateDigitalCardArt(
         params: TokenizationUpdateDigitalCardArtParams,
         requestOptions: RequestOptions,
-    ): TokenizationUpdateDigitalCardArtResponse =
+    ): Tokenization =
         // post /v1/tokenizations/{tokenization_token}/update_digital_card_art
         withRawResponse().updateDigitalCardArt(params, requestOptions).parse()
 
@@ -278,13 +276,13 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val simulateHandler: Handler<TokenizationSimulateResponse> =
-            jsonHandler<TokenizationSimulateResponse>(clientOptions.jsonMapper)
+        private val simulateHandler: Handler<Tokenization> =
+            jsonHandler<Tokenization>(clientOptions.jsonMapper)
 
         override fun simulate(
             params: TokenizationSimulateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TokenizationSimulateResponse> {
+        ): HttpResponseFor<Tokenization> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -330,13 +328,13 @@ class TokenizationServiceImpl internal constructor(private val clientOptions: Cl
             }
         }
 
-        private val updateDigitalCardArtHandler: Handler<TokenizationUpdateDigitalCardArtResponse> =
-            jsonHandler<TokenizationUpdateDigitalCardArtResponse>(clientOptions.jsonMapper)
+        private val updateDigitalCardArtHandler: Handler<Tokenization> =
+            jsonHandler<Tokenization>(clientOptions.jsonMapper)
 
         override fun updateDigitalCardArt(
             params: TokenizationUpdateDigitalCardArtParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse> {
+        ): HttpResponseFor<Tokenization> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("tokenizationToken", params.tokenizationToken())

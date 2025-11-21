@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.112.0)
-[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.112.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.112.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.lithic.api/lithic-kotlin)](https://central.sonatype.com/artifact/com.lithic.api/lithic-kotlin/0.113.0)
+[![javadoc](https://javadoc.io/badge2/com.lithic.api/lithic-kotlin/0.113.0/javadoc.svg)](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.113.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ The Lithic Kotlin SDK is similar to the Lithic Java SDK but with minor differenc
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.112.0).
+The REST API documentation can be found on [docs.lithic.com](https://docs.lithic.com). KDocs are available on [javadoc.io](https://javadoc.io/doc/com.lithic.api/lithic-kotlin/0.113.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [docs.lithic.com](https://docs.lithic
 ### Gradle
 
 ```kotlin
-implementation("com.lithic.api:lithic-kotlin:0.112.0")
+implementation("com.lithic.api:lithic-kotlin:0.113.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.lithic.api:lithic-kotlin:0.112.0")
 <dependency>
   <groupId>com.lithic.api</groupId>
   <artifactId>lithic-kotlin</artifactId>
-  <version>0.112.0</version>
+  <version>0.113.0</version>
 </dependency>
 ```
 
@@ -496,6 +496,22 @@ val params: CardCreateParams = CardCreateParams.builder()
 ```
 
 These can be accessed on the built object later using the `_additionalHeaders()`, `_additionalQueryParams()`, and `_additionalBodyProperties()` methods.
+
+To set undocumented parameters on _nested_ headers, query params, or body classes, call the `putAdditionalProperty` method on the nested class:
+
+```kotlin
+import com.lithic.api.core.JsonValue
+import com.lithic.api.models.CardCreateParams
+import com.lithic.api.models.ShippingAddress
+
+val params: CardCreateParams = CardCreateParams.builder()
+    .shippingAddress(ShippingAddress.builder()
+        .putAdditionalProperty("secretProperty", JsonValue.from("42"))
+        .build())
+    .build()
+```
+
+These properties can be accessed on the nested built object later using the `_additionalProperties()` method.
 
 To set a documented parameter or property to an undocumented or not yet supported _value_, pass a [`JsonValue`](lithic-kotlin-core/src/main/kotlin/com/lithic/api/core/Values.kt) object to its setter:
 

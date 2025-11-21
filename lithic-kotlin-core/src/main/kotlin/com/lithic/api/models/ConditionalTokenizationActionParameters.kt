@@ -1489,6 +1489,13 @@ private constructor(
          *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
          * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet provider.
          *   Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
+         * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
+         *   provider for the recommended decision. Valid values are `ACCOUNT_CARD_TOO_NEW`,
+         *   `ACCOUNT_RECENTLY_CHANGED`, `ACCOUNT_TOO_NEW`, `ACCOUNT_TOO_NEW_SINCE_LAUNCH`,
+         *   `DEVICE_RECENTLY_LOST`, `HAS_SUSPENDED_TOKENS`, `HIGH_RISK`, `INACTIVE_ACCOUNT`,
+         *   `LOW_ACCOUNT_SCORE`, `LOW_DEVICE_SCORE`, `OUTSIDE_HOME_TERRITORY`,
+         *   `SUSPICIOUS_ACTIVITY`, `TOO_MANY_DIFFERENT_CARDHOLDERS`, `TOO_MANY_RECENT_ATTEMPTS`,
+         *   `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
          * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
          * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
          *
@@ -1601,6 +1608,13 @@ private constructor(
              *   risk).
              * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet
              *   provider. Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
+             * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
+             *   provider for the recommended decision. Valid values are `ACCOUNT_CARD_TOO_NEW`,
+             *   `ACCOUNT_RECENTLY_CHANGED`, `ACCOUNT_TOO_NEW`, `ACCOUNT_TOO_NEW_SINCE_LAUNCH`,
+             *   `DEVICE_RECENTLY_LOST`, `HAS_SUSPENDED_TOKENS`, `HIGH_RISK`, `INACTIVE_ACCOUNT`,
+             *   `LOW_ACCOUNT_SCORE`, `LOW_DEVICE_SCORE`, `OUTSIDE_HOME_TERRITORY`,
+             *   `SUSPICIOUS_ACTIVITY`, `TOO_MANY_DIFFERENT_CARDHOLDERS`,
+             *   `TOO_MANY_RECENT_ATTEMPTS`, `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
              * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
              * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
              */
@@ -1743,6 +1757,13 @@ private constructor(
          *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
          * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet provider.
          *   Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
+         * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
+         *   provider for the recommended decision. Valid values are `ACCOUNT_CARD_TOO_NEW`,
+         *   `ACCOUNT_RECENTLY_CHANGED`, `ACCOUNT_TOO_NEW`, `ACCOUNT_TOO_NEW_SINCE_LAUNCH`,
+         *   `DEVICE_RECENTLY_LOST`, `HAS_SUSPENDED_TOKENS`, `HIGH_RISK`, `INACTIVE_ACCOUNT`,
+         *   `LOW_ACCOUNT_SCORE`, `LOW_DEVICE_SCORE`, `OUTSIDE_HOME_TERRITORY`,
+         *   `SUSPICIOUS_ACTIVITY`, `TOO_MANY_DIFFERENT_CARDHOLDERS`, `TOO_MANY_RECENT_ATTEMPTS`,
+         *   `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
          * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
          * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
          */
@@ -1775,6 +1796,8 @@ private constructor(
 
                 val WALLET_RECOMMENDED_DECISION = of("WALLET_RECOMMENDED_DECISION")
 
+                val WALLET_RECOMMENDATION_REASONS = of("WALLET_RECOMMENDATION_REASONS")
+
                 val TOKEN_REQUESTOR_ID = of("TOKEN_REQUESTOR_ID")
 
                 val WALLET_TOKEN_STATUS = of("WALLET_TOKEN_STATUS")
@@ -1791,6 +1814,7 @@ private constructor(
                 WALLET_ACCOUNT_SCORE,
                 WALLET_DEVICE_SCORE,
                 WALLET_RECOMMENDED_DECISION,
+                WALLET_RECOMMENDATION_REASONS,
                 TOKEN_REQUESTOR_ID,
                 WALLET_TOKEN_STATUS,
             }
@@ -1812,6 +1836,7 @@ private constructor(
                 WALLET_ACCOUNT_SCORE,
                 WALLET_DEVICE_SCORE,
                 WALLET_RECOMMENDED_DECISION,
+                WALLET_RECOMMENDATION_REASONS,
                 TOKEN_REQUESTOR_ID,
                 WALLET_TOKEN_STATUS,
                 /**
@@ -1837,6 +1862,7 @@ private constructor(
                     WALLET_ACCOUNT_SCORE -> Value.WALLET_ACCOUNT_SCORE
                     WALLET_DEVICE_SCORE -> Value.WALLET_DEVICE_SCORE
                     WALLET_RECOMMENDED_DECISION -> Value.WALLET_RECOMMENDED_DECISION
+                    WALLET_RECOMMENDATION_REASONS -> Value.WALLET_RECOMMENDATION_REASONS
                     TOKEN_REQUESTOR_ID -> Value.TOKEN_REQUESTOR_ID
                     WALLET_TOKEN_STATUS -> Value.WALLET_TOKEN_STATUS
                     else -> Value._UNKNOWN
@@ -1860,6 +1886,7 @@ private constructor(
                     WALLET_ACCOUNT_SCORE -> Known.WALLET_ACCOUNT_SCORE
                     WALLET_DEVICE_SCORE -> Known.WALLET_DEVICE_SCORE
                     WALLET_RECOMMENDED_DECISION -> Known.WALLET_RECOMMENDED_DECISION
+                    WALLET_RECOMMENDATION_REASONS -> Known.WALLET_RECOMMENDATION_REASONS
                     TOKEN_REQUESTOR_ID -> Known.TOKEN_REQUESTOR_ID
                     WALLET_TOKEN_STATUS -> Known.WALLET_TOKEN_STATUS
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")

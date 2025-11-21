@@ -16,10 +16,8 @@ import com.lithic.api.models.TokenizationPauseParams
 import com.lithic.api.models.TokenizationResendActivationCodeParams
 import com.lithic.api.models.TokenizationRetrieveParams
 import com.lithic.api.models.TokenizationSimulateParams
-import com.lithic.api.models.TokenizationSimulateResponse
 import com.lithic.api.models.TokenizationUnpauseParams
 import com.lithic.api.models.TokenizationUpdateDigitalCardArtParams
-import com.lithic.api.models.TokenizationUpdateDigitalCardArtResponse
 
 interface TokenizationServiceAsync {
 
@@ -182,7 +180,7 @@ interface TokenizationServiceAsync {
     suspend fun simulate(
         params: TokenizationSimulateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TokenizationSimulateResponse
+    ): Tokenization
 
     /**
      * This endpoint is used to ask the card network to unpause a tokenization. A successful
@@ -222,7 +220,7 @@ interface TokenizationServiceAsync {
         params: TokenizationUpdateDigitalCardArtParams =
             TokenizationUpdateDigitalCardArtParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TokenizationUpdateDigitalCardArtResponse =
+    ): Tokenization =
         updateDigitalCardArt(
             params.toBuilder().tokenizationToken(tokenizationToken).build(),
             requestOptions,
@@ -232,13 +230,13 @@ interface TokenizationServiceAsync {
     suspend fun updateDigitalCardArt(
         params: TokenizationUpdateDigitalCardArtParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): TokenizationUpdateDigitalCardArtResponse
+    ): Tokenization
 
     /** @see updateDigitalCardArt */
     suspend fun updateDigitalCardArt(
         tokenizationToken: String,
         requestOptions: RequestOptions,
-    ): TokenizationUpdateDigitalCardArtResponse =
+    ): Tokenization =
         updateDigitalCardArt(
             tokenizationToken,
             TokenizationUpdateDigitalCardArtParams.none(),
@@ -435,7 +433,7 @@ interface TokenizationServiceAsync {
         suspend fun simulate(
             params: TokenizationSimulateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TokenizationSimulateResponse>
+        ): HttpResponseFor<Tokenization>
 
         /**
          * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/unpause`,
@@ -475,7 +473,7 @@ interface TokenizationServiceAsync {
             params: TokenizationUpdateDigitalCardArtParams =
                 TokenizationUpdateDigitalCardArtParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse> =
+        ): HttpResponseFor<Tokenization> =
             updateDigitalCardArt(
                 params.toBuilder().tokenizationToken(tokenizationToken).build(),
                 requestOptions,
@@ -486,14 +484,14 @@ interface TokenizationServiceAsync {
         suspend fun updateDigitalCardArt(
             params: TokenizationUpdateDigitalCardArtParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse>
+        ): HttpResponseFor<Tokenization>
 
         /** @see updateDigitalCardArt */
         @MustBeClosed
         suspend fun updateDigitalCardArt(
             tokenizationToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<TokenizationUpdateDigitalCardArtResponse> =
+        ): HttpResponseFor<Tokenization> =
             updateDigitalCardArt(
                 tokenizationToken,
                 TokenizationUpdateDigitalCardArtParams.none(),

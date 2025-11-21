@@ -3175,31 +3175,31 @@ private constructor(
         /**
          * Number of months to full pay off
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun payoffPeriodLengthMonths(): Long =
-            payoffPeriodLengthMonths.getRequired("payoff_period_length_months")
+        fun payoffPeriodLengthMonths(): Long? =
+            payoffPeriodLengthMonths.getNullable("payoff_period_length_months")
 
         /**
          * The amount needed to be paid, in cents, each month in order to pay off current balance in
          * the payoff period
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun payoffPeriodMonthlyPaymentAmount(): Long =
-            payoffPeriodMonthlyPaymentAmount.getRequired("payoff_period_monthly_payment_amount")
+        fun payoffPeriodMonthlyPaymentAmount(): Long? =
+            payoffPeriodMonthlyPaymentAmount.getNullable("payoff_period_monthly_payment_amount")
 
         /**
          * The sum of all interest and principal paid, in cents, when paying off in the payoff
          * period
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun payoffPeriodPaymentTotal(): Long =
-            payoffPeriodPaymentTotal.getRequired("payoff_period_payment_total")
+        fun payoffPeriodPaymentTotal(): Long? =
+            payoffPeriodPaymentTotal.getNullable("payoff_period_payment_total")
 
         /**
          * Returns the raw JSON value of [minimumPaymentMonths].
@@ -3336,8 +3336,16 @@ private constructor(
             }
 
             /** Number of months to full pay off */
+            fun payoffPeriodLengthMonths(payoffPeriodLengthMonths: Long?) =
+                payoffPeriodLengthMonths(JsonField.ofNullable(payoffPeriodLengthMonths))
+
+            /**
+             * Alias for [Builder.payoffPeriodLengthMonths].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun payoffPeriodLengthMonths(payoffPeriodLengthMonths: Long) =
-                payoffPeriodLengthMonths(JsonField.of(payoffPeriodLengthMonths))
+                payoffPeriodLengthMonths(payoffPeriodLengthMonths as Long?)
 
             /**
              * Sets [Builder.payoffPeriodLengthMonths] to an arbitrary JSON value.
@@ -3354,8 +3362,18 @@ private constructor(
              * The amount needed to be paid, in cents, each month in order to pay off current
              * balance in the payoff period
              */
+            fun payoffPeriodMonthlyPaymentAmount(payoffPeriodMonthlyPaymentAmount: Long?) =
+                payoffPeriodMonthlyPaymentAmount(
+                    JsonField.ofNullable(payoffPeriodMonthlyPaymentAmount)
+                )
+
+            /**
+             * Alias for [Builder.payoffPeriodMonthlyPaymentAmount].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun payoffPeriodMonthlyPaymentAmount(payoffPeriodMonthlyPaymentAmount: Long) =
-                payoffPeriodMonthlyPaymentAmount(JsonField.of(payoffPeriodMonthlyPaymentAmount))
+                payoffPeriodMonthlyPaymentAmount(payoffPeriodMonthlyPaymentAmount as Long?)
 
             /**
              * Sets [Builder.payoffPeriodMonthlyPaymentAmount] to an arbitrary JSON value.
@@ -3372,8 +3390,16 @@ private constructor(
              * The sum of all interest and principal paid, in cents, when paying off in the payoff
              * period
              */
+            fun payoffPeriodPaymentTotal(payoffPeriodPaymentTotal: Long?) =
+                payoffPeriodPaymentTotal(JsonField.ofNullable(payoffPeriodPaymentTotal))
+
+            /**
+             * Alias for [Builder.payoffPeriodPaymentTotal].
+             *
+             * This unboxed primitive overload exists for backwards compatibility.
+             */
             fun payoffPeriodPaymentTotal(payoffPeriodPaymentTotal: Long) =
-                payoffPeriodPaymentTotal(JsonField.of(payoffPeriodPaymentTotal))
+                payoffPeriodPaymentTotal(payoffPeriodPaymentTotal as Long?)
 
             /**
              * Sets [Builder.payoffPeriodPaymentTotal] to an arbitrary JSON value.
