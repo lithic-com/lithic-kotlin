@@ -17,6 +17,7 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
+import com.lithic.api.models.AuthRule
 import com.lithic.api.models.AuthRuleV2CreateParams
 import com.lithic.api.models.AuthRuleV2DeleteParams
 import com.lithic.api.models.AuthRuleV2DraftParams
@@ -28,13 +29,8 @@ import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveParams
 import com.lithic.api.models.AuthRuleV2RetrieveReportParams
 import com.lithic.api.models.AuthRuleV2UpdateParams
-import com.lithic.api.models.V2CreateResponse
-import com.lithic.api.models.V2DraftResponse
-import com.lithic.api.models.V2PromoteResponse
 import com.lithic.api.models.V2RetrieveFeaturesResponse
 import com.lithic.api.models.V2RetrieveReportResponse
-import com.lithic.api.models.V2RetrieveResponse
-import com.lithic.api.models.V2UpdateResponse
 import com.lithic.api.services.async.authRules.v2.BacktestServiceAsync
 import com.lithic.api.services.async.authRules.v2.BacktestServiceAsyncImpl
 
@@ -57,21 +53,21 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
     override suspend fun create(
         params: AuthRuleV2CreateParams,
         requestOptions: RequestOptions,
-    ): V2CreateResponse =
+    ): AuthRule =
         // post /v2/auth_rules
         withRawResponse().create(params, requestOptions).parse()
 
     override suspend fun retrieve(
         params: AuthRuleV2RetrieveParams,
         requestOptions: RequestOptions,
-    ): V2RetrieveResponse =
+    ): AuthRule =
         // get /v2/auth_rules/{auth_rule_token}
         withRawResponse().retrieve(params, requestOptions).parse()
 
     override suspend fun update(
         params: AuthRuleV2UpdateParams,
         requestOptions: RequestOptions,
-    ): V2UpdateResponse =
+    ): AuthRule =
         // patch /v2/auth_rules/{auth_rule_token}
         withRawResponse().update(params, requestOptions).parse()
 
@@ -90,14 +86,14 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
     override suspend fun draft(
         params: AuthRuleV2DraftParams,
         requestOptions: RequestOptions,
-    ): V2DraftResponse =
+    ): AuthRule =
         // post /v2/auth_rules/{auth_rule_token}/draft
         withRawResponse().draft(params, requestOptions).parse()
 
     override suspend fun promote(
         params: AuthRuleV2PromoteParams,
         requestOptions: RequestOptions,
-    ): V2PromoteResponse =
+    ): AuthRule =
         // post /v2/auth_rules/{auth_rule_token}/promote
         withRawResponse().promote(params, requestOptions).parse()
 
@@ -134,13 +130,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
 
         override fun backtests(): BacktestServiceAsync.WithRawResponse = backtests
 
-        private val createHandler: Handler<V2CreateResponse> =
-            jsonHandler<V2CreateResponse>(clientOptions.jsonMapper)
+        private val createHandler: Handler<AuthRule> =
+            jsonHandler<AuthRule>(clientOptions.jsonMapper)
 
         override suspend fun create(
             params: AuthRuleV2CreateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<V2CreateResponse> {
+        ): HttpResponseFor<AuthRule> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
@@ -162,13 +158,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val retrieveHandler: Handler<V2RetrieveResponse> =
-            jsonHandler<V2RetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<AuthRule> =
+            jsonHandler<AuthRule>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: AuthRuleV2RetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<V2RetrieveResponse> {
+        ): HttpResponseFor<AuthRule> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("authRuleToken", params.authRuleToken())
@@ -192,13 +188,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val updateHandler: Handler<V2UpdateResponse> =
-            jsonHandler<V2UpdateResponse>(clientOptions.jsonMapper)
+        private val updateHandler: Handler<AuthRule> =
+            jsonHandler<AuthRule>(clientOptions.jsonMapper)
 
         override suspend fun update(
             params: AuthRuleV2UpdateParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<V2UpdateResponse> {
+        ): HttpResponseFor<AuthRule> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("authRuleToken", params.authRuleToken())
@@ -281,13 +277,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val draftHandler: Handler<V2DraftResponse> =
-            jsonHandler<V2DraftResponse>(clientOptions.jsonMapper)
+        private val draftHandler: Handler<AuthRule> =
+            jsonHandler<AuthRule>(clientOptions.jsonMapper)
 
         override suspend fun draft(
             params: AuthRuleV2DraftParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<V2DraftResponse> {
+        ): HttpResponseFor<AuthRule> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("authRuleToken", params.authRuleToken())
@@ -312,13 +308,13 @@ class V2ServiceAsyncImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val promoteHandler: Handler<V2PromoteResponse> =
-            jsonHandler<V2PromoteResponse>(clientOptions.jsonMapper)
+        private val promoteHandler: Handler<AuthRule> =
+            jsonHandler<AuthRule>(clientOptions.jsonMapper)
 
         override suspend fun promote(
             params: AuthRuleV2PromoteParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<V2PromoteResponse> {
+        ): HttpResponseFor<AuthRule> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("authRuleToken", params.authRuleToken())
