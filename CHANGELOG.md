@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.113.0 (2025-11-21)
+
+Full Changelog: [v0.112.0...v0.113.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.112.0...v0.113.0)
+
+### Features
+
+* **api:** add WALLET_RECOMMENDATION_REASONS attribute for tokenization rules ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+* **api:** provide a unified model for AuthRule ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+
+
+### Bug Fixes
+
+* **api:** fix examples in spec that were not fully valid ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+* **api:** make certain payoff fields nullable ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+
 ## 0.112.0 (2025-11-20)
 
 Full Changelog: [v0.111.0...v0.112.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.111.0...v0.112.0)
