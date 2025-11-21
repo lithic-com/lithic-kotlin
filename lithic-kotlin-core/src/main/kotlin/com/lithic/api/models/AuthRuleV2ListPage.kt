@@ -14,14 +14,14 @@ private constructor(
     private val service: V2Service,
     private val params: AuthRuleV2ListParams,
     private val response: AuthRuleV2ListPageResponse,
-) : Page<V2ListResponse> {
+) : Page<AuthRule> {
 
     /**
      * Delegates to [AuthRuleV2ListPageResponse], but gracefully handles missing data.
      *
      * @see AuthRuleV2ListPageResponse.data
      */
-    fun data(): List<V2ListResponse> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<AuthRule> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [AuthRuleV2ListPageResponse], but gracefully handles missing data.
@@ -30,7 +30,7 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun items(): List<V2ListResponse> = data()
+    override fun items(): List<AuthRule> = data()
 
     override fun hasNextPage(): Boolean = items().isNotEmpty()
 
@@ -43,7 +43,7 @@ private constructor(
 
     override fun nextPage(): AuthRuleV2ListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager<V2ListResponse> = AutoPager.from(this)
+    fun autoPager(): AutoPager<AuthRule> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): AuthRuleV2ListParams = params
