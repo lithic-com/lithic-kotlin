@@ -33,6 +33,8 @@ import com.lithic.api.services.blocking.BalanceService
 import com.lithic.api.services.blocking.BalanceServiceImpl
 import com.lithic.api.services.blocking.BookTransferService
 import com.lithic.api.services.blocking.BookTransferServiceImpl
+import com.lithic.api.services.blocking.CardBulkOrderService
+import com.lithic.api.services.blocking.CardBulkOrderServiceImpl
 import com.lithic.api.services.blocking.CardProgramService
 import com.lithic.api.services.blocking.CardProgramServiceImpl
 import com.lithic.api.services.blocking.CardService
@@ -57,6 +59,8 @@ import com.lithic.api.services.blocking.FraudService
 import com.lithic.api.services.blocking.FraudServiceImpl
 import com.lithic.api.services.blocking.FundingEventService
 import com.lithic.api.services.blocking.FundingEventServiceImpl
+import com.lithic.api.services.blocking.InternalTransactionService
+import com.lithic.api.services.blocking.InternalTransactionServiceImpl
 import com.lithic.api.services.blocking.ManagementOperationService
 import com.lithic.api.services.blocking.ManagementOperationServiceImpl
 import com.lithic.api.services.blocking.NetworkProgramService
@@ -118,6 +122,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
     }
 
     private val cards: CardService by lazy { CardServiceImpl(clientOptionsWithUserAgent) }
+
+    private val cardBulkOrders: CardBulkOrderService by lazy {
+        CardBulkOrderServiceImpl(clientOptionsWithUserAgent)
+    }
 
     private val balances: BalanceService by lazy { BalanceServiceImpl(clientOptionsWithUserAgent) }
 
@@ -183,6 +191,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         ManagementOperationServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val internalTransaction: InternalTransactionService by lazy {
+        InternalTransactionServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val fundingEvents: FundingEventService by lazy {
         FundingEventServiceImpl(clientOptionsWithUserAgent)
     }
@@ -217,6 +229,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
     override fun tokenizations(): TokenizationService = tokenizations
 
     override fun cards(): CardService = cards
+
+    override fun cardBulkOrders(): CardBulkOrderService = cardBulkOrders
 
     override fun balances(): BalanceService = balances
 
@@ -255,6 +269,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
     override fun externalPayments(): ExternalPaymentService = externalPayments
 
     override fun managementOperations(): ManagementOperationService = managementOperations
+
+    override fun internalTransaction(): InternalTransactionService = internalTransaction
 
     override fun fundingEvents(): FundingEventService = fundingEvents
 
@@ -306,6 +322,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
         private val cards: CardService.WithRawResponse by lazy {
             CardServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val cardBulkOrders: CardBulkOrderService.WithRawResponse by lazy {
+            CardBulkOrderServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val balances: BalanceService.WithRawResponse by lazy {
@@ -384,6 +404,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
             ManagementOperationServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val internalTransaction: InternalTransactionService.WithRawResponse by lazy {
+            InternalTransactionServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val fundingEvents: FundingEventService.WithRawResponse by lazy {
             FundingEventServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -420,6 +444,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         override fun tokenizations(): TokenizationService.WithRawResponse = tokenizations
 
         override fun cards(): CardService.WithRawResponse = cards
+
+        override fun cardBulkOrders(): CardBulkOrderService.WithRawResponse = cardBulkOrders
 
         override fun balances(): BalanceService.WithRawResponse = balances
 
@@ -463,6 +489,9 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
         override fun managementOperations(): ManagementOperationService.WithRawResponse =
             managementOperations
+
+        override fun internalTransaction(): InternalTransactionService.WithRawResponse =
+            internalTransaction
 
         override fun fundingEvents(): FundingEventService.WithRawResponse = fundingEvents
 

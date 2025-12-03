@@ -167,7 +167,7 @@ internal class ExternalBankAccountServiceAsyncTest {
                 .build()
         val externalBankAccountServiceAsync = client.externalBankAccounts()
 
-        val response =
+        val externalBankAccount =
             externalBankAccountServiceAsync.retryPrenote(
                 ExternalBankAccountRetryPrenoteParams.builder()
                     .externalBankAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -175,7 +175,7 @@ internal class ExternalBankAccountServiceAsyncTest {
                     .build()
             )
 
-        response.validate()
+        externalBankAccount.validate()
     }
 
     @Test
@@ -187,9 +187,9 @@ internal class ExternalBankAccountServiceAsyncTest {
                 .build()
         val externalBankAccountServiceAsync = client.externalBankAccounts()
 
-        val response =
+        val externalBankAccount =
             externalBankAccountServiceAsync.unpause("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
-        response.validate()
+        externalBankAccount.validate()
     }
 }

@@ -14,14 +14,14 @@ private constructor(
     private val service: FundingEventService,
     private val params: FundingEventListParams,
     private val response: FundingEventListPageResponse,
-) : Page<FundingEventListResponse> {
+) : Page<FundingEvent> {
 
     /**
      * Delegates to [FundingEventListPageResponse], but gracefully handles missing data.
      *
      * @see FundingEventListPageResponse.data
      */
-    fun data(): List<FundingEventListResponse> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<FundingEvent> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [FundingEventListPageResponse], but gracefully handles missing data.
@@ -30,7 +30,7 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun items(): List<FundingEventListResponse> = data()
+    override fun items(): List<FundingEvent> = data()
 
     override fun hasNextPage(): Boolean = items().isNotEmpty()
 
@@ -43,7 +43,7 @@ private constructor(
 
     override fun nextPage(): FundingEventListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager<FundingEventListResponse> = AutoPager.from(this)
+    fun autoPager(): AutoPager<FundingEvent> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): FundingEventListParams = params
