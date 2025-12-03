@@ -6,7 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
-import com.lithic.api.models.NetworkTotalRetrieveResponse
+import com.lithic.api.models.NetworkTotal
 import com.lithic.api.models.ReportSettlementNetworkTotalListPageAsync
 import com.lithic.api.models.ReportSettlementNetworkTotalListParams
 import com.lithic.api.models.ReportSettlementNetworkTotalRetrieveParams
@@ -31,20 +31,16 @@ interface NetworkTotalServiceAsync {
         params: ReportSettlementNetworkTotalRetrieveParams =
             ReportSettlementNetworkTotalRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NetworkTotalRetrieveResponse =
-        retrieve(params.toBuilder().token(token).build(), requestOptions)
+    ): NetworkTotal = retrieve(params.toBuilder().token(token).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
         params: ReportSettlementNetworkTotalRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NetworkTotalRetrieveResponse
+    ): NetworkTotal
 
     /** @see retrieve */
-    suspend fun retrieve(
-        token: String,
-        requestOptions: RequestOptions,
-    ): NetworkTotalRetrieveResponse =
+    suspend fun retrieve(token: String, requestOptions: RequestOptions): NetworkTotal =
         retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
     /** List network total records with optional filters. Not available in sandbox. */
@@ -83,7 +79,7 @@ interface NetworkTotalServiceAsync {
             params: ReportSettlementNetworkTotalRetrieveParams =
                 ReportSettlementNetworkTotalRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<NetworkTotalRetrieveResponse> =
+        ): HttpResponseFor<NetworkTotal> =
             retrieve(params.toBuilder().token(token).build(), requestOptions)
 
         /** @see retrieve */
@@ -91,14 +87,14 @@ interface NetworkTotalServiceAsync {
         suspend fun retrieve(
             params: ReportSettlementNetworkTotalRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<NetworkTotalRetrieveResponse>
+        ): HttpResponseFor<NetworkTotal>
 
         /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             token: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<NetworkTotalRetrieveResponse> =
+        ): HttpResponseFor<NetworkTotal> =
             retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
         /**

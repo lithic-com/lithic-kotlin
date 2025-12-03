@@ -18,7 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 /** Represents a 3DS authentication */
-class AuthenticationRetrieveResponse
+class ThreeDSAuthentication
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
@@ -500,8 +500,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [AuthenticationRetrieveResponse].
+         * Returns a mutable builder for constructing an instance of [ThreeDSAuthentication].
          *
          * The following fields are required:
          * ```kotlin
@@ -521,7 +520,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [AuthenticationRetrieveResponse]. */
+    /** A builder for [ThreeDSAuthentication]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -549,30 +548,29 @@ private constructor(
         private var transaction: JsonField<Transaction> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(authenticationRetrieveResponse: AuthenticationRetrieveResponse) = apply {
-            token = authenticationRetrieveResponse.token
-            accountType = authenticationRetrieveResponse.accountType
-            authenticationResult = authenticationRetrieveResponse.authenticationResult
-            cardExpiryCheck = authenticationRetrieveResponse.cardExpiryCheck
-            cardToken = authenticationRetrieveResponse.cardToken
-            cardholder = authenticationRetrieveResponse.cardholder
-            channel = authenticationRetrieveResponse.channel
-            created = authenticationRetrieveResponse.created
-            merchant = authenticationRetrieveResponse.merchant
-            messageCategory = authenticationRetrieveResponse.messageCategory
+        internal fun from(threeDSAuthentication: ThreeDSAuthentication) = apply {
+            token = threeDSAuthentication.token
+            accountType = threeDSAuthentication.accountType
+            authenticationResult = threeDSAuthentication.authenticationResult
+            cardExpiryCheck = threeDSAuthentication.cardExpiryCheck
+            cardToken = threeDSAuthentication.cardToken
+            cardholder = threeDSAuthentication.cardholder
+            channel = threeDSAuthentication.channel
+            created = threeDSAuthentication.created
+            merchant = threeDSAuthentication.merchant
+            messageCategory = threeDSAuthentication.messageCategory
             threeDSRequestorChallengeIndicator =
-                authenticationRetrieveResponse.threeDSRequestorChallengeIndicator
-            additionalData = authenticationRetrieveResponse.additionalData
-            app = authenticationRetrieveResponse.app
-            authenticationRequestType = authenticationRetrieveResponse.authenticationRequestType
-            browser = authenticationRetrieveResponse.browser
-            challengeMetadata = authenticationRetrieveResponse.challengeMetadata
-            challengeOrchestratedBy = authenticationRetrieveResponse.challengeOrchestratedBy
-            decisionMadeBy = authenticationRetrieveResponse.decisionMadeBy
-            threeRiRequestType = authenticationRetrieveResponse.threeRiRequestType
-            transaction = authenticationRetrieveResponse.transaction
-            additionalProperties =
-                authenticationRetrieveResponse.additionalProperties.toMutableMap()
+                threeDSAuthentication.threeDSRequestorChallengeIndicator
+            additionalData = threeDSAuthentication.additionalData
+            app = threeDSAuthentication.app
+            authenticationRequestType = threeDSAuthentication.authenticationRequestType
+            browser = threeDSAuthentication.browser
+            challengeMetadata = threeDSAuthentication.challengeMetadata
+            challengeOrchestratedBy = threeDSAuthentication.challengeOrchestratedBy
+            decisionMadeBy = threeDSAuthentication.decisionMadeBy
+            threeRiRequestType = threeDSAuthentication.threeRiRequestType
+            transaction = threeDSAuthentication.transaction
+            additionalProperties = threeDSAuthentication.additionalProperties.toMutableMap()
         }
 
         /**
@@ -927,7 +925,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [AuthenticationRetrieveResponse].
+         * Returns an immutable instance of [ThreeDSAuthentication].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -948,8 +946,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): AuthenticationRetrieveResponse =
-            AuthenticationRetrieveResponse(
+        fun build(): ThreeDSAuthentication =
+            ThreeDSAuthentication(
                 checkRequired("token", token),
                 checkRequired("accountType", accountType),
                 checkRequired("authenticationResult", authenticationResult),
@@ -979,7 +977,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): AuthenticationRetrieveResponse = apply {
+    fun validate(): ThreeDSAuthentication = apply {
         if (validated) {
             return@apply
         }
@@ -8098,7 +8096,7 @@ private constructor(
             return true
         }
 
-        return other is AuthenticationRetrieveResponse &&
+        return other is ThreeDSAuthentication &&
             token == other.token &&
             accountType == other.accountType &&
             authenticationResult == other.authenticationResult &&
@@ -8151,5 +8149,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AuthenticationRetrieveResponse{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, threeRiRequestType=$threeRiRequestType, transaction=$transaction, additionalProperties=$additionalProperties}"
+        "ThreeDSAuthentication{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, threeRiRequestType=$threeRiRequestType, transaction=$transaction, additionalProperties=$additionalProperties}"
 }

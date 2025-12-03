@@ -17,8 +17,8 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.core.http.json
 import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
-import com.lithic.api.models.AuthenticationRetrieveResponse
 import com.lithic.api.models.AuthenticationSimulateResponse
+import com.lithic.api.models.ThreeDSAuthentication
 import com.lithic.api.models.ThreeDSAuthenticationRetrieveParams
 import com.lithic.api.models.ThreeDSAuthenticationSimulateOtpEntryParams
 import com.lithic.api.models.ThreeDSAuthenticationSimulateParams
@@ -40,7 +40,7 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
     override suspend fun retrieve(
         params: ThreeDSAuthenticationRetrieveParams,
         requestOptions: RequestOptions,
-    ): AuthenticationRetrieveResponse =
+    ): ThreeDSAuthentication =
         // get /v1/three_ds_authentication/{three_ds_authentication_token}
         withRawResponse().retrieve(params, requestOptions).parse()
 
@@ -72,13 +72,13 @@ internal constructor(private val clientOptions: ClientOptions) : AuthenticationS
                 clientOptions.toBuilder().apply(modifier).build()
             )
 
-        private val retrieveHandler: Handler<AuthenticationRetrieveResponse> =
-            jsonHandler<AuthenticationRetrieveResponse>(clientOptions.jsonMapper)
+        private val retrieveHandler: Handler<ThreeDSAuthentication> =
+            jsonHandler<ThreeDSAuthentication>(clientOptions.jsonMapper)
 
         override suspend fun retrieve(
             params: ThreeDSAuthenticationRetrieveParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AuthenticationRetrieveResponse> {
+        ): HttpResponseFor<ThreeDSAuthentication> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("threeDSAuthenticationToken", params.threeDSAuthenticationToken())

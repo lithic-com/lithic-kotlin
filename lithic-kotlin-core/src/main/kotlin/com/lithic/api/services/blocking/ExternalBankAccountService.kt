@@ -6,6 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.models.ExternalBankAccount
 import com.lithic.api.models.ExternalBankAccountCreateParams
 import com.lithic.api.models.ExternalBankAccountCreateResponse
 import com.lithic.api.models.ExternalBankAccountListPage
@@ -15,9 +16,7 @@ import com.lithic.api.models.ExternalBankAccountRetrieveResponse
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsParams
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsResponse
 import com.lithic.api.models.ExternalBankAccountRetryPrenoteParams
-import com.lithic.api.models.ExternalBankAccountRetryPrenoteResponse
 import com.lithic.api.models.ExternalBankAccountUnpauseParams
-import com.lithic.api.models.ExternalBankAccountUnpauseResponse
 import com.lithic.api.models.ExternalBankAccountUpdateParams
 import com.lithic.api.models.ExternalBankAccountUpdateResponse
 import com.lithic.api.services.blocking.externalBankAccounts.MicroDepositService
@@ -141,7 +140,7 @@ interface ExternalBankAccountService {
         params: ExternalBankAccountRetryPrenoteParams =
             ExternalBankAccountRetryPrenoteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalBankAccountRetryPrenoteResponse =
+    ): ExternalBankAccount =
         retryPrenote(
             params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
             requestOptions,
@@ -151,13 +150,13 @@ interface ExternalBankAccountService {
     fun retryPrenote(
         params: ExternalBankAccountRetryPrenoteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalBankAccountRetryPrenoteResponse
+    ): ExternalBankAccount
 
     /** @see retryPrenote */
     fun retryPrenote(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
-    ): ExternalBankAccountRetryPrenoteResponse =
+    ): ExternalBankAccount =
         retryPrenote(
             externalBankAccountToken,
             ExternalBankAccountRetryPrenoteParams.none(),
@@ -169,7 +168,7 @@ interface ExternalBankAccountService {
         externalBankAccountToken: String,
         params: ExternalBankAccountUnpauseParams = ExternalBankAccountUnpauseParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalBankAccountUnpauseResponse =
+    ): ExternalBankAccount =
         unpause(
             params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
             requestOptions,
@@ -179,13 +178,13 @@ interface ExternalBankAccountService {
     fun unpause(
         params: ExternalBankAccountUnpauseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): ExternalBankAccountUnpauseResponse
+    ): ExternalBankAccount
 
     /** @see unpause */
     fun unpause(
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
-    ): ExternalBankAccountUnpauseResponse =
+    ): ExternalBankAccount =
         unpause(externalBankAccountToken, ExternalBankAccountUnpauseParams.none(), requestOptions)
 
     /**
@@ -350,7 +349,7 @@ interface ExternalBankAccountService {
             params: ExternalBankAccountRetryPrenoteParams =
                 ExternalBankAccountRetryPrenoteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalBankAccountRetryPrenoteResponse> =
+        ): HttpResponseFor<ExternalBankAccount> =
             retryPrenote(
                 params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
                 requestOptions,
@@ -361,14 +360,14 @@ interface ExternalBankAccountService {
         fun retryPrenote(
             params: ExternalBankAccountRetryPrenoteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalBankAccountRetryPrenoteResponse>
+        ): HttpResponseFor<ExternalBankAccount>
 
         /** @see retryPrenote */
         @MustBeClosed
         fun retryPrenote(
             externalBankAccountToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ExternalBankAccountRetryPrenoteResponse> =
+        ): HttpResponseFor<ExternalBankAccount> =
             retryPrenote(
                 externalBankAccountToken,
                 ExternalBankAccountRetryPrenoteParams.none(),
@@ -385,7 +384,7 @@ interface ExternalBankAccountService {
             externalBankAccountToken: String,
             params: ExternalBankAccountUnpauseParams = ExternalBankAccountUnpauseParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalBankAccountUnpauseResponse> =
+        ): HttpResponseFor<ExternalBankAccount> =
             unpause(
                 params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
                 requestOptions,
@@ -396,14 +395,14 @@ interface ExternalBankAccountService {
         fun unpause(
             params: ExternalBankAccountUnpauseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<ExternalBankAccountUnpauseResponse>
+        ): HttpResponseFor<ExternalBankAccount>
 
         /** @see unpause */
         @MustBeClosed
         fun unpause(
             externalBankAccountToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<ExternalBankAccountUnpauseResponse> =
+        ): HttpResponseFor<ExternalBankAccount> =
             unpause(
                 externalBankAccountToken,
                 ExternalBankAccountUnpauseParams.none(),

@@ -1709,7 +1709,7 @@ private constructor(
         private val authorizationCode: JsonField<String>,
         private val avs: JsonField<Transaction.Avs>,
         private val cardToken: JsonField<String>,
-        private val cardholderAuthentication: JsonField<Transaction.CardholderAuthentication>,
+        private val cardholderAuthentication: JsonField<CardholderAuthentication>,
         private val created: JsonField<OffsetDateTime>,
         private val financialAccountToken: JsonField<String>,
         private val merchant: JsonField<Merchant>,
@@ -1722,7 +1722,7 @@ private constructor(
         private val result: JsonField<Transaction.DeclineResult>,
         private val settledAmount: JsonField<Long>,
         private val status: JsonField<Transaction.Status>,
-        private val tokenInfo: JsonField<Transaction.TokenInfo>,
+        private val tokenInfo: JsonField<TokenInfo>,
         private val updated: JsonField<OffsetDateTime>,
         private val events: JsonField<List<Transaction.TransactionEvent>>,
         private val family: JsonField<Family>,
@@ -1757,8 +1757,7 @@ private constructor(
             cardToken: JsonField<String> = JsonMissing.of(),
             @JsonProperty("cardholder_authentication")
             @ExcludeMissing
-            cardholderAuthentication: JsonField<Transaction.CardholderAuthentication> =
-                JsonMissing.of(),
+            cardholderAuthentication: JsonField<CardholderAuthentication> = JsonMissing.of(),
             @JsonProperty("created")
             @ExcludeMissing
             created: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -1795,7 +1794,7 @@ private constructor(
             status: JsonField<Transaction.Status> = JsonMissing.of(),
             @JsonProperty("token_info")
             @ExcludeMissing
-            tokenInfo: JsonField<Transaction.TokenInfo> = JsonMissing.of(),
+            tokenInfo: JsonField<TokenInfo> = JsonMissing.of(),
             @JsonProperty("updated")
             @ExcludeMissing
             updated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -1954,7 +1953,7 @@ private constructor(
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun cardholderAuthentication(): Transaction.CardholderAuthentication? =
+        fun cardholderAuthentication(): CardholderAuthentication? =
             cardholderAuthentication.getNullable("cardholder_authentication")
 
         /**
@@ -2059,7 +2058,7 @@ private constructor(
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun tokenInfo(): Transaction.TokenInfo? = tokenInfo.getNullable("token_info")
+        fun tokenInfo(): TokenInfo? = tokenInfo.getNullable("token_info")
 
         /**
          * Date and time when the transaction last updated. UTC time zone.
@@ -2182,7 +2181,7 @@ private constructor(
          */
         @JsonProperty("cardholder_authentication")
         @ExcludeMissing
-        fun _cardholderAuthentication(): JsonField<Transaction.CardholderAuthentication> =
+        fun _cardholderAuthentication(): JsonField<CardholderAuthentication> =
             cardholderAuthentication
 
         /**
@@ -2304,7 +2303,7 @@ private constructor(
          */
         @JsonProperty("token_info")
         @ExcludeMissing
-        fun _tokenInfo(): JsonField<Transaction.TokenInfo> = tokenInfo
+        fun _tokenInfo(): JsonField<TokenInfo> = tokenInfo
 
         /**
          * Returns the raw JSON value of [updated].
@@ -2392,8 +2391,7 @@ private constructor(
             private var authorizationCode: JsonField<String>? = null
             private var avs: JsonField<Transaction.Avs>? = null
             private var cardToken: JsonField<String>? = null
-            private var cardholderAuthentication: JsonField<Transaction.CardholderAuthentication>? =
-                null
+            private var cardholderAuthentication: JsonField<CardholderAuthentication>? = null
             private var created: JsonField<OffsetDateTime>? = null
             private var financialAccountToken: JsonField<String>? = null
             private var merchant: JsonField<Merchant>? = null
@@ -2406,7 +2404,7 @@ private constructor(
             private var result: JsonField<Transaction.DeclineResult>? = null
             private var settledAmount: JsonField<Long>? = null
             private var status: JsonField<Transaction.Status>? = null
-            private var tokenInfo: JsonField<Transaction.TokenInfo>? = null
+            private var tokenInfo: JsonField<TokenInfo>? = null
             private var updated: JsonField<OffsetDateTime>? = null
             private var events: JsonField<MutableList<Transaction.TransactionEvent>>? = null
             private var family: JsonField<Family>? = null
@@ -2612,19 +2610,18 @@ private constructor(
              */
             fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
 
-            fun cardholderAuthentication(
-                cardholderAuthentication: Transaction.CardholderAuthentication?
-            ) = cardholderAuthentication(JsonField.ofNullable(cardholderAuthentication))
+            fun cardholderAuthentication(cardholderAuthentication: CardholderAuthentication?) =
+                cardholderAuthentication(JsonField.ofNullable(cardholderAuthentication))
 
             /**
              * Sets [Builder.cardholderAuthentication] to an arbitrary JSON value.
              *
              * You should usually call [Builder.cardholderAuthentication] with a well-typed
-             * [Transaction.CardholderAuthentication] value instead. This method is primarily for
-             * setting the field to an undocumented or not yet supported value.
+             * [CardholderAuthentication] value instead. This method is primarily for setting the
+             * field to an undocumented or not yet supported value.
              */
             fun cardholderAuthentication(
-                cardholderAuthentication: JsonField<Transaction.CardholderAuthentication>
+                cardholderAuthentication: JsonField<CardholderAuthentication>
             ) = apply { this.cardholderAuthentication = cardholderAuthentication }
 
             /** Date and time when the transaction first occurred. UTC time zone. */
@@ -2827,19 +2824,16 @@ private constructor(
              */
             fun status(status: JsonField<Transaction.Status>) = apply { this.status = status }
 
-            fun tokenInfo(tokenInfo: Transaction.TokenInfo?) =
-                tokenInfo(JsonField.ofNullable(tokenInfo))
+            fun tokenInfo(tokenInfo: TokenInfo?) = tokenInfo(JsonField.ofNullable(tokenInfo))
 
             /**
              * Sets [Builder.tokenInfo] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.tokenInfo] with a well-typed [Transaction.TokenInfo]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
+             * You should usually call [Builder.tokenInfo] with a well-typed [TokenInfo] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
              */
-            fun tokenInfo(tokenInfo: JsonField<Transaction.TokenInfo>) = apply {
-                this.tokenInfo = tokenInfo
-            }
+            fun tokenInfo(tokenInfo: JsonField<TokenInfo>) = apply { this.tokenInfo = tokenInfo }
 
             /** Date and time when the transaction last updated. UTC time zone. */
             fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
