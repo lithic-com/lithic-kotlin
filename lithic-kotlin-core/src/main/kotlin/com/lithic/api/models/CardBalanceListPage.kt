@@ -14,14 +14,14 @@ private constructor(
     private val service: BalanceService,
     private val params: CardBalanceListParams,
     private val response: CardBalanceListPageResponse,
-) : Page<BalanceListResponse> {
+) : Page<FinancialAccountBalance> {
 
     /**
      * Delegates to [CardBalanceListPageResponse], but gracefully handles missing data.
      *
      * @see CardBalanceListPageResponse.data
      */
-    fun data(): List<BalanceListResponse> = response._data().getNullable("data") ?: emptyList()
+    fun data(): List<FinancialAccountBalance> = response._data().getNullable("data") ?: emptyList()
 
     /**
      * Delegates to [CardBalanceListPageResponse], but gracefully handles missing data.
@@ -30,7 +30,7 @@ private constructor(
      */
     fun hasMore(): Boolean? = response._hasMore().getNullable("has_more")
 
-    override fun items(): List<BalanceListResponse> = data()
+    override fun items(): List<FinancialAccountBalance> = data()
 
     override fun hasNextPage(): Boolean = false
 
@@ -39,7 +39,7 @@ private constructor(
 
     override fun nextPage(): CardBalanceListPage = service.list(nextPageParams())
 
-    fun autoPager(): AutoPager<BalanceListResponse> = AutoPager.from(this)
+    fun autoPager(): AutoPager<FinancialAccountBalance> = AutoPager.from(this)
 
     /** The parameters that were used to request this page. */
     fun params(): CardBalanceListParams = params

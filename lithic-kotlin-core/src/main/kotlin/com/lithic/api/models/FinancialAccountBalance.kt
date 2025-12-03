@@ -18,7 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 /** Balance of a Financial Account */
-class BalanceListResponse
+class FinancialAccountBalance
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
@@ -253,7 +253,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [BalanceListResponse].
+         * Returns a mutable builder for constructing an instance of [FinancialAccountBalance].
          *
          * The following fields are required:
          * ```kotlin
@@ -272,7 +272,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [BalanceListResponse]. */
+    /** A builder for [FinancialAccountBalance]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -287,18 +287,18 @@ private constructor(
         private var updated: JsonField<OffsetDateTime>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(balanceListResponse: BalanceListResponse) = apply {
-            token = balanceListResponse.token
-            availableAmount = balanceListResponse.availableAmount
-            created = balanceListResponse.created
-            currency = balanceListResponse.currency
-            lastTransactionEventToken = balanceListResponse.lastTransactionEventToken
-            lastTransactionToken = balanceListResponse.lastTransactionToken
-            pendingAmount = balanceListResponse.pendingAmount
-            totalAmount = balanceListResponse.totalAmount
-            type = balanceListResponse.type
-            updated = balanceListResponse.updated
-            additionalProperties = balanceListResponse.additionalProperties.toMutableMap()
+        internal fun from(financialAccountBalance: FinancialAccountBalance) = apply {
+            token = financialAccountBalance.token
+            availableAmount = financialAccountBalance.availableAmount
+            created = financialAccountBalance.created
+            currency = financialAccountBalance.currency
+            lastTransactionEventToken = financialAccountBalance.lastTransactionEventToken
+            lastTransactionToken = financialAccountBalance.lastTransactionToken
+            pendingAmount = financialAccountBalance.pendingAmount
+            totalAmount = financialAccountBalance.totalAmount
+            type = financialAccountBalance.type
+            updated = financialAccountBalance.updated
+            additionalProperties = financialAccountBalance.additionalProperties.toMutableMap()
         }
 
         /** Globally unique identifier for the financial account that holds this balance. */
@@ -459,7 +459,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [BalanceListResponse].
+         * Returns an immutable instance of [FinancialAccountBalance].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -479,8 +479,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): BalanceListResponse =
-            BalanceListResponse(
+        fun build(): FinancialAccountBalance =
+            FinancialAccountBalance(
                 checkRequired("token", token),
                 checkRequired("availableAmount", availableAmount),
                 checkRequired("created", created),
@@ -497,7 +497,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): BalanceListResponse = apply {
+    fun validate(): FinancialAccountBalance = apply {
         if (validated) {
             return@apply
         }
@@ -683,7 +683,7 @@ private constructor(
             return true
         }
 
-        return other is BalanceListResponse &&
+        return other is FinancialAccountBalance &&
             token == other.token &&
             availableAmount == other.availableAmount &&
             created == other.created &&
@@ -716,5 +716,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BalanceListResponse{token=$token, availableAmount=$availableAmount, created=$created, currency=$currency, lastTransactionEventToken=$lastTransactionEventToken, lastTransactionToken=$lastTransactionToken, pendingAmount=$pendingAmount, totalAmount=$totalAmount, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
+        "FinancialAccountBalance{token=$token, availableAmount=$availableAmount, created=$created, currency=$currency, lastTransactionEventToken=$lastTransactionEventToken, lastTransactionToken=$lastTransactionToken, pendingAmount=$pendingAmount, totalAmount=$totalAmount, type=$type, updated=$updated, additionalProperties=$additionalProperties}"
 }

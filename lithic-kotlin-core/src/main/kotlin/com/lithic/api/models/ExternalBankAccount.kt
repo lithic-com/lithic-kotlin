@@ -18,7 +18,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-class ExternalBankAccountRetryPrenoteResponse
+class ExternalBankAccount
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
@@ -500,8 +500,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of
-         * [ExternalBankAccountRetryPrenoteResponse].
+         * Returns a mutable builder for constructing an instance of [ExternalBankAccount].
          *
          * The following fields are required:
          * ```kotlin
@@ -523,7 +522,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [ExternalBankAccountRetryPrenoteResponse]. */
+    /** A builder for [ExternalBankAccount]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -550,34 +549,30 @@ private constructor(
         private var verificationFailedReason: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(
-            externalBankAccountRetryPrenoteResponse: ExternalBankAccountRetryPrenoteResponse
-        ) = apply {
-            token = externalBankAccountRetryPrenoteResponse.token
-            country = externalBankAccountRetryPrenoteResponse.country
-            created = externalBankAccountRetryPrenoteResponse.created
-            currency = externalBankAccountRetryPrenoteResponse.currency
-            lastFour = externalBankAccountRetryPrenoteResponse.lastFour
-            owner = externalBankAccountRetryPrenoteResponse.owner
-            ownerType = externalBankAccountRetryPrenoteResponse.ownerType
-            routingNumber = externalBankAccountRetryPrenoteResponse.routingNumber
-            state = externalBankAccountRetryPrenoteResponse.state
-            type = externalBankAccountRetryPrenoteResponse.type
-            verificationAttempts = externalBankAccountRetryPrenoteResponse.verificationAttempts
-            verificationMethod = externalBankAccountRetryPrenoteResponse.verificationMethod
-            verificationState = externalBankAccountRetryPrenoteResponse.verificationState
-            accountToken = externalBankAccountRetryPrenoteResponse.accountToken
-            address = externalBankAccountRetryPrenoteResponse.address
-            companyId = externalBankAccountRetryPrenoteResponse.companyId
-            dob = externalBankAccountRetryPrenoteResponse.dob
-            doingBusinessAs = externalBankAccountRetryPrenoteResponse.doingBusinessAs
-            financialAccountToken = externalBankAccountRetryPrenoteResponse.financialAccountToken
-            name = externalBankAccountRetryPrenoteResponse.name
-            userDefinedId = externalBankAccountRetryPrenoteResponse.userDefinedId
-            verificationFailedReason =
-                externalBankAccountRetryPrenoteResponse.verificationFailedReason
-            additionalProperties =
-                externalBankAccountRetryPrenoteResponse.additionalProperties.toMutableMap()
+        internal fun from(externalBankAccount: ExternalBankAccount) = apply {
+            token = externalBankAccount.token
+            country = externalBankAccount.country
+            created = externalBankAccount.created
+            currency = externalBankAccount.currency
+            lastFour = externalBankAccount.lastFour
+            owner = externalBankAccount.owner
+            ownerType = externalBankAccount.ownerType
+            routingNumber = externalBankAccount.routingNumber
+            state = externalBankAccount.state
+            type = externalBankAccount.type
+            verificationAttempts = externalBankAccount.verificationAttempts
+            verificationMethod = externalBankAccount.verificationMethod
+            verificationState = externalBankAccount.verificationState
+            accountToken = externalBankAccount.accountToken
+            address = externalBankAccount.address
+            companyId = externalBankAccount.companyId
+            dob = externalBankAccount.dob
+            doingBusinessAs = externalBankAccount.doingBusinessAs
+            financialAccountToken = externalBankAccount.financialAccountToken
+            name = externalBankAccount.name
+            userDefinedId = externalBankAccount.userDefinedId
+            verificationFailedReason = externalBankAccount.verificationFailedReason
+            additionalProperties = externalBankAccount.additionalProperties.toMutableMap()
         }
 
         /**
@@ -904,7 +899,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [ExternalBankAccountRetryPrenoteResponse].
+         * Returns an immutable instance of [ExternalBankAccount].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -927,8 +922,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): ExternalBankAccountRetryPrenoteResponse =
-            ExternalBankAccountRetryPrenoteResponse(
+        fun build(): ExternalBankAccount =
+            ExternalBankAccount(
                 checkRequired("token", token),
                 checkRequired("country", country),
                 checkRequired("created", created),
@@ -957,7 +952,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): ExternalBankAccountRetryPrenoteResponse = apply {
+    fun validate(): ExternalBankAccount = apply {
         if (validated) {
             return@apply
         }
@@ -1432,7 +1427,7 @@ private constructor(
             return true
         }
 
-        return other is ExternalBankAccountRetryPrenoteResponse &&
+        return other is ExternalBankAccount &&
             token == other.token &&
             country == other.country &&
             created == other.created &&
@@ -1489,5 +1484,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ExternalBankAccountRetryPrenoteResponse{token=$token, country=$country, created=$created, currency=$currency, lastFour=$lastFour, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, state=$state, type=$type, verificationAttempts=$verificationAttempts, verificationMethod=$verificationMethod, verificationState=$verificationState, accountToken=$accountToken, address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, financialAccountToken=$financialAccountToken, name=$name, userDefinedId=$userDefinedId, verificationFailedReason=$verificationFailedReason, additionalProperties=$additionalProperties}"
+        "ExternalBankAccount{token=$token, country=$country, created=$created, currency=$currency, lastFour=$lastFour, owner=$owner, ownerType=$ownerType, routingNumber=$routingNumber, state=$state, type=$type, verificationAttempts=$verificationAttempts, verificationMethod=$verificationMethod, verificationState=$verificationState, accountToken=$accountToken, address=$address, companyId=$companyId, dob=$dob, doingBusinessAs=$doingBusinessAs, financialAccountToken=$financialAccountToken, name=$name, userDefinedId=$userDefinedId, verificationFailedReason=$verificationFailedReason, additionalProperties=$additionalProperties}"
 }

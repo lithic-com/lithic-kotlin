@@ -20,7 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-class FundingEventRetrieveResponse
+class FundingEvent
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
@@ -224,7 +224,7 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [FundingEventRetrieveResponse].
+         * Returns a mutable builder for constructing an instance of [FundingEvent].
          *
          * The following fields are required:
          * ```kotlin
@@ -241,7 +241,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [FundingEventRetrieveResponse]. */
+    /** A builder for [FundingEvent]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -254,18 +254,17 @@ private constructor(
         private var updated: JsonField<OffsetDateTime>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(fundingEventRetrieveResponse: FundingEventRetrieveResponse) = apply {
-            token = fundingEventRetrieveResponse.token
-            collectionResourceType = fundingEventRetrieveResponse.collectionResourceType
-            collectionTokens =
-                fundingEventRetrieveResponse.collectionTokens.map { it.toMutableList() }
-            created = fundingEventRetrieveResponse.created
-            highWatermark = fundingEventRetrieveResponse.highWatermark
+        internal fun from(fundingEvent: FundingEvent) = apply {
+            token = fundingEvent.token
+            collectionResourceType = fundingEvent.collectionResourceType
+            collectionTokens = fundingEvent.collectionTokens.map { it.toMutableList() }
+            created = fundingEvent.created
+            highWatermark = fundingEvent.highWatermark
             networkSettlementSummary =
-                fundingEventRetrieveResponse.networkSettlementSummary.map { it.toMutableList() }
-            previousHighWatermark = fundingEventRetrieveResponse.previousHighWatermark
-            updated = fundingEventRetrieveResponse.updated
-            additionalProperties = fundingEventRetrieveResponse.additionalProperties.toMutableMap()
+                fundingEvent.networkSettlementSummary.map { it.toMutableList() }
+            previousHighWatermark = fundingEvent.previousHighWatermark
+            updated = fundingEvent.updated
+            additionalProperties = fundingEvent.additionalProperties.toMutableMap()
         }
 
         /** Unique token ID */
@@ -428,7 +427,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [FundingEventRetrieveResponse].
+         * Returns an immutable instance of [FundingEvent].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -446,8 +445,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): FundingEventRetrieveResponse =
-            FundingEventRetrieveResponse(
+        fun build(): FundingEvent =
+            FundingEvent(
                 checkRequired("token", token),
                 checkRequired("collectionResourceType", collectionResourceType),
                 checkRequired("collectionTokens", collectionTokens).map { it.toImmutable() },
@@ -464,7 +463,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): FundingEventRetrieveResponse = apply {
+    fun validate(): FundingEvent = apply {
         if (validated) {
             return@apply
         }
@@ -850,7 +849,7 @@ private constructor(
             return true
         }
 
-        return other is FundingEventRetrieveResponse &&
+        return other is FundingEvent &&
             token == other.token &&
             collectionResourceType == other.collectionResourceType &&
             collectionTokens == other.collectionTokens &&
@@ -879,5 +878,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FundingEventRetrieveResponse{token=$token, collectionResourceType=$collectionResourceType, collectionTokens=$collectionTokens, created=$created, highWatermark=$highWatermark, networkSettlementSummary=$networkSettlementSummary, previousHighWatermark=$previousHighWatermark, updated=$updated, additionalProperties=$additionalProperties}"
+        "FundingEvent{token=$token, collectionResourceType=$collectionResourceType, collectionTokens=$collectionTokens, created=$created, highWatermark=$highWatermark, networkSettlementSummary=$networkSettlementSummary, previousHighWatermark=$previousHighWatermark, updated=$updated, additionalProperties=$additionalProperties}"
 }

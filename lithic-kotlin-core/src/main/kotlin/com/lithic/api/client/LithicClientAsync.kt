@@ -16,6 +16,7 @@ import com.lithic.api.services.async.AuthRuleServiceAsync
 import com.lithic.api.services.async.AuthStreamEnrollmentServiceAsync
 import com.lithic.api.services.async.BalanceServiceAsync
 import com.lithic.api.services.async.BookTransferServiceAsync
+import com.lithic.api.services.async.CardBulkOrderServiceAsync
 import com.lithic.api.services.async.CardProgramServiceAsync
 import com.lithic.api.services.async.CardServiceAsync
 import com.lithic.api.services.async.CreditProductServiceAsync
@@ -28,6 +29,7 @@ import com.lithic.api.services.async.ExternalPaymentServiceAsync
 import com.lithic.api.services.async.FinancialAccountServiceAsync
 import com.lithic.api.services.async.FraudServiceAsync
 import com.lithic.api.services.async.FundingEventServiceAsync
+import com.lithic.api.services.async.InternalTransactionServiceAsync
 import com.lithic.api.services.async.ManagementOperationServiceAsync
 import com.lithic.api.services.async.NetworkProgramServiceAsync
 import com.lithic.api.services.async.PaymentServiceAsync
@@ -90,6 +92,8 @@ interface LithicClientAsync {
 
     fun cards(): CardServiceAsync
 
+    fun cardBulkOrders(): CardBulkOrderServiceAsync
+
     fun balances(): BalanceServiceAsync
 
     fun aggregateBalances(): AggregateBalanceServiceAsync
@@ -129,6 +133,8 @@ interface LithicClientAsync {
     fun externalPayments(): ExternalPaymentServiceAsync
 
     fun managementOperations(): ManagementOperationServiceAsync
+
+    fun internalTransaction(): InternalTransactionServiceAsync
 
     fun fundingEvents(): FundingEventServiceAsync
 
@@ -187,6 +193,8 @@ interface LithicClientAsync {
 
         fun cards(): CardServiceAsync.WithRawResponse
 
+        fun cardBulkOrders(): CardBulkOrderServiceAsync.WithRawResponse
+
         fun balances(): BalanceServiceAsync.WithRawResponse
 
         fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse
@@ -224,6 +232,8 @@ interface LithicClientAsync {
         fun externalPayments(): ExternalPaymentServiceAsync.WithRawResponse
 
         fun managementOperations(): ManagementOperationServiceAsync.WithRawResponse
+
+        fun internalTransaction(): InternalTransactionServiceAsync.WithRawResponse
 
         fun fundingEvents(): FundingEventServiceAsync.WithRawResponse
 

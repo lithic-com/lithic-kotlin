@@ -6,12 +6,12 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
+import com.lithic.api.models.FundingEvent
 import com.lithic.api.models.FundingEventListPageAsync
 import com.lithic.api.models.FundingEventListParams
 import com.lithic.api.models.FundingEventRetrieveDetailsParams
 import com.lithic.api.models.FundingEventRetrieveDetailsResponse
 import com.lithic.api.models.FundingEventRetrieveParams
-import com.lithic.api.models.FundingEventRetrieveResponse
 
 interface FundingEventServiceAsync {
 
@@ -32,20 +32,17 @@ interface FundingEventServiceAsync {
         fundingEventToken: String,
         params: FundingEventRetrieveParams = FundingEventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): FundingEventRetrieveResponse =
+    ): FundingEvent =
         retrieve(params.toBuilder().fundingEventToken(fundingEventToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
         params: FundingEventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): FundingEventRetrieveResponse
+    ): FundingEvent
 
     /** @see retrieve */
-    suspend fun retrieve(
-        fundingEventToken: String,
-        requestOptions: RequestOptions,
-    ): FundingEventRetrieveResponse =
+    suspend fun retrieve(fundingEventToken: String, requestOptions: RequestOptions): FundingEvent =
         retrieve(fundingEventToken, FundingEventRetrieveParams.none(), requestOptions)
 
     /** Get all funding events for program */
@@ -106,7 +103,7 @@ interface FundingEventServiceAsync {
             fundingEventToken: String,
             params: FundingEventRetrieveParams = FundingEventRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<FundingEventRetrieveResponse> =
+        ): HttpResponseFor<FundingEvent> =
             retrieve(
                 params.toBuilder().fundingEventToken(fundingEventToken).build(),
                 requestOptions,
@@ -117,14 +114,14 @@ interface FundingEventServiceAsync {
         suspend fun retrieve(
             params: FundingEventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<FundingEventRetrieveResponse>
+        ): HttpResponseFor<FundingEvent>
 
         /** @see retrieve */
         @MustBeClosed
         suspend fun retrieve(
             fundingEventToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<FundingEventRetrieveResponse> =
+        ): HttpResponseFor<FundingEvent> =
             retrieve(fundingEventToken, FundingEventRetrieveParams.none(), requestOptions)
 
         /**
