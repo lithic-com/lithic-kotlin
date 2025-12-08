@@ -973,6 +973,10 @@ private constructor(
 
             val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
+            val EXTERNAL_FEDNOW = of("EXTERNAL_FEDNOW")
+
+            val EXTERNAL_RTP = of("EXTERNAL_RTP")
+
             val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
@@ -983,6 +987,8 @@ private constructor(
             EXTERNAL_WIRE,
             EXTERNAL_ACH,
             EXTERNAL_CHECK,
+            EXTERNAL_FEDNOW,
+            EXTERNAL_RTP,
             EXTERNAL_TRANSFER,
         }
 
@@ -1001,6 +1007,8 @@ private constructor(
             EXTERNAL_WIRE,
             EXTERNAL_ACH,
             EXTERNAL_CHECK,
+            EXTERNAL_FEDNOW,
+            EXTERNAL_RTP,
             EXTERNAL_TRANSFER,
             /**
              * An enum member indicating that [ExternalPaymentCategory] was instantiated with an
@@ -1021,6 +1029,8 @@ private constructor(
                 EXTERNAL_WIRE -> Value.EXTERNAL_WIRE
                 EXTERNAL_ACH -> Value.EXTERNAL_ACH
                 EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
+                EXTERNAL_FEDNOW -> Value.EXTERNAL_FEDNOW
+                EXTERNAL_RTP -> Value.EXTERNAL_RTP
                 EXTERNAL_TRANSFER -> Value.EXTERNAL_TRANSFER
                 else -> Value._UNKNOWN
             }
@@ -1039,6 +1049,8 @@ private constructor(
                 EXTERNAL_WIRE -> Known.EXTERNAL_WIRE
                 EXTERNAL_ACH -> Known.EXTERNAL_ACH
                 EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
+                EXTERNAL_FEDNOW -> Known.EXTERNAL_FEDNOW
+                EXTERNAL_RTP -> Known.EXTERNAL_RTP
                 EXTERNAL_TRANSFER -> Known.EXTERNAL_TRANSFER
                 else -> throw LithicInvalidDataException("Unknown ExternalPaymentCategory: $value")
             }

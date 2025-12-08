@@ -514,6 +514,26 @@ private constructor(
 
             val EXTERNAL_CHECK_SETTLED = of("EXTERNAL_CHECK_SETTLED")
 
+            val EXTERNAL_FEDNOW_CANCELED = of("EXTERNAL_FEDNOW_CANCELED")
+
+            val EXTERNAL_FEDNOW_INITIATED = of("EXTERNAL_FEDNOW_INITIATED")
+
+            val EXTERNAL_FEDNOW_RELEASED = of("EXTERNAL_FEDNOW_RELEASED")
+
+            val EXTERNAL_FEDNOW_REVERSED = of("EXTERNAL_FEDNOW_REVERSED")
+
+            val EXTERNAL_FEDNOW_SETTLED = of("EXTERNAL_FEDNOW_SETTLED")
+
+            val EXTERNAL_RTP_CANCELED = of("EXTERNAL_RTP_CANCELED")
+
+            val EXTERNAL_RTP_INITIATED = of("EXTERNAL_RTP_INITIATED")
+
+            val EXTERNAL_RTP_RELEASED = of("EXTERNAL_RTP_RELEASED")
+
+            val EXTERNAL_RTP_REVERSED = of("EXTERNAL_RTP_REVERSED")
+
+            val EXTERNAL_RTP_SETTLED = of("EXTERNAL_RTP_SETTLED")
+
             val EXTERNAL_TRANSFER_CANCELED = of("EXTERNAL_TRANSFER_CANCELED")
 
             val EXTERNAL_TRANSFER_INITIATED = of("EXTERNAL_TRANSFER_INITIATED")
@@ -570,6 +590,18 @@ private constructor(
 
             val LITHIC_NETWORK_PAYMENT = of("LITHIC_NETWORK_PAYMENT")
 
+            val ANNUAL = of("ANNUAL")
+
+            val ANNUAL_REVERSAL = of("ANNUAL_REVERSAL")
+
+            val QUARTERLY = of("QUARTERLY")
+
+            val QUARTERLY_REVERSAL = of("QUARTERLY_REVERSAL")
+
+            val MONTHLY = of("MONTHLY")
+
+            val MONTHLY_REVERSAL = of("MONTHLY_REVERSAL")
+
             fun of(value: String) = FinancialEventType(JsonField.of(value))
         }
 
@@ -618,6 +650,16 @@ private constructor(
             EXTERNAL_CHECK_RELEASED,
             EXTERNAL_CHECK_REVERSED,
             EXTERNAL_CHECK_SETTLED,
+            EXTERNAL_FEDNOW_CANCELED,
+            EXTERNAL_FEDNOW_INITIATED,
+            EXTERNAL_FEDNOW_RELEASED,
+            EXTERNAL_FEDNOW_REVERSED,
+            EXTERNAL_FEDNOW_SETTLED,
+            EXTERNAL_RTP_CANCELED,
+            EXTERNAL_RTP_INITIATED,
+            EXTERNAL_RTP_RELEASED,
+            EXTERNAL_RTP_REVERSED,
+            EXTERNAL_RTP_SETTLED,
             EXTERNAL_TRANSFER_CANCELED,
             EXTERNAL_TRANSFER_INITIATED,
             EXTERNAL_TRANSFER_RELEASED,
@@ -646,6 +688,12 @@ private constructor(
             RETURNED_PAYMENT,
             RETURNED_PAYMENT_REVERSAL,
             LITHIC_NETWORK_PAYMENT,
+            ANNUAL,
+            ANNUAL_REVERSAL,
+            QUARTERLY,
+            QUARTERLY_REVERSAL,
+            MONTHLY,
+            MONTHLY_REVERSAL,
         }
 
         /**
@@ -701,6 +749,16 @@ private constructor(
             EXTERNAL_CHECK_RELEASED,
             EXTERNAL_CHECK_REVERSED,
             EXTERNAL_CHECK_SETTLED,
+            EXTERNAL_FEDNOW_CANCELED,
+            EXTERNAL_FEDNOW_INITIATED,
+            EXTERNAL_FEDNOW_RELEASED,
+            EXTERNAL_FEDNOW_REVERSED,
+            EXTERNAL_FEDNOW_SETTLED,
+            EXTERNAL_RTP_CANCELED,
+            EXTERNAL_RTP_INITIATED,
+            EXTERNAL_RTP_RELEASED,
+            EXTERNAL_RTP_REVERSED,
+            EXTERNAL_RTP_SETTLED,
             EXTERNAL_TRANSFER_CANCELED,
             EXTERNAL_TRANSFER_INITIATED,
             EXTERNAL_TRANSFER_RELEASED,
@@ -729,6 +787,12 @@ private constructor(
             RETURNED_PAYMENT,
             RETURNED_PAYMENT_REVERSAL,
             LITHIC_NETWORK_PAYMENT,
+            ANNUAL,
+            ANNUAL_REVERSAL,
+            QUARTERLY,
+            QUARTERLY_REVERSAL,
+            MONTHLY,
+            MONTHLY_REVERSAL,
             /**
              * An enum member indicating that [FinancialEventType] was instantiated with an unknown
              * value.
@@ -788,6 +852,16 @@ private constructor(
                 EXTERNAL_CHECK_RELEASED -> Value.EXTERNAL_CHECK_RELEASED
                 EXTERNAL_CHECK_REVERSED -> Value.EXTERNAL_CHECK_REVERSED
                 EXTERNAL_CHECK_SETTLED -> Value.EXTERNAL_CHECK_SETTLED
+                EXTERNAL_FEDNOW_CANCELED -> Value.EXTERNAL_FEDNOW_CANCELED
+                EXTERNAL_FEDNOW_INITIATED -> Value.EXTERNAL_FEDNOW_INITIATED
+                EXTERNAL_FEDNOW_RELEASED -> Value.EXTERNAL_FEDNOW_RELEASED
+                EXTERNAL_FEDNOW_REVERSED -> Value.EXTERNAL_FEDNOW_REVERSED
+                EXTERNAL_FEDNOW_SETTLED -> Value.EXTERNAL_FEDNOW_SETTLED
+                EXTERNAL_RTP_CANCELED -> Value.EXTERNAL_RTP_CANCELED
+                EXTERNAL_RTP_INITIATED -> Value.EXTERNAL_RTP_INITIATED
+                EXTERNAL_RTP_RELEASED -> Value.EXTERNAL_RTP_RELEASED
+                EXTERNAL_RTP_REVERSED -> Value.EXTERNAL_RTP_REVERSED
+                EXTERNAL_RTP_SETTLED -> Value.EXTERNAL_RTP_SETTLED
                 EXTERNAL_TRANSFER_CANCELED -> Value.EXTERNAL_TRANSFER_CANCELED
                 EXTERNAL_TRANSFER_INITIATED -> Value.EXTERNAL_TRANSFER_INITIATED
                 EXTERNAL_TRANSFER_RELEASED -> Value.EXTERNAL_TRANSFER_RELEASED
@@ -816,6 +890,12 @@ private constructor(
                 RETURNED_PAYMENT -> Value.RETURNED_PAYMENT
                 RETURNED_PAYMENT_REVERSAL -> Value.RETURNED_PAYMENT_REVERSAL
                 LITHIC_NETWORK_PAYMENT -> Value.LITHIC_NETWORK_PAYMENT
+                ANNUAL -> Value.ANNUAL
+                ANNUAL_REVERSAL -> Value.ANNUAL_REVERSAL
+                QUARTERLY -> Value.QUARTERLY
+                QUARTERLY_REVERSAL -> Value.QUARTERLY_REVERSAL
+                MONTHLY -> Value.MONTHLY
+                MONTHLY_REVERSAL -> Value.MONTHLY_REVERSAL
                 else -> Value._UNKNOWN
             }
 
@@ -873,6 +953,16 @@ private constructor(
                 EXTERNAL_CHECK_RELEASED -> Known.EXTERNAL_CHECK_RELEASED
                 EXTERNAL_CHECK_REVERSED -> Known.EXTERNAL_CHECK_REVERSED
                 EXTERNAL_CHECK_SETTLED -> Known.EXTERNAL_CHECK_SETTLED
+                EXTERNAL_FEDNOW_CANCELED -> Known.EXTERNAL_FEDNOW_CANCELED
+                EXTERNAL_FEDNOW_INITIATED -> Known.EXTERNAL_FEDNOW_INITIATED
+                EXTERNAL_FEDNOW_RELEASED -> Known.EXTERNAL_FEDNOW_RELEASED
+                EXTERNAL_FEDNOW_REVERSED -> Known.EXTERNAL_FEDNOW_REVERSED
+                EXTERNAL_FEDNOW_SETTLED -> Known.EXTERNAL_FEDNOW_SETTLED
+                EXTERNAL_RTP_CANCELED -> Known.EXTERNAL_RTP_CANCELED
+                EXTERNAL_RTP_INITIATED -> Known.EXTERNAL_RTP_INITIATED
+                EXTERNAL_RTP_RELEASED -> Known.EXTERNAL_RTP_RELEASED
+                EXTERNAL_RTP_REVERSED -> Known.EXTERNAL_RTP_REVERSED
+                EXTERNAL_RTP_SETTLED -> Known.EXTERNAL_RTP_SETTLED
                 EXTERNAL_TRANSFER_CANCELED -> Known.EXTERNAL_TRANSFER_CANCELED
                 EXTERNAL_TRANSFER_INITIATED -> Known.EXTERNAL_TRANSFER_INITIATED
                 EXTERNAL_TRANSFER_RELEASED -> Known.EXTERNAL_TRANSFER_RELEASED
@@ -901,6 +991,12 @@ private constructor(
                 RETURNED_PAYMENT -> Known.RETURNED_PAYMENT
                 RETURNED_PAYMENT_REVERSAL -> Known.RETURNED_PAYMENT_REVERSAL
                 LITHIC_NETWORK_PAYMENT -> Known.LITHIC_NETWORK_PAYMENT
+                ANNUAL -> Known.ANNUAL
+                ANNUAL_REVERSAL -> Known.ANNUAL_REVERSAL
+                QUARTERLY -> Known.QUARTERLY
+                QUARTERLY_REVERSAL -> Known.QUARTERLY_REVERSAL
+                MONTHLY -> Known.MONTHLY
+                MONTHLY_REVERSAL -> Known.MONTHLY_REVERSAL
                 else -> throw LithicInvalidDataException("Unknown FinancialEventType: $value")
             }
 

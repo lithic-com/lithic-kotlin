@@ -1073,6 +1073,10 @@ private constructor(
 
             val EXTERNAL_CHECK = of("EXTERNAL_CHECK")
 
+            val EXTERNAL_FEDNOW = of("EXTERNAL_FEDNOW")
+
+            val EXTERNAL_RTP = of("EXTERNAL_RTP")
+
             val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             val EXTERNAL_WIRE = of("EXTERNAL_WIRE")
@@ -1104,6 +1108,8 @@ private constructor(
             CARD,
             EXTERNAL_ACH,
             EXTERNAL_CHECK,
+            EXTERNAL_FEDNOW,
+            EXTERNAL_RTP,
             EXTERNAL_TRANSFER,
             EXTERNAL_WIRE,
             MANAGEMENT_ADJUSTMENT,
@@ -1134,6 +1140,8 @@ private constructor(
             CARD,
             EXTERNAL_ACH,
             EXTERNAL_CHECK,
+            EXTERNAL_FEDNOW,
+            EXTERNAL_RTP,
             EXTERNAL_TRANSFER,
             EXTERNAL_WIRE,
             MANAGEMENT_ADJUSTMENT,
@@ -1168,6 +1176,8 @@ private constructor(
                 CARD -> Value.CARD
                 EXTERNAL_ACH -> Value.EXTERNAL_ACH
                 EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
+                EXTERNAL_FEDNOW -> Value.EXTERNAL_FEDNOW
+                EXTERNAL_RTP -> Value.EXTERNAL_RTP
                 EXTERNAL_TRANSFER -> Value.EXTERNAL_TRANSFER
                 EXTERNAL_WIRE -> Value.EXTERNAL_WIRE
                 MANAGEMENT_ADJUSTMENT -> Value.MANAGEMENT_ADJUSTMENT
@@ -1200,6 +1210,8 @@ private constructor(
                 CARD -> Known.CARD
                 EXTERNAL_ACH -> Known.EXTERNAL_ACH
                 EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
+                EXTERNAL_FEDNOW -> Known.EXTERNAL_FEDNOW
+                EXTERNAL_RTP -> Known.EXTERNAL_RTP
                 EXTERNAL_TRANSFER -> Known.EXTERNAL_TRANSFER
                 EXTERNAL_WIRE -> Known.EXTERNAL_WIRE
                 MANAGEMENT_ADJUSTMENT -> Known.MANAGEMENT_ADJUSTMENT
@@ -2768,6 +2780,7 @@ private constructor(
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val secCode: JsonField<SecCode>,
+            private val achHoldPeriod: JsonField<Long>,
             private val addenda: JsonField<String>,
             private val companyId: JsonField<String>,
             private val receiptRoutingNumber: JsonField<String>,
@@ -2782,6 +2795,9 @@ private constructor(
                 @JsonProperty("sec_code")
                 @ExcludeMissing
                 secCode: JsonField<SecCode> = JsonMissing.of(),
+                @JsonProperty("ach_hold_period")
+                @ExcludeMissing
+                achHoldPeriod: JsonField<Long> = JsonMissing.of(),
                 @JsonProperty("addenda")
                 @ExcludeMissing
                 addenda: JsonField<String> = JsonMissing.of(),
@@ -2802,6 +2818,7 @@ private constructor(
                 traceNumbers: JsonField<List<String>> = JsonMissing.of(),
             ) : this(
                 secCode,
+                achHoldPeriod,
                 addenda,
                 companyId,
                 receiptRoutingNumber,
@@ -2819,6 +2836,14 @@ private constructor(
              *   value).
              */
             fun secCode(): SecCode = secCode.getRequired("sec_code")
+
+            /**
+             * Number of days the ACH transaction is on hold
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun achHoldPeriod(): Long? = achHoldPeriod.getNullable("ach_hold_period")
 
             /**
              * Addenda information
@@ -2875,6 +2900,16 @@ private constructor(
              * Unlike [secCode], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("sec_code") @ExcludeMissing fun _secCode(): JsonField<SecCode> = secCode
+
+            /**
+             * Returns the raw JSON value of [achHoldPeriod].
+             *
+             * Unlike [achHoldPeriod], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("ach_hold_period")
+            @ExcludeMissing
+            fun _achHoldPeriod(): JsonField<Long> = achHoldPeriod
 
             /**
              * Returns the raw JSON value of [addenda].
@@ -2959,6 +2994,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var secCode: JsonField<SecCode>? = null
+                private var achHoldPeriod: JsonField<Long> = JsonMissing.of()
                 private var addenda: JsonField<String> = JsonMissing.of()
                 private var companyId: JsonField<String> = JsonMissing.of()
                 private var receiptRoutingNumber: JsonField<String> = JsonMissing.of()
@@ -2969,6 +3005,7 @@ private constructor(
 
                 internal fun from(achMethodAttributes: AchMethodAttributes) = apply {
                     secCode = achMethodAttributes.secCode
+                    achHoldPeriod = achMethodAttributes.achHoldPeriod
                     addenda = achMethodAttributes.addenda
                     companyId = achMethodAttributes.companyId
                     receiptRoutingNumber = achMethodAttributes.receiptRoutingNumber
@@ -2989,6 +3026,28 @@ private constructor(
                  * yet supported value.
                  */
                 fun secCode(secCode: JsonField<SecCode>) = apply { this.secCode = secCode }
+
+                /** Number of days the ACH transaction is on hold */
+                fun achHoldPeriod(achHoldPeriod: Long?) =
+                    achHoldPeriod(JsonField.ofNullable(achHoldPeriod))
+
+                /**
+                 * Alias for [Builder.achHoldPeriod].
+                 *
+                 * This unboxed primitive overload exists for backwards compatibility.
+                 */
+                fun achHoldPeriod(achHoldPeriod: Long) = achHoldPeriod(achHoldPeriod as Long?)
+
+                /**
+                 * Sets [Builder.achHoldPeriod] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.achHoldPeriod] with a well-typed [Long] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun achHoldPeriod(achHoldPeriod: JsonField<Long>) = apply {
+                    this.achHoldPeriod = achHoldPeriod
+                }
 
                 /** Addenda information */
                 fun addenda(addenda: String?) = addenda(JsonField.ofNullable(addenda))
@@ -3127,6 +3186,7 @@ private constructor(
                 fun build(): AchMethodAttributes =
                     AchMethodAttributes(
                         checkRequired("secCode", secCode),
+                        achHoldPeriod,
                         addenda,
                         companyId,
                         receiptRoutingNumber,
@@ -3145,6 +3205,7 @@ private constructor(
                 }
 
                 secCode().validate()
+                achHoldPeriod()
                 addenda()
                 companyId()
                 receiptRoutingNumber()
@@ -3170,6 +3231,7 @@ private constructor(
              */
             internal fun validity(): Int =
                 (secCode.asKnown()?.validity() ?: 0) +
+                    (if (achHoldPeriod.asKnown() == null) 0 else 1) +
                     (if (addenda.asKnown() == null) 0 else 1) +
                     (if (companyId.asKnown() == null) 0 else 1) +
                     (if (receiptRoutingNumber.asKnown() == null) 0 else 1) +
@@ -3338,6 +3400,7 @@ private constructor(
 
                 return other is AchMethodAttributes &&
                     secCode == other.secCode &&
+                    achHoldPeriod == other.achHoldPeriod &&
                     addenda == other.addenda &&
                     companyId == other.companyId &&
                     receiptRoutingNumber == other.receiptRoutingNumber &&
@@ -3350,6 +3413,7 @@ private constructor(
             private val hashCode: Int by lazy {
                 Objects.hash(
                     secCode,
+                    achHoldPeriod,
                     addenda,
                     companyId,
                     receiptRoutingNumber,
@@ -3363,7 +3427,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AchMethodAttributes{secCode=$secCode, addenda=$addenda, companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, retries=$retries, returnReasonCode=$returnReasonCode, traceNumbers=$traceNumbers, additionalProperties=$additionalProperties}"
+                "AchMethodAttributes{secCode=$secCode, achHoldPeriod=$achHoldPeriod, addenda=$addenda, companyId=$companyId, receiptRoutingNumber=$receiptRoutingNumber, retries=$retries, returnReasonCode=$returnReasonCode, traceNumbers=$traceNumbers, additionalProperties=$additionalProperties}"
         }
 
         class WireMethodAttributes
