@@ -112,8 +112,6 @@ interface LithicClient {
 
     fun responderEndpoints(): ResponderEndpointService
 
-    fun webhooks(): WebhookService
-
     fun externalBankAccounts(): ExternalBankAccountService
 
     fun payments(): PaymentService
@@ -143,6 +141,8 @@ interface LithicClient {
     fun networkPrograms(): NetworkProgramService
 
     fun accountActivity(): AccountActivityService
+
+    fun webhooks(): WebhookService
 
     /** Status of api */
     fun apiStatus(

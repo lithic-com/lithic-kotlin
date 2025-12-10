@@ -112,8 +112,6 @@ interface LithicClientAsync {
 
     fun responderEndpoints(): ResponderEndpointServiceAsync
 
-    fun webhooks(): WebhookServiceAsync
-
     fun externalBankAccounts(): ExternalBankAccountServiceAsync
 
     fun payments(): PaymentServiceAsync
@@ -143,6 +141,8 @@ interface LithicClientAsync {
     fun networkPrograms(): NetworkProgramServiceAsync
 
     fun accountActivity(): AccountActivityServiceAsync
+
+    fun webhooks(): WebhookServiceAsync
 
     /** Status of api */
     suspend fun apiStatus(
