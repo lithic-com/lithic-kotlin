@@ -241,6 +241,8 @@ interface LithicClient {
 
         fun accountActivity(): AccountActivityService.WithRawResponse
 
+        fun webhooks(): WebhookService.WithRawResponse
+
         /**
          * Returns a raw HTTP response for `get /v1/status`, but is otherwise the same as
          * [LithicClient.apiStatus].
