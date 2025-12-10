@@ -225,7 +225,8 @@ private constructor(
                                 ConditionalValue(listOfStrings = it, _json = json)
                             }
                         } else null,
-                        // Try timestamp before generic string, since timestamps serialize as strings
+                        // Try timestamp before generic string, since timestamps serialize as
+                        // strings
                         if (node.isTextual) {
                             tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                                 ConditionalValue(timestamp = it, _json = json)
