@@ -40,6 +40,7 @@ import com.lithic.api.services.blocking.TokenizationDecisioningService
 import com.lithic.api.services.blocking.TokenizationService
 import com.lithic.api.services.blocking.TransactionService
 import com.lithic.api.services.blocking.TransferService
+import com.lithic.api.services.blocking.WebhookService
 
 /**
  * A client for interacting with the Lithic REST API synchronously. You can also switch to
@@ -141,6 +142,8 @@ interface LithicClient {
 
     fun accountActivity(): AccountActivityService
 
+    fun webhooks(): WebhookService
+
     /** Status of api */
     fun apiStatus(
         params: ClientApiStatusParams = ClientApiStatusParams.none(),
@@ -237,6 +240,8 @@ interface LithicClient {
         fun networkPrograms(): NetworkProgramService.WithRawResponse
 
         fun accountActivity(): AccountActivityService.WithRawResponse
+
+        fun webhooks(): WebhookService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /v1/status`, but is otherwise the same as
