@@ -167,8 +167,6 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         ResponderEndpointServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
-    private val webhooks: WebhookServiceAsync by lazy { WebhookServiceAsyncImpl(clientOptions) }
-
     private val externalBankAccounts: ExternalBankAccountServiceAsync by lazy {
         ExternalBankAccountServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -229,6 +227,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         AccountActivityServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val webhooks: WebhookServiceAsync by lazy {
+        WebhookServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): LithicClient = sync
 
     override fun withRawResponse(): LithicClientAsync.WithRawResponse = withRawResponse
@@ -271,8 +273,6 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
     override fun responderEndpoints(): ResponderEndpointServiceAsync = responderEndpoints
 
-    override fun webhooks(): WebhookServiceAsync = webhooks
-
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
 
     override fun payments(): PaymentServiceAsync = payments
@@ -302,6 +302,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
     override fun networkPrograms(): NetworkProgramServiceAsync = networkPrograms
 
     override fun accountActivity(): AccountActivityServiceAsync = accountActivity
+
+    override fun webhooks(): WebhookServiceAsync = webhooks
 
     override suspend fun apiStatus(
         params: ClientApiStatusParams,
