@@ -447,6 +447,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             AccountActivityServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val webhooks: WebhookServiceAsync.WithRawResponse by lazy {
+            WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): LithicClientAsync.WithRawResponse =
@@ -527,6 +531,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
         override fun accountActivity(): AccountActivityServiceAsync.WithRawResponse =
             accountActivity
+
+        override fun webhooks(): WebhookServiceAsync.WithRawResponse = webhooks
 
         private val apiStatusHandler: Handler<ApiStatus> =
             jsonHandler<ApiStatus>(clientOptions.jsonMapper)
