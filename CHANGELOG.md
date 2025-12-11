@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.113.0 (2025-12-11)
+
+Full Changelog: [v0.112.0...v0.113.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.112.0...v0.113.0)
+
+### Features
+
+* **api:** add bulk card creation APIs ([b0df255](https://github.com/lithic-com/lithic-kotlin/commit/b0df25532d9d71175e23d206b71ee2c7367e12fa))
+* **api:** Add event_streams to auth rules APIs ([458d817](https://github.com/lithic-com/lithic-kotlin/commit/458d817ac2539f1be8d54b8ba56d3b6b4b7911e0))
+* **api:** add Google WPP to SDKs ([cf1bc47](https://github.com/lithic-com/lithic-kotlin/commit/cf1bc473e62dab4b7aa3527feb49bf783cabc7af))
+* **api:** add IS_AFTER / IS_BEFORE operators to Auth Rule APIs ([cf1bc47](https://github.com/lithic-com/lithic-kotlin/commit/cf1bc473e62dab4b7aa3527feb49bf783cabc7af))
+* **api:** Add new fee types ([458d817](https://github.com/lithic-com/lithic-kotlin/commit/458d817ac2539f1be8d54b8ba56d3b6b4b7911e0))
+* **api:** Add optional ach_hold_period ([458d817](https://github.com/lithic-com/lithic-kotlin/commit/458d817ac2539f1be8d54b8ba56d3b6b4b7911e0))
+* **api:** add WALLET_RECOMMENDATION_REASONS attribute for tokenization rules ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+* **api:** add webhook schemas to SDKs - add parse and parse_unsafe ([eecd9dd](https://github.com/lithic-com/lithic-kotlin/commit/eecd9dd80c76691d188753bdf76cddf8ea8c3b73))
+* **api:** provide a unified model for AuthRule ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+* **api:** support event_streams in auth_rules list endpoint ([b37fce9](https://github.com/lithic-com/lithic-kotlin/commit/b37fce95af70c288728f1503067258b3aa022e68))
+
+
+### Bug Fixes
+
+* **api:** extract several common types to reduce duplication ([b0df255](https://github.com/lithic-com/lithic-kotlin/commit/b0df25532d9d71175e23d206b71ee2c7367e12fa))
+* **api:** fix conditional value parsing for IS_BEFORE/IS_AFTER rule condition ([4135e09](https://github.com/lithic-com/lithic-kotlin/commit/4135e09eeb9c5e33e306138eb534c372bd585657))
+* **api:** fix examples in spec that were not fully valid ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+* **api:** make certain payoff fields nullable ([c7727e9](https://github.com/lithic-com/lithic-kotlin/commit/c7727e94e1d6701b4afdbf146a2ff3504af85200))
+
+
+### Chores
+
+* replace custom webhook signature verification with standardwebhooks ([eecd9dd](https://github.com/lithic-com/lithic-kotlin/commit/eecd9dd80c76691d188753bdf76cddf8ea8c3b73))
+* revert some unnecessary custom code ([a4d368e](https://github.com/lithic-com/lithic-kotlin/commit/a4d368e812b84a88369b4ab70374cca40e7e4b0f))
+
+
+### Documentation
+
+* **api:** clarify error 422 for 3DS challenge response ([cf1bc47](https://github.com/lithic-com/lithic-kotlin/commit/cf1bc473e62dab4b7aa3527feb49bf783cabc7af))
+* remove `$` for better copy-pasteabality ([87f075a](https://github.com/lithic-com/lithic-kotlin/commit/87f075a55f9833b5ec3473ab41990c9cd2e5158d))
+* update Webhooks section in readme ([fe64339](https://github.com/lithic-com/lithic-kotlin/commit/fe6433931701beb09fc7558c0043e03c8ae1c9a9))
+
+
+### Styles
+
+* reformat file ([5e5a72a](https://github.com/lithic-com/lithic-kotlin/commit/5e5a72a26f19768d836fe5c958f00bbf420875d9))
+
 ## 0.112.0 (2025-11-20)
 
 Full Changelog: [v0.111.0...v0.112.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.111.0...v0.112.0)
