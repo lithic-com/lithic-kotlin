@@ -23,7 +23,6 @@ import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.CardWebProvisionParams
 import com.lithic.api.models.CardWebProvisionResponse
-import com.lithic.api.services.blocking.cards.AggregateBalanceService
 import com.lithic.api.services.blocking.cards.BalanceService
 import com.lithic.api.services.blocking.cards.FinancialTransactionService
 
@@ -40,8 +39,6 @@ interface CardService {
      * The original service is not modified.
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardService
-
-    fun aggregateBalances(): AggregateBalanceService
 
     fun balances(): BalanceService
 
@@ -288,8 +285,6 @@ interface CardService {
          * The original service is not modified.
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardService.WithRawResponse
-
-        fun aggregateBalances(): AggregateBalanceService.WithRawResponse
 
         fun balances(): BalanceService.WithRawResponse
 

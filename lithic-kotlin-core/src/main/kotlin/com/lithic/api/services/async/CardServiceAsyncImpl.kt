@@ -35,8 +35,6 @@ import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.CardWebProvisionParams
 import com.lithic.api.models.CardWebProvisionResponse
-import com.lithic.api.services.async.cards.AggregateBalanceServiceAsync
-import com.lithic.api.services.async.cards.AggregateBalanceServiceAsyncImpl
 import com.lithic.api.services.async.cards.BalanceServiceAsync
 import com.lithic.api.services.async.cards.BalanceServiceAsyncImpl
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
@@ -49,10 +47,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         WithRawResponseImpl(clientOptions)
     }
 
-    private val aggregateBalances: AggregateBalanceServiceAsync by lazy {
-        AggregateBalanceServiceAsyncImpl(clientOptions)
-    }
-
     private val balances: BalanceServiceAsync by lazy { BalanceServiceAsyncImpl(clientOptions) }
 
     private val financialTransactions: FinancialTransactionServiceAsync by lazy {
@@ -63,8 +57,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardServiceAsync =
         CardServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
-
-    override fun aggregateBalances(): AggregateBalanceServiceAsync = aggregateBalances
 
     override fun balances(): BalanceServiceAsync = balances
 
@@ -145,10 +137,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
-        private val aggregateBalances: AggregateBalanceServiceAsync.WithRawResponse by lazy {
-            AggregateBalanceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
-        }
-
         private val balances: BalanceServiceAsync.WithRawResponse by lazy {
             BalanceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -164,9 +152,6 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
             CardServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
-
-        override fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse =
-            aggregateBalances
 
         override fun balances(): BalanceServiceAsync.WithRawResponse = balances
 

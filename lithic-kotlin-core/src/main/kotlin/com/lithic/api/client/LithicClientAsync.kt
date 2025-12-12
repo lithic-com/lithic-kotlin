@@ -11,7 +11,6 @@ import com.lithic.api.models.ClientApiStatusParams
 import com.lithic.api.services.async.AccountActivityServiceAsync
 import com.lithic.api.services.async.AccountHolderServiceAsync
 import com.lithic.api.services.async.AccountServiceAsync
-import com.lithic.api.services.async.AggregateBalanceServiceAsync
 import com.lithic.api.services.async.AuthRuleServiceAsync
 import com.lithic.api.services.async.AuthStreamEnrollmentServiceAsync
 import com.lithic.api.services.async.BalanceServiceAsync
@@ -95,8 +94,6 @@ interface LithicClientAsync {
     fun cardBulkOrders(): CardBulkOrderServiceAsync
 
     fun balances(): BalanceServiceAsync
-
-    fun aggregateBalances(): AggregateBalanceServiceAsync
 
     fun disputes(): DisputeServiceAsync
 
@@ -196,8 +193,6 @@ interface LithicClientAsync {
         fun cardBulkOrders(): CardBulkOrderServiceAsync.WithRawResponse
 
         fun balances(): BalanceServiceAsync.WithRawResponse
-
-        fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse
 
         fun disputes(): DisputeServiceAsync.WithRawResponse
 
