@@ -37,8 +37,6 @@ import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.CardWebProvisionParams
 import com.lithic.api.models.CardWebProvisionResponse
-import com.lithic.api.services.blocking.cards.AggregateBalanceService
-import com.lithic.api.services.blocking.cards.AggregateBalanceServiceImpl
 import com.lithic.api.services.blocking.cards.BalanceService
 import com.lithic.api.services.blocking.cards.BalanceServiceImpl
 import com.lithic.api.services.blocking.cards.FinancialTransactionService
@@ -55,10 +53,6 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
         WithRawResponseImpl(clientOptions)
     }
 
-    private val aggregateBalances: AggregateBalanceService by lazy {
-        AggregateBalanceServiceImpl(clientOptions)
-    }
-
     private val balances: BalanceService by lazy { BalanceServiceImpl(clientOptions) }
 
     private val financialTransactions: FinancialTransactionService by lazy {
@@ -69,8 +63,6 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardService =
         CardServiceImpl(clientOptions.toBuilder().apply(modifier).build())
-
-    override fun aggregateBalances(): AggregateBalanceService = aggregateBalances
 
     override fun balances(): BalanceService = balances
 
@@ -142,10 +134,6 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
-        private val aggregateBalances: AggregateBalanceService.WithRawResponse by lazy {
-            AggregateBalanceServiceImpl.WithRawResponseImpl(clientOptions)
-        }
-
         private val balances: BalanceService.WithRawResponse by lazy {
             BalanceServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -158,9 +146,6 @@ class CardServiceImpl internal constructor(private val clientOptions: ClientOpti
             modifier: (ClientOptions.Builder) -> Unit
         ): CardService.WithRawResponse =
             CardServiceImpl.WithRawResponseImpl(clientOptions.toBuilder().apply(modifier).build())
-
-        override fun aggregateBalances(): AggregateBalanceService.WithRawResponse =
-            aggregateBalances
 
         override fun balances(): BalanceService.WithRawResponse = balances
 
