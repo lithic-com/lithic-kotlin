@@ -25,7 +25,6 @@ import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.CardWebProvisionParams
 import com.lithic.api.models.CardWebProvisionResponse
-import com.lithic.api.services.async.cards.AggregateBalanceServiceAsync
 import com.lithic.api.services.async.cards.BalanceServiceAsync
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 
@@ -42,8 +41,6 @@ interface CardServiceAsync {
      * The original service is not modified.
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardServiceAsync
-
-    fun aggregateBalances(): AggregateBalanceServiceAsync
 
     fun balances(): BalanceServiceAsync
 
@@ -311,8 +308,6 @@ interface CardServiceAsync {
          * The original service is not modified.
          */
         fun withOptions(modifier: (ClientOptions.Builder) -> Unit): CardServiceAsync.WithRawResponse
-
-        fun aggregateBalances(): AggregateBalanceServiceAsync.WithRawResponse
 
         fun balances(): BalanceServiceAsync.WithRawResponse
 
