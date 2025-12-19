@@ -11,6 +11,7 @@ import com.lithic.api.models.BookTransferListPageAsync
 import com.lithic.api.models.BookTransferListParams
 import com.lithic.api.models.BookTransferResponse
 import com.lithic.api.models.BookTransferRetrieveParams
+import com.lithic.api.models.BookTransferRetryParams
 import com.lithic.api.models.BookTransferReverseParams
 
 interface BookTransferServiceAsync {
@@ -65,6 +66,20 @@ interface BookTransferServiceAsync {
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): BookTransferListPageAsync =
         list(BookTransferListParams.none(), requestOptions)
+
+    /** Retry a book transfer that has been declined */
+    suspend fun retry(
+        bookTransferToken: String,
+        params: BookTransferRetryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BookTransferResponse =
+        retry(params.toBuilder().bookTransferToken(bookTransferToken).build(), requestOptions)
+
+    /** @see retry */
+    suspend fun retry(
+        params: BookTransferRetryParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BookTransferResponse
 
     /** Reverse a book transfer */
     suspend fun reverse(
@@ -158,6 +173,25 @@ interface BookTransferServiceAsync {
             requestOptions: RequestOptions
         ): HttpResponseFor<BookTransferListPageAsync> =
             list(BookTransferListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /v1/book_transfers/{book_transfer_token}/retry`,
+         * but is otherwise the same as [BookTransferServiceAsync.retry].
+         */
+        @MustBeClosed
+        suspend fun retry(
+            bookTransferToken: String,
+            params: BookTransferRetryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BookTransferResponse> =
+            retry(params.toBuilder().bookTransferToken(bookTransferToken).build(), requestOptions)
+
+        /** @see retry */
+        @MustBeClosed
+        suspend fun retry(
+            params: BookTransferRetryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BookTransferResponse>
 
         /**
          * Returns a raw HTTP response for `post /v1/book_transfers/{book_transfer_token}/reverse`,

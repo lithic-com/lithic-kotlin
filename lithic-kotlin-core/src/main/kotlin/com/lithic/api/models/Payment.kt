@@ -1413,6 +1413,7 @@ private constructor(
         private val result: JsonField<Result>,
         private val type: JsonField<PaymentEventType>,
         private val detailedResults: JsonField<List<DetailedResult>>,
+        private val externalId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -1430,7 +1431,10 @@ private constructor(
             @JsonProperty("detailed_results")
             @ExcludeMissing
             detailedResults: JsonField<List<DetailedResult>> = JsonMissing.of(),
-        ) : this(token, amount, created, result, type, detailedResults, mutableMapOf())
+            @JsonProperty("external_id")
+            @ExcludeMissing
+            externalId: JsonField<String> = JsonMissing.of(),
+        ) : this(token, amount, created, result, type, detailedResults, externalId, mutableMapOf())
 
         /**
          * Globally unique identifier.
@@ -1505,6 +1509,14 @@ private constructor(
             detailedResults.getNullable("detailed_results")
 
         /**
+         * Payment event external ID, for example, ACH trace number.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun externalId(): String? = externalId.getNullable("external_id")
+
+        /**
          * Returns the raw JSON value of [token].
          *
          * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
@@ -1549,6 +1561,15 @@ private constructor(
         @ExcludeMissing
         fun _detailedResults(): JsonField<List<DetailedResult>> = detailedResults
 
+        /**
+         * Returns the raw JSON value of [externalId].
+         *
+         * Unlike [externalId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -1587,6 +1608,7 @@ private constructor(
             private var result: JsonField<Result>? = null
             private var type: JsonField<PaymentEventType>? = null
             private var detailedResults: JsonField<MutableList<DetailedResult>>? = null
+            private var externalId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(paymentEvent: PaymentEvent) = apply {
@@ -1596,6 +1618,7 @@ private constructor(
                 result = paymentEvent.result
                 type = paymentEvent.type
                 detailedResults = paymentEvent.detailedResults.map { it.toMutableList() }
+                externalId = paymentEvent.externalId
                 additionalProperties = paymentEvent.additionalProperties.toMutableMap()
             }
 
@@ -1715,6 +1738,18 @@ private constructor(
                     }
             }
 
+            /** Payment event external ID, for example, ACH trace number. */
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /**
+             * Sets [Builder.externalId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.externalId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1758,6 +1793,7 @@ private constructor(
                     checkRequired("result", result),
                     checkRequired("type", type),
                     (detailedResults ?: JsonMissing.of()).map { it.toImmutable() },
+                    externalId,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1775,6 +1811,7 @@ private constructor(
             result().validate()
             type().validate()
             detailedResults()?.forEach { it.validate() }
+            externalId()
             validated = true
         }
 
@@ -1798,7 +1835,8 @@ private constructor(
                 (if (created.asKnown() == null) 0 else 1) +
                 (result.asKnown()?.validity() ?: 0) +
                 (type.asKnown()?.validity() ?: 0) +
-                (detailedResults.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+                (detailedResults.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (externalId.asKnown() == null) 0 else 1)
 
         /**
          * APPROVED financial events were successful while DECLINED financial events were declined
@@ -2330,6 +2368,7 @@ private constructor(
                 result == other.result &&
                 type == other.type &&
                 detailedResults == other.detailedResults &&
+                externalId == other.externalId &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -2341,6 +2380,7 @@ private constructor(
                 result,
                 type,
                 detailedResults,
+                externalId,
                 additionalProperties,
             )
         }
@@ -2348,7 +2388,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PaymentEvent{token=$token, amount=$amount, created=$created, result=$result, type=$type, detailedResults=$detailedResults, additionalProperties=$additionalProperties}"
+            "PaymentEvent{token=$token, amount=$amount, created=$created, result=$result, type=$type, detailedResults=$detailedResults, externalId=$externalId, additionalProperties=$additionalProperties}"
     }
 
     /** PAYMENT - Payment Transaction */
