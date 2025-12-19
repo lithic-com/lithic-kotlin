@@ -77,6 +77,8 @@ import com.lithic.api.services.blocking.TokenizationService
 import com.lithic.api.services.blocking.TokenizationServiceImpl
 import com.lithic.api.services.blocking.TransactionService
 import com.lithic.api.services.blocking.TransactionServiceImpl
+import com.lithic.api.services.blocking.TransferLimitService
+import com.lithic.api.services.blocking.TransferLimitServiceImpl
 import com.lithic.api.services.blocking.TransferService
 import com.lithic.api.services.blocking.TransferServiceImpl
 import com.lithic.api.services.blocking.WebhookService
@@ -205,6 +207,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         AccountActivityServiceImpl(clientOptionsWithUserAgent)
     }
 
+    private val transferLimits: TransferLimitService by lazy {
+        TransferLimitServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptionsWithUserAgent) }
 
     override fun async(): LithicClientAsync = async
@@ -275,6 +281,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
     override fun networkPrograms(): NetworkProgramService = networkPrograms
 
     override fun accountActivity(): AccountActivityService = accountActivity
+
+    override fun transferLimits(): TransferLimitService = transferLimits
 
     override fun webhooks(): WebhookService = webhooks
 
@@ -418,6 +426,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
             AccountActivityServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val transferLimits: TransferLimitService.WithRawResponse by lazy {
+            TransferLimitServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val webhooks: WebhookService.WithRawResponse by lazy {
             WebhookServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -495,6 +507,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         override fun networkPrograms(): NetworkProgramService.WithRawResponse = networkPrograms
 
         override fun accountActivity(): AccountActivityService.WithRawResponse = accountActivity
+
+        override fun transferLimits(): TransferLimitService.WithRawResponse = transferLimits
 
         override fun webhooks(): WebhookService.WithRawResponse = webhooks
 
