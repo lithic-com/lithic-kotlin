@@ -30,7 +30,8 @@ private constructor(
     fun bookTransferToken(): String? = bookTransferToken
 
     /**
-     * Globally unique identifier for the retry.
+     * Customer-provided token that will serve as an idempotency token. This token will become the
+     * transaction token.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -95,7 +96,10 @@ private constructor(
          */
         fun body(body: RetryBookTransferRequest) = apply { this.body = body.toBuilder() }
 
-        /** Globally unique identifier for the retry. */
+        /**
+         * Customer-provided token that will serve as an idempotency token. This token will become
+         * the transaction token.
+         */
         fun retryToken(retryToken: String) = apply { body.retryToken(retryToken) }
 
         /**
@@ -272,7 +276,8 @@ private constructor(
         ) : this(retryToken, mutableMapOf())
 
         /**
-         * Globally unique identifier for the retry.
+         * Customer-provided token that will serve as an idempotency token. This token will become
+         * the transaction token.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -324,7 +329,10 @@ private constructor(
                 additionalProperties = retryBookTransferRequest.additionalProperties.toMutableMap()
             }
 
-            /** Globally unique identifier for the retry. */
+            /**
+             * Customer-provided token that will serve as an idempotency token. This token will
+             * become the transaction token.
+             */
             fun retryToken(retryToken: String) = retryToken(JsonField.of(retryToken))
 
             /**
