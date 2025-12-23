@@ -65,6 +65,9 @@ private constructor(
     fun financialAccountToken(): String = body.financialAccountToken()
 
     /**
+     * Customer-provided token that will serve as an idempotency token. This token will become the
+     * transaction token.
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -310,6 +313,10 @@ private constructor(
             body.financialAccountToken(financialAccountToken)
         }
 
+        /**
+         * Customer-provided token that will serve as an idempotency token. This token will become
+         * the transaction token.
+         */
         fun token(token: String) = apply { body.token(token) }
 
         /**
@@ -614,6 +621,9 @@ private constructor(
             financialAccountToken.getRequired("financial_account_token")
 
         /**
+         * Customer-provided token that will serve as an idempotency token. This token will become
+         * the transaction token.
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -883,6 +893,10 @@ private constructor(
                 this.financialAccountToken = financialAccountToken
             }
 
+            /**
+             * Customer-provided token that will serve as an idempotency token. This token will
+             * become the transaction token.
+             */
             fun token(token: String) = token(JsonField.of(token))
 
             /**
