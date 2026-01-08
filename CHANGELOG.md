@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.114.1 (2026-01-08)
+
+Full Changelog: [v0.114.0...v0.114.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.114.0...v0.114.1)
+
+### Chores
+
+* configure new SDK language ([c943aa5](https://github.com/lithic-com/lithic-kotlin/commit/c943aa580487a6fd471bc19d58036a08bc6ba24c))
+
 ## 0.114.0 (2026-01-08)
 
 Full Changelog: [v0.113.0...v0.114.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.113.0...v0.114.0)
