@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.114.0 (2026-01-08)
+
+Full Changelog: [v0.113.0...v0.114.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.113.0...v0.114.0)
+
+### Features
+
+* **api:** Add card state attribute to tokenization rules ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+* **api:** Add event_type to ASA request and 3DS decisioning request ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+* **api:** add external_id to payment_event ([cd0f638](https://github.com/lithic-com/lithic-kotlin/commit/cd0f6387b26a4bb9e9bfab9899fa73b674ea3018))
+* **api:** add get /v1/transfer_limits endpoint ([cd0f638](https://github.com/lithic-com/lithic-kotlin/commit/cd0f6387b26a4bb9e9bfab9899fa73b674ea3018))
+* **api:** add post /v1/book_transfers/{book_transfer_token}/retry endpoint ([cd0f638](https://github.com/lithic-com/lithic-kotlin/commit/cd0f6387b26a4bb9e9bfab9899fa73b674ea3018))
+* **api:** Add user defined status to ledger accounts ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+* **api:** add WIRE_DRAWDOWN_REQUEST transfer type ([132f187](https://github.com/lithic-com/lithic-kotlin/commit/132f1872be52cc0a360d0578ae0ebbe65520987e))
+* **api:** Expose Payment Allocation Details ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+* **api:** remove unnecessary X-Lithic-Pagination header ([132f187](https://github.com/lithic-com/lithic-kotlin/commit/132f1872be52cc0a360d0578ae0ebbe65520987e))
+* **api:** remove v1/aggregate_balances and related models ([b2cdef2](https://github.com/lithic-com/lithic-kotlin/commit/b2cdef25784b8011afceff74c66c959cab67389b))
+* **client:** add `HttpRequest#url()` method ([8d9b1e5](https://github.com/lithic-com/lithic-kotlin/commit/8d9b1e5ffab78ed781406294d5f01fecb55bd77a))
+
+
+### Chores
+
+* **internal:** codegen related update ([91473a7](https://github.com/lithic-com/lithic-kotlin/commit/91473a798642a8fbbdbee3248197314c46f2a76d))
+* **internal:** codegen related update ([764de34](https://github.com/lithic-com/lithic-kotlin/commit/764de341112400305ac0c2df204554e94f8646cf))
+* **internal:** codegen related update ([45b240a](https://github.com/lithic-com/lithic-kotlin/commit/45b240a07a17f5c3e4429fac74b072f2e70ae674))
+* **internal:** codegen related update ([b863e88](https://github.com/lithic-com/lithic-kotlin/commit/b863e8891c49e770463d747de1a200f92e614e8f))
+* **internal:** codegen related update ([50fd5e2](https://github.com/lithic-com/lithic-kotlin/commit/50fd5e2fc1da3b63dbd2bf042a22460797ec7a6f))
+* update code formatting ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+
+
+### Documentation
+
+* **api:** clarify description of token /  retry_token when it serves as idempotency key ([132f187](https://github.com/lithic-com/lithic-kotlin/commit/132f1872be52cc0a360d0578ae0ebbe65520987e))
+* Update language for Google Web Push Provisioning docs ([bee2886](https://github.com/lithic-com/lithic-kotlin/commit/bee2886f03357f52597f5bdb7ec525ee731ebdc8))
+
 ## 0.113.0 (2025-12-11)
 
 Full Changelog: [v0.112.0...v0.113.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.112.0...v0.113.0)
