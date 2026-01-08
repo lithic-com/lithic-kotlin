@@ -27,11 +27,12 @@ private constructor(
     private val isForBenefitOf: JsonField<Boolean>,
     private val nickname: JsonField<String>,
     private val status: JsonField<FinancialAccount.FinancialAccountStatus>,
+    private val substatus: JsonField<FinancialAccount.FinancialAccountSubstatus>,
     private val type: JsonField<FinancialAccount.Type>,
     private val updated: JsonField<OffsetDateTime>,
+    private val userDefinedStatus: JsonField<String>,
     private val accountNumber: JsonField<String>,
     private val routingNumber: JsonField<String>,
-    private val substatus: JsonField<FinancialAccount.FinancialAccountSubstatus>,
     private val eventType: JsonField<EventType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -56,21 +57,24 @@ private constructor(
         @JsonProperty("status")
         @ExcludeMissing
         status: JsonField<FinancialAccount.FinancialAccountStatus> = JsonMissing.of(),
+        @JsonProperty("substatus")
+        @ExcludeMissing
+        substatus: JsonField<FinancialAccount.FinancialAccountSubstatus> = JsonMissing.of(),
         @JsonProperty("type")
         @ExcludeMissing
         type: JsonField<FinancialAccount.Type> = JsonMissing.of(),
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("user_defined_status")
+        @ExcludeMissing
+        userDefinedStatus: JsonField<String> = JsonMissing.of(),
         @JsonProperty("account_number")
         @ExcludeMissing
         accountNumber: JsonField<String> = JsonMissing.of(),
         @JsonProperty("routing_number")
         @ExcludeMissing
         routingNumber: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("substatus")
-        @ExcludeMissing
-        substatus: JsonField<FinancialAccount.FinancialAccountSubstatus> = JsonMissing.of(),
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
@@ -82,11 +86,12 @@ private constructor(
         isForBenefitOf,
         nickname,
         status,
+        substatus,
         type,
         updated,
+        userDefinedStatus,
         accountNumber,
         routingNumber,
-        substatus,
         eventType,
         mutableMapOf(),
     )
@@ -100,11 +105,12 @@ private constructor(
             .isForBenefitOf(isForBenefitOf)
             .nickname(nickname)
             .status(status)
+            .substatus(substatus)
             .type(type)
             .updated(updated)
+            .userDefinedStatus(userDefinedStatus)
             .accountNumber(accountNumber)
             .routingNumber(routingNumber)
-            .substatus(substatus)
             .build()
 
     /**
@@ -157,6 +163,15 @@ private constructor(
     fun status(): FinancialAccount.FinancialAccountStatus = status.getRequired("status")
 
     /**
+     * Substatus for the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun substatus(): FinancialAccount.FinancialAccountSubstatus? =
+        substatus.getNullable("substatus")
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -169,6 +184,14 @@ private constructor(
     fun updated(): OffsetDateTime = updated.getRequired("updated")
 
     /**
+     * User-defined status for the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun userDefinedStatus(): String? = userDefinedStatus.getNullable("user_defined_status")
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -179,15 +202,6 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun routingNumber(): String? = routingNumber.getNullable("routing_number")
-
-    /**
-     * Substatus for the financial account
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun substatus(): FinancialAccount.FinancialAccountSubstatus? =
-        substatus.getNullable("substatus")
 
     /**
      * The type of event that occurred.
@@ -257,6 +271,15 @@ private constructor(
     fun _status(): JsonField<FinancialAccount.FinancialAccountStatus> = status
 
     /**
+     * Returns the raw JSON value of [substatus].
+     *
+     * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("substatus")
+    @ExcludeMissing
+    fun _substatus(): JsonField<FinancialAccount.FinancialAccountSubstatus> = substatus
+
+    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -269,6 +292,16 @@ private constructor(
      * Unlike [updated], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
+
+    /**
+     * Returns the raw JSON value of [userDefinedStatus].
+     *
+     * Unlike [userDefinedStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("user_defined_status")
+    @ExcludeMissing
+    fun _userDefinedStatus(): JsonField<String> = userDefinedStatus
 
     /**
      * Returns the raw JSON value of [accountNumber].
@@ -287,15 +320,6 @@ private constructor(
     @JsonProperty("routing_number")
     @ExcludeMissing
     fun _routingNumber(): JsonField<String> = routingNumber
-
-    /**
-     * Returns the raw JSON value of [substatus].
-     *
-     * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("substatus")
-    @ExcludeMissing
-    fun _substatus(): JsonField<FinancialAccount.FinancialAccountSubstatus> = substatus
 
     /**
      * Returns the raw JSON value of [eventType].
@@ -331,8 +355,10 @@ private constructor(
          * .isForBenefitOf()
          * .nickname()
          * .status()
+         * .substatus()
          * .type()
          * .updated()
+         * .userDefinedStatus()
          * .eventType()
          * ```
          */
@@ -350,12 +376,12 @@ private constructor(
         private var isForBenefitOf: JsonField<Boolean>? = null
         private var nickname: JsonField<String>? = null
         private var status: JsonField<FinancialAccount.FinancialAccountStatus>? = null
+        private var substatus: JsonField<FinancialAccount.FinancialAccountSubstatus>? = null
         private var type: JsonField<FinancialAccount.Type>? = null
         private var updated: JsonField<OffsetDateTime>? = null
+        private var userDefinedStatus: JsonField<String>? = null
         private var accountNumber: JsonField<String> = JsonMissing.of()
         private var routingNumber: JsonField<String> = JsonMissing.of()
-        private var substatus: JsonField<FinancialAccount.FinancialAccountSubstatus> =
-            JsonMissing.of()
         private var eventType: JsonField<EventType>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -369,11 +395,12 @@ private constructor(
             isForBenefitOf = financialAccountCreatedWebhookEvent.isForBenefitOf
             nickname = financialAccountCreatedWebhookEvent.nickname
             status = financialAccountCreatedWebhookEvent.status
+            substatus = financialAccountCreatedWebhookEvent.substatus
             type = financialAccountCreatedWebhookEvent.type
             updated = financialAccountCreatedWebhookEvent.updated
+            userDefinedStatus = financialAccountCreatedWebhookEvent.userDefinedStatus
             accountNumber = financialAccountCreatedWebhookEvent.accountNumber
             routingNumber = financialAccountCreatedWebhookEvent.routingNumber
-            substatus = financialAccountCreatedWebhookEvent.substatus
             eventType = financialAccountCreatedWebhookEvent.eventType
             additionalProperties =
                 financialAccountCreatedWebhookEvent.additionalProperties.toMutableMap()
@@ -467,6 +494,21 @@ private constructor(
             this.status = status
         }
 
+        /** Substatus for the financial account */
+        fun substatus(substatus: FinancialAccount.FinancialAccountSubstatus?) =
+            substatus(JsonField.ofNullable(substatus))
+
+        /**
+         * Sets [Builder.substatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.substatus] with a well-typed
+         * [FinancialAccount.FinancialAccountSubstatus] value instead. This method is primarily for
+         * setting the field to an undocumented or not yet supported value.
+         */
+        fun substatus(substatus: JsonField<FinancialAccount.FinancialAccountSubstatus>) = apply {
+            this.substatus = substatus
+        }
+
         fun type(type: FinancialAccount.Type) = type(JsonField.of(type))
 
         /**
@@ -488,6 +530,21 @@ private constructor(
          * supported value.
          */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+
+        /** User-defined status for the financial account */
+        fun userDefinedStatus(userDefinedStatus: String?) =
+            userDefinedStatus(JsonField.ofNullable(userDefinedStatus))
+
+        /**
+         * Sets [Builder.userDefinedStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.userDefinedStatus] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun userDefinedStatus(userDefinedStatus: JsonField<String>) = apply {
+            this.userDefinedStatus = userDefinedStatus
+        }
 
         fun accountNumber(accountNumber: String?) =
             accountNumber(JsonField.ofNullable(accountNumber))
@@ -515,21 +572,6 @@ private constructor(
          */
         fun routingNumber(routingNumber: JsonField<String>) = apply {
             this.routingNumber = routingNumber
-        }
-
-        /** Substatus for the financial account */
-        fun substatus(substatus: FinancialAccount.FinancialAccountSubstatus?) =
-            substatus(JsonField.ofNullable(substatus))
-
-        /**
-         * Sets [Builder.substatus] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.substatus] with a well-typed
-         * [FinancialAccount.FinancialAccountSubstatus] value instead. This method is primarily for
-         * setting the field to an undocumented or not yet supported value.
-         */
-        fun substatus(substatus: JsonField<FinancialAccount.FinancialAccountSubstatus>) = apply {
-            this.substatus = substatus
         }
 
         /** The type of event that occurred. */
@@ -577,8 +619,10 @@ private constructor(
          * .isForBenefitOf()
          * .nickname()
          * .status()
+         * .substatus()
          * .type()
          * .updated()
+         * .userDefinedStatus()
          * .eventType()
          * ```
          *
@@ -593,11 +637,12 @@ private constructor(
                 checkRequired("isForBenefitOf", isForBenefitOf),
                 checkRequired("nickname", nickname),
                 checkRequired("status", status),
+                checkRequired("substatus", substatus),
                 checkRequired("type", type),
                 checkRequired("updated", updated),
+                checkRequired("userDefinedStatus", userDefinedStatus),
                 accountNumber,
                 routingNumber,
-                substatus,
                 checkRequired("eventType", eventType),
                 additionalProperties.toMutableMap(),
             )
@@ -617,11 +662,12 @@ private constructor(
         isForBenefitOf()
         nickname()
         status().validate()
+        substatus()?.validate()
         type().validate()
         updated()
+        userDefinedStatus()
         accountNumber()
         routingNumber()
-        substatus()?.validate()
         eventType().validate()
         validated = true
     }
@@ -647,11 +693,12 @@ private constructor(
             (if (isForBenefitOf.asKnown() == null) 0 else 1) +
             (if (nickname.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
+            (substatus.asKnown()?.validity() ?: 0) +
             (type.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
+            (if (userDefinedStatus.asKnown() == null) 0 else 1) +
             (if (accountNumber.asKnown() == null) 0 else 1) +
             (if (routingNumber.asKnown() == null) 0 else 1) +
-            (substatus.asKnown()?.validity() ?: 0) +
             (eventType.asKnown()?.validity() ?: 0)
 
     /** The type of event that occurred. */
@@ -789,11 +836,12 @@ private constructor(
             isForBenefitOf == other.isForBenefitOf &&
             nickname == other.nickname &&
             status == other.status &&
+            substatus == other.substatus &&
             type == other.type &&
             updated == other.updated &&
+            userDefinedStatus == other.userDefinedStatus &&
             accountNumber == other.accountNumber &&
             routingNumber == other.routingNumber &&
-            substatus == other.substatus &&
             eventType == other.eventType &&
             additionalProperties == other.additionalProperties
     }
@@ -807,11 +855,12 @@ private constructor(
             isForBenefitOf,
             nickname,
             status,
+            substatus,
             type,
             updated,
+            userDefinedStatus,
             accountNumber,
             routingNumber,
-            substatus,
             eventType,
             additionalProperties,
         )
@@ -820,5 +869,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FinancialAccountCreatedWebhookEvent{token=$token, accountToken=$accountToken, created=$created, creditConfiguration=$creditConfiguration, isForBenefitOf=$isForBenefitOf, nickname=$nickname, status=$status, type=$type, updated=$updated, accountNumber=$accountNumber, routingNumber=$routingNumber, substatus=$substatus, eventType=$eventType, additionalProperties=$additionalProperties}"
+        "FinancialAccountCreatedWebhookEvent{token=$token, accountToken=$accountToken, created=$created, creditConfiguration=$creditConfiguration, isForBenefitOf=$isForBenefitOf, nickname=$nickname, status=$status, substatus=$substatus, type=$type, updated=$updated, userDefinedStatus=$userDefinedStatus, accountNumber=$accountNumber, routingNumber=$routingNumber, eventType=$eventType, additionalProperties=$additionalProperties}"
 }

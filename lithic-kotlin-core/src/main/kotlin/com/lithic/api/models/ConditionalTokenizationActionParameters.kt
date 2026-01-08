@@ -1499,6 +1499,8 @@ private constructor(
          *   `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
          * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
          * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
+         * * `CARD_STATE`: The state of the card being tokenized. Valid values are `CLOSED`, `OPEN`,
+         *   `PAUSED`, `PENDING_ACTIVATION`, `PENDING_FULFILLMENT`.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1618,6 +1620,8 @@ private constructor(
              *   `TOO_MANY_RECENT_ATTEMPTS`, `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
              * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
              * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
+             * * `CARD_STATE`: The state of the card being tokenized. Valid values are `CLOSED`,
+             *   `OPEN`, `PAUSED`, `PENDING_ACTIVATION`, `PENDING_FULFILLMENT`.
              */
             fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -1770,6 +1774,8 @@ private constructor(
          *   `TOO_MANY_RECENT_TOKENS`, `UNABLE_TO_ASSESS`.
          * * `TOKEN_REQUESTOR_ID`: Unique identifier for the entity requesting the token.
          * * `WALLET_TOKEN_STATUS`: The current status of the wallet token.
+         * * `CARD_STATE`: The state of the card being tokenized. Valid values are `CLOSED`, `OPEN`,
+         *   `PAUSED`, `PENDING_ACTIVATION`, `PENDING_FULFILLMENT`.
          */
         class Attribute @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -1806,6 +1812,8 @@ private constructor(
 
                 val WALLET_TOKEN_STATUS = of("WALLET_TOKEN_STATUS")
 
+                val CARD_STATE = of("CARD_STATE")
+
                 fun of(value: String) = Attribute(JsonField.of(value))
             }
 
@@ -1821,6 +1829,7 @@ private constructor(
                 WALLET_RECOMMENDATION_REASONS,
                 TOKEN_REQUESTOR_ID,
                 WALLET_TOKEN_STATUS,
+                CARD_STATE,
             }
 
             /**
@@ -1843,6 +1852,7 @@ private constructor(
                 WALLET_RECOMMENDATION_REASONS,
                 TOKEN_REQUESTOR_ID,
                 WALLET_TOKEN_STATUS,
+                CARD_STATE,
                 /**
                  * An enum member indicating that [Attribute] was instantiated with an unknown
                  * value.
@@ -1869,6 +1879,7 @@ private constructor(
                     WALLET_RECOMMENDATION_REASONS -> Value.WALLET_RECOMMENDATION_REASONS
                     TOKEN_REQUESTOR_ID -> Value.TOKEN_REQUESTOR_ID
                     WALLET_TOKEN_STATUS -> Value.WALLET_TOKEN_STATUS
+                    CARD_STATE -> Value.CARD_STATE
                     else -> Value._UNKNOWN
                 }
 
@@ -1893,6 +1904,7 @@ private constructor(
                     WALLET_RECOMMENDATION_REASONS -> Known.WALLET_RECOMMENDATION_REASONS
                     TOKEN_REQUESTOR_ID -> Known.TOKEN_REQUESTOR_ID
                     WALLET_TOKEN_STATUS -> Known.WALLET_TOKEN_STATUS
+                    CARD_STATE -> Known.CARD_STATE
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")
                 }
 

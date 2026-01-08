@@ -27,11 +27,12 @@ private constructor(
     private val isForBenefitOf: JsonField<Boolean>,
     private val nickname: JsonField<String>,
     private val status: JsonField<FinancialAccountStatus>,
+    private val substatus: JsonField<FinancialAccountSubstatus>,
     private val type: JsonField<Type>,
     private val updated: JsonField<OffsetDateTime>,
+    private val userDefinedStatus: JsonField<String>,
     private val accountNumber: JsonField<String>,
     private val routingNumber: JsonField<String>,
-    private val substatus: JsonField<FinancialAccountSubstatus>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -54,19 +55,22 @@ private constructor(
         @JsonProperty("status")
         @ExcludeMissing
         status: JsonField<FinancialAccountStatus> = JsonMissing.of(),
+        @JsonProperty("substatus")
+        @ExcludeMissing
+        substatus: JsonField<FinancialAccountSubstatus> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("user_defined_status")
+        @ExcludeMissing
+        userDefinedStatus: JsonField<String> = JsonMissing.of(),
         @JsonProperty("account_number")
         @ExcludeMissing
         accountNumber: JsonField<String> = JsonMissing.of(),
         @JsonProperty("routing_number")
         @ExcludeMissing
         routingNumber: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("substatus")
-        @ExcludeMissing
-        substatus: JsonField<FinancialAccountSubstatus> = JsonMissing.of(),
     ) : this(
         token,
         accountToken,
@@ -75,11 +79,12 @@ private constructor(
         isForBenefitOf,
         nickname,
         status,
+        substatus,
         type,
         updated,
+        userDefinedStatus,
         accountNumber,
         routingNumber,
-        substatus,
         mutableMapOf(),
     )
 
@@ -133,6 +138,14 @@ private constructor(
     fun status(): FinancialAccountStatus = status.getRequired("status")
 
     /**
+     * Substatus for the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun substatus(): FinancialAccountSubstatus? = substatus.getNullable("substatus")
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -145,6 +158,14 @@ private constructor(
     fun updated(): OffsetDateTime = updated.getRequired("updated")
 
     /**
+     * User-defined status for the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun userDefinedStatus(): String? = userDefinedStatus.getNullable("user_defined_status")
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -155,14 +176,6 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun routingNumber(): String? = routingNumber.getNullable("routing_number")
-
-    /**
-     * Substatus for the financial account
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun substatus(): FinancialAccountSubstatus? = substatus.getNullable("substatus")
 
     /**
      * Returns the raw JSON value of [token].
@@ -223,6 +236,15 @@ private constructor(
     fun _status(): JsonField<FinancialAccountStatus> = status
 
     /**
+     * Returns the raw JSON value of [substatus].
+     *
+     * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("substatus")
+    @ExcludeMissing
+    fun _substatus(): JsonField<FinancialAccountSubstatus> = substatus
+
+    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -235,6 +257,16 @@ private constructor(
      * Unlike [updated], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
+
+    /**
+     * Returns the raw JSON value of [userDefinedStatus].
+     *
+     * Unlike [userDefinedStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("user_defined_status")
+    @ExcludeMissing
+    fun _userDefinedStatus(): JsonField<String> = userDefinedStatus
 
     /**
      * Returns the raw JSON value of [accountNumber].
@@ -253,15 +285,6 @@ private constructor(
     @JsonProperty("routing_number")
     @ExcludeMissing
     fun _routingNumber(): JsonField<String> = routingNumber
-
-    /**
-     * Returns the raw JSON value of [substatus].
-     *
-     * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("substatus")
-    @ExcludeMissing
-    fun _substatus(): JsonField<FinancialAccountSubstatus> = substatus
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -289,8 +312,10 @@ private constructor(
          * .isForBenefitOf()
          * .nickname()
          * .status()
+         * .substatus()
          * .type()
          * .updated()
+         * .userDefinedStatus()
          * ```
          */
         fun builder() = Builder()
@@ -306,11 +331,12 @@ private constructor(
         private var isForBenefitOf: JsonField<Boolean>? = null
         private var nickname: JsonField<String>? = null
         private var status: JsonField<FinancialAccountStatus>? = null
+        private var substatus: JsonField<FinancialAccountSubstatus>? = null
         private var type: JsonField<Type>? = null
         private var updated: JsonField<OffsetDateTime>? = null
+        private var userDefinedStatus: JsonField<String>? = null
         private var accountNumber: JsonField<String> = JsonMissing.of()
         private var routingNumber: JsonField<String> = JsonMissing.of()
-        private var substatus: JsonField<FinancialAccountSubstatus> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(financialAccount: FinancialAccount) = apply {
@@ -321,11 +347,12 @@ private constructor(
             isForBenefitOf = financialAccount.isForBenefitOf
             nickname = financialAccount.nickname
             status = financialAccount.status
+            substatus = financialAccount.substatus
             type = financialAccount.type
             updated = financialAccount.updated
+            userDefinedStatus = financialAccount.userDefinedStatus
             accountNumber = financialAccount.accountNumber
             routingNumber = financialAccount.routingNumber
-            substatus = financialAccount.substatus
             additionalProperties = financialAccount.additionalProperties.toMutableMap()
         }
 
@@ -415,6 +442,21 @@ private constructor(
          */
         fun status(status: JsonField<FinancialAccountStatus>) = apply { this.status = status }
 
+        /** Substatus for the financial account */
+        fun substatus(substatus: FinancialAccountSubstatus?) =
+            substatus(JsonField.ofNullable(substatus))
+
+        /**
+         * Sets [Builder.substatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.substatus] with a well-typed [FinancialAccountSubstatus]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun substatus(substatus: JsonField<FinancialAccountSubstatus>) = apply {
+            this.substatus = substatus
+        }
+
         fun type(type: Type) = type(JsonField.of(type))
 
         /**
@@ -435,6 +477,21 @@ private constructor(
          * supported value.
          */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+
+        /** User-defined status for the financial account */
+        fun userDefinedStatus(userDefinedStatus: String?) =
+            userDefinedStatus(JsonField.ofNullable(userDefinedStatus))
+
+        /**
+         * Sets [Builder.userDefinedStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.userDefinedStatus] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun userDefinedStatus(userDefinedStatus: JsonField<String>) = apply {
+            this.userDefinedStatus = userDefinedStatus
+        }
 
         fun accountNumber(accountNumber: String?) =
             accountNumber(JsonField.ofNullable(accountNumber))
@@ -462,21 +519,6 @@ private constructor(
          */
         fun routingNumber(routingNumber: JsonField<String>) = apply {
             this.routingNumber = routingNumber
-        }
-
-        /** Substatus for the financial account */
-        fun substatus(substatus: FinancialAccountSubstatus?) =
-            substatus(JsonField.ofNullable(substatus))
-
-        /**
-         * Sets [Builder.substatus] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.substatus] with a well-typed [FinancialAccountSubstatus]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun substatus(substatus: JsonField<FinancialAccountSubstatus>) = apply {
-            this.substatus = substatus
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -512,8 +554,10 @@ private constructor(
          * .isForBenefitOf()
          * .nickname()
          * .status()
+         * .substatus()
          * .type()
          * .updated()
+         * .userDefinedStatus()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -527,11 +571,12 @@ private constructor(
                 checkRequired("isForBenefitOf", isForBenefitOf),
                 checkRequired("nickname", nickname),
                 checkRequired("status", status),
+                checkRequired("substatus", substatus),
                 checkRequired("type", type),
                 checkRequired("updated", updated),
+                checkRequired("userDefinedStatus", userDefinedStatus),
                 accountNumber,
                 routingNumber,
-                substatus,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -550,11 +595,12 @@ private constructor(
         isForBenefitOf()
         nickname()
         status().validate()
+        substatus()?.validate()
         type().validate()
         updated()
+        userDefinedStatus()
         accountNumber()
         routingNumber()
-        substatus()?.validate()
         validated = true
     }
 
@@ -579,11 +625,12 @@ private constructor(
             (if (isForBenefitOf.asKnown() == null) 0 else 1) +
             (if (nickname.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
+            (substatus.asKnown()?.validity() ?: 0) +
             (type.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
+            (if (userDefinedStatus.asKnown() == null) 0 else 1) +
             (if (accountNumber.asKnown() == null) 0 else 1) +
-            (if (routingNumber.asKnown() == null) 0 else 1) +
-            (substatus.asKnown()?.validity() ?: 0)
+            (if (routingNumber.asKnown() == null) 0 else 1)
 
     class FinancialAccountCreditConfig
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -1267,6 +1314,158 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Substatus for the financial account */
+    class FinancialAccountSubstatus
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val CHARGED_OFF_DELINQUENT = of("CHARGED_OFF_DELINQUENT")
+
+            val CHARGED_OFF_FRAUD = of("CHARGED_OFF_FRAUD")
+
+            val END_USER_REQUEST = of("END_USER_REQUEST")
+
+            val BANK_REQUEST = of("BANK_REQUEST")
+
+            val DELINQUENT = of("DELINQUENT")
+
+            fun of(value: String) = FinancialAccountSubstatus(JsonField.of(value))
+        }
+
+        /** An enum containing [FinancialAccountSubstatus]'s known values. */
+        enum class Known {
+            CHARGED_OFF_DELINQUENT,
+            CHARGED_OFF_FRAUD,
+            END_USER_REQUEST,
+            BANK_REQUEST,
+            DELINQUENT,
+        }
+
+        /**
+         * An enum containing [FinancialAccountSubstatus]'s known values, as well as an [_UNKNOWN]
+         * member.
+         *
+         * An instance of [FinancialAccountSubstatus] can contain an unknown value in a couple of
+         * cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            CHARGED_OFF_DELINQUENT,
+            CHARGED_OFF_FRAUD,
+            END_USER_REQUEST,
+            BANK_REQUEST,
+            DELINQUENT,
+            /**
+             * An enum member indicating that [FinancialAccountSubstatus] was instantiated with an
+             * unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                CHARGED_OFF_DELINQUENT -> Value.CHARGED_OFF_DELINQUENT
+                CHARGED_OFF_FRAUD -> Value.CHARGED_OFF_FRAUD
+                END_USER_REQUEST -> Value.END_USER_REQUEST
+                BANK_REQUEST -> Value.BANK_REQUEST
+                DELINQUENT -> Value.DELINQUENT
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
+        fun known(): Known =
+            when (this) {
+                CHARGED_OFF_DELINQUENT -> Known.CHARGED_OFF_DELINQUENT
+                CHARGED_OFF_FRAUD -> Known.CHARGED_OFF_FRAUD
+                END_USER_REQUEST -> Known.END_USER_REQUEST
+                BANK_REQUEST -> Known.BANK_REQUEST
+                DELINQUENT -> Known.DELINQUENT
+                else ->
+                    throw LithicInvalidDataException("Unknown FinancialAccountSubstatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws LithicInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): FinancialAccountSubstatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is FinancialAccountSubstatus && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1440,158 +1639,6 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Substatus for the financial account */
-    class FinancialAccountSubstatus
-    @JsonCreator
-    private constructor(private val value: JsonField<String>) : Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            val CHARGED_OFF_DELINQUENT = of("CHARGED_OFF_DELINQUENT")
-
-            val CHARGED_OFF_FRAUD = of("CHARGED_OFF_FRAUD")
-
-            val END_USER_REQUEST = of("END_USER_REQUEST")
-
-            val BANK_REQUEST = of("BANK_REQUEST")
-
-            val DELINQUENT = of("DELINQUENT")
-
-            fun of(value: String) = FinancialAccountSubstatus(JsonField.of(value))
-        }
-
-        /** An enum containing [FinancialAccountSubstatus]'s known values. */
-        enum class Known {
-            CHARGED_OFF_DELINQUENT,
-            CHARGED_OFF_FRAUD,
-            END_USER_REQUEST,
-            BANK_REQUEST,
-            DELINQUENT,
-        }
-
-        /**
-         * An enum containing [FinancialAccountSubstatus]'s known values, as well as an [_UNKNOWN]
-         * member.
-         *
-         * An instance of [FinancialAccountSubstatus] can contain an unknown value in a couple of
-         * cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            CHARGED_OFF_DELINQUENT,
-            CHARGED_OFF_FRAUD,
-            END_USER_REQUEST,
-            BANK_REQUEST,
-            DELINQUENT,
-            /**
-             * An enum member indicating that [FinancialAccountSubstatus] was instantiated with an
-             * unknown value.
-             */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                CHARGED_OFF_DELINQUENT -> Value.CHARGED_OFF_DELINQUENT
-                CHARGED_OFF_FRAUD -> Value.CHARGED_OFF_FRAUD
-                END_USER_REQUEST -> Value.END_USER_REQUEST
-                BANK_REQUEST -> Value.BANK_REQUEST
-                DELINQUENT -> Value.DELINQUENT
-                else -> Value._UNKNOWN
-            }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws LithicInvalidDataException if this class instance's value is a not a known
-         *   member.
-         */
-        fun known(): Known =
-            when (this) {
-                CHARGED_OFF_DELINQUENT -> Known.CHARGED_OFF_DELINQUENT
-                CHARGED_OFF_FRAUD -> Known.CHARGED_OFF_FRAUD
-                END_USER_REQUEST -> Known.END_USER_REQUEST
-                BANK_REQUEST -> Known.BANK_REQUEST
-                DELINQUENT -> Known.DELINQUENT
-                else ->
-                    throw LithicInvalidDataException("Unknown FinancialAccountSubstatus: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws LithicInvalidDataException if this class instance's value does not have the
-         *   expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
-
-        private var validated: Boolean = false
-
-        fun validate(): FinancialAccountSubstatus = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is FinancialAccountSubstatus && value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -1605,11 +1652,12 @@ private constructor(
             isForBenefitOf == other.isForBenefitOf &&
             nickname == other.nickname &&
             status == other.status &&
+            substatus == other.substatus &&
             type == other.type &&
             updated == other.updated &&
+            userDefinedStatus == other.userDefinedStatus &&
             accountNumber == other.accountNumber &&
             routingNumber == other.routingNumber &&
-            substatus == other.substatus &&
             additionalProperties == other.additionalProperties
     }
 
@@ -1622,11 +1670,12 @@ private constructor(
             isForBenefitOf,
             nickname,
             status,
+            substatus,
             type,
             updated,
+            userDefinedStatus,
             accountNumber,
             routingNumber,
-            substatus,
             additionalProperties,
         )
     }
@@ -1634,5 +1683,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "FinancialAccount{token=$token, accountToken=$accountToken, created=$created, creditConfiguration=$creditConfiguration, isForBenefitOf=$isForBenefitOf, nickname=$nickname, status=$status, type=$type, updated=$updated, accountNumber=$accountNumber, routingNumber=$routingNumber, substatus=$substatus, additionalProperties=$additionalProperties}"
+        "FinancialAccount{token=$token, accountToken=$accountToken, created=$created, creditConfiguration=$creditConfiguration, isForBenefitOf=$isForBenefitOf, nickname=$nickname, status=$status, substatus=$substatus, type=$type, updated=$updated, userDefinedStatus=$userDefinedStatus, accountNumber=$accountNumber, routingNumber=$routingNumber, additionalProperties=$additionalProperties}"
 }

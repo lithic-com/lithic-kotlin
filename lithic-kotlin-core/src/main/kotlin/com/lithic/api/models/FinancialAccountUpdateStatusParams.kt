@@ -47,6 +47,14 @@ private constructor(
     fun substatus(): UpdateFinancialAccountSubstatus? = body.substatus()
 
     /**
+     * User-defined status for the financial account
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun userDefinedStatus(): String? = body.userDefinedStatus()
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -59,6 +67,14 @@ private constructor(
      * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _substatus(): JsonField<UpdateFinancialAccountSubstatus> = body._substatus()
+
+    /**
+     * Returns the raw JSON value of [userDefinedStatus].
+     *
+     * Unlike [userDefinedStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _userDefinedStatus(): JsonField<String> = body._userDefinedStatus()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -114,6 +130,7 @@ private constructor(
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [status]
          * - [substatus]
+         * - [userDefinedStatus]
          */
         fun body(body: UpdateFinancialAccountStatusRequest) = apply { this.body = body.toBuilder() }
 
@@ -143,6 +160,22 @@ private constructor(
          */
         fun substatus(substatus: JsonField<UpdateFinancialAccountSubstatus>) = apply {
             body.substatus(substatus)
+        }
+
+        /** User-defined status for the financial account */
+        fun userDefinedStatus(userDefinedStatus: String) = apply {
+            body.userDefinedStatus(userDefinedStatus)
+        }
+
+        /**
+         * Sets [Builder.userDefinedStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.userDefinedStatus] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun userDefinedStatus(userDefinedStatus: JsonField<String>) = apply {
+            body.userDefinedStatus(userDefinedStatus)
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
@@ -301,6 +334,7 @@ private constructor(
     private constructor(
         private val status: JsonField<FinancialAccountStatus>,
         private val substatus: JsonField<UpdateFinancialAccountSubstatus>,
+        private val userDefinedStatus: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -312,7 +346,10 @@ private constructor(
             @JsonProperty("substatus")
             @ExcludeMissing
             substatus: JsonField<UpdateFinancialAccountSubstatus> = JsonMissing.of(),
-        ) : this(status, substatus, mutableMapOf())
+            @JsonProperty("user_defined_status")
+            @ExcludeMissing
+            userDefinedStatus: JsonField<String> = JsonMissing.of(),
+        ) : this(status, substatus, userDefinedStatus, mutableMapOf())
 
         /**
          * Status of the financial account
@@ -331,6 +368,14 @@ private constructor(
         fun substatus(): UpdateFinancialAccountSubstatus? = substatus.getNullable("substatus")
 
         /**
+         * User-defined status for the financial account
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun userDefinedStatus(): String? = userDefinedStatus.getNullable("user_defined_status")
+
+        /**
          * Returns the raw JSON value of [status].
          *
          * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -347,6 +392,16 @@ private constructor(
         @JsonProperty("substatus")
         @ExcludeMissing
         fun _substatus(): JsonField<UpdateFinancialAccountSubstatus> = substatus
+
+        /**
+         * Returns the raw JSON value of [userDefinedStatus].
+         *
+         * Unlike [userDefinedStatus], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("user_defined_status")
+        @ExcludeMissing
+        fun _userDefinedStatus(): JsonField<String> = userDefinedStatus
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -380,6 +435,7 @@ private constructor(
 
             private var status: JsonField<FinancialAccountStatus>? = null
             private var substatus: JsonField<UpdateFinancialAccountSubstatus>? = null
+            private var userDefinedStatus: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -387,6 +443,7 @@ private constructor(
             ) = apply {
                 status = updateFinancialAccountStatusRequest.status
                 substatus = updateFinancialAccountStatusRequest.substatus
+                userDefinedStatus = updateFinancialAccountStatusRequest.userDefinedStatus
                 additionalProperties =
                     updateFinancialAccountStatusRequest.additionalProperties.toMutableMap()
             }
@@ -416,6 +473,21 @@ private constructor(
              */
             fun substatus(substatus: JsonField<UpdateFinancialAccountSubstatus>) = apply {
                 this.substatus = substatus
+            }
+
+            /** User-defined status for the financial account */
+            fun userDefinedStatus(userDefinedStatus: String) =
+                userDefinedStatus(JsonField.of(userDefinedStatus))
+
+            /**
+             * Sets [Builder.userDefinedStatus] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.userDefinedStatus] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun userDefinedStatus(userDefinedStatus: JsonField<String>) = apply {
+                this.userDefinedStatus = userDefinedStatus
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -454,6 +526,7 @@ private constructor(
                 UpdateFinancialAccountStatusRequest(
                     checkRequired("status", status),
                     checkRequired("substatus", substatus),
+                    userDefinedStatus,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -467,6 +540,7 @@ private constructor(
 
             status().validate()
             substatus()?.validate()
+            userDefinedStatus()
             validated = true
         }
 
@@ -485,7 +559,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (status.asKnown()?.validity() ?: 0) + (substatus.asKnown()?.validity() ?: 0)
+            (status.asKnown()?.validity() ?: 0) +
+                (substatus.asKnown()?.validity() ?: 0) +
+                (if (userDefinedStatus.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -495,15 +571,18 @@ private constructor(
             return other is UpdateFinancialAccountStatusRequest &&
                 status == other.status &&
                 substatus == other.substatus &&
+                userDefinedStatus == other.userDefinedStatus &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(status, substatus, additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(status, substatus, userDefinedStatus, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UpdateFinancialAccountStatusRequest{status=$status, substatus=$substatus, additionalProperties=$additionalProperties}"
+            "UpdateFinancialAccountStatusRequest{status=$status, substatus=$substatus, userDefinedStatus=$userDefinedStatus, additionalProperties=$additionalProperties}"
     }
 
     /** Status of the financial account */

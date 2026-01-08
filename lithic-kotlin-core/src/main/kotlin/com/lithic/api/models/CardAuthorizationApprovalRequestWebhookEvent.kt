@@ -19,8 +19,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-/** The Auth Stream Access request payload that was sent to the ASA responder. */
-class AsaRequestWebhookEvent
+class CardAuthorizationApprovalRequestWebhookEvent
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
@@ -32,6 +31,7 @@ private constructor(
     private val cardholderCurrency: JsonField<String>,
     private val cashAmount: JsonField<Long>,
     private val created: JsonField<OffsetDateTime>,
+    private val eventType: JsonField<EventType>,
     private val merchant: JsonField<Merchant>,
     private val merchantAmount: JsonField<Long>,
     private val merchantCurrency: JsonField<String>,
@@ -73,6 +73,9 @@ private constructor(
         @JsonProperty("created")
         @ExcludeMissing
         created: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("event_type")
+        @ExcludeMissing
+        eventType: JsonField<EventType> = JsonMissing.of(),
         @JsonProperty("merchant") @ExcludeMissing merchant: JsonField<Merchant> = JsonMissing.of(),
         @JsonProperty("merchant_amount")
         @ExcludeMissing
@@ -130,6 +133,7 @@ private constructor(
         cardholderCurrency,
         cashAmount,
         created,
+        eventType,
         merchant,
         merchantAmount,
         merchantCurrency,
@@ -230,6 +234,12 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun created(): OffsetDateTime = created.getRequired("created")
+
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun eventType(): EventType = eventType.getRequired("event_type")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -463,6 +473,13 @@ private constructor(
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
 
     /**
+     * Returns the raw JSON value of [eventType].
+     *
+     * Unlike [eventType], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("event_type") @ExcludeMissing fun _eventType(): JsonField<EventType> = eventType
+
+    /**
      * Returns the raw JSON value of [merchant].
      *
      * Unlike [merchant], this method doesn't throw if the JSON field has an unexpected type.
@@ -637,7 +654,8 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [AsaRequestWebhookEvent].
+         * Returns a mutable builder for constructing an instance of
+         * [CardAuthorizationApprovalRequestWebhookEvent].
          *
          * The following fields are required:
          * ```kotlin
@@ -650,6 +668,7 @@ private constructor(
          * .cardholderCurrency()
          * .cashAmount()
          * .created()
+         * .eventType()
          * .merchant()
          * .merchantAmount()
          * .merchantCurrency()
@@ -661,7 +680,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    /** A builder for [AsaRequestWebhookEvent]. */
+    /** A builder for [CardAuthorizationApprovalRequestWebhookEvent]. */
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
@@ -673,6 +692,7 @@ private constructor(
         private var cardholderCurrency: JsonField<String>? = null
         private var cashAmount: JsonField<Long>? = null
         private var created: JsonField<OffsetDateTime>? = null
+        private var eventType: JsonField<EventType>? = null
         private var merchant: JsonField<Merchant>? = null
         private var merchantAmount: JsonField<Long>? = null
         private var merchantCurrency: JsonField<String>? = null
@@ -694,36 +714,42 @@ private constructor(
         private var ttl: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(asaRequestWebhookEvent: AsaRequestWebhookEvent) = apply {
-            token = asaRequestWebhookEvent.token
-            acquirerFee = asaRequestWebhookEvent.acquirerFee
-            amount = asaRequestWebhookEvent.amount
-            authorizationAmount = asaRequestWebhookEvent.authorizationAmount
-            avs = asaRequestWebhookEvent.avs
-            card = asaRequestWebhookEvent.card
-            cardholderCurrency = asaRequestWebhookEvent.cardholderCurrency
-            cashAmount = asaRequestWebhookEvent.cashAmount
-            created = asaRequestWebhookEvent.created
-            merchant = asaRequestWebhookEvent.merchant
-            merchantAmount = asaRequestWebhookEvent.merchantAmount
-            merchantCurrency = asaRequestWebhookEvent.merchantCurrency
-            settledAmount = asaRequestWebhookEvent.settledAmount
-            status = asaRequestWebhookEvent.status
-            transactionInitiator = asaRequestWebhookEvent.transactionInitiator
-            accountType = asaRequestWebhookEvent.accountType
-            cardholderAuthentication = asaRequestWebhookEvent.cardholderAuthentication
-            cashback = asaRequestWebhookEvent.cashback
-            conversionRate = asaRequestWebhookEvent.conversionRate
-            eventToken = asaRequestWebhookEvent.eventToken
-            fleetInfo = asaRequestWebhookEvent.fleetInfo
-            latestChallenge = asaRequestWebhookEvent.latestChallenge
-            network = asaRequestWebhookEvent.network
-            networkRiskScore = asaRequestWebhookEvent.networkRiskScore
-            networkSpecificData = asaRequestWebhookEvent.networkSpecificData
-            pos = asaRequestWebhookEvent.pos
-            tokenInfo = asaRequestWebhookEvent.tokenInfo
-            ttl = asaRequestWebhookEvent.ttl
-            additionalProperties = asaRequestWebhookEvent.additionalProperties.toMutableMap()
+        internal fun from(
+            cardAuthorizationApprovalRequestWebhookEvent:
+                CardAuthorizationApprovalRequestWebhookEvent
+        ) = apply {
+            token = cardAuthorizationApprovalRequestWebhookEvent.token
+            acquirerFee = cardAuthorizationApprovalRequestWebhookEvent.acquirerFee
+            amount = cardAuthorizationApprovalRequestWebhookEvent.amount
+            authorizationAmount = cardAuthorizationApprovalRequestWebhookEvent.authorizationAmount
+            avs = cardAuthorizationApprovalRequestWebhookEvent.avs
+            card = cardAuthorizationApprovalRequestWebhookEvent.card
+            cardholderCurrency = cardAuthorizationApprovalRequestWebhookEvent.cardholderCurrency
+            cashAmount = cardAuthorizationApprovalRequestWebhookEvent.cashAmount
+            created = cardAuthorizationApprovalRequestWebhookEvent.created
+            eventType = cardAuthorizationApprovalRequestWebhookEvent.eventType
+            merchant = cardAuthorizationApprovalRequestWebhookEvent.merchant
+            merchantAmount = cardAuthorizationApprovalRequestWebhookEvent.merchantAmount
+            merchantCurrency = cardAuthorizationApprovalRequestWebhookEvent.merchantCurrency
+            settledAmount = cardAuthorizationApprovalRequestWebhookEvent.settledAmount
+            status = cardAuthorizationApprovalRequestWebhookEvent.status
+            transactionInitiator = cardAuthorizationApprovalRequestWebhookEvent.transactionInitiator
+            accountType = cardAuthorizationApprovalRequestWebhookEvent.accountType
+            cardholderAuthentication =
+                cardAuthorizationApprovalRequestWebhookEvent.cardholderAuthentication
+            cashback = cardAuthorizationApprovalRequestWebhookEvent.cashback
+            conversionRate = cardAuthorizationApprovalRequestWebhookEvent.conversionRate
+            eventToken = cardAuthorizationApprovalRequestWebhookEvent.eventToken
+            fleetInfo = cardAuthorizationApprovalRequestWebhookEvent.fleetInfo
+            latestChallenge = cardAuthorizationApprovalRequestWebhookEvent.latestChallenge
+            network = cardAuthorizationApprovalRequestWebhookEvent.network
+            networkRiskScore = cardAuthorizationApprovalRequestWebhookEvent.networkRiskScore
+            networkSpecificData = cardAuthorizationApprovalRequestWebhookEvent.networkSpecificData
+            pos = cardAuthorizationApprovalRequestWebhookEvent.pos
+            tokenInfo = cardAuthorizationApprovalRequestWebhookEvent.tokenInfo
+            ttl = cardAuthorizationApprovalRequestWebhookEvent.ttl
+            additionalProperties =
+                cardAuthorizationApprovalRequestWebhookEvent.additionalProperties.toMutableMap()
         }
 
         /** The provisional transaction group uuid associated with the authorization */
@@ -852,6 +878,17 @@ private constructor(
          * supported value.
          */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+
+        fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
+
+        /**
+         * Sets [Builder.eventType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.eventType] with a well-typed [EventType] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
         fun merchant(merchant: Merchant) = merchant(JsonField.of(merchant))
 
@@ -1163,7 +1200,7 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [AsaRequestWebhookEvent].
+         * Returns an immutable instance of [CardAuthorizationApprovalRequestWebhookEvent].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
@@ -1178,6 +1215,7 @@ private constructor(
          * .cardholderCurrency()
          * .cashAmount()
          * .created()
+         * .eventType()
          * .merchant()
          * .merchantAmount()
          * .merchantCurrency()
@@ -1188,8 +1226,8 @@ private constructor(
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): AsaRequestWebhookEvent =
-            AsaRequestWebhookEvent(
+        fun build(): CardAuthorizationApprovalRequestWebhookEvent =
+            CardAuthorizationApprovalRequestWebhookEvent(
                 checkRequired("token", token),
                 checkRequired("acquirerFee", acquirerFee),
                 checkRequired("amount", amount),
@@ -1199,6 +1237,7 @@ private constructor(
                 checkRequired("cardholderCurrency", cardholderCurrency),
                 checkRequired("cashAmount", cashAmount),
                 checkRequired("created", created),
+                checkRequired("eventType", eventType),
                 checkRequired("merchant", merchant),
                 checkRequired("merchantAmount", merchantAmount),
                 checkRequired("merchantCurrency", merchantCurrency),
@@ -1224,7 +1263,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): AsaRequestWebhookEvent = apply {
+    fun validate(): CardAuthorizationApprovalRequestWebhookEvent = apply {
         if (validated) {
             return@apply
         }
@@ -1238,6 +1277,7 @@ private constructor(
         cardholderCurrency()
         cashAmount()
         created()
+        eventType().validate()
         merchant().validate()
         merchantAmount()
         merchantCurrency()
@@ -1283,6 +1323,7 @@ private constructor(
             (if (cardholderCurrency.asKnown() == null) 0 else 1) +
             (if (cashAmount.asKnown() == null) 0 else 1) +
             (if (created.asKnown() == null) 0 else 1) +
+            (eventType.asKnown()?.validity() ?: 0) +
             (merchant.asKnown()?.validity() ?: 0) +
             (if (merchantAmount.asKnown() == null) 0 else 1) +
             (if (merchantCurrency.asKnown() == null) 0 else 1) +
@@ -2599,6 +2640,127 @@ private constructor(
 
         override fun toString() =
             "AsaRequestCard{token=$token, hostname=$hostname, lastFour=$lastFour, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, additionalProperties=$additionalProperties}"
+    }
+
+    class EventType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val CARD_AUTHORIZATION_APPROVAL_REQUEST = of("card_authorization.approval_request")
+
+            fun of(value: String) = EventType(JsonField.of(value))
+        }
+
+        /** An enum containing [EventType]'s known values. */
+        enum class Known {
+            CARD_AUTHORIZATION_APPROVAL_REQUEST
+        }
+
+        /**
+         * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [EventType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            CARD_AUTHORIZATION_APPROVAL_REQUEST,
+            /**
+             * An enum member indicating that [EventType] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                CARD_AUTHORIZATION_APPROVAL_REQUEST -> Value.CARD_AUTHORIZATION_APPROVAL_REQUEST
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
+        fun known(): Known =
+            when (this) {
+                CARD_AUTHORIZATION_APPROVAL_REQUEST -> Known.CARD_AUTHORIZATION_APPROVAL_REQUEST
+                else -> throw LithicInvalidDataException("Unknown EventType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws LithicInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        fun validate(): EventType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is EventType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     /**
@@ -7118,7 +7280,7 @@ private constructor(
             return true
         }
 
-        return other is AsaRequestWebhookEvent &&
+        return other is CardAuthorizationApprovalRequestWebhookEvent &&
             token == other.token &&
             acquirerFee == other.acquirerFee &&
             amount == other.amount &&
@@ -7128,6 +7290,7 @@ private constructor(
             cardholderCurrency == other.cardholderCurrency &&
             cashAmount == other.cashAmount &&
             created == other.created &&
+            eventType == other.eventType &&
             merchant == other.merchant &&
             merchantAmount == other.merchantAmount &&
             merchantCurrency == other.merchantCurrency &&
@@ -7161,6 +7324,7 @@ private constructor(
             cardholderCurrency,
             cashAmount,
             created,
+            eventType,
             merchant,
             merchantAmount,
             merchantCurrency,
@@ -7187,5 +7351,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AsaRequestWebhookEvent{token=$token, acquirerFee=$acquirerFee, amount=$amount, authorizationAmount=$authorizationAmount, avs=$avs, card=$card, cardholderCurrency=$cardholderCurrency, cashAmount=$cashAmount, created=$created, merchant=$merchant, merchantAmount=$merchantAmount, merchantCurrency=$merchantCurrency, settledAmount=$settledAmount, status=$status, transactionInitiator=$transactionInitiator, accountType=$accountType, cardholderAuthentication=$cardholderAuthentication, cashback=$cashback, conversionRate=$conversionRate, eventToken=$eventToken, fleetInfo=$fleetInfo, latestChallenge=$latestChallenge, network=$network, networkRiskScore=$networkRiskScore, networkSpecificData=$networkSpecificData, pos=$pos, tokenInfo=$tokenInfo, ttl=$ttl, additionalProperties=$additionalProperties}"
+        "CardAuthorizationApprovalRequestWebhookEvent{token=$token, acquirerFee=$acquirerFee, amount=$amount, authorizationAmount=$authorizationAmount, avs=$avs, card=$card, cardholderCurrency=$cardholderCurrency, cashAmount=$cashAmount, created=$created, eventType=$eventType, merchant=$merchant, merchantAmount=$merchantAmount, merchantCurrency=$merchantCurrency, settledAmount=$settledAmount, status=$status, transactionInitiator=$transactionInitiator, accountType=$accountType, cardholderAuthentication=$cardholderAuthentication, cashback=$cashback, conversionRate=$conversionRate, eventToken=$eventToken, fleetInfo=$fleetInfo, latestChallenge=$latestChallenge, network=$network, networkRiskScore=$networkRiskScore, networkSpecificData=$networkSpecificData, pos=$pos, tokenInfo=$tokenInfo, ttl=$ttl, additionalProperties=$additionalProperties}"
 }
