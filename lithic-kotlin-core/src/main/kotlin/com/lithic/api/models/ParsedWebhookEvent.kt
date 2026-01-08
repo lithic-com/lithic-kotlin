@@ -41,7 +41,8 @@ private constructor(
     private val legacyPayload: LegacyPayload? = null,
     private val accountHolderVerification: AccountHolderVerificationWebhookEvent? = null,
     private val accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent? = null,
-    private val asaRequest: AsaRequestWebhookEvent? = null,
+    private val cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent? =
+        null,
     private val tokenizationDecisioningRequest: TokenizationDecisioningRequestWebhookEvent? = null,
     private val authRulesBacktestReportCreated: AuthRulesBacktestReportCreatedWebhookEvent? = null,
     private val balanceUpdated: BalanceUpdatedWebhookEvent? = null,
@@ -105,7 +106,9 @@ private constructor(
         TokenizationTwoFactorAuthenticationCodeSentWebhookEvent? =
         null,
     private val tokenizationUpdated: TokenizationUpdatedWebhookEvent? = null,
-    private val threeDSAuthentication: ThreeDSAuthentication? = null,
+    private val threeDSAuthenticationApprovalRequest:
+        ThreeDSAuthenticationApprovalRequestWebhookEvent? =
+        null,
     private val disputeTransactionCreated: DisputeTransactionCreatedWebhookEvent? = null,
     private val disputeTransactionUpdated: DisputeTransactionUpdatedWebhookEvent? = null,
     private val _json: JsonValue? = null,
@@ -128,8 +131,8 @@ private constructor(
     fun accountHolderDocumentUpdated(): AccountHolderDocumentUpdatedWebhookEvent? =
         accountHolderDocumentUpdated
 
-    /** The Auth Stream Access request payload that was sent to the ASA responder. */
-    fun asaRequest(): AsaRequestWebhookEvent? = asaRequest
+    fun cardAuthorizationApprovalRequest(): CardAuthorizationApprovalRequestWebhookEvent? =
+        cardAuthorizationApprovalRequest
 
     /** A webhook for tokenization decisioning sent to the customer's responder endpoint */
     fun tokenizationDecisioningRequest(): TokenizationDecisioningRequestWebhookEvent? =
@@ -266,7 +269,8 @@ private constructor(
     fun tokenizationUpdated(): TokenizationUpdatedWebhookEvent? = tokenizationUpdated
 
     /** Represents a 3DS authentication */
-    fun threeDSAuthentication(): ThreeDSAuthentication? = threeDSAuthentication
+    fun threeDSAuthenticationApprovalRequest(): ThreeDSAuthenticationApprovalRequestWebhookEvent? =
+        threeDSAuthenticationApprovalRequest
 
     /** The Dispute object tracks the progression of a dispute throughout its lifecycle. */
     fun disputeTransactionCreated(): DisputeTransactionCreatedWebhookEvent? =
@@ -288,7 +292,7 @@ private constructor(
 
     fun isAccountHolderDocumentUpdated(): Boolean = accountHolderDocumentUpdated != null
 
-    fun isAsaRequest(): Boolean = asaRequest != null
+    fun isCardAuthorizationApprovalRequest(): Boolean = cardAuthorizationApprovalRequest != null
 
     fun isTokenizationDecisioningRequest(): Boolean = tokenizationDecisioningRequest != null
 
@@ -389,7 +393,8 @@ private constructor(
 
     fun isTokenizationUpdated(): Boolean = tokenizationUpdated != null
 
-    fun isThreeDSAuthentication(): Boolean = threeDSAuthentication != null
+    fun isThreeDSAuthenticationApprovalRequest(): Boolean =
+        threeDSAuthenticationApprovalRequest != null
 
     fun isDisputeTransactionCreated(): Boolean = disputeTransactionCreated != null
 
@@ -413,8 +418,8 @@ private constructor(
     fun asAccountHolderDocumentUpdated(): AccountHolderDocumentUpdatedWebhookEvent =
         accountHolderDocumentUpdated.getOrThrow("accountHolderDocumentUpdated")
 
-    /** The Auth Stream Access request payload that was sent to the ASA responder. */
-    fun asAsaRequest(): AsaRequestWebhookEvent = asaRequest.getOrThrow("asaRequest")
+    fun asCardAuthorizationApprovalRequest(): CardAuthorizationApprovalRequestWebhookEvent =
+        cardAuthorizationApprovalRequest.getOrThrow("cardAuthorizationApprovalRequest")
 
     /** A webhook for tokenization decisioning sent to the customer's responder endpoint */
     fun asTokenizationDecisioningRequest(): TokenizationDecisioningRequestWebhookEvent =
@@ -575,8 +580,8 @@ private constructor(
         tokenizationUpdated.getOrThrow("tokenizationUpdated")
 
     /** Represents a 3DS authentication */
-    fun asThreeDSAuthentication(): ThreeDSAuthentication =
-        threeDSAuthentication.getOrThrow("threeDSAuthentication")
+    fun asThreeDSAuthenticationApprovalRequest(): ThreeDSAuthenticationApprovalRequestWebhookEvent =
+        threeDSAuthenticationApprovalRequest.getOrThrow("threeDSAuthenticationApprovalRequest")
 
     /** The Dispute object tracks the progression of a dispute throughout its lifecycle. */
     fun asDisputeTransactionCreated(): DisputeTransactionCreatedWebhookEvent =
@@ -598,7 +603,8 @@ private constructor(
                 visitor.visitAccountHolderVerification(accountHolderVerification)
             accountHolderDocumentUpdated != null ->
                 visitor.visitAccountHolderDocumentUpdated(accountHolderDocumentUpdated)
-            asaRequest != null -> visitor.visitAsaRequest(asaRequest)
+            cardAuthorizationApprovalRequest != null ->
+                visitor.visitCardAuthorizationApprovalRequest(cardAuthorizationApprovalRequest)
             tokenizationDecisioningRequest != null ->
                 visitor.visitTokenizationDecisioningRequest(tokenizationDecisioningRequest)
             authRulesBacktestReportCreated != null ->
@@ -688,8 +694,10 @@ private constructor(
                     tokenizationTwoFactorAuthenticationCodeSent
                 )
             tokenizationUpdated != null -> visitor.visitTokenizationUpdated(tokenizationUpdated)
-            threeDSAuthentication != null ->
-                visitor.visitThreeDSAuthentication(threeDSAuthentication)
+            threeDSAuthenticationApprovalRequest != null ->
+                visitor.visitThreeDSAuthenticationApprovalRequest(
+                    threeDSAuthenticationApprovalRequest
+                )
             disputeTransactionCreated != null ->
                 visitor.visitDisputeTransactionCreated(disputeTransactionCreated)
             disputeTransactionUpdated != null ->
@@ -736,8 +744,10 @@ private constructor(
                     accountHolderDocumentUpdated.validate()
                 }
 
-                override fun visitAsaRequest(asaRequest: AsaRequestWebhookEvent) {
-                    asaRequest.validate()
+                override fun visitCardAuthorizationApprovalRequest(
+                    cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
+                ) {
+                    cardAuthorizationApprovalRequest.validate()
                 }
 
                 override fun visitTokenizationDecisioningRequest(
@@ -1011,10 +1021,11 @@ private constructor(
                     tokenizationUpdated.validate()
                 }
 
-                override fun visitThreeDSAuthentication(
-                    threeDSAuthentication: ThreeDSAuthentication
+                override fun visitThreeDSAuthenticationApprovalRequest(
+                    threeDSAuthenticationApprovalRequest:
+                        ThreeDSAuthenticationApprovalRequestWebhookEvent
                 ) {
-                    threeDSAuthentication.validate()
+                    threeDSAuthenticationApprovalRequest.validate()
                 }
 
                 override fun visitDisputeTransactionCreated(
@@ -1068,8 +1079,9 @@ private constructor(
                     accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent
                 ) = accountHolderDocumentUpdated.validity()
 
-                override fun visitAsaRequest(asaRequest: AsaRequestWebhookEvent) =
-                    asaRequest.validity()
+                override fun visitCardAuthorizationApprovalRequest(
+                    cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
+                ) = cardAuthorizationApprovalRequest.validity()
 
                 override fun visitTokenizationDecisioningRequest(
                     tokenizationDecisioningRequest: TokenizationDecisioningRequestWebhookEvent
@@ -1257,9 +1269,10 @@ private constructor(
                     tokenizationUpdated: TokenizationUpdatedWebhookEvent
                 ) = tokenizationUpdated.validity()
 
-                override fun visitThreeDSAuthentication(
-                    threeDSAuthentication: ThreeDSAuthentication
-                ) = threeDSAuthentication.validity()
+                override fun visitThreeDSAuthenticationApprovalRequest(
+                    threeDSAuthenticationApprovalRequest:
+                        ThreeDSAuthenticationApprovalRequestWebhookEvent
+                ) = threeDSAuthenticationApprovalRequest.validity()
 
                 override fun visitDisputeTransactionCreated(
                     disputeTransactionCreated: DisputeTransactionCreatedWebhookEvent
@@ -1285,7 +1298,7 @@ private constructor(
             legacyPayload == other.legacyPayload &&
             accountHolderVerification == other.accountHolderVerification &&
             accountHolderDocumentUpdated == other.accountHolderDocumentUpdated &&
-            asaRequest == other.asaRequest &&
+            cardAuthorizationApprovalRequest == other.cardAuthorizationApprovalRequest &&
             tokenizationDecisioningRequest == other.tokenizationDecisioningRequest &&
             authRulesBacktestReportCreated == other.authRulesBacktestReportCreated &&
             balanceUpdated == other.balanceUpdated &&
@@ -1338,7 +1351,7 @@ private constructor(
             tokenizationTwoFactorAuthenticationCodeSent ==
                 other.tokenizationTwoFactorAuthenticationCodeSent &&
             tokenizationUpdated == other.tokenizationUpdated &&
-            threeDSAuthentication == other.threeDSAuthentication &&
+            threeDSAuthenticationApprovalRequest == other.threeDSAuthenticationApprovalRequest &&
             disputeTransactionCreated == other.disputeTransactionCreated &&
             disputeTransactionUpdated == other.disputeTransactionUpdated
     }
@@ -1351,7 +1364,7 @@ private constructor(
             legacyPayload,
             accountHolderVerification,
             accountHolderDocumentUpdated,
-            asaRequest,
+            cardAuthorizationApprovalRequest,
             tokenizationDecisioningRequest,
             authRulesBacktestReportCreated,
             balanceUpdated,
@@ -1399,7 +1412,7 @@ private constructor(
             tokenizationTwoFactorAuthenticationCode,
             tokenizationTwoFactorAuthenticationCodeSent,
             tokenizationUpdated,
-            threeDSAuthentication,
+            threeDSAuthenticationApprovalRequest,
             disputeTransactionCreated,
             disputeTransactionUpdated,
         )
@@ -1415,7 +1428,8 @@ private constructor(
                 "ParsedWebhookEvent{accountHolderVerification=$accountHolderVerification}"
             accountHolderDocumentUpdated != null ->
                 "ParsedWebhookEvent{accountHolderDocumentUpdated=$accountHolderDocumentUpdated}"
-            asaRequest != null -> "ParsedWebhookEvent{asaRequest=$asaRequest}"
+            cardAuthorizationApprovalRequest != null ->
+                "ParsedWebhookEvent{cardAuthorizationApprovalRequest=$cardAuthorizationApprovalRequest}"
             tokenizationDecisioningRequest != null ->
                 "ParsedWebhookEvent{tokenizationDecisioningRequest=$tokenizationDecisioningRequest}"
             authRulesBacktestReportCreated != null ->
@@ -1500,8 +1514,8 @@ private constructor(
                 "ParsedWebhookEvent{tokenizationTwoFactorAuthenticationCodeSent=$tokenizationTwoFactorAuthenticationCodeSent}"
             tokenizationUpdated != null ->
                 "ParsedWebhookEvent{tokenizationUpdated=$tokenizationUpdated}"
-            threeDSAuthentication != null ->
-                "ParsedWebhookEvent{threeDSAuthentication=$threeDSAuthentication}"
+            threeDSAuthenticationApprovalRequest != null ->
+                "ParsedWebhookEvent{threeDSAuthenticationApprovalRequest=$threeDSAuthenticationApprovalRequest}"
             disputeTransactionCreated != null ->
                 "ParsedWebhookEvent{disputeTransactionCreated=$disputeTransactionCreated}"
             disputeTransactionUpdated != null ->
@@ -1533,9 +1547,9 @@ private constructor(
             accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent
         ) = ParsedWebhookEvent(accountHolderDocumentUpdated = accountHolderDocumentUpdated)
 
-        /** The Auth Stream Access request payload that was sent to the ASA responder. */
-        fun ofAsaRequest(asaRequest: AsaRequestWebhookEvent) =
-            ParsedWebhookEvent(asaRequest = asaRequest)
+        fun ofCardAuthorizationApprovalRequest(
+            cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
+        ) = ParsedWebhookEvent(cardAuthorizationApprovalRequest = cardAuthorizationApprovalRequest)
 
         /** A webhook for tokenization decisioning sent to the customer's responder endpoint */
         fun ofTokenizationDecisioningRequest(
@@ -1746,8 +1760,12 @@ private constructor(
             ParsedWebhookEvent(tokenizationUpdated = tokenizationUpdated)
 
         /** Represents a 3DS authentication */
-        fun ofThreeDSAuthentication(threeDSAuthentication: ThreeDSAuthentication) =
-            ParsedWebhookEvent(threeDSAuthentication = threeDSAuthentication)
+        fun ofThreeDSAuthenticationApprovalRequest(
+            threeDSAuthenticationApprovalRequest: ThreeDSAuthenticationApprovalRequestWebhookEvent
+        ) =
+            ParsedWebhookEvent(
+                threeDSAuthenticationApprovalRequest = threeDSAuthenticationApprovalRequest
+            )
 
         /** The Dispute object tracks the progression of a dispute throughout its lifecycle. */
         fun ofDisputeTransactionCreated(
@@ -1785,8 +1803,9 @@ private constructor(
             accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent
         ): T
 
-        /** The Auth Stream Access request payload that was sent to the ASA responder. */
-        fun visitAsaRequest(asaRequest: AsaRequestWebhookEvent): T
+        fun visitCardAuthorizationApprovalRequest(
+            cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
+        ): T
 
         /** A webhook for tokenization decisioning sent to the customer's responder endpoint */
         fun visitTokenizationDecisioningRequest(
@@ -1961,7 +1980,9 @@ private constructor(
         fun visitTokenizationUpdated(tokenizationUpdated: TokenizationUpdatedWebhookEvent): T
 
         /** Represents a 3DS authentication */
-        fun visitThreeDSAuthentication(threeDSAuthentication: ThreeDSAuthentication): T
+        fun visitThreeDSAuthenticationApprovalRequest(
+            threeDSAuthenticationApprovalRequest: ThreeDSAuthenticationApprovalRequestWebhookEvent
+        ): T
 
         /** The Dispute object tracks the progression of a dispute throughout its lifecycle. */
         fun visitDisputeTransactionCreated(
@@ -2020,9 +2041,16 @@ private constructor(
                             ?.let {
                                 ParsedWebhookEvent(accountHolderDocumentUpdated = it, _json = json)
                             },
-                        tryDeserialize(node, jacksonTypeRef<AsaRequestWebhookEvent>())?.let {
-                            ParsedWebhookEvent(asaRequest = it, _json = json)
-                        },
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<CardAuthorizationApprovalRequestWebhookEvent>(),
+                            )
+                            ?.let {
+                                ParsedWebhookEvent(
+                                    cardAuthorizationApprovalRequest = it,
+                                    _json = json,
+                                )
+                            },
                         tryDeserialize(
                                 node,
                                 jacksonTypeRef<TokenizationDecisioningRequestWebhookEvent>(),
@@ -2315,9 +2343,16 @@ private constructor(
                             },
                         tryDeserialize(node, jacksonTypeRef<TokenizationUpdatedWebhookEvent>())
                             ?.let { ParsedWebhookEvent(tokenizationUpdated = it, _json = json) },
-                        tryDeserialize(node, jacksonTypeRef<ThreeDSAuthentication>())?.let {
-                            ParsedWebhookEvent(threeDSAuthentication = it, _json = json)
-                        },
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<ThreeDSAuthenticationApprovalRequestWebhookEvent>(),
+                            )
+                            ?.let {
+                                ParsedWebhookEvent(
+                                    threeDSAuthenticationApprovalRequest = it,
+                                    _json = json,
+                                )
+                            },
                         tryDeserialize(
                                 node,
                                 jacksonTypeRef<DisputeTransactionCreatedWebhookEvent>(),
@@ -2365,7 +2400,8 @@ private constructor(
                     generator.writeObject(value.accountHolderVerification)
                 value.accountHolderDocumentUpdated != null ->
                     generator.writeObject(value.accountHolderDocumentUpdated)
-                value.asaRequest != null -> generator.writeObject(value.asaRequest)
+                value.cardAuthorizationApprovalRequest != null ->
+                    generator.writeObject(value.cardAuthorizationApprovalRequest)
                 value.tokenizationDecisioningRequest != null ->
                     generator.writeObject(value.tokenizationDecisioningRequest)
                 value.authRulesBacktestReportCreated != null ->
@@ -2453,8 +2489,8 @@ private constructor(
                     generator.writeObject(value.tokenizationTwoFactorAuthenticationCodeSent)
                 value.tokenizationUpdated != null ->
                     generator.writeObject(value.tokenizationUpdated)
-                value.threeDSAuthentication != null ->
-                    generator.writeObject(value.threeDSAuthentication)
+                value.threeDSAuthenticationApprovalRequest != null ->
+                    generator.writeObject(value.threeDSAuthenticationApprovalRequest)
                 value.disputeTransactionCreated != null ->
                     generator.writeObject(value.disputeTransactionCreated)
                 value.disputeTransactionUpdated != null ->

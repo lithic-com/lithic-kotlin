@@ -6918,6 +6918,8 @@ private constructor(
 
                 val AUTH_RULE_BLOCKED_MCC = of("AUTH_RULE_BLOCKED_MCC")
 
+                val AUTH_RULE = of("AUTH_RULE")
+
                 val CARD_CLOSED = of("CARD_CLOSED")
 
                 val CARD_CRYPTOGRAM_VALIDATION_FAILURE = of("CARD_CRYPTOGRAM_VALIDATION_FAILURE")
@@ -7025,6 +7027,7 @@ private constructor(
                 AUTH_RULE_ALLOWED_MCC,
                 AUTH_RULE_BLOCKED_COUNTRY,
                 AUTH_RULE_BLOCKED_MCC,
+                AUTH_RULE,
                 CARD_CLOSED,
                 CARD_CRYPTOGRAM_VALIDATION_FAILURE,
                 CARD_EXPIRED,
@@ -7093,6 +7096,7 @@ private constructor(
                 AUTH_RULE_ALLOWED_MCC,
                 AUTH_RULE_BLOCKED_COUNTRY,
                 AUTH_RULE_BLOCKED_MCC,
+                AUTH_RULE,
                 CARD_CLOSED,
                 CARD_CRYPTOGRAM_VALIDATION_FAILURE,
                 CARD_EXPIRED,
@@ -7167,6 +7171,7 @@ private constructor(
                     AUTH_RULE_ALLOWED_MCC -> Value.AUTH_RULE_ALLOWED_MCC
                     AUTH_RULE_BLOCKED_COUNTRY -> Value.AUTH_RULE_BLOCKED_COUNTRY
                     AUTH_RULE_BLOCKED_MCC -> Value.AUTH_RULE_BLOCKED_MCC
+                    AUTH_RULE -> Value.AUTH_RULE
                     CARD_CLOSED -> Value.CARD_CLOSED
                     CARD_CRYPTOGRAM_VALIDATION_FAILURE -> Value.CARD_CRYPTOGRAM_VALIDATION_FAILURE
                     CARD_EXPIRED -> Value.CARD_EXPIRED
@@ -7242,6 +7247,7 @@ private constructor(
                     AUTH_RULE_ALLOWED_MCC -> Known.AUTH_RULE_ALLOWED_MCC
                     AUTH_RULE_BLOCKED_COUNTRY -> Known.AUTH_RULE_BLOCKED_COUNTRY
                     AUTH_RULE_BLOCKED_MCC -> Known.AUTH_RULE_BLOCKED_MCC
+                    AUTH_RULE -> Known.AUTH_RULE
                     CARD_CLOSED -> Known.CARD_CLOSED
                     CARD_CRYPTOGRAM_VALIDATION_FAILURE -> Known.CARD_CRYPTOGRAM_VALIDATION_FAILURE
                     CARD_EXPIRED -> Known.CARD_EXPIRED
@@ -9422,6 +9428,8 @@ private constructor(
 
                     val AUTH_RULE_BLOCKED_MCC = of("AUTH_RULE_BLOCKED_MCC")
 
+                    val AUTH_RULE = of("AUTH_RULE")
+
                     val CARD_CLOSED = of("CARD_CLOSED")
 
                     val CARD_CRYPTOGRAM_VALIDATION_FAILURE =
@@ -9531,6 +9539,7 @@ private constructor(
                     AUTH_RULE_ALLOWED_MCC,
                     AUTH_RULE_BLOCKED_COUNTRY,
                     AUTH_RULE_BLOCKED_MCC,
+                    AUTH_RULE,
                     CARD_CLOSED,
                     CARD_CRYPTOGRAM_VALIDATION_FAILURE,
                     CARD_EXPIRED,
@@ -9601,6 +9610,7 @@ private constructor(
                     AUTH_RULE_ALLOWED_MCC,
                     AUTH_RULE_BLOCKED_COUNTRY,
                     AUTH_RULE_BLOCKED_MCC,
+                    AUTH_RULE,
                     CARD_CLOSED,
                     CARD_CRYPTOGRAM_VALIDATION_FAILURE,
                     CARD_EXPIRED,
@@ -9676,6 +9686,7 @@ private constructor(
                         AUTH_RULE_ALLOWED_MCC -> Value.AUTH_RULE_ALLOWED_MCC
                         AUTH_RULE_BLOCKED_COUNTRY -> Value.AUTH_RULE_BLOCKED_COUNTRY
                         AUTH_RULE_BLOCKED_MCC -> Value.AUTH_RULE_BLOCKED_MCC
+                        AUTH_RULE -> Value.AUTH_RULE
                         CARD_CLOSED -> Value.CARD_CLOSED
                         CARD_CRYPTOGRAM_VALIDATION_FAILURE ->
                             Value.CARD_CRYPTOGRAM_VALIDATION_FAILURE
@@ -9754,6 +9765,7 @@ private constructor(
                         AUTH_RULE_ALLOWED_MCC -> Known.AUTH_RULE_ALLOWED_MCC
                         AUTH_RULE_BLOCKED_COUNTRY -> Known.AUTH_RULE_BLOCKED_COUNTRY
                         AUTH_RULE_BLOCKED_MCC -> Known.AUTH_RULE_BLOCKED_MCC
+                        AUTH_RULE -> Known.AUTH_RULE
                         CARD_CLOSED -> Known.CARD_CLOSED
                         CARD_CRYPTOGRAM_VALIDATION_FAILURE ->
                             Known.CARD_CRYPTOGRAM_VALIDATION_FAILURE
