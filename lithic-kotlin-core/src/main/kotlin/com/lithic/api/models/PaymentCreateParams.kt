@@ -1092,7 +1092,7 @@ private constructor(
             @JsonProperty("sec_code")
             @ExcludeMissing
             secCode: JsonField<SecCode> = JsonMissing.of(),
-            @JsonProperty("ach_hold_period")
+            @JsonProperty("ach_hold__period")
             @ExcludeMissing
             achHoldPeriod: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("addenda") @ExcludeMissing addenda: JsonField<String> = JsonMissing.of(),
@@ -1110,7 +1110,7 @@ private constructor(
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun achHoldPeriod(): Long? = achHoldPeriod.getNullable("ach_hold_period")
+        fun achHoldPeriod(): Long? = achHoldPeriod.getNullable("ach_hold__period")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1131,7 +1131,7 @@ private constructor(
          * Unlike [achHoldPeriod], this method doesn't throw if the JSON field has an unexpected
          * type.
          */
-        @JsonProperty("ach_hold_period")
+        @JsonProperty("ach_hold__period")
         @ExcludeMissing
         fun _achHoldPeriod(): JsonField<Long> = achHoldPeriod
 
