@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.115.0 (2026-01-16)
+
+Full Changelog: [v0.114.0...v0.115.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.114.0...v0.115.0)
+
+### Features
+
+* **api:** Add idempotency key to cards POST and PATCH endpoints ([3dbfeb5](https://github.com/lithic-com/lithic-kotlin/commit/3dbfeb59f0b68c3df56b37e6e58d8e6a049926d6))
+* **api:** make filter optional for Spend Velocity Auth Rules ([b330d9a](https://github.com/lithic-com/lithic-kotlin/commit/b330d9a5715ef17c022d66637c546632df8bd96f))
+
+
+### Bug Fixes
+
+* **api:** Correct field name from ach_hold__period to ach_hold_period ([ddcb4c2](https://github.com/lithic-com/lithic-kotlin/commit/ddcb4c22ede8565a6fb9f7788e886607d9c45a53))
+* **api:** mark AppleWebPushProvisioningResponse fields required ([32436e0](https://github.com/lithic-com/lithic-kotlin/commit/32436e038dbbadbab7af80b5b40ee7016f05875a))
+* **api:** rename WIRE_DRAWDOWN_REQUEST to WIRE_INBOUND_DRAWDOWN_REQUEST ([b330d9a](https://github.com/lithic-com/lithic-kotlin/commit/b330d9a5715ef17c022d66637c546632df8bd96f))
+* **client:** disallow coercion from float to int ([e30b3b6](https://github.com/lithic-com/lithic-kotlin/commit/e30b3b6877cef526e2c212fce7ac9d839732e358))
+* date time deserialization leniency ([6ad354a](https://github.com/lithic-com/lithic-kotlin/commit/6ad354a23a0e7f5b1cc8bff997c1de3efe5e39ba))
+
+
+### Chores
+
+* configure new SDK language ([c943aa5](https://github.com/lithic-com/lithic-kotlin/commit/c943aa580487a6fd471bc19d58036a08bc6ba24c))
+* fix build error ([74291fa](https://github.com/lithic-com/lithic-kotlin/commit/74291fa981c96c0045ca757acf875cefccfc6689))
+* fix build error ([cdde169](https://github.com/lithic-com/lithic-kotlin/commit/cdde16974d11f5248ac3e596b731a90955c3b221))
+* fix test ([6969f39](https://github.com/lithic-com/lithic-kotlin/commit/6969f39dbe0afd83f967f4a5074074c8b6e02783))
+* **internal:** codegen related update ([ab355b6](https://github.com/lithic-com/lithic-kotlin/commit/ab355b65f1e7a7d0b6e9ef49243385dba1305a10))
+* **internal:** refactor build files to support future stainless package uploads ([f992260](https://github.com/lithic-com/lithic-kotlin/commit/f992260e7eb541de8b96d8951d2c2344a1d14a62))
+* **internal:** update `actions/checkout` version ([d55856b](https://github.com/lithic-com/lithic-kotlin/commit/d55856b095170cfe834133812a1b8c970f30adca))
+* Rework event type generation to support spec splitting ([31b6791](https://github.com/lithic-com/lithic-kotlin/commit/31b6791cae047ab7694b1d315e779a8d6ea6329d))
+* test on Jackson 2.14.0 to avoid encountering FasterXML/jackson-databind[#3240](https://github.com/lithic-com/lithic-kotlin/issues/3240) in tests ([6ad354a](https://github.com/lithic-com/lithic-kotlin/commit/6ad354a23a0e7f5b1cc8bff997c1de3efe5e39ba))
+
 ## 0.114.0 (2026-01-08)
 
 Full Changelog: [v0.113.0...v0.114.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.113.0...v0.114.0)
