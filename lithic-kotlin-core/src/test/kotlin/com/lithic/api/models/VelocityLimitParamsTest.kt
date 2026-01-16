@@ -13,6 +13,13 @@ internal class VelocityLimitParamsTest {
     fun create() {
         val velocityLimitParams =
             VelocityLimitParams.builder()
+                .period(
+                    VelocityLimitPeriod.TrailingWindowObject.builder()
+                        .duration(10L)
+                        .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
+                        .build()
+                )
+                .scope(VelocityLimitParams.VelocityScope.CARD)
                 .filters(
                     VelocityLimitParams.VelocityLimitFilters.builder()
                         .addExcludeCountry("USD")
@@ -24,17 +31,20 @@ internal class VelocityLimitParamsTest {
                         )
                         .build()
                 )
-                .period(
+                .limitAmount(10000L)
+                .limitCount(0L)
+                .build()
+
+        assertThat(velocityLimitParams.period())
+            .isEqualTo(
+                VelocityLimitPeriod.ofTrailingWindowObject(
                     VelocityLimitPeriod.TrailingWindowObject.builder()
                         .duration(10L)
                         .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
                         .build()
                 )
-                .scope(VelocityLimitParams.VelocityScope.CARD)
-                .limitAmount(10000L)
-                .limitCount(0L)
-                .build()
-
+            )
+        assertThat(velocityLimitParams.scope()).isEqualTo(VelocityLimitParams.VelocityScope.CARD)
         assertThat(velocityLimitParams.filters())
             .isEqualTo(
                 VelocityLimitParams.VelocityLimitFilters.builder()
@@ -47,16 +57,6 @@ internal class VelocityLimitParamsTest {
                     )
                     .build()
             )
-        assertThat(velocityLimitParams.period())
-            .isEqualTo(
-                VelocityLimitPeriod.ofTrailingWindowObject(
-                    VelocityLimitPeriod.TrailingWindowObject.builder()
-                        .duration(10L)
-                        .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
-                        .build()
-                )
-            )
-        assertThat(velocityLimitParams.scope()).isEqualTo(VelocityLimitParams.VelocityScope.CARD)
         assertThat(velocityLimitParams.limitAmount()).isEqualTo(10000L)
         assertThat(velocityLimitParams.limitCount()).isEqualTo(0L)
     }
@@ -66,6 +66,13 @@ internal class VelocityLimitParamsTest {
         val jsonMapper = jsonMapper()
         val velocityLimitParams =
             VelocityLimitParams.builder()
+                .period(
+                    VelocityLimitPeriod.TrailingWindowObject.builder()
+                        .duration(10L)
+                        .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
+                        .build()
+                )
+                .scope(VelocityLimitParams.VelocityScope.CARD)
                 .filters(
                     VelocityLimitParams.VelocityLimitFilters.builder()
                         .addExcludeCountry("USD")
@@ -77,13 +84,6 @@ internal class VelocityLimitParamsTest {
                         )
                         .build()
                 )
-                .period(
-                    VelocityLimitPeriod.TrailingWindowObject.builder()
-                        .duration(10L)
-                        .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
-                        .build()
-                )
-                .scope(VelocityLimitParams.VelocityScope.CARD)
                 .limitAmount(10000L)
                 .limitCount(0L)
                 .build()
