@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":lithic-kotlin"))
+    implementation(project(":lithic-kotlin-core"))
+    implementation(project(":lithic-kotlin-client-okhttp"))
 }
 
 application {
