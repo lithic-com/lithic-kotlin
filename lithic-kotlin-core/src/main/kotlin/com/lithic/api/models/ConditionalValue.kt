@@ -215,6 +215,9 @@ private constructor(
 
             val bestMatches =
                 sequenceOf(
+                        tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                            ConditionalValue(timestamp = it, _json = json)
+                        },
                         tryDeserialize(node, jacksonTypeRef<String>())?.let {
                             ConditionalValue(regex = it, _json = json)
                         },
@@ -223,9 +226,6 @@ private constructor(
                         },
                         tryDeserialize(node, jacksonTypeRef<List<String>>())?.let {
                             ConditionalValue(listOfStrings = it, _json = json)
-                        },
-                        tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                            ConditionalValue(timestamp = it, _json = json)
                         },
                     )
                     .filterNotNull()
