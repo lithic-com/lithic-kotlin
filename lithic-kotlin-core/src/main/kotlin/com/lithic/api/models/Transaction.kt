@@ -45,6 +45,7 @@ private constructor(
     private val result: JsonField<DeclineResult>,
     private val settledAmount: JsonField<Long>,
     private val status: JsonField<Status>,
+    private val tags: JsonField<Tags>,
     private val tokenInfo: JsonField<TokenInfo>,
     private val updated: JsonField<OffsetDateTime>,
     private val events: JsonField<List<TransactionEvent>>,
@@ -104,6 +105,7 @@ private constructor(
         @ExcludeMissing
         settledAmount: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
+        @JsonProperty("tags") @ExcludeMissing tags: JsonField<Tags> = JsonMissing.of(),
         @JsonProperty("token_info")
         @ExcludeMissing
         tokenInfo: JsonField<TokenInfo> = JsonMissing.of(),
@@ -137,6 +139,7 @@ private constructor(
         result,
         settledAmount,
         status,
+        tags,
         tokenInfo,
         updated,
         events,
@@ -333,6 +336,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun status(): Status = status.getRequired("status")
+
+    /**
+     * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata with a
+     * resource for your own purposes.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun tags(): Tags = tags.getRequired("tags")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -555,6 +567,13 @@ private constructor(
     @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     /**
+     * Returns the raw JSON value of [tags].
+     *
+     * Unlike [tags], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("tags") @ExcludeMissing fun _tags(): JsonField<Tags> = tags
+
+    /**
      * Returns the raw JSON value of [tokenInfo].
      *
      * Unlike [tokenInfo], this method doesn't throw if the JSON field has an unexpected type.
@@ -619,6 +638,7 @@ private constructor(
          * .result()
          * .settledAmount()
          * .status()
+         * .tags()
          * .tokenInfo()
          * .updated()
          * ```
@@ -652,6 +672,7 @@ private constructor(
         private var result: JsonField<DeclineResult>? = null
         private var settledAmount: JsonField<Long>? = null
         private var status: JsonField<Status>? = null
+        private var tags: JsonField<Tags>? = null
         private var tokenInfo: JsonField<TokenInfo>? = null
         private var updated: JsonField<OffsetDateTime>? = null
         private var events: JsonField<MutableList<TransactionEvent>>? = null
@@ -681,6 +702,7 @@ private constructor(
             result = transaction.result
             settledAmount = transaction.settledAmount
             status = transaction.status
+            tags = transaction.tags
             tokenInfo = transaction.tokenInfo
             updated = transaction.updated
             events = transaction.events.map { it.toMutableList() }
@@ -1057,6 +1079,20 @@ private constructor(
          */
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        /**
+         * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata
+         * with a resource for your own purposes.
+         */
+        fun tags(tags: Tags) = tags(JsonField.of(tags))
+
+        /**
+         * Sets [Builder.tags] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tags] with a well-typed [Tags] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun tags(tags: JsonField<Tags>) = apply { this.tags = tags }
+
         fun tokenInfo(tokenInfo: TokenInfo?) = tokenInfo(JsonField.ofNullable(tokenInfo))
 
         /**
@@ -1154,6 +1190,7 @@ private constructor(
          * .result()
          * .settledAmount()
          * .status()
+         * .tags()
          * .tokenInfo()
          * .updated()
          * ```
@@ -1185,6 +1222,7 @@ private constructor(
                 checkRequired("result", result),
                 checkRequired("settledAmount", settledAmount),
                 checkRequired("status", status),
+                checkRequired("tags", tags),
                 checkRequired("tokenInfo", tokenInfo),
                 checkRequired("updated", updated),
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1222,6 +1260,7 @@ private constructor(
         result().validate()
         settledAmount()
         status().validate()
+        tags().validate()
         tokenInfo()?.validate()
         updated()
         events()?.forEach { it.validate() }
@@ -1265,6 +1304,7 @@ private constructor(
             (result.asKnown()?.validity() ?: 0) +
             (if (settledAmount.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
+            (tags.asKnown()?.validity() ?: 0) +
             (tokenInfo.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
             (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
@@ -5253,6 +5293,107 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
+    }
+
+    /**
+     * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata with a
+     * resource for your own purposes.
+     */
+    class Tags
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [Tags]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Tags]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(tags: Tags) = apply {
+                additionalProperties = tags.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Tags].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): Tags = Tags(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Tags = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Tags && additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Tags{additionalProperties=$additionalProperties}"
     }
 
     class TransactionEvent
@@ -11269,6 +11410,7 @@ private constructor(
             result == other.result &&
             settledAmount == other.settledAmount &&
             status == other.status &&
+            tags == other.tags &&
             tokenInfo == other.tokenInfo &&
             updated == other.updated &&
             events == other.events &&
@@ -11300,6 +11442,7 @@ private constructor(
             result,
             settledAmount,
             status,
+            tags,
             tokenInfo,
             updated,
             events,
@@ -11310,5 +11453,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Transaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, financialAccountToken=$financialAccountToken, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tokenInfo=$tokenInfo, updated=$updated, events=$events, additionalProperties=$additionalProperties}"
+        "Transaction{token=$token, accountToken=$accountToken, acquirerFee=$acquirerFee, acquirerReferenceNumber=$acquirerReferenceNumber, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, authorizationCode=$authorizationCode, avs=$avs, cardToken=$cardToken, cardholderAuthentication=$cardholderAuthentication, created=$created, financialAccountToken=$financialAccountToken, merchant=$merchant, merchantAmount=$merchantAmount, merchantAuthorizationAmount=$merchantAuthorizationAmount, merchantCurrency=$merchantCurrency, network=$network, networkRiskScore=$networkRiskScore, pos=$pos, result=$result, settledAmount=$settledAmount, status=$status, tags=$tags, tokenInfo=$tokenInfo, updated=$updated, events=$events, additionalProperties=$additionalProperties}"
 }
