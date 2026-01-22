@@ -130,13 +130,34 @@ private constructor(
      */
     fun purchases(): Long = purchases.getRequired("purchases")
 
-    /** Breakdown of credits */
+    /**
+     * Breakdown of credits
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = statementTotals.creditDetails().convert(MyClass::class.java)
+     * ```
+     */
     @JsonProperty("credit_details") @ExcludeMissing fun _creditDetails(): JsonValue = creditDetails
 
-    /** Breakdown of debits */
+    /**
+     * Breakdown of debits
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = statementTotals.debitDetails().convert(MyClass::class.java)
+     * ```
+     */
     @JsonProperty("debit_details") @ExcludeMissing fun _debitDetails(): JsonValue = debitDetails
 
-    /** Breakdown of payments */
+    /**
+     * Breakdown of payments
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = statementTotals.paymentDetails().convert(MyClass::class.java)
+     * ```
+     */
     @JsonProperty("payment_details")
     @ExcludeMissing
     fun _paymentDetails(): JsonValue = paymentDetails
