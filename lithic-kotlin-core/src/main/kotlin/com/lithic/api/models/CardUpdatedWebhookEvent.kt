@@ -54,7 +54,14 @@ private constructor(
      */
     fun eventType(): EventType = eventType.getRequired("event_type")
 
-    /** The previous values of the fields that were updated. */
+    /**
+     * The previous values of the fields that were updated.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = cardUpdatedWebhookEvent.previousFields().convert(MyClass::class.java)
+     * ```
+     */
     @JsonProperty("previous_fields")
     @ExcludeMissing
     fun _previousFields(): JsonValue = previousFields

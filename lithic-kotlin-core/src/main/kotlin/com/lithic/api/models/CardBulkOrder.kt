@@ -101,7 +101,14 @@ private constructor(
      */
     fun customerProductId(): String? = customerProductId.getNullable("customer_product_id")
 
-    /** Shipping address for all cards in this bulk order */
+    /**
+     * Shipping address for all cards in this bulk order
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```kotlin
+     * val myObject: MyClass = cardBulkOrder.shippingAddress().convert(MyClass::class.java)
+     * ```
+     */
     @JsonProperty("shipping_address")
     @ExcludeMissing
     fun _shippingAddress(): JsonValue = shippingAddress
