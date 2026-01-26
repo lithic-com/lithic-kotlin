@@ -19,7 +19,7 @@ import java.util.Objects
 class CardUpdatedWebhookEvent
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val token: JsonField<String>,
+    private val cardToken: JsonField<String>,
     private val eventType: JsonField<EventType>,
     private val previousFields: JsonValue,
     private val state: JsonField<String>,
@@ -28,7 +28,7 @@ private constructor(
 
     @JsonCreator
     private constructor(
-        @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("card_token") @ExcludeMissing cardToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
@@ -36,7 +36,7 @@ private constructor(
         @ExcludeMissing
         previousFields: JsonValue = JsonMissing.of(),
         @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
-    ) : this(token, eventType, previousFields, state, mutableMapOf())
+    ) : this(cardToken, eventType, previousFields, state, mutableMapOf())
 
     /**
      * The token of the card that was updated.
@@ -44,7 +44,7 @@ private constructor(
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun token(): String = token.getRequired("token")
+    fun cardToken(): String = cardToken.getRequired("card_token")
 
     /**
      * The type of event that occurred.
@@ -75,11 +75,11 @@ private constructor(
     fun state(): String = state.getRequired("state")
 
     /**
-     * Returns the raw JSON value of [token].
+     * Returns the raw JSON value of [cardToken].
      *
-     * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
+     * Unlike [cardToken], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
+    @JsonProperty("card_token") @ExcludeMissing fun _cardToken(): JsonField<String> = cardToken
 
     /**
      * Returns the raw JSON value of [eventType].
@@ -114,7 +114,7 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .token()
+         * .cardToken()
          * .eventType()
          * .previousFields()
          * .state()
@@ -126,14 +126,14 @@ private constructor(
     /** A builder for [CardUpdatedWebhookEvent]. */
     class Builder internal constructor() {
 
-        private var token: JsonField<String>? = null
+        private var cardToken: JsonField<String>? = null
         private var eventType: JsonField<EventType>? = null
         private var previousFields: JsonValue? = null
         private var state: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(cardUpdatedWebhookEvent: CardUpdatedWebhookEvent) = apply {
-            token = cardUpdatedWebhookEvent.token
+            cardToken = cardUpdatedWebhookEvent.cardToken
             eventType = cardUpdatedWebhookEvent.eventType
             previousFields = cardUpdatedWebhookEvent.previousFields
             state = cardUpdatedWebhookEvent.state
@@ -141,15 +141,16 @@ private constructor(
         }
 
         /** The token of the card that was updated. */
-        fun token(token: String) = token(JsonField.of(token))
+        fun cardToken(cardToken: String) = cardToken(JsonField.of(cardToken))
 
         /**
-         * Sets [Builder.token] to an arbitrary JSON value.
+         * Sets [Builder.cardToken] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.token] with a well-typed [String] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
+         * You should usually call [Builder.cardToken] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
 
         /** The type of event that occurred. */
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
@@ -205,7 +206,7 @@ private constructor(
          *
          * The following fields are required:
          * ```kotlin
-         * .token()
+         * .cardToken()
          * .eventType()
          * .previousFields()
          * .state()
@@ -215,7 +216,7 @@ private constructor(
          */
         fun build(): CardUpdatedWebhookEvent =
             CardUpdatedWebhookEvent(
-                checkRequired("token", token),
+                checkRequired("cardToken", cardToken),
                 checkRequired("eventType", eventType),
                 checkRequired("previousFields", previousFields),
                 checkRequired("state", state),
@@ -230,7 +231,7 @@ private constructor(
             return@apply
         }
 
-        token()
+        cardToken()
         eventType().validate()
         state()
         validated = true
@@ -250,7 +251,7 @@ private constructor(
      * Used for best match union deserialization.
      */
     internal fun validity(): Int =
-        (if (token.asKnown() == null) 0 else 1) +
+        (if (cardToken.asKnown() == null) 0 else 1) +
             (eventType.asKnown()?.validity() ?: 0) +
             (if (state.asKnown() == null) 0 else 1)
 
@@ -382,7 +383,7 @@ private constructor(
         }
 
         return other is CardUpdatedWebhookEvent &&
-            token == other.token &&
+            cardToken == other.cardToken &&
             eventType == other.eventType &&
             previousFields == other.previousFields &&
             state == other.state &&
@@ -390,11 +391,11 @@ private constructor(
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(token, eventType, previousFields, state, additionalProperties)
+        Objects.hash(cardToken, eventType, previousFields, state, additionalProperties)
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CardUpdatedWebhookEvent{token=$token, eventType=$eventType, previousFields=$previousFields, state=$state, additionalProperties=$additionalProperties}"
+        "CardUpdatedWebhookEvent{cardToken=$cardToken, eventType=$eventType, previousFields=$previousFields, state=$state, additionalProperties=$additionalProperties}"
 }
