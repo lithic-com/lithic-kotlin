@@ -14,7 +14,10 @@ internal class TransactionSimulateCreditAuthorizationParamsTest {
             .descriptor("COFFEE SHOP")
             .pan("4111111289144142")
             .mcc("5812")
+            .merchantAcceptorCity("SEATTLE")
+            .merchantAcceptorCountry("USA")
             .merchantAcceptorId("XRKGDPOWEWQRRWU")
+            .merchantAcceptorState("WA")
             .build()
     }
 
@@ -26,7 +29,10 @@ internal class TransactionSimulateCreditAuthorizationParamsTest {
                 .descriptor("COFFEE SHOP")
                 .pan("4111111289144142")
                 .mcc("5812")
+                .merchantAcceptorCity("SEATTLE")
+                .merchantAcceptorCountry("USA")
                 .merchantAcceptorId("XRKGDPOWEWQRRWU")
+                .merchantAcceptorState("WA")
                 .build()
 
         val body = params._body()
@@ -35,7 +41,10 @@ internal class TransactionSimulateCreditAuthorizationParamsTest {
         assertThat(body.descriptor()).isEqualTo("COFFEE SHOP")
         assertThat(body.pan()).isEqualTo("4111111289144142")
         assertThat(body.mcc()).isEqualTo("5812")
+        assertThat(body.merchantAcceptorCity()).isEqualTo("SEATTLE")
+        assertThat(body.merchantAcceptorCountry()).isEqualTo("USA")
         assertThat(body.merchantAcceptorId()).isEqualTo("XRKGDPOWEWQRRWU")
+        assertThat(body.merchantAcceptorState()).isEqualTo("WA")
     }
 
     @Test
