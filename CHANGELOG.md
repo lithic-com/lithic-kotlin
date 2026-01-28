@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.115.1 (2026-01-28)
+
+Full Changelog: [v0.115.0...v0.115.1](https://github.com/lithic-com/lithic-kotlin/compare/v0.115.0...v0.115.1)
+
+### Bug Fixes
+
+* add missing fields ([9705a62](https://github.com/lithic-com/lithic-kotlin/commit/9705a6223dd05857ab10c9cf5a7d2982723a9b58))
+
 ## 0.115.0 (2026-01-27)
 
 Full Changelog: [v0.114.0...v0.115.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.114.0...v0.115.0)
