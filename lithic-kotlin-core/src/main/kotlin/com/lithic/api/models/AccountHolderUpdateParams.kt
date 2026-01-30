@@ -460,6 +460,7 @@ private constructor(
             private val businessEntity: JsonField<KybBusinessEntityPatch>,
             private val controlPerson: JsonField<IndividualPatch>,
             private val externalId: JsonField<String>,
+            private val naicsCode: JsonField<String>,
             private val natureOfBusiness: JsonField<String>,
             private val websiteUrl: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
@@ -482,6 +483,9 @@ private constructor(
                 @JsonProperty("external_id")
                 @ExcludeMissing
                 externalId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("naics_code")
+                @ExcludeMissing
+                naicsCode: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("nature_of_business")
                 @ExcludeMissing
                 natureOfBusiness: JsonField<String> = JsonMissing.of(),
@@ -494,6 +498,7 @@ private constructor(
                 businessEntity,
                 controlPerson,
                 externalId,
+                naicsCode,
                 natureOfBusiness,
                 websiteUrl,
                 mutableMapOf(),
@@ -554,6 +559,14 @@ private constructor(
              *   the server responded with an unexpected value).
              */
             fun externalId(): String? = externalId.getNullable("external_id")
+
+            /**
+             * 6-digit North American Industry Classification System (NAICS) code for the business.
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun naicsCode(): String? = naicsCode.getNullable("naics_code")
 
             /**
              * Short description of the company's line of business (i.e., what does the company
@@ -626,6 +639,16 @@ private constructor(
             fun _externalId(): JsonField<String> = externalId
 
             /**
+             * Returns the raw JSON value of [naicsCode].
+             *
+             * Unlike [naicsCode], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("naics_code")
+            @ExcludeMissing
+            fun _naicsCode(): JsonField<String> = naicsCode
+
+            /**
              * Returns the raw JSON value of [natureOfBusiness].
              *
              * Unlike [natureOfBusiness], this method doesn't throw if the JSON field has an
@@ -674,6 +697,7 @@ private constructor(
                 private var businessEntity: JsonField<KybBusinessEntityPatch> = JsonMissing.of()
                 private var controlPerson: JsonField<IndividualPatch> = JsonMissing.of()
                 private var externalId: JsonField<String> = JsonMissing.of()
+                private var naicsCode: JsonField<String> = JsonMissing.of()
                 private var natureOfBusiness: JsonField<String> = JsonMissing.of()
                 private var websiteUrl: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -686,6 +710,7 @@ private constructor(
                     businessEntity = kybPatchRequest.businessEntity
                     controlPerson = kybPatchRequest.controlPerson
                     externalId = kybPatchRequest.externalId
+                    naicsCode = kybPatchRequest.naicsCode
                     natureOfBusiness = kybPatchRequest.natureOfBusiness
                     websiteUrl = kybPatchRequest.websiteUrl
                     additionalProperties = kybPatchRequest.additionalProperties.toMutableMap()
@@ -824,6 +849,21 @@ private constructor(
                 }
 
                 /**
+                 * 6-digit North American Industry Classification System (NAICS) code for the
+                 * business.
+                 */
+                fun naicsCode(naicsCode: String) = naicsCode(JsonField.of(naicsCode))
+
+                /**
+                 * Sets [Builder.naicsCode] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.naicsCode] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun naicsCode(naicsCode: JsonField<String>) = apply { this.naicsCode = naicsCode }
+
+                /**
                  * Short description of the company's line of business (i.e., what does the company
                  * do?).
                  */
@@ -889,6 +929,7 @@ private constructor(
                         businessEntity,
                         controlPerson,
                         externalId,
+                        naicsCode,
                         natureOfBusiness,
                         websiteUrl,
                         additionalProperties.toMutableMap(),
@@ -907,6 +948,7 @@ private constructor(
                 businessEntity()?.validate()
                 controlPerson()?.validate()
                 externalId()
+                naicsCode()
                 natureOfBusiness()
                 websiteUrl()
                 validated = true
@@ -932,6 +974,7 @@ private constructor(
                     (businessEntity.asKnown()?.validity() ?: 0) +
                     (controlPerson.asKnown()?.validity() ?: 0) +
                     (if (externalId.asKnown() == null) 0 else 1) +
+                    (if (naicsCode.asKnown() == null) 0 else 1) +
                     (if (natureOfBusiness.asKnown() == null) 0 else 1) +
                     (if (websiteUrl.asKnown() == null) 0 else 1)
 
@@ -1925,6 +1968,7 @@ private constructor(
                     businessEntity == other.businessEntity &&
                     controlPerson == other.controlPerson &&
                     externalId == other.externalId &&
+                    naicsCode == other.naicsCode &&
                     natureOfBusiness == other.natureOfBusiness &&
                     websiteUrl == other.websiteUrl &&
                     additionalProperties == other.additionalProperties
@@ -1937,6 +1981,7 @@ private constructor(
                     businessEntity,
                     controlPerson,
                     externalId,
+                    naicsCode,
                     natureOfBusiness,
                     websiteUrl,
                     additionalProperties,
@@ -1946,7 +1991,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "KybPatchRequest{beneficialOwnerEntities=$beneficialOwnerEntities, beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessEntity=$businessEntity, controlPerson=$controlPerson, externalId=$externalId, natureOfBusiness=$natureOfBusiness, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
+                "KybPatchRequest{beneficialOwnerEntities=$beneficialOwnerEntities, beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessEntity=$businessEntity, controlPerson=$controlPerson, externalId=$externalId, naicsCode=$naicsCode, natureOfBusiness=$natureOfBusiness, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
         }
 
         /** The KYC request payload for updating an account holder. */

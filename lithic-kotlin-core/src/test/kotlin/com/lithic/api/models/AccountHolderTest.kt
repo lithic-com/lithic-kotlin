@@ -121,6 +121,7 @@ internal class AccountHolderTest {
                         .phoneNumber("+15555555555")
                         .build()
                 )
+                .naicsCode("naics_code")
                 .natureOfBusiness("nature_of_business")
                 .phoneNumber("+15555555555")
                 .addRequiredDocument(
@@ -262,6 +263,7 @@ internal class AccountHolderTest {
                     .phoneNumber("+15555555555")
                     .build()
             )
+        assertThat(accountHolder.naicsCode()).isEqualTo("naics_code")
         assertThat(accountHolder.natureOfBusiness()).isEqualTo("nature_of_business")
         assertThat(accountHolder.phoneNumber()).isEqualTo("+15555555555")
         assertThat(accountHolder.requiredDocuments())
@@ -403,6 +405,7 @@ internal class AccountHolderTest {
                         .phoneNumber("+15555555555")
                         .build()
                 )
+                .naicsCode("naics_code")
                 .natureOfBusiness("nature_of_business")
                 .phoneNumber("+15555555555")
                 .addRequiredDocument(
