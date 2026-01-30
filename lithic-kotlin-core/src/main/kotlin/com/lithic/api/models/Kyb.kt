@@ -30,6 +30,7 @@ private constructor(
     private val beneficialOwnerEntities: JsonField<List<BusinessEntity>>,
     private val externalId: JsonField<String>,
     private val kybPassedTimestamp: JsonField<String>,
+    private val naicsCode: JsonField<String>,
     private val websiteUrl: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -61,6 +62,7 @@ private constructor(
         @JsonProperty("kyb_passed_timestamp")
         @ExcludeMissing
         kybPassedTimestamp: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("naics_code") @ExcludeMissing naicsCode: JsonField<String> = JsonMissing.of(),
         @JsonProperty("website_url")
         @ExcludeMissing
         websiteUrl: JsonField<String> = JsonMissing.of(),
@@ -74,6 +76,7 @@ private constructor(
         beneficialOwnerEntities,
         externalId,
         kybPassedTimestamp,
+        naicsCode,
         websiteUrl,
         mutableMapOf(),
     )
@@ -169,6 +172,14 @@ private constructor(
     fun kybPassedTimestamp(): String? = kybPassedTimestamp.getNullable("kyb_passed_timestamp")
 
     /**
+     * 6-digit North American Industry Classification System (NAICS) code for the business.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun naicsCode(): String? = naicsCode.getNullable("naics_code")
+
+    /**
      * Company website URL.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -259,6 +270,13 @@ private constructor(
     fun _kybPassedTimestamp(): JsonField<String> = kybPassedTimestamp
 
     /**
+     * Returns the raw JSON value of [naicsCode].
+     *
+     * Unlike [naicsCode], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("naics_code") @ExcludeMissing fun _naicsCode(): JsonField<String> = naicsCode
+
+    /**
      * Returns the raw JSON value of [websiteUrl].
      *
      * Unlike [websiteUrl], this method doesn't throw if the JSON field has an unexpected type.
@@ -307,6 +325,7 @@ private constructor(
         private var beneficialOwnerEntities: JsonField<MutableList<BusinessEntity>>? = null
         private var externalId: JsonField<String> = JsonMissing.of()
         private var kybPassedTimestamp: JsonField<String> = JsonMissing.of()
+        private var naicsCode: JsonField<String> = JsonMissing.of()
         private var websiteUrl: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -320,6 +339,7 @@ private constructor(
             beneficialOwnerEntities = kyb.beneficialOwnerEntities.map { it.toMutableList() }
             externalId = kyb.externalId
             kybPassedTimestamp = kyb.kybPassedTimestamp
+            naicsCode = kyb.naicsCode
             websiteUrl = kyb.websiteUrl
             additionalProperties = kyb.additionalProperties.toMutableMap()
         }
@@ -507,6 +527,18 @@ private constructor(
             this.kybPassedTimestamp = kybPassedTimestamp
         }
 
+        /** 6-digit North American Industry Classification System (NAICS) code for the business. */
+        fun naicsCode(naicsCode: String) = naicsCode(JsonField.of(naicsCode))
+
+        /**
+         * Sets [Builder.naicsCode] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.naicsCode] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun naicsCode(naicsCode: JsonField<String>) = apply { this.naicsCode = naicsCode }
+
         /** Company website URL. */
         fun websiteUrl(websiteUrl: String) = websiteUrl(JsonField.of(websiteUrl))
 
@@ -568,6 +600,7 @@ private constructor(
                 (beneficialOwnerEntities ?: JsonMissing.of()).map { it.toImmutable() },
                 externalId,
                 kybPassedTimestamp,
+                naicsCode,
                 websiteUrl,
                 additionalProperties.toMutableMap(),
             )
@@ -589,6 +622,7 @@ private constructor(
         beneficialOwnerEntities()?.forEach { it.validate() }
         externalId()
         kybPassedTimestamp()
+        naicsCode()
         websiteUrl()
         validated = true
     }
@@ -616,6 +650,7 @@ private constructor(
             (beneficialOwnerEntities.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (externalId.asKnown() == null) 0 else 1) +
             (if (kybPassedTimestamp.asKnown() == null) 0 else 1) +
+            (if (naicsCode.asKnown() == null) 0 else 1) +
             (if (websiteUrl.asKnown() == null) 0 else 1)
 
     /** Individuals associated with a KYB application. Phone number is optional. */
@@ -1612,6 +1647,7 @@ private constructor(
             beneficialOwnerEntities == other.beneficialOwnerEntities &&
             externalId == other.externalId &&
             kybPassedTimestamp == other.kybPassedTimestamp &&
+            naicsCode == other.naicsCode &&
             websiteUrl == other.websiteUrl &&
             additionalProperties == other.additionalProperties
     }
@@ -1627,6 +1663,7 @@ private constructor(
             beneficialOwnerEntities,
             externalId,
             kybPassedTimestamp,
+            naicsCode,
             websiteUrl,
             additionalProperties,
         )
@@ -1635,5 +1672,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Kyb{beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessEntity=$businessEntity, controlPerson=$controlPerson, natureOfBusiness=$natureOfBusiness, tosTimestamp=$tosTimestamp, workflow=$workflow, beneficialOwnerEntities=$beneficialOwnerEntities, externalId=$externalId, kybPassedTimestamp=$kybPassedTimestamp, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
+        "Kyb{beneficialOwnerIndividuals=$beneficialOwnerIndividuals, businessEntity=$businessEntity, controlPerson=$controlPerson, natureOfBusiness=$natureOfBusiness, tosTimestamp=$tosTimestamp, workflow=$workflow, beneficialOwnerEntities=$beneficialOwnerEntities, externalId=$externalId, kybPassedTimestamp=$kybPassedTimestamp, naicsCode=$naicsCode, websiteUrl=$websiteUrl, additionalProperties=$additionalProperties}"
 }
