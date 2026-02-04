@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.116.0 (2026-02-04)
+
+Full Changelog: [v0.115.0...v0.116.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.115.0...v0.116.0)
+
+### Features
+
+* **api:** Add naics_code to account holder requests/responses ([ff7f410](https://github.com/lithic-com/lithic-kotlin/commit/ff7f41021613714e9a06f43b2e9c88faf9eb907b))
+
+
+### Bug Fixes
+
+* add missing fields ([9705a62](https://github.com/lithic-com/lithic-kotlin/commit/9705a6223dd05857ab10c9cf5a7d2982723a9b58))
+
+
+### Chores
+
+* configure new SDK language ([2a331ff](https://github.com/lithic-com/lithic-kotlin/commit/2a331ff00742f6b2cacbb9d0266f4097c867c775))
+* Enable stainless MCP in config ([af983f0](https://github.com/lithic-com/lithic-kotlin/commit/af983f09098c626187fcb4e37670a2fb0dd238f1))
+* **internal:** allow passing args to `./scripts/test` ([0cc4e68](https://github.com/lithic-com/lithic-kotlin/commit/0cc4e6855347b6e1db33512f53be65eb907833d9))
+
+
+### Documentation
+
+* Fix documentation of tokenization channel and tokenization source for tokenization rules ([bce5179](https://github.com/lithic-com/lithic-kotlin/commit/bce517978323e9001834e5ca6fd438609fdf0034))
+
 ## 0.115.0 (2026-01-27)
 
 Full Changelog: [v0.114.0...v0.115.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.114.0...v0.115.0)
