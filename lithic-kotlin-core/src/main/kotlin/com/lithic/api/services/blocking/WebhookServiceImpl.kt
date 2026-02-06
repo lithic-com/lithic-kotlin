@@ -4,8 +4,13 @@ package com.lithic.api.services.blocking
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.lithic.api.core.ClientOptions
+import com.lithic.api.core.UnwrapWebhookParams
+import com.lithic.api.core.checkRequired
 import com.lithic.api.errors.LithicInvalidDataException
+import com.lithic.api.errors.LithicWebhookException
 import com.lithic.api.models.ParsedWebhookEvent
+import com.standardwebhooks.Webhook
+import com.standardwebhooks.exceptions.WebhookVerificationException
 
 class WebhookServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     WebhookService {
@@ -19,17 +24,33 @@ class WebhookServiceImpl internal constructor(private val clientOptions: ClientO
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): WebhookService =
         WebhookServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
-    /**
-     * Unwraps a webhook event from its JSON representation.
-     *
-     * @throws LithicInvalidDataException if the body could not be parsed.
-     */
     override fun parsed(body: String): ParsedWebhookEvent =
         try {
             clientOptions.jsonMapper.readValue(body, jacksonTypeRef<ParsedWebhookEvent>())
         } catch (e: Exception) {
             throw LithicInvalidDataException("Error parsing body", e)
         }
+
+    override fun parsed(unwrapParams: UnwrapWebhookParams): ParsedWebhookEvent {
+        val headers = unwrapParams.headers()
+        if (headers != null) {
+            try {
+                val webhookSecret =
+                    checkRequired(
+                        "webhookSecret",
+                        unwrapParams.secret() ?: clientOptions.webhookSecret,
+                    )
+                val headersMap =
+                    headers.names().associateWith { name -> headers.values(name) }.toMap()
+
+                val webhook = Webhook(webhookSecret)
+                webhook.verify(unwrapParams.body(), headersMap)
+            } catch (e: WebhookVerificationException) {
+                throw LithicWebhookException("Could not verify webhook event signature", e)
+            }
+        }
+        return parsed(unwrapParams.body())
+    }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         WebhookService.WithRawResponse {
