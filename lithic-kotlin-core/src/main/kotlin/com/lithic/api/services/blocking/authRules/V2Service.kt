@@ -13,6 +13,8 @@ import com.lithic.api.models.AuthRuleV2DeleteParams
 import com.lithic.api.models.AuthRuleV2DraftParams
 import com.lithic.api.models.AuthRuleV2ListPage
 import com.lithic.api.models.AuthRuleV2ListParams
+import com.lithic.api.models.AuthRuleV2ListResultsPage
+import com.lithic.api.models.AuthRuleV2ListResultsParams
 import com.lithic.api.models.AuthRuleV2PromoteParams
 import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveParams
@@ -127,6 +129,23 @@ interface V2Service {
     /** @see draft */
     fun draft(authRuleToken: String, requestOptions: RequestOptions): AuthRule =
         draft(authRuleToken, AuthRuleV2DraftParams.none(), requestOptions)
+
+    /**
+     * Lists Auth Rule evaluation results.
+     *
+     * **Limitations:**
+     * - Results are available for the past 3 months only
+     * - At least one filter (`event_uuid` or `auth_rule_token`) must be provided
+     * - When filtering by `event_uuid`, pagination is not supported
+     */
+    fun listResults(
+        params: AuthRuleV2ListResultsParams = AuthRuleV2ListResultsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRuleV2ListResultsPage
+
+    /** @see listResults */
+    fun listResults(requestOptions: RequestOptions): AuthRuleV2ListResultsPage =
+        listResults(AuthRuleV2ListResultsParams.none(), requestOptions)
 
     /**
      * Promotes the draft version of an Auth rule to the currently active version such that it is
@@ -336,6 +355,23 @@ interface V2Service {
             requestOptions: RequestOptions,
         ): HttpResponseFor<AuthRule> =
             draft(authRuleToken, AuthRuleV2DraftParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /v2/auth_rules/results`, but is otherwise the same
+         * as [V2Service.listResults].
+         */
+        @MustBeClosed
+        fun listResults(
+            params: AuthRuleV2ListResultsParams = AuthRuleV2ListResultsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRuleV2ListResultsPage>
+
+        /** @see listResults */
+        @MustBeClosed
+        fun listResults(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<AuthRuleV2ListResultsPage> =
+            listResults(AuthRuleV2ListResultsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/promote`, but is
