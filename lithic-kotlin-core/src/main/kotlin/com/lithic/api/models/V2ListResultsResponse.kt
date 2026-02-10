@@ -303,8 +303,9 @@ private constructor(
         fun addAction(authorization: Action.AuthorizationAction) =
             addAction(Action.ofAuthorization(authorization))
 
-        /** Alias for calling [addAction] with `Action.ofThreeDS(threeDS)`. */
-        fun addAction(threeDS: Action.ThreeDSAction) = addAction(Action.ofThreeDS(threeDS))
+        /** Alias for calling [addAction] with `Action.ofAuthentication3ds(authentication3ds)`. */
+        fun addAction(authentication3ds: Action.Authentication3dsAction) =
+            addAction(Action.ofAuthentication3ds(authentication3ds))
 
         /** Alias for calling [addAction] with `Action.ofDecline(decline)`. */
         fun addAction(decline: Action.DeclineAction) = addAction(Action.ofDecline(decline))
@@ -497,7 +498,7 @@ private constructor(
     class Action
     private constructor(
         private val authorization: AuthorizationAction? = null,
-        private val threeDS: ThreeDSAction? = null,
+        private val authentication3ds: Authentication3dsAction? = null,
         private val decline: DeclineAction? = null,
         private val requireTfa: RequireTfaAction? = null,
         private val approve: ApproveAction? = null,
@@ -507,7 +508,7 @@ private constructor(
 
         fun authorization(): AuthorizationAction? = authorization
 
-        fun threeDS(): ThreeDSAction? = threeDS
+        fun authentication3ds(): Authentication3dsAction? = authentication3ds
 
         fun decline(): DeclineAction? = decline
 
@@ -519,7 +520,7 @@ private constructor(
 
         fun isAuthorization(): Boolean = authorization != null
 
-        fun isThreeDS(): Boolean = threeDS != null
+        fun isAuthentication3ds(): Boolean = authentication3ds != null
 
         fun isDecline(): Boolean = decline != null
 
@@ -531,7 +532,8 @@ private constructor(
 
         fun asAuthorization(): AuthorizationAction = authorization.getOrThrow("authorization")
 
-        fun asThreeDS(): ThreeDSAction = threeDS.getOrThrow("threeDS")
+        fun asAuthentication3ds(): Authentication3dsAction =
+            authentication3ds.getOrThrow("authentication3ds")
 
         fun asDecline(): DeclineAction = decline.getOrThrow("decline")
 
@@ -546,7 +548,7 @@ private constructor(
         fun <T> accept(visitor: Visitor<T>): T =
             when {
                 authorization != null -> visitor.visitAuthorization(authorization)
-                threeDS != null -> visitor.visitThreeDS(threeDS)
+                authentication3ds != null -> visitor.visitAuthentication3ds(authentication3ds)
                 decline != null -> visitor.visitDecline(decline)
                 requireTfa != null -> visitor.visitRequireTfa(requireTfa)
                 approve != null -> visitor.visitApprove(approve)
@@ -567,8 +569,10 @@ private constructor(
                         authorization.validate()
                     }
 
-                    override fun visitThreeDS(threeDS: ThreeDSAction) {
-                        threeDS.validate()
+                    override fun visitAuthentication3ds(
+                        authentication3ds: Authentication3dsAction
+                    ) {
+                        authentication3ds.validate()
                     }
 
                     override fun visitDecline(decline: DeclineAction) {
@@ -611,7 +615,9 @@ private constructor(
                     override fun visitAuthorization(authorization: AuthorizationAction) =
                         authorization.validity()
 
-                    override fun visitThreeDS(threeDS: ThreeDSAction) = threeDS.validity()
+                    override fun visitAuthentication3ds(
+                        authentication3ds: Authentication3dsAction
+                    ) = authentication3ds.validity()
 
                     override fun visitDecline(decline: DeclineAction) = decline.validity()
 
@@ -634,7 +640,7 @@ private constructor(
 
             return other is Action &&
                 authorization == other.authorization &&
-                threeDS == other.threeDS &&
+                authentication3ds == other.authentication3ds &&
                 decline == other.decline &&
                 requireTfa == other.requireTfa &&
                 approve == other.approve &&
@@ -642,12 +648,19 @@ private constructor(
         }
 
         override fun hashCode(): Int =
-            Objects.hash(authorization, threeDS, decline, requireTfa, approve, returnAction)
+            Objects.hash(
+                authorization,
+                authentication3ds,
+                decline,
+                requireTfa,
+                approve,
+                returnAction,
+            )
 
         override fun toString(): String =
             when {
                 authorization != null -> "Action{authorization=$authorization}"
-                threeDS != null -> "Action{threeDS=$threeDS}"
+                authentication3ds != null -> "Action{authentication3ds=$authentication3ds}"
                 decline != null -> "Action{decline=$decline}"
                 requireTfa != null -> "Action{requireTfa=$requireTfa}"
                 approve != null -> "Action{approve=$approve}"
@@ -661,7 +674,8 @@ private constructor(
             fun ofAuthorization(authorization: AuthorizationAction) =
                 Action(authorization = authorization)
 
-            fun ofThreeDS(threeDS: ThreeDSAction) = Action(threeDS = threeDS)
+            fun ofAuthentication3ds(authentication3ds: Authentication3dsAction) =
+                Action(authentication3ds = authentication3ds)
 
             fun ofDecline(decline: DeclineAction) = Action(decline = decline)
 
@@ -677,7 +691,7 @@ private constructor(
 
             fun visitAuthorization(authorization: AuthorizationAction): T
 
-            fun visitThreeDS(threeDS: ThreeDSAction): T
+            fun visitAuthentication3ds(authentication3ds: Authentication3dsAction): T
 
             fun visitDecline(decline: DeclineAction): T
 
@@ -712,8 +726,8 @@ private constructor(
                             tryDeserialize(node, jacksonTypeRef<AuthorizationAction>())?.let {
                                 Action(authorization = it, _json = json)
                             },
-                            tryDeserialize(node, jacksonTypeRef<ThreeDSAction>())?.let {
-                                Action(threeDS = it, _json = json)
+                            tryDeserialize(node, jacksonTypeRef<Authentication3dsAction>())?.let {
+                                Action(authentication3ds = it, _json = json)
                             },
                             tryDeserialize(node, jacksonTypeRef<DeclineAction>())?.let {
                                 Action(decline = it, _json = json)
@@ -753,7 +767,8 @@ private constructor(
             ) {
                 when {
                     value.authorization != null -> generator.writeObject(value.authorization)
-                    value.threeDS != null -> generator.writeObject(value.threeDS)
+                    value.authentication3ds != null ->
+                        generator.writeObject(value.authentication3ds)
                     value.decline != null -> generator.writeObject(value.decline)
                     value.requireTfa != null -> generator.writeObject(value.requireTfa)
                     value.approve != null -> generator.writeObject(value.approve)
@@ -917,7 +932,7 @@ private constructor(
                 "AuthorizationAction{explanation=$explanation, additionalProperties=$additionalProperties}"
         }
 
-        class ThreeDSAction
+        class Authentication3dsAction
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val explanation: JsonField<String>,
@@ -963,19 +978,23 @@ private constructor(
 
             companion object {
 
-                /** Returns a mutable builder for constructing an instance of [ThreeDSAction]. */
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [Authentication3dsAction].
+                 */
                 fun builder() = Builder()
             }
 
-            /** A builder for [ThreeDSAction]. */
+            /** A builder for [Authentication3dsAction]. */
             class Builder internal constructor() {
 
                 private var explanation: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(threeDSAction: ThreeDSAction) = apply {
-                    explanation = threeDSAction.explanation
-                    additionalProperties = threeDSAction.additionalProperties.toMutableMap()
+                internal fun from(authentication3dsAction: Authentication3dsAction) = apply {
+                    explanation = authentication3dsAction.explanation
+                    additionalProperties =
+                        authentication3dsAction.additionalProperties.toMutableMap()
                 }
 
                 /** Optional explanation for why this action was taken */
@@ -1015,17 +1034,17 @@ private constructor(
                 }
 
                 /**
-                 * Returns an immutable instance of [ThreeDSAction].
+                 * Returns an immutable instance of [Authentication3dsAction].
                  *
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
-                fun build(): ThreeDSAction =
-                    ThreeDSAction(explanation, additionalProperties.toMutableMap())
+                fun build(): Authentication3dsAction =
+                    Authentication3dsAction(explanation, additionalProperties.toMutableMap())
             }
 
             private var validated: Boolean = false
 
-            fun validate(): ThreeDSAction = apply {
+            fun validate(): Authentication3dsAction = apply {
                 if (validated) {
                     return@apply
                 }
@@ -1055,7 +1074,7 @@ private constructor(
                     return true
                 }
 
-                return other is ThreeDSAction &&
+                return other is Authentication3dsAction &&
                     explanation == other.explanation &&
                     additionalProperties == other.additionalProperties
             }
@@ -1065,7 +1084,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "ThreeDSAction{explanation=$explanation, additionalProperties=$additionalProperties}"
+                "Authentication3dsAction{explanation=$explanation, additionalProperties=$additionalProperties}"
         }
 
         class DeclineAction

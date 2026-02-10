@@ -135,8 +135,8 @@ interface V2ServiceAsync {
      *
      * **Limitations:**
      * - Results are available for the past 3 months only
-     * - At least one filter (`event_uuid` or `auth_rule_token`) must be provided
-     * - When filtering by `event_uuid`, pagination is not supported
+     * - At least one filter (`event_token` or `auth_rule_token`) must be provided
+     * - When filtering by `event_token`, pagination is not supported
      */
     suspend fun listResults(
         params: AuthRuleV2ListResultsParams = AuthRuleV2ListResultsParams.none(),
