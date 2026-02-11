@@ -39,13 +39,9 @@ interface ExternalBankAccountServiceAsync {
 
     /** Creates an external bank account within a program or Lithic account. */
     suspend fun create(
-        params: ExternalBankAccountCreateParams = ExternalBankAccountCreateParams.none(),
+        params: ExternalBankAccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
-
-    /** @see create */
-    suspend fun create(requestOptions: RequestOptions): ExternalBankAccountCreateResponse =
-        create(ExternalBankAccountCreateParams.none(), requestOptions)
 
     /** Get the external bank account by token. */
     suspend fun retrieve(
@@ -210,16 +206,9 @@ interface ExternalBankAccountServiceAsync {
          */
         @MustBeClosed
         suspend fun create(
-            params: ExternalBankAccountCreateParams = ExternalBankAccountCreateParams.none(),
+            params: ExternalBankAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse>
-
-        /** @see create */
-        @MustBeClosed
-        suspend fun create(
-            requestOptions: RequestOptions
-        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
-            create(ExternalBankAccountCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
