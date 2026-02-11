@@ -33,12 +33,12 @@ import java.util.Objects
 /** Creates an external bank account within a program or Lithic account. */
 class ExternalBankAccountCreateParams
 private constructor(
-    private val body: Body?,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun body(): Body? = body
+    fun body(): Body = body
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -50,11 +50,14 @@ private constructor(
 
     companion object {
 
-        fun none(): ExternalBankAccountCreateParams = builder().build()
-
         /**
          * Returns a mutable builder for constructing an instance of
          * [ExternalBankAccountCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .body()
+         * ```
          */
         fun builder() = Builder()
     }
@@ -74,7 +77,7 @@ private constructor(
                     externalBankAccountCreateParams.additionalQueryParams.toBuilder()
             }
 
-        fun body(body: Body?) = apply { this.body = body }
+        fun body(body: Body) = apply { this.body = body }
 
         /**
          * Alias for calling [body] with
@@ -199,16 +202,23 @@ private constructor(
          * Returns an immutable instance of [ExternalBankAccountCreateParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .body()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ExternalBankAccountCreateParams =
             ExternalBankAccountCreateParams(
-                body,
+                checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
     }
 
-    fun _body(): Body? = body
+    fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
