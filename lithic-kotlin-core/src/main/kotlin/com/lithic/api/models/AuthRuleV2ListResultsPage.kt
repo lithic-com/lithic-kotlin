@@ -36,9 +36,61 @@ private constructor(
 
     fun nextPageParams(): AuthRuleV2ListResultsParams =
         if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
+            params
+                .toBuilder()
+                .endingBefore(
+                    items()
+                        .first()
+                        .accept(
+                            object : V2ListResultsResponse.Visitor<String?> {
+                                override fun visitAuthorizationResult(
+                                    authorizationResult: V2ListResultsResponse.AuthorizationResult
+                                ): String? = authorizationResult._token().getNullable("token")
+
+                                override fun visitAuthentication3dsResult(
+                                    authentication3dsResult:
+                                        V2ListResultsResponse.Authentication3dsResult
+                                ): String? = authentication3dsResult._token().getNullable("token")
+
+                                override fun visitTokenizationResult(
+                                    tokenizationResult: V2ListResultsResponse.TokenizationResult
+                                ): String? = tokenizationResult._token().getNullable("token")
+
+                                override fun visitAchResult(
+                                    achResult: V2ListResultsResponse.AchResult
+                                ): String? = achResult._token().getNullable("token")
+                            }
+                        )
+                )
+                .build()
         } else {
-            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
+            params
+                .toBuilder()
+                .startingAfter(
+                    items()
+                        .last()
+                        .accept(
+                            object : V2ListResultsResponse.Visitor<String?> {
+                                override fun visitAuthorizationResult(
+                                    authorizationResult: V2ListResultsResponse.AuthorizationResult
+                                ): String? = authorizationResult._token().getNullable("token")
+
+                                override fun visitAuthentication3dsResult(
+                                    authentication3dsResult:
+                                        V2ListResultsResponse.Authentication3dsResult
+                                ): String? = authentication3dsResult._token().getNullable("token")
+
+                                override fun visitTokenizationResult(
+                                    tokenizationResult: V2ListResultsResponse.TokenizationResult
+                                ): String? = tokenizationResult._token().getNullable("token")
+
+                                override fun visitAchResult(
+                                    achResult: V2ListResultsResponse.AchResult
+                                ): String? = achResult._token().getNullable("token")
+                            }
+                        )
+                )
+                .build()
         }
 
     override fun nextPage(): AuthRuleV2ListResultsPage = service.listResults(nextPageParams())
