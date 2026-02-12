@@ -593,6 +593,8 @@ private constructor(
 
             val REJECTED = of("REJECTED")
 
+            val PENDING_REVIEW = of("PENDING_REVIEW")
+
             fun of(value: String) = Status(JsonField.of(value))
         }
 
@@ -600,6 +602,7 @@ private constructor(
         enum class Known {
             ACCEPTED,
             REJECTED,
+            PENDING_REVIEW,
         }
 
         /**
@@ -614,6 +617,7 @@ private constructor(
         enum class Value {
             ACCEPTED,
             REJECTED,
+            PENDING_REVIEW,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -629,6 +633,7 @@ private constructor(
             when (this) {
                 ACCEPTED -> Value.ACCEPTED
                 REJECTED -> Value.REJECTED
+                PENDING_REVIEW -> Value.PENDING_REVIEW
                 else -> Value._UNKNOWN
             }
 
@@ -645,6 +650,7 @@ private constructor(
             when (this) {
                 ACCEPTED -> Known.ACCEPTED
                 REJECTED -> Known.REJECTED
+                PENDING_REVIEW -> Known.PENDING_REVIEW
                 else -> throw LithicInvalidDataException("Unknown Status: $value")
             }
 
