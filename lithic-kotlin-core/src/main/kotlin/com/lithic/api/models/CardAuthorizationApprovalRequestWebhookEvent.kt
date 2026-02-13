@@ -25,6 +25,7 @@ private constructor(
     private val token: JsonField<String>,
     private val acquirerFee: JsonField<Long>,
     private val amount: JsonField<Long>,
+    private val amounts: JsonField<Amounts>,
     private val authorizationAmount: JsonField<Long>,
     private val avs: JsonField<Avs>,
     private val card: JsonField<AsaRequestCard>,
@@ -61,6 +62,7 @@ private constructor(
         @ExcludeMissing
         acquirerFee: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("amounts") @ExcludeMissing amounts: JsonField<Amounts> = JsonMissing.of(),
         @JsonProperty("authorization_amount")
         @ExcludeMissing
         authorizationAmount: JsonField<Long> = JsonMissing.of(),
@@ -127,6 +129,7 @@ private constructor(
         token,
         acquirerFee,
         amount,
+        amounts,
         authorizationAmount,
         avs,
         card,
@@ -174,22 +177,35 @@ private constructor(
     fun acquirerFee(): Long = acquirerFee.getRequired("acquirer_fee")
 
     /**
-     * Authorization amount of the transaction (in cents), including any acquirer fees. The contents
-     * of this field are identical to `authorization_amount`.
+     * Deprecated, use `amounts`. Authorization amount of the transaction (in cents), including any
+     * acquirer fees. The contents of this field are identical to `authorization_amount`.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun amount(): Long = amount.getRequired("amount")
+    @Deprecated("deprecated") fun amount(): Long = amount.getRequired("amount")
 
     /**
-     * The base transaction amount (in cents) plus the acquirer fee field. This is the amount the
-     * issuer should authorize against unless the issuer is paying the acquirer fee on behalf of the
-     * cardholder.
+     * Structured amounts for this authorization. The `cardholder` and `merchant` amounts reflect
+     * the original network authorization values. For programs with hold adjustments enabled (e.g.,
+     * automated fuel dispensers or tipping MCCs), the `hold` amount may exceed the `cardholder` and
+     * `merchant` amounts to account for anticipated final transaction amounts such as tips or fuel
+     * fill-ups
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    fun amounts(): Amounts = amounts.getRequired("amounts")
+
+    /**
+     * Deprecated, use `amounts`. The base transaction amount (in cents) plus the acquirer fee
+     * field. This is the amount the issuer should authorize against unless the issuer is paying the
+     * acquirer fee on behalf of the cardholder.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    @Deprecated("deprecated")
     fun authorizationAmount(): Long = authorizationAmount.getRequired("authorization_amount")
 
     /**
@@ -207,11 +223,13 @@ private constructor(
     fun card(): AsaRequestCard = card.getRequired("card")
 
     /**
-     * 3-character alphabetic ISO 4217 code for cardholder's billing currency.
+     * Deprecated, use `amounts`. 3-character alphabetic ISO 4217 code for cardholder's billing
+     * currency.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun cardholderCurrency(): String = cardholderCurrency.getRequired("cardholder_currency")
 
     /**
@@ -248,14 +266,15 @@ private constructor(
     fun merchant(): Merchant = merchant.getRequired("merchant")
 
     /**
-     * The amount that the merchant will receive, denominated in `merchant_currency` and in the
-     * smallest currency unit. Note the amount includes `acquirer_fee`, similar to
-     * `authorization_amount`. It will be different from `authorization_amount` if the merchant is
-     * taking payment in a different currency.
+     * Deprecated, use `amounts`. The amount that the merchant will receive, denominated in
+     * `merchant_currency` and in the smallest currency unit. Note the amount includes
+     * `acquirer_fee`, similar to `authorization_amount`. It will be different from
+     * `authorization_amount` if the merchant is taking payment in a different currency.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun merchantAmount(): Long = merchantAmount.getRequired("merchant_amount")
 
     /**
@@ -264,14 +283,17 @@ private constructor(
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun merchantCurrency(): String = merchantCurrency.getRequired("merchant_currency")
 
     /**
-     * Amount (in cents) of the transaction that has been settled, including any acquirer fees
+     * Deprecated, use `amounts`. Amount (in cents) of the transaction that has been settled,
+     * including any acquirer fees.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun settledAmount(): Long = settledAmount.getRequired("settled_amount")
 
     /**
@@ -315,14 +337,16 @@ private constructor(
     fun cashback(): Long? = cashback.getNullable("cashback")
 
     /**
-     * If the transaction was requested in a currency other than the settlement currency, this field
-     * will be populated to indicate the rate used to translate the merchant_amount to the amount
-     * (i.e., `merchant_amount` x `conversion_rate` = `amount`). Note that the `merchant_amount` is
-     * in the local currency and the amount is in the settlement currency.
+     * Deprecated, use `amounts`. If the transaction was requested in a currency other than the
+     * settlement currency, this field will be populated to indicate the rate used to translate the
+     * merchant_amount to the amount (i.e., `merchant_amount` x `conversion_rate` = `amount`). Note
+     * that the `merchant_amount` is in the local currency and the amount is in the settlement
+     * currency.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
 
     /**
@@ -422,7 +446,17 @@ private constructor(
      *
      * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+    @Deprecated("deprecated")
+    @JsonProperty("amount")
+    @ExcludeMissing
+    fun _amount(): JsonField<Long> = amount
+
+    /**
+     * Returns the raw JSON value of [amounts].
+     *
+     * Unlike [amounts], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("amounts") @ExcludeMissing fun _amounts(): JsonField<Amounts> = amounts
 
     /**
      * Returns the raw JSON value of [authorizationAmount].
@@ -430,6 +464,7 @@ private constructor(
      * Unlike [authorizationAmount], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("authorization_amount")
     @ExcludeMissing
     fun _authorizationAmount(): JsonField<Long> = authorizationAmount
@@ -454,6 +489,7 @@ private constructor(
      * Unlike [cardholderCurrency], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("cardholder_currency")
     @ExcludeMissing
     fun _cardholderCurrency(): JsonField<String> = cardholderCurrency
@@ -491,6 +527,7 @@ private constructor(
      *
      * Unlike [merchantAmount], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("merchant_amount")
     @ExcludeMissing
     fun _merchantAmount(): JsonField<Long> = merchantAmount
@@ -501,6 +538,7 @@ private constructor(
      * Unlike [merchantCurrency], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("merchant_currency")
     @ExcludeMissing
     fun _merchantCurrency(): JsonField<String> = merchantCurrency
@@ -510,6 +548,7 @@ private constructor(
      *
      * Unlike [settledAmount], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("settled_amount")
     @ExcludeMissing
     fun _settledAmount(): JsonField<Long> = settledAmount
@@ -562,6 +601,7 @@ private constructor(
      *
      * Unlike [conversionRate], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("conversion_rate")
     @ExcludeMissing
     fun _conversionRate(): JsonField<Double> = conversionRate
@@ -662,6 +702,7 @@ private constructor(
          * .token()
          * .acquirerFee()
          * .amount()
+         * .amounts()
          * .authorizationAmount()
          * .avs()
          * .card()
@@ -686,6 +727,7 @@ private constructor(
         private var token: JsonField<String>? = null
         private var acquirerFee: JsonField<Long>? = null
         private var amount: JsonField<Long>? = null
+        private var amounts: JsonField<Amounts>? = null
         private var authorizationAmount: JsonField<Long>? = null
         private var avs: JsonField<Avs>? = null
         private var card: JsonField<AsaRequestCard>? = null
@@ -721,6 +763,7 @@ private constructor(
             token = cardAuthorizationApprovalRequestWebhookEvent.token
             acquirerFee = cardAuthorizationApprovalRequestWebhookEvent.acquirerFee
             amount = cardAuthorizationApprovalRequestWebhookEvent.amount
+            amounts = cardAuthorizationApprovalRequestWebhookEvent.amounts
             authorizationAmount = cardAuthorizationApprovalRequestWebhookEvent.authorizationAmount
             avs = cardAuthorizationApprovalRequestWebhookEvent.avs
             card = cardAuthorizationApprovalRequestWebhookEvent.card
@@ -780,10 +823,10 @@ private constructor(
         fun acquirerFee(acquirerFee: JsonField<Long>) = apply { this.acquirerFee = acquirerFee }
 
         /**
-         * Authorization amount of the transaction (in cents), including any acquirer fees. The
-         * contents of this field are identical to `authorization_amount`.
+         * Deprecated, use `amounts`. Authorization amount of the transaction (in cents), including
+         * any acquirer fees. The contents of this field are identical to `authorization_amount`.
          */
-        fun amount(amount: Long) = amount(JsonField.of(amount))
+        @Deprecated("deprecated") fun amount(amount: Long) = amount(JsonField.of(amount))
 
         /**
          * Sets [Builder.amount] to an arbitrary JSON value.
@@ -791,13 +834,32 @@ private constructor(
          * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
+        @Deprecated("deprecated")
         fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         /**
-         * The base transaction amount (in cents) plus the acquirer fee field. This is the amount
-         * the issuer should authorize against unless the issuer is paying the acquirer fee on
-         * behalf of the cardholder.
+         * Structured amounts for this authorization. The `cardholder` and `merchant` amounts
+         * reflect the original network authorization values. For programs with hold adjustments
+         * enabled (e.g., automated fuel dispensers or tipping MCCs), the `hold` amount may exceed
+         * the `cardholder` and `merchant` amounts to account for anticipated final transaction
+         * amounts such as tips or fuel fill-ups
          */
+        fun amounts(amounts: Amounts) = amounts(JsonField.of(amounts))
+
+        /**
+         * Sets [Builder.amounts] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amounts] with a well-typed [Amounts] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun amounts(amounts: JsonField<Amounts>) = apply { this.amounts = amounts }
+
+        /**
+         * Deprecated, use `amounts`. The base transaction amount (in cents) plus the acquirer fee
+         * field. This is the amount the issuer should authorize against unless the issuer is paying
+         * the acquirer fee on behalf of the cardholder.
+         */
+        @Deprecated("deprecated")
         fun authorizationAmount(authorizationAmount: Long) =
             authorizationAmount(JsonField.of(authorizationAmount))
 
@@ -808,6 +870,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun authorizationAmount(authorizationAmount: JsonField<Long>) = apply {
             this.authorizationAmount = authorizationAmount
         }
@@ -834,7 +897,11 @@ private constructor(
          */
         fun card(card: JsonField<AsaRequestCard>) = apply { this.card = card }
 
-        /** 3-character alphabetic ISO 4217 code for cardholder's billing currency. */
+        /**
+         * Deprecated, use `amounts`. 3-character alphabetic ISO 4217 code for cardholder's billing
+         * currency.
+         */
+        @Deprecated("deprecated")
         fun cardholderCurrency(cardholderCurrency: String) =
             cardholderCurrency(JsonField.of(cardholderCurrency))
 
@@ -845,6 +912,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun cardholderCurrency(cardholderCurrency: JsonField<String>) = apply {
             this.cardholderCurrency = cardholderCurrency
         }
@@ -902,11 +970,12 @@ private constructor(
         fun merchant(merchant: JsonField<Merchant>) = apply { this.merchant = merchant }
 
         /**
-         * The amount that the merchant will receive, denominated in `merchant_currency` and in the
-         * smallest currency unit. Note the amount includes `acquirer_fee`, similar to
-         * `authorization_amount`. It will be different from `authorization_amount` if the merchant
-         * is taking payment in a different currency.
+         * Deprecated, use `amounts`. The amount that the merchant will receive, denominated in
+         * `merchant_currency` and in the smallest currency unit. Note the amount includes
+         * `acquirer_fee`, similar to `authorization_amount`. It will be different from
+         * `authorization_amount` if the merchant is taking payment in a different currency.
          */
+        @Deprecated("deprecated")
         fun merchantAmount(merchantAmount: Long) = merchantAmount(JsonField.of(merchantAmount))
 
         /**
@@ -916,11 +985,13 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
+        @Deprecated("deprecated")
         fun merchantAmount(merchantAmount: JsonField<Long>) = apply {
             this.merchantAmount = merchantAmount
         }
 
         /** 3-character alphabetic ISO 4217 code for the local currency of the transaction. */
+        @Deprecated("deprecated")
         fun merchantCurrency(merchantCurrency: String) =
             merchantCurrency(JsonField.of(merchantCurrency))
 
@@ -931,13 +1002,16 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun merchantCurrency(merchantCurrency: JsonField<String>) = apply {
             this.merchantCurrency = merchantCurrency
         }
 
         /**
-         * Amount (in cents) of the transaction that has been settled, including any acquirer fees
+         * Deprecated, use `amounts`. Amount (in cents) of the transaction that has been settled,
+         * including any acquirer fees.
          */
+        @Deprecated("deprecated")
         fun settledAmount(settledAmount: Long) = settledAmount(JsonField.of(settledAmount))
 
         /**
@@ -947,6 +1021,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
+        @Deprecated("deprecated")
         fun settledAmount(settledAmount: JsonField<Long>) = apply {
             this.settledAmount = settledAmount
         }
@@ -1021,11 +1096,13 @@ private constructor(
         fun cashback(cashback: JsonField<Long>) = apply { this.cashback = cashback }
 
         /**
-         * If the transaction was requested in a currency other than the settlement currency, this
-         * field will be populated to indicate the rate used to translate the merchant_amount to the
-         * amount (i.e., `merchant_amount` x `conversion_rate` = `amount`). Note that the
-         * `merchant_amount` is in the local currency and the amount is in the settlement currency.
+         * Deprecated, use `amounts`. If the transaction was requested in a currency other than the
+         * settlement currency, this field will be populated to indicate the rate used to translate
+         * the merchant_amount to the amount (i.e., `merchant_amount` x `conversion_rate` =
+         * `amount`). Note that the `merchant_amount` is in the local currency and the amount is in
+         * the settlement currency.
          */
+        @Deprecated("deprecated")
         fun conversionRate(conversionRate: Double) = conversionRate(JsonField.of(conversionRate))
 
         /**
@@ -1035,6 +1112,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun conversionRate(conversionRate: JsonField<Double>) = apply {
             this.conversionRate = conversionRate
         }
@@ -1209,6 +1287,7 @@ private constructor(
          * .token()
          * .acquirerFee()
          * .amount()
+         * .amounts()
          * .authorizationAmount()
          * .avs()
          * .card()
@@ -1231,6 +1310,7 @@ private constructor(
                 checkRequired("token", token),
                 checkRequired("acquirerFee", acquirerFee),
                 checkRequired("amount", amount),
+                checkRequired("amounts", amounts),
                 checkRequired("authorizationAmount", authorizationAmount),
                 checkRequired("avs", avs),
                 checkRequired("card", card),
@@ -1271,6 +1351,7 @@ private constructor(
         token()
         acquirerFee()
         amount()
+        amounts().validate()
         authorizationAmount()
         avs().validate()
         card().validate()
@@ -1317,6 +1398,7 @@ private constructor(
         (if (token.asKnown() == null) 0 else 1) +
             (if (acquirerFee.asKnown() == null) 0 else 1) +
             (if (amount.asKnown() == null) 0 else 1) +
+            (amounts.asKnown()?.validity() ?: 0) +
             (if (authorizationAmount.asKnown() == null) 0 else 1) +
             (avs.asKnown()?.validity() ?: 0) +
             (card.asKnown()?.validity() ?: 0) +
@@ -1343,6 +1425,743 @@ private constructor(
             (pos.asKnown()?.validity() ?: 0) +
             (tokenInfo.asKnown()?.validity() ?: 0) +
             (if (ttl.asKnown() == null) 0 else 1)
+
+    /**
+     * Structured amounts for this authorization. The `cardholder` and `merchant` amounts reflect
+     * the original network authorization values. For programs with hold adjustments enabled (e.g.,
+     * automated fuel dispensers or tipping MCCs), the `hold` amount may exceed the `cardholder` and
+     * `merchant` amounts to account for anticipated final transaction amounts such as tips or fuel
+     * fill-ups
+     */
+    class Amounts
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val cardholder: JsonField<ConvertedAmount>,
+        private val hold: JsonField<Amount>,
+        private val merchant: JsonField<Amount>,
+        private val settlement: JsonField<Amount>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("cardholder")
+            @ExcludeMissing
+            cardholder: JsonField<ConvertedAmount> = JsonMissing.of(),
+            @JsonProperty("hold") @ExcludeMissing hold: JsonField<Amount> = JsonMissing.of(),
+            @JsonProperty("merchant")
+            @ExcludeMissing
+            merchant: JsonField<Amount> = JsonMissing.of(),
+            @JsonProperty("settlement")
+            @ExcludeMissing
+            settlement: JsonField<Amount> = JsonMissing.of(),
+        ) : this(cardholder, hold, merchant, settlement, mutableMapOf())
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun cardholder(): ConvertedAmount = cardholder.getRequired("cardholder")
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun hold(): Amount? = hold.getNullable("hold")
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun merchant(): Amount = merchant.getRequired("merchant")
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun settlement(): Amount? = settlement.getNullable("settlement")
+
+        /**
+         * Returns the raw JSON value of [cardholder].
+         *
+         * Unlike [cardholder], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("cardholder")
+        @ExcludeMissing
+        fun _cardholder(): JsonField<ConvertedAmount> = cardholder
+
+        /**
+         * Returns the raw JSON value of [hold].
+         *
+         * Unlike [hold], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("hold") @ExcludeMissing fun _hold(): JsonField<Amount> = hold
+
+        /**
+         * Returns the raw JSON value of [merchant].
+         *
+         * Unlike [merchant], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("merchant") @ExcludeMissing fun _merchant(): JsonField<Amount> = merchant
+
+        /**
+         * Returns the raw JSON value of [settlement].
+         *
+         * Unlike [settlement], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("settlement")
+        @ExcludeMissing
+        fun _settlement(): JsonField<Amount> = settlement
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Amounts].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .cardholder()
+             * .hold()
+             * .merchant()
+             * .settlement()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Amounts]. */
+        class Builder internal constructor() {
+
+            private var cardholder: JsonField<ConvertedAmount>? = null
+            private var hold: JsonField<Amount>? = null
+            private var merchant: JsonField<Amount>? = null
+            private var settlement: JsonField<Amount>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(amounts: Amounts) = apply {
+                cardholder = amounts.cardholder
+                hold = amounts.hold
+                merchant = amounts.merchant
+                settlement = amounts.settlement
+                additionalProperties = amounts.additionalProperties.toMutableMap()
+            }
+
+            fun cardholder(cardholder: ConvertedAmount) = cardholder(JsonField.of(cardholder))
+
+            /**
+             * Sets [Builder.cardholder] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.cardholder] with a well-typed [ConvertedAmount]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun cardholder(cardholder: JsonField<ConvertedAmount>) = apply {
+                this.cardholder = cardholder
+            }
+
+            fun hold(hold: Amount?) = hold(JsonField.ofNullable(hold))
+
+            /**
+             * Sets [Builder.hold] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.hold] with a well-typed [Amount] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun hold(hold: JsonField<Amount>) = apply { this.hold = hold }
+
+            fun merchant(merchant: Amount) = merchant(JsonField.of(merchant))
+
+            /**
+             * Sets [Builder.merchant] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.merchant] with a well-typed [Amount] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun merchant(merchant: JsonField<Amount>) = apply { this.merchant = merchant }
+
+            fun settlement(settlement: Amount?) = settlement(JsonField.ofNullable(settlement))
+
+            /**
+             * Sets [Builder.settlement] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.settlement] with a well-typed [Amount] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun settlement(settlement: JsonField<Amount>) = apply { this.settlement = settlement }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Amounts].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .cardholder()
+             * .hold()
+             * .merchant()
+             * .settlement()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Amounts =
+                Amounts(
+                    checkRequired("cardholder", cardholder),
+                    checkRequired("hold", hold),
+                    checkRequired("merchant", merchant),
+                    checkRequired("settlement", settlement),
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Amounts = apply {
+            if (validated) {
+                return@apply
+            }
+
+            cardholder().validate()
+            hold()?.validate()
+            merchant().validate()
+            settlement()?.validate()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (cardholder.asKnown()?.validity() ?: 0) +
+                (hold.asKnown()?.validity() ?: 0) +
+                (merchant.asKnown()?.validity() ?: 0) +
+                (settlement.asKnown()?.validity() ?: 0)
+
+        class ConvertedAmount
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val amount: JsonField<Long>,
+            private val conversionRate: JsonField<String>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                conversionRate: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, conversionRate, currency, mutableMapOf())
+
+            /**
+             * Amount in the smallest unit of the applicable currency (e.g., cents)
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun amount(): Long = amount.getRequired("amount")
+
+            /**
+             * Exchange rate used for currency conversion
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun conversionRate(): String = conversionRate.getRequired("conversion_rate")
+
+            /**
+             * 3-character alphabetic ISO 4217 currency
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun currency(): String = currency.getRequired("currency")
+
+            /**
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+            /**
+             * Returns the raw JSON value of [conversionRate].
+             *
+             * Unlike [conversionRate], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<String> = conversionRate
+
+            /**
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [ConvertedAmount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .conversionRate()
+                 * .currency()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [ConvertedAmount]. */
+            class Builder internal constructor() {
+
+                private var amount: JsonField<Long>? = null
+                private var conversionRate: JsonField<String>? = null
+                private var currency: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(convertedAmount: ConvertedAmount) = apply {
+                    amount = convertedAmount.amount
+                    conversionRate = convertedAmount.conversionRate
+                    currency = convertedAmount.currency
+                    additionalProperties = convertedAmount.additionalProperties.toMutableMap()
+                }
+
+                /** Amount in the smallest unit of the applicable currency (e.g., cents) */
+                fun amount(amount: Long) = amount(JsonField.of(amount))
+
+                /**
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Long] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+                /** Exchange rate used for currency conversion */
+                fun conversionRate(conversionRate: String) =
+                    conversionRate(JsonField.of(conversionRate))
+
+                /**
+                 * Sets [Builder.conversionRate] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.conversionRate] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun conversionRate(conversionRate: JsonField<String>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /** 3-character alphabetic ISO 4217 currency */
+                fun currency(currency: String) = currency(JsonField.of(currency))
+
+                /**
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [ConvertedAmount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .conversionRate()
+                 * .currency()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): ConvertedAmount =
+                    ConvertedAmount(
+                        checkRequired("amount", amount),
+                        checkRequired("conversionRate", conversionRate),
+                        checkRequired("currency", currency),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): ConvertedAmount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                conversionRate()
+                currency()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amount.asKnown() == null) 0 else 1) +
+                    (if (conversionRate.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is ConvertedAmount &&
+                    amount == other.amount &&
+                    conversionRate == other.conversionRate &&
+                    currency == other.currency &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(amount, conversionRate, currency, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "ConvertedAmount{amount=$amount, conversionRate=$conversionRate, currency=$currency, additionalProperties=$additionalProperties}"
+        }
+
+        class Amount
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val amount: JsonField<Long>,
+            private val currency: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("currency")
+                @ExcludeMissing
+                currency: JsonField<String> = JsonMissing.of(),
+            ) : this(amount, currency, mutableMapOf())
+
+            /**
+             * Amount in the smallest unit of the applicable currency (e.g., cents)
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun amount(): Long = amount.getRequired("amount")
+
+            /**
+             * 3-character alphabetic ISO 4217 currency
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun currency(): String = currency.getRequired("currency")
+
+            /**
+             * Returns the raw JSON value of [amount].
+             *
+             * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
+
+            /**
+             * Returns the raw JSON value of [currency].
+             *
+             * Unlike [currency], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of [Amount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .currency()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Amount]. */
+            class Builder internal constructor() {
+
+                private var amount: JsonField<Long>? = null
+                private var currency: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(amount: Amount) = apply {
+                    this.amount = amount.amount
+                    currency = amount.currency
+                    additionalProperties = amount.additionalProperties.toMutableMap()
+                }
+
+                /** Amount in the smallest unit of the applicable currency (e.g., cents) */
+                fun amount(amount: Long) = amount(JsonField.of(amount))
+
+                /**
+                 * Sets [Builder.amount] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.amount] with a well-typed [Long] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+
+                /** 3-character alphabetic ISO 4217 currency */
+                fun currency(currency: String) = currency(JsonField.of(currency))
+
+                /**
+                 * Sets [Builder.currency] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.currency] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [Amount].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amount()
+                 * .currency()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): Amount =
+                    Amount(
+                        checkRequired("amount", amount),
+                        checkRequired("currency", currency),
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            fun validate(): Amount = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                amount()
+                currency()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (amount.asKnown() == null) 0 else 1) +
+                    (if (currency.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Amount &&
+                    amount == other.amount &&
+                    currency == other.currency &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(amount, currency, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Amount{amount=$amount, currency=$currency, additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Amounts &&
+                cardholder == other.cardholder &&
+                hold == other.hold &&
+                merchant == other.merchant &&
+                settlement == other.settlement &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy {
+            Objects.hash(cardholder, hold, merchant, settlement, additionalProperties)
+        }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Amounts{cardholder=$cardholder, hold=$hold, merchant=$merchant, settlement=$settlement, additionalProperties=$additionalProperties}"
+    }
 
     class Avs
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -7284,6 +8103,7 @@ private constructor(
             token == other.token &&
             acquirerFee == other.acquirerFee &&
             amount == other.amount &&
+            amounts == other.amounts &&
             authorizationAmount == other.authorizationAmount &&
             avs == other.avs &&
             card == other.card &&
@@ -7318,6 +8138,7 @@ private constructor(
             token,
             acquirerFee,
             amount,
+            amounts,
             authorizationAmount,
             avs,
             card,
@@ -7351,5 +8172,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CardAuthorizationApprovalRequestWebhookEvent{token=$token, acquirerFee=$acquirerFee, amount=$amount, authorizationAmount=$authorizationAmount, avs=$avs, card=$card, cardholderCurrency=$cardholderCurrency, cashAmount=$cashAmount, created=$created, eventType=$eventType, merchant=$merchant, merchantAmount=$merchantAmount, merchantCurrency=$merchantCurrency, settledAmount=$settledAmount, status=$status, transactionInitiator=$transactionInitiator, accountType=$accountType, cardholderAuthentication=$cardholderAuthentication, cashback=$cashback, conversionRate=$conversionRate, eventToken=$eventToken, fleetInfo=$fleetInfo, latestChallenge=$latestChallenge, network=$network, networkRiskScore=$networkRiskScore, networkSpecificData=$networkSpecificData, pos=$pos, tokenInfo=$tokenInfo, ttl=$ttl, additionalProperties=$additionalProperties}"
+        "CardAuthorizationApprovalRequestWebhookEvent{token=$token, acquirerFee=$acquirerFee, amount=$amount, amounts=$amounts, authorizationAmount=$authorizationAmount, avs=$avs, card=$card, cardholderCurrency=$cardholderCurrency, cashAmount=$cashAmount, created=$created, eventType=$eventType, merchant=$merchant, merchantAmount=$merchantAmount, merchantCurrency=$merchantCurrency, settledAmount=$settledAmount, status=$status, transactionInitiator=$transactionInitiator, accountType=$accountType, cardholderAuthentication=$cardholderAuthentication, cashback=$cashback, conversionRate=$conversionRate, eventToken=$eventToken, fleetInfo=$fleetInfo, latestChallenge=$latestChallenge, network=$network, networkRiskScore=$networkRiskScore, networkSpecificData=$networkSpecificData, pos=$pos, tokenInfo=$tokenInfo, ttl=$ttl, additionalProperties=$additionalProperties}"
 }
