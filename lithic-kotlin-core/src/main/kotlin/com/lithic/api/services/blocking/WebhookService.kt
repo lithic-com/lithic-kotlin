@@ -4,8 +4,8 @@ package com.lithic.api.services.blocking
 
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.JsonValue
-import com.lithic.api.core.http.Headers
 import com.lithic.api.core.UnwrapWebhookParams
+import com.lithic.api.core.http.Headers
 import com.lithic.api.errors.LithicInvalidDataException
 import com.lithic.api.errors.LithicWebhookException
 import com.lithic.api.models.ParsedWebhookEvent

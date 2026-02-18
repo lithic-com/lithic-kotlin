@@ -3,8 +3,8 @@
 package com.lithic.api.services.async
 
 import com.lithic.api.core.ClientOptions
-import com.lithic.api.core.http.Headers
 import com.lithic.api.core.UnwrapWebhookParams
+import com.lithic.api.core.http.Headers
 import com.lithic.api.models.ParsedWebhookEvent
 import com.lithic.api.services.blocking.WebhookServiceImpl
 
