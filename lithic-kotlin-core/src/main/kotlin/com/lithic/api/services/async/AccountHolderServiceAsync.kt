@@ -22,6 +22,9 @@ import com.lithic.api.models.AccountHolderUpdateParams
 import com.lithic.api.models.AccountHolderUpdateResponse
 import com.lithic.api.models.AccountHolderUploadDocumentParams
 import com.lithic.api.models.Document
+import com.lithic.api.models.Kyb
+import com.lithic.api.models.Kyc
+import com.lithic.api.models.KycExempt
 
 interface AccountHolderServiceAsync {
 
@@ -50,6 +53,41 @@ interface AccountHolderServiceAsync {
         params: AccountHolderCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderCreateResponse
+
+    /** @see create */
+    suspend fun create(
+        body: AccountHolderCreateParams.Body,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderCreateResponse =
+        create(AccountHolderCreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        kyb: Kyb,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderCreateResponse =
+        create(AccountHolderCreateParams.Body.ofKyb(kyb), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        kybDelegated: AccountHolderCreateParams.Body.KybDelegated,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderCreateResponse =
+        create(AccountHolderCreateParams.Body.ofKybDelegated(kybDelegated), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        kyc: Kyc,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderCreateResponse =
+        create(AccountHolderCreateParams.Body.ofKyc(kyc), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        kycExempt: KycExempt,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AccountHolderCreateResponse =
+        create(AccountHolderCreateParams.Body.ofKycExempt(kycExempt), requestOptions)
 
     /** Get an Individual or Business Account Holder and/or their KYC or KYB evaluation status. */
     suspend fun retrieve(
@@ -254,6 +292,46 @@ interface AccountHolderServiceAsync {
             params: AccountHolderCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderCreateResponse>
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            body: AccountHolderCreateParams.Body,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse> =
+            create(AccountHolderCreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            kyb: Kyb,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse> =
+            create(AccountHolderCreateParams.Body.ofKyb(kyb), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            kybDelegated: AccountHolderCreateParams.Body.KybDelegated,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse> =
+            create(AccountHolderCreateParams.Body.ofKybDelegated(kybDelegated), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            kyc: Kyc,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse> =
+            create(AccountHolderCreateParams.Body.ofKyc(kyc), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            kycExempt: KycExempt,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AccountHolderCreateResponse> =
+            create(AccountHolderCreateParams.Body.ofKycExempt(kycExempt), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/account_holders/{account_holder_token}`, but is
