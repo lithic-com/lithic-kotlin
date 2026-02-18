@@ -43,6 +43,44 @@ interface ExternalBankAccountServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
 
+    /** @see create */
+    suspend fun create(
+        body: ExternalBankAccountCreateParams.Body,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        bankVerifiedCreateBankAccountApiRequest:
+            ExternalBankAccountCreateParams.Body.BankVerifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(
+            ExternalBankAccountCreateParams.Body.ofBankVerifiedCreateBankAccountApiRequest(
+                bankVerifiedCreateBankAccountApiRequest
+            ),
+            requestOptions,
+        )
+
+    /** @see create */
+    suspend fun create(
+        externallyVerified:
+            ExternalBankAccountCreateParams.Body.ExternallyVerifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(
+            ExternalBankAccountCreateParams.Body.ofExternallyVerified(externallyVerified),
+            requestOptions,
+        )
+
+    /** @see create */
+    suspend fun create(
+        unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
+
     /** Get the external bank account by token. */
     suspend fun retrieve(
         externalBankAccountToken: String,
@@ -209,6 +247,48 @@ interface ExternalBankAccountServiceAsync {
             params: ExternalBankAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse>
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            body: ExternalBankAccountCreateParams.Body,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            bankVerifiedCreateBankAccountApiRequest:
+                ExternalBankAccountCreateParams.Body.BankVerifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(
+                ExternalBankAccountCreateParams.Body.ofBankVerifiedCreateBankAccountApiRequest(
+                    bankVerifiedCreateBankAccountApiRequest
+                ),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            externallyVerified:
+                ExternalBankAccountCreateParams.Body.ExternallyVerifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(
+                ExternalBankAccountCreateParams.Body.ofExternallyVerified(externallyVerified),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
