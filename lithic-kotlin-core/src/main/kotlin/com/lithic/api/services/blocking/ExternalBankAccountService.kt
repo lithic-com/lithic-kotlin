@@ -43,6 +43,44 @@ interface ExternalBankAccountService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse
 
+    /** @see create */
+    fun create(
+        body: ExternalBankAccountCreateParams.Body,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    fun create(
+        bankVerifiedCreateBankAccountApiRequest:
+            ExternalBankAccountCreateParams.Body.BankVerifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(
+            ExternalBankAccountCreateParams.Body.ofBankVerifiedCreateBankAccountApiRequest(
+                bankVerifiedCreateBankAccountApiRequest
+            ),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        externallyVerified:
+            ExternalBankAccountCreateParams.Body.ExternallyVerifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(
+            ExternalBankAccountCreateParams.Body.ofExternallyVerified(externallyVerified),
+            requestOptions,
+        )
+
+    /** @see create */
+    fun create(
+        unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccountCreateResponse =
+        create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
+
     /** Get the external bank account by token. */
     fun retrieve(
         externalBankAccountToken: String,
@@ -209,6 +247,48 @@ interface ExternalBankAccountService {
             params: ExternalBankAccountCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            body: ExternalBankAccountCreateParams.Body,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            bankVerifiedCreateBankAccountApiRequest:
+                ExternalBankAccountCreateParams.Body.BankVerifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(
+                ExternalBankAccountCreateParams.Body.ofBankVerifiedCreateBankAccountApiRequest(
+                    bankVerifiedCreateBankAccountApiRequest
+                ),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            externallyVerified:
+                ExternalBankAccountCreateParams.Body.ExternallyVerifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(
+                ExternalBankAccountCreateParams.Body.ofExternallyVerified(externallyVerified),
+                requestOptions,
+            )
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccountCreateResponse> =
+            create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

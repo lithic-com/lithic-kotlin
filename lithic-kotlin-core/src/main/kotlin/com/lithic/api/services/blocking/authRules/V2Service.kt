@@ -46,6 +46,32 @@ interface V2Service {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRule
 
+    /** @see create */
+    fun create(
+        body: AuthRuleV2CreateParams.Body,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule = create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    fun create(
+        accountLevelRule: AuthRuleV2CreateParams.Body.AccountLevelRule,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule =
+        create(AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule), requestOptions)
+
+    /** @see create */
+    fun create(
+        cardLevelRule: AuthRuleV2CreateParams.Body.CardLevelRule,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule = create(AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule), requestOptions)
+
+    /** @see create */
+    fun create(
+        programLevelRule: AuthRuleV2CreateParams.Body.ProgramLevelRule,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule =
+        create(AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule), requestOptions)
+
     /** Fetches a V2 Auth rule by its token */
     fun retrieve(
         authRuleToken: String,
@@ -243,6 +269,38 @@ interface V2Service {
             params: AuthRuleV2CreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule>
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            body: AuthRuleV2CreateParams.Body,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            accountLevelRule: AuthRuleV2CreateParams.Body.AccountLevelRule,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            create(AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            cardLevelRule: AuthRuleV2CreateParams.Body.CardLevelRule,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            create(AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        fun create(
+            programLevelRule: AuthRuleV2CreateParams.Body.ProgramLevelRule,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            create(AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}`, but is otherwise
