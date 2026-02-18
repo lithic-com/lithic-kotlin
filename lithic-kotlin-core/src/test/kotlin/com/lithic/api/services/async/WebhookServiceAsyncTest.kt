@@ -39,13 +39,15 @@ internal class WebhookServiceAsyncTest {
                 )
                 .build()
 
-        webhookServiceAsync.parsed(
-            UnwrapWebhookParams.builder()
-                .body(payload)
-                .headers(headers)
-                .secret(webhookSecret)
-                .build()
-        ).validate()
+        webhookServiceAsync
+            .parsed(
+                UnwrapWebhookParams.builder()
+                    .body(payload)
+                    .headers(headers)
+                    .secret(webhookSecret)
+                    .build()
+            )
+            .validate()
 
         // Wrong key should throw
         assertThrows<LithicWebhookException> {
