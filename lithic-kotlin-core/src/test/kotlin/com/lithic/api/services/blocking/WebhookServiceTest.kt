@@ -4,99 +4,164 @@ package com.lithic.api.services.blocking
 
 import com.lithic.api.TestServerExtension
 import com.lithic.api.client.okhttp.LithicOkHttpClient
-import com.lithic.api.core.UnwrapWebhookParams
 import com.lithic.api.core.http.Headers
-import com.lithic.api.errors.LithicWebhookException
-import com.standardwebhooks.Webhook
+import com.lithic.api.errors.LithicException
+import com.lithic.api.models.*
+import java.time.Clock
 import java.time.Instant
+import java.time.ZoneOffset
+import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-internal class WebhookServiceTest {
+class WebhookServiceTest {
 
     @Test
-    fun parsed() {
-        val client = LithicOkHttpClient.builder().apiKey("My Lithic API Key").build()
-        val webhookService = client.webhooks()
-
-        val payload =
-            "{\"event_type\":\"account_holder.created\",\"token\":\"00000000-0000-0000-0000-000000000001\",\"account_token\":\"00000000-0000-0000-0000-000000000001\",\"created\":\"2019-12-27T18:11:19.117Z\",\"required_documents\":[{\"entity_token\":\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\",\"status_reasons\":[\"string\"],\"valid_documents\":[\"string\"]}],\"status\":\"ACCEPTED\",\"status_reason\":[\"string\"]}"
-        val webhookSecret = "whsec_c2VjcmV0Cg=="
-        val messageId = "1"
-        val timestampSeconds = Instant.now().epochSecond
-        val webhook = Webhook(webhookSecret)
-        val signature = webhook.sign(messageId, timestampSeconds, payload)
-        val headers =
-            Headers.builder()
-                .putAll(
-                    mapOf(
-                        "webhook-signature" to listOf(signature),
-                        "webhook-id" to listOf(messageId),
-                        "webhook-timestamp" to listOf(timestampSeconds.toString()),
-                    )
-                )
+    fun unwrap() {
+        val client =
+            LithicOkHttpClient.builder()
+                .apiKey("test-api-key")
+                .webhookSecret("whsec_zlFsbBZ8Xcodlpcu6NDTdSzZRLSdhkst")
+                .clock(Clock.fixed(Instant.ofEpochSecond(1676312382), ZoneOffset.UTC))
                 .build()
 
-        webhookService
-            .parsed(
-                UnwrapWebhookParams.builder()
-                    .body(payload)
-                    .headers(headers)
-                    .secret(webhookSecret)
-                    .build()
-            )
-            .validate()
+        val payload =
+            "{\"card_token\":\"sit Lorem ipsum, accusantium repellendus possimus\",\"created_at\":\"elit. placeat libero architecto molestias, sit\",\"account_token\":\"elit.\",\"issuer_decision\":\"magnam, libero esse Lorem ipsum magnam, magnam,\",\"tokenization_attempt_id\":\"illum dolor repellendus libero esse accusantium\",\"wallet_decisioning_info\":{\"device_score\":\"placeat architecto\"},\"digital_wallet_token_metadata\":{\"status\":\"reprehenderit dolor\",\"token_requestor_id\":\"possimus\",\"payment_account_info\":{\"account_holder_data\":{\"phone_number\":\"libero\",\"email_address\":\"nobis molestias, veniam culpa! quas elit. quas libero esse architecto placeat\"},\"pan_unique_reference\":\"adipisicing odit magnam, odit\"}}}"
+        val headers =
+            Headers.builder()
+                .put("webhook-id", "msg_2Lh9KRb0pzN4LePd3XiA4v12Axj")
+                .put("webhook-timestamp", "1676312382")
+                .put("webhook-signature", "v1,Dwa0AHInLL3XFo2sxcHamOQDrJNi7F654S3L6skMAOI=")
+                .build()
 
-        // Wrong key should throw
-        assertThrows<LithicWebhookException> {
-            val wrongKey = "whsec_aaaaaaaaaa"
-            webhookService.parsed(
-                UnwrapWebhookParams.builder()
-                    .body(payload)
-                    .headers(headers)
-                    .secret(wrongKey)
-                    .build()
-            )
-        }
+        val event = client.webhooks().unwrap(payload, headers, null)
 
-        // Bad signature should throw
-        assertThrows<LithicWebhookException> {
-            val badSig = webhook.sign(messageId, timestampSeconds, "some other payload")
-            val badHeaders =
-                headers.toBuilder().replace("webhook-signature", listOf(badSig)).build()
-            webhookService.parsed(
-                UnwrapWebhookParams.builder()
-                    .body(payload)
-                    .headers(badHeaders)
-                    .secret(webhookSecret)
-                    .build()
-            )
-        }
+        assertThat(event).isNotNull()
+    }
 
-        // Old timestamp should throw
-        assertThrows<LithicWebhookException> {
-            val oldHeaders = headers.toBuilder().replace("webhook-timestamp", listOf("5")).build()
-            webhookService.parsed(
-                UnwrapWebhookParams.builder()
-                    .body(payload)
-                    .headers(oldHeaders)
-                    .secret(webhookSecret)
-                    .build()
-            )
-        }
+    @Test
+    fun verifySignature() {
+        val client =
+            LithicOkHttpClient.builder()
+                .apiKey("test-api-key")
+                .webhookSecret("whsec_zlFsbBZ8Xcodlpcu6NDTdSzZRLSdhkst")
+                .clock(Clock.fixed(Instant.ofEpochSecond(1676312382), ZoneOffset.UTC))
+                .build()
 
-        // Wrong message ID should throw
-        assertThrows<LithicWebhookException> {
-            val wrongIdHeaders = headers.toBuilder().replace("webhook-id", listOf("wrong")).build()
-            webhookService.parsed(
-                UnwrapWebhookParams.builder()
-                    .body(payload)
-                    .headers(wrongIdHeaders)
-                    .secret(webhookSecret)
-                    .build()
-            )
-        }
+        val payload =
+            "{\"card_token\":\"sit Lorem ipsum, accusantium repellendus possimus\",\"created_at\":\"elit. placeat libero architecto molestias, sit\",\"account_token\":\"elit.\",\"issuer_decision\":\"magnam, libero esse Lorem ipsum magnam, magnam,\",\"tokenization_attempt_id\":\"illum dolor repellendus libero esse accusantium\",\"wallet_decisioning_info\":{\"device_score\":\"placeat architecto\"},\"digital_wallet_token_metadata\":{\"status\":\"reprehenderit dolor\",\"token_requestor_id\":\"possimus\",\"payment_account_info\":{\"account_holder_data\":{\"phone_number\":\"libero\",\"email_address\":\"nobis molestias, veniam culpa! quas elit. quas libero esse architecto placeat\"},\"pan_unique_reference\":\"adipisicing odit magnam, odit\"}}}"
+        val webhookId = "msg_2Lh9KRb0pzN4LePd3XiA4v12Axj"
+        val webhookTimestamp = "1676312382"
+        val webhookSignature = "Dwa0AHInLL3XFo2sxcHamOQDrJNi7F654S3L6skMAOI="
+        val headers =
+            Headers.builder()
+                .put("webhook-id", webhookId)
+                .put("webhook-timestamp", webhookTimestamp)
+                .put("webhook-signature", "v1,$webhookSignature")
+                .build()
+
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", "1676312022")
+                            .put("webhook-signature", "v1,$webhookSignature")
+                            .build(),
+                        null,
+                    )
+            }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("Webhook timestamp too old")
+
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", "1676312742")
+                            .put("webhook-signature", "v1,$webhookSignature")
+                            .build(),
+                        null,
+                    )
+            }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("Webhook timestamp too new")
+
+        assertThatThrownBy { client.webhooks().verifySignature(payload, headers, "invalid-secret") }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("Invalid webhook secret")
+
+        assertThatThrownBy { client.webhooks().verifySignature(payload, headers, "Zm9v") }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("None of the given webhook signatures match the expected signature")
+
+        assertThatCode {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", webhookTimestamp)
+                            .put("webhook-signature", "v1,$webhookSignature v1,Zm9v")
+                            .build(),
+                        null,
+                    )
+            }
+            .doesNotThrowAnyException()
+
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", webhookTimestamp)
+                            .put("webhook-signature", "v2,$webhookSignature")
+                            .build(),
+                        null,
+                    )
+            }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("None of the given webhook signatures match the expected signature")
+
+        assertThatCode {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", webhookTimestamp)
+                            .put("webhook-signature", "v1,$webhookSignature v2,$webhookSignature")
+                            .build(),
+                        null,
+                    )
+            }
+            .doesNotThrowAnyException()
+
+        assertThatThrownBy {
+                client
+                    .webhooks()
+                    .verifySignature(
+                        payload,
+                        Headers.builder()
+                            .put("webhook-id", webhookId)
+                            .put("webhook-timestamp", webhookTimestamp)
+                            .put("webhook-signature", webhookSignature)
+                            .build(),
+                        null,
+                    )
+            }
+            .isInstanceOf(LithicException::class.java)
+            .hasMessage("None of the given webhook signatures match the expected signature")
     }
 }
