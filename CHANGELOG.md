@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.117.0 (2026-02-19)
+
+Full Changelog: [v0.116.0...v0.117.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.116.0...v0.117.0)
+
+### Features
+
+* **api:** Add INTEREST_AND_FEES_PAUSED substatus to financial account ([ac9e7d7](https://github.com/lithic-com/lithic-kotlin/commit/ac9e7d776ea7385a49bf2710e3ef4ec947e49610))
+
 ## 0.116.0 (2026-02-19)
 
 Full Changelog: [v0.115.0...v0.116.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.115.0...v0.116.0)
