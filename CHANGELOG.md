@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.116.0 (2026-02-19)
+
+Full Changelog: [v0.115.0...v0.116.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.115.0...v0.116.0)
+
+### Features
+
+* **api:** Add /v2/auth_rules/results endpoint for listing rule evaluation data ([14cb34e](https://github.com/lithic-com/lithic-kotlin/commit/14cb34e8dcc353efee994ce9f7a3729ac63fdb78))
+* **api:** Add amounts object to ASA request ([b72e898](https://github.com/lithic-com/lithic-kotlin/commit/b72e898527fdd81684610a4817fa9cd7db8609de))
+* **api:** Add hold token field to book transfers ([d201c6c](https://github.com/lithic-com/lithic-kotlin/commit/d201c6c3bcef9dd94c8e56d25594c9e733f79ebe))
+* **api:** Add naics_code to account holder requests/responses ([ff7f410](https://github.com/lithic-com/lithic-kotlin/commit/ff7f41021613714e9a06f43b2e9c88faf9eb907b))
+* **api:** Add network specific wallet recommendation reasons ([76ba15e](https://github.com/lithic-com/lithic-kotlin/commit/76ba15e254f5acc547275321d9ec4f7281e558ab))
+* **api:** Add PENDING_REVIEW status to KYB enrollment simulation ([2d4e047](https://github.com/lithic-com/lithic-kotlin/commit/2d4e047a6ad05286fcf5a632288ce118eea8ffa2))
+* **api:** Add result schemas for Authorization and Authentication (3DS) actions ([9ad5935](https://github.com/lithic-com/lithic-kotlin/commit/9ad5935a0124f217e4f5c7bd5f0ef543652e22ef))
+* **api:** add webhook signature verification ([a12d878](https://github.com/lithic-com/lithic-kotlin/commit/a12d878993c0bc6fedbcb6e1f00bd2a80728429f))
+* **client:** add connection pooling option ([04342ca](https://github.com/lithic-com/lithic-kotlin/commit/04342ca32302c19903ddc8eec7971247e5dea46a))
+* **client:** add more convenience service method overloads ([b9c18e3](https://github.com/lithic-com/lithic-kotlin/commit/b9c18e3c2ad64b41ecdf1e6b59191c59cd5cf0a6))
+
+
+### Bug Fixes
+
+* add missing fields ([9705a62](https://github.com/lithic-com/lithic-kotlin/commit/9705a6223dd05857ab10c9cf5a7d2982723a9b58))
+* **api:** Update /v2/auth_rules/results endpoint parameter naming and action types ([a0b1b3f](https://github.com/lithic-com/lithic-kotlin/commit/a0b1b3fa86ae0c40adac05d04c32373a514fdc60))
+* **client:** mark request body as required ([dba8909](https://github.com/lithic-com/lithic-kotlin/commit/dba89095bf1d022b31e3e46a906e9b6ba3372f0e))
+
+
+### Chores
+
+* configure new SDK language ([2a331ff](https://github.com/lithic-com/lithic-kotlin/commit/2a331ff00742f6b2cacbb9d0266f4097c867c775))
+* Enable stainless MCP in config ([af983f0](https://github.com/lithic-com/lithic-kotlin/commit/af983f09098c626187fcb4e37670a2fb0dd238f1))
+* **internal:** allow passing args to `./scripts/test` ([0cc4e68](https://github.com/lithic-com/lithic-kotlin/commit/0cc4e6855347b6e1db33512f53be65eb907833d9))
+* **internal:** make `OkHttp` constructor internal ([3e0a6bd](https://github.com/lithic-com/lithic-kotlin/commit/3e0a6bd124b013d313200cf767c7afb445affc9a))
+* **internal:** remove unnecessary base URL ([3221c66](https://github.com/lithic-com/lithic-kotlin/commit/3221c662d73b00b1e5013cbae87dc9cb045bdeb4))
+* **internal:** update `TestServerExtension` comment ([65db518](https://github.com/lithic-com/lithic-kotlin/commit/65db518f8047290b1d2cd93183e6a9504c072309))
+* **internal:** upgrade AssertJ ([cb4f566](https://github.com/lithic-com/lithic-kotlin/commit/cb4f566aab5de6b5a8b9744c6e5678c27e776e26))
+
+
+### Documentation
+
+* Fix documentation of tokenization channel and tokenization source for tokenization rules ([bce5179](https://github.com/lithic-com/lithic-kotlin/commit/bce517978323e9001834e5ca6fd438609fdf0034))
+
 ## 0.115.0 (2026-01-27)
 
 Full Changelog: [v0.114.0...v0.115.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.114.0...v0.115.0)
