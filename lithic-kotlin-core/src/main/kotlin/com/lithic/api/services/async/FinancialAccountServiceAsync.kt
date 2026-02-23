@@ -18,6 +18,8 @@ import com.lithic.api.models.FinancialAccountUpdateStatusParams
 import com.lithic.api.services.async.financialAccounts.BalanceServiceAsync
 import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsync
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
+import com.lithic.api.services.async.financialAccounts.InterestTierScheduleServiceAsync
+import com.lithic.api.services.async.financialAccounts.LoanTapeConfigurationServiceAsync
 import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsync
 import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
 
@@ -44,6 +46,10 @@ interface FinancialAccountServiceAsync {
     fun statements(): StatementServiceAsync
 
     fun loanTapes(): LoanTapeServiceAsync
+
+    fun loanTapeConfiguration(): LoanTapeConfigurationServiceAsync
+
+    fun interestTierSchedule(): InterestTierScheduleServiceAsync
 
     /** Create a new financial account */
     suspend fun create(
@@ -167,6 +173,10 @@ interface FinancialAccountServiceAsync {
         fun statements(): StatementServiceAsync.WithRawResponse
 
         fun loanTapes(): LoanTapeServiceAsync.WithRawResponse
+
+        fun loanTapeConfiguration(): LoanTapeConfigurationServiceAsync.WithRawResponse
+
+        fun interestTierSchedule(): InterestTierScheduleServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /v1/financial_accounts`, but is otherwise the same

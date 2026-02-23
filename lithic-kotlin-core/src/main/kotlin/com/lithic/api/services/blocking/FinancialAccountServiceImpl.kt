@@ -32,6 +32,10 @@ import com.lithic.api.services.blocking.financialAccounts.CreditConfigurationSer
 import com.lithic.api.services.blocking.financialAccounts.CreditConfigurationServiceImpl
 import com.lithic.api.services.blocking.financialAccounts.FinancialTransactionService
 import com.lithic.api.services.blocking.financialAccounts.FinancialTransactionServiceImpl
+import com.lithic.api.services.blocking.financialAccounts.InterestTierScheduleService
+import com.lithic.api.services.blocking.financialAccounts.InterestTierScheduleServiceImpl
+import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationService
+import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationServiceImpl
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeServiceImpl
 import com.lithic.api.services.blocking.financialAccounts.StatementService
@@ -58,6 +62,14 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
 
     private val loanTapes: LoanTapeService by lazy { LoanTapeServiceImpl(clientOptions) }
 
+    private val loanTapeConfiguration: LoanTapeConfigurationService by lazy {
+        LoanTapeConfigurationServiceImpl(clientOptions)
+    }
+
+    private val interestTierSchedule: InterestTierScheduleService by lazy {
+        InterestTierScheduleServiceImpl(clientOptions)
+    }
+
     override fun withRawResponse(): FinancialAccountService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FinancialAccountService =
@@ -72,6 +84,10 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
     override fun statements(): StatementService = statements
 
     override fun loanTapes(): LoanTapeService = loanTapes
+
+    override fun loanTapeConfiguration(): LoanTapeConfigurationService = loanTapeConfiguration
+
+    override fun interestTierSchedule(): InterestTierScheduleService = interestTierSchedule
 
     override fun create(
         params: FinancialAccountCreateParams,
@@ -142,6 +158,14 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
             LoanTapeServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val loanTapeConfiguration: LoanTapeConfigurationService.WithRawResponse by lazy {
+            LoanTapeConfigurationServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val interestTierSchedule: InterestTierScheduleService.WithRawResponse by lazy {
+            InterestTierScheduleServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): FinancialAccountService.WithRawResponse =
@@ -160,6 +184,12 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
         override fun statements(): StatementService.WithRawResponse = statements
 
         override fun loanTapes(): LoanTapeService.WithRawResponse = loanTapes
+
+        override fun loanTapeConfiguration(): LoanTapeConfigurationService.WithRawResponse =
+            loanTapeConfiguration
+
+        override fun interestTierSchedule(): InterestTierScheduleService.WithRawResponse =
+            interestTierSchedule
 
         private val createHandler: Handler<FinancialAccount> =
             jsonHandler<FinancialAccount>(clientOptions.jsonMapper)
