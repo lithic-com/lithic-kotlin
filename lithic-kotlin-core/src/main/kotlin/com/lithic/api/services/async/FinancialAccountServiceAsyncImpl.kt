@@ -32,6 +32,10 @@ import com.lithic.api.services.async.financialAccounts.CreditConfigurationServic
 import com.lithic.api.services.async.financialAccounts.CreditConfigurationServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsync
 import com.lithic.api.services.async.financialAccounts.FinancialTransactionServiceAsyncImpl
+import com.lithic.api.services.async.financialAccounts.InterestTierScheduleServiceAsync
+import com.lithic.api.services.async.financialAccounts.InterestTierScheduleServiceAsyncImpl
+import com.lithic.api.services.async.financialAccounts.LoanTapeConfigurationServiceAsync
+import com.lithic.api.services.async.financialAccounts.LoanTapeConfigurationServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsync
 import com.lithic.api.services.async.financialAccounts.LoanTapeServiceAsyncImpl
 import com.lithic.api.services.async.financialAccounts.StatementServiceAsync
@@ -60,6 +64,14 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
 
     private val loanTapes: LoanTapeServiceAsync by lazy { LoanTapeServiceAsyncImpl(clientOptions) }
 
+    private val loanTapeConfiguration: LoanTapeConfigurationServiceAsync by lazy {
+        LoanTapeConfigurationServiceAsyncImpl(clientOptions)
+    }
+
+    private val interestTierSchedule: InterestTierScheduleServiceAsync by lazy {
+        InterestTierScheduleServiceAsyncImpl(clientOptions)
+    }
+
     override fun withRawResponse(): FinancialAccountServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(
@@ -76,6 +88,10 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
     override fun statements(): StatementServiceAsync = statements
 
     override fun loanTapes(): LoanTapeServiceAsync = loanTapes
+
+    override fun loanTapeConfiguration(): LoanTapeConfigurationServiceAsync = loanTapeConfiguration
+
+    override fun interestTierSchedule(): InterestTierScheduleServiceAsync = interestTierSchedule
 
     override suspend fun create(
         params: FinancialAccountCreateParams,
@@ -147,6 +163,15 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
             LoanTapeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val loanTapeConfiguration:
+            LoanTapeConfigurationServiceAsync.WithRawResponse by lazy {
+            LoanTapeConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val interestTierSchedule: InterestTierScheduleServiceAsync.WithRawResponse by lazy {
+            InterestTierScheduleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): FinancialAccountServiceAsync.WithRawResponse =
@@ -165,6 +190,12 @@ internal constructor(private val clientOptions: ClientOptions) : FinancialAccoun
         override fun statements(): StatementServiceAsync.WithRawResponse = statements
 
         override fun loanTapes(): LoanTapeServiceAsync.WithRawResponse = loanTapes
+
+        override fun loanTapeConfiguration(): LoanTapeConfigurationServiceAsync.WithRawResponse =
+            loanTapeConfiguration
+
+        override fun interestTierSchedule(): InterestTierScheduleServiceAsync.WithRawResponse =
+            interestTierSchedule
 
         private val createHandler: Handler<FinancialAccount> =
             jsonHandler<FinancialAccount>(clientOptions.jsonMapper)
