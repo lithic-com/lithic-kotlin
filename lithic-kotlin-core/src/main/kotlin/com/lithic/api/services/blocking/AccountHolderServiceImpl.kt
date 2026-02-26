@@ -33,6 +33,8 @@ import com.lithic.api.models.AccountHolderUpdateParams
 import com.lithic.api.models.AccountHolderUpdateResponse
 import com.lithic.api.models.AccountHolderUploadDocumentParams
 import com.lithic.api.models.Document
+import com.lithic.api.services.blocking.accountHolders.EntityService
+import com.lithic.api.services.blocking.accountHolders.EntityServiceImpl
 import java.time.Duration
 
 class AccountHolderServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -42,10 +44,14 @@ class AccountHolderServiceImpl internal constructor(private val clientOptions: C
         WithRawResponseImpl(clientOptions)
     }
 
+    private val entities: EntityService by lazy { EntityServiceImpl(clientOptions) }
+
     override fun withRawResponse(): AccountHolderService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AccountHolderService =
         AccountHolderServiceImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun entities(): EntityService = entities
 
     override fun create(
         params: AccountHolderCreateParams,
@@ -116,12 +122,18 @@ class AccountHolderServiceImpl internal constructor(private val clientOptions: C
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
+        private val entities: EntityService.WithRawResponse by lazy {
+            EntityServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): AccountHolderService.WithRawResponse =
             AccountHolderServiceImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        override fun entities(): EntityService.WithRawResponse = entities
 
         private val createHandler: Handler<AccountHolderCreateResponse> =
             jsonHandler<AccountHolderCreateResponse>(clientOptions.jsonMapper)
