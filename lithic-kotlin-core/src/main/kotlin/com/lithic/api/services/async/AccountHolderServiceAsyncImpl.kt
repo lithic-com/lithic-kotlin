@@ -33,6 +33,8 @@ import com.lithic.api.models.AccountHolderUpdateParams
 import com.lithic.api.models.AccountHolderUpdateResponse
 import com.lithic.api.models.AccountHolderUploadDocumentParams
 import com.lithic.api.models.Document
+import com.lithic.api.services.async.accountHolders.EntityServiceAsync
+import com.lithic.api.services.async.accountHolders.EntityServiceAsyncImpl
 import java.time.Duration
 
 class AccountHolderServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -42,10 +44,14 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
         WithRawResponseImpl(clientOptions)
     }
 
+    private val entities: EntityServiceAsync by lazy { EntityServiceAsyncImpl(clientOptions) }
+
     override fun withRawResponse(): AccountHolderServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: (ClientOptions.Builder) -> Unit): AccountHolderServiceAsync =
         AccountHolderServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun entities(): EntityServiceAsync = entities
 
     override suspend fun create(
         params: AccountHolderCreateParams,
@@ -116,12 +122,18 @@ class AccountHolderServiceAsyncImpl internal constructor(private val clientOptio
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
+        private val entities: EntityServiceAsync.WithRawResponse by lazy {
+            EntityServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): AccountHolderServiceAsync.WithRawResponse =
             AccountHolderServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        override fun entities(): EntityServiceAsync.WithRawResponse = entities
 
         private val createHandler: Handler<AccountHolderCreateResponse> =
             jsonHandler<AccountHolderCreateResponse>(clientOptions.jsonMapper)
