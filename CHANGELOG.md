@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.117.0 (2026-02-27)
+
+Full Changelog: [v0.116.0...v0.117.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.116.0...v0.117.0)
+
+### Features
+
+* **api:** Add account holder entity endpoints ([94d8809](https://github.com/lithic-com/lithic-kotlin/commit/94d880928dfa389e65e697339c0b975396491c85))
+* **api:** Add INTEREST_AND_FEES_PAUSED substatus to financial account ([ac9e7d7](https://github.com/lithic-com/lithic-kotlin/commit/ac9e7d776ea7385a49bf2710e3ef4ec947e49610))
+* **api:** Expose MIL interest schedules and loan tape configuration endpoints ([e3469eb](https://github.com/lithic-com/lithic-kotlin/commit/e3469eba3662f583dc50c134d582cf22406ea877))
+
+
+### Bug Fixes
+
+* **api:** Correct token_metadata field name in tokenization.approval_request schema ([e895300](https://github.com/lithic-com/lithic-kotlin/commit/e89530040756b3221995308ac43c842e7b6ac2dc))
+* set Accept header in more places ([66b3b02](https://github.com/lithic-com/lithic-kotlin/commit/66b3b0281b3298b715a21eb6879dea712276a81b))
+
+
+### Chores
+
+* drop apache dependency ([b77114b](https://github.com/lithic-com/lithic-kotlin/commit/b77114b24dd6e5e318300a35b706bfd5153e0a58))
+* fix card embed endpoints after removing apache dependency ([5e462bc](https://github.com/lithic-com/lithic-kotlin/commit/5e462bcb8d2208e1fabecc3c5cfcb1209498234d))
+* fix card embed endpoints after removing apache dependency ([4f6bce2](https://github.com/lithic-com/lithic-kotlin/commit/4f6bce2f9108bef8072399582069813cd0cbe320))
+* fix card embed endpoints after removing apache dependency [#1373](https://github.com/lithic-com/lithic-kotlin/issues/1373) ([5e462bc](https://github.com/lithic-com/lithic-kotlin/commit/5e462bcb8d2208e1fabecc3c5cfcb1209498234d))
+* **internal:** expand imports ([8d2083a](https://github.com/lithic-com/lithic-kotlin/commit/8d2083acc02e9293afc572c592ddd2606dfff6a4))
+* make `Properties` more resilient to `null` ([64a87b4](https://github.com/lithic-com/lithic-kotlin/commit/64a87b460a07657329aa7a057e5ecca000424483))
+
+
+### Documentation
+
+* Remove CONDITIONAL_BLOCK from docs ([27bdb11](https://github.com/lithic-com/lithic-kotlin/commit/27bdb11805efa9e61d060e3b1657a9da4b15ddc4))
+
 ## 0.116.0 (2026-02-19)
 
 Full Changelog: [v0.115.0...v0.116.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.115.0...v0.116.0)
