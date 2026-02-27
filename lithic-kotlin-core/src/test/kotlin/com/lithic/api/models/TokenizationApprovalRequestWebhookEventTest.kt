@@ -33,6 +33,26 @@ internal class TokenizationApprovalRequestWebhookEventTest {
                     TokenizationApprovalRequestWebhookEvent.EventType.TOKENIZATION_APPROVAL_REQUEST
                 )
                 .issuerDecision(TokenizationApprovalRequestWebhookEvent.IssuerDecision.APPROVED)
+                .tokenMetadata(
+                    TokenMetadata.builder()
+                        .paymentAccountInfo(
+                            TokenMetadata.PaymentAccountInfo.builder()
+                                .accountHolderData(
+                                    TokenMetadata.PaymentAccountInfo.AccountHolderData.builder()
+                                        .phoneNumber("phone_number")
+                                        .build()
+                                )
+                                .panUniqueReference("pan_unique_reference")
+                                .paymentAccountReference("payment_account_reference")
+                                .tokenUniqueReference("token_unique_reference")
+                                .build()
+                        )
+                        .status("status")
+                        .paymentAppInstanceId("payment_app_instance_id")
+                        .tokenRequestorId("xxxxxxxxxxx")
+                        .tokenRequestorName(TokenMetadata.TokenRequestorName.APPLE_PAY)
+                        .build()
+                )
                 .tokenizationChannel(
                     TokenizationApprovalRequestWebhookEvent.TokenizationChannel.DIGITAL_WALLET
                 )
@@ -50,27 +70,6 @@ internal class TokenizationApprovalRequestWebhookEventTest {
                         .imei("123456789012345")
                         .ipAddress("1.1.1.1")
                         .location("37.3860517/-122.0838511")
-                        .build()
-                )
-                .digitalWalletTokenMetadata(
-                    DigitalWalletTokenMetadata.builder()
-                        .paymentAccountInfo(
-                            DigitalWalletTokenMetadata.PaymentAccountInfo.builder()
-                                .accountHolderData(
-                                    DigitalWalletTokenMetadata.PaymentAccountInfo.AccountHolderData
-                                        .builder()
-                                        .phoneNumber("phone_number")
-                                        .build()
-                                )
-                                .panUniqueReference("pan_unique_reference")
-                                .paymentAccountReference("payment_account_reference")
-                                .tokenUniqueReference("token_unique_reference")
-                                .build()
-                        )
-                        .status("status")
-                        .paymentAppInstanceId("payment_app_instance_id")
-                        .tokenRequestorId("xxxxxxxxxxx")
-                        .tokenRequestorName(DigitalWalletTokenMetadata.TokenRequestorName.APPLE_PAY)
                         .build()
                 )
                 .addRuleResult(
@@ -112,6 +111,27 @@ internal class TokenizationApprovalRequestWebhookEventTest {
             )
         assertThat(tokenizationApprovalRequestWebhookEvent.issuerDecision())
             .isEqualTo(TokenizationApprovalRequestWebhookEvent.IssuerDecision.APPROVED)
+        assertThat(tokenizationApprovalRequestWebhookEvent.tokenMetadata())
+            .isEqualTo(
+                TokenMetadata.builder()
+                    .paymentAccountInfo(
+                        TokenMetadata.PaymentAccountInfo.builder()
+                            .accountHolderData(
+                                TokenMetadata.PaymentAccountInfo.AccountHolderData.builder()
+                                    .phoneNumber("phone_number")
+                                    .build()
+                            )
+                            .panUniqueReference("pan_unique_reference")
+                            .paymentAccountReference("payment_account_reference")
+                            .tokenUniqueReference("token_unique_reference")
+                            .build()
+                    )
+                    .status("status")
+                    .paymentAppInstanceId("payment_app_instance_id")
+                    .tokenRequestorId("xxxxxxxxxxx")
+                    .tokenRequestorName(TokenMetadata.TokenRequestorName.APPLE_PAY)
+                    .build()
+            )
         assertThat(tokenizationApprovalRequestWebhookEvent.tokenizationChannel())
             .isEqualTo(TokenizationApprovalRequestWebhookEvent.TokenizationChannel.DIGITAL_WALLET)
         assertThat(tokenizationApprovalRequestWebhookEvent.tokenizationToken())
@@ -131,28 +151,6 @@ internal class TokenizationApprovalRequestWebhookEventTest {
                     .imei("123456789012345")
                     .ipAddress("1.1.1.1")
                     .location("37.3860517/-122.0838511")
-                    .build()
-            )
-        assertThat(tokenizationApprovalRequestWebhookEvent.digitalWalletTokenMetadata())
-            .isEqualTo(
-                DigitalWalletTokenMetadata.builder()
-                    .paymentAccountInfo(
-                        DigitalWalletTokenMetadata.PaymentAccountInfo.builder()
-                            .accountHolderData(
-                                DigitalWalletTokenMetadata.PaymentAccountInfo.AccountHolderData
-                                    .builder()
-                                    .phoneNumber("phone_number")
-                                    .build()
-                            )
-                            .panUniqueReference("pan_unique_reference")
-                            .paymentAccountReference("payment_account_reference")
-                            .tokenUniqueReference("token_unique_reference")
-                            .build()
-                    )
-                    .status("status")
-                    .paymentAppInstanceId("payment_app_instance_id")
-                    .tokenRequestorId("xxxxxxxxxxx")
-                    .tokenRequestorName(DigitalWalletTokenMetadata.TokenRequestorName.APPLE_PAY)
                     .build()
             )
         assertThat(tokenizationApprovalRequestWebhookEvent.ruleResults())
@@ -196,6 +194,26 @@ internal class TokenizationApprovalRequestWebhookEventTest {
                     TokenizationApprovalRequestWebhookEvent.EventType.TOKENIZATION_APPROVAL_REQUEST
                 )
                 .issuerDecision(TokenizationApprovalRequestWebhookEvent.IssuerDecision.APPROVED)
+                .tokenMetadata(
+                    TokenMetadata.builder()
+                        .paymentAccountInfo(
+                            TokenMetadata.PaymentAccountInfo.builder()
+                                .accountHolderData(
+                                    TokenMetadata.PaymentAccountInfo.AccountHolderData.builder()
+                                        .phoneNumber("phone_number")
+                                        .build()
+                                )
+                                .panUniqueReference("pan_unique_reference")
+                                .paymentAccountReference("payment_account_reference")
+                                .tokenUniqueReference("token_unique_reference")
+                                .build()
+                        )
+                        .status("status")
+                        .paymentAppInstanceId("payment_app_instance_id")
+                        .tokenRequestorId("xxxxxxxxxxx")
+                        .tokenRequestorName(TokenMetadata.TokenRequestorName.APPLE_PAY)
+                        .build()
+                )
                 .tokenizationChannel(
                     TokenizationApprovalRequestWebhookEvent.TokenizationChannel.DIGITAL_WALLET
                 )
@@ -213,27 +231,6 @@ internal class TokenizationApprovalRequestWebhookEventTest {
                         .imei("123456789012345")
                         .ipAddress("1.1.1.1")
                         .location("37.3860517/-122.0838511")
-                        .build()
-                )
-                .digitalWalletTokenMetadata(
-                    DigitalWalletTokenMetadata.builder()
-                        .paymentAccountInfo(
-                            DigitalWalletTokenMetadata.PaymentAccountInfo.builder()
-                                .accountHolderData(
-                                    DigitalWalletTokenMetadata.PaymentAccountInfo.AccountHolderData
-                                        .builder()
-                                        .phoneNumber("phone_number")
-                                        .build()
-                                )
-                                .panUniqueReference("pan_unique_reference")
-                                .paymentAccountReference("payment_account_reference")
-                                .tokenUniqueReference("token_unique_reference")
-                                .build()
-                        )
-                        .status("status")
-                        .paymentAppInstanceId("payment_app_instance_id")
-                        .tokenRequestorId("xxxxxxxxxxx")
-                        .tokenRequestorName(DigitalWalletTokenMetadata.TokenRequestorName.APPLE_PAY)
                         .build()
                 )
                 .addRuleResult(
