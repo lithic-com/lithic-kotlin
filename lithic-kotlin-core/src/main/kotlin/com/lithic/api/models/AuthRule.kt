@@ -188,7 +188,8 @@ private constructor(
      * The type of Auth Rule. For certain rule types, this determines the event stream during which
      * it will be evaluated. For rules that can be applied to one of several event streams, the
      * effective one is defined by the separate `event_stream` field.
-     * - `CONDITIONAL_BLOCK`: AUTHORIZATION event stream.
+     * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION event
+     *   stream.
      * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
      * - `MERCHANT_LOCK`: AUTHORIZATION event stream.
      * - `CONDITIONAL_ACTION`: AUTHORIZATION, THREE_DS_AUTHENTICATION, TOKENIZATION,
@@ -579,7 +580,8 @@ private constructor(
          * The type of Auth Rule. For certain rule types, this determines the event stream during
          * which it will be evaluated. For rules that can be applied to one of several event
          * streams, the effective one is defined by the separate `event_stream` field.
-         * - `CONDITIONAL_BLOCK`: AUTHORIZATION event stream.
+         * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION event
+         *   stream.
          * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
          * - `MERCHANT_LOCK`: AUTHORIZATION event stream.
          * - `CONDITIONAL_ACTION`: AUTHORIZATION, THREE_DS_AUTHENTICATION, TOKENIZATION,
@@ -842,6 +844,7 @@ private constructor(
              * Alias for calling [parameters] with
              * `Parameters.ofConditionalBlock(conditionalBlock)`.
              */
+            @Deprecated("deprecated")
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
@@ -990,6 +993,8 @@ private constructor(
             private val _json: JsonValue? = null,
         ) {
 
+            /** Deprecated: Use CONDITIONAL_ACTION instead. */
+            @Deprecated("deprecated")
             fun conditionalBlock(): ConditionalBlockParameters? = conditionalBlock
 
             fun velocityLimitParams(): VelocityLimitParams? = velocityLimitParams
@@ -1006,7 +1011,7 @@ private constructor(
             fun conditionalTokenizationAction(): ConditionalTokenizationActionParameters? =
                 conditionalTokenizationAction
 
-            fun isConditionalBlock(): Boolean = conditionalBlock != null
+            @Deprecated("deprecated") fun isConditionalBlock(): Boolean = conditionalBlock != null
 
             fun isVelocityLimitParams(): Boolean = velocityLimitParams != null
 
@@ -1020,6 +1025,8 @@ private constructor(
 
             fun isConditionalTokenizationAction(): Boolean = conditionalTokenizationAction != null
 
+            /** Deprecated: Use CONDITIONAL_ACTION instead. */
+            @Deprecated("deprecated")
             fun asConditionalBlock(): ConditionalBlockParameters =
                 conditionalBlock.getOrThrow("conditionalBlock")
 
@@ -1206,6 +1213,8 @@ private constructor(
 
             companion object {
 
+                /** Deprecated: Use CONDITIONAL_ACTION instead. */
+                @Deprecated("deprecated")
                 fun ofConditionalBlock(conditionalBlock: ConditionalBlockParameters) =
                     Parameters(conditionalBlock = conditionalBlock)
 
@@ -1236,6 +1245,8 @@ private constructor(
              */
             interface Visitor<out T> {
 
+                /** Deprecated: Use CONDITIONAL_ACTION instead. */
+                @Deprecated("deprecated")
                 fun visitConditionalBlock(conditionalBlock: ConditionalBlockParameters): T
 
                 fun visitVelocityLimitParams(velocityLimitParams: VelocityLimitParams): T
@@ -1485,6 +1496,7 @@ private constructor(
              * Alias for calling [parameters] with
              * `Parameters.ofConditionalBlock(conditionalBlock)`.
              */
+            @Deprecated("deprecated")
             fun parameters(conditionalBlock: ConditionalBlockParameters) =
                 parameters(Parameters.ofConditionalBlock(conditionalBlock))
 
@@ -1633,6 +1645,8 @@ private constructor(
             private val _json: JsonValue? = null,
         ) {
 
+            /** Deprecated: Use CONDITIONAL_ACTION instead. */
+            @Deprecated("deprecated")
             fun conditionalBlock(): ConditionalBlockParameters? = conditionalBlock
 
             fun velocityLimitParams(): VelocityLimitParams? = velocityLimitParams
@@ -1649,7 +1663,7 @@ private constructor(
             fun conditionalTokenizationAction(): ConditionalTokenizationActionParameters? =
                 conditionalTokenizationAction
 
-            fun isConditionalBlock(): Boolean = conditionalBlock != null
+            @Deprecated("deprecated") fun isConditionalBlock(): Boolean = conditionalBlock != null
 
             fun isVelocityLimitParams(): Boolean = velocityLimitParams != null
 
@@ -1663,6 +1677,8 @@ private constructor(
 
             fun isConditionalTokenizationAction(): Boolean = conditionalTokenizationAction != null
 
+            /** Deprecated: Use CONDITIONAL_ACTION instead. */
+            @Deprecated("deprecated")
             fun asConditionalBlock(): ConditionalBlockParameters =
                 conditionalBlock.getOrThrow("conditionalBlock")
 
@@ -1849,6 +1865,8 @@ private constructor(
 
             companion object {
 
+                /** Deprecated: Use CONDITIONAL_ACTION instead. */
+                @Deprecated("deprecated")
                 fun ofConditionalBlock(conditionalBlock: ConditionalBlockParameters) =
                     Parameters(conditionalBlock = conditionalBlock)
 
@@ -1879,6 +1897,8 @@ private constructor(
              */
             interface Visitor<out T> {
 
+                /** Deprecated: Use CONDITIONAL_ACTION instead. */
+                @Deprecated("deprecated")
                 fun visitConditionalBlock(conditionalBlock: ConditionalBlockParameters): T
 
                 fun visitVelocityLimitParams(velocityLimitParams: VelocityLimitParams): T
@@ -2157,7 +2177,8 @@ private constructor(
      * The type of Auth Rule. For certain rule types, this determines the event stream during which
      * it will be evaluated. For rules that can be applied to one of several event streams, the
      * effective one is defined by the separate `event_stream` field.
-     * - `CONDITIONAL_BLOCK`: AUTHORIZATION event stream.
+     * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION event
+     *   stream.
      * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
      * - `MERCHANT_LOCK`: AUTHORIZATION event stream.
      * - `CONDITIONAL_ACTION`: AUTHORIZATION, THREE_DS_AUTHENTICATION, TOKENIZATION,

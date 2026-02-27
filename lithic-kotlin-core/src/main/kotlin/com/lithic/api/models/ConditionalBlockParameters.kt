@@ -17,6 +17,8 @@ import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
 import java.util.Objects
 
+/** Deprecated: Use CONDITIONAL_ACTION instead. */
+@Deprecated("deprecated")
 class ConditionalBlockParameters
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
