@@ -73,6 +73,14 @@ private constructor(
     fun token(): String? = body.token()
 
     /**
+     * Optional hold to settle when this payment is initiated.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun hold(): Hold? = body.hold()
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -135,6 +143,13 @@ private constructor(
      * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _token(): JsonField<String> = body._token()
+
+    /**
+     * Returns the raw JSON value of [hold].
+     *
+     * Unlike [hold], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _hold(): JsonField<Hold> = body._hold()
 
     /**
      * Returns the raw JSON value of [memo].
@@ -293,6 +308,17 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun token(token: JsonField<String>) = apply { body.token(token) }
+
+        /** Optional hold to settle when this payment is initiated. */
+        fun hold(hold: Hold) = apply { body.hold(hold) }
+
+        /**
+         * Sets [Builder.hold] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.hold] with a well-typed [Hold] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun hold(hold: JsonField<Hold>) = apply { body.hold(hold) }
 
         fun memo(memo: String) = apply { body.memo(memo) }
 
@@ -475,6 +501,7 @@ private constructor(
         private val methodAttributes: JsonField<PaymentMethodRequestAttributes>,
         private val type: JsonField<Type>,
         private val token: JsonField<String>,
+        private val hold: JsonField<Hold>,
         private val memo: JsonField<String>,
         private val userDefinedId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -495,6 +522,7 @@ private constructor(
             methodAttributes: JsonField<PaymentMethodRequestAttributes> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("hold") @ExcludeMissing hold: JsonField<Hold> = JsonMissing.of(),
             @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
             @JsonProperty("user_defined_id")
             @ExcludeMissing
@@ -507,6 +535,7 @@ private constructor(
             methodAttributes,
             type,
             token,
+            hold,
             memo,
             userDefinedId,
             mutableMapOf(),
@@ -559,6 +588,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun token(): String? = token.getNullable("token")
+
+        /**
+         * Optional hold to settle when this payment is initiated.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun hold(): Hold? = hold.getNullable("hold")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -631,6 +668,13 @@ private constructor(
         @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
 
         /**
+         * Returns the raw JSON value of [hold].
+         *
+         * Unlike [hold], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("hold") @ExcludeMissing fun _hold(): JsonField<Hold> = hold
+
+        /**
          * Returns the raw JSON value of [memo].
          *
          * Unlike [memo], this method doesn't throw if the JSON field has an unexpected type.
@@ -687,6 +731,7 @@ private constructor(
             private var methodAttributes: JsonField<PaymentMethodRequestAttributes>? = null
             private var type: JsonField<Type>? = null
             private var token: JsonField<String> = JsonMissing.of()
+            private var hold: JsonField<Hold> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
             private var userDefinedId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -699,6 +744,7 @@ private constructor(
                 methodAttributes = createPaymentRequest.methodAttributes
                 type = createPaymentRequest.type
                 token = createPaymentRequest.token
+                hold = createPaymentRequest.hold
                 memo = createPaymentRequest.memo
                 userDefinedId = createPaymentRequest.userDefinedId
                 additionalProperties = createPaymentRequest.additionalProperties.toMutableMap()
@@ -795,6 +841,18 @@ private constructor(
              */
             fun token(token: JsonField<String>) = apply { this.token = token }
 
+            /** Optional hold to settle when this payment is initiated. */
+            fun hold(hold: Hold) = hold(JsonField.of(hold))
+
+            /**
+             * Sets [Builder.hold] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.hold] with a well-typed [Hold] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun hold(hold: JsonField<Hold>) = apply { this.hold = hold }
+
             fun memo(memo: String) = memo(JsonField.of(memo))
 
             /**
@@ -864,6 +922,7 @@ private constructor(
                     checkRequired("methodAttributes", methodAttributes),
                     checkRequired("type", type),
                     token,
+                    hold,
                     memo,
                     userDefinedId,
                     additionalProperties.toMutableMap(),
@@ -884,6 +943,7 @@ private constructor(
             methodAttributes().validate()
             type().validate()
             token()
+            hold()?.validate()
             memo()
             userDefinedId()
             validated = true
@@ -911,6 +971,7 @@ private constructor(
                 (methodAttributes.asKnown()?.validity() ?: 0) +
                 (type.asKnown()?.validity() ?: 0) +
                 (if (token.asKnown() == null) 0 else 1) +
+                (hold.asKnown()?.validity() ?: 0) +
                 (if (memo.asKnown() == null) 0 else 1) +
                 (if (userDefinedId.asKnown() == null) 0 else 1)
 
@@ -927,6 +988,7 @@ private constructor(
                 methodAttributes == other.methodAttributes &&
                 type == other.type &&
                 token == other.token &&
+                hold == other.hold &&
                 memo == other.memo &&
                 userDefinedId == other.userDefinedId &&
                 additionalProperties == other.additionalProperties
@@ -941,6 +1003,7 @@ private constructor(
                 methodAttributes,
                 type,
                 token,
+                hold,
                 memo,
                 userDefinedId,
                 additionalProperties,
@@ -950,7 +1013,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreatePaymentRequest{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+            "CreatePaymentRequest{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, hold=$hold, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
     class Method @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1572,6 +1635,161 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
+    }
+
+    /** Optional hold to settle when this payment is initiated. */
+    class Hold
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val token: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of()
+        ) : this(token, mutableMapOf())
+
+        /**
+         * Token of the hold to settle when this payment is initiated.
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun token(): String = token.getRequired("token")
+
+        /**
+         * Returns the raw JSON value of [token].
+         *
+         * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [Hold].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Hold]. */
+        class Builder internal constructor() {
+
+            private var token: JsonField<String>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(hold: Hold) = apply {
+                token = hold.token
+                additionalProperties = hold.additionalProperties.toMutableMap()
+            }
+
+            /** Token of the hold to settle when this payment is initiated. */
+            fun token(token: String) = token(JsonField.of(token))
+
+            /**
+             * Sets [Builder.token] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.token] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun token(token: JsonField<String>) = apply { this.token = token }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [Hold].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): Hold =
+                Hold(checkRequired("token", token), additionalProperties.toMutableMap())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): Hold = apply {
+            if (validated) {
+                return@apply
+            }
+
+            token()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = (if (token.asKnown() == null) 0 else 1)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Hold &&
+                token == other.token &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(token, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "Hold{token=$token, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
