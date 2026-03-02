@@ -11,8 +11,8 @@ import com.lithic.api.core.toImmutable
 import java.util.Objects
 
 /**
- * Deactivate a beneficial owner entity on an existing KYB account holder. Only beneficial owner
- * entities can be deactivated.
+ * Deactivate a beneficial owner individual on an existing KYB account holder. Only beneficial owner
+ * individuals can be deactivated.
  */
 class AccountHolderEntityDeleteParams
 private constructor(
