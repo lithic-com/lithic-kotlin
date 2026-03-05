@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.118.0 (2026-03-05)
+
+Full Changelog: [v0.117.0...v0.118.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.117.0...v0.118.0)
+
+### Features
+
+* **api:** add action_counts to rule performance reports and code to authorization actions ([cebb8c7](https://github.com/lithic-com/lithic-kotlin/commit/cebb8c758f788bee55d2bd21687471633d1ad1b9))
+* **api:** Add Hold API for financial account fund reservations ([a9baad1](https://github.com/lithic-com/lithic-kotlin/commit/a9baad1ffb59248d380ec9817f2b62d35297070c))
+* **api:** Remove deprecated beneficial owner entities field ([e2e13d9](https://github.com/lithic-com/lithic-kotlin/commit/e2e13d9cab7b1582fffd0d354b1ed4e9e30dba11))
+
+
+### Chores
+
+* **internal:** codegen related update ([5d64e59](https://github.com/lithic-com/lithic-kotlin/commit/5d64e599ed072a2456f1e743707025997234bf75))
+* **internal:** codegen related update ([b80edae](https://github.com/lithic-com/lithic-kotlin/commit/b80edae34d65f28e682e3f53406c070511c2653c))
+
 ## 0.117.0 (2026-02-27)
 
 Full Changelog: [v0.116.0...v0.117.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.116.0...v0.117.0)
