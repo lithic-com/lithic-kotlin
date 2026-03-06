@@ -1506,6 +1506,8 @@ private constructor(
 
             val PROGRAM_BANK_ACCOUNTS_PAYABLE = of("PROGRAM_BANK_ACCOUNTS_PAYABLE")
 
+            val EARLY_DIRECT_DEPOSIT_FLOAT = of("EARLY_DIRECT_DEPOSIT_FLOAT")
+
             fun of(value: String) = Type(JsonField.of(value))
         }
 
@@ -1521,6 +1523,7 @@ private constructor(
             PROGRAM_RECEIVABLES,
             COLLECTION,
             PROGRAM_BANK_ACCOUNTS_PAYABLE,
+            EARLY_DIRECT_DEPOSIT_FLOAT,
         }
 
         /**
@@ -1543,6 +1546,7 @@ private constructor(
             PROGRAM_RECEIVABLES,
             COLLECTION,
             PROGRAM_BANK_ACCOUNTS_PAYABLE,
+            EARLY_DIRECT_DEPOSIT_FLOAT,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -1566,6 +1570,7 @@ private constructor(
                 PROGRAM_RECEIVABLES -> Value.PROGRAM_RECEIVABLES
                 COLLECTION -> Value.COLLECTION
                 PROGRAM_BANK_ACCOUNTS_PAYABLE -> Value.PROGRAM_BANK_ACCOUNTS_PAYABLE
+                EARLY_DIRECT_DEPOSIT_FLOAT -> Value.EARLY_DIRECT_DEPOSIT_FLOAT
                 else -> Value._UNKNOWN
             }
 
@@ -1590,6 +1595,7 @@ private constructor(
                 PROGRAM_RECEIVABLES -> Known.PROGRAM_RECEIVABLES
                 COLLECTION -> Known.COLLECTION
                 PROGRAM_BANK_ACCOUNTS_PAYABLE -> Known.PROGRAM_BANK_ACCOUNTS_PAYABLE
+                EARLY_DIRECT_DEPOSIT_FLOAT -> Known.EARLY_DIRECT_DEPOSIT_FLOAT
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
 

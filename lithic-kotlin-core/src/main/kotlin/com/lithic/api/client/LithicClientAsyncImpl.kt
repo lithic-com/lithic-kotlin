@@ -57,6 +57,8 @@ import com.lithic.api.services.async.FraudServiceAsync
 import com.lithic.api.services.async.FraudServiceAsyncImpl
 import com.lithic.api.services.async.FundingEventServiceAsync
 import com.lithic.api.services.async.FundingEventServiceAsyncImpl
+import com.lithic.api.services.async.HoldServiceAsync
+import com.lithic.api.services.async.HoldServiceAsyncImpl
 import com.lithic.api.services.async.InternalTransactionServiceAsync
 import com.lithic.api.services.async.InternalTransactionServiceAsyncImpl
 import com.lithic.api.services.async.ManagementOperationServiceAsync
@@ -219,6 +221,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         NetworkProgramServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val holds: HoldServiceAsync by lazy { HoldServiceAsyncImpl(clientOptionsWithUserAgent) }
+
     private val accountActivity: AccountActivityServiceAsync by lazy {
         AccountActivityServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -298,6 +302,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
     override fun fraud(): FraudServiceAsync = fraud
 
     override fun networkPrograms(): NetworkProgramServiceAsync = networkPrograms
+
+    override fun holds(): HoldServiceAsync = holds
 
     override fun accountActivity(): AccountActivityServiceAsync = accountActivity
 
@@ -441,6 +447,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             NetworkProgramServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val holds: HoldServiceAsync.WithRawResponse by lazy {
+            HoldServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val accountActivity: AccountActivityServiceAsync.WithRawResponse by lazy {
             AccountActivityServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -527,6 +537,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         override fun fraud(): FraudServiceAsync.WithRawResponse = fraud
 
         override fun networkPrograms(): NetworkProgramServiceAsync.WithRawResponse = networkPrograms
+
+        override fun holds(): HoldServiceAsync.WithRawResponse = holds
 
         override fun accountActivity(): AccountActivityServiceAsync.WithRawResponse =
             accountActivity

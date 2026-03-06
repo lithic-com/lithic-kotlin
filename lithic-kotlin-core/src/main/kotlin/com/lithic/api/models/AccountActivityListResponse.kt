@@ -33,8 +33,8 @@ import java.util.Objects
  * Response containing multiple transaction types. The `family` field determines which transaction
  * type is returned: INTERNAL returns FinancialTransaction, TRANSFER returns
  * BookTransferTransaction, CARD returns CardTransaction, PAYMENT returns PaymentTransaction,
- * EXTERNAL_PAYMENT returns ExternalPaymentResponse, and MANAGEMENT_OPERATION returns
- * ManagementOperationTransaction
+ * EXTERNAL_PAYMENT returns ExternalPaymentResponse, MANAGEMENT_OPERATION returns
+ * ManagementOperationTransaction, and HOLD returns HoldTransaction
  */
 @JsonDeserialize(using = AccountActivityListResponse.Deserializer::class)
 @JsonSerialize(using = AccountActivityListResponse.Serializer::class)
@@ -46,6 +46,7 @@ private constructor(
     private val payment: Payment? = null,
     private val externalPayment: ExternalPayment? = null,
     private val managementOperation: ManagementOperationTransaction? = null,
+    private val hold: Hold? = null,
     private val _json: JsonValue? = null,
 ) {
 
@@ -65,6 +66,13 @@ private constructor(
 
     fun managementOperation(): ManagementOperationTransaction? = managementOperation
 
+    /**
+     * A hold transaction representing reserved funds on a financial account. Holds move funds from
+     * available to pending balance in anticipation of future payments. They can be resolved via
+     * settlement (linked to payment), manual release, or expiration.
+     */
+    fun hold(): Hold? = hold
+
     fun isInternal(): Boolean = internal_ != null
 
     fun isTransfer(): Boolean = transfer != null
@@ -76,6 +84,8 @@ private constructor(
     fun isExternalPayment(): Boolean = externalPayment != null
 
     fun isManagementOperation(): Boolean = managementOperation != null
+
+    fun isHold(): Boolean = hold != null
 
     /** Financial transaction with inheritance from unified base transaction */
     fun asInternal(): FinancialTransaction = internal_.getOrThrow("internal_")
@@ -94,6 +104,13 @@ private constructor(
     fun asManagementOperation(): ManagementOperationTransaction =
         managementOperation.getOrThrow("managementOperation")
 
+    /**
+     * A hold transaction representing reserved funds on a financial account. Holds move funds from
+     * available to pending balance in anticipation of future payments. They can be resolved via
+     * settlement (linked to payment), manual release, or expiration.
+     */
+    fun asHold(): Hold = hold.getOrThrow("hold")
+
     fun _json(): JsonValue? = _json
 
     fun <T> accept(visitor: Visitor<T>): T =
@@ -104,6 +121,7 @@ private constructor(
             payment != null -> visitor.visitPayment(payment)
             externalPayment != null -> visitor.visitExternalPayment(externalPayment)
             managementOperation != null -> visitor.visitManagementOperation(managementOperation)
+            hold != null -> visitor.visitHold(hold)
             else -> visitor.unknown(_json)
         }
 
@@ -141,6 +159,10 @@ private constructor(
                 ) {
                     managementOperation.validate()
                 }
+
+                override fun visitHold(hold: Hold) {
+                    hold.validate()
+                }
             }
         )
         validated = true
@@ -177,6 +199,8 @@ private constructor(
                     managementOperation: ManagementOperationTransaction
                 ) = managementOperation.validity()
 
+                override fun visitHold(hold: Hold) = hold.validity()
+
                 override fun unknown(json: JsonValue?) = 0
             }
         )
@@ -192,11 +216,12 @@ private constructor(
             card == other.card &&
             payment == other.payment &&
             externalPayment == other.externalPayment &&
-            managementOperation == other.managementOperation
+            managementOperation == other.managementOperation &&
+            hold == other.hold
     }
 
     override fun hashCode(): Int =
-        Objects.hash(internal_, transfer, card, payment, externalPayment, managementOperation)
+        Objects.hash(internal_, transfer, card, payment, externalPayment, managementOperation, hold)
 
     override fun toString(): String =
         when {
@@ -208,6 +233,7 @@ private constructor(
                 "AccountActivityListResponse{externalPayment=$externalPayment}"
             managementOperation != null ->
                 "AccountActivityListResponse{managementOperation=$managementOperation}"
+            hold != null -> "AccountActivityListResponse{hold=$hold}"
             _json != null -> "AccountActivityListResponse{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid AccountActivityListResponse")
         }
@@ -233,6 +259,13 @@ private constructor(
 
         fun ofManagementOperation(managementOperation: ManagementOperationTransaction) =
             AccountActivityListResponse(managementOperation = managementOperation)
+
+        /**
+         * A hold transaction representing reserved funds on a financial account. Holds move funds
+         * from available to pending balance in anticipation of future payments. They can be
+         * resolved via settlement (linked to payment), manual release, or expiration.
+         */
+        fun ofHold(hold: Hold) = AccountActivityListResponse(hold = hold)
     }
 
     /**
@@ -256,6 +289,13 @@ private constructor(
         fun visitExternalPayment(externalPayment: ExternalPayment): T
 
         fun visitManagementOperation(managementOperation: ManagementOperationTransaction): T
+
+        /**
+         * A hold transaction representing reserved funds on a financial account. Holds move funds
+         * from available to pending balance in anticipation of future payments. They can be
+         * resolved via settlement (linked to payment), manual release, or expiration.
+         */
+        fun visitHold(hold: Hold): T
 
         /**
          * Maps an unknown variant of [AccountActivityListResponse] to a value of type [T].
@@ -311,6 +351,11 @@ private constructor(
                             AccountActivityListResponse(managementOperation = it, _json = json)
                         } ?: AccountActivityListResponse(_json = json)
                 }
+                "HOLD" -> {
+                    return tryDeserialize(node, jacksonTypeRef<Hold>())?.let {
+                        AccountActivityListResponse(hold = it, _json = json)
+                    } ?: AccountActivityListResponse(_json = json)
+                }
             }
 
             return AccountActivityListResponse(_json = json)
@@ -333,6 +378,7 @@ private constructor(
                 value.externalPayment != null -> generator.writeObject(value.externalPayment)
                 value.managementOperation != null ->
                     generator.writeObject(value.managementOperation)
+                value.hold != null -> generator.writeObject(value.hold)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid AccountActivityListResponse")
             }
@@ -1044,6 +1090,8 @@ private constructor(
 
                 val MANAGEMENT_DISBURSEMENT = of("MANAGEMENT_DISBURSEMENT")
 
+                val HOLD = of("HOLD")
+
                 val PROGRAM_FUNDING = of("PROGRAM_FUNDING")
 
                 fun of(value: String) = TransactionCategory(JsonField.of(value))
@@ -1070,6 +1118,7 @@ private constructor(
                 MANAGEMENT_FEE,
                 MANAGEMENT_REWARD,
                 MANAGEMENT_DISBURSEMENT,
+                HOLD,
                 PROGRAM_FUNDING,
             }
 
@@ -1104,6 +1153,7 @@ private constructor(
                 MANAGEMENT_FEE,
                 MANAGEMENT_REWARD,
                 MANAGEMENT_DISBURSEMENT,
+                HOLD,
                 PROGRAM_FUNDING,
                 /**
                  * An enum member indicating that [TransactionCategory] was instantiated with an
@@ -1140,6 +1190,7 @@ private constructor(
                     MANAGEMENT_FEE -> Value.MANAGEMENT_FEE
                     MANAGEMENT_REWARD -> Value.MANAGEMENT_REWARD
                     MANAGEMENT_DISBURSEMENT -> Value.MANAGEMENT_DISBURSEMENT
+                    HOLD -> Value.HOLD
                     PROGRAM_FUNDING -> Value.PROGRAM_FUNDING
                     else -> Value._UNKNOWN
                 }
@@ -1174,6 +1225,7 @@ private constructor(
                     MANAGEMENT_FEE -> Known.MANAGEMENT_FEE
                     MANAGEMENT_REWARD -> Known.MANAGEMENT_REWARD
                     MANAGEMENT_DISBURSEMENT -> Known.MANAGEMENT_DISBURSEMENT
+                    HOLD -> Known.HOLD
                     PROGRAM_FUNDING -> Known.PROGRAM_FUNDING
                     else -> throw LithicInvalidDataException("Unknown TransactionCategory: $value")
                 }

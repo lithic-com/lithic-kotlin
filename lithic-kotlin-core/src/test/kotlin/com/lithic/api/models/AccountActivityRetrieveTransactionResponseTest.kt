@@ -66,6 +66,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.payment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -183,6 +184,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.payment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -481,6 +483,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.payment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -804,6 +807,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.payment()).isEqualTo(payment)
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -930,6 +934,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment())
             .isEqualTo(externalPayment)
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -1048,6 +1053,7 @@ internal class AccountActivityRetrieveTransactionResponseTest {
         assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
         assertThat(accountActivityRetrieveTransactionResponse.managementOperation())
             .isEqualTo(managementOperation)
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isNull()
     }
 
     @Test
@@ -1109,6 +1115,89 @@ internal class AccountActivityRetrieveTransactionResponseTest {
                             .type("FEE")
                             .build()
                     )
+                    .userDefinedId("user_defined_id")
+                    .build()
+            )
+
+        val roundtrippedAccountActivityRetrieveTransactionResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(accountActivityRetrieveTransactionResponse),
+                jacksonTypeRef<AccountActivityRetrieveTransactionResponse>(),
+            )
+
+        assertThat(roundtrippedAccountActivityRetrieveTransactionResponse)
+            .isEqualTo(accountActivityRetrieveTransactionResponse)
+    }
+
+    @Test
+    fun ofHold() {
+        val hold =
+            Hold.builder()
+                .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .status(Hold.HoldStatus.PENDING)
+                .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .currency("currency")
+                .addEvent(
+                    HoldEvent.builder()
+                        .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .amount(0L)
+                        .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addDetailedResult(HoldEvent.DetailedResults.APPROVED)
+                        .memo("memo")
+                        .result(HoldEvent.TransactionResult.APPROVED)
+                        .settlingTransactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .type(HoldEvent.HoldEventType.HOLD_INITIATED)
+                        .build()
+                )
+                .expirationDatetime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .family(Hold.Family.HOLD)
+                .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .pendingAmount(0L)
+                .result(Hold.TransactionResult.APPROVED)
+                .userDefinedId("user_defined_id")
+                .build()
+
+        val accountActivityRetrieveTransactionResponse =
+            AccountActivityRetrieveTransactionResponse.ofHold(hold)
+
+        assertThat(accountActivityRetrieveTransactionResponse.internal_()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.transfer()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.card()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.payment()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.externalPayment()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.managementOperation()).isNull()
+        assertThat(accountActivityRetrieveTransactionResponse.hold()).isEqualTo(hold)
+    }
+
+    @Test
+    fun ofHoldRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val accountActivityRetrieveTransactionResponse =
+            AccountActivityRetrieveTransactionResponse.ofHold(
+                Hold.builder()
+                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .status(Hold.HoldStatus.PENDING)
+                    .updated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .currency("currency")
+                    .addEvent(
+                        HoldEvent.builder()
+                            .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                            .amount(0L)
+                            .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addDetailedResult(HoldEvent.DetailedResults.APPROVED)
+                            .memo("memo")
+                            .result(HoldEvent.TransactionResult.APPROVED)
+                            .settlingTransactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                            .type(HoldEvent.HoldEventType.HOLD_INITIATED)
+                            .build()
+                    )
+                    .expirationDatetime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .family(Hold.Family.HOLD)
+                    .financialAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .pendingAmount(0L)
+                    .result(Hold.TransactionResult.APPROVED)
                     .userDefinedId("user_defined_id")
                     .build()
             )
