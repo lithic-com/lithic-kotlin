@@ -66,6 +66,9 @@ private constructor(
                                 override fun visitManagementOperation(
                                     managementOperation: ManagementOperationTransaction
                                 ): String? = managementOperation._token().getNullable("token")
+
+                                override fun visitHold(hold: Hold): String? =
+                                    hold._token().getNullable("token")
                             }
                         )
                 )
@@ -100,6 +103,9 @@ private constructor(
                                 override fun visitManagementOperation(
                                     managementOperation: ManagementOperationTransaction
                                 ): String? = managementOperation._token().getNullable("token")
+
+                                override fun visitHold(hold: Hold): String? =
+                                    hold._token().getNullable("token")
                             }
                         )
                 )

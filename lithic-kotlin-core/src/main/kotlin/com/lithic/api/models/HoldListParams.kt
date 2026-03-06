@@ -9,26 +9,55 @@ import com.lithic.api.core.Params
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import com.lithic.api.errors.LithicInvalidDataException
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-/** Retrieve information on your financial accounts including routing and account number. */
-class FinancialAccountListParams
+/** List holds for a financial account. */
+class HoldListParams
 private constructor(
-    private val accountToken: String?,
-    private val businessAccountToken: String?,
-    private val type: Type?,
+    private val financialAccountToken: String?,
+    private val begin: OffsetDateTime?,
+    private val end: OffsetDateTime?,
+    private val endingBefore: String?,
+    private val pageSize: Long?,
+    private val startingAfter: String?,
+    private val status: HoldStatus?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    /** List financial accounts for a given account_token or business_account_token */
-    fun accountToken(): String? = accountToken
+    fun financialAccountToken(): String? = financialAccountToken
 
-    /** List financial accounts for a given business_account_token */
-    fun businessAccountToken(): String? = businessAccountToken
+    /**
+     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * included. UTC time zone.
+     */
+    fun begin(): OffsetDateTime? = begin
 
-    /** List financial accounts of a given type */
-    fun type(): Type? = type
+    /**
+     * Date string in RFC 3339 format. Only entries created before the specified time will be
+     * included. UTC time zone.
+     */
+    fun end(): OffsetDateTime? = end
+
+    /**
+     * A cursor representing an item's token before which a page of results should end. Used to
+     * retrieve the previous page of results before this item.
+     */
+    fun endingBefore(): String? = endingBefore
+
+    /** Page size (for pagination). */
+    fun pageSize(): Long? = pageSize
+
+    /**
+     * A cursor representing an item's token after which a page of results should begin. Used to
+     * retrieve the next page of results after this item.
+     */
+    fun startingAfter(): String? = startingAfter
+
+    /** Hold status to filter by. */
+    fun status(): HoldStatus? = status
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -40,41 +69,77 @@ private constructor(
 
     companion object {
 
-        fun none(): FinancialAccountListParams = builder().build()
+        fun none(): HoldListParams = builder().build()
 
-        /**
-         * Returns a mutable builder for constructing an instance of [FinancialAccountListParams].
-         */
+        /** Returns a mutable builder for constructing an instance of [HoldListParams]. */
         fun builder() = Builder()
     }
 
-    /** A builder for [FinancialAccountListParams]. */
+    /** A builder for [HoldListParams]. */
     class Builder internal constructor() {
 
-        private var accountToken: String? = null
-        private var businessAccountToken: String? = null
-        private var type: Type? = null
+        private var financialAccountToken: String? = null
+        private var begin: OffsetDateTime? = null
+        private var end: OffsetDateTime? = null
+        private var endingBefore: String? = null
+        private var pageSize: Long? = null
+        private var startingAfter: String? = null
+        private var status: HoldStatus? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(financialAccountListParams: FinancialAccountListParams) = apply {
-            accountToken = financialAccountListParams.accountToken
-            businessAccountToken = financialAccountListParams.businessAccountToken
-            type = financialAccountListParams.type
-            additionalHeaders = financialAccountListParams.additionalHeaders.toBuilder()
-            additionalQueryParams = financialAccountListParams.additionalQueryParams.toBuilder()
+        internal fun from(holdListParams: HoldListParams) = apply {
+            financialAccountToken = holdListParams.financialAccountToken
+            begin = holdListParams.begin
+            end = holdListParams.end
+            endingBefore = holdListParams.endingBefore
+            pageSize = holdListParams.pageSize
+            startingAfter = holdListParams.startingAfter
+            status = holdListParams.status
+            additionalHeaders = holdListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = holdListParams.additionalQueryParams.toBuilder()
         }
 
-        /** List financial accounts for a given account_token or business_account_token */
-        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
-
-        /** List financial accounts for a given business_account_token */
-        fun businessAccountToken(businessAccountToken: String?) = apply {
-            this.businessAccountToken = businessAccountToken
+        fun financialAccountToken(financialAccountToken: String?) = apply {
+            this.financialAccountToken = financialAccountToken
         }
 
-        /** List financial accounts of a given type */
-        fun type(type: Type?) = apply { this.type = type }
+        /**
+         * Date string in RFC 3339 format. Only entries created after the specified time will be
+         * included. UTC time zone.
+         */
+        fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
+
+        /**
+         * Date string in RFC 3339 format. Only entries created before the specified time will be
+         * included. UTC time zone.
+         */
+        fun end(end: OffsetDateTime?) = apply { this.end = end }
+
+        /**
+         * A cursor representing an item's token before which a page of results should end. Used to
+         * retrieve the previous page of results before this item.
+         */
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
+
+        /** Page size (for pagination). */
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
+
+        /**
+         * A cursor representing an item's token after which a page of results should begin. Used to
+         * retrieve the next page of results after this item.
+         */
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
+
+        /** Hold status to filter by. */
+        fun status(status: HoldStatus?) = apply { this.status = status }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -175,34 +240,47 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [FinancialAccountListParams].
+         * Returns an immutable instance of [HoldListParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): FinancialAccountListParams =
-            FinancialAccountListParams(
-                accountToken,
-                businessAccountToken,
-                type,
+        fun build(): HoldListParams =
+            HoldListParams(
+                financialAccountToken,
+                begin,
+                end,
+                endingBefore,
+                pageSize,
+                startingAfter,
+                status,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
     }
+
+    fun _pathParam(index: Int): String =
+        when (index) {
+            0 -> financialAccountToken ?: ""
+            else -> ""
+        }
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
-                accountToken?.let { put("account_token", it) }
-                businessAccountToken?.let { put("business_account_token", it) }
-                type?.let { put("type", it.toString()) }
+                begin?.let { put("begin", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
+                end?.let { put("end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
+                endingBefore?.let { put("ending_before", it) }
+                pageSize?.let { put("page_size", it.toString()) }
+                startingAfter?.let { put("starting_after", it) }
+                status?.let { put("status", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
 
-    /** List financial accounts of a given type */
-    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+    /** Hold status to filter by. */
+    class HoldStatus @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -216,44 +294,42 @@ private constructor(
 
         companion object {
 
-            val ISSUING = of("ISSUING")
+            val PENDING = of("PENDING")
 
-            val OPERATING = of("OPERATING")
+            val SETTLED = of("SETTLED")
 
-            val RESERVE = of("RESERVE")
+            val EXPIRED = of("EXPIRED")
 
-            val SECURITY = of("SECURITY")
+            val VOIDED = of("VOIDED")
 
-            val EARLY_DIRECT_DEPOSIT_FLOAT = of("EARLY_DIRECT_DEPOSIT_FLOAT")
-
-            fun of(value: String) = Type(JsonField.of(value))
+            fun of(value: String) = HoldStatus(JsonField.of(value))
         }
 
-        /** An enum containing [Type]'s known values. */
+        /** An enum containing [HoldStatus]'s known values. */
         enum class Known {
-            ISSUING,
-            OPERATING,
-            RESERVE,
-            SECURITY,
-            EARLY_DIRECT_DEPOSIT_FLOAT,
+            PENDING,
+            SETTLED,
+            EXPIRED,
+            VOIDED,
         }
 
         /**
-         * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+         * An enum containing [HoldStatus]'s known values, as well as an [_UNKNOWN] member.
          *
-         * An instance of [Type] can contain an unknown value in a couple of cases:
+         * An instance of [HoldStatus] can contain an unknown value in a couple of cases:
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            ISSUING,
-            OPERATING,
-            RESERVE,
-            SECURITY,
-            EARLY_DIRECT_DEPOSIT_FLOAT,
-            /** An enum member indicating that [Type] was instantiated with an unknown value. */
+            PENDING,
+            SETTLED,
+            EXPIRED,
+            VOIDED,
+            /**
+             * An enum member indicating that [HoldStatus] was instantiated with an unknown value.
+             */
             _UNKNOWN,
         }
 
@@ -266,11 +342,10 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                ISSUING -> Value.ISSUING
-                OPERATING -> Value.OPERATING
-                RESERVE -> Value.RESERVE
-                SECURITY -> Value.SECURITY
-                EARLY_DIRECT_DEPOSIT_FLOAT -> Value.EARLY_DIRECT_DEPOSIT_FLOAT
+                PENDING -> Value.PENDING
+                SETTLED -> Value.SETTLED
+                EXPIRED -> Value.EXPIRED
+                VOIDED -> Value.VOIDED
                 else -> Value._UNKNOWN
             }
 
@@ -285,12 +360,11 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                ISSUING -> Known.ISSUING
-                OPERATING -> Known.OPERATING
-                RESERVE -> Known.RESERVE
-                SECURITY -> Known.SECURITY
-                EARLY_DIRECT_DEPOSIT_FLOAT -> Known.EARLY_DIRECT_DEPOSIT_FLOAT
-                else -> throw LithicInvalidDataException("Unknown Type: $value")
+                PENDING -> Known.PENDING
+                SETTLED -> Known.SETTLED
+                EXPIRED -> Known.EXPIRED
+                VOIDED -> Known.VOIDED
+                else -> throw LithicInvalidDataException("Unknown HoldStatus: $value")
             }
 
         /**
@@ -307,7 +381,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): Type = apply {
+        fun validate(): HoldStatus = apply {
             if (validated) {
                 return@apply
             }
@@ -337,7 +411,7 @@ private constructor(
                 return true
             }
 
-            return other is Type && value == other.value
+            return other is HoldStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -350,23 +424,31 @@ private constructor(
             return true
         }
 
-        return other is FinancialAccountListParams &&
-            accountToken == other.accountToken &&
-            businessAccountToken == other.businessAccountToken &&
-            type == other.type &&
+        return other is HoldListParams &&
+            financialAccountToken == other.financialAccountToken &&
+            begin == other.begin &&
+            end == other.end &&
+            endingBefore == other.endingBefore &&
+            pageSize == other.pageSize &&
+            startingAfter == other.startingAfter &&
+            status == other.status &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
         Objects.hash(
-            accountToken,
-            businessAccountToken,
-            type,
+            financialAccountToken,
+            begin,
+            end,
+            endingBefore,
+            pageSize,
+            startingAfter,
+            status,
             additionalHeaders,
             additionalQueryParams,
         )
 
     override fun toString() =
-        "FinancialAccountListParams{accountToken=$accountToken, businessAccountToken=$businessAccountToken, type=$type, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "HoldListParams{financialAccountToken=$financialAccountToken, begin=$begin, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
