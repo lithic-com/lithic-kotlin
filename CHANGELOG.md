@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.119.0 (2026-03-06)
+
+Full Changelog: [v0.118.0...v0.119.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.118.0...v0.119.0)
+
+### Features
+
+* **api:** add EARLY_DIRECT_DEPOSIT_FLOAT enum value to financial account types ([b6b91d3](https://github.com/lithic-com/lithic-kotlin/commit/b6b91d360724b875d807f3db8da4f4c8c840ce41))
+
 ## 0.118.0 (2026-03-05)
 
 Full Changelog: [v0.117.0...v0.118.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.117.0...v0.118.0)
