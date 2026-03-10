@@ -222,6 +222,7 @@ private constructor(
         private val financialTransactionToken: JsonField<String>,
         private val cardToken: JsonField<String>,
         private val descriptor: JsonField<String>,
+        private val eventSubtype: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -259,6 +260,9 @@ private constructor(
             @JsonProperty("descriptor")
             @ExcludeMissing
             descriptor: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("event_subtype")
+            @ExcludeMissing
+            eventSubtype: JsonField<String> = JsonMissing.of(),
         ) : this(
             token,
             amount,
@@ -272,6 +276,7 @@ private constructor(
             financialTransactionToken,
             cardToken,
             descriptor,
+            eventSubtype,
             mutableMapOf(),
         )
 
@@ -367,6 +372,14 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun descriptor(): String? = descriptor.getNullable("descriptor")
+
+        /**
+         * Subtype of the event that generated the line items
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun eventSubtype(): String? = eventSubtype.getNullable("event_subtype")
 
         /**
          * Returns the raw JSON value of [token].
@@ -470,6 +483,16 @@ private constructor(
         @ExcludeMissing
         fun _descriptor(): JsonField<String> = descriptor
 
+        /**
+         * Returns the raw JSON value of [eventSubtype].
+         *
+         * Unlike [eventSubtype], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("event_subtype")
+        @ExcludeMissing
+        fun _eventSubtype(): JsonField<String> = eventSubtype
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -520,6 +543,7 @@ private constructor(
             private var financialTransactionToken: JsonField<String>? = null
             private var cardToken: JsonField<String> = JsonMissing.of()
             private var descriptor: JsonField<String> = JsonMissing.of()
+            private var eventSubtype: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(statementLineItemResponse: StatementLineItemResponse) = apply {
@@ -536,6 +560,7 @@ private constructor(
                 financialTransactionToken = statementLineItemResponse.financialTransactionToken
                 cardToken = statementLineItemResponse.cardToken
                 descriptor = statementLineItemResponse.descriptor
+                eventSubtype = statementLineItemResponse.eventSubtype
                 additionalProperties = statementLineItemResponse.additionalProperties.toMutableMap()
             }
 
@@ -696,6 +721,21 @@ private constructor(
              */
             fun descriptor(descriptor: JsonField<String>) = apply { this.descriptor = descriptor }
 
+            /** Subtype of the event that generated the line items */
+            fun eventSubtype(eventSubtype: String?) =
+                eventSubtype(JsonField.ofNullable(eventSubtype))
+
+            /**
+             * Sets [Builder.eventSubtype] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.eventSubtype] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun eventSubtype(eventSubtype: JsonField<String>) = apply {
+                this.eventSubtype = eventSubtype
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -750,6 +790,7 @@ private constructor(
                     checkRequired("financialTransactionToken", financialTransactionToken),
                     cardToken,
                     descriptor,
+                    eventSubtype,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -773,6 +814,7 @@ private constructor(
             financialTransactionToken()
             cardToken()
             descriptor()
+            eventSubtype()
             validated = true
         }
 
@@ -802,7 +844,8 @@ private constructor(
                 (if (financialTransactionEventToken.asKnown() == null) 0 else 1) +
                 (if (financialTransactionToken.asKnown() == null) 0 else 1) +
                 (if (cardToken.asKnown() == null) 0 else 1) +
-                (if (descriptor.asKnown() == null) 0 else 1)
+                (if (descriptor.asKnown() == null) 0 else 1) +
+                (if (eventSubtype.asKnown() == null) 0 else 1)
 
         class TransactionCategory
         @JsonCreator
@@ -1710,6 +1753,7 @@ private constructor(
                 financialTransactionToken == other.financialTransactionToken &&
                 cardToken == other.cardToken &&
                 descriptor == other.descriptor &&
+                eventSubtype == other.eventSubtype &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -1727,6 +1771,7 @@ private constructor(
                 financialTransactionToken,
                 cardToken,
                 descriptor,
+                eventSubtype,
                 additionalProperties,
             )
         }
@@ -1734,7 +1779,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "StatementLineItemResponse{token=$token, amount=$amount, category=$category, created=$created, currency=$currency, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, financialTransactionEventToken=$financialTransactionEventToken, financialTransactionToken=$financialTransactionToken, cardToken=$cardToken, descriptor=$descriptor, additionalProperties=$additionalProperties}"
+            "StatementLineItemResponse{token=$token, amount=$amount, category=$category, created=$created, currency=$currency, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, financialTransactionEventToken=$financialTransactionEventToken, financialTransactionToken=$financialTransactionToken, cardToken=$cardToken, descriptor=$descriptor, eventSubtype=$eventSubtype, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
