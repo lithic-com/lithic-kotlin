@@ -57,6 +57,8 @@ internal class AuthRuleTest {
                 .programLevel(true)
                 .state(AuthRule.AuthRuleState.ACTIVE)
                 .type(AuthRule.AuthRuleType.CONDITIONAL_BLOCK)
+                .addExcludedAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addExcludedBusinessAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addExcludedCardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
 
@@ -107,6 +109,10 @@ internal class AuthRuleTest {
         assertThat(authRule.programLevel()).isEqualTo(true)
         assertThat(authRule.state()).isEqualTo(AuthRule.AuthRuleState.ACTIVE)
         assertThat(authRule.type()).isEqualTo(AuthRule.AuthRuleType.CONDITIONAL_BLOCK)
+        assertThat(authRule.excludedAccountTokens())
+            .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(authRule.excludedBusinessAccountTokens())
+            .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
         assertThat(authRule.excludedCardTokens())
             .containsExactly("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
     }
@@ -160,6 +166,8 @@ internal class AuthRuleTest {
                 .programLevel(true)
                 .state(AuthRule.AuthRuleState.ACTIVE)
                 .type(AuthRule.AuthRuleType.CONDITIONAL_BLOCK)
+                .addExcludedAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addExcludedBusinessAccountToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .addExcludedCardToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .build()
 
