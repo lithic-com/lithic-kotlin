@@ -20,7 +20,7 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 
-/** Initiate a dispute. */
+/** Request a chargeback. */
 class DisputeCreateParams
 private constructor(
     private val body: Body,
@@ -29,7 +29,7 @@ private constructor(
 ) : Params {
 
     /**
-     * Amount to dispute
+     * Amount for chargeback
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -37,7 +37,7 @@ private constructor(
     fun amount(): Long = body.amount()
 
     /**
-     * Reason for dispute
+     * Reason for chargeback
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -45,7 +45,7 @@ private constructor(
     fun reason(): Reason = body.reason()
 
     /**
-     * Transaction to dispute
+     * Transaction for chargeback
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -53,7 +53,7 @@ private constructor(
     fun transactionToken(): String = body.transactionToken()
 
     /**
-     * Date the customer filed the dispute
+     * Date the customer filed the chargeback request
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -61,7 +61,7 @@ private constructor(
     fun customerFiledDate(): OffsetDateTime? = body.customerFiledDate()
 
     /**
-     * Customer description of dispute
+     * Customer description
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -157,7 +157,7 @@ private constructor(
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
-        /** Amount to dispute */
+        /** Amount for chargeback */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
@@ -168,7 +168,7 @@ private constructor(
          */
         fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
 
-        /** Reason for dispute */
+        /** Reason for chargeback */
         fun reason(reason: Reason) = apply { body.reason(reason) }
 
         /**
@@ -179,7 +179,7 @@ private constructor(
          */
         fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
 
-        /** Transaction to dispute */
+        /** Transaction for chargeback */
         fun transactionToken(transactionToken: String) = apply {
             body.transactionToken(transactionToken)
         }
@@ -195,7 +195,7 @@ private constructor(
             body.transactionToken(transactionToken)
         }
 
-        /** Date the customer filed the dispute */
+        /** Date the customer filed the chargeback request */
         fun customerFiledDate(customerFiledDate: OffsetDateTime) = apply {
             body.customerFiledDate(customerFiledDate)
         }
@@ -211,7 +211,7 @@ private constructor(
             body.customerFiledDate(customerFiledDate)
         }
 
-        /** Customer description of dispute */
+        /** Customer description */
         fun customerNote(customerNote: String) = apply { body.customerNote(customerNote) }
 
         /**
@@ -397,7 +397,7 @@ private constructor(
         ) : this(amount, reason, transactionToken, customerFiledDate, customerNote, mutableMapOf())
 
         /**
-         * Amount to dispute
+         * Amount for chargeback
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -405,7 +405,7 @@ private constructor(
         fun amount(): Long = amount.getRequired("amount")
 
         /**
-         * Reason for dispute
+         * Reason for chargeback
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -413,7 +413,7 @@ private constructor(
         fun reason(): Reason = reason.getRequired("reason")
 
         /**
-         * Transaction to dispute
+         * Transaction for chargeback
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -421,7 +421,7 @@ private constructor(
         fun transactionToken(): String = transactionToken.getRequired("transaction_token")
 
         /**
-         * Date the customer filed the dispute
+         * Date the customer filed the chargeback request
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -430,7 +430,7 @@ private constructor(
             customerFiledDate.getNullable("customer_filed_date")
 
         /**
-         * Customer description of dispute
+         * Customer description
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -527,7 +527,7 @@ private constructor(
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
-            /** Amount to dispute */
+            /** Amount for chargeback */
             fun amount(amount: Long) = amount(JsonField.of(amount))
 
             /**
@@ -539,7 +539,7 @@ private constructor(
              */
             fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
-            /** Reason for dispute */
+            /** Reason for chargeback */
             fun reason(reason: Reason) = reason(JsonField.of(reason))
 
             /**
@@ -551,7 +551,7 @@ private constructor(
              */
             fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
-            /** Transaction to dispute */
+            /** Transaction for chargeback */
             fun transactionToken(transactionToken: String) =
                 transactionToken(JsonField.of(transactionToken))
 
@@ -566,7 +566,7 @@ private constructor(
                 this.transactionToken = transactionToken
             }
 
-            /** Date the customer filed the dispute */
+            /** Date the customer filed the chargeback request */
             fun customerFiledDate(customerFiledDate: OffsetDateTime) =
                 customerFiledDate(JsonField.of(customerFiledDate))
 
@@ -581,7 +581,7 @@ private constructor(
                 this.customerFiledDate = customerFiledDate
             }
 
-            /** Customer description of dispute */
+            /** Customer description */
             fun customerNote(customerNote: String) = customerNote(JsonField.of(customerNote))
 
             /**
@@ -706,7 +706,7 @@ private constructor(
             "Body{amount=$amount, reason=$reason, transactionToken=$transactionToken, customerFiledDate=$customerFiledDate, customerNote=$customerNote, additionalProperties=$additionalProperties}"
     }
 
-    /** Reason for dispute */
+    /** Reason for chargeback */
     class Reason @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

@@ -14,7 +14,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-/** List disputes. */
+/** List chargeback requests. */
 class DisputeListParams
 private constructor(
     private val begin: OffsetDateTime?,
@@ -55,7 +55,7 @@ private constructor(
      */
     fun startingAfter(): String? = startingAfter
 
-    /** List disputes of a specific status. */
+    /** Filter by status. */
     fun status(): Status? = status
 
     /** Transaction tokens to filter by. */
@@ -136,7 +136,7 @@ private constructor(
          */
         fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
-        /** List disputes of a specific status. */
+        /** Filter by status. */
         fun status(status: Status?) = apply { this.status = status }
 
         /** Transaction tokens to filter by. */
@@ -287,7 +287,7 @@ private constructor(
             }
             .build()
 
-    /** List disputes of a specific status. */
+    /** Filter by status. */
     class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
