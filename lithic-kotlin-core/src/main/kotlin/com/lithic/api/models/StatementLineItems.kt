@@ -302,9 +302,6 @@ private constructor(
         fun amount(): Long = amount.getRequired("amount")
 
         /**
-         * Note: Inbound wire transfers are coming soon (availability varies by partner bank). The
-         * WIRE category is a preview. To learn more, contact your customer success manager.
-         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -616,10 +613,6 @@ private constructor(
              */
             fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
-            /**
-             * Note: Inbound wire transfers are coming soon (availability varies by partner bank).
-             * The WIRE category is a preview. To learn more, contact your customer success manager.
-             */
             fun category(category: TransactionCategory) = category(JsonField.of(category))
 
             /**
@@ -897,10 +890,6 @@ private constructor(
                 (if (eventSubtype.asKnown() == null) 0 else 1) +
                 (if (loanTapeDate.asKnown() == null) 0 else 1)
 
-        /**
-         * Note: Inbound wire transfers are coming soon (availability varies by partner bank). The
-         * WIRE category is a preview. To learn more, contact your customer success manager.
-         */
         class TransactionCategory
         @JsonCreator
         private constructor(private val value: JsonField<String>) : Enum {
@@ -918,8 +907,6 @@ private constructor(
             companion object {
 
                 val ACH = of("ACH")
-
-                val WIRE = of("WIRE")
 
                 val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
@@ -967,7 +954,6 @@ private constructor(
             /** An enum containing [TransactionCategory]'s known values. */
             enum class Known {
                 ACH,
-                WIRE,
                 BALANCE_OR_FUNDING,
                 FEE,
                 REWARD,
@@ -1003,7 +989,6 @@ private constructor(
              */
             enum class Value {
                 ACH,
-                WIRE,
                 BALANCE_OR_FUNDING,
                 FEE,
                 REWARD,
@@ -1041,7 +1026,6 @@ private constructor(
             fun value(): Value =
                 when (this) {
                     ACH -> Value.ACH
-                    WIRE -> Value.WIRE
                     BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
                     FEE -> Value.FEE
                     REWARD -> Value.REWARD
@@ -1077,7 +1061,6 @@ private constructor(
             fun known(): Known =
                 when (this) {
                     ACH -> Known.ACH
-                    WIRE -> Known.WIRE
                     BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
                     FEE -> Known.FEE
                     REWARD -> Known.REWARD
