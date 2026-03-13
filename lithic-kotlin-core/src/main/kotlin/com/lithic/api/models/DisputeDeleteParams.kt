@@ -9,7 +9,7 @@ import com.lithic.api.core.http.QueryParams
 import com.lithic.api.core.toImmutable
 import java.util.Objects
 
-/** Withdraw chargeback request. */
+/** Withdraw dispute. */
 class DisputeDeleteParams
 private constructor(
     private val disputeToken: String?,
