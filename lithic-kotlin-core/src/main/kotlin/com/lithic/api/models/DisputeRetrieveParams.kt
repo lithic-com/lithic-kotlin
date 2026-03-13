@@ -7,7 +7,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
-/** Get chargeback request. */
+/** Get dispute. */
 class DisputeRetrieveParams
 private constructor(
     private val disputeToken: String?,

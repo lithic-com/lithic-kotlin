@@ -9,7 +9,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-/** List evidence for a chargeback request. */
+/** List evidence metadata for a dispute. */
 class DisputeListEvidencesParams
 private constructor(
     private val disputeToken: String?,
