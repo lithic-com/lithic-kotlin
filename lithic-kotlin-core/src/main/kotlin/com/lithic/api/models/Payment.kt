@@ -1055,6 +1055,8 @@ private constructor(
 
             val ACH = of("ACH")
 
+            val WIRE = of("WIRE")
+
             val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
             val FEE = of("FEE")
@@ -1101,6 +1103,7 @@ private constructor(
         /** An enum containing [TransactionCategory]'s known values. */
         enum class Known {
             ACH,
+            WIRE,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -1134,6 +1137,7 @@ private constructor(
          */
         enum class Value {
             ACH,
+            WIRE,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -1171,6 +1175,7 @@ private constructor(
         fun value(): Value =
             when (this) {
                 ACH -> Value.ACH
+                WIRE -> Value.WIRE
                 BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
                 FEE -> Value.FEE
                 REWARD -> Value.REWARD
@@ -1206,6 +1211,7 @@ private constructor(
         fun known(): Known =
             when (this) {
                 ACH -> Known.ACH
+                WIRE -> Known.WIRE
                 BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
                 FEE -> Known.FEE
                 REWARD -> Known.REWARD
@@ -1409,7 +1415,13 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Payment Event */
+    /**
+     * Note: Inbound wire transfers are coming soon (availability varies by partner bank).
+     * Wire-related fields below are a preview. To learn more, contact your customer success
+     * manager.
+     *
+     * Payment Event
+     */
     class PaymentEvent
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -1477,7 +1489,13 @@ private constructor(
         fun result(): Result = result.getRequired("result")
 
         /**
+         * Note: Inbound wire transfers are coming soon (availability varies by partner bank).
+         * Wire-related event types below are a preview. To learn more, contact your customer
+         * success manager.
+         *
          * Event types:
+         *
+         * ACH events:
          * * `ACH_ORIGINATION_INITIATED` - ACH origination received and pending approval/release
          *   from an ACH hold.
          * * `ACH_ORIGINATION_REVIEWED` - ACH origination has completed the review process.
@@ -1502,6 +1520,23 @@ private constructor(
          * * `ACH_RETURN_REJECTED` - ACH return was rejected by the Receiving Depository Financial
          *   Institution.
          *
+         * Wire transfer events:
+         * * `WIRE_TRANSFER_INBOUND_RECEIVED` - Inbound wire transfer received from the Federal
+         *   Reserve and pending release to available balance.
+         * * `WIRE_TRANSFER_INBOUND_SETTLED` - Inbound wire transfer funds released from pending to
+         *   available balance.
+         * * `WIRE_TRANSFER_INBOUND_BLOCKED` - Inbound wire transfer blocked and funds frozen for
+         *   regulatory review.
+         *
+         * Wire return events:
+         * * `WIRE_RETURN_OUTBOUND_INITIATED` - Outbound wire return initiated to return funds from
+         *   an inbound wire transfer.
+         * * `WIRE_RETURN_OUTBOUND_SENT` - Outbound wire return sent to the Federal Reserve and
+         *   pending acceptance.
+         * * `WIRE_RETURN_OUTBOUND_SETTLED` - Outbound wire return accepted by the Federal Reserve
+         *   and funds returned to sender.
+         * * `WIRE_RETURN_OUTBOUND_REJECTED` - Outbound wire return rejected by the Federal Reserve.
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -1517,7 +1552,8 @@ private constructor(
             detailedResults.getNullable("detailed_results")
 
         /**
-         * Payment event external ID, for example, ACH trace number.
+         * Payment event external ID. For ACH transactions, this is the ACH trace number. For
+         * inbound wire transfers, this is the IMAD (Input Message Accountability Data).
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1685,7 +1721,13 @@ private constructor(
             fun result(result: JsonField<Result>) = apply { this.result = result }
 
             /**
+             * Note: Inbound wire transfers are coming soon (availability varies by partner bank).
+             * Wire-related event types below are a preview. To learn more, contact your customer
+             * success manager.
+             *
              * Event types:
+             *
+             * ACH events:
              * * `ACH_ORIGINATION_INITIATED` - ACH origination received and pending approval/release
              *   from an ACH hold.
              * * `ACH_ORIGINATION_REVIEWED` - ACH origination has completed the review process.
@@ -1709,6 +1751,24 @@ private constructor(
              *   Institution.
              * * `ACH_RETURN_REJECTED` - ACH return was rejected by the Receiving Depository
              *   Financial Institution.
+             *
+             * Wire transfer events:
+             * * `WIRE_TRANSFER_INBOUND_RECEIVED` - Inbound wire transfer received from the Federal
+             *   Reserve and pending release to available balance.
+             * * `WIRE_TRANSFER_INBOUND_SETTLED` - Inbound wire transfer funds released from pending
+             *   to available balance.
+             * * `WIRE_TRANSFER_INBOUND_BLOCKED` - Inbound wire transfer blocked and funds frozen
+             *   for regulatory review.
+             *
+             * Wire return events:
+             * * `WIRE_RETURN_OUTBOUND_INITIATED` - Outbound wire return initiated to return funds
+             *   from an inbound wire transfer.
+             * * `WIRE_RETURN_OUTBOUND_SENT` - Outbound wire return sent to the Federal Reserve and
+             *   pending acceptance.
+             * * `WIRE_RETURN_OUTBOUND_SETTLED` - Outbound wire return accepted by the Federal
+             *   Reserve and funds returned to sender.
+             * * `WIRE_RETURN_OUTBOUND_REJECTED` - Outbound wire return rejected by the Federal
+             *   Reserve.
              */
             fun type(type: PaymentEventType) = type(JsonField.of(type))
 
@@ -1748,7 +1808,10 @@ private constructor(
                     }
             }
 
-            /** Payment event external ID, for example, ACH trace number. */
+            /**
+             * Payment event external ID. For ACH transactions, this is the ACH trace number. For
+             * inbound wire transfers, this is the IMAD (Input Message Accountability Data).
+             */
             fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
 
             /**
@@ -1980,7 +2043,13 @@ private constructor(
         }
 
         /**
+         * Note: Inbound wire transfers are coming soon (availability varies by partner bank).
+         * Wire-related event types below are a preview. To learn more, contact your customer
+         * success manager.
+         *
          * Event types:
+         *
+         * ACH events:
          * * `ACH_ORIGINATION_INITIATED` - ACH origination received and pending approval/release
          *   from an ACH hold.
          * * `ACH_ORIGINATION_REVIEWED` - ACH origination has completed the review process.
@@ -2004,6 +2073,23 @@ private constructor(
          *   Institution.
          * * `ACH_RETURN_REJECTED` - ACH return was rejected by the Receiving Depository Financial
          *   Institution.
+         *
+         * Wire transfer events:
+         * * `WIRE_TRANSFER_INBOUND_RECEIVED` - Inbound wire transfer received from the Federal
+         *   Reserve and pending release to available balance.
+         * * `WIRE_TRANSFER_INBOUND_SETTLED` - Inbound wire transfer funds released from pending to
+         *   available balance.
+         * * `WIRE_TRANSFER_INBOUND_BLOCKED` - Inbound wire transfer blocked and funds frozen for
+         *   regulatory review.
+         *
+         * Wire return events:
+         * * `WIRE_RETURN_OUTBOUND_INITIATED` - Outbound wire return initiated to return funds from
+         *   an inbound wire transfer.
+         * * `WIRE_RETURN_OUTBOUND_SENT` - Outbound wire return sent to the Federal Reserve and
+         *   pending acceptance.
+         * * `WIRE_RETURN_OUTBOUND_SETTLED` - Outbound wire return accepted by the Federal Reserve
+         *   and funds returned to sender.
+         * * `WIRE_RETURN_OUTBOUND_REJECTED` - Outbound wire return rejected by the Federal Reserve.
          */
         class PaymentEventType
         @JsonCreator
@@ -2051,6 +2137,20 @@ private constructor(
 
                 val ACH_RETURN_SETTLED = of("ACH_RETURN_SETTLED")
 
+                val WIRE_TRANSFER_INBOUND_RECEIVED = of("WIRE_TRANSFER_INBOUND_RECEIVED")
+
+                val WIRE_TRANSFER_INBOUND_SETTLED = of("WIRE_TRANSFER_INBOUND_SETTLED")
+
+                val WIRE_TRANSFER_INBOUND_BLOCKED = of("WIRE_TRANSFER_INBOUND_BLOCKED")
+
+                val WIRE_RETURN_OUTBOUND_INITIATED = of("WIRE_RETURN_OUTBOUND_INITIATED")
+
+                val WIRE_RETURN_OUTBOUND_SENT = of("WIRE_RETURN_OUTBOUND_SENT")
+
+                val WIRE_RETURN_OUTBOUND_SETTLED = of("WIRE_RETURN_OUTBOUND_SETTLED")
+
+                val WIRE_RETURN_OUTBOUND_REJECTED = of("WIRE_RETURN_OUTBOUND_REJECTED")
+
                 fun of(value: String) = PaymentEventType(JsonField.of(value))
             }
 
@@ -2071,6 +2171,13 @@ private constructor(
                 ACH_RETURN_PROCESSED,
                 ACH_RETURN_REJECTED,
                 ACH_RETURN_SETTLED,
+                WIRE_TRANSFER_INBOUND_RECEIVED,
+                WIRE_TRANSFER_INBOUND_SETTLED,
+                WIRE_TRANSFER_INBOUND_BLOCKED,
+                WIRE_RETURN_OUTBOUND_INITIATED,
+                WIRE_RETURN_OUTBOUND_SENT,
+                WIRE_RETURN_OUTBOUND_SETTLED,
+                WIRE_RETURN_OUTBOUND_REJECTED,
             }
 
             /**
@@ -2099,6 +2206,13 @@ private constructor(
                 ACH_RETURN_PROCESSED,
                 ACH_RETURN_REJECTED,
                 ACH_RETURN_SETTLED,
+                WIRE_TRANSFER_INBOUND_RECEIVED,
+                WIRE_TRANSFER_INBOUND_SETTLED,
+                WIRE_TRANSFER_INBOUND_BLOCKED,
+                WIRE_RETURN_OUTBOUND_INITIATED,
+                WIRE_RETURN_OUTBOUND_SENT,
+                WIRE_RETURN_OUTBOUND_SETTLED,
+                WIRE_RETURN_OUTBOUND_REJECTED,
                 /**
                  * An enum member indicating that [PaymentEventType] was instantiated with an
                  * unknown value.
@@ -2130,6 +2244,13 @@ private constructor(
                     ACH_RETURN_PROCESSED -> Value.ACH_RETURN_PROCESSED
                     ACH_RETURN_REJECTED -> Value.ACH_RETURN_REJECTED
                     ACH_RETURN_SETTLED -> Value.ACH_RETURN_SETTLED
+                    WIRE_TRANSFER_INBOUND_RECEIVED -> Value.WIRE_TRANSFER_INBOUND_RECEIVED
+                    WIRE_TRANSFER_INBOUND_SETTLED -> Value.WIRE_TRANSFER_INBOUND_SETTLED
+                    WIRE_TRANSFER_INBOUND_BLOCKED -> Value.WIRE_TRANSFER_INBOUND_BLOCKED
+                    WIRE_RETURN_OUTBOUND_INITIATED -> Value.WIRE_RETURN_OUTBOUND_INITIATED
+                    WIRE_RETURN_OUTBOUND_SENT -> Value.WIRE_RETURN_OUTBOUND_SENT
+                    WIRE_RETURN_OUTBOUND_SETTLED -> Value.WIRE_RETURN_OUTBOUND_SETTLED
+                    WIRE_RETURN_OUTBOUND_REJECTED -> Value.WIRE_RETURN_OUTBOUND_REJECTED
                     else -> Value._UNKNOWN
                 }
 
@@ -2159,6 +2280,13 @@ private constructor(
                     ACH_RETURN_PROCESSED -> Known.ACH_RETURN_PROCESSED
                     ACH_RETURN_REJECTED -> Known.ACH_RETURN_REJECTED
                     ACH_RETURN_SETTLED -> Known.ACH_RETURN_SETTLED
+                    WIRE_TRANSFER_INBOUND_RECEIVED -> Known.WIRE_TRANSFER_INBOUND_RECEIVED
+                    WIRE_TRANSFER_INBOUND_SETTLED -> Known.WIRE_TRANSFER_INBOUND_SETTLED
+                    WIRE_TRANSFER_INBOUND_BLOCKED -> Known.WIRE_TRANSFER_INBOUND_BLOCKED
+                    WIRE_RETURN_OUTBOUND_INITIATED -> Known.WIRE_RETURN_OUTBOUND_INITIATED
+                    WIRE_RETURN_OUTBOUND_SENT -> Known.WIRE_RETURN_OUTBOUND_SENT
+                    WIRE_RETURN_OUTBOUND_SETTLED -> Known.WIRE_RETURN_OUTBOUND_SETTLED
+                    WIRE_RETURN_OUTBOUND_REJECTED -> Known.WIRE_RETURN_OUTBOUND_REJECTED
                     else -> throw LithicInvalidDataException("Unknown PaymentEventType: $value")
                 }
 
@@ -3496,7 +3624,6 @@ private constructor(
             private val creditor: JsonField<WirePartyDetails>,
             private val debtor: JsonField<WirePartyDetails>,
             private val messageId: JsonField<String>,
-            private val remittanceInformation: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -3517,18 +3644,7 @@ private constructor(
                 @JsonProperty("message_id")
                 @ExcludeMissing
                 messageId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("remittance_information")
-                @ExcludeMissing
-                remittanceInformation: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                wireMessageType,
-                wireNetwork,
-                creditor,
-                debtor,
-                messageId,
-                remittanceInformation,
-                mutableMapOf(),
-            )
+            ) : this(wireMessageType, wireNetwork, creditor, debtor, messageId, mutableMapOf())
 
             /**
              * Type of wire message
@@ -3567,15 +3683,6 @@ private constructor(
              *   the server responded with an unexpected value).
              */
             fun messageId(): String? = messageId.getNullable("message_id")
-
-            /**
-             * Payment details or invoice reference
-             *
-             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
-             *   the server responded with an unexpected value).
-             */
-            fun remittanceInformation(): String? =
-                remittanceInformation.getNullable("remittance_information")
 
             /**
              * Returns the raw JSON value of [wireMessageType].
@@ -3626,16 +3733,6 @@ private constructor(
             @ExcludeMissing
             fun _messageId(): JsonField<String> = messageId
 
-            /**
-             * Returns the raw JSON value of [remittanceInformation].
-             *
-             * Unlike [remittanceInformation], this method doesn't throw if the JSON field has an
-             * unexpected type.
-             */
-            @JsonProperty("remittance_information")
-            @ExcludeMissing
-            fun _remittanceInformation(): JsonField<String> = remittanceInformation
-
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
                 additionalProperties.put(key, value)
@@ -3670,7 +3767,6 @@ private constructor(
                 private var creditor: JsonField<WirePartyDetails> = JsonMissing.of()
                 private var debtor: JsonField<WirePartyDetails> = JsonMissing.of()
                 private var messageId: JsonField<String> = JsonMissing.of()
-                private var remittanceInformation: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(wireMethodAttributes: WireMethodAttributes) = apply {
@@ -3679,7 +3775,6 @@ private constructor(
                     creditor = wireMethodAttributes.creditor
                     debtor = wireMethodAttributes.debtor
                     messageId = wireMethodAttributes.messageId
-                    remittanceInformation = wireMethodAttributes.remittanceInformation
                     additionalProperties = wireMethodAttributes.additionalProperties.toMutableMap()
                 }
 
@@ -3751,21 +3846,6 @@ private constructor(
                  */
                 fun messageId(messageId: JsonField<String>) = apply { this.messageId = messageId }
 
-                /** Payment details or invoice reference */
-                fun remittanceInformation(remittanceInformation: String?) =
-                    remittanceInformation(JsonField.ofNullable(remittanceInformation))
-
-                /**
-                 * Sets [Builder.remittanceInformation] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.remittanceInformation] with a well-typed
-                 * [String] value instead. This method is primarily for setting the field to an
-                 * undocumented or not yet supported value.
-                 */
-                fun remittanceInformation(remittanceInformation: JsonField<String>) = apply {
-                    this.remittanceInformation = remittanceInformation
-                }
-
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -3808,7 +3888,6 @@ private constructor(
                         creditor,
                         debtor,
                         messageId,
-                        remittanceInformation,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -3825,7 +3904,6 @@ private constructor(
                 creditor()?.validate()
                 debtor()?.validate()
                 messageId()
-                remittanceInformation()
                 validated = true
             }
 
@@ -3848,8 +3926,7 @@ private constructor(
                     (wireNetwork.asKnown()?.validity() ?: 0) +
                     (creditor.asKnown()?.validity() ?: 0) +
                     (debtor.asKnown()?.validity() ?: 0) +
-                    (if (messageId.asKnown() == null) 0 else 1) +
-                    (if (remittanceInformation.asKnown() == null) 0 else 1)
+                    (if (messageId.asKnown() == null) 0 else 1)
 
             /** Type of wire transfer */
             class WireNetwork
@@ -3993,7 +4070,6 @@ private constructor(
                     creditor == other.creditor &&
                     debtor == other.debtor &&
                     messageId == other.messageId &&
-                    remittanceInformation == other.remittanceInformation &&
                     additionalProperties == other.additionalProperties
             }
 
@@ -4004,7 +4080,6 @@ private constructor(
                     creditor,
                     debtor,
                     messageId,
-                    remittanceInformation,
                     additionalProperties,
                 )
             }
@@ -4012,7 +4087,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "WireMethodAttributes{wireMessageType=$wireMessageType, wireNetwork=$wireNetwork, creditor=$creditor, debtor=$debtor, messageId=$messageId, remittanceInformation=$remittanceInformation, additionalProperties=$additionalProperties}"
+                "WireMethodAttributes{wireMessageType=$wireMessageType, wireNetwork=$wireNetwork, creditor=$creditor, debtor=$debtor, messageId=$messageId, additionalProperties=$additionalProperties}"
         }
     }
 

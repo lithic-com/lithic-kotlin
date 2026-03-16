@@ -8,7 +8,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
-/** Get a dispute's evidence metadata. */
+/** Get evidence for a chargeback request. */
 class DisputeRetrieveEvidenceParams
 private constructor(
     private val disputeToken: String,
