@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.119.0 (2026-03-16)
+
+Full Changelog: [v0.118.0...v0.119.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.118.0...v0.119.0)
+
+### Features
+
+* **api:** add EARLY_DIRECT_DEPOSIT_FLOAT enum value to financial account types ([b6b91d3](https://github.com/lithic-com/lithic-kotlin/commit/b6b91d360724b875d807f3db8da4f4c8c840ce41))
+* **api:** Add event_subtype to statement line items ([aaafa6b](https://github.com/lithic-com/lithic-kotlin/commit/aaafa6beb91fd1d757915eef18557ac4a0b37a96))
+* **api:** add excludedAccountTokens field to auth rule v2 ([bdae746](https://github.com/lithic-com/lithic-kotlin/commit/bdae7469c37585ad639ff606449173b45829b4ac))
+* **api:** add loanTapeDate field to statement line item response ([0569621](https://github.com/lithic-com/lithic-kotlin/commit/05696213e6fd45b5702264fbe7992cc679b8487f))
+* **api:** add penalty_rates field to InterestTierSchedule ([7ac5046](https://github.com/lithic-com/lithic-kotlin/commit/7ac504643f24c62aa4e6d9441c6ac555680c4193))
+* **api:** Add support for early direct deposit ([2e8b286](https://github.com/lithic-com/lithic-kotlin/commit/2e8b28692a14df9825ab4d959b85fbdbff4809f9))
+* **api:** add TypeScript rules, RuleFeature/TypescriptCodeParameters models, DraftVersion fields ([c8c5241](https://github.com/lithic-com/lithic-kotlin/commit/c8c5241e1a3854b65476b4ace6beccce062941f5))
+* **api:** add versions field to daily statistics response ([9b20ddb](https://github.com/lithic-com/lithic-kotlin/commit/9b20ddb6cbf5495d60eb3bd073e0daa52cce10c2))
+* **api:** add WIRE transaction category, wire payment events, remove remittanceInformation ([ef965f9](https://github.com/lithic-com/lithic-kotlin/commit/ef965f914267c6214d071bb558d145cbab816661))
+
+
+### Bug Fixes
+
+* **api:** [breaking] unify webhook schemas for digital_wallet.tokenization_approval_request webhooks ([da897a4](https://github.com/lithic-com/lithic-kotlin/commit/da897a43d1bc0e766dfe21a362795db65bcc0abc))
+* **api:** Disable MCP server to fix TypeScript SDK package publishing ([a84dda8](https://github.com/lithic-com/lithic-kotlin/commit/a84dda812f23d87da1ec50f05d6d1b28e12cacb3))
+* **client:** incorrect `Retry-After` parsing ([eea9103](https://github.com/lithic-com/lithic-kotlin/commit/eea910347a96eddefc48ac83bb735124bd9ad590))
+* **types:** remove auth_rule_token, make end/start required in BacktestSimulationParameters ([04f68d8](https://github.com/lithic-com/lithic-kotlin/commit/04f68d81be1e1560ae5ee3b655d46e8f2cf7aadf))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([ff96b33](https://github.com/lithic-com/lithic-kotlin/commit/ff96b338d6f59094388bdc66cfad6071d18f96d4))
+
+
+### Documentation
+
+* **api:** update dispute methods to use chargeback request terminology ([4bf8b18](https://github.com/lithic-com/lithic-kotlin/commit/4bf8b18818146a3d297eac83359ea364c026f0f2))
+* **client:** add MCP Server integration documentation ([519ba76](https://github.com/lithic-com/lithic-kotlin/commit/519ba7614904db6c9943fdb500e174b89d1542e0))
+
 ## 0.118.0 (2026-03-05)
 
 Full Changelog: [v0.117.0...v0.118.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.117.0...v0.118.0)
