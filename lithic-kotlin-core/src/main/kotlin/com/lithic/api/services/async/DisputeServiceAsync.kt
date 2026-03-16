@@ -34,13 +34,13 @@ interface DisputeServiceAsync {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DisputeServiceAsync
 
-    /** Initiate a dispute. */
+    /** Request a chargeback. */
     suspend fun create(
         params: DisputeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
-    /** Get dispute. */
+    /** Get chargeback request. */
     suspend fun retrieve(
         disputeToken: String,
         params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
@@ -57,7 +57,7 @@ interface DisputeServiceAsync {
     suspend fun retrieve(disputeToken: String, requestOptions: RequestOptions): Dispute =
         retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
 
-    /** Update dispute. Can only be modified if status is `NEW`. */
+    /** Update chargeback request. Can only be modified if status is `NEW`. */
     suspend fun update(
         disputeToken: String,
         params: DisputeUpdateParams = DisputeUpdateParams.none(),
@@ -74,7 +74,7 @@ interface DisputeServiceAsync {
     suspend fun update(disputeToken: String, requestOptions: RequestOptions): Dispute =
         update(disputeToken, DisputeUpdateParams.none(), requestOptions)
 
-    /** List disputes. */
+    /** List chargeback requests. */
     suspend fun list(
         params: DisputeListParams = DisputeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +84,7 @@ interface DisputeServiceAsync {
     suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
         list(DisputeListParams.none(), requestOptions)
 
-    /** Withdraw dispute. */
+    /** Withdraw chargeback request. */
     suspend fun delete(
         disputeToken: String,
         params: DisputeDeleteParams = DisputeDeleteParams.none(),
@@ -102,8 +102,8 @@ interface DisputeServiceAsync {
         delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
 
     /**
-     * Soft delete evidence for a dispute. Evidence will not be reviewed or submitted by Lithic
-     * after it is withdrawn.
+     * Soft delete evidence for a chargeback request. Evidence will not be reviewed or submitted by
+     * Lithic after it is withdrawn.
      */
     suspend fun deleteEvidence(
         evidenceToken: String,
@@ -119,8 +119,8 @@ interface DisputeServiceAsync {
     ): DisputeEvidence
 
     /**
-     * Use this endpoint to upload evidences for the dispute. It will return a URL to upload your
-     * documents to. The URL will expire in 30 minutes.
+     * Use this endpoint to upload evidence for a chargeback request. It will return a URL to upload
+     * your documents to. The URL will expire in 30 minutes.
      *
      * Uploaded documents must either be a `jpg`, `png` or `pdf` file, and each must be less than 5
      * GiB.
@@ -152,7 +152,7 @@ interface DisputeServiceAsync {
             requestOptions,
         )
 
-    /** List evidence metadata for a dispute. */
+    /** List evidence for a chargeback request. */
     suspend fun listEvidences(
         disputeToken: String,
         params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
@@ -173,7 +173,7 @@ interface DisputeServiceAsync {
     ): DisputeListEvidencesPageAsync =
         listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
 
-    /** Get a dispute's evidence metadata. */
+    /** Get evidence for a chargeback request. */
     suspend fun retrieveEvidence(
         evidenceToken: String,
         params: DisputeRetrieveEvidenceParams,

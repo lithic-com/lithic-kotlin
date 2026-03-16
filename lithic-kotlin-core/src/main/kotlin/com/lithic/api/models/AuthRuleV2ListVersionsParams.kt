@@ -7,15 +7,15 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
-/** Get chargeback request. */
-class DisputeRetrieveParams
+/** Returns all versions of an auth rule, sorted by version number descending (newest first). */
+class AuthRuleV2ListVersionsParams
 private constructor(
-    private val disputeToken: String?,
+    private val authRuleToken: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
-    fun disputeToken(): String? = disputeToken
+    fun authRuleToken(): String? = authRuleToken
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -27,26 +27,28 @@ private constructor(
 
     companion object {
 
-        fun none(): DisputeRetrieveParams = builder().build()
+        fun none(): AuthRuleV2ListVersionsParams = builder().build()
 
-        /** Returns a mutable builder for constructing an instance of [DisputeRetrieveParams]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [AuthRuleV2ListVersionsParams].
+         */
         fun builder() = Builder()
     }
 
-    /** A builder for [DisputeRetrieveParams]. */
+    /** A builder for [AuthRuleV2ListVersionsParams]. */
     class Builder internal constructor() {
 
-        private var disputeToken: String? = null
+        private var authRuleToken: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(disputeRetrieveParams: DisputeRetrieveParams) = apply {
-            disputeToken = disputeRetrieveParams.disputeToken
-            additionalHeaders = disputeRetrieveParams.additionalHeaders.toBuilder()
-            additionalQueryParams = disputeRetrieveParams.additionalQueryParams.toBuilder()
+        internal fun from(authRuleV2ListVersionsParams: AuthRuleV2ListVersionsParams) = apply {
+            authRuleToken = authRuleV2ListVersionsParams.authRuleToken
+            additionalHeaders = authRuleV2ListVersionsParams.additionalHeaders.toBuilder()
+            additionalQueryParams = authRuleV2ListVersionsParams.additionalQueryParams.toBuilder()
         }
 
-        fun disputeToken(disputeToken: String?) = apply { this.disputeToken = disputeToken }
+        fun authRuleToken(authRuleToken: String?) = apply { this.authRuleToken = authRuleToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -147,13 +149,13 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [DisputeRetrieveParams].
+         * Returns an immutable instance of [AuthRuleV2ListVersionsParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): DisputeRetrieveParams =
-            DisputeRetrieveParams(
-                disputeToken,
+        fun build(): AuthRuleV2ListVersionsParams =
+            AuthRuleV2ListVersionsParams(
+                authRuleToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -161,7 +163,7 @@ private constructor(
 
     fun _pathParam(index: Int): String =
         when (index) {
-            0 -> disputeToken ?: ""
+            0 -> authRuleToken ?: ""
             else -> ""
         }
 
@@ -174,15 +176,15 @@ private constructor(
             return true
         }
 
-        return other is DisputeRetrieveParams &&
-            disputeToken == other.disputeToken &&
+        return other is AuthRuleV2ListVersionsParams &&
+            authRuleToken == other.authRuleToken &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
     }
 
     override fun hashCode(): Int =
-        Objects.hash(disputeToken, additionalHeaders, additionalQueryParams)
+        Objects.hash(authRuleToken, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "DisputeRetrieveParams{disputeToken=$disputeToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "AuthRuleV2ListVersionsParams{authRuleToken=$authRuleToken, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
