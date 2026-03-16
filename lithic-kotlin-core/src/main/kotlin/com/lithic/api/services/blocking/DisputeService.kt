@@ -34,13 +34,13 @@ interface DisputeService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): DisputeService
 
-    /** Initiate a dispute. */
+    /** Request a chargeback. */
     fun create(
         params: DisputeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Dispute
 
-    /** Get dispute. */
+    /** Get chargeback request. */
     fun retrieve(
         disputeToken: String,
         params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
@@ -57,7 +57,7 @@ interface DisputeService {
     fun retrieve(disputeToken: String, requestOptions: RequestOptions): Dispute =
         retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
 
-    /** Update dispute. Can only be modified if status is `NEW`. */
+    /** Update chargeback request. Can only be modified if status is `NEW`. */
     fun update(
         disputeToken: String,
         params: DisputeUpdateParams = DisputeUpdateParams.none(),
@@ -74,7 +74,7 @@ interface DisputeService {
     fun update(disputeToken: String, requestOptions: RequestOptions): Dispute =
         update(disputeToken, DisputeUpdateParams.none(), requestOptions)
 
-    /** List disputes. */
+    /** List chargeback requests. */
     fun list(
         params: DisputeListParams = DisputeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +84,7 @@ interface DisputeService {
     fun list(requestOptions: RequestOptions): DisputeListPage =
         list(DisputeListParams.none(), requestOptions)
 
-    /** Withdraw dispute. */
+    /** Withdraw chargeback request. */
     fun delete(
         disputeToken: String,
         params: DisputeDeleteParams = DisputeDeleteParams.none(),
@@ -102,8 +102,8 @@ interface DisputeService {
         delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
 
     /**
-     * Soft delete evidence for a dispute. Evidence will not be reviewed or submitted by Lithic
-     * after it is withdrawn.
+     * Soft delete evidence for a chargeback request. Evidence will not be reviewed or submitted by
+     * Lithic after it is withdrawn.
      */
     fun deleteEvidence(
         evidenceToken: String,
@@ -119,8 +119,8 @@ interface DisputeService {
     ): DisputeEvidence
 
     /**
-     * Use this endpoint to upload evidences for the dispute. It will return a URL to upload your
-     * documents to. The URL will expire in 30 minutes.
+     * Use this endpoint to upload evidence for a chargeback request. It will return a URL to upload
+     * your documents to. The URL will expire in 30 minutes.
      *
      * Uploaded documents must either be a `jpg`, `png` or `pdf` file, and each must be less than 5
      * GiB.
@@ -152,7 +152,7 @@ interface DisputeService {
             requestOptions,
         )
 
-    /** List evidence metadata for a dispute. */
+    /** List evidence for a chargeback request. */
     fun listEvidences(
         disputeToken: String,
         params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
@@ -173,7 +173,7 @@ interface DisputeService {
     ): DisputeListEvidencesPage =
         listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
 
-    /** Get a dispute's evidence metadata. */
+    /** Get evidence for a chargeback request. */
     fun retrieveEvidence(
         evidenceToken: String,
         params: DisputeRetrieveEvidenceParams,
