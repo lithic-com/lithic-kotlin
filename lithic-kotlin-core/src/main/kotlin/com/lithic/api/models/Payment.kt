@@ -3624,6 +3624,7 @@ private constructor(
             private val creditor: JsonField<WirePartyDetails>,
             private val debtor: JsonField<WirePartyDetails>,
             private val messageId: JsonField<String>,
+            private val remittanceInformation: JsonField<String>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -3644,7 +3645,18 @@ private constructor(
                 @JsonProperty("message_id")
                 @ExcludeMissing
                 messageId: JsonField<String> = JsonMissing.of(),
-            ) : this(wireMessageType, wireNetwork, creditor, debtor, messageId, mutableMapOf())
+                @JsonProperty("remittance_information")
+                @ExcludeMissing
+                remittanceInformation: JsonField<String> = JsonMissing.of(),
+            ) : this(
+                wireMessageType,
+                wireNetwork,
+                creditor,
+                debtor,
+                messageId,
+                remittanceInformation,
+                mutableMapOf(),
+            )
 
             /**
              * Type of wire message
@@ -3683,6 +3695,15 @@ private constructor(
              *   the server responded with an unexpected value).
              */
             fun messageId(): String? = messageId.getNullable("message_id")
+
+            /**
+             * Payment details or invoice reference
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun remittanceInformation(): String? =
+                remittanceInformation.getNullable("remittance_information")
 
             /**
              * Returns the raw JSON value of [wireMessageType].
@@ -3733,6 +3754,16 @@ private constructor(
             @ExcludeMissing
             fun _messageId(): JsonField<String> = messageId
 
+            /**
+             * Returns the raw JSON value of [remittanceInformation].
+             *
+             * Unlike [remittanceInformation], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("remittance_information")
+            @ExcludeMissing
+            fun _remittanceInformation(): JsonField<String> = remittanceInformation
+
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
                 additionalProperties.put(key, value)
@@ -3767,6 +3798,7 @@ private constructor(
                 private var creditor: JsonField<WirePartyDetails> = JsonMissing.of()
                 private var debtor: JsonField<WirePartyDetails> = JsonMissing.of()
                 private var messageId: JsonField<String> = JsonMissing.of()
+                private var remittanceInformation: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(wireMethodAttributes: WireMethodAttributes) = apply {
@@ -3775,6 +3807,7 @@ private constructor(
                     creditor = wireMethodAttributes.creditor
                     debtor = wireMethodAttributes.debtor
                     messageId = wireMethodAttributes.messageId
+                    remittanceInformation = wireMethodAttributes.remittanceInformation
                     additionalProperties = wireMethodAttributes.additionalProperties.toMutableMap()
                 }
 
@@ -3846,6 +3879,21 @@ private constructor(
                  */
                 fun messageId(messageId: JsonField<String>) = apply { this.messageId = messageId }
 
+                /** Payment details or invoice reference */
+                fun remittanceInformation(remittanceInformation: String?) =
+                    remittanceInformation(JsonField.ofNullable(remittanceInformation))
+
+                /**
+                 * Sets [Builder.remittanceInformation] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.remittanceInformation] with a well-typed
+                 * [String] value instead. This method is primarily for setting the field to an
+                 * undocumented or not yet supported value.
+                 */
+                fun remittanceInformation(remittanceInformation: JsonField<String>) = apply {
+                    this.remittanceInformation = remittanceInformation
+                }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -3888,6 +3936,7 @@ private constructor(
                         creditor,
                         debtor,
                         messageId,
+                        remittanceInformation,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -3904,6 +3953,7 @@ private constructor(
                 creditor()?.validate()
                 debtor()?.validate()
                 messageId()
+                remittanceInformation()
                 validated = true
             }
 
@@ -3926,7 +3976,8 @@ private constructor(
                     (wireNetwork.asKnown()?.validity() ?: 0) +
                     (creditor.asKnown()?.validity() ?: 0) +
                     (debtor.asKnown()?.validity() ?: 0) +
-                    (if (messageId.asKnown() == null) 0 else 1)
+                    (if (messageId.asKnown() == null) 0 else 1) +
+                    (if (remittanceInformation.asKnown() == null) 0 else 1)
 
             /** Type of wire transfer */
             class WireNetwork
@@ -4070,6 +4121,7 @@ private constructor(
                     creditor == other.creditor &&
                     debtor == other.debtor &&
                     messageId == other.messageId &&
+                    remittanceInformation == other.remittanceInformation &&
                     additionalProperties == other.additionalProperties
             }
 
@@ -4080,6 +4132,7 @@ private constructor(
                     creditor,
                     debtor,
                     messageId,
+                    remittanceInformation,
                     additionalProperties,
                 )
             }
@@ -4087,7 +4140,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "WireMethodAttributes{wireMessageType=$wireMessageType, wireNetwork=$wireNetwork, creditor=$creditor, debtor=$debtor, messageId=$messageId, additionalProperties=$additionalProperties}"
+                "WireMethodAttributes{wireMessageType=$wireMessageType, wireNetwork=$wireNetwork, creditor=$creditor, debtor=$debtor, messageId=$messageId, remittanceInformation=$remittanceInformation, additionalProperties=$additionalProperties}"
         }
     }
 
