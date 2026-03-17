@@ -373,6 +373,7 @@ internal class CardServiceTest {
         val cardEmbedUrl =
             cardService.getEmbedUrl(CardGetEmbedUrlParams.builder().token("foo").build())
         println(cardEmbedUrl)
+        assertThat(cardEmbedUrl).contains("/v1/embed/card")
         assertThat(cardEmbedUrl).contains("hmac")
     }
 }
