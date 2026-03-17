@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.120.0 (2026-03-17)
+
+Full Changelog: [v0.119.0...v0.120.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.119.0...v0.120.0)
+
+### Features
+
+* **api:** add remittanceInformation field to Payment WireMethodAttributes ([1a66025](https://github.com/lithic-com/lithic-kotlin/commit/1a660255f4db480b27ef811f15dca9c55155e54a))
+
+
+### Bug Fixes
+
+* add v1 prefix to cardService.getEmbedUrl ([#1542](https://github.com/lithic-com/lithic-kotlin/issues/1542)) ([603117c](https://github.com/lithic-com/lithic-kotlin/commit/603117c8623dcd7b6b60425f0c1dde9f441a70cd))
+* **client:** allow updating header/query affecting fields in `toBuilder()` ([2fecb2c](https://github.com/lithic-com/lithic-kotlin/commit/2fecb2cdac2c949399839003132ab768c95a1b65))
+* **types:** use KybDelegatedIndividual for beneficial owners and control person ([7a89893](https://github.com/lithic-com/lithic-kotlin/commit/7a89893f2c1f642fcb103703de07863b6f17f469))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([ed9193a](https://github.com/lithic-com/lithic-kotlin/commit/ed9193a162fb9b069361871f07a61b6315c22bb6))
+* **internal:** update retry delay tests ([868a145](https://github.com/lithic-com/lithic-kotlin/commit/868a14590ff32ff8454ae8b02d261213011e0c44))
+
+
+### Documentation
+
+* **api:** add pdf to supported file types in account holder document upload ([a9ba654](https://github.com/lithic-com/lithic-kotlin/commit/a9ba654a16a221d8f46223c45e6748140bb69fe5))
+
 ## 0.119.0 (2026-03-16)
 
 Full Changelog: [v0.118.0...v0.119.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.118.0...v0.119.0)
