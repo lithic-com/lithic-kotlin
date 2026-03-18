@@ -420,6 +420,14 @@ private constructor(
          * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data with
          *   the cardholder KYC data if it exists. Valid values are `MATCH`, `MATCH_ADDRESS_ONLY`,
          *   `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+         * * `SERVICE_LOCATION_STATE`: The state/province code (ISO 3166-2) where the cardholder
+         *   received the service, e.g. "NY". When a service location is present in the network
+         *   data, the service location state is used. Otherwise, falls back to the card acceptor
+         *   state.
+         * * `SERVICE_LOCATION_POSTAL_CODE`: The postal code where the cardholder received the
+         *   service, e.g. "10001". When a service location is present in the network data, the
+         *   service location postal code is used. Otherwise, falls back to the card acceptor postal
+         *   code.
          * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
          * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of the
          *   authorization.
@@ -565,6 +573,14 @@ private constructor(
              * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data
              *   with the cardholder KYC data if it exists. Valid values are `MATCH`,
              *   `MATCH_ADDRESS_ONLY`, `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+             * * `SERVICE_LOCATION_STATE`: The state/province code (ISO 3166-2) where the cardholder
+             *   received the service, e.g. "NY". When a service location is present in the network
+             *   data, the service location state is used. Otherwise, falls back to the card
+             *   acceptor state.
+             * * `SERVICE_LOCATION_POSTAL_CODE`: The postal code where the cardholder received the
+             *   service, e.g. "10001". When a service location is present in the network data, the
+             *   service location postal code is used. Otherwise, falls back to the card acceptor
+             *   postal code.
              * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
              * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of
              *   the authorization.
@@ -743,6 +759,14 @@ private constructor(
          * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data with
          *   the cardholder KYC data if it exists. Valid values are `MATCH`, `MATCH_ADDRESS_ONLY`,
          *   `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+         * * `SERVICE_LOCATION_STATE`: The state/province code (ISO 3166-2) where the cardholder
+         *   received the service, e.g. "NY". When a service location is present in the network
+         *   data, the service location state is used. Otherwise, falls back to the card acceptor
+         *   state.
+         * * `SERVICE_LOCATION_POSTAL_CODE`: The postal code where the cardholder received the
+         *   service, e.g. "10001". When a service location is present in the network data, the
+         *   service location postal code is used. Otherwise, falls back to the card acceptor postal
+         *   code.
          * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
          * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of the
          *   authorization.
@@ -800,6 +824,10 @@ private constructor(
 
                 val ADDRESS_MATCH = of("ADDRESS_MATCH")
 
+                val SERVICE_LOCATION_STATE = of("SERVICE_LOCATION_STATE")
+
+                val SERVICE_LOCATION_POSTAL_CODE = of("SERVICE_LOCATION_POSTAL_CODE")
+
                 val CARD_AGE = of("CARD_AGE")
 
                 val ACCOUNT_AGE = of("ACCOUNT_AGE")
@@ -828,6 +856,8 @@ private constructor(
                 WALLET_TYPE,
                 TRANSACTION_INITIATOR,
                 ADDRESS_MATCH,
+                SERVICE_LOCATION_STATE,
+                SERVICE_LOCATION_POSTAL_CODE,
                 CARD_AGE,
                 ACCOUNT_AGE,
             }
@@ -861,6 +891,8 @@ private constructor(
                 WALLET_TYPE,
                 TRANSACTION_INITIATOR,
                 ADDRESS_MATCH,
+                SERVICE_LOCATION_STATE,
+                SERVICE_LOCATION_POSTAL_CODE,
                 CARD_AGE,
                 ACCOUNT_AGE,
                 /**
@@ -898,6 +930,8 @@ private constructor(
                     WALLET_TYPE -> Value.WALLET_TYPE
                     TRANSACTION_INITIATOR -> Value.TRANSACTION_INITIATOR
                     ADDRESS_MATCH -> Value.ADDRESS_MATCH
+                    SERVICE_LOCATION_STATE -> Value.SERVICE_LOCATION_STATE
+                    SERVICE_LOCATION_POSTAL_CODE -> Value.SERVICE_LOCATION_POSTAL_CODE
                     CARD_AGE -> Value.CARD_AGE
                     ACCOUNT_AGE -> Value.ACCOUNT_AGE
                     else -> Value._UNKNOWN
@@ -933,6 +967,8 @@ private constructor(
                     WALLET_TYPE -> Known.WALLET_TYPE
                     TRANSACTION_INITIATOR -> Known.TRANSACTION_INITIATOR
                     ADDRESS_MATCH -> Known.ADDRESS_MATCH
+                    SERVICE_LOCATION_STATE -> Known.SERVICE_LOCATION_STATE
+                    SERVICE_LOCATION_POSTAL_CODE -> Known.SERVICE_LOCATION_POSTAL_CODE
                     CARD_AGE -> Known.CARD_AGE
                     ACCOUNT_AGE -> Known.ACCOUNT_AGE
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")
