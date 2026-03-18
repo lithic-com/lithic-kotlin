@@ -420,6 +420,9 @@ private constructor(
          * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data with
          *   the cardholder KYC data if it exists. Valid values are `MATCH`, `MATCH_ADDRESS_ONLY`,
          *   `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+         * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
+         * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of the
+         *   authorization.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -562,6 +565,9 @@ private constructor(
              * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data
              *   with the cardholder KYC data if it exists. Valid values are `MATCH`,
              *   `MATCH_ADDRESS_ONLY`, `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+             * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
+             * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of
+             *   the authorization.
              */
             fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -737,6 +743,9 @@ private constructor(
          * * `ADDRESS_MATCH`: Lithic's evaluation result comparing transaction's address data with
          *   the cardholder KYC data if it exists. Valid values are `MATCH`, `MATCH_ADDRESS_ONLY`,
          *   `MATCH_ZIP_ONLY`,`MISMATCH`,`NOT_PRESENT`.
+         * * `CARD_AGE`: The age of the card in seconds at the time of the authorization.
+         * * `ACCOUNT_AGE`: The age of the account holder's account in seconds at the time of the
+         *   authorization.
          */
         class Attribute @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -791,6 +800,10 @@ private constructor(
 
                 val ADDRESS_MATCH = of("ADDRESS_MATCH")
 
+                val CARD_AGE = of("CARD_AGE")
+
+                val ACCOUNT_AGE = of("ACCOUNT_AGE")
+
                 fun of(value: String) = Attribute(JsonField.of(value))
             }
 
@@ -815,6 +828,8 @@ private constructor(
                 WALLET_TYPE,
                 TRANSACTION_INITIATOR,
                 ADDRESS_MATCH,
+                CARD_AGE,
+                ACCOUNT_AGE,
             }
 
             /**
@@ -846,6 +861,8 @@ private constructor(
                 WALLET_TYPE,
                 TRANSACTION_INITIATOR,
                 ADDRESS_MATCH,
+                CARD_AGE,
+                ACCOUNT_AGE,
                 /**
                  * An enum member indicating that [Attribute] was instantiated with an unknown
                  * value.
@@ -881,6 +898,8 @@ private constructor(
                     WALLET_TYPE -> Value.WALLET_TYPE
                     TRANSACTION_INITIATOR -> Value.TRANSACTION_INITIATOR
                     ADDRESS_MATCH -> Value.ADDRESS_MATCH
+                    CARD_AGE -> Value.CARD_AGE
+                    ACCOUNT_AGE -> Value.ACCOUNT_AGE
                     else -> Value._UNKNOWN
                 }
 
@@ -914,6 +933,8 @@ private constructor(
                     WALLET_TYPE -> Known.WALLET_TYPE
                     TRANSACTION_INITIATOR -> Known.TRANSACTION_INITIATOR
                     ADDRESS_MATCH -> Known.ADDRESS_MATCH
+                    CARD_AGE -> Known.CARD_AGE
+                    ACCOUNT_AGE -> Known.ACCOUNT_AGE
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")
                 }
 
