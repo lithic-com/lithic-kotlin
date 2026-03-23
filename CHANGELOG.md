@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.121.0 (2026-03-23)
+
+Full Changelog: [v0.120.0...v0.121.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.120.0...v0.121.0)
+
+### Features
+
+* **api:** add CARD_AGE and ACCOUNT_AGE to conditional authorization attributes ([3c8c290](https://github.com/lithic-com/lithic-kotlin/commit/3c8c290c18f3ad33e8664a9f312294e9f7999ac0))
+* **api:** add override_company_name parameter to external payment create ([77f8a85](https://github.com/lithic-com/lithic-kotlin/commit/77f8a8531cce40974a2060f9aca9cdae330bf65f))
+* **api:** add service location fields to Merchant, location attributes to auth parameters ([a3a3513](https://github.com/lithic-com/lithic-kotlin/commit/a3a35135d65ea2a6147a6e8f2029ebe0aa254eb6))
+
+
+### Chores
+
+* **internal:** bump ktfmt ([7f54839](https://github.com/lithic-com/lithic-kotlin/commit/7f5483990896e8b7f0a850bf9f34d9c49520aca2))
+* **internal:** switch from steady to prism mock server ([b5b4e6d](https://github.com/lithic-com/lithic-kotlin/commit/b5b4e6dc93fa979182311e04ee1673076983e9c5))
+* **internal:** update gitignore ([4adf551](https://github.com/lithic-com/lithic-kotlin/commit/4adf5519e083f2428144959a83a1caf122d3b1ea))
+* **tests:** bump steady to v0.19.4 ([111cc45](https://github.com/lithic-com/lithic-kotlin/commit/111cc45b96a9050accc849abc55debb53b9e92bd))
+* **tests:** bump steady to v0.19.5 ([773df9c](https://github.com/lithic-com/lithic-kotlin/commit/773df9cf5d52fadfd3652e5147a423346c427ae4))
+* **tests:** bump steady to v0.19.6 ([4f6190e](https://github.com/lithic-com/lithic-kotlin/commit/4f6190ef69fab769144a0eb3da7d45b841e21486))
+
+
+### Documentation
+
+* **api:** clarify natureOfBusiness and qrCodeUrl field descriptions ([edcb195](https://github.com/lithic-com/lithic-kotlin/commit/edcb19570891b0557ebcf9baa267cfd507ea9a0d))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([a8c4026](https://github.com/lithic-com/lithic-kotlin/commit/a8c402663f6bc03166a96111db53fd1c5880f68c))
+
 ## 0.120.0 (2026-03-17)
 
 Full Changelog: [v0.119.0...v0.120.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.119.0...v0.120.0)
