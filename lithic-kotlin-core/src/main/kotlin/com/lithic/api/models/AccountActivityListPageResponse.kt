@@ -11,6 +11,7 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.checkKnown
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
@@ -34,18 +35,18 @@ private constructor(
     ) : this(data, hasMore, mutableMapOf())
 
     /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun data(): List<AccountActivityListResponse>? = data.getNullable("data")
+    fun data(): List<AccountActivityListResponse> = data.getRequired("data")
 
     /**
      * Indicates if there are more transactions available for pagination
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun hasMore(): Boolean? = hasMore.getNullable("has_more")
+    fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
     /**
      * Returns the raw JSON value of [data].
@@ -80,6 +81,12 @@ private constructor(
         /**
          * Returns a mutable builder for constructing an instance of
          * [AccountActivityListPageResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .hasMore()
+         * ```
          */
         fun builder() = Builder()
     }
@@ -88,7 +95,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<AccountActivityListResponse>>? = null
-        private var hasMore: JsonField<Boolean> = JsonMissing.of()
+        private var hasMore: JsonField<Boolean>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(accountActivityListPageResponse: AccountActivityListPageResponse) =
@@ -190,11 +197,19 @@ private constructor(
          * Returns an immutable instance of [AccountActivityListPageResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .data()
+         * .hasMore()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): AccountActivityListPageResponse =
             AccountActivityListPageResponse(
-                (data ?: JsonMissing.of()).map { it.toImmutable() },
-                hasMore,
+                checkRequired("data", data).map { it.toImmutable() },
+                checkRequired("hasMore", hasMore),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -206,7 +221,7 @@ private constructor(
             return@apply
         }
 
-        data()?.forEach { it.validate() }
+        data().forEach { it.validate() }
         hasMore()
         validated = true
     }
