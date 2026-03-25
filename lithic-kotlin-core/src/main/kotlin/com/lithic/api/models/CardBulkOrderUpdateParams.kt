@@ -20,8 +20,8 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * Update a bulk order **[BETA]**. Primarily used to lock the order, preventing additional cards
- * from being added
+ * Update a bulk order. Primarily used to lock the order, preventing additional cards from being
+ * added
  */
 class CardBulkOrderUpdateParams
 private constructor(

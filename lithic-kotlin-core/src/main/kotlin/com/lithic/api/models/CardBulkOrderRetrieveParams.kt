@@ -7,7 +7,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
 import java.util.Objects
 
-/** Retrieve a specific bulk order by token **[BETA]** */
+/** Retrieve a specific bulk order by token */
 class CardBulkOrderRetrieveParams
 private constructor(
     private val bulkOrderToken: String?,
