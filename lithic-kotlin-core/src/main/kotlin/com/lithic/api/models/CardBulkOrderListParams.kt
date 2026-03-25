@@ -9,7 +9,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
-/** List bulk orders for physical card shipments **[BETA]** */
+/** List bulk orders for physical card shipments */
 class CardBulkOrderListParams
 private constructor(
     private val begin: OffsetDateTime?,
