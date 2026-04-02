@@ -43,6 +43,7 @@ private constructor(
     private val nextPaymentDueDate: JsonField<LocalDate>,
     private val nextStatementEndDate: JsonField<LocalDate>,
     private val payoffDetails: JsonField<Statement.PayoffDetails>,
+    private val statementTotals: JsonField<StatementTotals>,
     private val eventType: JsonField<EventType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -113,6 +114,9 @@ private constructor(
         @JsonProperty("payoff_details")
         @ExcludeMissing
         payoffDetails: JsonField<Statement.PayoffDetails> = JsonMissing.of(),
+        @JsonProperty("statement_totals")
+        @ExcludeMissing
+        statementTotals: JsonField<StatementTotals> = JsonMissing.of(),
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
@@ -139,6 +143,7 @@ private constructor(
         nextPaymentDueDate,
         nextStatementEndDate,
         payoffDetails,
+        statementTotals,
         eventType,
         mutableMapOf(),
     )
@@ -167,6 +172,7 @@ private constructor(
             .nextPaymentDueDate(nextPaymentDueDate)
             .nextStatementEndDate(nextStatementEndDate)
             .payoffDetails(payoffDetails)
+            .statementTotals(statementTotals)
             .build()
 
     /**
@@ -337,6 +343,12 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun payoffDetails(): Statement.PayoffDetails? = payoffDetails.getNullable("payoff_details")
+
+    /**
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun statementTotals(): StatementTotals? = statementTotals.getNullable("statement_totals")
 
     /**
      * The type of event that occurred.
@@ -544,6 +556,15 @@ private constructor(
     fun _payoffDetails(): JsonField<Statement.PayoffDetails> = payoffDetails
 
     /**
+     * Returns the raw JSON value of [statementTotals].
+     *
+     * Unlike [statementTotals], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("statement_totals")
+    @ExcludeMissing
+    fun _statementTotals(): JsonField<StatementTotals> = statementTotals
+
+    /**
      * Returns the raw JSON value of [eventType].
      *
      * Unlike [eventType], this method doesn't throw if the JSON field has an unexpected type.
@@ -619,6 +640,7 @@ private constructor(
         private var nextPaymentDueDate: JsonField<LocalDate> = JsonMissing.of()
         private var nextStatementEndDate: JsonField<LocalDate> = JsonMissing.of()
         private var payoffDetails: JsonField<Statement.PayoffDetails> = JsonMissing.of()
+        private var statementTotals: JsonField<StatementTotals> = JsonMissing.of()
         private var eventType: JsonField<EventType>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -645,6 +667,7 @@ private constructor(
             nextPaymentDueDate = statementsCreatedWebhookEvent.nextPaymentDueDate
             nextStatementEndDate = statementsCreatedWebhookEvent.nextStatementEndDate
             payoffDetails = statementsCreatedWebhookEvent.payoffDetails
+            statementTotals = statementsCreatedWebhookEvent.statementTotals
             eventType = statementsCreatedWebhookEvent.eventType
             additionalProperties = statementsCreatedWebhookEvent.additionalProperties.toMutableMap()
         }
@@ -955,6 +978,20 @@ private constructor(
             this.payoffDetails = payoffDetails
         }
 
+        fun statementTotals(statementTotals: StatementTotals) =
+            statementTotals(JsonField.of(statementTotals))
+
+        /**
+         * Sets [Builder.statementTotals] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.statementTotals] with a well-typed [StatementTotals]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun statementTotals(statementTotals: JsonField<StatementTotals>) = apply {
+            this.statementTotals = statementTotals
+        }
+
         /** The type of event that occurred. */
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
 
@@ -1040,6 +1077,7 @@ private constructor(
                 nextPaymentDueDate,
                 nextStatementEndDate,
                 payoffDetails,
+                statementTotals,
                 checkRequired("eventType", eventType),
                 additionalProperties.toMutableMap(),
             )
@@ -1074,6 +1112,7 @@ private constructor(
         nextPaymentDueDate()
         nextStatementEndDate()
         payoffDetails()?.validate()
+        statementTotals()?.validate()
         eventType().validate()
         validated = true
     }
@@ -1114,6 +1153,7 @@ private constructor(
             (if (nextPaymentDueDate.asKnown() == null) 0 else 1) +
             (if (nextStatementEndDate.asKnown() == null) 0 else 1) +
             (payoffDetails.asKnown()?.validity() ?: 0) +
+            (statementTotals.asKnown()?.validity() ?: 0) +
             (eventType.asKnown()?.validity() ?: 0)
 
     /** The type of event that occurred. */
@@ -1266,6 +1306,7 @@ private constructor(
             nextPaymentDueDate == other.nextPaymentDueDate &&
             nextStatementEndDate == other.nextStatementEndDate &&
             payoffDetails == other.payoffDetails &&
+            statementTotals == other.statementTotals &&
             eventType == other.eventType &&
             additionalProperties == other.additionalProperties
     }
@@ -1294,6 +1335,7 @@ private constructor(
             nextPaymentDueDate,
             nextStatementEndDate,
             payoffDetails,
+            statementTotals,
             eventType,
             additionalProperties,
         )
@@ -1302,5 +1344,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "StatementsCreatedWebhookEvent{token=$token, accountStanding=$accountStanding, amountDue=$amountDue, availableCredit=$availableCredit, created=$created, creditLimit=$creditLimit, creditProductToken=$creditProductToken, daysInBillingCycle=$daysInBillingCycle, endingBalance=$endingBalance, financialAccountToken=$financialAccountToken, paymentDueDate=$paymentDueDate, periodTotals=$periodTotals, startingBalance=$startingBalance, statementEndDate=$statementEndDate, statementStartDate=$statementStartDate, statementType=$statementType, updated=$updated, ytdTotals=$ytdTotals, interestDetails=$interestDetails, nextPaymentDueDate=$nextPaymentDueDate, nextStatementEndDate=$nextStatementEndDate, payoffDetails=$payoffDetails, eventType=$eventType, additionalProperties=$additionalProperties}"
+        "StatementsCreatedWebhookEvent{token=$token, accountStanding=$accountStanding, amountDue=$amountDue, availableCredit=$availableCredit, created=$created, creditLimit=$creditLimit, creditProductToken=$creditProductToken, daysInBillingCycle=$daysInBillingCycle, endingBalance=$endingBalance, financialAccountToken=$financialAccountToken, paymentDueDate=$paymentDueDate, periodTotals=$periodTotals, startingBalance=$startingBalance, statementEndDate=$statementEndDate, statementStartDate=$statementStartDate, statementType=$statementType, updated=$updated, ytdTotals=$ytdTotals, interestDetails=$interestDetails, nextPaymentDueDate=$nextPaymentDueDate, nextStatementEndDate=$nextStatementEndDate, payoffDetails=$payoffDetails, statementTotals=$statementTotals, eventType=$eventType, additionalProperties=$additionalProperties}"
 }
