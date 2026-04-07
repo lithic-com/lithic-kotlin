@@ -2631,7 +2631,6 @@ private constructor(
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val token: JsonField<String>,
-        private val hostname: JsonField<String>,
         private val lastFour: JsonField<String>,
         private val memo: JsonField<String>,
         private val spendLimit: JsonField<Long>,
@@ -2644,9 +2643,6 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("hostname")
-            @ExcludeMissing
-            hostname: JsonField<String> = JsonMissing.of(),
             @JsonProperty("last_four")
             @ExcludeMissing
             lastFour: JsonField<String> = JsonMissing.of(),
@@ -2659,50 +2655,31 @@ private constructor(
             spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of(),
             @JsonProperty("state") @ExcludeMissing state: JsonField<State> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<CardType> = JsonMissing.of(),
-        ) : this(
-            token,
-            hostname,
-            lastFour,
-            memo,
-            spendLimit,
-            spendLimitDuration,
-            state,
-            type,
-            mutableMapOf(),
-        )
+        ) : this(token, lastFour, memo, spendLimit, spendLimitDuration, state, type, mutableMapOf())
 
         /**
          * Globally unique identifier for the card.
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun token(): String? = token.getNullable("token")
-
-        /**
-         * Hostname of card’s locked merchant (will be empty if not applicable)
-         *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun hostname(): String? = hostname.getNullable("hostname")
+        fun token(): String = token.getRequired("token")
 
         /**
          * Last four digits of the card number
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun lastFour(): String? = lastFour.getNullable("last_four")
+        fun lastFour(): String = lastFour.getRequired("last_four")
 
         /**
-         * Customizable name to identify the card. We recommend against using this field to store
-         * JSON data as it can cause unexpected behavior.
+         * Customizable name to identify the card
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun memo(): String? = memo.getNullable("memo")
+        fun memo(): String = memo.getRequired("memo")
 
         /**
          * Amount (in cents) to limit approved authorizations. Purchase requests above the spend
@@ -2713,33 +2690,33 @@ private constructor(
          * Spend limits also cannot block force posted charges (i.e., when a merchant sends a
          * clearing message without a prior authorization).
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun spendLimit(): Long? = spendLimit.getNullable("spend_limit")
+        fun spendLimit(): Long = spendLimit.getRequired("spend_limit")
 
         /**
          * Note that to support recurring monthly payments, which can occur on different day every
          * month, the time window we consider for MONTHLY velocity starts 6 days after the current
          * calendar date one month prior.
          *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun spendLimitDuration(): SpendLimitDuration? =
-            spendLimitDuration.getNullable("spend_limit_duration")
+        fun spendLimitDuration(): SpendLimitDuration =
+            spendLimitDuration.getRequired("spend_limit_duration")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun state(): State? = state.getNullable("state")
+        fun state(): State = state.getRequired("state")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun type(): CardType? = type.getNullable("type")
+        fun type(): CardType = type.getRequired("type")
 
         /**
          * Returns the raw JSON value of [token].
@@ -2747,13 +2724,6 @@ private constructor(
          * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
-
-        /**
-         * Returns the raw JSON value of [hostname].
-         *
-         * Unlike [hostname], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("hostname") @ExcludeMissing fun _hostname(): JsonField<String> = hostname
 
         /**
          * Returns the raw JSON value of [lastFour].
@@ -2814,26 +2784,37 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [AsaRequestCard]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [AsaRequestCard].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .lastFour()
+             * .memo()
+             * .spendLimit()
+             * .spendLimitDuration()
+             * .state()
+             * .type()
+             * ```
+             */
             fun builder() = Builder()
         }
 
         /** A builder for [AsaRequestCard]. */
         class Builder internal constructor() {
 
-            private var token: JsonField<String> = JsonMissing.of()
-            private var hostname: JsonField<String> = JsonMissing.of()
-            private var lastFour: JsonField<String> = JsonMissing.of()
-            private var memo: JsonField<String> = JsonMissing.of()
-            private var spendLimit: JsonField<Long> = JsonMissing.of()
-            private var spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of()
-            private var state: JsonField<State> = JsonMissing.of()
-            private var type: JsonField<CardType> = JsonMissing.of()
+            private var token: JsonField<String>? = null
+            private var lastFour: JsonField<String>? = null
+            private var memo: JsonField<String>? = null
+            private var spendLimit: JsonField<Long>? = null
+            private var spendLimitDuration: JsonField<SpendLimitDuration>? = null
+            private var state: JsonField<State>? = null
+            private var type: JsonField<CardType>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(asaRequestCard: AsaRequestCard) = apply {
                 token = asaRequestCard.token
-                hostname = asaRequestCard.hostname
                 lastFour = asaRequestCard.lastFour
                 memo = asaRequestCard.memo
                 spendLimit = asaRequestCard.spendLimit
@@ -2855,18 +2836,6 @@ private constructor(
              */
             fun token(token: JsonField<String>) = apply { this.token = token }
 
-            /** Hostname of card’s locked merchant (will be empty if not applicable) */
-            fun hostname(hostname: String) = hostname(JsonField.of(hostname))
-
-            /**
-             * Sets [Builder.hostname] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.hostname] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun hostname(hostname: JsonField<String>) = apply { this.hostname = hostname }
-
             /** Last four digits of the card number */
             fun lastFour(lastFour: String) = lastFour(JsonField.of(lastFour))
 
@@ -2879,10 +2848,7 @@ private constructor(
              */
             fun lastFour(lastFour: JsonField<String>) = apply { this.lastFour = lastFour }
 
-            /**
-             * Customizable name to identify the card. We recommend against using this field to
-             * store JSON data as it can cause unexpected behavior.
-             */
+            /** Customizable name to identify the card */
             fun memo(memo: String) = memo(JsonField.of(memo))
 
             /**
@@ -2978,17 +2944,29 @@ private constructor(
              * Returns an immutable instance of [AsaRequestCard].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .token()
+             * .lastFour()
+             * .memo()
+             * .spendLimit()
+             * .spendLimitDuration()
+             * .state()
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): AsaRequestCard =
                 AsaRequestCard(
-                    token,
-                    hostname,
-                    lastFour,
-                    memo,
-                    spendLimit,
-                    spendLimitDuration,
-                    state,
-                    type,
+                    checkRequired("token", token),
+                    checkRequired("lastFour", lastFour),
+                    checkRequired("memo", memo),
+                    checkRequired("spendLimit", spendLimit),
+                    checkRequired("spendLimitDuration", spendLimitDuration),
+                    checkRequired("state", state),
+                    checkRequired("type", type),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -3001,13 +2979,12 @@ private constructor(
             }
 
             token()
-            hostname()
             lastFour()
             memo()
             spendLimit()
-            spendLimitDuration()?.validate()
-            state()?.validate()
-            type()?.validate()
+            spendLimitDuration().validate()
+            state().validate()
+            type().validate()
             validated = true
         }
 
@@ -3027,7 +3004,6 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (token.asKnown() == null) 0 else 1) +
-                (if (hostname.asKnown() == null) 0 else 1) +
                 (if (lastFour.asKnown() == null) 0 else 1) +
                 (if (memo.asKnown() == null) 0 else 1) +
                 (if (spendLimit.asKnown() == null) 0 else 1) +
@@ -3488,7 +3464,6 @@ private constructor(
 
             return other is AsaRequestCard &&
                 token == other.token &&
-                hostname == other.hostname &&
                 lastFour == other.lastFour &&
                 memo == other.memo &&
                 spendLimit == other.spendLimit &&
@@ -3501,7 +3476,6 @@ private constructor(
         private val hashCode: Int by lazy {
             Objects.hash(
                 token,
-                hostname,
                 lastFour,
                 memo,
                 spendLimit,
@@ -3515,7 +3489,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AsaRequestCard{token=$token, hostname=$hostname, lastFour=$lastFour, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, additionalProperties=$additionalProperties}"
+            "AsaRequestCard{token=$token, lastFour=$lastFour, memo=$memo, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, additionalProperties=$additionalProperties}"
     }
 
     class EventType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
