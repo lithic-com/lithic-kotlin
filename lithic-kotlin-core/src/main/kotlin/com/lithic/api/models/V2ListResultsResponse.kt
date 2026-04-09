@@ -283,6 +283,7 @@ private constructor(
         private val eventToken: JsonField<String>,
         private val mode: JsonField<AuthRuleState>,
         private val ruleVersion: JsonField<Long>,
+        private val transactionToken: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -308,6 +309,9 @@ private constructor(
             @JsonProperty("rule_version")
             @ExcludeMissing
             ruleVersion: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("transaction_token")
+            @ExcludeMissing
+            transactionToken: JsonField<String> = JsonMissing.of(),
         ) : this(
             token,
             actions,
@@ -317,6 +321,7 @@ private constructor(
             eventToken,
             mode,
             ruleVersion,
+            transactionToken,
             mutableMapOf(),
         )
 
@@ -383,6 +388,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun ruleVersion(): Long = ruleVersion.getRequired("rule_version")
+
+        /**
+         * The token of the transaction that triggered the rule evaluation
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionToken(): String? = transactionToken.getNullable("transaction_token")
 
         /**
          * Returns the raw JSON value of [token].
@@ -452,6 +465,16 @@ private constructor(
         @ExcludeMissing
         fun _ruleVersion(): JsonField<Long> = ruleVersion
 
+        /**
+         * Returns the raw JSON value of [transactionToken].
+         *
+         * Unlike [transactionToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transaction_token")
+        @ExcludeMissing
+        fun _transactionToken(): JsonField<String> = transactionToken
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -479,6 +502,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              */
             fun builder() = Builder()
@@ -495,6 +519,7 @@ private constructor(
             private var eventToken: JsonField<String>? = null
             private var mode: JsonField<AuthRuleState>? = null
             private var ruleVersion: JsonField<Long>? = null
+            private var transactionToken: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authorizationResult: AuthorizationResult) = apply {
@@ -506,6 +531,7 @@ private constructor(
                 eventToken = authorizationResult.eventToken
                 mode = authorizationResult.mode
                 ruleVersion = authorizationResult.ruleVersion
+                transactionToken = authorizationResult.transactionToken
                 additionalProperties = authorizationResult.additionalProperties.toMutableMap()
             }
 
@@ -640,6 +666,21 @@ private constructor(
              */
             fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
+            /** The token of the transaction that triggered the rule evaluation */
+            fun transactionToken(transactionToken: String?) =
+                transactionToken(JsonField.ofNullable(transactionToken))
+
+            /**
+             * Sets [Builder.transactionToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionToken(transactionToken: JsonField<String>) = apply {
+                this.transactionToken = transactionToken
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -674,6 +715,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -688,6 +730,7 @@ private constructor(
                     checkRequired("eventToken", eventToken),
                     checkRequired("mode", mode),
                     checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -707,6 +750,7 @@ private constructor(
             eventToken()
             mode().validate()
             ruleVersion()
+            transactionToken()
             validated = true
         }
 
@@ -732,7 +776,8 @@ private constructor(
                 (eventStream.asKnown()?.validity() ?: 0) +
                 (if (eventToken.asKnown() == null) 0 else 1) +
                 (mode.asKnown()?.validity() ?: 0) +
-                (if (ruleVersion.asKnown() == null) 0 else 1)
+                (if (ruleVersion.asKnown() == null) 0 else 1) +
+                (if (transactionToken.asKnown() == null) 0 else 1)
 
         @JsonDeserialize(using = Action.Deserializer::class)
         @JsonSerialize(using = Action.Serializer::class)
@@ -2406,6 +2451,7 @@ private constructor(
                 eventToken == other.eventToken &&
                 mode == other.mode &&
                 ruleVersion == other.ruleVersion &&
+                transactionToken == other.transactionToken &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -2419,6 +2465,7 @@ private constructor(
                 eventToken,
                 mode,
                 ruleVersion,
+                transactionToken,
                 additionalProperties,
             )
         }
@@ -2426,7 +2473,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AuthorizationResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, additionalProperties=$additionalProperties}"
+            "AuthorizationResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
     }
 
     class Authentication3dsResult
@@ -2440,6 +2487,7 @@ private constructor(
         private val eventToken: JsonField<String>,
         private val mode: JsonField<AuthRuleState>,
         private val ruleVersion: JsonField<Long>,
+        private val transactionToken: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2465,6 +2513,9 @@ private constructor(
             @JsonProperty("rule_version")
             @ExcludeMissing
             ruleVersion: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("transaction_token")
+            @ExcludeMissing
+            transactionToken: JsonField<String> = JsonMissing.of(),
         ) : this(
             token,
             actions,
@@ -2474,6 +2525,7 @@ private constructor(
             eventToken,
             mode,
             ruleVersion,
+            transactionToken,
             mutableMapOf(),
         )
 
@@ -2540,6 +2592,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun ruleVersion(): Long = ruleVersion.getRequired("rule_version")
+
+        /**
+         * The token of the transaction that triggered the rule evaluation
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionToken(): String? = transactionToken.getNullable("transaction_token")
 
         /**
          * Returns the raw JSON value of [token].
@@ -2609,6 +2669,16 @@ private constructor(
         @ExcludeMissing
         fun _ruleVersion(): JsonField<Long> = ruleVersion
 
+        /**
+         * Returns the raw JSON value of [transactionToken].
+         *
+         * Unlike [transactionToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transaction_token")
+        @ExcludeMissing
+        fun _transactionToken(): JsonField<String> = transactionToken
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -2636,6 +2706,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              */
             fun builder() = Builder()
@@ -2652,6 +2723,7 @@ private constructor(
             private var eventToken: JsonField<String>? = null
             private var mode: JsonField<AuthRuleState>? = null
             private var ruleVersion: JsonField<Long>? = null
+            private var transactionToken: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(authentication3dsResult: Authentication3dsResult) = apply {
@@ -2663,6 +2735,7 @@ private constructor(
                 eventToken = authentication3dsResult.eventToken
                 mode = authentication3dsResult.mode
                 ruleVersion = authentication3dsResult.ruleVersion
+                transactionToken = authentication3dsResult.transactionToken
                 additionalProperties = authentication3dsResult.additionalProperties.toMutableMap()
             }
 
@@ -2783,6 +2856,21 @@ private constructor(
              */
             fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
+            /** The token of the transaction that triggered the rule evaluation */
+            fun transactionToken(transactionToken: String?) =
+                transactionToken(JsonField.ofNullable(transactionToken))
+
+            /**
+             * Sets [Builder.transactionToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionToken(transactionToken: JsonField<String>) = apply {
+                this.transactionToken = transactionToken
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -2817,6 +2905,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -2831,6 +2920,7 @@ private constructor(
                     checkRequired("eventToken", eventToken),
                     checkRequired("mode", mode),
                     checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -2850,6 +2940,7 @@ private constructor(
             eventToken()
             mode().validate()
             ruleVersion()
+            transactionToken()
             validated = true
         }
 
@@ -2875,7 +2966,8 @@ private constructor(
                 (eventStream.asKnown()?.validity() ?: 0) +
                 (if (eventToken.asKnown() == null) 0 else 1) +
                 (mode.asKnown()?.validity() ?: 0) +
-                (if (ruleVersion.asKnown() == null) 0 else 1)
+                (if (ruleVersion.asKnown() == null) 0 else 1) +
+                (if (transactionToken.asKnown() == null) 0 else 1)
 
         class Action
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -3487,6 +3579,7 @@ private constructor(
                 eventToken == other.eventToken &&
                 mode == other.mode &&
                 ruleVersion == other.ruleVersion &&
+                transactionToken == other.transactionToken &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -3500,6 +3593,7 @@ private constructor(
                 eventToken,
                 mode,
                 ruleVersion,
+                transactionToken,
                 additionalProperties,
             )
         }
@@ -3507,7 +3601,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Authentication3dsResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, additionalProperties=$additionalProperties}"
+            "Authentication3dsResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
     }
 
     class TokenizationResult
@@ -3521,6 +3615,7 @@ private constructor(
         private val eventToken: JsonField<String>,
         private val mode: JsonField<AuthRuleState>,
         private val ruleVersion: JsonField<Long>,
+        private val transactionToken: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -3546,6 +3641,9 @@ private constructor(
             @JsonProperty("rule_version")
             @ExcludeMissing
             ruleVersion: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("transaction_token")
+            @ExcludeMissing
+            transactionToken: JsonField<String> = JsonMissing.of(),
         ) : this(
             token,
             actions,
@@ -3555,6 +3653,7 @@ private constructor(
             eventToken,
             mode,
             ruleVersion,
+            transactionToken,
             mutableMapOf(),
         )
 
@@ -3621,6 +3720,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun ruleVersion(): Long = ruleVersion.getRequired("rule_version")
+
+        /**
+         * The token of the transaction that triggered the rule evaluation
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionToken(): String? = transactionToken.getNullable("transaction_token")
 
         /**
          * Returns the raw JSON value of [token].
@@ -3690,6 +3797,16 @@ private constructor(
         @ExcludeMissing
         fun _ruleVersion(): JsonField<Long> = ruleVersion
 
+        /**
+         * Returns the raw JSON value of [transactionToken].
+         *
+         * Unlike [transactionToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transaction_token")
+        @ExcludeMissing
+        fun _transactionToken(): JsonField<String> = transactionToken
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -3717,6 +3834,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              */
             fun builder() = Builder()
@@ -3733,6 +3851,7 @@ private constructor(
             private var eventToken: JsonField<String>? = null
             private var mode: JsonField<AuthRuleState>? = null
             private var ruleVersion: JsonField<Long>? = null
+            private var transactionToken: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(tokenizationResult: TokenizationResult) = apply {
@@ -3744,6 +3863,7 @@ private constructor(
                 eventToken = tokenizationResult.eventToken
                 mode = tokenizationResult.mode
                 ruleVersion = tokenizationResult.ruleVersion
+                transactionToken = tokenizationResult.transactionToken
                 additionalProperties = tokenizationResult.additionalProperties.toMutableMap()
             }
 
@@ -3875,6 +3995,21 @@ private constructor(
              */
             fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
+            /** The token of the transaction that triggered the rule evaluation */
+            fun transactionToken(transactionToken: String?) =
+                transactionToken(JsonField.ofNullable(transactionToken))
+
+            /**
+             * Sets [Builder.transactionToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionToken(transactionToken: JsonField<String>) = apply {
+                this.transactionToken = transactionToken
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -3909,6 +4044,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -3923,6 +4059,7 @@ private constructor(
                     checkRequired("eventToken", eventToken),
                     checkRequired("mode", mode),
                     checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -3942,6 +4079,7 @@ private constructor(
             eventToken()
             mode().validate()
             ruleVersion()
+            transactionToken()
             validated = true
         }
 
@@ -3967,7 +4105,8 @@ private constructor(
                 (eventStream.asKnown()?.validity() ?: 0) +
                 (if (eventToken.asKnown() == null) 0 else 1) +
                 (mode.asKnown()?.validity() ?: 0) +
-                (if (ruleVersion.asKnown() == null) 0 else 1)
+                (if (ruleVersion.asKnown() == null) 0 else 1) +
+                (if (transactionToken.asKnown() == null) 0 else 1)
 
         @JsonDeserialize(using = Action.Deserializer::class)
         @JsonSerialize(using = Action.Serializer::class)
@@ -5583,6 +5722,7 @@ private constructor(
                 eventToken == other.eventToken &&
                 mode == other.mode &&
                 ruleVersion == other.ruleVersion &&
+                transactionToken == other.transactionToken &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -5596,6 +5736,7 @@ private constructor(
                 eventToken,
                 mode,
                 ruleVersion,
+                transactionToken,
                 additionalProperties,
             )
         }
@@ -5603,7 +5744,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "TokenizationResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, additionalProperties=$additionalProperties}"
+            "TokenizationResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
     }
 
     class AchResult
@@ -5617,6 +5758,7 @@ private constructor(
         private val eventToken: JsonField<String>,
         private val mode: JsonField<AuthRuleState>,
         private val ruleVersion: JsonField<Long>,
+        private val transactionToken: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -5642,6 +5784,9 @@ private constructor(
             @JsonProperty("rule_version")
             @ExcludeMissing
             ruleVersion: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("transaction_token")
+            @ExcludeMissing
+            transactionToken: JsonField<String> = JsonMissing.of(),
         ) : this(
             token,
             actions,
@@ -5651,6 +5796,7 @@ private constructor(
             eventToken,
             mode,
             ruleVersion,
+            transactionToken,
             mutableMapOf(),
         )
 
@@ -5717,6 +5863,14 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun ruleVersion(): Long = ruleVersion.getRequired("rule_version")
+
+        /**
+         * The token of the transaction that triggered the rule evaluation
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun transactionToken(): String? = transactionToken.getNullable("transaction_token")
 
         /**
          * Returns the raw JSON value of [token].
@@ -5786,6 +5940,16 @@ private constructor(
         @ExcludeMissing
         fun _ruleVersion(): JsonField<Long> = ruleVersion
 
+        /**
+         * Returns the raw JSON value of [transactionToken].
+         *
+         * Unlike [transactionToken], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("transaction_token")
+        @ExcludeMissing
+        fun _transactionToken(): JsonField<String> = transactionToken
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -5813,6 +5977,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              */
             fun builder() = Builder()
@@ -5829,6 +5994,7 @@ private constructor(
             private var eventToken: JsonField<String>? = null
             private var mode: JsonField<AuthRuleState>? = null
             private var ruleVersion: JsonField<Long>? = null
+            private var transactionToken: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(achResult: AchResult) = apply {
@@ -5840,6 +6006,7 @@ private constructor(
                 eventToken = achResult.eventToken
                 mode = achResult.mode
                 ruleVersion = achResult.ruleVersion
+                transactionToken = achResult.transactionToken
                 additionalProperties = achResult.additionalProperties.toMutableMap()
             }
 
@@ -5968,6 +6135,21 @@ private constructor(
              */
             fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
+            /** The token of the transaction that triggered the rule evaluation */
+            fun transactionToken(transactionToken: String?) =
+                transactionToken(JsonField.ofNullable(transactionToken))
+
+            /**
+             * Sets [Builder.transactionToken] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.transactionToken] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun transactionToken(transactionToken: JsonField<String>) = apply {
+                this.transactionToken = transactionToken
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -6002,6 +6184,7 @@ private constructor(
              * .eventToken()
              * .mode()
              * .ruleVersion()
+             * .transactionToken()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -6016,6 +6199,7 @@ private constructor(
                     checkRequired("eventToken", eventToken),
                     checkRequired("mode", mode),
                     checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -6035,6 +6219,7 @@ private constructor(
             eventToken()
             mode().validate()
             ruleVersion()
+            transactionToken()
             validated = true
         }
 
@@ -6060,7 +6245,8 @@ private constructor(
                 (eventStream.asKnown()?.validity() ?: 0) +
                 (if (eventToken.asKnown() == null) 0 else 1) +
                 (mode.asKnown()?.validity() ?: 0) +
-                (if (ruleVersion.asKnown() == null) 0 else 1)
+                (if (ruleVersion.asKnown() == null) 0 else 1) +
+                (if (transactionToken.asKnown() == null) 0 else 1)
 
         @JsonDeserialize(using = Action.Deserializer::class)
         @JsonSerialize(using = Action.Serializer::class)
@@ -7770,6 +7956,7 @@ private constructor(
                 eventToken == other.eventToken &&
                 mode == other.mode &&
                 ruleVersion == other.ruleVersion &&
+                transactionToken == other.transactionToken &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -7783,6 +7970,7 @@ private constructor(
                 eventToken,
                 mode,
                 ruleVersion,
+                transactionToken,
                 additionalProperties,
             )
         }
@@ -7790,6 +7978,6 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AchResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, additionalProperties=$additionalProperties}"
+            "AchResult{token=$token, actions=$actions, authRuleToken=$authRuleToken, evaluationTime=$evaluationTime, eventStream=$eventStream, eventToken=$eventToken, mode=$mode, ruleVersion=$ruleVersion, transactionToken=$transactionToken, additionalProperties=$additionalProperties}"
     }
 }
