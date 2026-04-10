@@ -20,9 +20,6 @@ internal class ReportStatsTest {
                         .putAdditionalProperty("foo", JsonValue.from(0))
                         .build()
                 )
-                .approved(0L)
-                .challenged(0L)
-                .declined(0L)
                 .addExample(
                     ReportStats.Example.builder()
                         .addAction(
@@ -38,13 +35,13 @@ internal class ReportStatsTest {
                                 )
                                 .build()
                         )
-                        .approved(true)
-                        .decision(ReportStats.Example.Decision.APPROVED)
                         .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .timestamp(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .build()
                 )
+                .state(ReportStats.AuthRuleVersionState.ACTIVE)
+                .version(0L)
                 .build()
 
         assertThat(reportStats.actionCounts())
@@ -53,9 +50,6 @@ internal class ReportStatsTest {
                     .putAdditionalProperty("foo", JsonValue.from(0))
                     .build()
             )
-        assertThat(reportStats.approved()).isEqualTo(0L)
-        assertThat(reportStats.challenged()).isEqualTo(0L)
-        assertThat(reportStats.declined()).isEqualTo(0L)
         assertThat(reportStats.examples())
             .containsExactly(
                 ReportStats.Example.builder()
@@ -70,13 +64,13 @@ internal class ReportStatsTest {
                             )
                             .build()
                     )
-                    .approved(true)
-                    .decision(ReportStats.Example.Decision.APPROVED)
                     .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .timestamp(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
             )
+        assertThat(reportStats.state()).isEqualTo(ReportStats.AuthRuleVersionState.ACTIVE)
+        assertThat(reportStats.version()).isEqualTo(0L)
     }
 
     @Test
@@ -89,9 +83,6 @@ internal class ReportStatsTest {
                         .putAdditionalProperty("foo", JsonValue.from(0))
                         .build()
                 )
-                .approved(0L)
-                .challenged(0L)
-                .declined(0L)
                 .addExample(
                     ReportStats.Example.builder()
                         .addAction(
@@ -107,13 +98,13 @@ internal class ReportStatsTest {
                                 )
                                 .build()
                         )
-                        .approved(true)
-                        .decision(ReportStats.Example.Decision.APPROVED)
                         .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .timestamp(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .build()
                 )
+                .state(ReportStats.AuthRuleVersionState.ACTIVE)
+                .version(0L)
                 .build()
 
         val roundtrippedReportStats =
