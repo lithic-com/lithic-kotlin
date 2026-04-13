@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.122.0 (2026-04-13)
+
+Full Changelog: [v0.121.0...v0.122.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.121.0...v0.122.0)
+
+### Features
+
+* **api:** add card decline count attributes to ConditionalAuthorizationActionParameters ([bc219dc](https://github.com/lithic-com/lithic-kotlin/commit/bc219dc4f929bacd6a1ad4224ecb520131f78eb8))
+* **api:** add DELINQUENT to financial account update status ([039b29d](https://github.com/lithic-com/lithic-kotlin/commit/039b29dfbcc694308464a9d39abfc5b1cb6de0ce))
+* **api:** add INTERCHANGE/CHARGEBACK/PROVISIONAL_CREDIT_ACCOUNT financial account types ([90235eb](https://github.com/lithic-com/lithic-kotlin/commit/90235ebb0a99b9508ca74bb793e1061b533de1ee))
+* **api:** add override_company_name parameter to payment creation ([40b77cf](https://github.com/lithic-com/lithic-kotlin/commit/40b77cf97307ae8f32a8b9362f8b5a4969a466f4))
+* **api:** add statement_totals field to Statement/StatementsCreatedWebhookEvent ([a5c35b4](https://github.com/lithic-com/lithic-kotlin/commit/a5c35b40e55e2f602ad729fb2e45f4690037302b))
+* **api:** add transaction_token field to BacktestStats/ReportStats/V2RetrieveReportResponse ([602d7f3](https://github.com/lithic-com/lithic-kotlin/commit/602d7f3e14beac0b151f76c27da18e77e2b42d44))
+* **api:** add transactionToken field to V2ListResultsResponse ([d285042](https://github.com/lithic-com/lithic-kotlin/commit/d285042b9ca1da3368f6ca03965031b3f3c1ee89))
+
+
+### Bug Fixes
+
+* **types:** make creditProductToken optional in Statement/StatementsCreatedWebhookEvent ([fe197aa](https://github.com/lithic-com/lithic-kotlin/commit/fe197aa39cfe7099c50feed19d56340c18bbd410))
+* **types:** make data and hasMore required in AccountActivityListPageResponse ([86f62e9](https://github.com/lithic-com/lithic-kotlin/commit/86f62e92c8a0b96ffa44e7cb422444238b24b882))
+* **types:** remove hostname, make fields required in AsaRequestCard ([b09a33e](https://github.com/lithic-com/lithic-kotlin/commit/b09a33e6d602b4b19d882504d6b1852496011bf7))
+* **types:** remove INTERCHANGE and CHARGEBACK from financial account type enums ([0323c54](https://github.com/lithic-com/lithic-kotlin/commit/0323c54d543ca5a48fb4fd47ebf2ca75dc143881))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([f21e1fd](https://github.com/lithic-com/lithic-kotlin/commit/f21e1fd773cf772b6f43a1af65f7d4883feb8b35))
+* **types:** [breaking] remove deprecated fields from ReportStats and Example ([5118cc4](https://github.com/lithic-com/lithic-kotlin/commit/5118cc4dc2088611083a9b4b55ed968751a82d51))
+
+
+### Documentation
+
+* **api:** update natureOfBusiness and qrCodeUrl field documentation ([2bddc6b](https://github.com/lithic-com/lithic-kotlin/commit/2bddc6b244647d0a8836a72478848960d9df8481))
+* improve examples ([e12e504](https://github.com/lithic-com/lithic-kotlin/commit/e12e5046d042e11b2bd3a1e25d691828d5b69b17))
+
 ## 0.121.0 (2026-03-23)
 
 Full Changelog: [v0.120.0...v0.121.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.120.0...v0.121.0)
