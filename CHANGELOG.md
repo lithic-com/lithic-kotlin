@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.123.0 (2026-04-20)
+
+Full Changelog: [v0.122.0...v0.123.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.122.0...v0.123.0)
+
+### Features
+
+* **api:** add card_authorization.challenge_response webhook event ([a63a255](https://github.com/lithic-com/lithic-kotlin/commit/a63a255328f58c97bf199c4001ca4534f4a29146))
+* **api:** Add card/account/business account signals endpoints and behavioral rule attributes ([d911078](https://github.com/lithic-com/lithic-kotlin/commit/d911078044fd3bd4e30e43f92926d2629aec8a8c))
+* **api:** add setVerificationMethod to external_bank_accounts ([140c48a](https://github.com/lithic-com/lithic-kotlin/commit/140c48a98617062c119e7fad3aebec3663950ab1))
+
 ## 0.122.0 (2026-04-13)
 
 Full Changelog: [v0.121.0...v0.122.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.121.0...v0.122.0)
