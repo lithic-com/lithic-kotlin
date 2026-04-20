@@ -16,6 +16,7 @@ import com.lithic.api.models.ExternalBankAccountRetrieveResponse
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsParams
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsResponse
 import com.lithic.api.models.ExternalBankAccountRetryPrenoteParams
+import com.lithic.api.models.ExternalBankAccountSetVerificationMethodParams
 import com.lithic.api.models.ExternalBankAccountUnpauseParams
 import com.lithic.api.models.ExternalBankAccountUpdateParams
 import com.lithic.api.models.ExternalBankAccountUpdateResponse
@@ -196,6 +197,26 @@ interface ExternalBankAccountService {
             ExternalBankAccountRetryPrenoteParams.none(),
             requestOptions,
         )
+
+    /**
+     * Update the verification method for an external bank account. Verification method can only be
+     * updated if the `verification_state` is `PENDING`.
+     */
+    fun setVerificationMethod(
+        externalBankAccountToken: String,
+        params: ExternalBankAccountSetVerificationMethodParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccount =
+        setVerificationMethod(
+            params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see setVerificationMethod */
+    fun setVerificationMethod(
+        params: ExternalBankAccountSetVerificationMethodParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccount
 
     /** Unpause an external bank account */
     fun unpause(
@@ -442,6 +463,29 @@ interface ExternalBankAccountService {
                 ExternalBankAccountRetryPrenoteParams.none(),
                 requestOptions,
             )
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/external_bank_accounts/{external_bank_account_token}/set_verification_method`, but is
+         * otherwise the same as [ExternalBankAccountService.setVerificationMethod].
+         */
+        @MustBeClosed
+        fun setVerificationMethod(
+            externalBankAccountToken: String,
+            params: ExternalBankAccountSetVerificationMethodParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccount> =
+            setVerificationMethod(
+                params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see setVerificationMethod */
+        @MustBeClosed
+        fun setVerificationMethod(
+            params: ExternalBankAccountSetVerificationMethodParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccount>
 
         /**
          * Returns a raw HTTP response for `post
