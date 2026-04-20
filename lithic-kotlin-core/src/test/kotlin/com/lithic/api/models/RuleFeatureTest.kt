@@ -32,6 +32,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -72,6 +73,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -112,6 +114,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -152,6 +155,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -192,6 +196,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -232,6 +237,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isEqualTo(accountHolder)
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -272,6 +278,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isEqualTo(ipMetadata)
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -328,6 +335,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isEqualTo(spendVelocity)
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
     }
 
     @Test
@@ -354,6 +362,52 @@ internal class RuleFeatureTest {
                                 VelocityLimitFilters.IncludePanEntryMode.AUTO_ENTRY
                             )
                             .build()
+                    )
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
+    fun ofTransactionHistorySignals() {
+        val transactionHistorySignals =
+            RuleFeature.TransactionHistorySignalsFeature.builder()
+                .scope(RuleFeature.TransactionHistorySignalsFeature.Scope.CARD)
+                .type(RuleFeature.TransactionHistorySignalsFeature.Type.TRANSACTION_HISTORY_SIGNALS)
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofTransactionHistorySignals(transactionHistorySignals)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isEqualTo(transactionHistorySignals)
+    }
+
+    @Test
+    fun ofTransactionHistorySignalsRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofTransactionHistorySignals(
+                RuleFeature.TransactionHistorySignalsFeature.builder()
+                    .scope(RuleFeature.TransactionHistorySignalsFeature.Scope.CARD)
+                    .type(
+                        RuleFeature.TransactionHistorySignalsFeature.Type
+                            .TRANSACTION_HISTORY_SIGNALS
                     )
                     .name("name")
                     .build()
