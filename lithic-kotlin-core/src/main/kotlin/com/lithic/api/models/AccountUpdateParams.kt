@@ -331,7 +331,7 @@ private constructor(
          * * `OTHER` - The reason for the account's current status does not fall into any of the
          *   above categories. A comment should be provided to specify the particular reason.
          */
-        fun substatus(substatus: Substatus) = apply { body.substatus(substatus) }
+        fun substatus(substatus: Substatus?) = apply { body.substatus(substatus) }
 
         /**
          * Sets [Builder.substatus] to an arbitrary JSON value.
@@ -855,7 +855,7 @@ private constructor(
              * * `OTHER` - The reason for the account's current status does not fall into any of the
              *   above categories. A comment should be provided to specify the particular reason.
              */
-            fun substatus(substatus: Substatus) = substatus(JsonField.of(substatus))
+            fun substatus(substatus: Substatus?) = substatus(JsonField.ofNullable(substatus))
 
             /**
              * Sets [Builder.substatus] to an arbitrary JSON value.
