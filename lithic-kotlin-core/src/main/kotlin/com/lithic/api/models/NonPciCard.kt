@@ -168,12 +168,12 @@ private constructor(
     fun created(): OffsetDateTime = created.getRequired("created")
 
     /**
-     * Deprecated: Funding account for the card.
+     * Funding account for a card
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun funding(): FundingAccount = funding.getRequired("funding")
+    fun funding(): FundingAccount? = funding.getNullable("funding")
 
     /**
      * Last four digits of the card number.
@@ -739,8 +739,8 @@ private constructor(
          */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
-        /** Deprecated: Funding account for the card. */
-        fun funding(funding: FundingAccount) = funding(JsonField.of(funding))
+        /** Funding account for a card */
+        fun funding(funding: FundingAccount?) = funding(JsonField.ofNullable(funding))
 
         /**
          * Sets [Builder.funding] to an arbitrary JSON value.
@@ -947,8 +947,8 @@ private constructor(
          * tokenization. This artwork must be approved by Mastercard and configured by Lithic to
          * use.
          */
-        fun digitalCardArtToken(digitalCardArtToken: String) =
-            digitalCardArtToken(JsonField.of(digitalCardArtToken))
+        fun digitalCardArtToken(digitalCardArtToken: String?) =
+            digitalCardArtToken(JsonField.ofNullable(digitalCardArtToken))
 
         /**
          * Sets [Builder.digitalCardArtToken] to an arbitrary JSON value.
@@ -1060,7 +1060,7 @@ private constructor(
          * use. Specifies the configuration (i.e., physical card art) that the card should be
          * manufactured with.
          */
-        fun productId(productId: String) = productId(JsonField.of(productId))
+        fun productId(productId: String?) = productId(JsonField.ofNullable(productId))
 
         /**
          * Sets [Builder.productId] to an arbitrary JSON value.
@@ -1109,7 +1109,7 @@ private constructor(
          * has been returned. * `OTHER` - The reason for the status does not fall into any of the
          * above categories. A comment can be provided to specify the reason.
          */
-        fun substatus(substatus: Substatus) = substatus(JsonField.of(substatus))
+        fun substatus(substatus: Substatus?) = substatus(JsonField.ofNullable(substatus))
 
         /**
          * Sets [Builder.substatus] to an arbitrary JSON value.
@@ -1203,7 +1203,7 @@ private constructor(
         accountToken()
         cardProgramToken()
         created()
-        funding().validate()
+        funding()?.validate()
         lastFour()
         pinStatus().validate()
         spendLimit()
@@ -1267,7 +1267,7 @@ private constructor(
             (if (replacementFor.asKnown() == null) 0 else 1) +
             (substatus.asKnown()?.validity() ?: 0)
 
-    /** Deprecated: Funding account for the card. */
+    /** Funding account for a card */
     class FundingAccount
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -1552,7 +1552,7 @@ private constructor(
             }
 
             /** The nickname given to the `FundingAccount` or `null` if it has no nickname. */
-            fun nickname(nickname: String) = nickname(JsonField.of(nickname))
+            fun nickname(nickname: String?) = nickname(JsonField.ofNullable(nickname))
 
             /**
              * Sets [Builder.nickname] to an arbitrary JSON value.
