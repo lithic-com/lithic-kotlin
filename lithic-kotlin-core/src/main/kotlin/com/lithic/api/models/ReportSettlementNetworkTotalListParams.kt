@@ -350,6 +350,8 @@ private constructor(
 
         companion object {
 
+            val AMEX = of("AMEX")
+
             val VISA = of("VISA")
 
             val MASTERCARD = of("MASTERCARD")
@@ -363,6 +365,7 @@ private constructor(
 
         /** An enum containing [Network]'s known values. */
         enum class Known {
+            AMEX,
             VISA,
             MASTERCARD,
             MAESTRO,
@@ -379,6 +382,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            AMEX,
             VISA,
             MASTERCARD,
             MAESTRO,
@@ -396,6 +400,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                AMEX -> Value.AMEX
                 VISA -> Value.VISA
                 MASTERCARD -> Value.MASTERCARD
                 MAESTRO -> Value.MAESTRO
@@ -414,6 +419,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                AMEX -> Known.AMEX
                 VISA -> Known.VISA
                 MASTERCARD -> Known.MASTERCARD
                 MAESTRO -> Known.MAESTRO
