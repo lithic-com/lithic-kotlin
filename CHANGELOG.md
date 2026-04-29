@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.124.0 (2026-04-29)
+
+Full Changelog: [v0.123.0...v0.124.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.123.0...v0.124.0)
+
+### Features
+
+* **api:** add AMEX to Network enum in settlement models ([f1900ca](https://github.com/lithic-com/lithic-kotlin/commit/f1900caeb91da85f23c66fc382218200c0be79f4))
+* support setting headers via env ([b7c2d0d](https://github.com/lithic-com/lithic-kotlin/commit/b7c2d0d106ec9c00415aa1fe115022a9fd0d36fb))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([fc4032f](https://github.com/lithic-com/lithic-kotlin/commit/fc4032feec429c0b08613895647b32f7eeb8f8fd))
+
+
+### Documentation
+
+* **api:** update exp_month and exp_year descriptions in card create and renew ([8cef3d7](https://github.com/lithic-com/lithic-kotlin/commit/8cef3d7659a93f8d55f84ccb448c588775288472))
+
 ## 0.123.0 (2026-04-20)
 
 Full Changelog: [v0.122.0...v0.123.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.122.0...v0.123.0)
