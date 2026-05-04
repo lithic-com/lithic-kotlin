@@ -1398,6 +1398,14 @@ private constructor(
 
     private var validated: Boolean = false
 
+    /**
+     * Validates that the types of all values in this object match their expected types recursively.
+     *
+     * This method is _not_ forwards compatible with new types from the API for existing fields.
+     *
+     * @throws LithicInvalidDataException if any value type in this object doesn't match its
+     *   expected type.
+     */
     fun validate(): CardAuthorizationApprovalRequestWebhookEvent = apply {
         if (validated) {
             return@apply
@@ -1707,6 +1715,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Amounts = apply {
             if (validated) {
                 return@apply
@@ -1939,6 +1956,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): ConvertedAmount = apply {
                 if (validated) {
                     return@apply
@@ -2148,6 +2175,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Amount = apply {
                 if (validated) {
                     return@apply
@@ -2419,6 +2456,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Avs = apply {
             if (validated) {
                 return@apply
@@ -2566,6 +2612,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): AddressMatchResult = apply {
                 if (validated) {
                     return@apply
@@ -2973,6 +3029,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AsaRequestCard = apply {
             if (validated) {
                 return@apply
@@ -3122,6 +3187,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): SpendLimitDuration = apply {
                 if (validated) {
                     return@apply
@@ -3267,6 +3342,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): State = apply {
                 if (validated) {
                     return@apply
@@ -3419,6 +3504,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): CardType = apply {
                 if (validated) {
                     return@apply
@@ -3575,6 +3670,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): EventType = apply {
             if (validated) {
                 return@apply
@@ -4105,6 +4209,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): TransactionMerchant = apply {
             if (validated) {
                 return@apply
@@ -4458,6 +4571,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): ServiceLocation = apply {
             if (validated) {
                 return@apply
@@ -4630,6 +4752,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AsaRequestStatus = apply {
             if (validated) {
                 return@apply
@@ -4768,6 +4899,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): TransactionInitiator = apply {
             if (validated) {
                 return@apply
@@ -4896,6 +5036,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AccountType = apply {
             if (validated) {
                 return@apply
@@ -5194,6 +5343,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AsaRequestFleetInfo = apply {
             if (validated) {
                 return@apply
@@ -5329,6 +5487,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): FleetPromptCode = apply {
                 if (validated) {
                     return@apply
@@ -5466,6 +5634,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): FleetRestrictionCode = apply {
                 if (validated) {
                     return@apply
@@ -5741,6 +5919,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): LatestChallenge = apply {
             if (validated) {
                 return@apply
@@ -5879,6 +6066,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): Status = apply {
                 if (validated) {
                     return@apply
@@ -6051,6 +6248,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Network = apply {
             if (validated) {
                 return@apply
@@ -6233,6 +6439,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): AsaNetworkSpecificData = apply {
             if (validated) {
                 return@apply
@@ -6495,6 +6710,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): AsaNetworkSpecificDataMastercard = apply {
                 if (validated) {
                     return@apply
@@ -6729,6 +6954,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): OnBehalfServiceResult = apply {
                     if (validated) {
                         return@apply
@@ -6932,6 +7167,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): AsaNetworkSpecificDataVisa = apply {
                 if (validated) {
                     return@apply
@@ -7132,6 +7377,15 @@ private constructor(
 
         private var validated: Boolean = false
 
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
         fun validate(): Pos = apply {
             if (validated) {
                 return@apply
@@ -7380,6 +7634,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): AsaRequestPosEntryMode = apply {
                 if (validated) {
                     return@apply
@@ -7509,6 +7773,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): Card = apply {
                     if (validated) {
                         return@apply
@@ -7682,6 +7956,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): Cardholder = apply {
                     if (validated) {
                         return@apply
@@ -7889,6 +8173,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): Pan = apply {
                     if (validated) {
                         return@apply
@@ -8383,6 +8677,16 @@ private constructor(
 
             private var validated: Boolean = false
 
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
             fun validate(): AsaPosTerminal = apply {
                 if (validated) {
                     return@apply
@@ -8527,6 +8831,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): Operator = apply {
                     if (validated) {
                         return@apply
@@ -8671,6 +8985,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): PinCapability = apply {
                     if (validated) {
                         return@apply
@@ -8932,6 +9256,16 @@ private constructor(
 
                 private var validated: Boolean = false
 
+                /**
+                 * Validates that the types of all values in this object match their expected types
+                 * recursively.
+                 *
+                 * This method is _not_ forwards compatible with new types from the API for existing
+                 * fields.
+                 *
+                 * @throws LithicInvalidDataException if any value type in this object doesn't match
+                 *   its expected type.
+                 */
                 fun validate(): Type = apply {
                     if (validated) {
                         return@apply
