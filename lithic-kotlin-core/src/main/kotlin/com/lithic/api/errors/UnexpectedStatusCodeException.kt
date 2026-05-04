@@ -5,6 +5,7 @@ package com.lithic.api.errors
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.checkRequired
 import com.lithic.api.core.http.Headers
+import com.lithic.api.core.jsonMapper
 
 class UnexpectedStatusCodeException
 private constructor(
@@ -12,7 +13,11 @@ private constructor(
     private val headers: Headers,
     private val body: JsonValue,
     cause: Throwable?,
-) : LithicServiceException("$statusCode: $body", cause) {
+) :
+    LithicServiceException(
+        "$statusCode: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
+        cause,
+    ) {
 
     override fun statusCode(): Int = statusCode
 
