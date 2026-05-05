@@ -481,6 +481,9 @@ private constructor(
          *   for the entity. Requires `parameters.scope`.
          * * `DISTINCT_COUNTRY_COUNT`: The number of distinct merchant countries seen in the
          *   entity's transaction history. Requires `parameters.scope`.
+         * * `IS_NEW_MERCHANT`: Whether the card acceptor ID has not been seen in the card's
+         *   approved transaction history (capped at the 1000 most recently seen merchants). Valid
+         *   values are `TRUE`, `FALSE`. Card-scoped only; no `parameters` required.
          * * `THREE_DS_SUCCESS_RATE`: The 3DS authentication success rate for the card, as a
          *   percentage from 0.0 to 100.0. Card-scoped only; no `parameters` required.
          *
@@ -689,6 +692,9 @@ private constructor(
              *   transaction for the entity. Requires `parameters.scope`.
              * * `DISTINCT_COUNTRY_COUNT`: The number of distinct merchant countries seen in the
              *   entity's transaction history. Requires `parameters.scope`.
+             * * `IS_NEW_MERCHANT`: Whether the card acceptor ID has not been seen in the card's
+             *   approved transaction history (capped at the 1000 most recently seen merchants).
+             *   Valid values are `TRUE`, `FALSE`. Card-scoped only; no `parameters` required.
              * * `THREE_DS_SUCCESS_RATE`: The 3DS authentication success rate for the card, as a
              *   percentage from 0.0 to 100.0. Card-scoped only; no `parameters` required.
              */
@@ -938,6 +944,9 @@ private constructor(
          *   for the entity. Requires `parameters.scope`.
          * * `DISTINCT_COUNTRY_COUNT`: The number of distinct merchant countries seen in the
          *   entity's transaction history. Requires `parameters.scope`.
+         * * `IS_NEW_MERCHANT`: Whether the card acceptor ID has not been seen in the card's
+         *   approved transaction history (capped at the 1000 most recently seen merchants). Valid
+         *   values are `TRUE`, `FALSE`. Card-scoped only; no `parameters` required.
          * * `THREE_DS_SUCCESS_RATE`: The 3DS authentication success rate for the card, as a
          *   percentage from 0.0 to 100.0. Card-scoped only; no `parameters` required.
          */
@@ -1026,6 +1035,8 @@ private constructor(
 
                 val DISTINCT_COUNTRY_COUNT = of("DISTINCT_COUNTRY_COUNT")
 
+                val IS_NEW_MERCHANT = of("IS_NEW_MERCHANT")
+
                 val THREE_DS_SUCCESS_RATE = of("THREE_DS_SUCCESS_RATE")
 
                 fun of(value: String) = Attribute(JsonField.of(value))
@@ -1068,6 +1079,7 @@ private constructor(
                 CONSECUTIVE_DECLINES,
                 TIME_SINCE_LAST_TRANSACTION,
                 DISTINCT_COUNTRY_COUNT,
+                IS_NEW_MERCHANT,
                 THREE_DS_SUCCESS_RATE,
             }
 
@@ -1116,6 +1128,7 @@ private constructor(
                 CONSECUTIVE_DECLINES,
                 TIME_SINCE_LAST_TRANSACTION,
                 DISTINCT_COUNTRY_COUNT,
+                IS_NEW_MERCHANT,
                 THREE_DS_SUCCESS_RATE,
                 /**
                  * An enum member indicating that [Attribute] was instantiated with an unknown
@@ -1168,6 +1181,7 @@ private constructor(
                     CONSECUTIVE_DECLINES -> Value.CONSECUTIVE_DECLINES
                     TIME_SINCE_LAST_TRANSACTION -> Value.TIME_SINCE_LAST_TRANSACTION
                     DISTINCT_COUNTRY_COUNT -> Value.DISTINCT_COUNTRY_COUNT
+                    IS_NEW_MERCHANT -> Value.IS_NEW_MERCHANT
                     THREE_DS_SUCCESS_RATE -> Value.THREE_DS_SUCCESS_RATE
                     else -> Value._UNKNOWN
                 }
@@ -1218,6 +1232,7 @@ private constructor(
                     CONSECUTIVE_DECLINES -> Known.CONSECUTIVE_DECLINES
                     TIME_SINCE_LAST_TRANSACTION -> Known.TIME_SINCE_LAST_TRANSACTION
                     DISTINCT_COUNTRY_COUNT -> Known.DISTINCT_COUNTRY_COUNT
+                    IS_NEW_MERCHANT -> Known.IS_NEW_MERCHANT
                     THREE_DS_SUCCESS_RATE -> Known.THREE_DS_SUCCESS_RATE
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")
                 }
