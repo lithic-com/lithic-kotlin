@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.124.0 (2026-05-06)
+
+Full Changelog: [v0.123.0...v0.124.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.123.0...v0.124.0)
+
+### Features
+
+* **api:** add AMEX to Network enum in settlement models ([f1900ca](https://github.com/lithic-com/lithic-kotlin/commit/f1900caeb91da85f23c66fc382218200c0be79f4))
+* **api:** add CARD_TRANSACTION_UPDATE event stream to conditional action auth rules ([0b269aa](https://github.com/lithic-com/lithic-kotlin/commit/0b269aa182759f307f8faa55833db4f96e3945c4))
+* **api:** add IS_NEW_MERCHANT attribute to conditional authorization ([a3d514e](https://github.com/lithic-com/lithic-kotlin/commit/a3d514e18e8890d66a830a2afcac82a990296911))
+* **client:** improve logging ([587f8ab](https://github.com/lithic-com/lithic-kotlin/commit/587f8ab7bd96ec39dd3cb26c1d7bb23d68af12d9))
+* **client:** more robust error parsing ([5630511](https://github.com/lithic-com/lithic-kotlin/commit/563051142763a95d3a8ce529ff9092776e4f21f7))
+* **client:** support proxy authentication ([d8361cc](https://github.com/lithic-com/lithic-kotlin/commit/d8361cc9f61bc6f8a55f123a5519502538b46478))
+* support setting headers via env ([b7c2d0d](https://github.com/lithic-com/lithic-kotlin/commit/b7c2d0d106ec9c00415aa1fe115022a9fd0d36fb))
+
+
+### Performance Improvements
+
+* **client:** create one json mapper ([d96568f](https://github.com/lithic-com/lithic-kotlin/commit/d96568fae286f24882e0e7ef0617ffec98b60650))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([fc4032f](https://github.com/lithic-com/lithic-kotlin/commit/fc4032feec429c0b08613895647b32f7eeb8f8fd))
+* remove duplicated dokka setup ([3b8c02f](https://github.com/lithic-com/lithic-kotlin/commit/3b8c02f88dde9bad76e73d028b40f5f0aa6e2a74))
+
+
+### Documentation
+
+* **api:** update exp_month and exp_year descriptions in card create and renew ([8cef3d7](https://github.com/lithic-com/lithic-kotlin/commit/8cef3d7659a93f8d55f84ccb448c588775288472))
+* clarify forwards compat behavior ([a65e20e](https://github.com/lithic-com/lithic-kotlin/commit/a65e20e840f784e360d02cb8b1f37ed0760ee545))
+* **types:** clarify eventTokens and transactionToken fields in SettlementDetail ([70bdb35](https://github.com/lithic-com/lithic-kotlin/commit/70bdb35cc9bbbcc6cf8a95e4da51857ded2668dc))
+
 ## 0.123.0 (2026-04-20)
 
 Full Changelog: [v0.122.0...v0.123.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.122.0...v0.123.0)
