@@ -19,12 +19,14 @@ import com.lithic.api.models.CardProvisionResponse
 import com.lithic.api.models.CardReissueParams
 import com.lithic.api.models.CardRenewParams
 import com.lithic.api.models.CardRetrieveParams
+import com.lithic.api.models.CardRetrieveSignalsParams
 import com.lithic.api.models.CardRetrieveSpendLimitsParams
 import com.lithic.api.models.CardSearchByPanParams
 import com.lithic.api.models.CardSpendLimits
 import com.lithic.api.models.CardUpdateParams
 import com.lithic.api.models.CardWebProvisionParams
 import com.lithic.api.models.CardWebProvisionResponse
+import com.lithic.api.models.SignalsResponse
 import com.lithic.api.services.async.cards.BalanceServiceAsync
 import com.lithic.api.services.async.cards.FinancialTransactionServiceAsync
 
@@ -223,6 +225,34 @@ interface CardServiceAsync {
         params: CardRenewParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Card
+
+    /**
+     * Returns behavioral feature state derived from a card's transaction history.
+     *
+     * These signals expose the same data used by behavioral rule attributes (e.g. `AMOUNT_Z_SCORE`
+     * with `scope: CARD`, `IS_NEW_COUNTRY` with `scope: CARD`) and custom code
+     * `TRANSACTION_HISTORY_SIGNALS` features, allowing clients to inspect feature values before
+     * writing rules and debug rule behavior.
+     */
+    suspend fun retrieveSignals(
+        cardToken: String,
+        params: CardRetrieveSignalsParams = CardRetrieveSignalsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SignalsResponse =
+        retrieveSignals(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see retrieveSignals */
+    suspend fun retrieveSignals(
+        params: CardRetrieveSignalsParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SignalsResponse
+
+    /** @see retrieveSignals */
+    suspend fun retrieveSignals(
+        cardToken: String,
+        requestOptions: RequestOptions,
+    ): SignalsResponse =
+        retrieveSignals(cardToken, CardRetrieveSignalsParams.none(), requestOptions)
 
     /**
      * Get a Card's available spend limit, which is based on the spend limit configured on the Card
@@ -490,6 +520,33 @@ interface CardServiceAsync {
             params: CardRenewParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Card>
+
+        /**
+         * Returns a raw HTTP response for `get /v1/cards/{card_token}/signals`, but is otherwise
+         * the same as [CardServiceAsync.retrieveSignals].
+         */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            cardToken: String,
+            params: CardRetrieveSignalsParams = CardRetrieveSignalsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SignalsResponse> =
+            retrieveSignals(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see retrieveSignals */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            params: CardRetrieveSignalsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SignalsResponse>
+
+        /** @see retrieveSignals */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            cardToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SignalsResponse> =
+            retrieveSignals(cardToken, CardRetrieveSignalsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/cards/{card_token}/spend_limits`, but is

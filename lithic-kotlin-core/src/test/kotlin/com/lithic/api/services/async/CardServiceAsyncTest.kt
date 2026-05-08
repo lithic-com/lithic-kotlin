@@ -291,6 +291,21 @@ internal class CardServiceAsyncTest {
     }
 
     @Test
+    suspend fun retrieveSignals() {
+        val client =
+            LithicOkHttpClientAsync.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My Lithic API Key")
+                .build()
+        val cardServiceAsync = client.cards()
+
+        val signalsResponse =
+            cardServiceAsync.retrieveSignals("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+
+        signalsResponse.validate()
+    }
+
+    @Test
     suspend fun retrieveSpendLimits() {
         val client =
             LithicOkHttpClientAsync.builder()
