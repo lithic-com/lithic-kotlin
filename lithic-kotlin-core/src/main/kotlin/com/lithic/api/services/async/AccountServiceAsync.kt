@@ -10,9 +10,11 @@ import com.lithic.api.models.Account
 import com.lithic.api.models.AccountListPageAsync
 import com.lithic.api.models.AccountListParams
 import com.lithic.api.models.AccountRetrieveParams
+import com.lithic.api.models.AccountRetrieveSignalsParams
 import com.lithic.api.models.AccountRetrieveSpendLimitsParams
 import com.lithic.api.models.AccountSpendLimits
 import com.lithic.api.models.AccountUpdateParams
+import com.lithic.api.models.SignalsResponse
 
 interface AccountServiceAsync {
 
@@ -75,6 +77,36 @@ interface AccountServiceAsync {
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): AccountListPageAsync =
         list(AccountListParams.none(), requestOptions)
+
+    /**
+     * Returns behavioral feature state derived from an account's transaction history.
+     *
+     * These signals expose the same data used by behavioral rule attributes (e.g. `AMOUNT_Z_SCORE`
+     * with `scope: ACCOUNT`, `IS_NEW_COUNTRY` with `scope: ACCOUNT`) and custom code
+     * `TRANSACTION_HISTORY_SIGNALS` features, allowing clients to inspect feature values before
+     * writing rules and debug rule behavior.
+     *
+     * Note: 3DS fields are not available at the account scope and will be null.
+     */
+    suspend fun retrieveSignals(
+        accountToken: String,
+        params: AccountRetrieveSignalsParams = AccountRetrieveSignalsParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SignalsResponse =
+        retrieveSignals(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+    /** @see retrieveSignals */
+    suspend fun retrieveSignals(
+        params: AccountRetrieveSignalsParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SignalsResponse
+
+    /** @see retrieveSignals */
+    suspend fun retrieveSignals(
+        accountToken: String,
+        requestOptions: RequestOptions,
+    ): SignalsResponse =
+        retrieveSignals(accountToken, AccountRetrieveSignalsParams.none(), requestOptions)
 
     /**
      * Get an Account's available spend limits, which is based on the spend limit configured on the
@@ -184,6 +216,33 @@ interface AccountServiceAsync {
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPageAsync> =
             list(AccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /v1/accounts/{account_token}/signals`, but is
+         * otherwise the same as [AccountServiceAsync.retrieveSignals].
+         */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            accountToken: String,
+            params: AccountRetrieveSignalsParams = AccountRetrieveSignalsParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SignalsResponse> =
+            retrieveSignals(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+
+        /** @see retrieveSignals */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            params: AccountRetrieveSignalsParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SignalsResponse>
+
+        /** @see retrieveSignals */
+        @MustBeClosed
+        suspend fun retrieveSignals(
+            accountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<SignalsResponse> =
+            retrieveSignals(accountToken, AccountRetrieveSignalsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/accounts/{account_token}/spend_limits`, but is
