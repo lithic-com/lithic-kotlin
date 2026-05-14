@@ -1607,9 +1607,11 @@ private constructor(
          *   `FACEBOOK`, `FITBIT_PAY`, `GARMIN_PAY`, `GOOGLE_PAY`, `GOOGLE_VCN`, `ISSUER_HCE`,
          *   `MICROSOFT_PAY`, `NETFLIX`, `SAMSUNG_PAY`, `UNKNOWN`, `VISA_CHECKOUT`.
          * * `WALLET_ACCOUNT_SCORE`: Risk score for the account in the digital wallet. Numeric value
-         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
+         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk). Use an
+         *   integer value.
          * * `WALLET_DEVICE_SCORE`: Risk score for the device in the digital wallet. Numeric value
-         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
+         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk). Use an
+         *   integer value.
          * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet provider.
          *   Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
          * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
@@ -1738,10 +1740,10 @@ private constructor(
              *   `VISA_CHECKOUT`.
              * * `WALLET_ACCOUNT_SCORE`: Risk score for the account in the digital wallet. Numeric
              *   value where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium
-             *   risk).
+             *   risk). Use an integer value.
              * * `WALLET_DEVICE_SCORE`: Risk score for the device in the digital wallet. Numeric
              *   value where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium
-             *   risk).
+             *   risk). Use an integer value.
              * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet
              *   provider. Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
              * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
@@ -1808,8 +1810,11 @@ private constructor(
             /** Alias for calling [value] with `ConditionalValue.ofRegex(regex)`. */
             fun value(regex: String) = value(ConditionalValue.ofRegex(regex))
 
-            /** Alias for calling [value] with `ConditionalValue.ofNumber(number)`. */
-            fun value(number: Long) = value(ConditionalValue.ofNumber(number))
+            /** Alias for calling [value] with `ConditionalValue.ofLong(long)`. */
+            fun value(long: Long) = value(ConditionalValue.ofLong(long))
+
+            /** Alias for calling [value] with `ConditionalValue.ofDouble(double)`. */
+            fun value(double: Double) = value(ConditionalValue.ofDouble(double))
 
             /** Alias for calling [value] with `ConditionalValue.ofListOfStrings(listOfStrings)`. */
             fun valueOfListOfStrings(listOfStrings: List<String>) =
@@ -1916,9 +1921,11 @@ private constructor(
          *   `FACEBOOK`, `FITBIT_PAY`, `GARMIN_PAY`, `GOOGLE_PAY`, `GOOGLE_VCN`, `ISSUER_HCE`,
          *   `MICROSOFT_PAY`, `NETFLIX`, `SAMSUNG_PAY`, `UNKNOWN`, `VISA_CHECKOUT`.
          * * `WALLET_ACCOUNT_SCORE`: Risk score for the account in the digital wallet. Numeric value
-         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
+         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk). Use an
+         *   integer value.
          * * `WALLET_DEVICE_SCORE`: Risk score for the device in the digital wallet. Numeric value
-         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk).
+         *   where lower numbers indicate higher risk (e.g., 1 = high risk, 2 = medium risk). Use an
+         *   integer value.
          * * `WALLET_RECOMMENDED_DECISION`: The decision recommended by the digital wallet provider.
          *   Valid values include APPROVE, DECLINE, REQUIRE_ADDITIONAL_AUTHENTICATION.
          * * `WALLET_RECOMMENDATION_REASONS`: List of reasons provided by the digital wallet
