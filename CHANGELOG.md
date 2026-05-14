@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.125.0 (2026-05-14)
+
+Full Changelog: [v0.124.0...v0.125.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.124.0...v0.125.0)
+
+### Features
+
+* **api:** add retrieveSignals method to accounts and cards ([d003b45](https://github.com/lithic-com/lithic-kotlin/commit/d003b45000c817bf089c0b2565afa5350e81ea38))
+* **api:** add travel attributes, unit parameter to ConditionalAuthorizationActionParameters ([0066026](https://github.com/lithic-com/lithic-kotlin/commit/00660264bd62d077d1ea7faf549b52f43edd6e78))
+
+
+### Bug Fixes
+
+* **types:** change number type from Long to Double in ConditionalValue ([91e1668](https://github.com/lithic-com/lithic-kotlin/commit/91e16680beaec28a551a74e8294649a77c6ed965))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([c342453](https://github.com/lithic-com/lithic-kotlin/commit/c3424539bf4af3b232ab8e45b456285c89014b8d))
+
 ## 0.124.0 (2026-05-06)
 
 Full Changelog: [v0.123.0...v0.124.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.123.0...v0.124.0)
