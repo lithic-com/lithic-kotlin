@@ -22,7 +22,8 @@ internal class ConditionalValueTest {
         val conditionalValue = ConditionalValue.ofRegex(regex)
 
         assertThat(conditionalValue.regex()).isEqualTo(regex)
-        assertThat(conditionalValue.number()).isNull()
+        assertThat(conditionalValue.long()).isNull()
+        assertThat(conditionalValue.double()).isNull()
         assertThat(conditionalValue.listOfStrings()).isNull()
         assertThat(conditionalValue.timestamp()).isNull()
     }
@@ -42,21 +43,49 @@ internal class ConditionalValueTest {
     }
 
     @Test
-    fun ofNumber() {
-        val number = 0L
+    fun ofLong() {
+        val long = 0L
 
-        val conditionalValue = ConditionalValue.ofNumber(number)
+        val conditionalValue = ConditionalValue.ofLong(long)
 
         assertThat(conditionalValue.regex()).isNull()
-        assertThat(conditionalValue.number()).isEqualTo(number)
+        assertThat(conditionalValue.long()).isEqualTo(long)
+        assertThat(conditionalValue.double()).isNull()
         assertThat(conditionalValue.listOfStrings()).isNull()
         assertThat(conditionalValue.timestamp()).isNull()
     }
 
     @Test
-    fun ofNumberRoundtrip() {
+    fun ofLongRoundtrip() {
         val jsonMapper = jsonMapper()
-        val conditionalValue = ConditionalValue.ofNumber(0L)
+        val conditionalValue = ConditionalValue.ofLong(0L)
+
+        val roundtrippedConditionalValue =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(conditionalValue),
+                jacksonTypeRef<ConditionalValue>(),
+            )
+
+        assertThat(roundtrippedConditionalValue).isEqualTo(conditionalValue)
+    }
+
+    @Test
+    fun ofDouble() {
+        val double = 0.0
+
+        val conditionalValue = ConditionalValue.ofDouble(double)
+
+        assertThat(conditionalValue.regex()).isNull()
+        assertThat(conditionalValue.long()).isNull()
+        assertThat(conditionalValue.double()).isEqualTo(double)
+        assertThat(conditionalValue.listOfStrings()).isNull()
+        assertThat(conditionalValue.timestamp()).isNull()
+    }
+
+    @Test
+    fun ofDoubleRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val conditionalValue = ConditionalValue.ofDouble(0.0)
 
         val roundtrippedConditionalValue =
             jsonMapper.readValue(
@@ -74,7 +103,8 @@ internal class ConditionalValueTest {
         val conditionalValue = ConditionalValue.ofListOfStrings(listOfStrings)
 
         assertThat(conditionalValue.regex()).isNull()
-        assertThat(conditionalValue.number()).isNull()
+        assertThat(conditionalValue.long()).isNull()
+        assertThat(conditionalValue.double()).isNull()
         assertThat(conditionalValue.listOfStrings()).isEqualTo(listOfStrings)
         assertThat(conditionalValue.timestamp()).isNull()
     }
@@ -100,7 +130,8 @@ internal class ConditionalValueTest {
         val conditionalValue = ConditionalValue.ofTimestamp(timestamp)
 
         assertThat(conditionalValue.regex()).isNull()
-        assertThat(conditionalValue.number()).isNull()
+        assertThat(conditionalValue.long()).isNull()
+        assertThat(conditionalValue.double()).isNull()
         assertThat(conditionalValue.listOfStrings()).isNull()
         assertThat(conditionalValue.timestamp()).isEqualTo(timestamp)
     }
@@ -122,7 +153,6 @@ internal class ConditionalValueTest {
 
     enum class IncompatibleJsonShapeTestCase(val value: JsonValue) {
         BOOLEAN(JsonValue.from(false)),
-        FLOAT(JsonValue.from(3.14)),
         OBJECT(JsonValue.from(mapOf("invalid" to "object"))),
     }
 
