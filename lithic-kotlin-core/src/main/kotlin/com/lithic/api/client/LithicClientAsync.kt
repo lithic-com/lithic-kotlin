@@ -15,6 +15,7 @@ import com.lithic.api.services.async.AuthRuleServiceAsync
 import com.lithic.api.services.async.AuthStreamEnrollmentServiceAsync
 import com.lithic.api.services.async.BalanceServiceAsync
 import com.lithic.api.services.async.BookTransferServiceAsync
+import com.lithic.api.services.async.CardAuthorizationServiceAsync
 import com.lithic.api.services.async.CardBulkOrderServiceAsync
 import com.lithic.api.services.async.CardProgramServiceAsync
 import com.lithic.api.services.async.CardServiceAsync
@@ -92,6 +93,8 @@ interface LithicClientAsync {
     fun tokenizations(): TokenizationServiceAsync
 
     fun cards(): CardServiceAsync
+
+    fun cardAuthorizations(): CardAuthorizationServiceAsync
 
     fun cardBulkOrders(): CardBulkOrderServiceAsync
 
@@ -195,6 +198,8 @@ interface LithicClientAsync {
         fun tokenizations(): TokenizationServiceAsync.WithRawResponse
 
         fun cards(): CardServiceAsync.WithRawResponse
+
+        fun cardAuthorizations(): CardAuthorizationServiceAsync.WithRawResponse
 
         fun cardBulkOrders(): CardBulkOrderServiceAsync.WithRawResponse
 
