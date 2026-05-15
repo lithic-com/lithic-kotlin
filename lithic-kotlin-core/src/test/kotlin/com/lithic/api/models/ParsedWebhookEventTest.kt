@@ -44,6 +44,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -216,6 +217,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -407,6 +409,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -534,6 +537,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -642,6 +646,7 @@ internal class ParsedWebhookEventTest {
             .isEqualTo(accountHolderVerification)
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -769,6 +774,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated())
             .isEqualTo(accountHolderDocumentUpdated)
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -881,29 +887,28 @@ internal class ParsedWebhookEventTest {
                 .acquirerFee(0L)
                 .amount(0L)
                 .amounts(
-                    CardAuthorizationApprovalRequestWebhookEvent.Amounts.builder()
+                    CardAuthorization.Amounts.builder()
                         .cardholder(
-                            CardAuthorizationApprovalRequestWebhookEvent.Amounts.ConvertedAmount
-                                .builder()
+                            CardAuthorization.Amounts.ConvertedAmount.builder()
                                 .amount(0L)
                                 .conversionRate("1.000000")
                                 .currency("USD")
                                 .build()
                         )
                         .hold(
-                            CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount.builder()
+                            CardAuthorization.Amounts.Amount.builder()
                                 .amount(0L)
                                 .currency("USD")
                                 .build()
                         )
                         .merchant(
-                            CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount.builder()
+                            CardAuthorization.Amounts.Amount.builder()
                                 .amount(0L)
                                 .currency("USD")
                                 .build()
                         )
                         .settlement(
-                            CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount.builder()
+                            CardAuthorization.Amounts.Amount.builder()
                                 .amount(0L)
                                 .currency("USD")
                                 .build()
@@ -912,44 +917,30 @@ internal class ParsedWebhookEventTest {
                 )
                 .authorizationAmount(0L)
                 .avs(
-                    CardAuthorizationApprovalRequestWebhookEvent.Avs.builder()
+                    CardAuthorization.Avs.builder()
                         .address("address")
-                        .addressOnFileMatch(
-                            CardAuthorizationApprovalRequestWebhookEvent.Avs.AddressMatchResult
-                                .MATCH
-                        )
+                        .addressOnFileMatch(CardAuthorization.Avs.AddressMatchResult.MATCH)
                         .zipcode("zipcode")
                         .build()
                 )
                 .card(
-                    CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.builder()
+                    CardAuthorization.AsaRequestCard.builder()
                         .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                         .lastFour("last_four")
                         .memo("memo")
                         .spendLimit(0L)
                         .spendLimitDuration(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard
-                                .SpendLimitDuration
-                                .ANNUALLY
+                            CardAuthorization.AsaRequestCard.SpendLimitDuration.ANNUALLY
                         )
-                        .state(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.State.CLOSED
-                        )
-                        .type(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.CardType
-                                .SINGLE_USE
-                        )
+                        .state(CardAuthorization.AsaRequestCard.State.CLOSED)
+                        .type(CardAuthorization.AsaRequestCard.CardType.SINGLE_USE)
                         .build()
                 )
                 .cardholderCurrency("cardholder_currency")
                 .cashAmount(0L)
                 .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .eventType(
-                    CardAuthorizationApprovalRequestWebhookEvent.EventType
-                        .CARD_AUTHORIZATION_APPROVAL_REQUEST
-                )
                 .merchant(
-                    CardAuthorizationApprovalRequestWebhookEvent.TransactionMerchant.builder()
+                    CardAuthorization.TransactionMerchant.builder()
                         .acceptorId("333301802529120")
                         .acquiringInstitutionId("191231")
                         .city("NEW YORK")
@@ -965,7 +956,7 @@ internal class ParsedWebhookEventTest {
                 .merchantAmount(0L)
                 .merchantCurrency("USD")
                 .serviceLocation(
-                    CardAuthorizationApprovalRequestWebhookEvent.ServiceLocation.builder()
+                    CardAuthorization.ServiceLocation.builder()
                         .city("city")
                         .country("country")
                         .postalCode("postal_code")
@@ -974,11 +965,9 @@ internal class ParsedWebhookEventTest {
                         .build()
                 )
                 .settledAmount(0L)
-                .status(CardAuthorizationApprovalRequestWebhookEvent.AsaRequestStatus.AUTHORIZATION)
-                .transactionInitiator(
-                    CardAuthorizationApprovalRequestWebhookEvent.TransactionInitiator.CARDHOLDER
-                )
-                .accountType(CardAuthorizationApprovalRequestWebhookEvent.AccountType.CHECKING)
+                .status(CardAuthorization.AsaRequestStatus.AUTHORIZATION)
+                .transactionInitiator(CardAuthorization.TransactionInitiator.CARDHOLDER)
+                .accountType(CardAuthorization.AccountType.CHECKING)
                 .cardholderAuthentication(
                     CardholderAuthentication.builder()
                         .authenticationMethod(
@@ -994,15 +983,12 @@ internal class ParsedWebhookEventTest {
                 .conversionRate(0.0)
                 .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .fleetInfo(
-                    CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo.builder()
+                    CardAuthorization.AsaRequestFleetInfo.builder()
                         .fleetPromptCode(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo
-                                .FleetPromptCode
-                                .NO_PROMPT
+                            CardAuthorization.AsaRequestFleetInfo.FleetPromptCode.NO_PROMPT
                         )
                         .fleetRestrictionCode(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo
-                                .FleetRestrictionCode
+                            CardAuthorization.AsaRequestFleetInfo.FleetRestrictionCode
                                 .NO_RESTRICTIONS
                         )
                         .driverNumber("driver_number")
@@ -1010,27 +996,23 @@ internal class ParsedWebhookEventTest {
                         .build()
                 )
                 .latestChallenge(
-                    CardAuthorizationApprovalRequestWebhookEvent.LatestChallenge.builder()
+                    CardAuthorization.LatestChallenge.builder()
                         .phoneNumber("phone_number")
-                        .status(
-                            CardAuthorizationApprovalRequestWebhookEvent.LatestChallenge.Status
-                                .COMPLETED
-                        )
+                        .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
                         .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
-                .network(CardAuthorizationApprovalRequestWebhookEvent.Network.AMEX)
+                .network(CardAuthorization.Network.AMEX)
                 .networkRiskScore(0L)
                 .networkSpecificData(
-                    CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData.builder()
+                    CardAuthorization.AsaNetworkSpecificData.builder()
                         .mastercard(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData
+                            CardAuthorization.AsaNetworkSpecificData
                                 .AsaNetworkSpecificDataMastercard
                                 .builder()
                                 .ecommerceSecurityLevelIndicator("xxx")
                                 .addOnBehalfServiceResult(
-                                    CardAuthorizationApprovalRequestWebhookEvent
-                                        .AsaNetworkSpecificData
+                                    CardAuthorization.AsaNetworkSpecificData
                                         .AsaNetworkSpecificDataMastercard
                                         .OnBehalfServiceResult
                                         .builder()
@@ -1043,8 +1025,7 @@ internal class ParsedWebhookEventTest {
                                 .build()
                         )
                         .visa(
-                            CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData
-                                .AsaNetworkSpecificDataVisa
+                            CardAuthorization.AsaNetworkSpecificData.AsaNetworkSpecificDataVisa
                                 .builder()
                                 .businessApplicationIdentifier("xx")
                                 .build()
@@ -1052,53 +1033,31 @@ internal class ParsedWebhookEventTest {
                         .build()
                 )
                 .pos(
-                    CardAuthorizationApprovalRequestWebhookEvent.Pos.builder()
+                    CardAuthorization.Pos.builder()
                         .entryMode(
-                            CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaRequestPosEntryMode
-                                .builder()
-                                .card(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                        .AsaRequestPosEntryMode
-                                        .Card
-                                        .PRESENT
-                                )
+                            CardAuthorization.Pos.AsaRequestPosEntryMode.builder()
+                                .card(CardAuthorization.Pos.AsaRequestPosEntryMode.Card.PRESENT)
                                 .cardholder(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                        .AsaRequestPosEntryMode
-                                        .Cardholder
+                                    CardAuthorization.Pos.AsaRequestPosEntryMode.Cardholder
                                         .DEFERRED_BILLING
                                 )
-                                .pan(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                        .AsaRequestPosEntryMode
-                                        .Pan
-                                        .AUTO_ENTRY
-                                )
+                                .pan(CardAuthorization.Pos.AsaRequestPosEntryMode.Pan.AUTO_ENTRY)
                                 .pinEntered(true)
                                 .build()
                         )
                         .terminal(
-                            CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaPosTerminal
-                                .builder()
+                            CardAuthorization.Pos.AsaPosTerminal.builder()
                                 .attended(true)
                                 .cardRetentionCapable(true)
                                 .onPremise(true)
                                 .operator(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaPosTerminal
-                                        .Operator
-                                        .ADMINISTRATIVE
+                                    CardAuthorization.Pos.AsaPosTerminal.Operator.ADMINISTRATIVE
                                 )
                                 .partialApprovalCapable(true)
                                 .pinCapability(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaPosTerminal
-                                        .PinCapability
-                                        .CAPABLE
+                                    CardAuthorization.Pos.AsaPosTerminal.PinCapability.CAPABLE
                                 )
-                                .type(
-                                    CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaPosTerminal
-                                        .Type
-                                        .ADMINISTRATIVE
-                                )
+                                .type(CardAuthorization.Pos.AsaPosTerminal.Type.ADMINISTRATIVE)
                                 .acceptorTerminalId("5([<,yN%")
                                 .build()
                         )
@@ -1106,6 +1065,10 @@ internal class ParsedWebhookEventTest {
                 )
                 .tokenInfo(TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build())
                 .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .eventType(
+                    CardAuthorizationApprovalRequestWebhookEvent.EventType
+                        .CARD_AUTHORIZATION_APPROVAL_REQUEST
+                )
                 .build()
 
         val parsedWebhookEvent =
@@ -1119,6 +1082,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest())
             .isEqualTo(cardAuthorizationApprovalRequest)
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -1184,32 +1148,28 @@ internal class ParsedWebhookEventTest {
                     .acquirerFee(0L)
                     .amount(0L)
                     .amounts(
-                        CardAuthorizationApprovalRequestWebhookEvent.Amounts.builder()
+                        CardAuthorization.Amounts.builder()
                             .cardholder(
-                                CardAuthorizationApprovalRequestWebhookEvent.Amounts.ConvertedAmount
-                                    .builder()
+                                CardAuthorization.Amounts.ConvertedAmount.builder()
                                     .amount(0L)
                                     .conversionRate("1.000000")
                                     .currency("USD")
                                     .build()
                             )
                             .hold(
-                                CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount
-                                    .builder()
+                                CardAuthorization.Amounts.Amount.builder()
                                     .amount(0L)
                                     .currency("USD")
                                     .build()
                             )
                             .merchant(
-                                CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount
-                                    .builder()
+                                CardAuthorization.Amounts.Amount.builder()
                                     .amount(0L)
                                     .currency("USD")
                                     .build()
                             )
                             .settlement(
-                                CardAuthorizationApprovalRequestWebhookEvent.Amounts.Amount
-                                    .builder()
+                                CardAuthorization.Amounts.Amount.builder()
                                     .amount(0L)
                                     .currency("USD")
                                     .build()
@@ -1218,45 +1178,30 @@ internal class ParsedWebhookEventTest {
                     )
                     .authorizationAmount(0L)
                     .avs(
-                        CardAuthorizationApprovalRequestWebhookEvent.Avs.builder()
+                        CardAuthorization.Avs.builder()
                             .address("address")
-                            .addressOnFileMatch(
-                                CardAuthorizationApprovalRequestWebhookEvent.Avs.AddressMatchResult
-                                    .MATCH
-                            )
+                            .addressOnFileMatch(CardAuthorization.Avs.AddressMatchResult.MATCH)
                             .zipcode("zipcode")
                             .build()
                     )
                     .card(
-                        CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.builder()
+                        CardAuthorization.AsaRequestCard.builder()
                             .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                             .lastFour("last_four")
                             .memo("memo")
                             .spendLimit(0L)
                             .spendLimitDuration(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard
-                                    .SpendLimitDuration
-                                    .ANNUALLY
+                                CardAuthorization.AsaRequestCard.SpendLimitDuration.ANNUALLY
                             )
-                            .state(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.State
-                                    .CLOSED
-                            )
-                            .type(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaRequestCard.CardType
-                                    .SINGLE_USE
-                            )
+                            .state(CardAuthorization.AsaRequestCard.State.CLOSED)
+                            .type(CardAuthorization.AsaRequestCard.CardType.SINGLE_USE)
                             .build()
                     )
                     .cardholderCurrency("cardholder_currency")
                     .cashAmount(0L)
                     .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .eventType(
-                        CardAuthorizationApprovalRequestWebhookEvent.EventType
-                            .CARD_AUTHORIZATION_APPROVAL_REQUEST
-                    )
                     .merchant(
-                        CardAuthorizationApprovalRequestWebhookEvent.TransactionMerchant.builder()
+                        CardAuthorization.TransactionMerchant.builder()
                             .acceptorId("333301802529120")
                             .acquiringInstitutionId("191231")
                             .city("NEW YORK")
@@ -1272,7 +1217,7 @@ internal class ParsedWebhookEventTest {
                     .merchantAmount(0L)
                     .merchantCurrency("USD")
                     .serviceLocation(
-                        CardAuthorizationApprovalRequestWebhookEvent.ServiceLocation.builder()
+                        CardAuthorization.ServiceLocation.builder()
                             .city("city")
                             .country("country")
                             .postalCode("postal_code")
@@ -1281,13 +1226,9 @@ internal class ParsedWebhookEventTest {
                             .build()
                     )
                     .settledAmount(0L)
-                    .status(
-                        CardAuthorizationApprovalRequestWebhookEvent.AsaRequestStatus.AUTHORIZATION
-                    )
-                    .transactionInitiator(
-                        CardAuthorizationApprovalRequestWebhookEvent.TransactionInitiator.CARDHOLDER
-                    )
-                    .accountType(CardAuthorizationApprovalRequestWebhookEvent.AccountType.CHECKING)
+                    .status(CardAuthorization.AsaRequestStatus.AUTHORIZATION)
+                    .transactionInitiator(CardAuthorization.TransactionInitiator.CARDHOLDER)
+                    .accountType(CardAuthorization.AccountType.CHECKING)
                     .cardholderAuthentication(
                         CardholderAuthentication.builder()
                             .authenticationMethod(
@@ -1307,15 +1248,12 @@ internal class ParsedWebhookEventTest {
                     .conversionRate(0.0)
                     .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .fleetInfo(
-                        CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo.builder()
+                        CardAuthorization.AsaRequestFleetInfo.builder()
                             .fleetPromptCode(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo
-                                    .FleetPromptCode
-                                    .NO_PROMPT
+                                CardAuthorization.AsaRequestFleetInfo.FleetPromptCode.NO_PROMPT
                             )
                             .fleetRestrictionCode(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaRequestFleetInfo
-                                    .FleetRestrictionCode
+                                CardAuthorization.AsaRequestFleetInfo.FleetRestrictionCode
                                     .NO_RESTRICTIONS
                             )
                             .driverNumber("driver_number")
@@ -1323,28 +1261,23 @@ internal class ParsedWebhookEventTest {
                             .build()
                     )
                     .latestChallenge(
-                        CardAuthorizationApprovalRequestWebhookEvent.LatestChallenge.builder()
+                        CardAuthorization.LatestChallenge.builder()
                             .phoneNumber("phone_number")
-                            .status(
-                                CardAuthorizationApprovalRequestWebhookEvent.LatestChallenge.Status
-                                    .COMPLETED
-                            )
+                            .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
                             .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
-                    .network(CardAuthorizationApprovalRequestWebhookEvent.Network.AMEX)
+                    .network(CardAuthorization.Network.AMEX)
                     .networkRiskScore(0L)
                     .networkSpecificData(
-                        CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData
-                            .builder()
+                        CardAuthorization.AsaNetworkSpecificData.builder()
                             .mastercard(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData
+                                CardAuthorization.AsaNetworkSpecificData
                                     .AsaNetworkSpecificDataMastercard
                                     .builder()
                                     .ecommerceSecurityLevelIndicator("xxx")
                                     .addOnBehalfServiceResult(
-                                        CardAuthorizationApprovalRequestWebhookEvent
-                                            .AsaNetworkSpecificData
+                                        CardAuthorization.AsaNetworkSpecificData
                                             .AsaNetworkSpecificDataMastercard
                                             .OnBehalfServiceResult
                                             .builder()
@@ -1357,8 +1290,7 @@ internal class ParsedWebhookEventTest {
                                     .build()
                             )
                             .visa(
-                                CardAuthorizationApprovalRequestWebhookEvent.AsaNetworkSpecificData
-                                    .AsaNetworkSpecificDataVisa
+                                CardAuthorization.AsaNetworkSpecificData.AsaNetworkSpecificDataVisa
                                     .builder()
                                     .businessApplicationIdentifier("xx")
                                     .build()
@@ -1366,57 +1298,33 @@ internal class ParsedWebhookEventTest {
                             .build()
                     )
                     .pos(
-                        CardAuthorizationApprovalRequestWebhookEvent.Pos.builder()
+                        CardAuthorization.Pos.builder()
                             .entryMode(
-                                CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                    .AsaRequestPosEntryMode
-                                    .builder()
-                                    .card(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaRequestPosEntryMode
-                                            .Card
-                                            .PRESENT
-                                    )
+                                CardAuthorization.Pos.AsaRequestPosEntryMode.builder()
+                                    .card(CardAuthorization.Pos.AsaRequestPosEntryMode.Card.PRESENT)
                                     .cardholder(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaRequestPosEntryMode
-                                            .Cardholder
+                                        CardAuthorization.Pos.AsaRequestPosEntryMode.Cardholder
                                             .DEFERRED_BILLING
                                     )
                                     .pan(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaRequestPosEntryMode
-                                            .Pan
-                                            .AUTO_ENTRY
+                                        CardAuthorization.Pos.AsaRequestPosEntryMode.Pan.AUTO_ENTRY
                                     )
                                     .pinEntered(true)
                                     .build()
                             )
                             .terminal(
-                                CardAuthorizationApprovalRequestWebhookEvent.Pos.AsaPosTerminal
-                                    .builder()
+                                CardAuthorization.Pos.AsaPosTerminal.builder()
                                     .attended(true)
                                     .cardRetentionCapable(true)
                                     .onPremise(true)
                                     .operator(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaPosTerminal
-                                            .Operator
-                                            .ADMINISTRATIVE
+                                        CardAuthorization.Pos.AsaPosTerminal.Operator.ADMINISTRATIVE
                                     )
                                     .partialApprovalCapable(true)
                                     .pinCapability(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaPosTerminal
-                                            .PinCapability
-                                            .CAPABLE
+                                        CardAuthorization.Pos.AsaPosTerminal.PinCapability.CAPABLE
                                     )
-                                    .type(
-                                        CardAuthorizationApprovalRequestWebhookEvent.Pos
-                                            .AsaPosTerminal
-                                            .Type
-                                            .ADMINISTRATIVE
-                                    )
+                                    .type(CardAuthorization.Pos.AsaPosTerminal.Type.ADMINISTRATIVE)
                                     .acceptorTerminalId("5([<,yN%")
                                     .build()
                             )
@@ -1426,6 +1334,541 @@ internal class ParsedWebhookEventTest {
                         TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build()
                     )
                     .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .eventType(
+                        CardAuthorizationApprovalRequestWebhookEvent.EventType
+                            .CARD_AUTHORIZATION_APPROVAL_REQUEST
+                    )
+                    .build()
+            )
+
+        val roundtrippedParsedWebhookEvent =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(parsedWebhookEvent),
+                jacksonTypeRef<ParsedWebhookEvent>(),
+            )
+
+        assertThat(roundtrippedParsedWebhookEvent).isEqualTo(parsedWebhookEvent)
+    }
+
+    @Test
+    fun ofCardAuthorizationChallenge() {
+        val cardAuthorizationChallenge =
+            CardAuthorizationChallengeWebhookEvent.builder()
+                .authorization(
+                    CardAuthorization.builder()
+                        .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .acquirerFee(0L)
+                        .amount(0L)
+                        .amounts(
+                            CardAuthorization.Amounts.builder()
+                                .cardholder(
+                                    CardAuthorization.Amounts.ConvertedAmount.builder()
+                                        .amount(0L)
+                                        .conversionRate("1.000000")
+                                        .currency("USD")
+                                        .build()
+                                )
+                                .hold(
+                                    CardAuthorization.Amounts.Amount.builder()
+                                        .amount(0L)
+                                        .currency("USD")
+                                        .build()
+                                )
+                                .merchant(
+                                    CardAuthorization.Amounts.Amount.builder()
+                                        .amount(0L)
+                                        .currency("USD")
+                                        .build()
+                                )
+                                .settlement(
+                                    CardAuthorization.Amounts.Amount.builder()
+                                        .amount(0L)
+                                        .currency("USD")
+                                        .build()
+                                )
+                                .build()
+                        )
+                        .authorizationAmount(0L)
+                        .avs(
+                            CardAuthorization.Avs.builder()
+                                .address("address")
+                                .addressOnFileMatch(CardAuthorization.Avs.AddressMatchResult.MATCH)
+                                .zipcode("zipcode")
+                                .build()
+                        )
+                        .card(
+                            CardAuthorization.AsaRequestCard.builder()
+                                .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                                .lastFour("last_four")
+                                .memo("memo")
+                                .spendLimit(0L)
+                                .spendLimitDuration(
+                                    CardAuthorization.AsaRequestCard.SpendLimitDuration.ANNUALLY
+                                )
+                                .state(CardAuthorization.AsaRequestCard.State.CLOSED)
+                                .type(CardAuthorization.AsaRequestCard.CardType.SINGLE_USE)
+                                .build()
+                        )
+                        .cardholderCurrency("cardholder_currency")
+                        .cashAmount(0L)
+                        .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .merchant(
+                            CardAuthorization.TransactionMerchant.builder()
+                                .acceptorId("333301802529120")
+                                .acquiringInstitutionId("191231")
+                                .city("NEW YORK")
+                                .country("USA")
+                                .descriptor("COFFEE SHOP")
+                                .mcc("5812")
+                                .state("NY")
+                                .phoneNumber("5551234567")
+                                .postalCode("10001")
+                                .streetAddress("123 MAIN ST")
+                                .build()
+                        )
+                        .merchantAmount(0L)
+                        .merchantCurrency("USD")
+                        .serviceLocation(
+                            CardAuthorization.ServiceLocation.builder()
+                                .city("city")
+                                .country("country")
+                                .postalCode("postal_code")
+                                .state("state")
+                                .streetAddress("street_address")
+                                .build()
+                        )
+                        .settledAmount(0L)
+                        .status(CardAuthorization.AsaRequestStatus.AUTHORIZATION)
+                        .transactionInitiator(CardAuthorization.TransactionInitiator.CARDHOLDER)
+                        .accountType(CardAuthorization.AccountType.CHECKING)
+                        .cardholderAuthentication(
+                            CardholderAuthentication.builder()
+                                .authenticationMethod(
+                                    CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
+                                )
+                                .authenticationResult(
+                                    CardholderAuthentication.AuthenticationResult.SUCCESS
+                                )
+                                .decisionMadeBy(
+                                    CardholderAuthentication.DecisionMadeBy.LITHIC_RULES
+                                )
+                                .liabilityShift(
+                                    CardholderAuthentication.LiabilityShift._3DS_AUTHENTICATED
+                                )
+                                .threeDSAuthenticationToken("a6e372d0-b40a-43eb-b0d1-4e1aebef5875")
+                                .build()
+                        )
+                        .cashback(0L)
+                        .conversionRate(0.0)
+                        .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .fleetInfo(
+                            CardAuthorization.AsaRequestFleetInfo.builder()
+                                .fleetPromptCode(
+                                    CardAuthorization.AsaRequestFleetInfo.FleetPromptCode.NO_PROMPT
+                                )
+                                .fleetRestrictionCode(
+                                    CardAuthorization.AsaRequestFleetInfo.FleetRestrictionCode
+                                        .NO_RESTRICTIONS
+                                )
+                                .driverNumber("driver_number")
+                                .vehicleNumber("vehicle_number")
+                                .build()
+                        )
+                        .latestChallenge(
+                            CardAuthorization.LatestChallenge.builder()
+                                .phoneNumber("phone_number")
+                                .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
+                                .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .build()
+                        )
+                        .network(CardAuthorization.Network.AMEX)
+                        .networkRiskScore(0L)
+                        .networkSpecificData(
+                            CardAuthorization.AsaNetworkSpecificData.builder()
+                                .mastercard(
+                                    CardAuthorization.AsaNetworkSpecificData
+                                        .AsaNetworkSpecificDataMastercard
+                                        .builder()
+                                        .ecommerceSecurityLevelIndicator("xxx")
+                                        .addOnBehalfServiceResult(
+                                            CardAuthorization.AsaNetworkSpecificData
+                                                .AsaNetworkSpecificDataMastercard
+                                                .OnBehalfServiceResult
+                                                .builder()
+                                                .result1("x")
+                                                .result2("x")
+                                                .service("xx")
+                                                .build()
+                                        )
+                                        .transactionTypeIdentifier("xxx")
+                                        .build()
+                                )
+                                .visa(
+                                    CardAuthorization.AsaNetworkSpecificData
+                                        .AsaNetworkSpecificDataVisa
+                                        .builder()
+                                        .businessApplicationIdentifier("xx")
+                                        .build()
+                                )
+                                .build()
+                        )
+                        .pos(
+                            CardAuthorization.Pos.builder()
+                                .entryMode(
+                                    CardAuthorization.Pos.AsaRequestPosEntryMode.builder()
+                                        .card(
+                                            CardAuthorization.Pos.AsaRequestPosEntryMode.Card
+                                                .PRESENT
+                                        )
+                                        .cardholder(
+                                            CardAuthorization.Pos.AsaRequestPosEntryMode.Cardholder
+                                                .DEFERRED_BILLING
+                                        )
+                                        .pan(
+                                            CardAuthorization.Pos.AsaRequestPosEntryMode.Pan
+                                                .AUTO_ENTRY
+                                        )
+                                        .pinEntered(true)
+                                        .build()
+                                )
+                                .terminal(
+                                    CardAuthorization.Pos.AsaPosTerminal.builder()
+                                        .attended(true)
+                                        .cardRetentionCapable(true)
+                                        .onPremise(true)
+                                        .operator(
+                                            CardAuthorization.Pos.AsaPosTerminal.Operator
+                                                .ADMINISTRATIVE
+                                        )
+                                        .partialApprovalCapable(true)
+                                        .pinCapability(
+                                            CardAuthorization.Pos.AsaPosTerminal.PinCapability
+                                                .CAPABLE
+                                        )
+                                        .type(
+                                            CardAuthorization.Pos.AsaPosTerminal.Type.ADMINISTRATIVE
+                                        )
+                                        .acceptorTerminalId("5([<,yN%")
+                                        .build()
+                                )
+                                .build()
+                        )
+                        .tokenInfo(
+                            TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build()
+                        )
+                        .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
+                .challenge(
+                    CardAuthorizationChallengeWebhookEvent.AuthorizationChallenge.builder()
+                        .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                        .expiryTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .startTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
+                .eventType(
+                    CardAuthorizationChallengeWebhookEvent.EventType.CARD_AUTHORIZATION_CHALLENGE
+                )
+                .build()
+
+        val parsedWebhookEvent =
+            ParsedWebhookEvent.ofCardAuthorizationChallenge(cardAuthorizationChallenge)
+
+        assertThat(parsedWebhookEvent.accountHolderCreated()).isNull()
+        assertThat(parsedWebhookEvent.kybPayload()).isNull()
+        assertThat(parsedWebhookEvent.kycPayload()).isNull()
+        assertThat(parsedWebhookEvent.legacyPayload()).isNull()
+        assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
+        assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge())
+            .isEqualTo(cardAuthorizationChallenge)
+        assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
+        assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
+        assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
+        assertThat(parsedWebhookEvent.bookTransferTransactionCreated()).isNull()
+        assertThat(parsedWebhookEvent.bookTransferTransactionUpdated()).isNull()
+        assertThat(parsedWebhookEvent.cardCreated()).isNull()
+        assertThat(parsedWebhookEvent.cardConverted()).isNull()
+        assertThat(parsedWebhookEvent.cardRenewed()).isNull()
+        assertThat(parsedWebhookEvent.cardReissued()).isNull()
+        assertThat(parsedWebhookEvent.cardShipped()).isNull()
+        assertThat(parsedWebhookEvent.cardUpdated()).isNull()
+        assertThat(parsedWebhookEvent.cardTransactionUpdated()).isNull()
+        assertThat(parsedWebhookEvent.cardTransactionEnhancedDataCreated()).isNull()
+        assertThat(parsedWebhookEvent.cardTransactionEnhancedDataUpdated()).isNull()
+        assertThat(parsedWebhookEvent.digitalWalletTokenizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.digitalWalletTokenizationResult()).isNull()
+        assertThat(parsedWebhookEvent.digitalWalletTokenizationTwoFactorAuthenticationCode())
+            .isNull()
+        assertThat(parsedWebhookEvent.digitalWalletTokenizationTwoFactorAuthenticationCodeSent())
+            .isNull()
+        assertThat(parsedWebhookEvent.digitalWalletTokenizationUpdated()).isNull()
+        assertThat(parsedWebhookEvent.disputeUpdated()).isNull()
+        assertThat(parsedWebhookEvent.disputeEvidenceUploadFailed()).isNull()
+        assertThat(parsedWebhookEvent.externalBankAccountCreated()).isNull()
+        assertThat(parsedWebhookEvent.externalBankAccountUpdated()).isNull()
+        assertThat(parsedWebhookEvent.externalPaymentCreated()).isNull()
+        assertThat(parsedWebhookEvent.externalPaymentUpdated()).isNull()
+        assertThat(parsedWebhookEvent.financialAccountCreated()).isNull()
+        assertThat(parsedWebhookEvent.financialAccountUpdated()).isNull()
+        assertThat(parsedWebhookEvent.fundingEventCreated()).isNull()
+        assertThat(parsedWebhookEvent.loanTapeCreated()).isNull()
+        assertThat(parsedWebhookEvent.loanTapeUpdated()).isNull()
+        assertThat(parsedWebhookEvent.managementOperationCreated()).isNull()
+        assertThat(parsedWebhookEvent.managementOperationUpdated()).isNull()
+        assertThat(parsedWebhookEvent.internalTransactionCreated()).isNull()
+        assertThat(parsedWebhookEvent.internalTransactionUpdated()).isNull()
+        assertThat(parsedWebhookEvent.networkTotalCreated()).isNull()
+        assertThat(parsedWebhookEvent.networkTotalUpdated()).isNull()
+        assertThat(parsedWebhookEvent.paymentTransactionCreated()).isNull()
+        assertThat(parsedWebhookEvent.paymentTransactionUpdated()).isNull()
+        assertThat(parsedWebhookEvent.settlementReportUpdated()).isNull()
+        assertThat(parsedWebhookEvent.statementsCreated()).isNull()
+        assertThat(parsedWebhookEvent.threeDSAuthenticationCreated()).isNull()
+        assertThat(parsedWebhookEvent.threeDSAuthenticationUpdated()).isNull()
+        assertThat(parsedWebhookEvent.threeDSAuthenticationChallenge()).isNull()
+        assertThat(parsedWebhookEvent.tokenizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.tokenizationResult()).isNull()
+        assertThat(parsedWebhookEvent.tokenizationTwoFactorAuthenticationCode()).isNull()
+        assertThat(parsedWebhookEvent.tokenizationTwoFactorAuthenticationCodeSent()).isNull()
+        assertThat(parsedWebhookEvent.tokenizationUpdated()).isNull()
+        assertThat(parsedWebhookEvent.threeDSAuthenticationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.disputeTransactionCreated()).isNull()
+        assertThat(parsedWebhookEvent.disputeTransactionUpdated()).isNull()
+    }
+
+    @Test
+    fun ofCardAuthorizationChallengeRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val parsedWebhookEvent =
+            ParsedWebhookEvent.ofCardAuthorizationChallenge(
+                CardAuthorizationChallengeWebhookEvent.builder()
+                    .authorization(
+                        CardAuthorization.builder()
+                            .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                            .acquirerFee(0L)
+                            .amount(0L)
+                            .amounts(
+                                CardAuthorization.Amounts.builder()
+                                    .cardholder(
+                                        CardAuthorization.Amounts.ConvertedAmount.builder()
+                                            .amount(0L)
+                                            .conversionRate("1.000000")
+                                            .currency("USD")
+                                            .build()
+                                    )
+                                    .hold(
+                                        CardAuthorization.Amounts.Amount.builder()
+                                            .amount(0L)
+                                            .currency("USD")
+                                            .build()
+                                    )
+                                    .merchant(
+                                        CardAuthorization.Amounts.Amount.builder()
+                                            .amount(0L)
+                                            .currency("USD")
+                                            .build()
+                                    )
+                                    .settlement(
+                                        CardAuthorization.Amounts.Amount.builder()
+                                            .amount(0L)
+                                            .currency("USD")
+                                            .build()
+                                    )
+                                    .build()
+                            )
+                            .authorizationAmount(0L)
+                            .avs(
+                                CardAuthorization.Avs.builder()
+                                    .address("address")
+                                    .addressOnFileMatch(
+                                        CardAuthorization.Avs.AddressMatchResult.MATCH
+                                    )
+                                    .zipcode("zipcode")
+                                    .build()
+                            )
+                            .card(
+                                CardAuthorization.AsaRequestCard.builder()
+                                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                                    .lastFour("last_four")
+                                    .memo("memo")
+                                    .spendLimit(0L)
+                                    .spendLimitDuration(
+                                        CardAuthorization.AsaRequestCard.SpendLimitDuration.ANNUALLY
+                                    )
+                                    .state(CardAuthorization.AsaRequestCard.State.CLOSED)
+                                    .type(CardAuthorization.AsaRequestCard.CardType.SINGLE_USE)
+                                    .build()
+                            )
+                            .cardholderCurrency("cardholder_currency")
+                            .cashAmount(0L)
+                            .created(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .merchant(
+                                CardAuthorization.TransactionMerchant.builder()
+                                    .acceptorId("333301802529120")
+                                    .acquiringInstitutionId("191231")
+                                    .city("NEW YORK")
+                                    .country("USA")
+                                    .descriptor("COFFEE SHOP")
+                                    .mcc("5812")
+                                    .state("NY")
+                                    .phoneNumber("5551234567")
+                                    .postalCode("10001")
+                                    .streetAddress("123 MAIN ST")
+                                    .build()
+                            )
+                            .merchantAmount(0L)
+                            .merchantCurrency("USD")
+                            .serviceLocation(
+                                CardAuthorization.ServiceLocation.builder()
+                                    .city("city")
+                                    .country("country")
+                                    .postalCode("postal_code")
+                                    .state("state")
+                                    .streetAddress("street_address")
+                                    .build()
+                            )
+                            .settledAmount(0L)
+                            .status(CardAuthorization.AsaRequestStatus.AUTHORIZATION)
+                            .transactionInitiator(CardAuthorization.TransactionInitiator.CARDHOLDER)
+                            .accountType(CardAuthorization.AccountType.CHECKING)
+                            .cardholderAuthentication(
+                                CardholderAuthentication.builder()
+                                    .authenticationMethod(
+                                        CardholderAuthentication.AuthenticationMethod.FRICTIONLESS
+                                    )
+                                    .authenticationResult(
+                                        CardholderAuthentication.AuthenticationResult.SUCCESS
+                                    )
+                                    .decisionMadeBy(
+                                        CardholderAuthentication.DecisionMadeBy.LITHIC_RULES
+                                    )
+                                    .liabilityShift(
+                                        CardholderAuthentication.LiabilityShift._3DS_AUTHENTICATED
+                                    )
+                                    .threeDSAuthenticationToken(
+                                        "a6e372d0-b40a-43eb-b0d1-4e1aebef5875"
+                                    )
+                                    .build()
+                            )
+                            .cashback(0L)
+                            .conversionRate(0.0)
+                            .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                            .fleetInfo(
+                                CardAuthorization.AsaRequestFleetInfo.builder()
+                                    .fleetPromptCode(
+                                        CardAuthorization.AsaRequestFleetInfo.FleetPromptCode
+                                            .NO_PROMPT
+                                    )
+                                    .fleetRestrictionCode(
+                                        CardAuthorization.AsaRequestFleetInfo.FleetRestrictionCode
+                                            .NO_RESTRICTIONS
+                                    )
+                                    .driverNumber("driver_number")
+                                    .vehicleNumber("vehicle_number")
+                                    .build()
+                            )
+                            .latestChallenge(
+                                CardAuthorization.LatestChallenge.builder()
+                                    .phoneNumber("phone_number")
+                                    .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
+                                    .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .build()
+                            )
+                            .network(CardAuthorization.Network.AMEX)
+                            .networkRiskScore(0L)
+                            .networkSpecificData(
+                                CardAuthorization.AsaNetworkSpecificData.builder()
+                                    .mastercard(
+                                        CardAuthorization.AsaNetworkSpecificData
+                                            .AsaNetworkSpecificDataMastercard
+                                            .builder()
+                                            .ecommerceSecurityLevelIndicator("xxx")
+                                            .addOnBehalfServiceResult(
+                                                CardAuthorization.AsaNetworkSpecificData
+                                                    .AsaNetworkSpecificDataMastercard
+                                                    .OnBehalfServiceResult
+                                                    .builder()
+                                                    .result1("x")
+                                                    .result2("x")
+                                                    .service("xx")
+                                                    .build()
+                                            )
+                                            .transactionTypeIdentifier("xxx")
+                                            .build()
+                                    )
+                                    .visa(
+                                        CardAuthorization.AsaNetworkSpecificData
+                                            .AsaNetworkSpecificDataVisa
+                                            .builder()
+                                            .businessApplicationIdentifier("xx")
+                                            .build()
+                                    )
+                                    .build()
+                            )
+                            .pos(
+                                CardAuthorization.Pos.builder()
+                                    .entryMode(
+                                        CardAuthorization.Pos.AsaRequestPosEntryMode.builder()
+                                            .card(
+                                                CardAuthorization.Pos.AsaRequestPosEntryMode.Card
+                                                    .PRESENT
+                                            )
+                                            .cardholder(
+                                                CardAuthorization.Pos.AsaRequestPosEntryMode
+                                                    .Cardholder
+                                                    .DEFERRED_BILLING
+                                            )
+                                            .pan(
+                                                CardAuthorization.Pos.AsaRequestPosEntryMode.Pan
+                                                    .AUTO_ENTRY
+                                            )
+                                            .pinEntered(true)
+                                            .build()
+                                    )
+                                    .terminal(
+                                        CardAuthorization.Pos.AsaPosTerminal.builder()
+                                            .attended(true)
+                                            .cardRetentionCapable(true)
+                                            .onPremise(true)
+                                            .operator(
+                                                CardAuthorization.Pos.AsaPosTerminal.Operator
+                                                    .ADMINISTRATIVE
+                                            )
+                                            .partialApprovalCapable(true)
+                                            .pinCapability(
+                                                CardAuthorization.Pos.AsaPosTerminal.PinCapability
+                                                    .CAPABLE
+                                            )
+                                            .type(
+                                                CardAuthorization.Pos.AsaPosTerminal.Type
+                                                    .ADMINISTRATIVE
+                                            )
+                                            .acceptorTerminalId("5([<,yN%")
+                                            .build()
+                                    )
+                                    .build()
+                            )
+                            .tokenInfo(
+                                TokenInfo.builder()
+                                    .walletType(TokenInfo.WalletType.APPLE_PAY)
+                                    .build()
+                            )
+                            .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .build()
+                    )
+                    .challenge(
+                        CardAuthorizationChallengeWebhookEvent.AuthorizationChallenge.builder()
+                            .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                            .expiryTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .build()
+                    )
+                    .eventType(
+                        CardAuthorizationChallengeWebhookEvent.EventType
+                            .CARD_AUTHORIZATION_CHALLENGE
+                    )
                     .build()
             )
 
@@ -1467,6 +1910,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse())
             .isEqualTo(cardAuthorizationChallengeResponse)
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
@@ -1617,6 +2061,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated())
             .isEqualTo(authRulesBacktestReportCreated)
@@ -1776,6 +2221,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isEqualTo(balanceUpdated)
@@ -1929,6 +2375,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2117,6 +2564,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2258,6 +2706,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2351,6 +2800,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2447,6 +2897,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2543,6 +2994,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2640,6 +3092,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -2739,6 +3192,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -3060,6 +3514,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -3449,6 +3904,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -3654,6 +4110,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -3884,6 +4341,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4092,6 +4550,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4244,6 +4703,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4378,6 +4838,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4537,6 +4998,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4694,6 +5156,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4812,6 +5275,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -4947,6 +5411,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5106,6 +5571,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5261,6 +5727,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5413,6 +5880,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5563,6 +6031,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5710,6 +6179,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -5842,6 +6312,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -6107,6 +6578,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -6539,6 +7011,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -6863,6 +7336,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7065,6 +7539,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7237,6 +7712,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7379,6 +7855,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7516,6 +7993,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7644,6 +8122,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -7816,6 +8295,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -8032,6 +8512,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -8208,6 +8689,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -8449,6 +8931,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -8804,6 +9287,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -9178,6 +9662,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -9581,6 +10066,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -9914,6 +10400,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -10108,6 +10595,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -10250,6 +10738,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -10381,6 +10870,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -10535,6 +11025,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -10810,6 +11301,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -11103,6 +11595,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()
@@ -11309,6 +11802,7 @@ internal class ParsedWebhookEventTest {
         assertThat(parsedWebhookEvent.accountHolderVerification()).isNull()
         assertThat(parsedWebhookEvent.accountHolderDocumentUpdated()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationApprovalRequest()).isNull()
+        assertThat(parsedWebhookEvent.cardAuthorizationChallenge()).isNull()
         assertThat(parsedWebhookEvent.cardAuthorizationChallengeResponse()).isNull()
         assertThat(parsedWebhookEvent.authRulesBacktestReportCreated()).isNull()
         assertThat(parsedWebhookEvent.balanceUpdated()).isNull()

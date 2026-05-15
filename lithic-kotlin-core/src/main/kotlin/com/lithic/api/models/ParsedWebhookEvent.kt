@@ -43,6 +43,7 @@ private constructor(
     private val accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent? = null,
     private val cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent? =
         null,
+    private val cardAuthorizationChallenge: CardAuthorizationChallengeWebhookEvent? = null,
     private val cardAuthorizationChallengeResponse:
         CardAuthorizationChallengeResponseWebhookEvent? =
         null,
@@ -134,8 +135,12 @@ private constructor(
     fun accountHolderDocumentUpdated(): AccountHolderDocumentUpdatedWebhookEvent? =
         accountHolderDocumentUpdated
 
+    /** The Auth Stream Access request payload that was sent to the ASA responder. */
     fun cardAuthorizationApprovalRequest(): CardAuthorizationApprovalRequestWebhookEvent? =
         cardAuthorizationApprovalRequest
+
+    fun cardAuthorizationChallenge(): CardAuthorizationChallengeWebhookEvent? =
+        cardAuthorizationChallenge
 
     fun cardAuthorizationChallengeResponse(): CardAuthorizationChallengeResponseWebhookEvent? =
         cardAuthorizationChallengeResponse
@@ -305,6 +310,8 @@ private constructor(
 
     fun isCardAuthorizationApprovalRequest(): Boolean = cardAuthorizationApprovalRequest != null
 
+    fun isCardAuthorizationChallenge(): Boolean = cardAuthorizationChallenge != null
+
     fun isCardAuthorizationChallengeResponse(): Boolean = cardAuthorizationChallengeResponse != null
 
     fun isAuthRulesBacktestReportCreated(): Boolean = authRulesBacktestReportCreated != null
@@ -431,8 +438,12 @@ private constructor(
     fun asAccountHolderDocumentUpdated(): AccountHolderDocumentUpdatedWebhookEvent =
         accountHolderDocumentUpdated.getOrThrow("accountHolderDocumentUpdated")
 
+    /** The Auth Stream Access request payload that was sent to the ASA responder. */
     fun asCardAuthorizationApprovalRequest(): CardAuthorizationApprovalRequestWebhookEvent =
         cardAuthorizationApprovalRequest.getOrThrow("cardAuthorizationApprovalRequest")
+
+    fun asCardAuthorizationChallenge(): CardAuthorizationChallengeWebhookEvent =
+        cardAuthorizationChallenge.getOrThrow("cardAuthorizationChallenge")
 
     fun asCardAuthorizationChallengeResponse(): CardAuthorizationChallengeResponseWebhookEvent =
         cardAuthorizationChallengeResponse.getOrThrow("cardAuthorizationChallengeResponse")
@@ -650,6 +661,8 @@ private constructor(
                 visitor.visitAccountHolderDocumentUpdated(accountHolderDocumentUpdated)
             cardAuthorizationApprovalRequest != null ->
                 visitor.visitCardAuthorizationApprovalRequest(cardAuthorizationApprovalRequest)
+            cardAuthorizationChallenge != null ->
+                visitor.visitCardAuthorizationChallenge(cardAuthorizationChallenge)
             cardAuthorizationChallengeResponse != null ->
                 visitor.visitCardAuthorizationChallengeResponse(cardAuthorizationChallengeResponse)
             authRulesBacktestReportCreated != null ->
@@ -802,6 +815,12 @@ private constructor(
                     cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
                 ) {
                     cardAuthorizationApprovalRequest.validate()
+                }
+
+                override fun visitCardAuthorizationChallenge(
+                    cardAuthorizationChallenge: CardAuthorizationChallengeWebhookEvent
+                ) {
+                    cardAuthorizationChallenge.validate()
                 }
 
                 override fun visitCardAuthorizationChallengeResponse(
@@ -1142,6 +1161,10 @@ private constructor(
                     cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
                 ) = cardAuthorizationApprovalRequest.validity()
 
+                override fun visitCardAuthorizationChallenge(
+                    cardAuthorizationChallenge: CardAuthorizationChallengeWebhookEvent
+                ) = cardAuthorizationChallenge.validity()
+
                 override fun visitCardAuthorizationChallengeResponse(
                     cardAuthorizationChallengeResponse:
                         CardAuthorizationChallengeResponseWebhookEvent
@@ -1362,6 +1385,7 @@ private constructor(
             accountHolderVerification == other.accountHolderVerification &&
             accountHolderDocumentUpdated == other.accountHolderDocumentUpdated &&
             cardAuthorizationApprovalRequest == other.cardAuthorizationApprovalRequest &&
+            cardAuthorizationChallenge == other.cardAuthorizationChallenge &&
             cardAuthorizationChallengeResponse == other.cardAuthorizationChallengeResponse &&
             authRulesBacktestReportCreated == other.authRulesBacktestReportCreated &&
             balanceUpdated == other.balanceUpdated &&
@@ -1429,6 +1453,7 @@ private constructor(
             accountHolderVerification,
             accountHolderDocumentUpdated,
             cardAuthorizationApprovalRequest,
+            cardAuthorizationChallenge,
             cardAuthorizationChallengeResponse,
             authRulesBacktestReportCreated,
             balanceUpdated,
@@ -1495,6 +1520,8 @@ private constructor(
                 "ParsedWebhookEvent{accountHolderDocumentUpdated=$accountHolderDocumentUpdated}"
             cardAuthorizationApprovalRequest != null ->
                 "ParsedWebhookEvent{cardAuthorizationApprovalRequest=$cardAuthorizationApprovalRequest}"
+            cardAuthorizationChallenge != null ->
+                "ParsedWebhookEvent{cardAuthorizationChallenge=$cardAuthorizationChallenge}"
             cardAuthorizationChallengeResponse != null ->
                 "ParsedWebhookEvent{cardAuthorizationChallengeResponse=$cardAuthorizationChallengeResponse}"
             authRulesBacktestReportCreated != null ->
@@ -1613,9 +1640,14 @@ private constructor(
             accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent
         ) = ParsedWebhookEvent(accountHolderDocumentUpdated = accountHolderDocumentUpdated)
 
+        /** The Auth Stream Access request payload that was sent to the ASA responder. */
         fun ofCardAuthorizationApprovalRequest(
             cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
         ) = ParsedWebhookEvent(cardAuthorizationApprovalRequest = cardAuthorizationApprovalRequest)
+
+        fun ofCardAuthorizationChallenge(
+            cardAuthorizationChallenge: CardAuthorizationChallengeWebhookEvent
+        ) = ParsedWebhookEvent(cardAuthorizationChallenge = cardAuthorizationChallenge)
 
         fun ofCardAuthorizationChallengeResponse(
             cardAuthorizationChallengeResponse: CardAuthorizationChallengeResponseWebhookEvent
@@ -1882,8 +1914,13 @@ private constructor(
             accountHolderDocumentUpdated: AccountHolderDocumentUpdatedWebhookEvent
         ): T
 
+        /** The Auth Stream Access request payload that was sent to the ASA responder. */
         fun visitCardAuthorizationApprovalRequest(
             cardAuthorizationApprovalRequest: CardAuthorizationApprovalRequestWebhookEvent
+        ): T
+
+        fun visitCardAuthorizationChallenge(
+            cardAuthorizationChallenge: CardAuthorizationChallengeWebhookEvent
         ): T
 
         fun visitCardAuthorizationChallengeResponse(
@@ -2138,6 +2175,13 @@ private constructor(
                                     cardAuthorizationApprovalRequest = it,
                                     _json = json,
                                 )
+                            },
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<CardAuthorizationChallengeWebhookEvent>(),
+                            )
+                            ?.let {
+                                ParsedWebhookEvent(cardAuthorizationChallenge = it, _json = json)
                             },
                         tryDeserialize(
                                 node,
@@ -2493,6 +2537,8 @@ private constructor(
                     generator.writeObject(value.accountHolderDocumentUpdated)
                 value.cardAuthorizationApprovalRequest != null ->
                     generator.writeObject(value.cardAuthorizationApprovalRequest)
+                value.cardAuthorizationChallenge != null ->
+                    generator.writeObject(value.cardAuthorizationChallenge)
                 value.cardAuthorizationChallengeResponse != null ->
                     generator.writeObject(value.cardAuthorizationChallengeResponse)
                 value.authRulesBacktestReportCreated != null ->

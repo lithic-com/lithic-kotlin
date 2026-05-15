@@ -8,12 +8,12 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class CardAuthorizationApprovalRequestWebhookEventTest {
+internal class CardAuthorizationTest {
 
     @Test
     fun create() {
-        val cardAuthorizationApprovalRequestWebhookEvent =
-            CardAuthorizationApprovalRequestWebhookEvent.builder()
+        val cardAuthorization =
+            CardAuthorization.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .acquirerFee(0L)
                 .amount(0L)
@@ -196,17 +196,12 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                 )
                 .tokenInfo(TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build())
                 .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .eventType(
-                    CardAuthorizationApprovalRequestWebhookEvent.EventType
-                        .CARD_AUTHORIZATION_APPROVAL_REQUEST
-                )
                 .build()
 
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.token())
-            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.acquirerFee()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.amount()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.amounts())
+        assertThat(cardAuthorization.token()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(cardAuthorization.acquirerFee()).isEqualTo(0L)
+        assertThat(cardAuthorization.amount()).isEqualTo(0L)
+        assertThat(cardAuthorization.amounts())
             .isEqualTo(
                 CardAuthorization.Amounts.builder()
                     .cardholder(
@@ -236,8 +231,8 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     )
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.authorizationAmount()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.avs())
+        assertThat(cardAuthorization.authorizationAmount()).isEqualTo(0L)
+        assertThat(cardAuthorization.avs())
             .isEqualTo(
                 CardAuthorization.Avs.builder()
                     .address("address")
@@ -245,7 +240,7 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .zipcode("zipcode")
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.card())
+        assertThat(cardAuthorization.card())
             .isEqualTo(
                 CardAuthorization.AsaRequestCard.builder()
                     .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
@@ -259,12 +254,11 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .type(CardAuthorization.AsaRequestCard.CardType.SINGLE_USE)
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.cardholderCurrency())
-            .isEqualTo("cardholder_currency")
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.cashAmount()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.created())
+        assertThat(cardAuthorization.cardholderCurrency()).isEqualTo("cardholder_currency")
+        assertThat(cardAuthorization.cashAmount()).isEqualTo(0L)
+        assertThat(cardAuthorization.created())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.merchant())
+        assertThat(cardAuthorization.merchant())
             .isEqualTo(
                 CardAuthorization.TransactionMerchant.builder()
                     .acceptorId("333301802529120")
@@ -279,9 +273,9 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .streetAddress("123 MAIN ST")
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.merchantAmount()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.merchantCurrency()).isEqualTo("USD")
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.serviceLocation())
+        assertThat(cardAuthorization.merchantAmount()).isEqualTo(0L)
+        assertThat(cardAuthorization.merchantCurrency()).isEqualTo("USD")
+        assertThat(cardAuthorization.serviceLocation())
             .isEqualTo(
                 CardAuthorization.ServiceLocation.builder()
                     .city("city")
@@ -291,14 +285,14 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .streetAddress("street_address")
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.settledAmount()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.status())
+        assertThat(cardAuthorization.settledAmount()).isEqualTo(0L)
+        assertThat(cardAuthorization.status())
             .isEqualTo(CardAuthorization.AsaRequestStatus.AUTHORIZATION)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.transactionInitiator())
+        assertThat(cardAuthorization.transactionInitiator())
             .isEqualTo(CardAuthorization.TransactionInitiator.CARDHOLDER)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.accountType())
+        assertThat(cardAuthorization.accountType())
             .isEqualTo(CardAuthorization.AccountType.CHECKING)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.cardholderAuthentication())
+        assertThat(cardAuthorization.cardholderAuthentication())
             .isEqualTo(
                 CardholderAuthentication.builder()
                     .authenticationMethod(
@@ -310,11 +304,10 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .threeDSAuthenticationToken("a6e372d0-b40a-43eb-b0d1-4e1aebef5875")
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.cashback()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.conversionRate()).isEqualTo(0.0)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.eventToken())
-            .isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.fleetInfo())
+        assertThat(cardAuthorization.cashback()).isEqualTo(0L)
+        assertThat(cardAuthorization.conversionRate()).isEqualTo(0.0)
+        assertThat(cardAuthorization.eventToken()).isEqualTo("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+        assertThat(cardAuthorization.fleetInfo())
             .isEqualTo(
                 CardAuthorization.AsaRequestFleetInfo.builder()
                     .fleetPromptCode(
@@ -327,7 +320,7 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .vehicleNumber("vehicle_number")
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.latestChallenge())
+        assertThat(cardAuthorization.latestChallenge())
             .isEqualTo(
                 CardAuthorization.LatestChallenge.builder()
                     .phoneNumber("phone_number")
@@ -335,10 +328,9 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.network())
-            .isEqualTo(CardAuthorization.Network.AMEX)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.networkRiskScore()).isEqualTo(0L)
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.networkSpecificData())
+        assertThat(cardAuthorization.network()).isEqualTo(CardAuthorization.Network.AMEX)
+        assertThat(cardAuthorization.networkRiskScore()).isEqualTo(0L)
+        assertThat(cardAuthorization.networkSpecificData())
             .isEqualTo(
                 CardAuthorization.AsaNetworkSpecificData.builder()
                     .mastercard(
@@ -366,7 +358,7 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     )
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.pos())
+        assertThat(cardAuthorization.pos())
             .isEqualTo(
                 CardAuthorization.Pos.builder()
                     .entryMode(
@@ -396,22 +388,17 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                     )
                     .build()
             )
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.tokenInfo())
+        assertThat(cardAuthorization.tokenInfo())
             .isEqualTo(TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build())
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.ttl())
+        assertThat(cardAuthorization.ttl())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(cardAuthorizationApprovalRequestWebhookEvent.eventType())
-            .isEqualTo(
-                CardAuthorizationApprovalRequestWebhookEvent.EventType
-                    .CARD_AUTHORIZATION_APPROVAL_REQUEST
-            )
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
-        val cardAuthorizationApprovalRequestWebhookEvent =
-            CardAuthorizationApprovalRequestWebhookEvent.builder()
+        val cardAuthorization =
+            CardAuthorization.builder()
                 .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                 .acquirerFee(0L)
                 .amount(0L)
@@ -594,19 +581,14 @@ internal class CardAuthorizationApprovalRequestWebhookEventTest {
                 )
                 .tokenInfo(TokenInfo.builder().walletType(TokenInfo.WalletType.APPLE_PAY).build())
                 .ttl(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .eventType(
-                    CardAuthorizationApprovalRequestWebhookEvent.EventType
-                        .CARD_AUTHORIZATION_APPROVAL_REQUEST
-                )
                 .build()
 
-        val roundtrippedCardAuthorizationApprovalRequestWebhookEvent =
+        val roundtrippedCardAuthorization =
             jsonMapper.readValue(
-                jsonMapper.writeValueAsString(cardAuthorizationApprovalRequestWebhookEvent),
-                jacksonTypeRef<CardAuthorizationApprovalRequestWebhookEvent>(),
+                jsonMapper.writeValueAsString(cardAuthorization),
+                jacksonTypeRef<CardAuthorization>(),
             )
 
-        assertThat(roundtrippedCardAuthorizationApprovalRequestWebhookEvent)
-            .isEqualTo(cardAuthorizationApprovalRequestWebhookEvent)
+        assertThat(roundtrippedCardAuthorization).isEqualTo(cardAuthorization)
     }
 }
