@@ -301,7 +301,8 @@ private constructor(
         }
 
         /** Parent company name (if applicable). */
-        fun parentCompany(parentCompany: String) = parentCompany(JsonField.of(parentCompany))
+        fun parentCompany(parentCompany: String?) =
+            parentCompany(JsonField.ofNullable(parentCompany))
 
         /**
          * Sets [Builder.parentCompany] to an arbitrary JSON value.
