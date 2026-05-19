@@ -128,6 +128,7 @@ internal class CardAuthorizationTest {
                 )
                 .latestChallenge(
                     CardAuthorization.LatestChallenge.builder()
+                        .method(CardAuthorization.LatestChallenge.Method.SMS)
                         .phoneNumber("phone_number")
                         .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
                         .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -323,6 +324,7 @@ internal class CardAuthorizationTest {
         assertThat(cardAuthorization.latestChallenge())
             .isEqualTo(
                 CardAuthorization.LatestChallenge.builder()
+                    .method(CardAuthorization.LatestChallenge.Method.SMS)
                     .phoneNumber("phone_number")
                     .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
                     .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -513,6 +515,7 @@ internal class CardAuthorizationTest {
                 )
                 .latestChallenge(
                     CardAuthorization.LatestChallenge.builder()
+                        .method(CardAuthorization.LatestChallenge.Method.SMS)
                         .phoneNumber("phone_number")
                         .status(CardAuthorization.LatestChallenge.Status.COMPLETED)
                         .completedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
