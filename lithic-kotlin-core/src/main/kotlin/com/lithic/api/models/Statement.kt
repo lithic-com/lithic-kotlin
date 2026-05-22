@@ -876,8 +876,8 @@ private constructor(
         }
 
         /** Date when the next payment is due */
-        fun nextPaymentDueDate(nextPaymentDueDate: LocalDate) =
-            nextPaymentDueDate(JsonField.of(nextPaymentDueDate))
+        fun nextPaymentDueDate(nextPaymentDueDate: LocalDate?) =
+            nextPaymentDueDate(JsonField.ofNullable(nextPaymentDueDate))
 
         /**
          * Sets [Builder.nextPaymentDueDate] to an arbitrary JSON value.
@@ -891,8 +891,8 @@ private constructor(
         }
 
         /** Date when the next billing period will end */
-        fun nextStatementEndDate(nextStatementEndDate: LocalDate) =
-            nextStatementEndDate(JsonField.of(nextStatementEndDate))
+        fun nextStatementEndDate(nextStatementEndDate: LocalDate?) =
+            nextStatementEndDate(JsonField.ofNullable(nextStatementEndDate))
 
         /**
          * Sets [Builder.nextStatementEndDate] to an arbitrary JSON value.

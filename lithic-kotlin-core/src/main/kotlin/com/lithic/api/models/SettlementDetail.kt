@@ -137,27 +137,27 @@ private constructor(
     /**
      * Globally unique identifier denoting the account that the associated transaction occurred on.
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun accountToken(): String = accountToken.getRequired("account_token")
+    fun accountToken(): String? = accountToken.getNullable("account_token")
 
     /**
      * Globally unique identifier denoting the card program that the associated transaction occurred
      * on.
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun cardProgramToken(): String = cardProgramToken.getRequired("card_program_token")
+    fun cardProgramToken(): String? = cardProgramToken.getNullable("card_program_token")
 
     /**
      * Globally unique identifier denoting the card that the associated transaction occurred on.
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun cardToken(): String = cardToken.getRequired("card_token")
+    fun cardToken(): String? = cardToken.getNullable("card_token")
 
     /**
      * Date and time when the transaction first occurred. UTC time zone.
@@ -262,15 +262,15 @@ private constructor(
 
     /**
      * Globally unique identifier denoting the associated transaction. For settlement records with
-     * type `CLEARING`, `FINANCIAL`, or `NON-FINANCIAL`, this references a card transaction token.
+     * type `CLEARING`, `FINANCIAL`, or `NON_FINANCIAL`, this references a card transaction token.
      * For settlement records with type `CHARGEBACK`, `REPRESENTMENT`, `PREARBITRATION`,
      * `ARBITRATION`, or `COLLABORATION`, this references the dispute transaction token. May be null
      * for certain settlement types.
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun transactionToken(): String = transactionToken.getRequired("transaction_token")
+    fun transactionToken(): String? = transactionToken.getNullable("transaction_token")
 
     /**
      * The total amount of settlement impacting transactions (excluding interchange, fees, and
@@ -595,7 +595,7 @@ private constructor(
          * Globally unique identifier denoting the account that the associated transaction occurred
          * on.
          */
-        fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
+        fun accountToken(accountToken: String?) = accountToken(JsonField.ofNullable(accountToken))
 
         /**
          * Sets [Builder.accountToken] to an arbitrary JSON value.
@@ -612,8 +612,8 @@ private constructor(
          * Globally unique identifier denoting the card program that the associated transaction
          * occurred on.
          */
-        fun cardProgramToken(cardProgramToken: String) =
-            cardProgramToken(JsonField.of(cardProgramToken))
+        fun cardProgramToken(cardProgramToken: String?) =
+            cardProgramToken(JsonField.ofNullable(cardProgramToken))
 
         /**
          * Sets [Builder.cardProgramToken] to an arbitrary JSON value.
@@ -629,7 +629,7 @@ private constructor(
         /**
          * Globally unique identifier denoting the card that the associated transaction occurred on.
          */
-        fun cardToken(cardToken: String) = cardToken(JsonField.of(cardToken))
+        fun cardToken(cardToken: String?) = cardToken(JsonField.ofNullable(cardToken))
 
         /**
          * Sets [Builder.cardToken] to an arbitrary JSON value.
@@ -825,13 +825,13 @@ private constructor(
 
         /**
          * Globally unique identifier denoting the associated transaction. For settlement records
-         * with type `CLEARING`, `FINANCIAL`, or `NON-FINANCIAL`, this references a card transaction
+         * with type `CLEARING`, `FINANCIAL`, or `NON_FINANCIAL`, this references a card transaction
          * token. For settlement records with type `CHARGEBACK`, `REPRESENTMENT`, `PREARBITRATION`,
          * `ARBITRATION`, or `COLLABORATION`, this references the dispute transaction token. May be
          * null for certain settlement types.
          */
-        fun transactionToken(transactionToken: String) =
-            transactionToken(JsonField.of(transactionToken))
+        fun transactionToken(transactionToken: String?) =
+            transactionToken(JsonField.ofNullable(transactionToken))
 
         /**
          * Sets [Builder.transactionToken] to an arbitrary JSON value.
@@ -1387,7 +1387,7 @@ private constructor(
 
             val FINANCIAL = of("FINANCIAL")
 
-            val NON_FINANCIAL = of("NON-FINANCIAL")
+            val NON_FINANCIAL = of("NON_FINANCIAL")
 
             val PREARBITRATION = of("PREARBITRATION")
 
