@@ -886,8 +886,16 @@ private constructor(
                     fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
 
                     /** Amount originated towards limit */
+                    fun amountOriginated(amountOriginated: Long?) =
+                        amountOriginated(JsonField.ofNullable(amountOriginated))
+
+                    /**
+                     * Alias for [Builder.amountOriginated].
+                     *
+                     * This unboxed primitive overload exists for backwards compatibility.
+                     */
                     fun amountOriginated(amountOriginated: Long) =
-                        amountOriginated(JsonField.of(amountOriginated))
+                        amountOriginated(amountOriginated as Long?)
 
                     /**
                      * Sets [Builder.amountOriginated] to an arbitrary JSON value.

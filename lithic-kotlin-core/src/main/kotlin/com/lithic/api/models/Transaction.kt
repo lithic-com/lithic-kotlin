@@ -7073,8 +7073,8 @@ private constructor(
                 this.accountType = accountType
             }
 
-            fun networkSpecificData(networkSpecificData: NetworkSpecificData) =
-                networkSpecificData(JsonField.of(networkSpecificData))
+            fun networkSpecificData(networkSpecificData: NetworkSpecificData?) =
+                networkSpecificData(JsonField.ofNullable(networkSpecificData))
 
             /**
              * Sets [Builder.networkSpecificData] to an arbitrary JSON value.
