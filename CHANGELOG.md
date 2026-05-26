@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.126.0 (2026-05-26)
+
+Full Changelog: [v0.125.0...v0.126.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.125.0...v0.126.0)
+
+### Features
+
+* **api:** add card_authorization.challenge event, rename webhook types for consistency ([9838bc6](https://github.com/lithic-com/lithic-kotlin/commit/9838bc653fd70603a0a23d50ed13552d03ee3ac4))
+* **api:** add INVALID_PAN value to TokenizationDeclineReason enum ([becb2a8](https://github.com/lithic-com/lithic-kotlin/commit/becb2a8dbb480db506e291a4ecd09da3f8dbb61e))
+* **api:** add method field and enum values to card authorization challenges ([860fdfe](https://github.com/lithic-com/lithic-kotlin/commit/860fdfe955634dab9c9798a1ade530e0e7ac3486))
+* **api:** add pause method to external_bank_accounts ([371b700](https://github.com/lithic-com/lithic-kotlin/commit/371b70008dbf53df54c679f33de57eda650bcb53))
+* **api:** Add schemas for authorization adjustment rules ([484993e](https://github.com/lithic-com/lithic-kotlin/commit/484993e69403d3b2ea449dd25b1a437c63919d54))
+
+
+### Bug Fixes
+
+* **types:** make cardholderCurrency optional in CardProgram ([f373a30](https://github.com/lithic-com/lithic-kotlin/commit/f373a30742969fdde5a834ed0bfcecaa53d49b5d))
+* **types:** make externalId/naicsCode/parentCompany optional in account holder/kyb types ([28c9f5d](https://github.com/lithic-com/lithic-kotlin/commit/28c9f5d6439bdf28459adc800ad8e79e113b1ff8))
+* **types:** make fields nullable, add enum values across Balance/SettlementDetail/Statement models ([1a16b37](https://github.com/lithic-com/lithic-kotlin/commit/1a16b37ae41727238c008f3237a81571b9b3a0fb))
+
+
+### Documentation
+
+* **types:** clarify ACCOUNT_AGE attribute behavior in conditional action parameters ([8f7e06b](https://github.com/lithic-com/lithic-kotlin/commit/8f7e06b34ee93e33e72405238fae7ff2dde29fbb))
+
 ## 0.125.0 (2026-05-14)
 
 Full Changelog: [v0.124.0...v0.125.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.124.0...v0.125.0)
