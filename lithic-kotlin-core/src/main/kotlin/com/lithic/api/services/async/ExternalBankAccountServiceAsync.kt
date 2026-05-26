@@ -11,6 +11,7 @@ import com.lithic.api.models.ExternalBankAccountCreateParams
 import com.lithic.api.models.ExternalBankAccountCreateResponse
 import com.lithic.api.models.ExternalBankAccountListPageAsync
 import com.lithic.api.models.ExternalBankAccountListParams
+import com.lithic.api.models.ExternalBankAccountPauseParams
 import com.lithic.api.models.ExternalBankAccountRetrieveParams
 import com.lithic.api.models.ExternalBankAccountRetrieveResponse
 import com.lithic.api.models.ExternalBankAccountRetryMicroDepositsParams
@@ -139,6 +140,30 @@ interface ExternalBankAccountServiceAsync {
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): ExternalBankAccountListPageAsync =
         list(ExternalBankAccountListParams.none(), requestOptions)
+
+    /** Pause an external bank account */
+    suspend fun pause(
+        externalBankAccountToken: String,
+        params: ExternalBankAccountPauseParams = ExternalBankAccountPauseParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccount =
+        pause(
+            params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+            requestOptions,
+        )
+
+    /** @see pause */
+    suspend fun pause(
+        params: ExternalBankAccountPauseParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): ExternalBankAccount
+
+    /** @see pause */
+    suspend fun pause(
+        externalBankAccountToken: String,
+        requestOptions: RequestOptions,
+    ): ExternalBankAccount =
+        pause(externalBankAccountToken, ExternalBankAccountPauseParams.none(), requestOptions)
 
     /** Retry external bank account micro deposit verification. */
     suspend fun retryMicroDeposits(
@@ -393,6 +418,37 @@ interface ExternalBankAccountServiceAsync {
             requestOptions: RequestOptions
         ): HttpResponseFor<ExternalBankAccountListPageAsync> =
             list(ExternalBankAccountListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /v1/external_bank_accounts/{external_bank_account_token}/pause`, but is otherwise the
+         * same as [ExternalBankAccountServiceAsync.pause].
+         */
+        @MustBeClosed
+        suspend fun pause(
+            externalBankAccountToken: String,
+            params: ExternalBankAccountPauseParams = ExternalBankAccountPauseParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccount> =
+            pause(
+                params.toBuilder().externalBankAccountToken(externalBankAccountToken).build(),
+                requestOptions,
+            )
+
+        /** @see pause */
+        @MustBeClosed
+        suspend fun pause(
+            params: ExternalBankAccountPauseParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<ExternalBankAccount>
+
+        /** @see pause */
+        @MustBeClosed
+        suspend fun pause(
+            externalBankAccountToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ExternalBankAccount> =
+            pause(externalBankAccountToken, ExternalBankAccountPauseParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
