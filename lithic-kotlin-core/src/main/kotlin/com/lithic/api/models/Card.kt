@@ -438,7 +438,8 @@ private constructor(
 
     /**
      * Primary Account Number (PAN) (i.e. the card number). Customers must be PCI compliant to have
-     * PAN returned as a field in production. Please contact support@lithic.com for questions.
+     * PAN returned as a field in production. Please contact https://support.lithic.com/ for
+     * questions.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -1218,8 +1219,8 @@ private constructor(
 
         /**
          * Primary Account Number (PAN) (i.e. the card number). Customers must be PCI compliant to
-         * have PAN returned as a field in production. Please contact support@lithic.com for
-         * questions.
+         * have PAN returned as a field in production. Please contact https://support.lithic.com/
+         * for questions.
          */
         fun pan(pan: String) = pan(JsonField.of(pan))
 
