@@ -177,6 +177,7 @@ internal class LoanTapeTest {
                         .paymentDetails(JsonValue.from(mapOf<String, Any>()))
                         .build()
                 )
+                .dayOfPeriod(0L)
                 .tier("tier")
                 .build()
 
@@ -345,6 +346,7 @@ internal class LoanTapeTest {
                     .paymentDetails(JsonValue.from(mapOf<String, Any>()))
                     .build()
             )
+        assertThat(loanTape.dayOfPeriod()).isEqualTo(0L)
         assertThat(loanTape.tier()).isEqualTo("tier")
     }
 
@@ -514,6 +516,7 @@ internal class LoanTapeTest {
                         .paymentDetails(JsonValue.from(mapOf<String, Any>()))
                         .build()
                 )
+                .dayOfPeriod(0L)
                 .tier("tier")
                 .build()
 
