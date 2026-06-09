@@ -42,6 +42,7 @@ private constructor(
     private val updated: JsonField<OffsetDateTime>,
     private val version: JsonField<Long>,
     private val ytdTotals: JsonField<StatementTotals>,
+    private val dayOfPeriod: JsonField<Long>,
     private val tier: JsonField<String>,
     private val eventType: JsonField<EventType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -106,6 +107,9 @@ private constructor(
         @JsonProperty("ytd_totals")
         @ExcludeMissing
         ytdTotals: JsonField<StatementTotals> = JsonMissing.of(),
+        @JsonProperty("day_of_period")
+        @ExcludeMissing
+        dayOfPeriod: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("tier") @ExcludeMissing tier: JsonField<String> = JsonMissing.of(),
         @JsonProperty("event_type")
         @ExcludeMissing
@@ -132,6 +136,7 @@ private constructor(
         updated,
         version,
         ytdTotals,
+        dayOfPeriod,
         tier,
         eventType,
         mutableMapOf(),
@@ -160,6 +165,7 @@ private constructor(
             .updated(updated)
             .version(version)
             .ytdTotals(ytdTotals)
+            .dayOfPeriod(dayOfPeriod)
             .tier(tier)
             .build()
 
@@ -321,6 +327,14 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun ytdTotals(): StatementTotals = ytdTotals.getRequired("ytd_totals")
+
+    /**
+     * Day of the billing period that this loan tape covers, starting at 1
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun dayOfPeriod(): Long? = dayOfPeriod.getNullable("day_of_period")
 
     /**
      * Interest tier to which this account belongs to
@@ -521,6 +535,13 @@ private constructor(
     fun _ytdTotals(): JsonField<StatementTotals> = ytdTotals
 
     /**
+     * Returns the raw JSON value of [dayOfPeriod].
+     *
+     * Unlike [dayOfPeriod], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("day_of_period") @ExcludeMissing fun _dayOfPeriod(): JsonField<Long> = dayOfPeriod
+
+    /**
      * Returns the raw JSON value of [tier].
      *
      * Unlike [tier], this method doesn't throw if the JSON field has an unexpected type.
@@ -604,6 +625,7 @@ private constructor(
         private var updated: JsonField<OffsetDateTime>? = null
         private var version: JsonField<Long>? = null
         private var ytdTotals: JsonField<StatementTotals>? = null
+        private var dayOfPeriod: JsonField<Long> = JsonMissing.of()
         private var tier: JsonField<String> = JsonMissing.of()
         private var eventType: JsonField<EventType>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -630,6 +652,7 @@ private constructor(
             updated = loanTapeCreatedWebhookEvent.updated
             version = loanTapeCreatedWebhookEvent.version
             ytdTotals = loanTapeCreatedWebhookEvent.ytdTotals
+            dayOfPeriod = loanTapeCreatedWebhookEvent.dayOfPeriod
             tier = loanTapeCreatedWebhookEvent.tier
             eventType = loanTapeCreatedWebhookEvent.eventType
             additionalProperties = loanTapeCreatedWebhookEvent.additionalProperties.toMutableMap()
@@ -915,6 +938,25 @@ private constructor(
          */
         fun ytdTotals(ytdTotals: JsonField<StatementTotals>) = apply { this.ytdTotals = ytdTotals }
 
+        /** Day of the billing period that this loan tape covers, starting at 1 */
+        fun dayOfPeriod(dayOfPeriod: Long?) = dayOfPeriod(JsonField.ofNullable(dayOfPeriod))
+
+        /**
+         * Alias for [Builder.dayOfPeriod].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun dayOfPeriod(dayOfPeriod: Long) = dayOfPeriod(dayOfPeriod as Long?)
+
+        /**
+         * Sets [Builder.dayOfPeriod] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.dayOfPeriod] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun dayOfPeriod(dayOfPeriod: JsonField<Long>) = apply { this.dayOfPeriod = dayOfPeriod }
+
         /** Interest tier to which this account belongs to */
         fun tier(tier: String?) = tier(JsonField.ofNullable(tier))
 
@@ -1013,6 +1055,7 @@ private constructor(
                 checkRequired("updated", updated),
                 checkRequired("version", version),
                 checkRequired("ytdTotals", ytdTotals),
+                dayOfPeriod,
                 tier,
                 checkRequired("eventType", eventType),
                 additionalProperties.toMutableMap(),
@@ -1055,6 +1098,7 @@ private constructor(
         updated()
         version()
         ytdTotals().validate()
+        dayOfPeriod()
         tier()
         eventType().validate()
         validated = true
@@ -1095,6 +1139,7 @@ private constructor(
             (if (updated.asKnown() == null) 0 else 1) +
             (if (version.asKnown() == null) 0 else 1) +
             (ytdTotals.asKnown()?.validity() ?: 0) +
+            (if (dayOfPeriod.asKnown() == null) 0 else 1) +
             (if (tier.asKnown() == null) 0 else 1) +
             (eventType.asKnown()?.validity() ?: 0)
 
@@ -1256,6 +1301,7 @@ private constructor(
             updated == other.updated &&
             version == other.version &&
             ytdTotals == other.ytdTotals &&
+            dayOfPeriod == other.dayOfPeriod &&
             tier == other.tier &&
             eventType == other.eventType &&
             additionalProperties == other.additionalProperties
@@ -1284,6 +1330,7 @@ private constructor(
             updated,
             version,
             ytdTotals,
+            dayOfPeriod,
             tier,
             eventType,
             additionalProperties,
@@ -1293,5 +1340,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "LoanTapeCreatedWebhookEvent{token=$token, accountStanding=$accountStanding, availableCredit=$availableCredit, balances=$balances, created=$created, creditLimit=$creditLimit, creditProductToken=$creditProductToken, date=$date, dayTotals=$dayTotals, endingBalance=$endingBalance, excessCredits=$excessCredits, financialAccountToken=$financialAccountToken, interestDetails=$interestDetails, minimumPaymentBalance=$minimumPaymentBalance, paymentAllocation=$paymentAllocation, periodTotals=$periodTotals, previousStatementBalance=$previousStatementBalance, startingBalance=$startingBalance, updated=$updated, version=$version, ytdTotals=$ytdTotals, tier=$tier, eventType=$eventType, additionalProperties=$additionalProperties}"
+        "LoanTapeCreatedWebhookEvent{token=$token, accountStanding=$accountStanding, availableCredit=$availableCredit, balances=$balances, created=$created, creditLimit=$creditLimit, creditProductToken=$creditProductToken, date=$date, dayTotals=$dayTotals, endingBalance=$endingBalance, excessCredits=$excessCredits, financialAccountToken=$financialAccountToken, interestDetails=$interestDetails, minimumPaymentBalance=$minimumPaymentBalance, paymentAllocation=$paymentAllocation, periodTotals=$periodTotals, previousStatementBalance=$previousStatementBalance, startingBalance=$startingBalance, updated=$updated, version=$version, ytdTotals=$ytdTotals, dayOfPeriod=$dayOfPeriod, tier=$tier, eventType=$eventType, additionalProperties=$additionalProperties}"
 }
