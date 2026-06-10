@@ -79,6 +79,8 @@ import com.lithic.api.services.blocking.TokenizationDecisioningService
 import com.lithic.api.services.blocking.TokenizationDecisioningServiceImpl
 import com.lithic.api.services.blocking.TokenizationService
 import com.lithic.api.services.blocking.TokenizationServiceImpl
+import com.lithic.api.services.blocking.TransactionMonitoringService
+import com.lithic.api.services.blocking.TransactionMonitoringServiceImpl
 import com.lithic.api.services.blocking.TransactionService
 import com.lithic.api.services.blocking.TransactionServiceImpl
 import com.lithic.api.services.blocking.TransferLimitService
@@ -113,6 +115,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
     private val authRules: AuthRuleService by lazy {
         AuthRuleServiceImpl(clientOptionsWithUserAgent)
+    }
+
+    private val transactionMonitoring: TransactionMonitoringService by lazy {
+        TransactionMonitoringServiceImpl(clientOptionsWithUserAgent)
     }
 
     private val authStreamEnrollment: AuthStreamEnrollmentService by lazy {
@@ -236,6 +242,8 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
     override fun authRules(): AuthRuleService = authRules
 
+    override fun transactionMonitoring(): TransactionMonitoringService = transactionMonitoring
+
     override fun authStreamEnrollment(): AuthStreamEnrollmentService = authStreamEnrollment
 
     override fun tokenizationDecisioning(): TokenizationDecisioningService = tokenizationDecisioning
@@ -325,6 +333,10 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
 
         private val authRules: AuthRuleService.WithRawResponse by lazy {
             AuthRuleServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val transactionMonitoring: TransactionMonitoringService.WithRawResponse by lazy {
+            TransactionMonitoringServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val authStreamEnrollment: AuthStreamEnrollmentService.WithRawResponse by lazy {
@@ -466,6 +478,9 @@ class LithicClientImpl(private val clientOptions: ClientOptions) : LithicClient 
         override fun accountHolders(): AccountHolderService.WithRawResponse = accountHolders
 
         override fun authRules(): AuthRuleService.WithRawResponse = authRules
+
+        override fun transactionMonitoring(): TransactionMonitoringService.WithRawResponse =
+            transactionMonitoring
 
         override fun authStreamEnrollment(): AuthStreamEnrollmentService.WithRawResponse =
             authStreamEnrollment
