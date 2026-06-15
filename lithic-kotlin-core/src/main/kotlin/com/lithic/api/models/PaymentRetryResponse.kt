@@ -43,6 +43,7 @@ private constructor(
     private val currency: JsonField<String>,
     private val expectedReleaseDate: JsonField<LocalDate>,
     private val externalBankAccountToken: JsonField<String>,
+    private val tags: JsonField<Payment.Tags>,
     private val type: JsonField<Payment.TransferType>,
     private val userDefinedId: JsonField<String>,
     private val balance: JsonField<Balance>,
@@ -107,6 +108,7 @@ private constructor(
         @JsonProperty("external_bank_account_token")
         @ExcludeMissing
         externalBankAccountToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tags") @ExcludeMissing tags: JsonField<Payment.Tags> = JsonMissing.of(),
         @JsonProperty("type")
         @ExcludeMissing
         type: JsonField<Payment.TransferType> = JsonMissing.of(),
@@ -135,6 +137,7 @@ private constructor(
         currency,
         expectedReleaseDate,
         externalBankAccountToken,
+        tags,
         type,
         userDefinedId,
         balance,
@@ -163,6 +166,7 @@ private constructor(
             .currency(currency)
             .expectedReleaseDate(expectedReleaseDate)
             .externalBankAccountToken(externalBankAccountToken)
+            .tags(tags)
             .type(type)
             .userDefinedId(userDefinedId)
             .build()
@@ -330,6 +334,15 @@ private constructor(
      */
     fun externalBankAccountToken(): String? =
         externalBankAccountToken.getNullable("external_bank_account_token")
+
+    /**
+     * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata with a
+     * resource for your own purposes.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun tags(): Payment.Tags? = tags.getNullable("tags")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -523,6 +536,13 @@ private constructor(
     fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
 
     /**
+     * Returns the raw JSON value of [tags].
+     *
+     * Unlike [tags], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("tags") @ExcludeMissing fun _tags(): JsonField<Payment.Tags> = tags
+
+    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -609,6 +629,7 @@ private constructor(
         private var currency: JsonField<String> = JsonMissing.of()
         private var expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of()
         private var externalBankAccountToken: JsonField<String> = JsonMissing.of()
+        private var tags: JsonField<Payment.Tags> = JsonMissing.of()
         private var type: JsonField<Payment.TransferType> = JsonMissing.of()
         private var userDefinedId: JsonField<String> = JsonMissing.of()
         private var balance: JsonField<Balance> = JsonMissing.of()
@@ -635,6 +656,7 @@ private constructor(
             currency = paymentRetryResponse.currency
             expectedReleaseDate = paymentRetryResponse.expectedReleaseDate
             externalBankAccountToken = paymentRetryResponse.externalBankAccountToken
+            tags = paymentRetryResponse.tags
             type = paymentRetryResponse.type
             userDefinedId = paymentRetryResponse.userDefinedId
             balance = paymentRetryResponse.balance
@@ -925,6 +947,21 @@ private constructor(
             this.externalBankAccountToken = externalBankAccountToken
         }
 
+        /**
+         * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata
+         * with a resource for your own purposes.
+         */
+        fun tags(tags: Payment.Tags) = tags(JsonField.of(tags))
+
+        /**
+         * Sets [Builder.tags] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tags] with a well-typed [Payment.Tags] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun tags(tags: JsonField<Payment.Tags>) = apply { this.tags = tags }
+
         fun type(type: Payment.TransferType) = type(JsonField.of(type))
 
         /**
@@ -1031,6 +1068,7 @@ private constructor(
                 currency,
                 expectedReleaseDate,
                 externalBankAccountToken,
+                tags,
                 type,
                 userDefinedId,
                 balance,
@@ -1073,6 +1111,7 @@ private constructor(
         currency()
         expectedReleaseDate()
         externalBankAccountToken()
+        tags()?.validate()
         type()?.validate()
         userDefinedId()
         balance()?.validate()
@@ -1113,6 +1152,7 @@ private constructor(
             (if (currency.asKnown() == null) 0 else 1) +
             (if (expectedReleaseDate.asKnown() == null) 0 else 1) +
             (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+            (tags.asKnown()?.validity() ?: 0) +
             (type.asKnown()?.validity() ?: 0) +
             (if (userDefinedId.asKnown() == null) 0 else 1) +
             (balance.asKnown()?.validity() ?: 0)
@@ -1143,6 +1183,7 @@ private constructor(
             currency == other.currency &&
             expectedReleaseDate == other.expectedReleaseDate &&
             externalBankAccountToken == other.externalBankAccountToken &&
+            tags == other.tags &&
             type == other.type &&
             userDefinedId == other.userDefinedId &&
             balance == other.balance &&
@@ -1171,6 +1212,7 @@ private constructor(
             currency,
             expectedReleaseDate,
             externalBankAccountToken,
+            tags,
             type,
             userDefinedId,
             balance,
@@ -1181,5 +1223,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PaymentRetryResponse{token=$token, category=$category, created=$created, descriptor=$descriptor, direction=$direction, events=$events, family=$family, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, currency=$currency, expectedReleaseDate=$expectedReleaseDate, externalBankAccountToken=$externalBankAccountToken, type=$type, userDefinedId=$userDefinedId, balance=$balance, additionalProperties=$additionalProperties}"
+        "PaymentRetryResponse{token=$token, category=$category, created=$created, descriptor=$descriptor, direction=$direction, events=$events, family=$family, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, currency=$currency, expectedReleaseDate=$expectedReleaseDate, externalBankAccountToken=$externalBankAccountToken, tags=$tags, type=$type, userDefinedId=$userDefinedId, balance=$balance, additionalProperties=$additionalProperties}"
 }
