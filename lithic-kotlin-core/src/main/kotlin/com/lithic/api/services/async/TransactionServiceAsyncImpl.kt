@@ -23,6 +23,7 @@ import com.lithic.api.models.TransactionListPageAsync
 import com.lithic.api.models.TransactionListPageResponse
 import com.lithic.api.models.TransactionListParams
 import com.lithic.api.models.TransactionRetrieveParams
+import com.lithic.api.models.TransactionRouteParams
 import com.lithic.api.models.TransactionSimulateAuthorizationAdviceParams
 import com.lithic.api.models.TransactionSimulateAuthorizationAdviceResponse
 import com.lithic.api.models.TransactionSimulateAuthorizationParams
@@ -87,6 +88,11 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
     ) {
         // post /v1/transactions/{transaction_token}/expire_authorization
         withRawResponse().expireAuthorization(params, requestOptions)
+    }
+
+    override suspend fun route(params: TransactionRouteParams, requestOptions: RequestOptions) {
+        // post /v1/transactions/{transaction_token}/route
+        withRawResponse().route(params, requestOptions)
     }
 
     override suspend fun simulateAuthorization(
@@ -263,6 +269,30 @@ class TransactionServiceAsyncImpl internal constructor(private val clientOptions
             val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response.use { expireAuthorizationHandler.handle(it) }
+            }
+        }
+
+        private val routeHandler: Handler<Void?> = emptyHandler()
+
+        override suspend fun route(
+            params: TransactionRouteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("transactionToken", params.transactionToken())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("v1", "transactions", params._pathParam(0), "route")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response.use { routeHandler.handle(it) }
             }
         }
 
