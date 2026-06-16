@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.127.0 (2026-06-16)
+
+Full Changelog: [v0.126.0...v0.127.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.126.0...v0.127.0)
+
+### Features
+
+* **api:** add attributes/interval/unit to conditional transaction parameters ([ad0bce8](https://github.com/lithic-com/lithic-kotlin/commit/ad0bce88875468dbbec3fc26dc9a04aee66d4715))
+* **api:** add CardTransactionFeature to RuleFeature union and TypescriptCodeParameters ([7a759ad](https://github.com/lithic-com/lithic-kotlin/commit/7a759adf6d6039a89f480fcdc49434a8fdce604e))
+* **api:** Add created field and make completed_at nullable in latest_challenge ([3b2b2fd](https://github.com/lithic-com/lithic-kotlin/commit/3b2b2fd1c5fb46ec238bcb777abd45080a15160d))
+* **api:** add day_of_period field to LoanTape and webhook event models ([91bd8e1](https://github.com/lithic-com/lithic-kotlin/commit/91bd8e12583f4b6f6c5c12e05aafec68c067a1a1))
+* **api:** add hold adjustment action type to conditional authorization action parameters ([c95b8a5](https://github.com/lithic-com/lithic-kotlin/commit/c95b8a5aedcb693058d4a8b3144feef5fa5f1504))
+* **api:** add nameValidation field to card authorization responses ([27f7720](https://github.com/lithic-com/lithic-kotlin/commit/27f77206c25cbccb68d730dd3ee58202c9a6685b))
+* **api:** add route method to transactions ([840c50d](https://github.com/lithic-com/lithic-kotlin/commit/840c50df0446f859e3975f81a1f17842b8c3352d))
+* **api:** add tags field to Payment and related response models ([053f285](https://github.com/lithic-com/lithic-kotlin/commit/053f28531d84dd2085d1622b33d206e02054e56d))
+* **api:** Add transaction monitoring spec ([aa12f67](https://github.com/lithic-com/lithic-kotlin/commit/aa12f678bb97b2323822e11aa9ce94c6131a955e))
+
+
+### Documentation
+
+* update support contact from email to URL across models and services ([4df96ba](https://github.com/lithic-com/lithic-kotlin/commit/4df96bae521b7a40bb108d006f4a1d69ecebb359))
+
 ## 0.126.0 (2026-05-26)
 
 Full Changelog: [v0.125.0...v0.126.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.125.0...v0.126.0)
