@@ -29,6 +29,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -71,6 +72,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -113,6 +115,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isEqualTo(tokenization)
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -155,6 +158,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isEqualTo(achReceipt)
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -197,6 +201,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isEqualTo(cardTransaction)
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -225,6 +230,49 @@ internal class RuleFeatureTest {
     }
 
     @Test
+    fun ofAchPayment() {
+        val achPayment =
+            RuleFeature.AchPaymentFeature.builder()
+                .type(RuleFeature.AchPaymentFeature.Type.ACH_PAYMENT)
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofAchPayment(achPayment)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isEqualTo(achPayment)
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
+    }
+
+    @Test
+    fun ofAchPaymentRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofAchPayment(
+                RuleFeature.AchPaymentFeature.builder()
+                    .type(RuleFeature.AchPaymentFeature.Type.ACH_PAYMENT)
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
     fun ofCard() {
         val card =
             RuleFeature.CardFeature.builder()
@@ -239,6 +287,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isEqualTo(card)
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -281,6 +330,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isEqualTo(accountHolder)
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -323,6 +373,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isEqualTo(ipMetadata)
@@ -381,6 +432,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
@@ -442,6 +494,7 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.tokenization()).isNull()
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()

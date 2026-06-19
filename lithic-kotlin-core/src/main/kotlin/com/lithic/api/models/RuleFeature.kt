@@ -41,10 +41,12 @@ import java.util.Objects
  *   ACH_DEBIT_RECEIPT event stream rules.
  * - `CARD_TRANSACTION`: The card transaction being evaluated. Only available for
  *   CARD_TRANSACTION_UPDATE event stream rules.
+ * - `ACH_PAYMENT`: The ACH payment being evaluated. Only available for ACH_PAYMENT_UPDATE event
+ *   stream rules.
  * - `CARD`: The card associated with the event. Available for AUTHORIZATION,
  *   THREE_DS_AUTHENTICATION, and CARD_TRANSACTION_UPDATE event stream rules.
- * - `ACCOUNT_HOLDER`: The account holder associated with the card. Available for AUTHORIZATION,
- *   THREE_DS_AUTHENTICATION, and CARD_TRANSACTION_UPDATE event stream rules.
+ * - `ACCOUNT_HOLDER`: The account holder associated with the event. Available for AUTHORIZATION,
+ *   THREE_DS_AUTHENTICATION, CARD_TRANSACTION_UPDATE, and ACH_PAYMENT_UPDATE event stream rules.
  * - `IP_METADATA`: IP address metadata for the request. Available for THREE_DS_AUTHENTICATION event
  *   stream rules.
  * - `SPEND_VELOCITY`: Spend velocity data for the card or account. Requires `scope`, `period`, and
@@ -63,6 +65,7 @@ private constructor(
     private val tokenization: TokenizationFeature? = null,
     private val achReceipt: AchReceiptFeature? = null,
     private val cardTransaction: CardTransactionFeature? = null,
+    private val achPayment: AchPaymentFeature? = null,
     private val card: CardFeature? = null,
     private val accountHolder: AccountHolderFeature? = null,
     private val ipMetadata: IpMetadataFeature? = null,
@@ -80,6 +83,8 @@ private constructor(
     fun achReceipt(): AchReceiptFeature? = achReceipt
 
     fun cardTransaction(): CardTransactionFeature? = cardTransaction
+
+    fun achPayment(): AchPaymentFeature? = achPayment
 
     fun card(): CardFeature? = card
 
@@ -101,6 +106,8 @@ private constructor(
 
     fun isCardTransaction(): Boolean = cardTransaction != null
 
+    fun isAchPayment(): Boolean = achPayment != null
+
     fun isCard(): Boolean = card != null
 
     fun isAccountHolder(): Boolean = accountHolder != null
@@ -120,6 +127,8 @@ private constructor(
     fun asAchReceipt(): AchReceiptFeature = achReceipt.getOrThrow("achReceipt")
 
     fun asCardTransaction(): CardTransactionFeature = cardTransaction.getOrThrow("cardTransaction")
+
+    fun asAchPayment(): AchPaymentFeature = achPayment.getOrThrow("achPayment")
 
     fun asCard(): CardFeature = card.getOrThrow("card")
 
@@ -165,6 +174,7 @@ private constructor(
             tokenization != null -> visitor.visitTokenization(tokenization)
             achReceipt != null -> visitor.visitAchReceipt(achReceipt)
             cardTransaction != null -> visitor.visitCardTransaction(cardTransaction)
+            achPayment != null -> visitor.visitAchPayment(achPayment)
             card != null -> visitor.visitCard(card)
             accountHolder != null -> visitor.visitAccountHolder(accountHolder)
             ipMetadata != null -> visitor.visitIpMetadata(ipMetadata)
@@ -209,6 +219,10 @@ private constructor(
 
                 override fun visitCardTransaction(cardTransaction: CardTransactionFeature) {
                     cardTransaction.validate()
+                }
+
+                override fun visitAchPayment(achPayment: AchPaymentFeature) {
+                    achPayment.validate()
                 }
 
                 override fun visitCard(card: CardFeature) {
@@ -267,6 +281,8 @@ private constructor(
                 override fun visitCardTransaction(cardTransaction: CardTransactionFeature) =
                     cardTransaction.validity()
 
+                override fun visitAchPayment(achPayment: AchPaymentFeature) = achPayment.validity()
+
                 override fun visitCard(card: CardFeature) = card.validity()
 
                 override fun visitAccountHolder(accountHolder: AccountHolderFeature) =
@@ -296,6 +312,7 @@ private constructor(
             tokenization == other.tokenization &&
             achReceipt == other.achReceipt &&
             cardTransaction == other.cardTransaction &&
+            achPayment == other.achPayment &&
             card == other.card &&
             accountHolder == other.accountHolder &&
             ipMetadata == other.ipMetadata &&
@@ -310,6 +327,7 @@ private constructor(
             tokenization,
             achReceipt,
             cardTransaction,
+            achPayment,
             card,
             accountHolder,
             ipMetadata,
@@ -324,6 +342,7 @@ private constructor(
             tokenization != null -> "RuleFeature{tokenization=$tokenization}"
             achReceipt != null -> "RuleFeature{achReceipt=$achReceipt}"
             cardTransaction != null -> "RuleFeature{cardTransaction=$cardTransaction}"
+            achPayment != null -> "RuleFeature{achPayment=$achPayment}"
             card != null -> "RuleFeature{card=$card}"
             accountHolder != null -> "RuleFeature{accountHolder=$accountHolder}"
             ipMetadata != null -> "RuleFeature{ipMetadata=$ipMetadata}"
@@ -349,6 +368,8 @@ private constructor(
 
         fun ofCardTransaction(cardTransaction: CardTransactionFeature) =
             RuleFeature(cardTransaction = cardTransaction)
+
+        fun ofAchPayment(achPayment: AchPaymentFeature) = RuleFeature(achPayment = achPayment)
 
         fun ofCard(card: CardFeature) = RuleFeature(card = card)
 
@@ -379,6 +400,8 @@ private constructor(
         fun visitAchReceipt(achReceipt: AchReceiptFeature): T
 
         fun visitCardTransaction(cardTransaction: CardTransactionFeature): T
+
+        fun visitAchPayment(achPayment: AchPaymentFeature): T
 
         fun visitCard(card: CardFeature): T
 
@@ -428,6 +451,9 @@ private constructor(
                         tryDeserialize(node, jacksonTypeRef<CardTransactionFeature>())?.let {
                             RuleFeature(cardTransaction = it, _json = json)
                         },
+                        tryDeserialize(node, jacksonTypeRef<AchPaymentFeature>())?.let {
+                            RuleFeature(achPayment = it, _json = json)
+                        },
                         tryDeserialize(node, jacksonTypeRef<CardFeature>())?.let {
                             RuleFeature(card = it, _json = json)
                         },
@@ -471,6 +497,7 @@ private constructor(
                 value.tokenization != null -> generator.writeObject(value.tokenization)
                 value.achReceipt != null -> generator.writeObject(value.achReceipt)
                 value.cardTransaction != null -> generator.writeObject(value.cardTransaction)
+                value.achPayment != null -> generator.writeObject(value.achPayment)
                 value.card != null -> generator.writeObject(value.card)
                 value.accountHolder != null -> generator.writeObject(value.accountHolder)
                 value.ipMetadata != null -> generator.writeObject(value.ipMetadata)
@@ -2121,6 +2148,334 @@ private constructor(
 
         override fun toString() =
             "CardTransactionFeature{type=$type, name=$name, additionalProperties=$additionalProperties}"
+    }
+
+    class AchPaymentFeature
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+    private constructor(
+        private val type: JsonField<Type>,
+        private val name: JsonField<String>,
+        private val additionalProperties: MutableMap<String, JsonValue>,
+    ) {
+
+        @JsonCreator
+        private constructor(
+            @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        ) : this(type, name, mutableMapOf())
+
+        /**
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun type(): Type = type.getRequired("type")
+
+        /**
+         * The variable name for this feature in the rule function signature
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun name(): String? = name.getNullable("name")
+
+        /**
+         * Returns the raw JSON value of [type].
+         *
+         * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+        /**
+         * Returns the raw JSON value of [name].
+         *
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        @JsonAnySetter
+        private fun putAdditionalProperty(key: String, value: JsonValue) {
+            additionalProperties.put(key, value)
+        }
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> =
+            Collections.unmodifiableMap(additionalProperties)
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /**
+             * Returns a mutable builder for constructing an instance of [AchPaymentFeature].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [AchPaymentFeature]. */
+        class Builder internal constructor() {
+
+            private var type: JsonField<Type>? = null
+            private var name: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(achPaymentFeature: AchPaymentFeature) = apply {
+                type = achPaymentFeature.type
+                name = achPaymentFeature.name
+                additionalProperties = achPaymentFeature.additionalProperties.toMutableMap()
+            }
+
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /**
+             * Sets [Builder.type] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.type] with a well-typed [Type] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
+
+            /** The variable name for this feature in the rule function signature */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [AchPaymentFeature].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .type()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
+             */
+            fun build(): AchPaymentFeature =
+                AchPaymentFeature(
+                    checkRequired("type", type),
+                    name,
+                    additionalProperties.toMutableMap(),
+                )
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): AchPaymentFeature = apply {
+            if (validated) {
+                return@apply
+            }
+
+            type().validate()
+            name()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            (type.asKnown()?.validity() ?: 0) + (if (name.asKnown() == null) 0 else 1)
+
+        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val ACH_PAYMENT = of("ACH_PAYMENT")
+
+                fun of(value: String) = Type(JsonField.of(value))
+            }
+
+            /** An enum containing [Type]'s known values. */
+            enum class Known {
+                ACH_PAYMENT
+            }
+
+            /**
+             * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Type] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                ACH_PAYMENT,
+                /** An enum member indicating that [Type] was instantiated with an unknown value. */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    ACH_PAYMENT -> Value.ACH_PAYMENT
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws LithicInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    ACH_PAYMENT -> Known.ACH_PAYMENT
+                    else -> throw LithicInvalidDataException("Unknown Type: $value")
+                }
+
+            /**
+             * Returns this class instance's primitive wire representation.
+             *
+             * This differs from the [toString] method because that method is primarily for
+             * debugging and generally doesn't throw.
+             *
+             * @throws LithicInvalidDataException if this class instance's value does not have the
+             *   expected primitive type.
+             */
+            fun asString(): String =
+                _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
+            fun validate(): Type = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                known()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Type && value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AchPaymentFeature &&
+                type == other.type &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(type, name, additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "AchPaymentFeature{type=$type, name=$name, additionalProperties=$additionalProperties}"
     }
 
     class CardFeature

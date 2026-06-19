@@ -53,6 +53,8 @@ internal class V2ListResultsResponseTest {
         assertThat(v2ListResultsResponse.authentication3dsResult()).isNull()
         assertThat(v2ListResultsResponse.tokenizationResult()).isNull()
         assertThat(v2ListResultsResponse.achResult()).isNull()
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult()).isNull()
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isNull()
     }
 
     @Test
@@ -136,6 +138,8 @@ internal class V2ListResultsResponseTest {
             .isEqualTo(authentication3dsResult)
         assertThat(v2ListResultsResponse.tokenizationResult()).isNull()
         assertThat(v2ListResultsResponse.achResult()).isNull()
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult()).isNull()
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isNull()
     }
 
     @Test
@@ -215,6 +219,8 @@ internal class V2ListResultsResponseTest {
         assertThat(v2ListResultsResponse.authentication3dsResult()).isNull()
         assertThat(v2ListResultsResponse.tokenizationResult()).isEqualTo(tokenizationResult)
         assertThat(v2ListResultsResponse.achResult()).isNull()
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult()).isNull()
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isNull()
     }
 
     @Test
@@ -287,6 +293,8 @@ internal class V2ListResultsResponseTest {
         assertThat(v2ListResultsResponse.authentication3dsResult()).isNull()
         assertThat(v2ListResultsResponse.tokenizationResult()).isNull()
         assertThat(v2ListResultsResponse.achResult()).isEqualTo(achResult)
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult()).isNull()
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isNull()
     }
 
     @Test
@@ -309,6 +317,163 @@ internal class V2ListResultsResponseTest {
                     .eventStream(V2ListResultsResponse.AchResult.EventStream.ACH_CREDIT_RECEIPT)
                     .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .mode(V2ListResultsResponse.AchResult.AuthRuleState.ACTIVE)
+                    .ruleVersion(0L)
+                    .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .build()
+            )
+
+        val roundtrippedV2ListResultsResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(v2ListResultsResponse),
+                jacksonTypeRef<V2ListResultsResponse>(),
+            )
+
+        assertThat(roundtrippedV2ListResultsResponse).isEqualTo(v2ListResultsResponse)
+    }
+
+    @Test
+    fun ofCardTransactionUpdateResult() {
+        val cardTransactionUpdateResult =
+            V2ListResultsResponse.CardTransactionUpdateResult.builder()
+                .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addAction(
+                    V2ListResultsResponse.CardTransactionUpdateResult.Action.TagAction.builder()
+                        .key("key")
+                        .type(
+                            V2ListResultsResponse.CardTransactionUpdateResult.Action.TagAction.Type
+                                .TAG
+                        )
+                        .value("value")
+                        .explanation("explanation")
+                        .build()
+                )
+                .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .evaluationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .eventStream(
+                    V2ListResultsResponse.CardTransactionUpdateResult.EventStream
+                        .CARD_TRANSACTION_UPDATE
+                )
+                .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .mode(V2ListResultsResponse.CardTransactionUpdateResult.AuthRuleState.ACTIVE)
+                .ruleVersion(0L)
+                .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .build()
+
+        val v2ListResultsResponse =
+            V2ListResultsResponse.ofCardTransactionUpdateResult(cardTransactionUpdateResult)
+
+        assertThat(v2ListResultsResponse.authorizationResult()).isNull()
+        assertThat(v2ListResultsResponse.authentication3dsResult()).isNull()
+        assertThat(v2ListResultsResponse.tokenizationResult()).isNull()
+        assertThat(v2ListResultsResponse.achResult()).isNull()
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult())
+            .isEqualTo(cardTransactionUpdateResult)
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isNull()
+    }
+
+    @Test
+    fun ofCardTransactionUpdateResultRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val v2ListResultsResponse =
+            V2ListResultsResponse.ofCardTransactionUpdateResult(
+                V2ListResultsResponse.CardTransactionUpdateResult.builder()
+                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .addAction(
+                        V2ListResultsResponse.CardTransactionUpdateResult.Action.TagAction.builder()
+                            .key("key")
+                            .type(
+                                V2ListResultsResponse.CardTransactionUpdateResult.Action.TagAction
+                                    .Type
+                                    .TAG
+                            )
+                            .value("value")
+                            .explanation("explanation")
+                            .build()
+                    )
+                    .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .evaluationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .eventStream(
+                        V2ListResultsResponse.CardTransactionUpdateResult.EventStream
+                            .CARD_TRANSACTION_UPDATE
+                    )
+                    .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .mode(V2ListResultsResponse.CardTransactionUpdateResult.AuthRuleState.ACTIVE)
+                    .ruleVersion(0L)
+                    .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .build()
+            )
+
+        val roundtrippedV2ListResultsResponse =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(v2ListResultsResponse),
+                jacksonTypeRef<V2ListResultsResponse>(),
+            )
+
+        assertThat(roundtrippedV2ListResultsResponse).isEqualTo(v2ListResultsResponse)
+    }
+
+    @Test
+    fun ofAchPaymentUpdateResult() {
+        val achPaymentUpdateResult =
+            V2ListResultsResponse.AchPaymentUpdateResult.builder()
+                .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addAction(
+                    V2ListResultsResponse.AchPaymentUpdateResult.Action.TagAction.builder()
+                        .key("key")
+                        .type(
+                            V2ListResultsResponse.AchPaymentUpdateResult.Action.TagAction.Type.TAG
+                        )
+                        .value("value")
+                        .explanation("explanation")
+                        .build()
+                )
+                .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .evaluationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .eventStream(
+                    V2ListResultsResponse.AchPaymentUpdateResult.EventStream.ACH_PAYMENT_UPDATE
+                )
+                .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .mode(V2ListResultsResponse.AchPaymentUpdateResult.AuthRuleState.ACTIVE)
+                .ruleVersion(0L)
+                .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .build()
+
+        val v2ListResultsResponse =
+            V2ListResultsResponse.ofAchPaymentUpdateResult(achPaymentUpdateResult)
+
+        assertThat(v2ListResultsResponse.authorizationResult()).isNull()
+        assertThat(v2ListResultsResponse.authentication3dsResult()).isNull()
+        assertThat(v2ListResultsResponse.tokenizationResult()).isNull()
+        assertThat(v2ListResultsResponse.achResult()).isNull()
+        assertThat(v2ListResultsResponse.cardTransactionUpdateResult()).isNull()
+        assertThat(v2ListResultsResponse.achPaymentUpdateResult()).isEqualTo(achPaymentUpdateResult)
+    }
+
+    @Test
+    fun ofAchPaymentUpdateResultRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val v2ListResultsResponse =
+            V2ListResultsResponse.ofAchPaymentUpdateResult(
+                V2ListResultsResponse.AchPaymentUpdateResult.builder()
+                    .token("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .addAction(
+                        V2ListResultsResponse.AchPaymentUpdateResult.Action.TagAction.builder()
+                            .key("key")
+                            .type(
+                                V2ListResultsResponse.AchPaymentUpdateResult.Action.TagAction.Type
+                                    .TAG
+                            )
+                            .value("value")
+                            .explanation("explanation")
+                            .build()
+                    )
+                    .authRuleToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .evaluationTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .eventStream(
+                        V2ListResultsResponse.AchPaymentUpdateResult.EventStream.ACH_PAYMENT_UPDATE
+                    )
+                    .eventToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                    .mode(V2ListResultsResponse.AchPaymentUpdateResult.AuthRuleState.ACTIVE)
                     .ruleVersion(0L)
                     .transactionToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
                     .build()
