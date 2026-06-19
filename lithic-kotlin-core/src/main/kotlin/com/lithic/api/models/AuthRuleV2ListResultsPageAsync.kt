@@ -59,6 +59,17 @@ private constructor(
                                 override fun visitAchResult(
                                     achResult: V2ListResultsResponse.AchResult
                                 ): String? = achResult._token().getNullable("token")
+
+                                override fun visitCardTransactionUpdateResult(
+                                    cardTransactionUpdateResult:
+                                        V2ListResultsResponse.CardTransactionUpdateResult
+                                ): String? =
+                                    cardTransactionUpdateResult._token().getNullable("token")
+
+                                override fun visitAchPaymentUpdateResult(
+                                    achPaymentUpdateResult:
+                                        V2ListResultsResponse.AchPaymentUpdateResult
+                                ): String? = achPaymentUpdateResult._token().getNullable("token")
                             }
                         )
                 )
@@ -87,6 +98,17 @@ private constructor(
                                 override fun visitAchResult(
                                     achResult: V2ListResultsResponse.AchResult
                                 ): String? = achResult._token().getNullable("token")
+
+                                override fun visitCardTransactionUpdateResult(
+                                    cardTransactionUpdateResult:
+                                        V2ListResultsResponse.CardTransactionUpdateResult
+                                ): String? =
+                                    cardTransactionUpdateResult._token().getNullable("token")
+
+                                override fun visitAchPaymentUpdateResult(
+                                    achPaymentUpdateResult:
+                                        V2ListResultsResponse.AchPaymentUpdateResult
+                                ): String? = achPaymentUpdateResult._token().getNullable("token")
                             }
                         )
                 )
