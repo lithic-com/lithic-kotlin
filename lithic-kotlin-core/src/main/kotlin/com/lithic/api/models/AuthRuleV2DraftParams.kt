@@ -178,6 +178,14 @@ private constructor(
             conditionalCardTransactionUpdateAction: ConditionalCardTransactionUpdateActionParameters
         ) = apply { body.parameters(conditionalCardTransactionUpdateAction) }
 
+        /**
+         * Alias for calling [parameters] with
+         * `Parameters.ofConditionalAchPaymentUpdateAction(conditionalAchPaymentUpdateAction)`.
+         */
+        fun parameters(
+            conditionalAchPaymentUpdateAction: ConditionalAchPaymentUpdateActionParameters
+        ) = apply { body.parameters(conditionalAchPaymentUpdateAction) }
+
         /** Alias for calling [parameters] with `Parameters.ofTypescriptCode(typescriptCode)`. */
         fun parameters(typescriptCode: TypescriptCodeParameters) = apply {
             body.parameters(typescriptCode)
@@ -476,6 +484,19 @@ private constructor(
                 )
 
             /**
+             * Alias for calling [parameters] with
+             * `Parameters.ofConditionalAchPaymentUpdateAction(conditionalAchPaymentUpdateAction)`.
+             */
+            fun parameters(
+                conditionalAchPaymentUpdateAction: ConditionalAchPaymentUpdateActionParameters
+            ) =
+                parameters(
+                    Parameters.ofConditionalAchPaymentUpdateAction(
+                        conditionalAchPaymentUpdateAction
+                    )
+                )
+
+            /**
              * Alias for calling [parameters] with `Parameters.ofTypescriptCode(typescriptCode)`.
              */
             fun parameters(typescriptCode: TypescriptCodeParameters) =
@@ -591,6 +612,9 @@ private constructor(
         private val conditionalCardTransactionUpdateAction:
             ConditionalCardTransactionUpdateActionParameters? =
             null,
+        private val conditionalAchPaymentUpdateAction:
+            ConditionalAchPaymentUpdateActionParameters? =
+            null,
         private val typescriptCode: TypescriptCodeParameters? = null,
         private val conditionalAuthorizationAdjustment:
             ConditionalAuthorizationAdjustmentParameters? =
@@ -620,6 +644,9 @@ private constructor(
             ConditionalCardTransactionUpdateActionParameters? =
             conditionalCardTransactionUpdateAction
 
+        fun conditionalAchPaymentUpdateAction(): ConditionalAchPaymentUpdateActionParameters? =
+            conditionalAchPaymentUpdateAction
+
         /** Parameters for defining a TypeScript code rule */
         fun typescriptCode(): TypescriptCodeParameters? = typescriptCode
 
@@ -642,6 +669,9 @@ private constructor(
 
         fun isConditionalCardTransactionUpdateAction(): Boolean =
             conditionalCardTransactionUpdateAction != null
+
+        fun isConditionalAchPaymentUpdateAction(): Boolean =
+            conditionalAchPaymentUpdateAction != null
 
         fun isTypescriptCode(): Boolean = typescriptCode != null
 
@@ -675,6 +705,9 @@ private constructor(
             conditionalCardTransactionUpdateAction.getOrThrow(
                 "conditionalCardTransactionUpdateAction"
             )
+
+        fun asConditionalAchPaymentUpdateAction(): ConditionalAchPaymentUpdateActionParameters =
+            conditionalAchPaymentUpdateAction.getOrThrow("conditionalAchPaymentUpdateAction")
 
         /** Parameters for defining a TypeScript code rule */
         fun asTypescriptCode(): TypescriptCodeParameters =
@@ -725,6 +758,10 @@ private constructor(
                 conditionalCardTransactionUpdateAction != null ->
                     visitor.visitConditionalCardTransactionUpdateAction(
                         conditionalCardTransactionUpdateAction
+                    )
+                conditionalAchPaymentUpdateAction != null ->
+                    visitor.visitConditionalAchPaymentUpdateAction(
+                        conditionalAchPaymentUpdateAction
                     )
                 typescriptCode != null -> visitor.visitTypescriptCode(typescriptCode)
                 conditionalAuthorizationAdjustment != null ->
@@ -799,6 +836,13 @@ private constructor(
                         conditionalCardTransactionUpdateAction.validate()
                     }
 
+                    override fun visitConditionalAchPaymentUpdateAction(
+                        conditionalAchPaymentUpdateAction:
+                            ConditionalAchPaymentUpdateActionParameters
+                    ) {
+                        conditionalAchPaymentUpdateAction.validate()
+                    }
+
                     override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) {
                         typescriptCode.validate()
                     }
@@ -863,6 +907,11 @@ private constructor(
                             ConditionalCardTransactionUpdateActionParameters
                     ) = conditionalCardTransactionUpdateAction.validity()
 
+                    override fun visitConditionalAchPaymentUpdateAction(
+                        conditionalAchPaymentUpdateAction:
+                            ConditionalAchPaymentUpdateActionParameters
+                    ) = conditionalAchPaymentUpdateAction.validity()
+
                     override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                         typescriptCode.validity()
 
@@ -890,6 +939,7 @@ private constructor(
                 conditionalTokenizationAction == other.conditionalTokenizationAction &&
                 conditionalCardTransactionUpdateAction ==
                     other.conditionalCardTransactionUpdateAction &&
+                conditionalAchPaymentUpdateAction == other.conditionalAchPaymentUpdateAction &&
                 typescriptCode == other.typescriptCode &&
                 conditionalAuthorizationAdjustment == other.conditionalAuthorizationAdjustment
         }
@@ -904,6 +954,7 @@ private constructor(
                 conditionalAchAction,
                 conditionalTokenizationAction,
                 conditionalCardTransactionUpdateAction,
+                conditionalAchPaymentUpdateAction,
                 typescriptCode,
                 conditionalAuthorizationAdjustment,
             )
@@ -924,6 +975,8 @@ private constructor(
                     "Parameters{conditionalTokenizationAction=$conditionalTokenizationAction}"
                 conditionalCardTransactionUpdateAction != null ->
                     "Parameters{conditionalCardTransactionUpdateAction=$conditionalCardTransactionUpdateAction}"
+                conditionalAchPaymentUpdateAction != null ->
+                    "Parameters{conditionalAchPaymentUpdateAction=$conditionalAchPaymentUpdateAction}"
                 typescriptCode != null -> "Parameters{typescriptCode=$typescriptCode}"
                 conditionalAuthorizationAdjustment != null ->
                     "Parameters{conditionalAuthorizationAdjustment=$conditionalAuthorizationAdjustment}"
@@ -966,6 +1019,10 @@ private constructor(
                     conditionalCardTransactionUpdateAction = conditionalCardTransactionUpdateAction
                 )
 
+            fun ofConditionalAchPaymentUpdateAction(
+                conditionalAchPaymentUpdateAction: ConditionalAchPaymentUpdateActionParameters
+            ) = Parameters(conditionalAchPaymentUpdateAction = conditionalAchPaymentUpdateAction)
+
             /** Parameters for defining a TypeScript code rule */
             fun ofTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                 Parameters(typescriptCode = typescriptCode)
@@ -1003,6 +1060,10 @@ private constructor(
             fun visitConditionalCardTransactionUpdateAction(
                 conditionalCardTransactionUpdateAction:
                     ConditionalCardTransactionUpdateActionParameters
+            ): T
+
+            fun visitConditionalAchPaymentUpdateAction(
+                conditionalAchPaymentUpdateAction: ConditionalAchPaymentUpdateActionParameters
             ): T
 
             /** Parameters for defining a TypeScript code rule */
@@ -1072,6 +1133,13 @@ private constructor(
                                         _json = json,
                                     )
                                 },
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<ConditionalAchPaymentUpdateActionParameters>(),
+                                )
+                                ?.let {
+                                    Parameters(conditionalAchPaymentUpdateAction = it, _json = json)
+                                },
                             tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())?.let {
                                 Parameters(typescriptCode = it, _json = json)
                             },
@@ -1124,6 +1192,8 @@ private constructor(
                         generator.writeObject(value.conditionalTokenizationAction)
                     value.conditionalCardTransactionUpdateAction != null ->
                         generator.writeObject(value.conditionalCardTransactionUpdateAction)
+                    value.conditionalAchPaymentUpdateAction != null ->
+                        generator.writeObject(value.conditionalAchPaymentUpdateAction)
                     value.typescriptCode != null -> generator.writeObject(value.typescriptCode)
                     value.conditionalAuthorizationAdjustment != null ->
                         generator.writeObject(value.conditionalAuthorizationAdjustment)
