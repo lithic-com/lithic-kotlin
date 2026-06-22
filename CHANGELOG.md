@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.128.0 (2026-06-22)
+
+Full Changelog: [v0.127.0...v0.128.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.127.0...v0.128.0)
+
+### Features
+
+* **api:** add ACH payment update actions, event stream, and result types ([0f37eb7](https://github.com/lithic-com/lithic-kotlin/commit/0f37eb79b695248c926e12ee734743ae1f44021b))
+* **api:** add ACH_EVENT_TYPE attribute to ConditionalAchPaymentUpdateActionParameters ([49635ea](https://github.com/lithic-com/lithic-kotlin/commit/49635ea504114ae98b77fa6c058035ecf547541b))
+
 ## 0.127.0 (2026-06-16)
 
 Full Changelog: [v0.126.0...v0.127.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.126.0...v0.127.0)
