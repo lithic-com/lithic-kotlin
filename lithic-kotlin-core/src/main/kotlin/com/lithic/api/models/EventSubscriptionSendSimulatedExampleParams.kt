@@ -461,6 +461,16 @@ private constructor(
 
             val CARD_UPDATED = of("card.updated")
 
+            val CLAIM_DOCUMENT_ACCEPTED = of("claim_document.accepted")
+
+            val CLAIM_DOCUMENT_REJECTED = of("claim_document.rejected")
+
+            val CLAIM_DOCUMENT_UPLOADED = of("claim_document.uploaded")
+
+            val CLAIM_CREATED = of("claim.created")
+
+            val CLAIM_UPDATED = of("claim.updated")
+
             val DIGITAL_WALLET_TOKENIZATION_RESULT = of("digital_wallet.tokenization_result")
 
             val DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE =
@@ -559,6 +569,11 @@ private constructor(
             CARD_RENEWED,
             CARD_SHIPPED,
             CARD_UPDATED,
+            CLAIM_DOCUMENT_ACCEPTED,
+            CLAIM_DOCUMENT_REJECTED,
+            CLAIM_DOCUMENT_UPLOADED,
+            CLAIM_CREATED,
+            CLAIM_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_RESULT,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT,
@@ -625,6 +640,11 @@ private constructor(
             CARD_RENEWED,
             CARD_SHIPPED,
             CARD_UPDATED,
+            CLAIM_DOCUMENT_ACCEPTED,
+            CLAIM_DOCUMENT_REJECTED,
+            CLAIM_DOCUMENT_UPLOADED,
+            CLAIM_CREATED,
+            CLAIM_UPDATED,
             DIGITAL_WALLET_TOKENIZATION_RESULT,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE,
             DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE_SENT,
@@ -696,6 +716,11 @@ private constructor(
                 CARD_RENEWED -> Value.CARD_RENEWED
                 CARD_SHIPPED -> Value.CARD_SHIPPED
                 CARD_UPDATED -> Value.CARD_UPDATED
+                CLAIM_DOCUMENT_ACCEPTED -> Value.CLAIM_DOCUMENT_ACCEPTED
+                CLAIM_DOCUMENT_REJECTED -> Value.CLAIM_DOCUMENT_REJECTED
+                CLAIM_DOCUMENT_UPLOADED -> Value.CLAIM_DOCUMENT_UPLOADED
+                CLAIM_CREATED -> Value.CLAIM_CREATED
+                CLAIM_UPDATED -> Value.CLAIM_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_RESULT -> Value.DIGITAL_WALLET_TOKENIZATION_RESULT
                 DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
                     Value.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
@@ -770,6 +795,11 @@ private constructor(
                 CARD_RENEWED -> Known.CARD_RENEWED
                 CARD_SHIPPED -> Known.CARD_SHIPPED
                 CARD_UPDATED -> Known.CARD_UPDATED
+                CLAIM_DOCUMENT_ACCEPTED -> Known.CLAIM_DOCUMENT_ACCEPTED
+                CLAIM_DOCUMENT_REJECTED -> Known.CLAIM_DOCUMENT_REJECTED
+                CLAIM_DOCUMENT_UPLOADED -> Known.CLAIM_DOCUMENT_UPLOADED
+                CLAIM_CREATED -> Known.CLAIM_CREATED
+                CLAIM_UPDATED -> Known.CLAIM_UPDATED
                 DIGITAL_WALLET_TOKENIZATION_RESULT -> Known.DIGITAL_WALLET_TOKENIZATION_RESULT
                 DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE ->
                     Known.DIGITAL_WALLET_TOKENIZATION_TWO_FACTOR_AUTHENTICATION_CODE
