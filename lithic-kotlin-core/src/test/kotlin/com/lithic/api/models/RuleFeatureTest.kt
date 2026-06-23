@@ -30,11 +30,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -73,11 +77,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -116,11 +124,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -159,11 +171,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isEqualTo(achReceipt)
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -202,11 +218,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isEqualTo(cardTransaction)
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -245,11 +265,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isEqualTo(achPayment)
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -259,6 +283,53 @@ internal class RuleFeatureTest {
             RuleFeature.ofAchPayment(
                 RuleFeature.AchPaymentFeature.builder()
                     .type(RuleFeature.AchPaymentFeature.Type.ACH_PAYMENT)
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
+    fun ofExternalBankAccount() {
+        val externalBankAccount =
+            RuleFeature.ExternalBankAccountFeature.builder()
+                .type(RuleFeature.ExternalBankAccountFeature.Type.EXTERNAL_BANK_ACCOUNT)
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofExternalBankAccount(externalBankAccount)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isEqualTo(externalBankAccount)
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
+    }
+
+    @Test
+    fun ofExternalBankAccountRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofExternalBankAccount(
+                RuleFeature.ExternalBankAccountFeature.builder()
+                    .type(RuleFeature.ExternalBankAccountFeature.Type.EXTERNAL_BANK_ACCOUNT)
                     .name("name")
                     .build()
             )
@@ -288,11 +359,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isEqualTo(card)
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -331,11 +406,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isEqualTo(accountHolder)
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -374,11 +453,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isEqualTo(ipMetadata)
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -433,11 +516,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isEqualTo(spendVelocity)
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -479,6 +566,138 @@ internal class RuleFeatureTest {
     }
 
     @Test
+    fun ofPaymentVelocity() {
+        val paymentVelocity =
+            RuleFeature.PaymentVelocityFeature.builder()
+                .period(
+                    VelocityLimitPeriod.TrailingWindowObject.builder()
+                        .duration(10L)
+                        .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
+                        .build()
+                )
+                .scope(RuleFeature.PaymentVelocityFeature.Scope.FINANCIAL_ACCOUNT)
+                .type(RuleFeature.PaymentVelocityFeature.Type.PAYMENT_VELOCITY)
+                .filters(
+                    RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.builder()
+                        .excludeTags(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.ExcludeTags
+                                .builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .addIncludePaymentType(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                .IncludePaymentType
+                                .ORIGINATION
+                        )
+                        .addIncludePolarity(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                .IncludePolarity
+                                .CREDIT
+                        )
+                        .addIncludeStatus(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.IncludeStatus
+                                .PENDING
+                        )
+                        .includeTags(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.IncludeTags
+                                .builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .result(
+                            RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.Result
+                                .APPROVED
+                        )
+                        .build()
+                )
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofPaymentVelocity(paymentVelocity)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isEqualTo(paymentVelocity)
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
+    }
+
+    @Test
+    fun ofPaymentVelocityRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofPaymentVelocity(
+                RuleFeature.PaymentVelocityFeature.builder()
+                    .period(
+                        VelocityLimitPeriod.TrailingWindowObject.builder()
+                            .duration(10L)
+                            .type(VelocityLimitPeriod.TrailingWindowObject.Type.CUSTOM)
+                            .build()
+                    )
+                    .scope(RuleFeature.PaymentVelocityFeature.Scope.FINANCIAL_ACCOUNT)
+                    .type(RuleFeature.PaymentVelocityFeature.Type.PAYMENT_VELOCITY)
+                    .filters(
+                        RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.builder()
+                            .excludeTags(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                    .ExcludeTags
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .addIncludePaymentType(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                    .IncludePaymentType
+                                    .ORIGINATION
+                            )
+                            .addIncludePolarity(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                    .IncludePolarity
+                                    .CREDIT
+                            )
+                            .addIncludeStatus(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                    .IncludeStatus
+                                    .PENDING
+                            )
+                            .includeTags(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters
+                                    .IncludeTags
+                                    .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .result(
+                                RuleFeature.PaymentVelocityFeature.PaymentVelocityFilters.Result
+                                    .APPROVED
+                            )
+                            .build()
+                    )
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
     fun ofTransactionHistorySignals() {
         val transactionHistorySignals =
             RuleFeature.TransactionHistorySignalsFeature.builder()
@@ -495,11 +714,15 @@ internal class RuleFeatureTest {
         assertThat(ruleFeature.achReceipt()).isNull()
         assertThat(ruleFeature.cardTransaction()).isNull()
         assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
         assertThat(ruleFeature.card()).isNull()
         assertThat(ruleFeature.accountHolder()).isNull()
         assertThat(ruleFeature.ipMetadata()).isNull()
         assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
         assertThat(ruleFeature.transactionHistorySignals()).isEqualTo(transactionHistorySignals)
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
     }
 
     @Test
@@ -513,6 +736,104 @@ internal class RuleFeatureTest {
                         RuleFeature.TransactionHistorySignalsFeature.Type
                             .TRANSACTION_HISTORY_SIGNALS
                     )
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
+    fun ofConsecutiveDeclines() {
+        val consecutiveDeclines =
+            RuleFeature.ConsecutiveDeclinesFeature.builder()
+                .scope(RuleFeature.ConsecutiveDeclinesFeature.Scope.CARD)
+                .type(RuleFeature.ConsecutiveDeclinesFeature.Type.CONSECUTIVE_DECLINES)
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofConsecutiveDeclines(consecutiveDeclines)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isEqualTo(consecutiveDeclines)
+        assertThat(ruleFeature.achPaymentHistory()).isNull()
+    }
+
+    @Test
+    fun ofConsecutiveDeclinesRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofConsecutiveDeclines(
+                RuleFeature.ConsecutiveDeclinesFeature.builder()
+                    .scope(RuleFeature.ConsecutiveDeclinesFeature.Scope.CARD)
+                    .type(RuleFeature.ConsecutiveDeclinesFeature.Type.CONSECUTIVE_DECLINES)
+                    .name("name")
+                    .build()
+            )
+
+        val roundtrippedRuleFeature =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(ruleFeature),
+                jacksonTypeRef<RuleFeature>(),
+            )
+
+        assertThat(roundtrippedRuleFeature).isEqualTo(ruleFeature)
+    }
+
+    @Test
+    fun ofAchPaymentHistory() {
+        val achPaymentHistory =
+            RuleFeature.AchPaymentHistoryFeature.builder()
+                .scope(RuleFeature.AchPaymentHistoryFeature.Scope.FINANCIAL_ACCOUNT)
+                .type(RuleFeature.AchPaymentHistoryFeature.Type.ACH_PAYMENT_HISTORY)
+                .name("name")
+                .build()
+
+        val ruleFeature = RuleFeature.ofAchPaymentHistory(achPaymentHistory)
+
+        assertThat(ruleFeature.authorization()).isNull()
+        assertThat(ruleFeature.authentication()).isNull()
+        assertThat(ruleFeature.tokenization()).isNull()
+        assertThat(ruleFeature.achReceipt()).isNull()
+        assertThat(ruleFeature.cardTransaction()).isNull()
+        assertThat(ruleFeature.achPayment()).isNull()
+        assertThat(ruleFeature.externalBankAccount()).isNull()
+        assertThat(ruleFeature.card()).isNull()
+        assertThat(ruleFeature.accountHolder()).isNull()
+        assertThat(ruleFeature.ipMetadata()).isNull()
+        assertThat(ruleFeature.spendVelocity()).isNull()
+        assertThat(ruleFeature.paymentVelocity()).isNull()
+        assertThat(ruleFeature.transactionHistorySignals()).isNull()
+        assertThat(ruleFeature.consecutiveDeclines()).isNull()
+        assertThat(ruleFeature.achPaymentHistory()).isEqualTo(achPaymentHistory)
+    }
+
+    @Test
+    fun ofAchPaymentHistoryRoundtrip() {
+        val jsonMapper = jsonMapper()
+        val ruleFeature =
+            RuleFeature.ofAchPaymentHistory(
+                RuleFeature.AchPaymentHistoryFeature.builder()
+                    .scope(RuleFeature.AchPaymentHistoryFeature.Scope.FINANCIAL_ACCOUNT)
+                    .type(RuleFeature.AchPaymentHistoryFeature.Type.ACH_PAYMENT_HISTORY)
                     .name("name")
                     .build()
             )
