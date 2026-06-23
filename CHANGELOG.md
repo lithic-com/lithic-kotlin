@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.129.0 (2026-06-23)
+
+Full Changelog: [v0.128.0...v0.129.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.128.0...v0.129.0)
+
+### Features
+
+* **api:** add claim and claim_document webhook event types ([f9a91b0](https://github.com/lithic-com/lithic-kotlin/commit/f9a91b0df5a7f24c2f7dfd9591f1abc67bf920b8))
+* **api:** add payment velocity/consecutive declines/payment history/bank account features ([9229521](https://github.com/lithic-com/lithic-kotlin/commit/92295216b3f263dc9efa7ad23489c09e1b585aaa))
+
 ## 0.128.0 (2026-06-22)
 
 Full Changelog: [v0.127.0...v0.128.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.127.0...v0.128.0)
