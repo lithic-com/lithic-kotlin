@@ -38,9 +38,43 @@ private constructor(
 
     fun nextPageParams(): TransactionMonitoringCaseListTransactionsParams =
         if (params.endingBefore() != null) {
-            params.toBuilder().endingBefore(items().first()._token().getNullable("token")).build()
+            params
+                .toBuilder()
+                .endingBefore(
+                    items()
+                        .first()
+                        .accept(
+                            object : CaseTransaction.Visitor<String?> {
+                                override fun visitCard(
+                                    card: CaseTransaction.CardCaseTransaction
+                                ): String? = card._token().getNullable("token")
+
+                                override fun visitPayment(
+                                    payment: CaseTransaction.PaymentCaseTransaction
+                                ): String? = payment._token().getNullable("token")
+                            }
+                        )
+                )
+                .build()
         } else {
-            params.toBuilder().startingAfter(items().last()._token().getNullable("token")).build()
+            params
+                .toBuilder()
+                .startingAfter(
+                    items()
+                        .last()
+                        .accept(
+                            object : CaseTransaction.Visitor<String?> {
+                                override fun visitCard(
+                                    card: CaseTransaction.CardCaseTransaction
+                                ): String? = card._token().getNullable("token")
+
+                                override fun visitPayment(
+                                    payment: CaseTransaction.PaymentCaseTransaction
+                                ): String? = payment._token().getNullable("token")
+                            }
+                        )
+                )
+                .build()
         }
 
     override suspend fun nextPage(): TransactionMonitoringCaseListTransactionsPageAsync =
