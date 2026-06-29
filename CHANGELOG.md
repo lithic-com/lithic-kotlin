@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.130.0 (2026-06-29)
+
+Full Changelog: [v0.129.0...v0.130.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.129.0...v0.130.0)
+
+### Features
+
+* **api:** convert CaseTransaction to union type with card/payment variants ([9e9a0b9](https://github.com/lithic-com/lithic-kotlin/commit/9e9a0b93b712935217bd569d0f8244c2e18ec23c))
+
+
+### Documentation
+
+* **types:** update cash_amount field description in authorization models ([d680ae2](https://github.com/lithic-com/lithic-kotlin/commit/d680ae225e0e81c44dfbb7785dc8d768128e9b74))
+
 ## 0.129.0 (2026-06-23)
 
 Full Changelog: [v0.128.0...v0.129.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.128.0...v0.129.0)
