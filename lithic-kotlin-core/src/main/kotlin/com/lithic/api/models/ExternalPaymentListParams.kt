@@ -38,7 +38,7 @@ private constructor(
 
     fun businessAccountToken(): String? = businessAccountToken
 
-    /** External Payment category to be returned. */
+    /** The external rail the funds moved on */
     fun category(): ExternalPaymentCategory? = category
 
     /**
@@ -133,7 +133,7 @@ private constructor(
             this.businessAccountToken = businessAccountToken
         }
 
-        /** External Payment category to be returned. */
+        /** The external rail the funds moved on */
         fun category(category: ExternalPaymentCategory?) = apply { this.category = category }
 
         /**
@@ -317,7 +317,7 @@ private constructor(
             }
             .build()
 
-    /** External Payment category to be returned. */
+    /** The external rail the funds moved on */
     class ExternalPaymentCategory
     @JsonCreator
     private constructor(private val value: JsonField<String>) : Enum {
