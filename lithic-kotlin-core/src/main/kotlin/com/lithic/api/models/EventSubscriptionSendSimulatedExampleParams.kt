@@ -489,6 +489,10 @@ private constructor(
 
             val DISPUTE_UPDATED = of("dispute.updated")
 
+            val EMBED_SESSION_GENERATED = of("embed.session_generated")
+
+            val EMBED_VIEWED = of("embed.viewed")
+
             val EXTERNAL_BANK_ACCOUNT_CREATED = of("external_bank_account.created")
 
             val EXTERNAL_BANK_ACCOUNT_UPDATED = of("external_bank_account.updated")
@@ -582,6 +586,8 @@ private constructor(
             DISPUTE_TRANSACTION_CREATED,
             DISPUTE_TRANSACTION_UPDATED,
             DISPUTE_UPDATED,
+            EMBED_SESSION_GENERATED,
+            EMBED_VIEWED,
             EXTERNAL_BANK_ACCOUNT_CREATED,
             EXTERNAL_BANK_ACCOUNT_UPDATED,
             EXTERNAL_PAYMENT_CREATED,
@@ -653,6 +659,8 @@ private constructor(
             DISPUTE_TRANSACTION_CREATED,
             DISPUTE_TRANSACTION_UPDATED,
             DISPUTE_UPDATED,
+            EMBED_SESSION_GENERATED,
+            EMBED_VIEWED,
             EXTERNAL_BANK_ACCOUNT_CREATED,
             EXTERNAL_BANK_ACCOUNT_UPDATED,
             EXTERNAL_PAYMENT_CREATED,
@@ -731,6 +739,8 @@ private constructor(
                 DISPUTE_TRANSACTION_CREATED -> Value.DISPUTE_TRANSACTION_CREATED
                 DISPUTE_TRANSACTION_UPDATED -> Value.DISPUTE_TRANSACTION_UPDATED
                 DISPUTE_UPDATED -> Value.DISPUTE_UPDATED
+                EMBED_SESSION_GENERATED -> Value.EMBED_SESSION_GENERATED
+                EMBED_VIEWED -> Value.EMBED_VIEWED
                 EXTERNAL_BANK_ACCOUNT_CREATED -> Value.EXTERNAL_BANK_ACCOUNT_CREATED
                 EXTERNAL_BANK_ACCOUNT_UPDATED -> Value.EXTERNAL_BANK_ACCOUNT_UPDATED
                 EXTERNAL_PAYMENT_CREATED -> Value.EXTERNAL_PAYMENT_CREATED
@@ -810,6 +820,8 @@ private constructor(
                 DISPUTE_TRANSACTION_CREATED -> Known.DISPUTE_TRANSACTION_CREATED
                 DISPUTE_TRANSACTION_UPDATED -> Known.DISPUTE_TRANSACTION_UPDATED
                 DISPUTE_UPDATED -> Known.DISPUTE_UPDATED
+                EMBED_SESSION_GENERATED -> Known.EMBED_SESSION_GENERATED
+                EMBED_VIEWED -> Known.EMBED_VIEWED
                 EXTERNAL_BANK_ACCOUNT_CREATED -> Known.EXTERNAL_BANK_ACCOUNT_CREATED
                 EXTERNAL_BANK_ACCOUNT_UPDATED -> Known.EXTERNAL_BANK_ACCOUNT_UPDATED
                 EXTERNAL_PAYMENT_CREATED -> Known.EXTERNAL_PAYMENT_CREATED
