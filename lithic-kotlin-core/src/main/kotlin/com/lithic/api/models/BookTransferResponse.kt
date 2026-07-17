@@ -1779,6 +1779,8 @@ private constructor(
 
                 val BILL_PAYMENT = of("BILL_PAYMENT")
 
+                val PAYMENT_FEE = of("PAYMENT_FEE")
+
                 val CASH_BACK = of("CASH_BACK")
 
                 val ACCOUNT_TO_ACCOUNT = of("ACCOUNT_TO_ACCOUNT")
@@ -1834,6 +1836,7 @@ private constructor(
                 INTEREST,
                 LATE_PAYMENT,
                 BILL_PAYMENT,
+                PAYMENT_FEE,
                 CASH_BACK,
                 ACCOUNT_TO_ACCOUNT,
                 CARD_TO_CARD,
@@ -1882,6 +1885,7 @@ private constructor(
                 INTEREST,
                 LATE_PAYMENT,
                 BILL_PAYMENT,
+                PAYMENT_FEE,
                 CASH_BACK,
                 ACCOUNT_TO_ACCOUNT,
                 CARD_TO_CARD,
@@ -1933,6 +1937,7 @@ private constructor(
                     INTEREST -> Value.INTEREST
                     LATE_PAYMENT -> Value.LATE_PAYMENT
                     BILL_PAYMENT -> Value.BILL_PAYMENT
+                    PAYMENT_FEE -> Value.PAYMENT_FEE
                     CASH_BACK -> Value.CASH_BACK
                     ACCOUNT_TO_ACCOUNT -> Value.ACCOUNT_TO_ACCOUNT
                     CARD_TO_CARD -> Value.CARD_TO_CARD
@@ -1982,6 +1987,7 @@ private constructor(
                     INTEREST -> Known.INTEREST
                     LATE_PAYMENT -> Known.LATE_PAYMENT
                     BILL_PAYMENT -> Known.BILL_PAYMENT
+                    PAYMENT_FEE -> Known.PAYMENT_FEE
                     CASH_BACK -> Known.CASH_BACK
                     ACCOUNT_TO_ACCOUNT -> Known.ACCOUNT_TO_ACCOUNT
                     CARD_TO_CARD -> Known.CARD_TO_CARD
