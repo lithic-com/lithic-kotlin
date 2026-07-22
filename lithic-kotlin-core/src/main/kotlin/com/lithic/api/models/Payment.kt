@@ -1143,6 +1143,8 @@ private constructor(
 
             val PROGRAM_FUNDING = of("PROGRAM_FUNDING")
 
+            val PROGRAM_TRANSFER = of("PROGRAM_TRANSFER")
+
             fun of(value: String) = TransactionCategory(JsonField.of(value))
         }
 
@@ -1170,6 +1172,7 @@ private constructor(
             MANAGEMENT_DISBURSEMENT,
             HOLD,
             PROGRAM_FUNDING,
+            PROGRAM_TRANSFER,
         }
 
         /**
@@ -1204,6 +1207,7 @@ private constructor(
             MANAGEMENT_DISBURSEMENT,
             HOLD,
             PROGRAM_FUNDING,
+            PROGRAM_TRANSFER,
             /**
              * An enum member indicating that [TransactionCategory] was instantiated with an unknown
              * value.
@@ -1242,6 +1246,7 @@ private constructor(
                 MANAGEMENT_DISBURSEMENT -> Value.MANAGEMENT_DISBURSEMENT
                 HOLD -> Value.HOLD
                 PROGRAM_FUNDING -> Value.PROGRAM_FUNDING
+                PROGRAM_TRANSFER -> Value.PROGRAM_TRANSFER
                 else -> Value._UNKNOWN
             }
 
@@ -1278,6 +1283,7 @@ private constructor(
                 MANAGEMENT_DISBURSEMENT -> Known.MANAGEMENT_DISBURSEMENT
                 HOLD -> Known.HOLD
                 PROGRAM_FUNDING -> Known.PROGRAM_FUNDING
+                PROGRAM_TRANSFER -> Known.PROGRAM_TRANSFER
                 else -> throw LithicInvalidDataException("Unknown TransactionCategory: $value")
             }
 

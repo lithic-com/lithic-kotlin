@@ -357,6 +357,8 @@ private constructor(
 
             val PROGRAM_FUNDING = of("PROGRAM_FUNDING")
 
+            val PROGRAM_TRANSFER = of("PROGRAM_TRANSFER")
+
             val TRANSFER = of("TRANSFER")
 
             fun of(value: String) = BookTransferCategory(JsonField.of(value))
@@ -372,6 +374,7 @@ private constructor(
             INTERNAL,
             REWARD,
             PROGRAM_FUNDING,
+            PROGRAM_TRANSFER,
             TRANSFER,
         }
 
@@ -394,6 +397,7 @@ private constructor(
             INTERNAL,
             REWARD,
             PROGRAM_FUNDING,
+            PROGRAM_TRANSFER,
             TRANSFER,
             /**
              * An enum member indicating that [BookTransferCategory] was instantiated with an
@@ -419,6 +423,7 @@ private constructor(
                 INTERNAL -> Value.INTERNAL
                 REWARD -> Value.REWARD
                 PROGRAM_FUNDING -> Value.PROGRAM_FUNDING
+                PROGRAM_TRANSFER -> Value.PROGRAM_TRANSFER
                 TRANSFER -> Value.TRANSFER
                 else -> Value._UNKNOWN
             }
@@ -442,6 +447,7 @@ private constructor(
                 INTERNAL -> Known.INTERNAL
                 REWARD -> Known.REWARD
                 PROGRAM_FUNDING -> Known.PROGRAM_FUNDING
+                PROGRAM_TRANSFER -> Known.PROGRAM_TRANSFER
                 TRANSFER -> Known.TRANSFER
                 else -> throw LithicInvalidDataException("Unknown BookTransferCategory: $value")
             }
