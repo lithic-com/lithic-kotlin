@@ -3125,6 +3125,7 @@ private constructor(
             private val companyId: JsonField<String>,
             private val overrideCompanyName: JsonField<String>,
             private val receiptRoutingNumber: JsonField<String>,
+            private val recipientName: JsonField<String>,
             private val retries: JsonField<Long>,
             private val returnReasonCode: JsonField<String>,
             private val traceNumbers: JsonField<List<String>>,
@@ -3151,6 +3152,9 @@ private constructor(
                 @JsonProperty("receipt_routing_number")
                 @ExcludeMissing
                 receiptRoutingNumber: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("recipient_name")
+                @ExcludeMissing
+                recipientName: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("retries")
                 @ExcludeMissing
                 retries: JsonField<Long> = JsonMissing.of(),
@@ -3167,6 +3171,7 @@ private constructor(
                 companyId,
                 overrideCompanyName,
                 receiptRoutingNumber,
+                recipientName,
                 retries,
                 returnReasonCode,
                 traceNumbers,
@@ -3224,6 +3229,14 @@ private constructor(
              */
             fun receiptRoutingNumber(): String? =
                 receiptRoutingNumber.getNullable("receipt_routing_number")
+
+            /**
+             * Name of the recipient on ACH receipts. Reflects the originating bank's record
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun recipientName(): String? = recipientName.getNullable("recipient_name")
 
             /**
              * Number of retries attempted
@@ -3304,6 +3317,16 @@ private constructor(
             fun _receiptRoutingNumber(): JsonField<String> = receiptRoutingNumber
 
             /**
+             * Returns the raw JSON value of [recipientName].
+             *
+             * Unlike [recipientName], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("recipient_name")
+            @ExcludeMissing
+            fun _recipientName(): JsonField<String> = recipientName
+
+            /**
              * Returns the raw JSON value of [retries].
              *
              * Unlike [retries], this method doesn't throw if the JSON field has an unexpected type.
@@ -3364,6 +3387,7 @@ private constructor(
                 private var companyId: JsonField<String> = JsonMissing.of()
                 private var overrideCompanyName: JsonField<String> = JsonMissing.of()
                 private var receiptRoutingNumber: JsonField<String> = JsonMissing.of()
+                private var recipientName: JsonField<String> = JsonMissing.of()
                 private var retries: JsonField<Long> = JsonMissing.of()
                 private var returnReasonCode: JsonField<String> = JsonMissing.of()
                 private var traceNumbers: JsonField<MutableList<String>>? = null
@@ -3376,6 +3400,7 @@ private constructor(
                     companyId = achMethodAttributes.companyId
                     overrideCompanyName = achMethodAttributes.overrideCompanyName
                     receiptRoutingNumber = achMethodAttributes.receiptRoutingNumber
+                    recipientName = achMethodAttributes.recipientName
                     retries = achMethodAttributes.retries
                     returnReasonCode = achMethodAttributes.returnReasonCode
                     traceNumbers = achMethodAttributes.traceNumbers.map { it.toMutableList() }
@@ -3471,6 +3496,21 @@ private constructor(
                  */
                 fun receiptRoutingNumber(receiptRoutingNumber: JsonField<String>) = apply {
                     this.receiptRoutingNumber = receiptRoutingNumber
+                }
+
+                /** Name of the recipient on ACH receipts. Reflects the originating bank's record */
+                fun recipientName(recipientName: String?) =
+                    recipientName(JsonField.ofNullable(recipientName))
+
+                /**
+                 * Sets [Builder.recipientName] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.recipientName] with a well-typed [String] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun recipientName(recipientName: JsonField<String>) = apply {
+                    this.recipientName = recipientName
                 }
 
                 /** Number of retries attempted */
@@ -3576,6 +3616,7 @@ private constructor(
                         companyId,
                         overrideCompanyName,
                         receiptRoutingNumber,
+                        recipientName,
                         retries,
                         returnReasonCode,
                         (traceNumbers ?: JsonMissing.of()).map { it.toImmutable() },
@@ -3606,6 +3647,7 @@ private constructor(
                 companyId()
                 overrideCompanyName()
                 receiptRoutingNumber()
+                recipientName()
                 retries()
                 returnReasonCode()
                 traceNumbers()
@@ -3633,6 +3675,7 @@ private constructor(
                     (if (companyId.asKnown() == null) 0 else 1) +
                     (if (overrideCompanyName.asKnown() == null) 0 else 1) +
                     (if (receiptRoutingNumber.asKnown() == null) 0 else 1) +
+                    (if (recipientName.asKnown() == null) 0 else 1) +
                     (if (retries.asKnown() == null) 0 else 1) +
                     (if (returnReasonCode.asKnown() == null) 0 else 1) +
                     (traceNumbers.asKnown()?.size ?: 0)
@@ -3813,6 +3856,7 @@ private constructor(
                     companyId == other.companyId &&
                     overrideCompanyName == other.overrideCompanyName &&
                     receiptRoutingNumber == other.receiptRoutingNumber &&
+                    recipientName == other.recipientName &&
                     retries == other.retries &&
                     returnReasonCode == other.returnReasonCode &&
                     traceNumbers == other.traceNumbers &&
@@ -3827,6 +3871,7 @@ private constructor(
                     companyId,
                     overrideCompanyName,
                     receiptRoutingNumber,
+                    recipientName,
                     retries,
                     returnReasonCode,
                     traceNumbers,
@@ -3837,7 +3882,7 @@ private constructor(
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AchMethodAttributes{secCode=$secCode, achHoldPeriod=$achHoldPeriod, addenda=$addenda, companyId=$companyId, overrideCompanyName=$overrideCompanyName, receiptRoutingNumber=$receiptRoutingNumber, retries=$retries, returnReasonCode=$returnReasonCode, traceNumbers=$traceNumbers, additionalProperties=$additionalProperties}"
+                "AchMethodAttributes{secCode=$secCode, achHoldPeriod=$achHoldPeriod, addenda=$addenda, companyId=$companyId, overrideCompanyName=$overrideCompanyName, receiptRoutingNumber=$receiptRoutingNumber, recipientName=$recipientName, retries=$retries, returnReasonCode=$returnReasonCode, traceNumbers=$traceNumbers, additionalProperties=$additionalProperties}"
         }
 
         class WireMethodAttributes
