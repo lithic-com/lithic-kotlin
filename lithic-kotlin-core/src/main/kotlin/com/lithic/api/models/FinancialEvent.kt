@@ -607,6 +607,10 @@ private constructor(
 
             val LITHIC_NETWORK_PAYMENT = of("LITHIC_NETWORK_PAYMENT")
 
+            val LITHIC_PROGRAM_TRANSFER = of("LITHIC_PROGRAM_TRANSFER")
+
+            val BANK_PROGRAM_TRANSFER = of("BANK_PROGRAM_TRANSFER")
+
             val ANNUAL = of("ANNUAL")
 
             val ANNUAL_REVERSAL = of("ANNUAL_REVERSAL")
@@ -707,6 +711,8 @@ private constructor(
             RETURNED_PAYMENT,
             RETURNED_PAYMENT_REVERSAL,
             LITHIC_NETWORK_PAYMENT,
+            LITHIC_PROGRAM_TRANSFER,
+            BANK_PROGRAM_TRANSFER,
             ANNUAL,
             ANNUAL_REVERSAL,
             QUARTERLY,
@@ -807,6 +813,8 @@ private constructor(
             RETURNED_PAYMENT,
             RETURNED_PAYMENT_REVERSAL,
             LITHIC_NETWORK_PAYMENT,
+            LITHIC_PROGRAM_TRANSFER,
+            BANK_PROGRAM_TRANSFER,
             ANNUAL,
             ANNUAL_REVERSAL,
             QUARTERLY,
@@ -911,6 +919,8 @@ private constructor(
                 RETURNED_PAYMENT -> Value.RETURNED_PAYMENT
                 RETURNED_PAYMENT_REVERSAL -> Value.RETURNED_PAYMENT_REVERSAL
                 LITHIC_NETWORK_PAYMENT -> Value.LITHIC_NETWORK_PAYMENT
+                LITHIC_PROGRAM_TRANSFER -> Value.LITHIC_PROGRAM_TRANSFER
+                BANK_PROGRAM_TRANSFER -> Value.BANK_PROGRAM_TRANSFER
                 ANNUAL -> Value.ANNUAL
                 ANNUAL_REVERSAL -> Value.ANNUAL_REVERSAL
                 QUARTERLY -> Value.QUARTERLY
@@ -1013,6 +1023,8 @@ private constructor(
                 RETURNED_PAYMENT -> Known.RETURNED_PAYMENT
                 RETURNED_PAYMENT_REVERSAL -> Known.RETURNED_PAYMENT_REVERSAL
                 LITHIC_NETWORK_PAYMENT -> Known.LITHIC_NETWORK_PAYMENT
+                LITHIC_PROGRAM_TRANSFER -> Known.LITHIC_PROGRAM_TRANSFER
+                BANK_PROGRAM_TRANSFER -> Known.BANK_PROGRAM_TRANSFER
                 ANNUAL -> Known.ANNUAL
                 ANNUAL_REVERSAL -> Known.ANNUAL_REVERSAL
                 QUARTERLY -> Known.QUARTERLY

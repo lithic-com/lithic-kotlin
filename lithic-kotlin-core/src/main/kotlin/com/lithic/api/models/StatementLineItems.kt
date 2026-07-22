@@ -978,6 +978,8 @@ private constructor(
 
                 val PROGRAM_FUNDING = of("PROGRAM_FUNDING")
 
+                val PROGRAM_TRANSFER = of("PROGRAM_TRANSFER")
+
                 fun of(value: String) = TransactionCategory(JsonField.of(value))
             }
 
@@ -1005,6 +1007,7 @@ private constructor(
                 MANAGEMENT_DISBURSEMENT,
                 HOLD,
                 PROGRAM_FUNDING,
+                PROGRAM_TRANSFER,
             }
 
             /**
@@ -1041,6 +1044,7 @@ private constructor(
                 MANAGEMENT_DISBURSEMENT,
                 HOLD,
                 PROGRAM_FUNDING,
+                PROGRAM_TRANSFER,
                 /**
                  * An enum member indicating that [TransactionCategory] was instantiated with an
                  * unknown value.
@@ -1079,6 +1083,7 @@ private constructor(
                     MANAGEMENT_DISBURSEMENT -> Value.MANAGEMENT_DISBURSEMENT
                     HOLD -> Value.HOLD
                     PROGRAM_FUNDING -> Value.PROGRAM_FUNDING
+                    PROGRAM_TRANSFER -> Value.PROGRAM_TRANSFER
                     else -> Value._UNKNOWN
                 }
 
@@ -1115,6 +1120,7 @@ private constructor(
                     MANAGEMENT_DISBURSEMENT -> Known.MANAGEMENT_DISBURSEMENT
                     HOLD -> Known.HOLD
                     PROGRAM_FUNDING -> Known.PROGRAM_FUNDING
+                    PROGRAM_TRANSFER -> Known.PROGRAM_TRANSFER
                     else -> throw LithicInvalidDataException("Unknown TransactionCategory: $value")
                 }
 
@@ -1358,6 +1364,10 @@ private constructor(
 
                 val LITHIC_NETWORK_PAYMENT = of("LITHIC_NETWORK_PAYMENT")
 
+                val LITHIC_PROGRAM_TRANSFER = of("LITHIC_PROGRAM_TRANSFER")
+
+                val BANK_PROGRAM_TRANSFER = of("BANK_PROGRAM_TRANSFER")
+
                 val ANNUAL = of("ANNUAL")
 
                 val ANNUAL_REVERSAL = of("ANNUAL_REVERSAL")
@@ -1458,6 +1468,8 @@ private constructor(
                 RETURNED_PAYMENT,
                 RETURNED_PAYMENT_REVERSAL,
                 LITHIC_NETWORK_PAYMENT,
+                LITHIC_PROGRAM_TRANSFER,
+                BANK_PROGRAM_TRANSFER,
                 ANNUAL,
                 ANNUAL_REVERSAL,
                 QUARTERLY,
@@ -1560,6 +1572,8 @@ private constructor(
                 RETURNED_PAYMENT,
                 RETURNED_PAYMENT_REVERSAL,
                 LITHIC_NETWORK_PAYMENT,
+                LITHIC_PROGRAM_TRANSFER,
+                BANK_PROGRAM_TRANSFER,
                 ANNUAL,
                 ANNUAL_REVERSAL,
                 QUARTERLY,
@@ -1664,6 +1678,8 @@ private constructor(
                     RETURNED_PAYMENT -> Value.RETURNED_PAYMENT
                     RETURNED_PAYMENT_REVERSAL -> Value.RETURNED_PAYMENT_REVERSAL
                     LITHIC_NETWORK_PAYMENT -> Value.LITHIC_NETWORK_PAYMENT
+                    LITHIC_PROGRAM_TRANSFER -> Value.LITHIC_PROGRAM_TRANSFER
+                    BANK_PROGRAM_TRANSFER -> Value.BANK_PROGRAM_TRANSFER
                     ANNUAL -> Value.ANNUAL
                     ANNUAL_REVERSAL -> Value.ANNUAL_REVERSAL
                     QUARTERLY -> Value.QUARTERLY
@@ -1766,6 +1782,8 @@ private constructor(
                     RETURNED_PAYMENT -> Known.RETURNED_PAYMENT
                     RETURNED_PAYMENT_REVERSAL -> Known.RETURNED_PAYMENT_REVERSAL
                     LITHIC_NETWORK_PAYMENT -> Known.LITHIC_NETWORK_PAYMENT
+                    LITHIC_PROGRAM_TRANSFER -> Known.LITHIC_PROGRAM_TRANSFER
+                    BANK_PROGRAM_TRANSFER -> Known.BANK_PROGRAM_TRANSFER
                     ANNUAL -> Known.ANNUAL
                     ANNUAL_REVERSAL -> Known.ANNUAL_REVERSAL
                     QUARTERLY -> Known.QUARTERLY
