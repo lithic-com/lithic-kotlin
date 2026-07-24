@@ -25,8 +25,9 @@ private constructor(
     fun balanceDate(): OffsetDateTime? = balanceDate
 
     /**
-     * Balance after a given financial event occured. For example, passing the event_token of a $5
-     * CARD_CLEARING financial event will return a balance decreased by $5
+     * Balance after a given financial event occured. Note: if an account receives multiple events
+     * around the same time whose financial impacts cancel out, a balance lookup by one of those
+     * event tokens may return 404, since their combined impact on the account is zero.
      */
     fun lastTransactionEventToken(): String? = lastTransactionEventToken
 
@@ -77,8 +78,9 @@ private constructor(
         fun balanceDate(balanceDate: OffsetDateTime?) = apply { this.balanceDate = balanceDate }
 
         /**
-         * Balance after a given financial event occured. For example, passing the event_token of a
-         * $5 CARD_CLEARING financial event will return a balance decreased by $5
+         * Balance after a given financial event occured. Note: if an account receives multiple
+         * events around the same time whose financial impacts cancel out, a balance lookup by one
+         * of those event tokens may return 404, since their combined impact on the account is zero.
          */
         fun lastTransactionEventToken(lastTransactionEventToken: String?) = apply {
             this.lastTransactionEventToken = lastTransactionEventToken
