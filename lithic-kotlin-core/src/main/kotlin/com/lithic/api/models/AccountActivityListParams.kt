@@ -345,6 +345,8 @@ private constructor(
 
             val WIRE = of("WIRE")
 
+            val STABLECOIN = of("STABLECOIN")
+
             val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
             val FEE = of("FEE")
@@ -394,6 +396,7 @@ private constructor(
         enum class Known {
             ACH,
             WIRE,
+            STABLECOIN,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -429,6 +432,7 @@ private constructor(
         enum class Value {
             ACH,
             WIRE,
+            STABLECOIN,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -468,6 +472,7 @@ private constructor(
             when (this) {
                 ACH -> Value.ACH
                 WIRE -> Value.WIRE
+                STABLECOIN -> Value.STABLECOIN
                 BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
                 FEE -> Value.FEE
                 REWARD -> Value.REWARD
@@ -505,6 +510,7 @@ private constructor(
             when (this) {
                 ACH -> Known.ACH
                 WIRE -> Known.WIRE
+                STABLECOIN -> Known.STABLECOIN
                 BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
                 FEE -> Known.FEE
                 REWARD -> Known.REWARD
