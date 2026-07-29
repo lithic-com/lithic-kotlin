@@ -10,7 +10,9 @@ import com.lithic.api.core.ExcludeMissing
 import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
+import com.lithic.api.core.checkKnown
 import com.lithic.api.core.checkRequired
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
@@ -21,6 +23,7 @@ class Queue
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val token: JsonField<String>,
+    private val allowedResolutions: JsonField<List<String>>,
     private val caseCounts: JsonField<CaseCounts>,
     private val created: JsonField<OffsetDateTime>,
     private val description: JsonField<String>,
@@ -32,6 +35,9 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("allowed_resolutions")
+        @ExcludeMissing
+        allowedResolutions: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("case_counts")
         @ExcludeMissing
         caseCounts: JsonField<CaseCounts> = JsonMissing.of(),
@@ -45,7 +51,16 @@ private constructor(
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
-    ) : this(token, caseCounts, created, description, name, updated, mutableMapOf())
+    ) : this(
+        token,
+        allowedResolutions,
+        caseCounts,
+        created,
+        description,
+        name,
+        updated,
+        mutableMapOf(),
+    )
 
     /**
      * Globally unique identifier for the queue
@@ -54,6 +69,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun token(): String = token.getRequired("token")
+
+    /**
+     * Resolutions that can be recorded on cases in this queue. Always the effective list: the
+     * queue's own values when it defines them, otherwise the default list
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun allowedResolutions(): List<String> = allowedResolutions.getRequired("allowed_resolutions")
 
     /**
      * Number of cases in the queue, broken down by status. A status is omitted when the queue has
@@ -102,6 +126,16 @@ private constructor(
      * Unlike [token], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("token") @ExcludeMissing fun _token(): JsonField<String> = token
+
+    /**
+     * Returns the raw JSON value of [allowedResolutions].
+     *
+     * Unlike [allowedResolutions], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("allowed_resolutions")
+    @ExcludeMissing
+    fun _allowedResolutions(): JsonField<List<String>> = allowedResolutions
 
     /**
      * Returns the raw JSON value of [caseCounts].
@@ -160,6 +194,7 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .token()
+         * .allowedResolutions()
          * .caseCounts()
          * .created()
          * .description()
@@ -174,6 +209,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var token: JsonField<String>? = null
+        private var allowedResolutions: JsonField<MutableList<String>>? = null
         private var caseCounts: JsonField<CaseCounts>? = null
         private var created: JsonField<OffsetDateTime>? = null
         private var description: JsonField<String>? = null
@@ -183,6 +219,7 @@ private constructor(
 
         internal fun from(queue: Queue) = apply {
             token = queue.token
+            allowedResolutions = queue.allowedResolutions.map { it.toMutableList() }
             caseCounts = queue.caseCounts
             created = queue.created
             description = queue.description
@@ -201,6 +238,36 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun token(token: JsonField<String>) = apply { this.token = token }
+
+        /**
+         * Resolutions that can be recorded on cases in this queue. Always the effective list: the
+         * queue's own values when it defines them, otherwise the default list
+         */
+        fun allowedResolutions(allowedResolutions: List<String>) =
+            allowedResolutions(JsonField.of(allowedResolutions))
+
+        /**
+         * Sets [Builder.allowedResolutions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowedResolutions] with a well-typed `List<String>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun allowedResolutions(allowedResolutions: JsonField<List<String>>) = apply {
+            this.allowedResolutions = allowedResolutions.map { it.toMutableList() }
+        }
+
+        /**
+         * Adds a single [String] to [allowedResolutions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAllowedResolution(allowedResolution: String) = apply {
+            allowedResolutions =
+                (allowedResolutions ?: JsonField.of(mutableListOf())).also {
+                    checkKnown("allowedResolutions", it).add(allowedResolution)
+                }
+        }
 
         /**
          * Number of cases in the queue, broken down by status. A status is omitted when the queue
@@ -291,6 +358,7 @@ private constructor(
          * The following fields are required:
          * ```kotlin
          * .token()
+         * .allowedResolutions()
          * .caseCounts()
          * .created()
          * .description()
@@ -303,6 +371,7 @@ private constructor(
         fun build(): Queue =
             Queue(
                 checkRequired("token", token),
+                checkRequired("allowedResolutions", allowedResolutions).map { it.toImmutable() },
                 checkRequired("caseCounts", caseCounts),
                 checkRequired("created", created),
                 checkRequired("description", description),
@@ -328,6 +397,7 @@ private constructor(
         }
 
         token()
+        allowedResolutions()
         caseCounts().validate()
         created()
         description()
@@ -351,6 +421,7 @@ private constructor(
      */
     internal fun validity(): Int =
         (if (token.asKnown() == null) 0 else 1) +
+            (allowedResolutions.asKnown()?.size ?: 0) +
             (caseCounts.asKnown()?.validity() ?: 0) +
             (if (created.asKnown() == null) 0 else 1) +
             (if (description.asKnown() == null) 0 else 1) +
@@ -709,6 +780,7 @@ private constructor(
 
         return other is Queue &&
             token == other.token &&
+            allowedResolutions == other.allowedResolutions &&
             caseCounts == other.caseCounts &&
             created == other.created &&
             description == other.description &&
@@ -718,11 +790,20 @@ private constructor(
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(token, caseCounts, created, description, name, updated, additionalProperties)
+        Objects.hash(
+            token,
+            allowedResolutions,
+            caseCounts,
+            created,
+            description,
+            name,
+            updated,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Queue{token=$token, caseCounts=$caseCounts, created=$created, description=$description, name=$name, updated=$updated, additionalProperties=$additionalProperties}"
+        "Queue{token=$token, allowedResolutions=$allowedResolutions, caseCounts=$caseCounts, created=$created, description=$description, name=$name, updated=$updated, additionalProperties=$additionalProperties}"
 }
