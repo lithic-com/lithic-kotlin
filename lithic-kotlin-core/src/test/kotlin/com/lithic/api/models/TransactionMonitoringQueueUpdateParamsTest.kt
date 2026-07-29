@@ -11,6 +11,7 @@ internal class TransactionMonitoringQueueUpdateParamsTest {
     fun create() {
         TransactionMonitoringQueueUpdateParams.builder()
             .queueToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+            .addAllowedResolution("x")
             .description("description")
             .name("name")
             .build()
@@ -33,12 +34,14 @@ internal class TransactionMonitoringQueueUpdateParamsTest {
         val params =
             TransactionMonitoringQueueUpdateParams.builder()
                 .queueToken("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+                .addAllowedResolution("x")
                 .description("description")
                 .name("name")
                 .build()
 
         val body = params._body()
 
+        assertThat(body.allowedResolutions()).containsExactly("x")
         assertThat(body.description()).isEqualTo("description")
         assertThat(body.name()).isEqualTo("name")
     }

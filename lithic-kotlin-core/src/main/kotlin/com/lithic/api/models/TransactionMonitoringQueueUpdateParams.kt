@@ -11,8 +11,10 @@ import com.lithic.api.core.JsonField
 import com.lithic.api.core.JsonMissing
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
+import com.lithic.api.core.checkKnown
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
 import java.util.Objects
@@ -29,6 +31,17 @@ private constructor(
     fun queueToken(): String? = queueToken
 
     /**
+     * New list of resolutions that can be recorded on cases in this queue, or `null` to revert to
+     * the default list. Values are free-form labels and must be non-empty and unique. Changing the
+     * list only affects what is selectable going forward; the `resolution` already stored on a case
+     * is preserved as-is
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowedResolutions(): List<String>? = body.allowedResolutions()
+
+    /**
      * New description for the queue, or `null` to clear it
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -43,6 +56,14 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun name(): String? = body.name()
+
+    /**
+     * Returns the raw JSON value of [allowedResolutions].
+     *
+     * Unlike [allowedResolutions], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _allowedResolutions(): JsonField<List<String>> = body._allowedResolutions()
 
     /**
      * Returns the raw JSON value of [description].
@@ -104,10 +125,41 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [allowedResolutions]
          * - [description]
          * - [name]
          */
         fun body(body: UpdateQueueRequest) = apply { this.body = body.toBuilder() }
+
+        /**
+         * New list of resolutions that can be recorded on cases in this queue, or `null` to revert
+         * to the default list. Values are free-form labels and must be non-empty and unique.
+         * Changing the list only affects what is selectable going forward; the `resolution` already
+         * stored on a case is preserved as-is
+         */
+        fun allowedResolutions(allowedResolutions: List<String>?) = apply {
+            body.allowedResolutions(allowedResolutions)
+        }
+
+        /**
+         * Sets [Builder.allowedResolutions] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowedResolutions] with a well-typed `List<String>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun allowedResolutions(allowedResolutions: JsonField<List<String>>) = apply {
+            body.allowedResolutions(allowedResolutions)
+        }
+
+        /**
+         * Adds a single [String] to [allowedResolutions].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAllowedResolution(allowedResolution: String) = apply {
+            body.addAllowedResolution(allowedResolution)
+        }
 
         /** New description for the queue, or `null` to clear it */
         fun description(description: String?) = apply { body.description(description) }
@@ -281,6 +333,7 @@ private constructor(
     class UpdateQueueRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
+        private val allowedResolutions: JsonField<List<String>>,
         private val description: JsonField<String>,
         private val name: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -288,11 +341,26 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("allowed_resolutions")
+            @ExcludeMissing
+            allowedResolutions: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(description, name, mutableMapOf())
+        ) : this(allowedResolutions, description, name, mutableMapOf())
+
+        /**
+         * New list of resolutions that can be recorded on cases in this queue, or `null` to revert
+         * to the default list. Values are free-form labels and must be non-empty and unique.
+         * Changing the list only affects what is selectable going forward; the `resolution` already
+         * stored on a case is preserved as-is
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun allowedResolutions(): List<String>? =
+            allowedResolutions.getNullable("allowed_resolutions")
 
         /**
          * New description for the queue, or `null` to clear it
@@ -309,6 +377,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun name(): String? = name.getNullable("name")
+
+        /**
+         * Returns the raw JSON value of [allowedResolutions].
+         *
+         * Unlike [allowedResolutions], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("allowed_resolutions")
+        @ExcludeMissing
+        fun _allowedResolutions(): JsonField<List<String>> = allowedResolutions
 
         /**
          * Returns the raw JSON value of [description].
@@ -347,14 +425,49 @@ private constructor(
         /** A builder for [UpdateQueueRequest]. */
         class Builder internal constructor() {
 
+            private var allowedResolutions: JsonField<MutableList<String>>? = null
             private var description: JsonField<String> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(updateQueueRequest: UpdateQueueRequest) = apply {
+                allowedResolutions =
+                    updateQueueRequest.allowedResolutions.map { it.toMutableList() }
                 description = updateQueueRequest.description
                 name = updateQueueRequest.name
                 additionalProperties = updateQueueRequest.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * New list of resolutions that can be recorded on cases in this queue, or `null` to
+             * revert to the default list. Values are free-form labels and must be non-empty and
+             * unique. Changing the list only affects what is selectable going forward; the
+             * `resolution` already stored on a case is preserved as-is
+             */
+            fun allowedResolutions(allowedResolutions: List<String>?) =
+                allowedResolutions(JsonField.ofNullable(allowedResolutions))
+
+            /**
+             * Sets [Builder.allowedResolutions] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allowedResolutions] with a well-typed `List<String>`
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun allowedResolutions(allowedResolutions: JsonField<List<String>>) = apply {
+                this.allowedResolutions = allowedResolutions.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [allowedResolutions].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addAllowedResolution(allowedResolution: String) = apply {
+                allowedResolutions =
+                    (allowedResolutions ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("allowedResolutions", it).add(allowedResolution)
+                    }
             }
 
             /** New description for the queue, or `null` to clear it */
@@ -408,7 +521,12 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): UpdateQueueRequest =
-                UpdateQueueRequest(description, name, additionalProperties.toMutableMap())
+                UpdateQueueRequest(
+                    (allowedResolutions ?: JsonMissing.of()).map { it.toImmutable() },
+                    description,
+                    name,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -427,6 +545,7 @@ private constructor(
                 return@apply
             }
 
+            allowedResolutions()
             description()
             name()
             validated = true
@@ -447,7 +566,9 @@ private constructor(
          * Used for best match union deserialization.
          */
         internal fun validity(): Int =
-            (if (description.asKnown() == null) 0 else 1) + (if (name.asKnown() == null) 0 else 1)
+            (allowedResolutions.asKnown()?.size ?: 0) +
+                (if (description.asKnown() == null) 0 else 1) +
+                (if (name.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -455,17 +576,20 @@ private constructor(
             }
 
             return other is UpdateQueueRequest &&
+                allowedResolutions == other.allowedResolutions &&
                 description == other.description &&
                 name == other.name &&
                 additionalProperties == other.additionalProperties
         }
 
-        private val hashCode: Int by lazy { Objects.hash(description, name, additionalProperties) }
+        private val hashCode: Int by lazy {
+            Objects.hash(allowedResolutions, description, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "UpdateQueueRequest{description=$description, name=$name, additionalProperties=$additionalProperties}"
+            "UpdateQueueRequest{allowedResolutions=$allowedResolutions, description=$description, name=$name, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
