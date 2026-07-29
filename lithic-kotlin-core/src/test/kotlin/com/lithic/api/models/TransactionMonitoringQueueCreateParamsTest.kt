@@ -11,6 +11,7 @@ internal class TransactionMonitoringQueueCreateParamsTest {
     fun create() {
         TransactionMonitoringQueueCreateParams.builder()
             .name("name")
+            .addAllowedResolution("x")
             .description("description")
             .build()
     }
@@ -20,12 +21,14 @@ internal class TransactionMonitoringQueueCreateParamsTest {
         val params =
             TransactionMonitoringQueueCreateParams.builder()
                 .name("name")
+                .addAllowedResolution("x")
                 .description("description")
                 .build()
 
         val body = params._body()
 
         assertThat(body.name()).isEqualTo("name")
+        assertThat(body.allowedResolutions()).containsExactly("x")
         assertThat(body.description()).isEqualTo("description")
     }
 
