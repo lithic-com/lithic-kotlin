@@ -1685,6 +1685,7 @@ private constructor(
          *   Debit Entry), WEB (Internet-Initiated/Mobile Entry), TEL (Telephone-Initiated Entry),
          *   and others.
          * * `MEMO`: Optional memo or description field included with the ACH transaction.
+         * * `RECIPIENT_NAME`: The name of the recipient of the ACH transaction.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1789,6 +1790,7 @@ private constructor(
              *   or Debit Entry), WEB (Internet-Initiated/Mobile Entry), TEL (Telephone-Initiated
              *   Entry), and others.
              * * `MEMO`: Optional memo or description field included with the ACH transaction.
+             * * `RECIPIENT_NAME`: The name of the recipient of the ACH transaction.
              */
             fun attribute(attribute: Attribute) = attribute(JsonField.of(attribute))
 
@@ -1941,6 +1943,7 @@ private constructor(
          *   Debit Entry), WEB (Internet-Initiated/Mobile Entry), TEL (Telephone-Initiated Entry),
          *   and others.
          * * `MEMO`: Optional memo or description field included with the ACH transaction.
+         * * `RECIPIENT_NAME`: The name of the recipient of the ACH transaction.
          */
         class Attribute @JsonCreator private constructor(private val value: JsonField<String>) :
             Enum {
@@ -1969,6 +1972,8 @@ private constructor(
 
                 val MEMO = of("MEMO")
 
+                val RECIPIENT_NAME = of("RECIPIENT_NAME")
+
                 fun of(value: String) = Attribute(JsonField.of(value))
             }
 
@@ -1980,6 +1985,7 @@ private constructor(
                 TRANSACTION_AMOUNT,
                 SEC_CODE,
                 MEMO,
+                RECIPIENT_NAME,
             }
 
             /**
@@ -1998,6 +2004,7 @@ private constructor(
                 TRANSACTION_AMOUNT,
                 SEC_CODE,
                 MEMO,
+                RECIPIENT_NAME,
                 /**
                  * An enum member indicating that [Attribute] was instantiated with an unknown
                  * value.
@@ -2020,6 +2027,7 @@ private constructor(
                     TRANSACTION_AMOUNT -> Value.TRANSACTION_AMOUNT
                     SEC_CODE -> Value.SEC_CODE
                     MEMO -> Value.MEMO
+                    RECIPIENT_NAME -> Value.RECIPIENT_NAME
                     else -> Value._UNKNOWN
                 }
 
@@ -2040,6 +2048,7 @@ private constructor(
                     TRANSACTION_AMOUNT -> Known.TRANSACTION_AMOUNT
                     SEC_CODE -> Known.SEC_CODE
                     MEMO -> Known.MEMO
+                    RECIPIENT_NAME -> Known.RECIPIENT_NAME
                     else -> throw LithicInvalidDataException("Unknown Attribute: $value")
                 }
 
