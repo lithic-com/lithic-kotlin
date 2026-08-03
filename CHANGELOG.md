@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.131.0 (2026-08-03)
+
+Full Changelog: [v0.130.0...v0.131.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.130.0...v0.131.0)
+
+### Features
+
+* **api:** add disposition_reasons to queue, change resolution type to string in case ([b63aa2c](https://github.com/lithic-com/lithic-kotlin/commit/b63aa2c119b84f1c9fc19c9dbc0ff62dcdcbb5b9))
+* **api:** add embed webhook events ([3907970](https://github.com/lithic-com/lithic-kotlin/commit/3907970bee35040cf03985bf76246ca84aad49e5))
+* **api:** add PAYMENT category value to book transfer ([29a80d3](https://github.com/lithic-com/lithic-kotlin/commit/29a80d321d3122f5336934059c1650e0f9c2ec1d))
+* **api:** add PROGRAM_TRANSFER category, LITHIC/BANK_PROGRAM_TRANSFER types ([108d3a7](https://github.com/lithic-com/lithic-kotlin/commit/108d3a7db72431d1837cfd92da80fa4cc6fda5b7))
+* **api:** add RECIPIENT_NAME attribute to ConditionalAchActionParameters ([9823064](https://github.com/lithic-com/lithic-kotlin/commit/98230648fca27f0d1b1783dfa55d803c97296e7b))
+* **api:** add recipientName field to Payment ACH method attributes ([552f606](https://github.com/lithic-com/lithic-kotlin/commit/552f60698bc01ff661a381ee7a45278075145534))
+* **api:** add REVERSED status to payments list method ([e96458d](https://github.com/lithic-com/lithic-kotlin/commit/e96458de5c1d22737c3b9c65f68956d988e2dbaf))
+* **api:** add stablecoin enum values to account activity/payment/financial event types ([dea3734](https://github.com/lithic-com/lithic-kotlin/commit/dea373492fb65edcdc6453c839e720d9f6b2ca05))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([8befbba](https://github.com/lithic-com/lithic-kotlin/commit/8befbbaf926c08273f1b2587d53e70f04e956d83))
+
+
+### Bug Fixes
+
+* **client:** leniently parse space-separated date-times ([7b77346](https://github.com/lithic-com/lithic-kotlin/commit/7b77346c242d552e4adfa20bc2484c5852b90983))
+* **types:** make comment/createdAt/fraudType/updatedAt optional in fraud report ([eb0a53f](https://github.com/lithic-com/lithic-kotlin/commit/eb0a53ff426afe420e5f7525fcda032d10a71f6f))
+
+
+### Documentation
+
+* **api:** clarify category parameter description in external payment list ([cb2793a](https://github.com/lithic-com/lithic-kotlin/commit/cb2793a387fa727cca23aaab7645be1b3527fd47))
+* **api:** clarify dispute event type descriptions ([31b30c6](https://github.com/lithic-com/lithic-kotlin/commit/31b30c632e41d603a5b7727fb1517f61dc86e49e))
+* **api:** clarify lastTransactionEventToken behavior in financial account balance list ([da42bd3](https://github.com/lithic-com/lithic-kotlin/commit/da42bd3e8880a229ab626be62f0d3c0b9f350433))
+* **api:** clarify transaction simulateClearing supports multiple calls ([8d1a678](https://github.com/lithic-com/lithic-kotlin/commit/8d1a678d13b2c5687bf83103c4a99e090045cee2))
+* **types:** update max duration to 90 days in VelocityLimitPeriod ([9bf03e4](https://github.com/lithic-com/lithic-kotlin/commit/9bf03e456e86c4dc7d5dad940bd0d6810174141a))
+
 ## 0.130.0 (2026-06-29)
 
 Full Changelog: [v0.129.0...v0.130.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.129.0...v0.130.0)
