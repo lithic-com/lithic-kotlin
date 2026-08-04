@@ -213,9 +213,7 @@ private constructor(
                 transactionMonitoringCaseUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun caseToken(caseToken: String?) = apply {
-            this.caseToken = caseToken
-        }
+        fun caseToken(caseToken: String?) = apply { this.caseToken = caseToken }
 
         /**
          * Sets the entire request body.
@@ -229,18 +227,14 @@ private constructor(
          * - [resolutionNotes]
          * - etc.
          */
-        fun body(body: UpdateCaseRequest) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: UpdateCaseRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * Optional client-provided identifier for the actor performing this action, recorded on the
          * resulting activity entry. This value is supplied by the client (for example, your own
          * internal user ID) and is not authenticated by Lithic
          */
-        fun actorToken(actorToken: String) = apply {
-            body.actorToken(actorToken)
-        }
+        fun actorToken(actorToken: String) = apply { body.actorToken(actorToken) }
 
         /**
          * Sets [Builder.actorToken] to an arbitrary JSON value.
@@ -249,14 +243,10 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun actorToken(actorToken: JsonField<String>) = apply {
-            body.actorToken(actorToken)
-        }
+        fun actorToken(actorToken: JsonField<String>) = apply { body.actorToken(actorToken) }
 
         /** New assignee for the case, or `null` to unassign */
-        fun assignee(assignee: String?) = apply {
-            body.assignee(assignee)
-        }
+        fun assignee(assignee: String?) = apply { body.assignee(assignee) }
 
         /**
          * Sets [Builder.assignee] to an arbitrary JSON value.
@@ -264,14 +254,10 @@ private constructor(
          * You should usually call [Builder.assignee] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun assignee(assignee: JsonField<String>) = apply {
-            body.assignee(assignee)
-        }
+        fun assignee(assignee: JsonField<String>) = apply { body.assignee(assignee) }
 
         /** Priority level of a case, controlling queue ordering and SLA urgency */
-        fun priority(priority: CasePriority) = apply {
-            body.priority(priority)
-        }
+        fun priority(priority: CasePriority) = apply { body.priority(priority) }
 
         /**
          * Sets [Builder.priority] to an arbitrary JSON value.
@@ -280,17 +266,13 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun priority(priority: JsonField<CasePriority>) = apply {
-            body.priority(priority)
-        }
+        fun priority(priority: JsonField<CasePriority>) = apply { body.priority(priority) }
 
         /**
          * Resolution to record on the case. Must be one of the `allowed_resolutions` configured on
          * the case's queue, otherwise the request is rejected with a `400`
          */
-        fun resolution(resolution: String) = apply {
-            body.resolution(resolution)
-        }
+        fun resolution(resolution: String) = apply { body.resolution(resolution) }
 
         /**
          * Sets [Builder.resolution] to an arbitrary JSON value.
@@ -299,9 +281,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun resolution(resolution: JsonField<String>) = apply {
-            body.resolution(resolution)
-        }
+        fun resolution(resolution: JsonField<String>) = apply { body.resolution(resolution) }
 
         /** Notes describing the resolution */
         fun resolutionNotes(resolutionNotes: String) = apply {
@@ -320,9 +300,7 @@ private constructor(
         }
 
         /** New SLA deadline for the case, or `null` to clear it */
-        fun slaDeadline(slaDeadline: OffsetDateTime?) = apply {
-            body.slaDeadline(slaDeadline)
-        }
+        fun slaDeadline(slaDeadline: OffsetDateTime?) = apply { body.slaDeadline(slaDeadline) }
 
         /**
          * Sets [Builder.slaDeadline] to an arbitrary JSON value.
@@ -344,9 +322,7 @@ private constructor(
          * - `RESOLVED` - A determination has been made and a resolution recorded
          * - `CLOSED` - The case is finalized
          */
-        fun status(status: CaseStatus) = apply {
-            body.status(status)
-        }
+        fun status(status: CaseStatus) = apply { body.status(status) }
 
         /**
          * Sets [Builder.status] to an arbitrary JSON value.
@@ -355,14 +331,10 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun status(status: JsonField<CaseStatus>) = apply {
-            body.status(status)
-        }
+        fun status(status: JsonField<CaseStatus>) = apply { body.status(status) }
 
         /** Arbitrary key-value metadata to set on the case */
-        fun tags(tags: Tags) = apply {
-            body.tags(tags)
-        }
+        fun tags(tags: Tags) = apply { body.tags(tags) }
 
         /**
          * Sets [Builder.tags] to an arbitrary JSON value.
@@ -370,14 +342,10 @@ private constructor(
          * You should usually call [Builder.tags] with a well-typed [Tags] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun tags(tags: JsonField<Tags>) = apply {
-            body.tags(tags)
-        }
+        fun tags(tags: JsonField<Tags>) = apply { body.tags(tags) }
 
         /** New title for the case, or `null` to clear it */
-        fun title(title: String?) = apply {
-            body.title(title)
-        }
+        fun title(title: String?) = apply { body.title(title) }
 
         /**
          * Sets [Builder.title] to an arbitrary JSON value.
@@ -385,19 +353,14 @@ private constructor(
          * You should usually call [Builder.title] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun title(title: JsonField<String>) = apply {
-            body.title(title)
-        }
+        fun title(title: JsonField<String>) = apply { body.title(title) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -405,9 +368,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -455,9 +416,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -507,9 +466,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -812,9 +769,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun actorToken(actorToken: JsonField<String>) = apply {
-                this.actorToken = actorToken
-            }
+            fun actorToken(actorToken: JsonField<String>) = apply { this.actorToken = actorToken }
 
             /** New assignee for the case, or `null` to unassign */
             fun assignee(assignee: String?) = assignee(JsonField.ofNullable(assignee))
@@ -826,9 +781,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun assignee(assignee: JsonField<String>) = apply {
-                this.assignee = assignee
-            }
+            fun assignee(assignee: JsonField<String>) = apply { this.assignee = assignee }
 
             /** Priority level of a case, controlling queue ordering and SLA urgency */
             fun priority(priority: CasePriority) = priority(JsonField.of(priority))
@@ -840,9 +793,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun priority(priority: JsonField<CasePriority>) = apply {
-                this.priority = priority
-            }
+            fun priority(priority: JsonField<CasePriority>) = apply { this.priority = priority }
 
             /**
              * Resolution to record on the case. Must be one of the `allowed_resolutions` configured
@@ -857,9 +808,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun resolution(resolution: JsonField<String>) = apply {
-                this.resolution = resolution
-            }
+            fun resolution(resolution: JsonField<String>) = apply { this.resolution = resolution }
 
             /** Notes describing the resolution */
             fun resolutionNotes(resolutionNotes: String) =
@@ -909,9 +858,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun status(status: JsonField<CaseStatus>) = apply {
-                this.status = status
-            }
+            fun status(status: JsonField<CaseStatus>) = apply { this.status = status }
 
             /** Arbitrary key-value metadata to set on the case */
             fun tags(tags: Tags) = tags(JsonField.of(tags))
@@ -923,9 +870,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun tags(tags: JsonField<Tags>) = apply {
-                this.tags = tags
-            }
+            fun tags(tags: JsonField<Tags>) = apply { this.tags = tags }
 
             /** New title for the case, or `null` to clear it */
             fun title(title: String?) = title(JsonField.ofNullable(title))
@@ -937,9 +882,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun title(title: JsonField<String>) = apply {
-                this.title = title
-            }
+            fun title(title: JsonField<String>) = apply { this.title = title }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -954,9 +897,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1116,9 +1057,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1165,9 +1104,8 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int = additionalProperties.count { (_, value) ->
-            !value.isNull() && !value.isMissing()
-        }
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

@@ -31,10 +31,7 @@ interface CardProgramService {
         params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgram =
-        retrieve(
-            params.toBuilder().cardProgramToken(cardProgramToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -44,11 +41,7 @@ interface CardProgramService {
 
     /** @see retrieve */
     fun retrieve(cardProgramToken: String, requestOptions: RequestOptions): CardProgram =
-        retrieve(
-            cardProgramToken,
-            CardProgramRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
 
     /** List card programs. */
     fun list(
@@ -58,10 +51,7 @@ interface CardProgramService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): CardProgramListPage =
-        list(
-            CardProgramListParams.none(),
-            requestOptions,
-        )
+        list(CardProgramListParams.none(), requestOptions)
 
     /**
      * A view of [CardProgramService] that provides access to raw HTTP responses for each method.
@@ -87,10 +77,7 @@ interface CardProgramService {
             params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgram> =
-            retrieve(
-                params.toBuilder().cardProgramToken(cardProgramToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -105,11 +92,7 @@ interface CardProgramService {
             cardProgramToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardProgram> =
-            retrieve(
-                cardProgramToken,
-                CardProgramRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/card_programs`, but is otherwise the same as
@@ -124,9 +107,6 @@ interface CardProgramService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CardProgramListPage> =
-            list(
-                CardProgramListParams.none(),
-                requestOptions,
-            )
+            list(CardProgramListParams.none(), requestOptions)
     }
 }

@@ -37,12 +37,7 @@ private constructor(
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
-    ) : this(
-        authorization,
-        challenge,
-        eventType,
-        mutableMapOf(),
-    )
+    ) : this(authorization, challenge, eventType, mutableMapOf())
 
     /**
      * The authorization that triggered the challenge
@@ -178,9 +173,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply {
-            this.eventType = eventType
-        }
+        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -195,9 +188,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -219,18 +210,9 @@ private constructor(
          */
         fun build(): CardAuthorizationChallengeWebhookEvent =
             CardAuthorizationChallengeWebhookEvent(
-                checkRequired(
-                    "authorization",
-                    authorization,
-                ),
-                checkRequired(
-                    "challenge",
-                    challenge,
-                ),
-                checkRequired(
-                    "eventType",
-                    eventType,
-                ),
+                checkRequired("authorization", authorization),
+                checkRequired("challenge", challenge),
+                checkRequired("eventType", eventType),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -295,12 +277,7 @@ private constructor(
             @JsonProperty("start_time")
             @ExcludeMissing
             startTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-        ) : this(
-            eventToken,
-            expiryTime,
-            startTime,
-            mutableMapOf(),
-        )
+        ) : this(eventToken, expiryTime, startTime, mutableMapOf())
 
         /**
          * Globally unique identifier for the event that triggered the challenge. Use this token
@@ -409,9 +386,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** ISO-8601 time at which the challenge expires */
             fun expiryTime(expiryTime: OffsetDateTime) = expiryTime(JsonField.of(expiryTime))
@@ -454,9 +429,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -478,18 +451,9 @@ private constructor(
              */
             fun build(): AuthorizationChallenge =
                 AuthorizationChallenge(
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "expiryTime",
-                        expiryTime,
-                    ),
-                    checkRequired(
-                        "startTime",
-                        startTime,
-                    ),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("expiryTime", expiryTime),
+                    checkRequired("startTime", startTime),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -586,11 +550,9 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

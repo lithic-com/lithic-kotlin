@@ -47,11 +47,7 @@ interface NetworkProgramServiceAsync {
         networkProgramToken: String,
         requestOptions: RequestOptions,
     ): NetworkProgram =
-        retrieve(
-            networkProgramToken,
-            NetworkProgramRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(networkProgramToken, NetworkProgramRetrieveParams.none(), requestOptions)
 
     /** List network programs. */
     suspend fun list(
@@ -61,10 +57,7 @@ interface NetworkProgramServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): NetworkProgramListPageAsync =
-        list(
-            NetworkProgramListParams.none(),
-            requestOptions,
-        )
+        list(NetworkProgramListParams.none(), requestOptions)
 
     /**
      * A view of [NetworkProgramServiceAsync] that provides access to raw HTTP responses for each
@@ -109,11 +102,7 @@ interface NetworkProgramServiceAsync {
             networkProgramToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NetworkProgram> =
-            retrieve(
-                networkProgramToken,
-                NetworkProgramRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(networkProgramToken, NetworkProgramRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/network_programs`, but is otherwise the same as
@@ -130,9 +119,6 @@ interface NetworkProgramServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<NetworkProgramListPageAsync> =
-            list(
-                NetworkProgramListParams.none(),
-                requestOptions,
-            )
+            list(NetworkProgramListParams.none(), requestOptions)
     }
 }

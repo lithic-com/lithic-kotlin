@@ -72,13 +72,9 @@ private constructor(
                 transactionMonitoringCaseCommentDeleteParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun caseToken(caseToken: String) = apply {
-            this.caseToken = caseToken
-        }
+        fun caseToken(caseToken: String) = apply { this.caseToken = caseToken }
 
-        fun commentToken(commentToken: String?) = apply {
-            this.commentToken = commentToken
-        }
+        fun commentToken(commentToken: String?) = apply { this.commentToken = commentToken }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -122,9 +118,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -174,9 +168,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -218,10 +210,7 @@ private constructor(
          */
         fun build(): TransactionMonitoringCaseCommentDeleteParams =
             TransactionMonitoringCaseCommentDeleteParams(
-                checkRequired(
-                    "caseToken",
-                    caseToken,
-                ),
+                checkRequired("caseToken", caseToken),
                 commentToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

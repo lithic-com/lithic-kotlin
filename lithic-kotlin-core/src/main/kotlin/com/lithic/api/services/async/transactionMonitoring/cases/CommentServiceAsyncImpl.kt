@@ -92,21 +92,12 @@ class CommentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        createHandler.handle(it)
-                    }
+                    .use { createHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -139,21 +130,12 @@ class CommentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     )
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        updateHandler.handle(it)
-                    }
+                    .use { updateHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -185,20 +167,11 @@ class CommentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
-                response.use {
-                    deleteHandler.handle(it)
-                }
+                response.use { deleteHandler.handle(it) }
             }
         }
     }

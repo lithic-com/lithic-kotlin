@@ -137,21 +137,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "payments")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        createHandler.handle(it)
-                    }
+                    .use { createHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -176,21 +167,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments", params._pathParam(0))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveHandler.handle(it)
-                    }
+                    .use { retrieveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -212,21 +194,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "payments")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        listHandler.handle(it)
-                    }
+                    .use { listHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -259,21 +232,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "payments", params._pathParam(0), "retry")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retryHandler.handle(it)
-                    }
+                    .use { retryHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -298,21 +262,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "payments", params._pathParam(0), "return")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        returnHandler.handle(it)
-                    }
+                    .use { returnHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -338,21 +293,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "simulate", "payments", params._pathParam(0), "action")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateActionHandler.handle(it)
-                    }
+                    .use { simulateActionHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -375,21 +321,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "simulate", "payments", "receipt")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateReceiptHandler.handle(it)
-                    }
+                    .use { simulateReceiptHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -412,21 +349,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "simulate", "payments", "release")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateReleaseHandler.handle(it)
-                    }
+                    .use { simulateReleaseHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -449,21 +377,12 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                     .addPathSegments("v1", "simulate", "payments", "return")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateReturnHandler.handle(it)
-                    }
+                    .use { simulateReturnHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

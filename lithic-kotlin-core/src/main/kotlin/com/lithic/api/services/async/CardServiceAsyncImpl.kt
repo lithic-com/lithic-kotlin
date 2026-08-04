@@ -187,21 +187,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        createHandler.handle(it)
-                    }
+                    .use { createHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -225,21 +216,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveHandler.handle(it)
-                    }
+                    .use { retrieveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -264,21 +246,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0))
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        updateHandler.handle(it)
-                    }
+                    .use { updateHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -300,21 +273,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        listHandler.handle(it)
-                    }
+                    .use { listHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -347,21 +311,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0), "convert_physical")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        convertPhysicalHandler.handle(it)
-                    }
+                    .use { convertPhysicalHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -384,20 +339,11 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "embed", "card")
                     .putHeader("Accept", "text/html")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
-                response.use {
-                    embedHandler.handle(it)
-                }
+                response.use { embedHandler.handle(it) }
             }
         }
 
@@ -418,21 +364,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0), "provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        provisionHandler.handle(it)
-                    }
+                    .use { provisionHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -457,21 +394,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0), "reissue")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        reissueHandler.handle(it)
-                    }
+                    .use { reissueHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -496,21 +424,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0), "renew")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        renewHandler.handle(it)
-                    }
+                    .use { renewHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -535,21 +454,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "signals")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveSignalsHandler.handle(it)
-                    }
+                    .use { retrieveSignalsHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -574,21 +484,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "cards", params._pathParam(0), "spend_limits")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveSpendLimitsHandler.handle(it)
-                    }
+                    .use { retrieveSpendLimitsHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -610,21 +511,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", "search_by_pan")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        searchByPanHandler.handle(it)
-                    }
+                    .use { searchByPanHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -650,21 +542,12 @@ class CardServiceAsyncImpl internal constructor(private val clientOptions: Clien
                     .addPathSegments("v1", "cards", params._pathParam(0), "web_provision")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        webProvisionHandler.handle(it)
-                    }
+                    .use { webProvisionHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

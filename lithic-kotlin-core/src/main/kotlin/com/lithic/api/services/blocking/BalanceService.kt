@@ -31,10 +31,7 @@ interface BalanceService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): BalanceListPage =
-        list(
-            BalanceListParams.none(),
-            requestOptions,
-        )
+        list(BalanceListParams.none(), requestOptions)
 
     /** A view of [BalanceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -59,9 +56,6 @@ interface BalanceService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPage> =
-            list(
-                BalanceListParams.none(),
-                requestOptions,
-            )
+            list(BalanceListParams.none(), requestOptions)
     }
 }

@@ -193,21 +193,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "transactions", params._pathParam(0))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveHandler.handle(it)
-                    }
+                    .use { retrieveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -229,21 +220,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "transactions")
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        listHandler.handle(it)
-                    }
+                    .use { listHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -280,20 +262,11 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     )
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
-                response.use {
-                    expireAuthorizationHandler.handle(it)
-                }
+                response.use { expireAuthorizationHandler.handle(it) }
             }
         }
 
@@ -313,20 +286,11 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "transactions", params._pathParam(0), "route")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
-                response.use {
-                    routeHandler.handle(it)
-                }
+                response.use { routeHandler.handle(it) }
             }
         }
 
@@ -345,21 +309,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "authorize")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateAuthorizationHandler.handle(it)
-                    }
+                    .use { simulateAuthorizationHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -383,21 +338,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "authorization_advice")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateAuthorizationAdviceHandler.handle(it)
-                    }
+                    .use { simulateAuthorizationAdviceHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -420,21 +366,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "clearing")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateClearingHandler.handle(it)
-                    }
+                    .use { simulateClearingHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -459,21 +396,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "credit_authorization_advice")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateCreditAuthorizationHandler.handle(it)
-                    }
+                    .use { simulateCreditAuthorizationHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -499,21 +427,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "credit_authorization_advice")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateCreditAuthorizationAdviceHandler.handle(it)
-                    }
+                    .use { simulateCreditAuthorizationAdviceHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -536,21 +455,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "return")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateReturnHandler.handle(it)
-                    }
+                    .use { simulateReturnHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -574,21 +484,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "return_reversal")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateReturnReversalHandler.handle(it)
-                    }
+                    .use { simulateReturnReversalHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -611,21 +512,12 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .addPathSegments("v1", "simulate", "void")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        simulateVoidHandler.handle(it)
-                    }
+                    .use { simulateVoidHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

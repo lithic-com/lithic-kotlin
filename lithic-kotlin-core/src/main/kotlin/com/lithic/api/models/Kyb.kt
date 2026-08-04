@@ -336,9 +336,8 @@ private constructor(
          */
         fun beneficialOwnerIndividuals(beneficialOwnerIndividuals: JsonField<List<KybIndividual>>) =
             apply {
-                this.beneficialOwnerIndividuals = beneficialOwnerIndividuals.map {
-                    it.toMutableList()
-                }
+                this.beneficialOwnerIndividuals =
+                    beneficialOwnerIndividuals.map { it.toMutableList() }
             }
 
         /**
@@ -437,9 +436,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun workflow(workflow: JsonField<Workflow>) = apply {
-            this.workflow = workflow
-        }
+        fun workflow(workflow: JsonField<Workflow>) = apply { this.workflow = workflow }
 
         /** A user provided id that can be used to link an account holder with an external system */
         fun externalId(externalId: String) = externalId(JsonField.of(externalId))
@@ -451,9 +448,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun externalId(externalId: JsonField<String>) = apply {
-            this.externalId = externalId
-        }
+        fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
         /**
          * An RFC 3339 timestamp indicating when precomputed KYB was completed on the business with
@@ -485,9 +480,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun naicsCode(naicsCode: JsonField<String>) = apply {
-            this.naicsCode = naicsCode
-        }
+        fun naicsCode(naicsCode: JsonField<String>) = apply { this.naicsCode = naicsCode }
 
         /** Company website URL. */
         fun websiteUrl(websiteUrl: String) = websiteUrl(JsonField.of(websiteUrl))
@@ -499,9 +492,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun websiteUrl(websiteUrl: JsonField<String>) = apply {
-            this.websiteUrl = websiteUrl
-        }
+        fun websiteUrl(websiteUrl: JsonField<String>) = apply { this.websiteUrl = websiteUrl }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -516,9 +507,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -543,31 +532,14 @@ private constructor(
          */
         fun build(): Kyb =
             Kyb(
-                checkRequired(
-                        "beneficialOwnerIndividuals",
-                        beneficialOwnerIndividuals,
-                    )
-                    .map { it.toImmutable() },
-                checkRequired(
-                    "businessEntity",
-                    businessEntity,
-                ),
-                checkRequired(
-                    "controlPerson",
-                    controlPerson,
-                ),
-                checkRequired(
-                    "natureOfBusiness",
-                    natureOfBusiness,
-                ),
-                checkRequired(
-                    "tosTimestamp",
-                    tosTimestamp,
-                ),
-                checkRequired(
-                    "workflow",
-                    workflow,
-                ),
+                checkRequired("beneficialOwnerIndividuals", beneficialOwnerIndividuals).map {
+                    it.toImmutable()
+                },
+                checkRequired("businessEntity", businessEntity),
+                checkRequired("controlPerson", controlPerson),
+                checkRequired("natureOfBusiness", natureOfBusiness),
+                checkRequired("tosTimestamp", tosTimestamp),
+                checkRequired("workflow", workflow),
                 externalId,
                 kybPassedTimestamp,
                 naicsCode,
@@ -852,9 +824,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address(address: JsonField<Address>) = apply {
-                this.address = address
-            }
+            fun address(address: JsonField<Address>) = apply { this.address = address }
 
             /** Individual's date of birth, as an RFC 3339 date. */
             fun dob(dob: String) = dob(JsonField.of(dob))
@@ -866,9 +836,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun dob(dob: JsonField<String>) = apply {
-                this.dob = dob
-            }
+            fun dob(dob: JsonField<String>) = apply { this.dob = dob }
 
             /**
              * Individual's email address. If utilizing Lithic for chargeback processing, this
@@ -883,9 +851,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun email(email: JsonField<String>) = apply {
-                this.email = email
-            }
+            fun email(email: JsonField<String>) = apply { this.email = email }
 
             /** Individual's first name, as it appears on government-issued identity documents. */
             fun firstName(firstName: String) = firstName(JsonField.of(firstName))
@@ -897,9 +863,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun firstName(firstName: JsonField<String>) = apply {
-                this.firstName = firstName
-            }
+            fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
             /**
              * Government-issued identification number (required for identity verification and
@@ -930,9 +894,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun lastName(lastName: JsonField<String>) = apply {
-                this.lastName = lastName
-            }
+            fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
             /** Individual's phone number, entered in E.164 format. */
             fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
@@ -961,9 +923,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -988,30 +948,12 @@ private constructor(
              */
             fun build(): KybIndividual =
                 KybIndividual(
-                    checkRequired(
-                        "address",
-                        address,
-                    ),
-                    checkRequired(
-                        "dob",
-                        dob,
-                    ),
-                    checkRequired(
-                        "email",
-                        email,
-                    ),
-                    checkRequired(
-                        "firstName",
-                        firstName,
-                    ),
-                    checkRequired(
-                        "governmentId",
-                        governmentId,
-                    ),
-                    checkRequired(
-                        "lastName",
-                        lastName,
-                    ),
+                    checkRequired("address", address),
+                    checkRequired("dob", dob),
+                    checkRequired("email", email),
+                    checkRequired("firstName", firstName),
+                    checkRequired("governmentId", governmentId),
+                    checkRequired("lastName", lastName),
                     phoneNumber,
                     additionalProperties.toMutableMap(),
                 )
@@ -1312,9 +1254,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address(address: JsonField<Address>) = apply {
-                this.address = address
-            }
+            fun address(address: JsonField<Address>) = apply { this.address = address }
 
             /**
              * Government-issued identification number. US Federal Employer Identification Numbers
@@ -1419,9 +1359,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1444,23 +1382,10 @@ private constructor(
              */
             fun build(): BusinessEntity =
                 BusinessEntity(
-                    checkRequired(
-                        "address",
-                        address,
-                    ),
-                    checkRequired(
-                        "governmentId",
-                        governmentId,
-                    ),
-                    checkRequired(
-                        "legalBusinessName",
-                        legalBusinessName,
-                    ),
-                    checkRequired(
-                            "phoneNumbers",
-                            phoneNumbers,
-                        )
-                        .map { it.toImmutable() },
+                    checkRequired("address", address),
+                    checkRequired("governmentId", governmentId),
+                    checkRequired("legalBusinessName", legalBusinessName),
+                    checkRequired("phoneNumbers", phoneNumbers).map { it.toImmutable() },
                     dbaBusinessName,
                     parentCompany,
                     additionalProperties.toMutableMap(),
@@ -1579,11 +1504,9 @@ private constructor(
          * An enum containing [Workflow]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Workflow] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

@@ -133,9 +133,7 @@ private constructor(
             additionalQueryParams = cardWebProvisionParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String?) = apply {
-            this.cardToken = cardToken
-        }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         /**
          * Sets the entire request body.
@@ -147,17 +145,13 @@ private constructor(
          * - [digitalWallet]
          * - [serverSessionId]
          */
-        fun body(body: Body) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
          * Only applicable if `digital_wallet` is GOOGLE_PAY. Google Pay Web Push Provisioning
          * device identifier required for the tokenization flow
          */
-        fun clientDeviceId(clientDeviceId: String) = apply {
-            body.clientDeviceId(clientDeviceId)
-        }
+        fun clientDeviceId(clientDeviceId: String) = apply { body.clientDeviceId(clientDeviceId) }
 
         /**
          * Sets [Builder.clientDeviceId] to an arbitrary JSON value.
@@ -229,10 +223,7 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -240,9 +231,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -290,9 +279,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -342,9 +329,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -601,9 +586,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -729,11 +712,9 @@ private constructor(
          * An enum containing [DigitalWallet]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [DigitalWallet] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

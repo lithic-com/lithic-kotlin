@@ -35,10 +35,7 @@ interface SettlementServiceAsync {
         params: ReportSettlementListDetailsParams = ReportSettlementListDetailsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementListDetailsPageAsync =
-        listDetails(
-            params.toBuilder().reportDate(reportDate).build(),
-            requestOptions,
-        )
+        listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
     /** @see listDetails */
     suspend fun listDetails(
@@ -51,22 +48,14 @@ interface SettlementServiceAsync {
         reportDate: LocalDate,
         requestOptions: RequestOptions,
     ): ReportSettlementListDetailsPageAsync =
-        listDetails(
-            reportDate,
-            ReportSettlementListDetailsParams.none(),
-            requestOptions,
-        )
+        listDetails(reportDate, ReportSettlementListDetailsParams.none(), requestOptions)
 
     /** Get the settlement report for a specified report date. Not available in sandbox. */
     suspend fun summary(
         reportDate: LocalDate,
         params: ReportSettlementSummaryParams = ReportSettlementSummaryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SettlementReport =
-        summary(
-            params.toBuilder().reportDate(reportDate).build(),
-            requestOptions,
-        )
+    ): SettlementReport = summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
     /** @see summary */
     suspend fun summary(
@@ -76,11 +65,7 @@ interface SettlementServiceAsync {
 
     /** @see summary */
     suspend fun summary(reportDate: LocalDate, requestOptions: RequestOptions): SettlementReport =
-        summary(
-            reportDate,
-            ReportSettlementSummaryParams.none(),
-            requestOptions,
-        )
+        summary(reportDate, ReportSettlementSummaryParams.none(), requestOptions)
 
     /**
      * A view of [SettlementServiceAsync] that provides access to raw HTTP responses for each
@@ -109,10 +94,7 @@ interface SettlementServiceAsync {
             params: ReportSettlementListDetailsParams = ReportSettlementListDetailsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementListDetailsPageAsync> =
-            listDetails(
-                params.toBuilder().reportDate(reportDate).build(),
-                requestOptions,
-            )
+            listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
         /** @see listDetails */
         @MustBeClosed
@@ -127,11 +109,7 @@ interface SettlementServiceAsync {
             reportDate: LocalDate,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ReportSettlementListDetailsPageAsync> =
-            listDetails(
-                reportDate,
-                ReportSettlementListDetailsParams.none(),
-                requestOptions,
-            )
+            listDetails(reportDate, ReportSettlementListDetailsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/summary/{report_date}`, but
@@ -143,10 +121,7 @@ interface SettlementServiceAsync {
             params: ReportSettlementSummaryParams = ReportSettlementSummaryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SettlementReport> =
-            summary(
-                params.toBuilder().reportDate(reportDate).build(),
-                requestOptions,
-            )
+            summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
 
         /** @see summary */
         @MustBeClosed
@@ -161,10 +136,6 @@ interface SettlementServiceAsync {
             reportDate: LocalDate,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SettlementReport> =
-            summary(
-                reportDate,
-                ReportSettlementSummaryParams.none(),
-                requestOptions,
-            )
+            summary(reportDate, ReportSettlementSummaryParams.none(), requestOptions)
     }
 }

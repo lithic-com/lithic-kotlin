@@ -340,9 +340,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** ISO 8601 timestamp of when the transaction was created */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -354,9 +352,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Status of a hold transaction */
         fun status(status: HoldStatus) = status(JsonField.of(status))
@@ -368,9 +364,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun status(status: JsonField<HoldStatus>) = apply {
-            this.status = status
-        }
+        fun status(status: JsonField<HoldStatus>) = apply { this.status = status }
 
         /** ISO 8601 timestamp of when the transaction was last updated */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -382,9 +376,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply {
-            this.updated = updated
-        }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         fun currency(currency: String) = currency(JsonField.of(currency))
 
@@ -394,9 +386,7 @@ private constructor(
          * You should usually call [Builder.currency] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun currency(currency: JsonField<String>) = apply {
-            this.currency = currency
-        }
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         fun events(events: List<HoldEvent>) = events(JsonField.of(events))
 
@@ -447,9 +437,7 @@ private constructor(
          * You should usually call [Builder.family] with a well-typed [Family] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun family(family: JsonField<Family>) = apply {
-            this.family = family
-        }
+        fun family(family: JsonField<Family>) = apply { this.family = family }
 
         fun financialAccountToken(financialAccountToken: String) =
             financialAccountToken(JsonField.of(financialAccountToken))
@@ -488,9 +476,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun result(result: JsonField<TransactionResult>) = apply {
-            this.result = result
-        }
+        fun result(result: JsonField<TransactionResult>) = apply { this.result = result }
 
         fun userDefinedId(userDefinedId: String?) =
             userDefinedId(JsonField.ofNullable(userDefinedId))
@@ -519,9 +505,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -544,22 +528,10 @@ private constructor(
          */
         fun build(): Hold =
             Hold(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                    "status",
-                    status,
-                ),
-                checkRequired(
-                    "updated",
-                    updated,
-                ),
+                checkRequired("token", token),
+                checkRequired("created", created),
+                checkRequired("status", status),
+                checkRequired("updated", updated),
                 currency,
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
                 expirationDatetime,
@@ -679,11 +651,9 @@ private constructor(
          * An enum containing [HoldStatus]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [HoldStatus] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -833,11 +803,9 @@ private constructor(
          * An enum containing [Family]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Family] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -967,11 +935,9 @@ private constructor(
          * An enum containing [TransactionResult]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TransactionResult] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

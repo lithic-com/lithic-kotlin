@@ -34,12 +34,7 @@ private constructor(
         @JsonProperty("transaction_count")
         @ExcludeMissing
         transactionCount: JsonField<Long> = JsonMissing.of(),
-    ) : this(
-        accountToken,
-        cardToken,
-        transactionCount,
-        mutableMapOf(),
-    )
+    ) : this(accountToken, cardToken, transactionCount, mutableMapOf())
 
     /**
      * Token of the account the card belongs to
@@ -157,9 +152,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun cardToken(cardToken: JsonField<String>) = apply {
-            this.cardToken = cardToken
-        }
+        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
 
         /** Number of the card's transactions associated with the case */
         fun transactionCount(transactionCount: Long) =
@@ -189,9 +182,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -213,18 +204,9 @@ private constructor(
          */
         fun build(): CaseCard =
             CaseCard(
-                checkRequired(
-                    "accountToken",
-                    accountToken,
-                ),
-                checkRequired(
-                    "cardToken",
-                    cardToken,
-                ),
-                checkRequired(
-                    "transactionCount",
-                    transactionCount,
-                ),
+                checkRequired("accountToken", accountToken),
+                checkRequired("cardToken", cardToken),
+                checkRequired("transactionCount", transactionCount),
                 additionalProperties.toMutableMap(),
             )
     }

@@ -222,9 +222,7 @@ private constructor(
          * You should usually call [Builder.address] with a well-typed [Address] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun address(address: JsonField<Address>) = apply {
-            this.address = address
-        }
+        fun address(address: JsonField<Address>) = apply { this.address = address }
 
         /**
          * Government-issued identification number. US Federal Employer Identification Numbers (EIN)
@@ -330,9 +328,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -355,23 +351,10 @@ private constructor(
          */
         fun build(): KybBusinessEntity =
             KybBusinessEntity(
-                checkRequired(
-                    "address",
-                    address,
-                ),
-                checkRequired(
-                    "governmentId",
-                    governmentId,
-                ),
-                checkRequired(
-                    "legalBusinessName",
-                    legalBusinessName,
-                ),
-                checkRequired(
-                        "phoneNumbers",
-                        phoneNumbers,
-                    )
-                    .map { it.toImmutable() },
+                checkRequired("address", address),
+                checkRequired("governmentId", governmentId),
+                checkRequired("legalBusinessName", legalBusinessName),
+                checkRequired("phoneNumbers", phoneNumbers).map { it.toImmutable() },
                 dbaBusinessName,
                 parentCompany,
                 additionalProperties.toMutableMap(),
@@ -450,18 +433,8 @@ private constructor(
             @ExcludeMissing
             postalCode: JsonField<String> = JsonMissing.of(),
             @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("address2")
-            @ExcludeMissing
-            address2: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            address1,
-            city,
-            country,
-            postalCode,
-            state,
-            address2,
-            mutableMapOf(),
-        )
+            @JsonProperty("address2") @ExcludeMissing address2: JsonField<String> = JsonMissing.of(),
+        ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
 
         /**
          * Valid deliverable address (no PO boxes).
@@ -618,9 +591,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address1(address1: JsonField<String>) = apply {
-                this.address1 = address1
-            }
+            fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
             /** Name of city. */
             fun city(city: String) = city(JsonField.of(city))
@@ -632,9 +603,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun city(city: JsonField<String>) = apply {
-                this.city = city
-            }
+            fun city(city: JsonField<String>) = apply { this.city = city }
 
             /**
              * Valid country code. Only USA is currently supported, entered in uppercase ISO 3166-1
@@ -649,9 +618,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun country(country: JsonField<String>) = apply {
-                this.country = country
-            }
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
              * Valid postal code. Only USA ZIP codes are currently supported, entered as a
@@ -666,9 +633,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun postalCode(postalCode: JsonField<String>) = apply {
-                this.postalCode = postalCode
-            }
+            fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             /**
              * Valid state code. Only USA state codes are currently supported, entered in uppercase
@@ -683,9 +648,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun state(state: JsonField<String>) = apply {
-                this.state = state
-            }
+            fun state(state: JsonField<String>) = apply { this.state = state }
 
             /** Unit or apartment number (if applicable). */
             fun address2(address2: String) = address2(JsonField.of(address2))
@@ -697,9 +660,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address2(address2: JsonField<String>) = apply {
-                this.address2 = address2
-            }
+            fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -714,9 +675,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -740,26 +699,11 @@ private constructor(
              */
             fun build(): Address =
                 Address(
-                    checkRequired(
-                        "address1",
-                        address1,
-                    ),
-                    checkRequired(
-                        "city",
-                        city,
-                    ),
-                    checkRequired(
-                        "country",
-                        country,
-                    ),
-                    checkRequired(
-                        "postalCode",
-                        postalCode,
-                    ),
-                    checkRequired(
-                        "state",
-                        state,
-                    ),
+                    checkRequired("address1", address1),
+                    checkRequired("city", city),
+                    checkRequired("country", country),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("state", state),
                     address2,
                     additionalProperties.toMutableMap(),
                 )

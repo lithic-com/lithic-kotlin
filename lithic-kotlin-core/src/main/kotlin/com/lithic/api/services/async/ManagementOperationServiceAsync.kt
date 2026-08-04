@@ -55,11 +55,7 @@ interface ManagementOperationServiceAsync {
         managementOperationToken: String,
         requestOptions: RequestOptions,
     ): ManagementOperationTransaction =
-        retrieve(
-            managementOperationToken,
-            ManagementOperationRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(managementOperationToken, ManagementOperationRetrieveParams.none(), requestOptions)
 
     /** List management operations */
     suspend fun list(
@@ -69,10 +65,7 @@ interface ManagementOperationServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): ManagementOperationListPageAsync =
-        list(
-            ManagementOperationListParams.none(),
-            requestOptions,
-        )
+        list(ManagementOperationListParams.none(), requestOptions)
 
     /** Reverse a management operation */
     suspend fun reverse(
@@ -166,10 +159,7 @@ interface ManagementOperationServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<ManagementOperationListPageAsync> =
-            list(
-                ManagementOperationListParams.none(),
-                requestOptions,
-            )
+            list(ManagementOperationListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post

@@ -37,10 +37,7 @@ private constructor(
         @JsonProperty("provisioning_payload")
         @ExcludeMissing
         provisioningPayload: JsonField<ProvisioningPayload> = JsonMissing.of()
-    ) : this(
-        provisioningPayload,
-        mutableMapOf(),
-    )
+    ) : this(provisioningPayload, mutableMapOf())
 
     /**
      * Base64 encoded JSON payload representing a payment card that can be passed to a device's
@@ -133,9 +130,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -147,10 +142,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): CardProvisionResponse =
-            CardProvisionResponse(
-                provisioningPayload,
-                additionalProperties.toMutableMap(),
-            )
+            CardProvisionResponse(provisioningPayload, additionalProperties.toMutableMap())
     }
 
     private var validated: Boolean = false

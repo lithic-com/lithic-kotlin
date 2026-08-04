@@ -244,9 +244,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply {
-            this.eventType = eventType
-        }
+        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
         /** The token of the account holder document */
         fun token(token: String) = token(JsonField.of(token))
@@ -257,9 +255,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** The token of the account_holder that the document belongs to */
         fun accountHolderToken(accountHolderToken: String) =
@@ -286,9 +282,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Type of documentation to be submitted for verification of an account holder */
         fun documentType(documentType: DocumentType) = documentType(JsonField.of(documentType))
@@ -314,9 +308,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun entityToken(entityToken: JsonField<String>) = apply {
-            this.entityToken = entityToken
-        }
+        fun entityToken(entityToken: JsonField<String>) = apply { this.entityToken = entityToken }
 
         fun requiredDocumentUploads(requiredDocumentUploads: List<RequiredDocumentUpload>) =
             requiredDocumentUploads(JsonField.of(requiredDocumentUploads))
@@ -359,9 +351,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -381,10 +371,7 @@ private constructor(
          */
         fun build(): AccountHolderDocumentUpdatedWebhookEvent =
             AccountHolderDocumentUpdatedWebhookEvent(
-                checkRequired(
-                    "eventType",
-                    eventType,
-                ),
+                checkRequired("eventType", eventType),
                 token,
                 accountHolderToken,
                 created,
@@ -471,11 +458,9 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -659,11 +644,9 @@ private constructor(
          * An enum containing [DocumentType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [DocumentType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1054,9 +1037,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: List<String>) =
                 acceptedEntityStatusReasons(JsonField.of(acceptedEntityStatusReasons))
@@ -1070,9 +1051,8 @@ private constructor(
              */
             fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: JsonField<List<String>>) =
                 apply {
-                    this.acceptedEntityStatusReasons = acceptedEntityStatusReasons.map {
-                        it.toMutableList()
-                    }
+                    this.acceptedEntityStatusReasons =
+                        acceptedEntityStatusReasons.map { it.toMutableList() }
                 }
 
             /**
@@ -1098,9 +1078,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun created(created: JsonField<OffsetDateTime>) = apply {
-                this.created = created
-            }
+            fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
             /** The type of image that was uploaded */
             fun imageType(imageType: ImageType) = imageType(JsonField.of(imageType))
@@ -1112,9 +1090,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun imageType(imageType: JsonField<ImageType>) = apply {
-                this.imageType = imageType
-            }
+            fun imageType(imageType: JsonField<ImageType>) = apply { this.imageType = imageType }
 
             fun rejectedEntityStatusReasons(rejectedEntityStatusReasons: List<String>) =
                 rejectedEntityStatusReasons(JsonField.of(rejectedEntityStatusReasons))
@@ -1128,9 +1104,8 @@ private constructor(
              */
             fun rejectedEntityStatusReasons(rejectedEntityStatusReasons: JsonField<List<String>>) =
                 apply {
-                    this.rejectedEntityStatusReasons = rejectedEntityStatusReasons.map {
-                        it.toMutableList()
-                    }
+                    this.rejectedEntityStatusReasons =
+                        rejectedEntityStatusReasons.map { it.toMutableList() }
                 }
 
             /**
@@ -1156,9 +1131,7 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun status(status: JsonField<DocumentUploadStatus>) = apply {
-                this.status = status
-            }
+            fun status(status: JsonField<DocumentUploadStatus>) = apply { this.status = status }
 
             fun statusReasons(statusReasons: List<String>) =
                 statusReasons(JsonField.of(statusReasons))
@@ -1196,9 +1169,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun updated(updated: JsonField<OffsetDateTime>) = apply {
-                this.updated = updated
-            }
+            fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1213,9 +1184,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1324,11 +1293,9 @@ private constructor(
              * An enum containing [ImageType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [ImageType] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1478,11 +1445,9 @@ private constructor(
              *
              * An instance of [DocumentUploadStatus] can contain an unknown value in a couple of
              * cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

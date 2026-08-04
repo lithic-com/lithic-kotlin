@@ -134,53 +134,39 @@ private constructor(
          * Date string in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
-        fun begin(begin: OffsetDateTime?) = apply {
-            this.begin = begin
-        }
+        fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
 
         /**
          * Email address of the account holder. The query must be an exact match, case insensitive.
          */
-        fun email(email: String?) = apply {
-            this.email = email
-        }
+        fun email(email: String?) = apply { this.email = email }
 
         /**
          * Date string in RFC 3339 format. Only entries created before the specified time will be
          * included. UTC time zone.
          */
-        fun end(end: OffsetDateTime?) = apply {
-            this.end = end
-        }
+        fun end(end: OffsetDateTime?) = apply { this.end = end }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String?) = apply {
-            this.endingBefore = endingBefore
-        }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
         /** If applicable, represents the external_id associated with the account_holder. */
-        fun externalId(externalId: String?) = apply {
-            this.externalId = externalId
-        }
+        fun externalId(externalId: String?) = apply { this.externalId = externalId }
 
         /**
          * (Individual Account Holders only) The first name of the account holder. The query is case
          * insensitive and supports partial matches.
          */
-        fun firstName(firstName: String?) = apply {
-            this.firstName = firstName
-        }
+        fun firstName(firstName: String?) = apply { this.firstName = firstName }
 
         /**
          * (Individual Account Holders only) The last name of the account holder. The query is case
          * insensitive and supports partial matches.
          */
-        fun lastName(lastName: String?) = apply {
-            this.lastName = lastName
-        }
+        fun lastName(lastName: String?) = apply { this.lastName = lastName }
 
         /**
          * (Business Account Holders only) The legal business name of the account holder. The query
@@ -191,9 +177,7 @@ private constructor(
         }
 
         /** The number of account_holders to limit the response to. */
-        fun limit(limit: Long?) = apply {
-            this.limit = limit
-        }
+        fun limit(limit: Long?) = apply { this.limit = limit }
 
         /**
          * Alias for [Builder.limit].
@@ -203,17 +187,13 @@ private constructor(
         fun limit(limit: Long) = limit(limit as Long?)
 
         /** Phone number of the account holder. The query must be an exact match. */
-        fun phoneNumber(phoneNumber: String?) = apply {
-            this.phoneNumber = phoneNumber
-        }
+        fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String?) = apply {
-            this.startingAfter = startingAfter
-        }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -257,9 +237,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -309,9 +287,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

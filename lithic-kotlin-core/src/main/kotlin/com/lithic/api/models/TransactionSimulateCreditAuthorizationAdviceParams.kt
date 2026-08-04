@@ -213,18 +213,14 @@ private constructor(
          * - [merchantAcceptorCity]
          * - etc.
          */
-        fun body(body: Body) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
          * Amount (in cents). Any value entered will be converted into a negative amount in the
          * simulated transaction. For example, entering 100 in this field will appear as a -100
          * amount in the transaction.
          */
-        fun amount(amount: Long) = apply {
-            body.amount(amount)
-        }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
          * Sets [Builder.amount] to an arbitrary JSON value.
@@ -232,14 +228,10 @@ private constructor(
          * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun amount(amount: JsonField<Long>) = apply {
-            body.amount(amount)
-        }
+        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
 
         /** Merchant descriptor. */
-        fun descriptor(descriptor: String) = apply {
-            body.descriptor(descriptor)
-        }
+        fun descriptor(descriptor: String) = apply { body.descriptor(descriptor) }
 
         /**
          * Sets [Builder.descriptor] to an arbitrary JSON value.
@@ -248,14 +240,10 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun descriptor(descriptor: JsonField<String>) = apply {
-            body.descriptor(descriptor)
-        }
+        fun descriptor(descriptor: JsonField<String>) = apply { body.descriptor(descriptor) }
 
         /** Sixteen digit card number. */
-        fun pan(pan: String) = apply {
-            body.pan(pan)
-        }
+        fun pan(pan: String) = apply { body.pan(pan) }
 
         /**
          * Sets [Builder.pan] to an arbitrary JSON value.
@@ -263,18 +251,14 @@ private constructor(
          * You should usually call [Builder.pan] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun pan(pan: JsonField<String>) = apply {
-            body.pan(pan)
-        }
+        fun pan(pan: JsonField<String>) = apply { body.pan(pan) }
 
         /**
          * Merchant category code for the transaction to be simulated. A four-digit number listed in
          * ISO 18245. Supported merchant category codes can be found
          * [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).
          */
-        fun mcc(mcc: String) = apply {
-            body.mcc(mcc)
-        }
+        fun mcc(mcc: String) = apply { body.mcc(mcc) }
 
         /**
          * Sets [Builder.mcc] to an arbitrary JSON value.
@@ -282,9 +266,7 @@ private constructor(
          * You should usually call [Builder.mcc] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun mcc(mcc: JsonField<String>) = apply {
-            body.mcc(mcc)
-        }
+        fun mcc(mcc: JsonField<String>) = apply { body.mcc(mcc) }
 
         /** Merchant acceptor city */
         fun merchantAcceptorCity(merchantAcceptorCity: String) = apply {
@@ -355,10 +337,7 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -366,9 +345,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -416,9 +393,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -468,9 +443,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -757,9 +730,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun amount(amount: JsonField<Long>) = apply {
-                this.amount = amount
-            }
+            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /** Merchant descriptor. */
             fun descriptor(descriptor: String) = descriptor(JsonField.of(descriptor))
@@ -771,9 +742,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun descriptor(descriptor: JsonField<String>) = apply {
-                this.descriptor = descriptor
-            }
+            fun descriptor(descriptor: JsonField<String>) = apply { this.descriptor = descriptor }
 
             /** Sixteen digit card number. */
             fun pan(pan: String) = pan(JsonField.of(pan))
@@ -785,9 +754,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun pan(pan: JsonField<String>) = apply {
-                this.pan = pan
-            }
+            fun pan(pan: JsonField<String>) = apply { this.pan = pan }
 
             /**
              * Merchant category code for the transaction to be simulated. A four-digit number
@@ -803,9 +770,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun mcc(mcc: JsonField<String>) = apply {
-                this.mcc = mcc
-            }
+            fun mcc(mcc: JsonField<String>) = apply { this.mcc = mcc }
 
             /** Merchant acceptor city */
             fun merchantAcceptorCity(merchantAcceptorCity: String) =
@@ -880,9 +845,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -904,18 +867,9 @@ private constructor(
              */
             fun build(): Body =
                 Body(
-                    checkRequired(
-                        "amount",
-                        amount,
-                    ),
-                    checkRequired(
-                        "descriptor",
-                        descriptor,
-                    ),
-                    checkRequired(
-                        "pan",
-                        pan,
-                    ),
+                    checkRequired("amount", amount),
+                    checkRequired("descriptor", descriptor),
+                    checkRequired("pan", pan),
                     mcc,
                     merchantAcceptorCity,
                     merchantAcceptorCountry,

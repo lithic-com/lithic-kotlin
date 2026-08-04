@@ -36,12 +36,7 @@ private constructor(
         @JsonProperty("external_resource_sub_token")
         @ExcludeMissing
         externalResourceSubToken: JsonField<String> = JsonMissing.of(),
-    ) : this(
-        externalResourceToken,
-        externalResourceType,
-        externalResourceSubToken,
-        mutableMapOf(),
-    )
+    ) : this(externalResourceToken, externalResourceType, externalResourceSubToken, mutableMapOf())
 
     /**
      * Token identifying the external resource
@@ -199,9 +194,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -222,14 +215,8 @@ private constructor(
          */
         fun build(): ExternalResource =
             ExternalResource(
-                checkRequired(
-                    "externalResourceToken",
-                    externalResourceToken,
-                ),
-                checkRequired(
-                    "externalResourceType",
-                    externalResourceType,
-                ),
+                checkRequired("externalResourceToken", externalResourceToken),
+                checkRequired("externalResourceType", externalResourceType),
                 externalResourceSubToken,
                 additionalProperties.toMutableMap(),
             )

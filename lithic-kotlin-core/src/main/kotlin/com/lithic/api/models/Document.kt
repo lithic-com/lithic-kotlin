@@ -199,9 +199,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Globally unique identifier for the account holder. */
         fun accountHolderToken(accountHolderToken: String) =
@@ -242,9 +240,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun entityToken(entityToken: JsonField<String>) = apply {
-            this.entityToken = entityToken
-        }
+        fun entityToken(entityToken: JsonField<String>) = apply { this.entityToken = entityToken }
 
         /** Represents a single image of the document to upload. */
         fun requiredDocumentUploads(requiredDocumentUploads: List<RequiredDocumentUpload>) =
@@ -288,9 +284,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -314,27 +308,13 @@ private constructor(
          */
         fun build(): Document =
             Document(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "accountHolderToken",
-                    accountHolderToken,
-                ),
-                checkRequired(
-                    "documentType",
-                    documentType,
-                ),
-                checkRequired(
-                    "entityToken",
-                    entityToken,
-                ),
-                checkRequired(
-                        "requiredDocumentUploads",
-                        requiredDocumentUploads,
-                    )
-                    .map { it.toImmutable() },
+                checkRequired("token", token),
+                checkRequired("accountHolderToken", accountHolderToken),
+                checkRequired("documentType", documentType),
+                checkRequired("entityToken", entityToken),
+                checkRequired("requiredDocumentUploads", requiredDocumentUploads).map {
+                    it.toImmutable()
+                },
                 additionalProperties.toMutableMap(),
             )
     }
@@ -466,11 +446,9 @@ private constructor(
          * An enum containing [DocumentType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [DocumentType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -909,9 +887,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /**
              * A list of status reasons associated with a KYB account holder that have been
@@ -929,9 +905,8 @@ private constructor(
              */
             fun acceptedEntityStatusReasons(acceptedEntityStatusReasons: JsonField<List<String>>) =
                 apply {
-                    this.acceptedEntityStatusReasons = acceptedEntityStatusReasons.map {
-                        it.toMutableList()
-                    }
+                    this.acceptedEntityStatusReasons =
+                        acceptedEntityStatusReasons.map { it.toMutableList() }
                 }
 
             /**
@@ -957,9 +932,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun created(created: JsonField<OffsetDateTime>) = apply {
-                this.created = created
-            }
+            fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
             /** Type of image to upload. */
             fun imageType(imageType: ImageType) = imageType(JsonField.of(imageType))
@@ -971,9 +944,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun imageType(imageType: JsonField<ImageType>) = apply {
-                this.imageType = imageType
-            }
+            fun imageType(imageType: JsonField<ImageType>) = apply { this.imageType = imageType }
 
             /**
              * A list of status reasons associated with a KYB account holder that have not been
@@ -991,9 +962,8 @@ private constructor(
              */
             fun rejectedEntityStatusReasons(rejectedEntityStatusReasons: JsonField<List<String>>) =
                 apply {
-                    this.rejectedEntityStatusReasons = rejectedEntityStatusReasons.map {
-                        it.toMutableList()
-                    }
+                    this.rejectedEntityStatusReasons =
+                        rejectedEntityStatusReasons.map { it.toMutableList() }
                 }
 
             /**
@@ -1019,9 +989,7 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun status(status: JsonField<DocumentUploadStatus>) = apply {
-                this.status = status
-            }
+            fun status(status: JsonField<DocumentUploadStatus>) = apply { this.status = status }
 
             /** Reasons for document image upload status. */
             fun statusReasons(statusReasons: List<DocumentUploadStatusReasons>) =
@@ -1060,9 +1028,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun updated(updated: JsonField<OffsetDateTime>) = apply {
-                this.updated = updated
-            }
+            fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
             /**
              * URL to upload document image to.
@@ -1080,9 +1046,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun uploadUrl(uploadUrl: JsonField<String>) = apply {
-                this.uploadUrl = uploadUrl
-            }
+            fun uploadUrl(uploadUrl: JsonField<String>) = apply { this.uploadUrl = uploadUrl }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1097,9 +1061,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1127,45 +1089,19 @@ private constructor(
              */
             fun build(): RequiredDocumentUpload =
                 RequiredDocumentUpload(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "acceptedEntityStatusReasons",
-                            acceptedEntityStatusReasons,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "created",
-                        created,
-                    ),
-                    checkRequired(
-                        "imageType",
-                        imageType,
-                    ),
-                    checkRequired(
-                            "rejectedEntityStatusReasons",
-                            rejectedEntityStatusReasons,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "status",
-                        status,
-                    ),
-                    checkRequired(
-                            "statusReasons",
-                            statusReasons,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "updated",
-                        updated,
-                    ),
-                    checkRequired(
-                        "uploadUrl",
-                        uploadUrl,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("acceptedEntityStatusReasons", acceptedEntityStatusReasons).map {
+                        it.toImmutable()
+                    },
+                    checkRequired("created", created),
+                    checkRequired("imageType", imageType),
+                    checkRequired("rejectedEntityStatusReasons", rejectedEntityStatusReasons).map {
+                        it.toImmutable()
+                    },
+                    checkRequired("status", status),
+                    checkRequired("statusReasons", statusReasons).map { it.toImmutable() },
+                    checkRequired("updated", updated),
+                    checkRequired("uploadUrl", uploadUrl),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1256,11 +1192,9 @@ private constructor(
              * An enum containing [ImageType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [ImageType] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1410,11 +1344,9 @@ private constructor(
              *
              * An instance of [DocumentUploadStatus] can contain an unknown value in a couple of
              * cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1592,11 +1524,9 @@ private constructor(
              *
              * An instance of [DocumentUploadStatusReasons] can contain an unknown value in a couple
              * of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

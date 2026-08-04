@@ -653,9 +653,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -750,9 +748,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -764,9 +760,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -778,9 +772,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -810,9 +802,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -840,43 +830,15 @@ private constructor(
              */
             fun build(): AuthorizationResult =
                 AuthorizationResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1129,9 +1091,7 @@ private constructor(
                     val bestMatches =
                         sequenceOf(
                                 tryDeserialize(node, jacksonTypeRef<DeclineActionAuthorization>())
-                                    ?.let {
-                                        Action(declineActionAuthorization = it, _json = json)
-                                    },
+                                    ?.let { Action(declineActionAuthorization = it, _json = json) },
                                 tryDeserialize(node, jacksonTypeRef<ChallengeActionAuthorization>())
                                     ?.let {
                                         Action(challengeActionAuthorization = it, _json = json)
@@ -1189,12 +1149,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    code,
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(code, type, explanation, mutableMapOf())
 
                 /**
                  * The detailed result code explaining the specific reason for the decline
@@ -1300,9 +1255,7 @@ private constructor(
                      * value instead. This method is primarily for setting the field to an
                      * undocumented or not yet supported value.
                      */
-                    fun code(code: JsonField<DetailedResult>) = apply {
-                        this.code = code
-                    }
+                    fun code(code: JsonField<DetailedResult>) = apply { this.code = code }
 
                     fun type(type: Type) = type(JsonField.of(type))
 
@@ -1313,9 +1266,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -1368,14 +1319,8 @@ private constructor(
                      */
                     fun build(): DeclineActionAuthorization =
                         DeclineActionAuthorization(
-                            checkRequired(
-                                "code",
-                                code,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("code", code),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -1635,11 +1580,9 @@ private constructor(
                      *
                      * An instance of [DetailedResult] can contain an unknown value in a couple of
                      * cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -1961,11 +1904,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -2104,11 +2045,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(type, explanation, mutableMapOf())
 
                 /**
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -2193,9 +2130,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -2247,10 +2182,7 @@ private constructor(
                      */
                     fun build(): ChallengeActionAuthorization =
                         ChallengeActionAuthorization(
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -2326,11 +2258,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -2485,11 +2415,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2624,11 +2552,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3045,9 +2971,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -3128,9 +3052,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -3142,9 +3064,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -3156,9 +3076,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -3188,9 +3106,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3218,43 +3134,15 @@ private constructor(
              */
             fun build(): Authentication3dsResult =
                 Authentication3dsResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -3328,11 +3216,7 @@ private constructor(
                 @JsonProperty("explanation")
                 @ExcludeMissing
                 explanation: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                type,
-                explanation,
-                mutableMapOf(),
-            )
+            ) : this(type, explanation, mutableMapOf())
 
             /**
              * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -3415,9 +3299,7 @@ private constructor(
                  * [Authentication3dsAction] value instead. This method is primarily for setting the
                  * field to an undocumented or not yet supported value.
                  */
-                fun type(type: JsonField<Authentication3dsAction>) = apply {
-                    this.type = type
-                }
+                fun type(type: JsonField<Authentication3dsAction>) = apply { this.type = type }
 
                 /** Optional explanation for why this action was taken */
                 fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -3469,10 +3351,7 @@ private constructor(
                  */
                 fun build(): Action =
                     Action(
-                        checkRequired(
-                            "type",
-                            type,
-                        ),
+                        checkRequired("type", type),
                         explanation,
                         additionalProperties.toMutableMap(),
                     )
@@ -3552,11 +3431,9 @@ private constructor(
                  *
                  * An instance of [Authentication3dsAction] can contain an unknown value in a couple
                  * of cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -3715,11 +3592,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3854,11 +3729,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -4275,9 +4148,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -4369,9 +4240,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -4383,9 +4252,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -4397,9 +4264,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -4429,9 +4294,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -4459,43 +4322,15 @@ private constructor(
              */
             fun build(): TokenizationResult =
                 TokenizationResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -4735,9 +4570,7 @@ private constructor(
                     val bestMatches =
                         sequenceOf(
                                 tryDeserialize(node, jacksonTypeRef<DeclineActionTokenization>())
-                                    ?.let {
-                                        Action(declineActionTokenization = it, _json = json)
-                                    },
+                                    ?.let { Action(declineActionTokenization = it, _json = json) },
                                 tryDeserialize(node, jacksonTypeRef<RequireTfaAction>())?.let {
                                     Action(requireTfa = it, _json = json)
                                 },
@@ -4793,12 +4626,7 @@ private constructor(
                     @JsonProperty("reason")
                     @ExcludeMissing
                     reason: JsonField<Reason> = JsonMissing.of(),
-                ) : this(
-                    type,
-                    explanation,
-                    reason,
-                    mutableMapOf(),
-                )
+                ) : this(type, explanation, reason, mutableMapOf())
 
                 /**
                  * Decline the tokenization request
@@ -4904,9 +4732,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -4932,9 +4758,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun reason(reason: JsonField<Reason>) = apply {
-                        this.reason = reason
-                    }
+                    fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -4972,10 +4796,7 @@ private constructor(
                      */
                     fun build(): DeclineActionTokenization =
                         DeclineActionTokenization(
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("type", type),
                             explanation,
                             reason,
                             additionalProperties.toMutableMap(),
@@ -5055,11 +4876,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -5231,11 +5050,9 @@ private constructor(
                      * An enum containing [Reason]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Reason] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -5416,12 +5233,7 @@ private constructor(
                     @JsonProperty("reason")
                     @ExcludeMissing
                     reason: JsonField<Reason> = JsonMissing.of(),
-                ) : this(
-                    type,
-                    explanation,
-                    reason,
-                    mutableMapOf(),
-                )
+                ) : this(type, explanation, reason, mutableMapOf())
 
                 /**
                  * Require two-factor authentication for the tokenization request
@@ -5524,9 +5336,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -5552,9 +5362,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun reason(reason: JsonField<Reason>) = apply {
-                        this.reason = reason
-                    }
+                    fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -5592,10 +5400,7 @@ private constructor(
                      */
                     fun build(): RequireTfaAction =
                         RequireTfaAction(
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("type", type),
                             explanation,
                             reason,
                             additionalProperties.toMutableMap(),
@@ -5675,11 +5480,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -5856,11 +5659,9 @@ private constructor(
                      * An enum containing [Reason]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Reason] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -6058,11 +5859,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -6197,11 +5996,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -6618,9 +6415,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -6709,9 +6504,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -6723,9 +6516,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -6737,9 +6528,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -6769,9 +6558,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -6799,43 +6586,15 @@ private constructor(
              */
             fun build(): AchResult =
                 AchResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -7120,11 +6879,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(type, explanation, mutableMapOf())
 
                 /**
                  * Approve the ACH transaction
@@ -7209,9 +6964,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -7263,10 +7016,7 @@ private constructor(
                      */
                     fun build(): ApproveActionAch =
                         ApproveActionAch(
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -7343,11 +7093,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -7487,12 +7235,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    code,
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(code, type, explanation, mutableMapOf())
 
                 /**
                  * NACHA return code to use when returning the transaction. Note that the list of
@@ -7602,9 +7345,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun code(code: JsonField<Code>) = apply {
-                        this.code = code
-                    }
+                    fun code(code: JsonField<Code>) = apply { this.code = code }
 
                     /** Return the ACH transaction */
                     fun type(type: Type) = type(JsonField.of(type))
@@ -7616,9 +7357,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -7671,14 +7410,8 @@ private constructor(
                      */
                     fun build(): ReturnAction =
                         ReturnAction(
-                            checkRequired(
-                                "code",
-                                code,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("code", code),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -7967,11 +7700,9 @@ private constructor(
                      * An enum containing [Code]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Code] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -8312,11 +8043,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -8475,11 +8204,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -8617,11 +8344,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -9040,9 +8765,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -9130,9 +8853,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -9144,9 +8865,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -9158,9 +8877,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -9190,9 +8907,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -9220,43 +8935,15 @@ private constructor(
              */
             fun build(): CardTransactionUpdateResult =
                 CardTransactionUpdateResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -9541,13 +9228,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    key,
-                    type,
-                    value,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(key, type, value, explanation, mutableMapOf())
 
                 /**
                  * The key of the tag to apply to the transaction
@@ -9671,9 +9352,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun key(key: JsonField<String>) = apply {
-                        this.key = key
-                    }
+                    fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** Tag the transaction with key-value metadata */
                     fun type(type: Type) = type(JsonField.of(type))
@@ -9685,9 +9364,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** The value of the tag to apply to the transaction */
                     fun value(value: String) = value(JsonField.of(value))
@@ -9699,9 +9376,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun value(value: JsonField<String>) = apply {
-                        this.value = value
-                    }
+                    fun value(value: JsonField<String>) = apply { this.value = value }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -9755,18 +9430,9 @@ private constructor(
                      */
                     fun build(): TagAction =
                         TagAction(
-                            checkRequired(
-                                "key",
-                                key,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
-                            checkRequired(
-                                "value",
-                                value,
-                            ),
+                            checkRequired("key", key),
+                            checkRequired("type", type),
+                            checkRequired("value", value),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -9847,11 +9513,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -9999,13 +9663,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    queueToken,
-                    scope,
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(queueToken, scope, type, explanation, mutableMapOf())
 
                 /**
                  * The token of the queue to create the case in
@@ -10146,9 +9804,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun scope(scope: JsonField<Scope>) = apply {
-                        this.scope = scope
-                    }
+                    fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
 
                     /** Create a case for the transaction */
                     fun type(type: Type) = type(JsonField.of(type))
@@ -10160,9 +9816,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -10216,18 +9870,9 @@ private constructor(
                      */
                     fun build(): CreateCaseAction =
                         CreateCaseAction(
-                            checkRequired(
-                                "queueToken",
-                                queueToken,
-                            ),
-                            checkRequired(
-                                "scope",
-                                scope,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("queueToken", queueToken),
+                            checkRequired("scope", scope),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -10311,11 +9956,9 @@ private constructor(
                      * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Scope] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -10452,11 +10095,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -10613,11 +10254,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -10752,11 +10391,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -11173,9 +10810,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Actions returned by the rule evaluation */
             fun actions(actions: List<Action>) = actions(JsonField.of(actions))
@@ -11263,9 +10898,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The state of the Auth Rule */
             fun mode(mode: AuthRuleState) = mode(JsonField.of(mode))
@@ -11277,9 +10910,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun mode(mode: JsonField<AuthRuleState>) = apply {
-                this.mode = mode
-            }
+            fun mode(mode: JsonField<AuthRuleState>) = apply { this.mode = mode }
 
             /** Version of the rule that was evaluated */
             fun ruleVersion(ruleVersion: Long) = ruleVersion(JsonField.of(ruleVersion))
@@ -11291,9 +10922,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ruleVersion(ruleVersion: JsonField<Long>) = apply {
-                this.ruleVersion = ruleVersion
-            }
+            fun ruleVersion(ruleVersion: JsonField<Long>) = apply { this.ruleVersion = ruleVersion }
 
             /** The token of the transaction that triggered the rule evaluation */
             fun transactionToken(transactionToken: String?) =
@@ -11323,9 +10952,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -11353,43 +10980,15 @@ private constructor(
              */
             fun build(): AchPaymentUpdateResult =
                 AchPaymentUpdateResult(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                            "actions",
-                            actions,
-                        )
-                        .map { it.toImmutable() },
-                    checkRequired(
-                        "authRuleToken",
-                        authRuleToken,
-                    ),
-                    checkRequired(
-                        "evaluationTime",
-                        evaluationTime,
-                    ),
-                    checkRequired(
-                        "eventStream",
-                        eventStream,
-                    ),
-                    checkRequired(
-                        "eventToken",
-                        eventToken,
-                    ),
-                    checkRequired(
-                        "mode",
-                        mode,
-                    ),
-                    checkRequired(
-                        "ruleVersion",
-                        ruleVersion,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("actions", actions).map { it.toImmutable() },
+                    checkRequired("authRuleToken", authRuleToken),
+                    checkRequired("evaluationTime", evaluationTime),
+                    checkRequired("eventStream", eventStream),
+                    checkRequired("eventToken", eventToken),
+                    checkRequired("mode", mode),
+                    checkRequired("ruleVersion", ruleVersion),
+                    checkRequired("transactionToken", transactionToken),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -11674,13 +11273,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    key,
-                    type,
-                    value,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(key, type, value, explanation, mutableMapOf())
 
                 /**
                  * The key of the tag to apply to the payment
@@ -11804,9 +11397,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun key(key: JsonField<String>) = apply {
-                        this.key = key
-                    }
+                    fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** Tag the payment with key-value metadata */
                     fun type(type: Type) = type(JsonField.of(type))
@@ -11818,9 +11409,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** The value of the tag to apply to the payment */
                     fun value(value: String) = value(JsonField.of(value))
@@ -11832,9 +11421,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun value(value: JsonField<String>) = apply {
-                        this.value = value
-                    }
+                    fun value(value: JsonField<String>) = apply { this.value = value }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -11888,18 +11475,9 @@ private constructor(
                      */
                     fun build(): TagAction =
                         TagAction(
-                            checkRequired(
-                                "key",
-                                key,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
-                            checkRequired(
-                                "value",
-                                value,
-                            ),
+                            checkRequired("key", key),
+                            checkRequired("type", type),
+                            checkRequired("value", value),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -11980,11 +11558,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -12132,13 +11708,7 @@ private constructor(
                     @JsonProperty("explanation")
                     @ExcludeMissing
                     explanation: JsonField<String> = JsonMissing.of(),
-                ) : this(
-                    queueToken,
-                    scope,
-                    type,
-                    explanation,
-                    mutableMapOf(),
-                )
+                ) : this(queueToken, scope, type, explanation, mutableMapOf())
 
                 /**
                  * The token of the queue to create the case in
@@ -12279,9 +11849,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun scope(scope: JsonField<Scope>) = apply {
-                        this.scope = scope
-                    }
+                    fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
 
                     /** Create a case for the payment */
                     fun type(type: Type) = type(JsonField.of(type))
@@ -12293,9 +11861,7 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun type(type: JsonField<Type>) = apply {
-                        this.type = type
-                    }
+                    fun type(type: JsonField<Type>) = apply { this.type = type }
 
                     /** Optional explanation for why this action was taken */
                     fun explanation(explanation: String) = explanation(JsonField.of(explanation))
@@ -12349,18 +11915,9 @@ private constructor(
                      */
                     fun build(): CreateCaseAction =
                         CreateCaseAction(
-                            checkRequired(
-                                "queueToken",
-                                queueToken,
-                            ),
-                            checkRequired(
-                                "scope",
-                                scope,
-                            ),
-                            checkRequired(
-                                "type",
-                                type,
-                            ),
+                            checkRequired("queueToken", queueToken),
+                            checkRequired("scope", scope),
+                            checkRequired("type", type),
                             explanation,
                             additionalProperties.toMutableMap(),
                         )
@@ -12441,11 +11998,9 @@ private constructor(
                      * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Scope] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -12579,11 +12134,9 @@ private constructor(
                      * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
                      *
                      * An instance of [Type] can contain an unknown value in a couple of cases:
-                     *
                      * - It was deserialized from data that doesn't match any known member. For
                      *   example, if the SDK is on an older version than the API, then the API may
                      *   respond with new members that the SDK is unaware of.
-                     *
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
@@ -12740,11 +12293,9 @@ private constructor(
              * An enum containing [EventStream]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventStream] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -12879,11 +12430,9 @@ private constructor(
              * An enum containing [AuthRuleState]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [AuthRuleState] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

@@ -208,7 +208,6 @@ private constructor(
 
     /**
      * Indicates whether a challenge is requested for this transaction
-     *
      * * `NO_PREFERENCE` - No Preference
      * * `NO_CHALLENGE_REQUESTED` - No Challenge Requested
      * * `CHALLENGE_PREFERENCE` - Challenge requested (3DS Requestor preference)
@@ -586,9 +585,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /**
          * Type of account/card that is being used for the transaction. Maps to EMV 3DS field
@@ -653,9 +650,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun cardToken(cardToken: JsonField<String>) = apply {
-            this.cardToken = cardToken
-        }
+        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
 
         /** Object containing data about the cardholder provided during the transaction. */
         fun cardholder(cardholder: Cardholder) = cardholder(JsonField.of(cardholder))
@@ -667,9 +662,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun cardholder(cardholder: JsonField<Cardholder>) = apply {
-            this.cardholder = cardholder
-        }
+        fun cardholder(cardholder: JsonField<Cardholder>) = apply { this.cardholder = cardholder }
 
         /** Channel in which the authentication occurs. Maps to EMV 3DS field `deviceChannel`. */
         fun channel(channel: Channel) = channel(JsonField.of(channel))
@@ -680,9 +673,7 @@ private constructor(
          * You should usually call [Builder.channel] with a well-typed [Channel] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun channel(channel: JsonField<Channel>) = apply {
-            this.channel = channel
-        }
+        fun channel(channel: JsonField<Channel>) = apply { this.channel = channel }
 
         /**
          * Date and time when the authentication was created in Lithic's system. Permitted values:
@@ -697,9 +688,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Object containing data about the merchant involved in the e-commerce transaction. */
         fun merchant(merchant: Merchant) = merchant(JsonField.of(merchant))
@@ -711,9 +700,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun merchant(merchant: JsonField<Merchant>) = apply {
-            this.merchant = merchant
-        }
+        fun merchant(merchant: JsonField<Merchant>) = apply { this.merchant = merchant }
 
         /**
          * Either PAYMENT_AUTHENTICATION or NON_PAYMENT_AUTHENTICATION. For
@@ -735,7 +722,6 @@ private constructor(
 
         /**
          * Indicates whether a challenge is requested for this transaction
-         *
          * * `NO_PREFERENCE` - No Preference
          * * `NO_CHALLENGE_REQUESTED` - No Challenge Requested
          * * `CHALLENGE_PREFERENCE` - Challenge requested (3DS Requestor preference)
@@ -758,9 +744,7 @@ private constructor(
          */
         fun threeDSRequestorChallengeIndicator(
             threeDSRequestorChallengeIndicator: JsonField<ThreeDSRequestorChallengeIndicator>
-        ) = apply {
-            this.threeDSRequestorChallengeIndicator = threeDSRequestorChallengeIndicator
-        }
+        ) = apply { this.threeDSRequestorChallengeIndicator = threeDSRequestorChallengeIndicator }
 
         /**
          * Object containing additional data about the 3DS request that is beyond the EMV 3DS
@@ -793,9 +777,7 @@ private constructor(
          * You should usually call [Builder.app] with a well-typed [App] value instead. This method
          * is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun app(app: JsonField<App>) = apply {
-            this.app = app
-        }
+        fun app(app: JsonField<App>) = apply { this.app = app }
 
         /**
          * Type of authentication request - i.e., the type of transaction or interaction is causing
@@ -814,9 +796,7 @@ private constructor(
          */
         fun authenticationRequestType(
             authenticationRequestType: JsonField<AuthenticationRequestType>
-        ) = apply {
-            this.authenticationRequestType = authenticationRequestType
-        }
+        ) = apply { this.authenticationRequestType = authenticationRequestType }
 
         /**
          * Object containing data about the browser used in the e-commerce transaction. Present if
@@ -830,9 +810,7 @@ private constructor(
          * You should usually call [Builder.browser] with a well-typed [Browser] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun browser(browser: JsonField<Browser>) = apply {
-            this.browser = browser
-        }
+        fun browser(browser: JsonField<Browser>) = apply { this.browser = browser }
 
         /**
          * Metadata about the challenge method and delivery. Only present when a challenge is
@@ -940,9 +918,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -972,46 +948,16 @@ private constructor(
          */
         fun build(): ThreeDSAuthentication =
             ThreeDSAuthentication(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "accountType",
-                    accountType,
-                ),
-                checkRequired(
-                    "authenticationResult",
-                    authenticationResult,
-                ),
-                checkRequired(
-                    "cardExpiryCheck",
-                    cardExpiryCheck,
-                ),
-                checkRequired(
-                    "cardToken",
-                    cardToken,
-                ),
-                checkRequired(
-                    "cardholder",
-                    cardholder,
-                ),
-                checkRequired(
-                    "channel",
-                    channel,
-                ),
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                    "merchant",
-                    merchant,
-                ),
-                checkRequired(
-                    "messageCategory",
-                    messageCategory,
-                ),
+                checkRequired("token", token),
+                checkRequired("accountType", accountType),
+                checkRequired("authenticationResult", authenticationResult),
+                checkRequired("cardExpiryCheck", cardExpiryCheck),
+                checkRequired("cardToken", cardToken),
+                checkRequired("cardholder", cardholder),
+                checkRequired("channel", channel),
+                checkRequired("created", created),
+                checkRequired("merchant", merchant),
+                checkRequired("messageCategory", messageCategory),
                 checkRequired(
                     "threeDSRequestorChallengeIndicator",
                     threeDSRequestorChallengeIndicator,
@@ -1141,11 +1087,9 @@ private constructor(
          * An enum containing [AccountType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [AccountType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1292,11 +1236,9 @@ private constructor(
          * member.
          *
          * An instance of [AuthenticationResult] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1445,11 +1387,9 @@ private constructor(
          * An enum containing [CardExpiryCheck]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [CardExpiryCheck] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1896,9 +1836,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun email(email: JsonField<String>) = apply {
-                this.email = email
-            }
+            fun email(email: JsonField<String>) = apply { this.email = email }
 
             /** Name of the cardholder. Maps to EMV 3DS field `cardholderName`. */
             fun name(name: String?) = name(JsonField.ofNullable(name))
@@ -1910,9 +1848,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply {
-                this.name = name
-            }
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
              * Home phone number in E.164 format provided by the cardholder. Maps to EMV 3DS fields
@@ -1996,9 +1932,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2126,11 +2060,9 @@ private constructor(
              *
              * An instance of [AddressMatchResult] can contain an unknown value in a couple of
              * cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2275,15 +2207,7 @@ private constructor(
                 @JsonProperty("postal_code")
                 @ExcludeMissing
                 postalCode: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                address1,
-                address2,
-                address3,
-                city,
-                country,
-                postalCode,
-                mutableMapOf(),
-            )
+            ) : this(address1, address2, address3, city, country, postalCode, mutableMapOf())
 
             /**
              * First line of the street address provided by the cardholder.
@@ -2431,9 +2355,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address1(address1: JsonField<String>) = apply {
-                    this.address1 = address1
-                }
+                fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
                 /** Second line of the street address provided by the cardholder. */
                 fun address2(address2: String?) = address2(JsonField.ofNullable(address2))
@@ -2445,9 +2367,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address2(address2: JsonField<String>) = apply {
-                    this.address2 = address2
-                }
+                fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
                 /** Third line of the street address provided by the cardholder. */
                 fun address3(address3: String?) = address3(JsonField.ofNullable(address3))
@@ -2459,9 +2379,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address3(address3: JsonField<String>) = apply {
-                    this.address3 = address3
-                }
+                fun address3(address3: JsonField<String>) = apply { this.address3 = address3 }
 
                 /** City of the address provided by the cardholder. */
                 fun city(city: String?) = city(JsonField.ofNullable(city))
@@ -2473,9 +2391,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun city(city: JsonField<String>) = apply {
-                    this.city = city
-                }
+                fun city(city: JsonField<String>) = apply { this.city = city }
 
                 /**
                  * Country of the address provided by the cardholder in ISO 3166-1 alpha-3 format
@@ -2490,9 +2406,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun country(country: JsonField<String>) = apply {
-                    this.country = country
-                }
+                fun country(country: JsonField<String>) = apply { this.country = country }
 
                 /** Postal code (e.g., ZIP code) of the address provided by the cardholder */
                 fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
@@ -2659,15 +2573,7 @@ private constructor(
                 @JsonProperty("postal_code")
                 @ExcludeMissing
                 postalCode: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                address1,
-                address2,
-                address3,
-                city,
-                country,
-                postalCode,
-                mutableMapOf(),
-            )
+            ) : this(address1, address2, address3, city, country, postalCode, mutableMapOf())
 
             /**
              * First line of the street address provided by the cardholder.
@@ -2815,9 +2721,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address1(address1: JsonField<String>) = apply {
-                    this.address1 = address1
-                }
+                fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
                 /** Second line of the street address provided by the cardholder. */
                 fun address2(address2: String?) = address2(JsonField.ofNullable(address2))
@@ -2829,9 +2733,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address2(address2: JsonField<String>) = apply {
-                    this.address2 = address2
-                }
+                fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
                 /** Third line of the street address provided by the cardholder. */
                 fun address3(address3: String?) = address3(JsonField.ofNullable(address3))
@@ -2843,9 +2745,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun address3(address3: JsonField<String>) = apply {
-                    this.address3 = address3
-                }
+                fun address3(address3: JsonField<String>) = apply { this.address3 = address3 }
 
                 /** City of the address provided by the cardholder. */
                 fun city(city: String?) = city(JsonField.ofNullable(city))
@@ -2857,9 +2757,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun city(city: JsonField<String>) = apply {
-                    this.city = city
-                }
+                fun city(city: JsonField<String>) = apply { this.city = city }
 
                 /**
                  * Country of the address provided by the cardholder in ISO 3166-1 alpha-3 format
@@ -2874,9 +2772,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun country(country: JsonField<String>) = apply {
-                    this.country = country
-                }
+                fun country(country: JsonField<String>) = apply { this.country = country }
 
                 /** Postal code (e.g., ZIP code) of the address provided by the cardholder */
                 fun postalCode(postalCode: String?) = postalCode(JsonField.ofNullable(postalCode))
@@ -3086,11 +2982,9 @@ private constructor(
          * An enum containing [Channel]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Channel] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -3215,14 +3109,7 @@ private constructor(
             @JsonProperty("country") @ExcludeMissing country: JsonField<String> = JsonMissing.of(),
             @JsonProperty("mcc") @ExcludeMissing mcc: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            riskIndicator,
-            id,
-            country,
-            mcc,
-            name,
-            mutableMapOf(),
-        )
+        ) : this(riskIndicator, id, country, mcc, name, mutableMapOf())
 
         /**
          * Object containing additional data indicating additional risk factors related to the
@@ -3383,9 +3270,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun id(id: JsonField<String>) = apply {
-                this.id = id
-            }
+            fun id(id: JsonField<String>) = apply { this.id = id }
 
             /**
              * Country code of the merchant requesting 3DS authentication. Maps to EMV 3DS field
@@ -3401,9 +3286,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun country(country: JsonField<String>) = apply {
-                this.country = country
-            }
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
              * Merchant category code assigned to the merchant that describes its business activity
@@ -3419,9 +3302,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun mcc(mcc: JsonField<String>) = apply {
-                this.mcc = mcc
-            }
+            fun mcc(mcc: JsonField<String>) = apply { this.mcc = mcc }
 
             /**
              * Name of the merchant. Maps to EMV 3DS field `merchantName`. May not be present for
@@ -3436,9 +3317,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply {
-                this.name = name
-            }
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3453,9 +3332,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3475,10 +3352,7 @@ private constructor(
              */
             fun build(): Merchant =
                 Merchant(
-                    checkRequired(
-                        "riskIndicator",
-                        riskIndicator,
-                    ),
+                    checkRequired("riskIndicator", riskIndicator),
                     id,
                     country,
                     mcc,
@@ -4141,11 +4015,9 @@ private constructor(
                  *
                  * An instance of [DeliveryTimeFrame] can contain an unknown value in a couple of
                  * cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -4296,11 +4168,9 @@ private constructor(
                  *
                  * An instance of [OrderAvailability] can contain an unknown value in a couple of
                  * cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -4444,11 +4314,9 @@ private constructor(
                  * member.
                  *
                  * An instance of [ReorderItems] can contain an unknown value in a couple of cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -4615,11 +4483,9 @@ private constructor(
                  *
                  * An instance of [ShippingMethod] can contain an unknown value in a couple of
                  * cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -4844,11 +4710,9 @@ private constructor(
          * An enum containing [MessageCategory]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [MessageCategory] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -4954,7 +4818,6 @@ private constructor(
 
     /**
      * Indicates whether a challenge is requested for this transaction
-     *
      * * `NO_PREFERENCE` - No Preference
      * * `NO_CHALLENGE_REQUESTED` - No Challenge Requested
      * * `CHALLENGE_PREFERENCE` - Challenge requested (3DS Requestor preference)
@@ -5014,11 +4877,9 @@ private constructor(
          *
          * An instance of [ThreeDSRequestorChallengeIndicator] can contain an unknown value in a
          * couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -5161,11 +5022,7 @@ private constructor(
             @JsonProperty("network_risk_score")
             @ExcludeMissing
             networkRiskScore: JsonField<Long> = JsonMissing.of(),
-        ) : this(
-            networkDecision,
-            networkRiskScore,
-            mutableMapOf(),
-        )
+        ) : this(networkDecision, networkRiskScore, mutableMapOf())
 
         /**
          * Mastercard only: Indicates whether the network would have considered the authentication
@@ -5295,9 +5152,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -5392,11 +5247,9 @@ private constructor(
              * An enum containing [NetworkDecision]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [NetworkDecision] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -5816,9 +5669,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun device(device: JsonField<String>) = apply {
-                this.device = device
-            }
+            fun device(device: JsonField<String>) = apply { this.device = device }
 
             /**
              * Raw device information - base64-encoded JSON object. Maps to EMV 3DS field
@@ -5833,9 +5684,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun deviceInfo(deviceInfo: JsonField<String>) = apply {
-                this.deviceInfo = deviceInfo
-            }
+            fun deviceInfo(deviceInfo: JsonField<String>) = apply { this.deviceInfo = deviceInfo }
 
             /** IP address of the device. */
             fun ip(ip: String) = ip(JsonField.of(ip))
@@ -5847,9 +5696,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun ip(ip: JsonField<String>) = apply {
-                this.ip = ip
-            }
+            fun ip(ip: JsonField<String>) = apply { this.ip = ip }
 
             /** Latitude coordinate of current device location. */
             fun latitude(latitude: Double?) = latitude(JsonField.ofNullable(latitude))
@@ -5868,9 +5715,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun latitude(latitude: JsonField<Double>) = apply {
-                this.latitude = latitude
-            }
+            fun latitude(latitude: JsonField<Double>) = apply { this.latitude = latitude }
 
             /** Device locale: e.g. "en-US". */
             fun locale(locale: String?) = locale(JsonField.ofNullable(locale))
@@ -5882,9 +5727,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun locale(locale: JsonField<String>) = apply {
-                this.locale = locale
-            }
+            fun locale(locale: JsonField<String>) = apply { this.locale = locale }
 
             /** Longitude coordinate of current device location. */
             fun longitude(longitude: Double?) = longitude(JsonField.ofNullable(longitude))
@@ -5903,9 +5746,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun longitude(longitude: JsonField<Double>) = apply {
-                this.longitude = longitude
-            }
+            fun longitude(longitude: JsonField<Double>) = apply { this.longitude = longitude }
 
             /** Operating System: e.g. "Android 12", "iOS 17.1". */
             fun os(os: String?) = os(JsonField.ofNullable(os))
@@ -5917,9 +5758,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun os(os: JsonField<String>) = apply {
-                this.os = os
-            }
+            fun os(os: JsonField<String>) = apply { this.os = os }
 
             /** Device platform: Android, iOS, Windows, etc. */
             fun platform(platform: String?) = platform(JsonField.ofNullable(platform))
@@ -5931,9 +5770,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun platform(platform: JsonField<String>) = apply {
-                this.platform = platform
-            }
+            fun platform(platform: JsonField<String>) = apply { this.platform = platform }
 
             /** Screen height in pixels. */
             fun screenHeight(screenHeight: Long?) = screenHeight(JsonField.ofNullable(screenHeight))
@@ -5973,9 +5810,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun screenWidth(screenWidth: JsonField<Long>) = apply {
-                this.screenWidth = screenWidth
-            }
+            fun screenWidth(screenWidth: JsonField<Long>) = apply { this.screenWidth = screenWidth }
 
             /** Time zone offset in minutes between UTC and device local time. */
             fun timeZone(timeZone: String?) = timeZone(JsonField.ofNullable(timeZone))
@@ -5987,9 +5822,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun timeZone(timeZone: JsonField<String>) = apply {
-                this.timeZone = timeZone
-            }
+            fun timeZone(timeZone: JsonField<String>) = apply { this.timeZone = timeZone }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -6004,9 +5837,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -6198,11 +6029,9 @@ private constructor(
          *
          * An instance of [AuthenticationRequestType] can contain an unknown value in a couple of
          * cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -6571,9 +6400,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun ip(ip: JsonField<String>) = apply {
-                this.ip = ip
-            }
+            fun ip(ip: JsonField<String>) = apply { this.ip = ip }
 
             /**
              * Indicates whether the cardholder's browser has the ability to execute Java. Maps to
@@ -6638,9 +6465,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun language(language: JsonField<String>) = apply {
-                this.language = language
-            }
+            fun language(language: JsonField<String>) = apply { this.language = language }
 
             /**
              * Time zone offset in minutes between UTC and browser local time. Maps to EMV 3DS field
@@ -6655,9 +6480,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun timeZone(timeZone: JsonField<String>) = apply {
-                this.timeZone = timeZone
-            }
+            fun timeZone(timeZone: JsonField<String>) = apply { this.timeZone = timeZone }
 
             /** Content of the HTTP user-agent header. Maps to EMV 3DS field `browserUserAgent`. */
             fun userAgent(userAgent: String?) = userAgent(JsonField.ofNullable(userAgent))
@@ -6669,9 +6492,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun userAgent(userAgent: JsonField<String>) = apply {
-                this.userAgent = userAgent
-            }
+            fun userAgent(userAgent: JsonField<String>) = apply { this.userAgent = userAgent }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -6686,9 +6507,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -6817,12 +6636,7 @@ private constructor(
             @JsonProperty("phone_number")
             @ExcludeMissing
             phoneNumber: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            methodType,
-            status,
-            phoneNumber,
-            mutableMapOf(),
-        )
+        ) : this(methodType, status, phoneNumber, mutableMapOf())
 
         /**
          * The type of challenge method used for authentication.
@@ -6834,7 +6648,6 @@ private constructor(
 
         /**
          * Indicates the status of the challenge
-         *
          * * SUCCESS - Cardholder completed the challenge successfully
          * * PENDING - Challenge was issued to the cardholder and was not completed yet
          * * SMS_DELIVERY_FAILED - Lithic confirmed undeliverability of the SMS to the provided
@@ -6945,7 +6758,6 @@ private constructor(
 
             /**
              * Indicates the status of the challenge
-             *
              * * SUCCESS - Cardholder completed the challenge successfully
              * * PENDING - Challenge was issued to the cardholder and was not completed yet
              * * SMS_DELIVERY_FAILED - Lithic confirmed undeliverability of the SMS to the provided
@@ -6970,9 +6782,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun status(status: JsonField<Status>) = apply {
-                this.status = status
-            }
+            fun status(status: JsonField<Status>) = apply { this.status = status }
 
             /** The phone number used for delivering the OTP. Relevant only for SMS_OTP method. */
             fun phoneNumber(phoneNumber: String?) = phoneNumber(JsonField.ofNullable(phoneNumber))
@@ -7001,9 +6811,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -7024,14 +6832,8 @@ private constructor(
              */
             fun build(): ChallengeMetadata =
                 ChallengeMetadata(
-                    checkRequired(
-                        "methodType",
-                        methodType,
-                    ),
-                    checkRequired(
-                        "status",
-                        status,
-                    ),
+                    checkRequired("methodType", methodType),
+                    checkRequired("status", status),
                     phoneNumber,
                     additionalProperties.toMutableMap(),
                 )
@@ -7111,11 +6913,9 @@ private constructor(
              * An enum containing [MethodType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [MethodType] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -7222,7 +7022,6 @@ private constructor(
 
         /**
          * Indicates the status of the challenge
-         *
          * * SUCCESS - Cardholder completed the challenge successfully
          * * PENDING - Challenge was issued to the cardholder and was not completed yet
          * * SMS_DELIVERY_FAILED - Lithic confirmed undeliverability of the SMS to the provided
@@ -7290,11 +7089,9 @@ private constructor(
              * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Status] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -7483,11 +7280,9 @@ private constructor(
          *
          * An instance of [ChallengeOrchestratedBy] can contain an unknown value in a couple of
          * cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -7642,11 +7437,9 @@ private constructor(
          * An enum containing [DecisionMadeBy]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [DecisionMadeBy] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -7843,11 +7636,9 @@ private constructor(
          * An enum containing [ThreeRiRequestType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [ThreeRiRequestType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -8204,9 +7995,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun amount(amount: JsonField<Double>) = apply {
-                this.amount = amount
-            }
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             /**
              * Approximate amount of the purchase in minor units of cardholder currency. Derived
@@ -8247,9 +8036,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun currency(currency: JsonField<String>) = apply {
-                this.currency = currency
-            }
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /**
              * Minor units of currency, as specified in ISO 4217 currency exponent. Maps to EMV 3DS
@@ -8283,9 +8070,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun dateTime(dateTime: JsonField<OffsetDateTime>) = apply {
-                this.dateTime = dateTime
-            }
+            fun dateTime(dateTime: JsonField<OffsetDateTime>) = apply { this.dateTime = dateTime }
 
             /**
              * Type of the transaction for which a 3DS authentication request is occurring. Maps to
@@ -8300,9 +8085,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply {
-                this.type = type
-            }
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -8317,9 +8100,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -8344,30 +8125,12 @@ private constructor(
              */
             fun build(): Transaction =
                 Transaction(
-                    checkRequired(
-                        "amount",
-                        amount,
-                    ),
-                    checkRequired(
-                        "cardholderAmount",
-                        cardholderAmount,
-                    ),
-                    checkRequired(
-                        "currency",
-                        currency,
-                    ),
-                    checkRequired(
-                        "currencyExponent",
-                        currencyExponent,
-                    ),
-                    checkRequired(
-                        "dateTime",
-                        dateTime,
-                    ),
-                    checkRequired(
-                        "type",
-                        type,
-                    ),
+                    checkRequired("amount", amount),
+                    checkRequired("cardholderAmount", cardholderAmount),
+                    checkRequired("currency", currency),
+                    checkRequired("currencyExponent", currencyExponent),
+                    checkRequired("dateTime", dateTime),
+                    checkRequired("type", type),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -8463,11 +8226,9 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

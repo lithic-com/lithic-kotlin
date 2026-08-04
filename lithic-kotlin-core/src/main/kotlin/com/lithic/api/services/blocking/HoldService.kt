@@ -53,11 +53,7 @@ interface HoldService {
         holdToken: String,
         params: HoldRetrieveParams = HoldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Hold =
-        retrieve(
-            params.toBuilder().holdToken(holdToken).build(),
-            requestOptions,
-        )
+    ): Hold = retrieve(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -67,11 +63,7 @@ interface HoldService {
 
     /** @see retrieve */
     fun retrieve(holdToken: String, requestOptions: RequestOptions): Hold =
-        retrieve(
-            holdToken,
-            HoldRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(holdToken, HoldRetrieveParams.none(), requestOptions)
 
     /** List holds for a financial account. */
     fun list(
@@ -92,11 +84,7 @@ interface HoldService {
 
     /** @see list */
     fun list(financialAccountToken: String, requestOptions: RequestOptions): HoldListPage =
-        list(
-            financialAccountToken,
-            HoldListParams.none(),
-            requestOptions,
-        )
+        list(financialAccountToken, HoldListParams.none(), requestOptions)
 
     /**
      * Void an active hold. This returns the held funds from pending back to available balance. Only
@@ -106,22 +94,14 @@ interface HoldService {
         holdToken: String,
         params: HoldVoidParams = HoldVoidParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Hold =
-        void(
-            params.toBuilder().holdToken(holdToken).build(),
-            requestOptions,
-        )
+    ): Hold = void(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
     /** @see void */
     fun void(params: HoldVoidParams, requestOptions: RequestOptions = RequestOptions.none()): Hold
 
     /** @see void */
     fun void(holdToken: String, requestOptions: RequestOptions): Hold =
-        void(
-            holdToken,
-            HoldVoidParams.none(),
-            requestOptions,
-        )
+        void(holdToken, HoldVoidParams.none(), requestOptions)
 
     /** A view of [HoldService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -166,10 +146,7 @@ interface HoldService {
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Hold> =
-            retrieve(
-                params.toBuilder().holdToken(holdToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -181,11 +158,7 @@ interface HoldService {
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(holdToken: String, requestOptions: RequestOptions): HttpResponseFor<Hold> =
-            retrieve(
-                holdToken,
-                HoldRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(holdToken, HoldRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
@@ -216,11 +189,7 @@ interface HoldService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<HoldListPage> =
-            list(
-                financialAccountToken,
-                HoldListParams.none(),
-                requestOptions,
-            )
+            list(financialAccountToken, HoldListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/holds/{hold_token}/void`, but is otherwise the
@@ -232,10 +201,7 @@ interface HoldService {
             params: HoldVoidParams = HoldVoidParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Hold> =
-            void(
-                params.toBuilder().holdToken(holdToken).build(),
-                requestOptions,
-            )
+            void(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
         /** @see void */
         @MustBeClosed
@@ -247,10 +213,6 @@ interface HoldService {
         /** @see void */
         @MustBeClosed
         fun void(holdToken: String, requestOptions: RequestOptions): HttpResponseFor<Hold> =
-            void(
-                holdToken,
-                HoldVoidParams.none(),
-                requestOptions,
-            )
+            void(holdToken, HoldVoidParams.none(), requestOptions)
     }
 }

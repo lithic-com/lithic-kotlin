@@ -52,52 +52,34 @@ interface V2Service {
     fun create(
         body: AuthRuleV2CreateParams.Body,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        create(
-            AuthRuleV2CreateParams.builder().body(body).build(),
-            requestOptions,
-        )
+    ): AuthRule = create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
 
     /** @see create */
     fun create(
         accountLevelRule: AuthRuleV2CreateParams.Body.AccountLevelRule,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRule =
-        create(
-            AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule),
-            requestOptions,
-        )
+        create(AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule), requestOptions)
 
     /** @see create */
     fun create(
         cardLevelRule: AuthRuleV2CreateParams.Body.CardLevelRule,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        create(
-            AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule),
-            requestOptions,
-        )
+    ): AuthRule = create(AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule), requestOptions)
 
     /** @see create */
     fun create(
         programLevelRule: AuthRuleV2CreateParams.Body.ProgramLevelRule,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRule =
-        create(
-            AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule),
-            requestOptions,
-        )
+        create(AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule), requestOptions)
 
     /** Fetches a V2 Auth rule by its token */
     fun retrieve(
         authRuleToken: String,
         params: AuthRuleV2RetrieveParams = AuthRuleV2RetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        retrieve(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+    ): AuthRule = retrieve(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -107,11 +89,7 @@ interface V2Service {
 
     /** @see retrieve */
     fun retrieve(authRuleToken: String, requestOptions: RequestOptions): AuthRule =
-        retrieve(
-            authRuleToken,
-            AuthRuleV2RetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(authRuleToken, AuthRuleV2RetrieveParams.none(), requestOptions)
 
     /**
      * Updates a V2 Auth rule's properties
@@ -124,11 +102,7 @@ interface V2Service {
         authRuleToken: String,
         params: AuthRuleV2UpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        update(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+    ): AuthRule = update(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see update */
     fun update(
@@ -144,21 +118,14 @@ interface V2Service {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): AuthRuleV2ListPage =
-        list(
-            AuthRuleV2ListParams.none(),
-            requestOptions,
-        )
+        list(AuthRuleV2ListParams.none(), requestOptions)
 
     /** Deletes a V2 Auth rule */
     fun delete(
         authRuleToken: String,
         params: AuthRuleV2DeleteParams = AuthRuleV2DeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) =
-        delete(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+    ) = delete(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see delete */
     fun delete(
@@ -168,11 +135,7 @@ interface V2Service {
 
     /** @see delete */
     fun delete(authRuleToken: String, requestOptions: RequestOptions) =
-        delete(
-            authRuleToken,
-            AuthRuleV2DeleteParams.none(),
-            requestOptions,
-        )
+        delete(authRuleToken, AuthRuleV2DeleteParams.none(), requestOptions)
 
     /**
      * Creates a new draft version of a rule that will be ran in shadow mode.
@@ -184,11 +147,7 @@ interface V2Service {
         authRuleToken: String,
         params: AuthRuleV2DraftParams = AuthRuleV2DraftParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        draft(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+    ): AuthRule = draft(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see draft */
     fun draft(
@@ -198,11 +157,7 @@ interface V2Service {
 
     /** @see draft */
     fun draft(authRuleToken: String, requestOptions: RequestOptions): AuthRule =
-        draft(
-            authRuleToken,
-            AuthRuleV2DraftParams.none(),
-            requestOptions,
-        )
+        draft(authRuleToken, AuthRuleV2DraftParams.none(), requestOptions)
 
     /**
      * Lists Auth Rule evaluation results.
@@ -219,10 +174,7 @@ interface V2Service {
 
     /** @see listResults */
     fun listResults(requestOptions: RequestOptions): AuthRuleV2ListResultsPage =
-        listResults(
-            AuthRuleV2ListResultsParams.none(),
-            requestOptions,
-        )
+        listResults(AuthRuleV2ListResultsParams.none(), requestOptions)
 
     /** Returns all versions of an auth rule, sorted by version number descending (newest first). */
     fun listVersions(
@@ -230,10 +182,7 @@ interface V2Service {
         params: AuthRuleV2ListVersionsParams = AuthRuleV2ListVersionsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2ListVersionsResponse =
-        listVersions(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+        listVersions(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see listVersions */
     fun listVersions(
@@ -246,11 +195,7 @@ interface V2Service {
         authRuleToken: String,
         requestOptions: RequestOptions,
     ): V2ListVersionsResponse =
-        listVersions(
-            authRuleToken,
-            AuthRuleV2ListVersionsParams.none(),
-            requestOptions,
-        )
+        listVersions(authRuleToken, AuthRuleV2ListVersionsParams.none(), requestOptions)
 
     /**
      * Promotes the draft version of an Auth rule to the currently active version such that it is
@@ -260,11 +205,7 @@ interface V2Service {
         authRuleToken: String,
         params: AuthRuleV2PromoteParams = AuthRuleV2PromoteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AuthRule =
-        promote(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+    ): AuthRule = promote(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see promote */
     fun promote(
@@ -274,11 +215,7 @@ interface V2Service {
 
     /** @see promote */
     fun promote(authRuleToken: String, requestOptions: RequestOptions): AuthRule =
-        promote(
-            authRuleToken,
-            AuthRuleV2PromoteParams.none(),
-            requestOptions,
-        )
+        promote(authRuleToken, AuthRuleV2PromoteParams.none(), requestOptions)
 
     /**
      * Fetches the current calculated Feature values for the given Auth Rule
@@ -294,10 +231,7 @@ interface V2Service {
         params: AuthRuleV2RetrieveFeaturesParams = AuthRuleV2RetrieveFeaturesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveFeaturesResponse =
-        retrieveFeatures(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+        retrieveFeatures(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see retrieveFeatures */
     fun retrieveFeatures(
@@ -310,11 +244,7 @@ interface V2Service {
         authRuleToken: String,
         requestOptions: RequestOptions,
     ): V2RetrieveFeaturesResponse =
-        retrieveFeatures(
-            authRuleToken,
-            AuthRuleV2RetrieveFeaturesParams.none(),
-            requestOptions,
-        )
+        retrieveFeatures(authRuleToken, AuthRuleV2RetrieveFeaturesParams.none(), requestOptions)
 
     /**
      * Retrieves a performance report for an Auth rule containing daily statistics and evaluation
@@ -334,10 +264,7 @@ interface V2Service {
         params: AuthRuleV2RetrieveReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveReportResponse =
-        retrieveReport(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+        retrieveReport(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see retrieveReport */
     fun retrieveReport(
@@ -373,10 +300,7 @@ interface V2Service {
             body: AuthRuleV2CreateParams.Body,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            create(
-                AuthRuleV2CreateParams.builder().body(body).build(),
-                requestOptions,
-            )
+            create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -384,10 +308,7 @@ interface V2Service {
             accountLevelRule: AuthRuleV2CreateParams.Body.AccountLevelRule,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            create(
-                AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule),
-                requestOptions,
-            )
+            create(AuthRuleV2CreateParams.Body.ofAccountLevelRule(accountLevelRule), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -395,10 +316,7 @@ interface V2Service {
             cardLevelRule: AuthRuleV2CreateParams.Body.CardLevelRule,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            create(
-                AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule),
-                requestOptions,
-            )
+            create(AuthRuleV2CreateParams.Body.ofCardLevelRule(cardLevelRule), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -406,10 +324,7 @@ interface V2Service {
             programLevelRule: AuthRuleV2CreateParams.Body.ProgramLevelRule,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            create(
-                AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule),
-                requestOptions,
-            )
+            create(AuthRuleV2CreateParams.Body.ofProgramLevelRule(programLevelRule), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}`, but is otherwise
@@ -421,10 +336,7 @@ interface V2Service {
             params: AuthRuleV2RetrieveParams = AuthRuleV2RetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            retrieve(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -439,11 +351,7 @@ interface V2Service {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AuthRule> =
-            retrieve(
-                authRuleToken,
-                AuthRuleV2RetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(authRuleToken, AuthRuleV2RetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v2/auth_rules/{auth_rule_token}`, but is
@@ -455,10 +363,7 @@ interface V2Service {
             params: AuthRuleV2UpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            update(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            update(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see update */
         @MustBeClosed
@@ -480,10 +385,7 @@ interface V2Service {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AuthRuleV2ListPage> =
-            list(
-                AuthRuleV2ListParams.none(),
-                requestOptions,
-            )
+            list(AuthRuleV2ListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /v2/auth_rules/{auth_rule_token}`, but is
@@ -495,10 +397,7 @@ interface V2Service {
             params: AuthRuleV2DeleteParams = AuthRuleV2DeleteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            delete(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            delete(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see delete */
         @MustBeClosed
@@ -510,11 +409,7 @@ interface V2Service {
         /** @see delete */
         @MustBeClosed
         fun delete(authRuleToken: String, requestOptions: RequestOptions): HttpResponse =
-            delete(
-                authRuleToken,
-                AuthRuleV2DeleteParams.none(),
-                requestOptions,
-            )
+            delete(authRuleToken, AuthRuleV2DeleteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/draft`, but is
@@ -526,10 +421,7 @@ interface V2Service {
             params: AuthRuleV2DraftParams = AuthRuleV2DraftParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            draft(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            draft(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see draft */
         @MustBeClosed
@@ -544,11 +436,7 @@ interface V2Service {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AuthRule> =
-            draft(
-                authRuleToken,
-                AuthRuleV2DraftParams.none(),
-                requestOptions,
-            )
+            draft(authRuleToken, AuthRuleV2DraftParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/results`, but is otherwise the same
@@ -565,10 +453,7 @@ interface V2Service {
         fun listResults(
             requestOptions: RequestOptions
         ): HttpResponseFor<AuthRuleV2ListResultsPage> =
-            listResults(
-                AuthRuleV2ListResultsParams.none(),
-                requestOptions,
-            )
+            listResults(AuthRuleV2ListResultsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}/versions`, but is
@@ -580,10 +465,7 @@ interface V2Service {
             params: AuthRuleV2ListVersionsParams = AuthRuleV2ListVersionsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2ListVersionsResponse> =
-            listVersions(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            listVersions(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see listVersions */
         @MustBeClosed
@@ -598,11 +480,7 @@ interface V2Service {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<V2ListVersionsResponse> =
-            listVersions(
-                authRuleToken,
-                AuthRuleV2ListVersionsParams.none(),
-                requestOptions,
-            )
+            listVersions(authRuleToken, AuthRuleV2ListVersionsParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v2/auth_rules/{auth_rule_token}/promote`, but is
@@ -614,10 +492,7 @@ interface V2Service {
             params: AuthRuleV2PromoteParams = AuthRuleV2PromoteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
-            promote(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            promote(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see promote */
         @MustBeClosed
@@ -632,11 +507,7 @@ interface V2Service {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<AuthRule> =
-            promote(
-                authRuleToken,
-                AuthRuleV2PromoteParams.none(),
-                requestOptions,
-            )
+            promote(authRuleToken, AuthRuleV2PromoteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}/features`, but is
@@ -666,11 +537,7 @@ interface V2Service {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<V2RetrieveFeaturesResponse> =
-            retrieveFeatures(
-                authRuleToken,
-                AuthRuleV2RetrieveFeaturesParams.none(),
-                requestOptions,
-            )
+            retrieveFeatures(authRuleToken, AuthRuleV2RetrieveFeaturesParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v2/auth_rules/{auth_rule_token}/report`, but is
@@ -682,10 +549,7 @@ interface V2Service {
             params: AuthRuleV2RetrieveReportParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2RetrieveReportResponse> =
-            retrieveReport(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            retrieveReport(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see retrieveReport */
         @MustBeClosed

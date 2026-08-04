@@ -444,9 +444,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Token of the account the transaction belongs to */
             fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -472,9 +470,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun addedAt(addedAt: JsonField<OffsetDateTime>) = apply {
-                this.addedAt = addedAt
-            }
+            fun addedAt(addedAt: JsonField<OffsetDateTime>) = apply { this.addedAt = addedAt }
 
             /** Token of the card the transaction was made on */
             fun cardToken(cardToken: String) = cardToken(JsonField.of(cardToken))
@@ -486,9 +482,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun cardToken(cardToken: JsonField<String>) = apply {
-                this.cardToken = cardToken
-            }
+            fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
 
             fun category(category: Category) = category(JsonField.of(category))
 
@@ -499,9 +493,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun category(category: JsonField<Category>) = apply {
-                this.category = category
-            }
+            fun category(category: JsonField<Category>) = apply { this.category = category }
 
             /** Date and time at which the transaction was created */
             fun transactionCreatedAt(transactionCreatedAt: OffsetDateTime) =
@@ -531,9 +523,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -558,30 +548,12 @@ private constructor(
              */
             fun build(): CardCaseTransaction =
                 CardCaseTransaction(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                        "accountToken",
-                        accountToken,
-                    ),
-                    checkRequired(
-                        "addedAt",
-                        addedAt,
-                    ),
-                    checkRequired(
-                        "cardToken",
-                        cardToken,
-                    ),
-                    checkRequired(
-                        "category",
-                        category,
-                    ),
-                    checkRequired(
-                        "transactionCreatedAt",
-                        transactionCreatedAt,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("accountToken", accountToken),
+                    checkRequired("addedAt", addedAt),
+                    checkRequired("cardToken", cardToken),
+                    checkRequired("category", category),
+                    checkRequired("transactionCreatedAt", transactionCreatedAt),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -662,11 +634,9 @@ private constructor(
              * An enum containing [Category]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Category] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1002,9 +972,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply {
-                this.token = token
-            }
+            fun token(token: JsonField<String>) = apply { this.token = token }
 
             /** Date and time at which the transaction was added to the case */
             fun addedAt(addedAt: OffsetDateTime) = addedAt(JsonField.of(addedAt))
@@ -1016,9 +984,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun addedAt(addedAt: JsonField<OffsetDateTime>) = apply {
-                this.addedAt = addedAt
-            }
+            fun addedAt(addedAt: JsonField<OffsetDateTime>) = apply { this.addedAt = addedAt }
 
             fun category(category: Category) = category(JsonField.of(category))
 
@@ -1029,9 +995,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun category(category: JsonField<Category>) = apply {
-                this.category = category
-            }
+            fun category(category: JsonField<Category>) = apply { this.category = category }
 
             /** Token of the financial account the payment belongs to */
             fun financialAccountToken(financialAccountToken: String) =
@@ -1090,9 +1054,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1116,26 +1078,11 @@ private constructor(
              */
             fun build(): PaymentCaseTransaction =
                 PaymentCaseTransaction(
-                    checkRequired(
-                        "token",
-                        token,
-                    ),
-                    checkRequired(
-                        "addedAt",
-                        addedAt,
-                    ),
-                    checkRequired(
-                        "category",
-                        category,
-                    ),
-                    checkRequired(
-                        "financialAccountToken",
-                        financialAccountToken,
-                    ),
-                    checkRequired(
-                        "transactionCreatedAt",
-                        transactionCreatedAt,
-                    ),
+                    checkRequired("token", token),
+                    checkRequired("addedAt", addedAt),
+                    checkRequired("category", category),
+                    checkRequired("financialAccountToken", financialAccountToken),
+                    checkRequired("transactionCreatedAt", transactionCreatedAt),
                     accountToken,
                     additionalProperties.toMutableMap(),
                 )
@@ -1217,11 +1164,9 @@ private constructor(
              * An enum containing [Category]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Category] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

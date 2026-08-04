@@ -48,10 +48,7 @@ private constructor(
     val level: LogLevel,
 ) : HttpClient {
 
-    override fun execute(
-        request: HttpRequest,
-        requestOptions: RequestOptions,
-    ): HttpResponse {
+    override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
         val loggingRequest = logRequest(request)
 
         val before = OffsetDateTime.now(clock)
@@ -119,10 +116,7 @@ private constructor(
             .build()
     }
 
-    private fun logResponse(
-        response: HttpResponse,
-        took: Duration,
-    ): HttpResponse {
+    private fun logResponse(response: HttpResponse, took: Duration): HttpResponse {
         if (!level.shouldLog(LogLevel.INFO)) {
             return response
         }
@@ -201,9 +195,7 @@ private constructor(
         }
 
         /** The underlying [HttpClient] for making requests. */
-        fun httpClient(httpClient: HttpClient) = apply {
-            this.httpClient = httpClient
-        }
+        fun httpClient(httpClient: HttpClient) = apply { this.httpClient = httpClient }
 
         /**
          * Sensitive headers to redact from logs.
@@ -221,18 +213,14 @@ private constructor(
          *
          * Defaults to [Clock.systemUTC].
          */
-        fun clock(clock: Clock) = apply {
-            this.clock = clock
-        }
+        fun clock(clock: Clock) = apply { this.clock = clock }
 
         /**
          * The log level to use.
          *
          * Pass [LogLevel.fromEnv] to read from environment variables.
          */
-        fun level(level: LogLevel) = apply {
-            this.level = level
-        }
+        fun level(level: LogLevel) = apply { this.level = level }
 
         /**
          * Returns an immutable instance of [LoggingHttpClient].
@@ -249,16 +237,10 @@ private constructor(
          */
         fun build(): LoggingHttpClient =
             LoggingHttpClient(
-                checkRequired(
-                    "httpClient",
-                    httpClient,
-                ),
+                checkRequired("httpClient", httpClient),
                 redactedHeaders.toSortedSet(String.CASE_INSENSITIVE_ORDER).toImmutable(),
                 clock,
-                checkRequired(
-                    "level",
-                    level,
-                ),
+                checkRequired("level", level),
             )
     }
 }
@@ -301,10 +283,8 @@ private class LoggingHttpRequestBody(
  * The written content is assumed to be in the given [charset] and the logging occurs in a streaming
  * manner with minimal buffering.
  */
-private class LoggingOutputStream(
-    private val outputStream: OutputStream,
-    charset: Charset?,
-) : OutputStream() {
+private class LoggingOutputStream(private val outputStream: OutputStream, charset: Charset?) :
+    OutputStream() {
 
     private val buffer = LoggingBuffer(charset)
 
@@ -367,10 +347,8 @@ private class LoggingHttpResponse(private val response: HttpResponse) : HttpResp
  * The contents of [inputStream] are assumed to be in the given [charset] and the logging occurs in
  * a streaming manner with minimal buffering.
  */
-private class LoggingInputStream(
-    private val inputStream: InputStream,
-    charset: Charset?,
-) : InputStream() {
+private class LoggingInputStream(private val inputStream: InputStream, charset: Charset?) :
+    InputStream() {
 
     private var isDone = false
     private val buffer = LoggingBuffer(charset)

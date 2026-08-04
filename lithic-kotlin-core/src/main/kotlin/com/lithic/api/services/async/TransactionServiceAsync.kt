@@ -59,10 +59,7 @@ interface TransactionServiceAsync {
         params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction =
-        retrieve(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -72,11 +69,7 @@ interface TransactionServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(transactionToken: String, requestOptions: RequestOptions): Transaction =
-        retrieve(
-            transactionToken,
-            TransactionRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(transactionToken, TransactionRetrieveParams.none(), requestOptions)
 
     /**
      * List card transactions. All amounts are in the smallest unit of their respective currency
@@ -89,10 +82,7 @@ interface TransactionServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): TransactionListPageAsync =
-        list(
-            TransactionListParams.none(),
-            requestOptions,
-        )
+        list(TransactionListParams.none(), requestOptions)
 
     /** Expire authorization */
     suspend fun expireAuthorization(
@@ -127,11 +117,7 @@ interface TransactionServiceAsync {
         transactionToken: String,
         params: TransactionRouteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) =
-        route(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+    ) = route(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see route */
     suspend fun route(
@@ -251,10 +237,7 @@ interface TransactionServiceAsync {
             params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction> =
-            retrieve(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -269,11 +252,7 @@ interface TransactionServiceAsync {
             transactionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Transaction> =
-            retrieve(
-                transactionToken,
-                TransactionRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(transactionToken, TransactionRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/transactions`, but is otherwise the same as
@@ -290,10 +269,7 @@ interface TransactionServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<TransactionListPageAsync> =
-            list(
-                TransactionListParams.none(),
-                requestOptions,
-            )
+            list(TransactionListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
@@ -341,10 +317,7 @@ interface TransactionServiceAsync {
             params: TransactionRouteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            route(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            route(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see route */
         @MustBeClosed

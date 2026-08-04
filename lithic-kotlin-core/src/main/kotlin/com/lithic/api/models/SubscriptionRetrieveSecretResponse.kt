@@ -24,10 +24,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("secret") @ExcludeMissing secret: JsonField<String> = JsonMissing.of()
-    ) : this(
-        secret,
-        mutableMapOf(),
-    )
+    ) : this(secret, mutableMapOf())
 
     /**
      * The secret for the event subscription.
@@ -87,9 +84,7 @@ private constructor(
          * You should usually call [Builder.secret] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun secret(secret: JsonField<String>) = apply {
-            this.secret = secret
-        }
+        fun secret(secret: JsonField<String>) = apply { this.secret = secret }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -104,9 +99,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -118,10 +111,7 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): SubscriptionRetrieveSecretResponse =
-            SubscriptionRetrieveSecretResponse(
-                secret,
-                additionalProperties.toMutableMap(),
-            )
+            SubscriptionRetrieveSecretResponse(secret, additionalProperties.toMutableMap())
     }
 
     private var validated: Boolean = false

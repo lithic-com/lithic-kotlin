@@ -45,11 +45,7 @@ interface DisputeServiceAsync {
         disputeToken: String,
         params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute =
-        retrieve(
-            params.toBuilder().disputeToken(disputeToken).build(),
-            requestOptions,
-        )
+    ): Dispute = retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -59,22 +55,14 @@ interface DisputeServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        retrieve(
-            disputeToken,
-            DisputeRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
 
     /** Update chargeback request. Can only be modified if status is `NEW`. */
     suspend fun update(
         disputeToken: String,
         params: DisputeUpdateParams = DisputeUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute =
-        update(
-            params.toBuilder().disputeToken(disputeToken).build(),
-            requestOptions,
-        )
+    ): Dispute = update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
     /** @see update */
     suspend fun update(
@@ -84,11 +72,7 @@ interface DisputeServiceAsync {
 
     /** @see update */
     suspend fun update(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        update(
-            disputeToken,
-            DisputeUpdateParams.none(),
-            requestOptions,
-        )
+        update(disputeToken, DisputeUpdateParams.none(), requestOptions)
 
     /** List chargeback requests. */
     suspend fun list(
@@ -98,21 +82,14 @@ interface DisputeServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): DisputeListPageAsync =
-        list(
-            DisputeListParams.none(),
-            requestOptions,
-        )
+        list(DisputeListParams.none(), requestOptions)
 
     /** Withdraw chargeback request. */
     suspend fun delete(
         disputeToken: String,
         params: DisputeDeleteParams = DisputeDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute =
-        delete(
-            params.toBuilder().disputeToken(disputeToken).build(),
-            requestOptions,
-        )
+    ): Dispute = delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
     /** @see delete */
     suspend fun delete(
@@ -122,11 +99,7 @@ interface DisputeServiceAsync {
 
     /** @see delete */
     suspend fun delete(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        delete(
-            disputeToken,
-            DisputeDeleteParams.none(),
-            requestOptions,
-        )
+        delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
 
     /**
      * Soft delete evidence for a chargeback request. Evidence will not be reviewed or submitted by
@@ -137,10 +110,7 @@ interface DisputeServiceAsync {
         params: DisputeDeleteEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence =
-        deleteEvidence(
-            params.toBuilder().evidenceToken(evidenceToken).build(),
-            requestOptions,
-        )
+        deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
     /** @see deleteEvidence */
     suspend fun deleteEvidence(
@@ -188,10 +158,7 @@ interface DisputeServiceAsync {
         params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListEvidencesPageAsync =
-        listEvidences(
-            params.toBuilder().disputeToken(disputeToken).build(),
-            requestOptions,
-        )
+        listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
     /** @see listEvidences */
     suspend fun listEvidences(
@@ -204,11 +171,7 @@ interface DisputeServiceAsync {
         disputeToken: String,
         requestOptions: RequestOptions,
     ): DisputeListEvidencesPageAsync =
-        listEvidences(
-            disputeToken,
-            DisputeListEvidencesParams.none(),
-            requestOptions,
-        )
+        listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
 
     /** Get evidence for a chargeback request. */
     suspend fun retrieveEvidence(
@@ -216,10 +179,7 @@ interface DisputeServiceAsync {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence =
-        retrieveEvidence(
-            params.toBuilder().evidenceToken(evidenceToken).build(),
-            requestOptions,
-        )
+        retrieveEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
     /** @see retrieveEvidence */
     suspend fun retrieveEvidence(
@@ -263,10 +223,7 @@ interface DisputeServiceAsync {
             params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            retrieve(
-                params.toBuilder().disputeToken(disputeToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -281,11 +238,7 @@ interface DisputeServiceAsync {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> =
-            retrieve(
-                disputeToken,
-                DisputeRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/disputes/{dispute_token}`, but is otherwise
@@ -297,10 +250,7 @@ interface DisputeServiceAsync {
             params: DisputeUpdateParams = DisputeUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            update(
-                params.toBuilder().disputeToken(disputeToken).build(),
-                requestOptions,
-            )
+            update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
         /** @see update */
         @MustBeClosed
@@ -315,11 +265,7 @@ interface DisputeServiceAsync {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> =
-            update(
-                disputeToken,
-                DisputeUpdateParams.none(),
-                requestOptions,
-            )
+            update(disputeToken, DisputeUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
@@ -334,10 +280,7 @@ interface DisputeServiceAsync {
         /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPageAsync> =
-            list(
-                DisputeListParams.none(),
-                requestOptions,
-            )
+            list(DisputeListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete /v1/disputes/{dispute_token}`, but is otherwise
@@ -349,10 +292,7 @@ interface DisputeServiceAsync {
             params: DisputeDeleteParams = DisputeDeleteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            delete(
-                params.toBuilder().disputeToken(disputeToken).build(),
-                requestOptions,
-            )
+            delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
         /** @see delete */
         @MustBeClosed
@@ -367,11 +307,7 @@ interface DisputeServiceAsync {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> =
-            delete(
-                disputeToken,
-                DisputeDeleteParams.none(),
-                requestOptions,
-            )
+            delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete
@@ -384,10 +320,7 @@ interface DisputeServiceAsync {
             params: DisputeDeleteEvidenceParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeEvidence> =
-            deleteEvidence(
-                params.toBuilder().evidenceToken(evidenceToken).build(),
-                requestOptions,
-            )
+            deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
 
         /** @see deleteEvidence */
         @MustBeClosed
@@ -441,10 +374,7 @@ interface DisputeServiceAsync {
             params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListEvidencesPageAsync> =
-            listEvidences(
-                params.toBuilder().disputeToken(disputeToken).build(),
-                requestOptions,
-            )
+            listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
 
         /** @see listEvidences */
         @MustBeClosed
@@ -459,11 +389,7 @@ interface DisputeServiceAsync {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeListEvidencesPageAsync> =
-            listEvidences(
-                disputeToken,
-                DisputeListEvidencesParams.none(),
-                requestOptions,
-            )
+            listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

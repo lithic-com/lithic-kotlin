@@ -29,10 +29,7 @@ interface LineItemService {
         params: FinancialAccountStatementLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FinancialAccountStatementLineItemListPage =
-        list(
-            params.toBuilder().statementToken(statementToken).build(),
-            requestOptions,
-        )
+        list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
     /** @see list */
     fun list(
@@ -61,10 +58,7 @@ interface LineItemService {
             params: FinancialAccountStatementLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FinancialAccountStatementLineItemListPage> =
-            list(
-                params.toBuilder().statementToken(statementToken).build(),
-                requestOptions,
-            )
+            list(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
         /** @see list */
         @MustBeClosed

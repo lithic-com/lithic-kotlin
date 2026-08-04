@@ -53,11 +53,7 @@ interface HoldServiceAsync {
         holdToken: String,
         params: HoldRetrieveParams = HoldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Hold =
-        retrieve(
-            params.toBuilder().holdToken(holdToken).build(),
-            requestOptions,
-        )
+    ): Hold = retrieve(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -67,11 +63,7 @@ interface HoldServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(holdToken: String, requestOptions: RequestOptions): Hold =
-        retrieve(
-            holdToken,
-            HoldRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(holdToken, HoldRetrieveParams.none(), requestOptions)
 
     /** List holds for a financial account. */
     suspend fun list(
@@ -94,12 +86,7 @@ interface HoldServiceAsync {
     suspend fun list(
         financialAccountToken: String,
         requestOptions: RequestOptions,
-    ): HoldListPageAsync =
-        list(
-            financialAccountToken,
-            HoldListParams.none(),
-            requestOptions,
-        )
+    ): HoldListPageAsync = list(financialAccountToken, HoldListParams.none(), requestOptions)
 
     /**
      * Void an active hold. This returns the held funds from pending back to available balance. Only
@@ -109,11 +96,7 @@ interface HoldServiceAsync {
         holdToken: String,
         params: HoldVoidParams = HoldVoidParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Hold =
-        void(
-            params.toBuilder().holdToken(holdToken).build(),
-            requestOptions,
-        )
+    ): Hold = void(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
     /** @see void */
     suspend fun void(
@@ -123,11 +106,7 @@ interface HoldServiceAsync {
 
     /** @see void */
     suspend fun void(holdToken: String, requestOptions: RequestOptions): Hold =
-        void(
-            holdToken,
-            HoldVoidParams.none(),
-            requestOptions,
-        )
+        void(holdToken, HoldVoidParams.none(), requestOptions)
 
     /** A view of [HoldServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -172,10 +151,7 @@ interface HoldServiceAsync {
             params: HoldRetrieveParams = HoldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Hold> =
-            retrieve(
-                params.toBuilder().holdToken(holdToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -189,12 +165,7 @@ interface HoldServiceAsync {
         suspend fun retrieve(
             holdToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Hold> =
-            retrieve(
-                holdToken,
-                HoldRetrieveParams.none(),
-                requestOptions,
-            )
+        ): HttpResponseFor<Hold> = retrieve(holdToken, HoldRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
@@ -225,11 +196,7 @@ interface HoldServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<HoldListPageAsync> =
-            list(
-                financialAccountToken,
-                HoldListParams.none(),
-                requestOptions,
-            )
+            list(financialAccountToken, HoldListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/holds/{hold_token}/void`, but is otherwise the
@@ -241,10 +208,7 @@ interface HoldServiceAsync {
             params: HoldVoidParams = HoldVoidParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Hold> =
-            void(
-                params.toBuilder().holdToken(holdToken).build(),
-                requestOptions,
-            )
+            void(params.toBuilder().holdToken(holdToken).build(), requestOptions)
 
         /** @see void */
         @MustBeClosed
@@ -256,10 +220,6 @@ interface HoldServiceAsync {
         /** @see void */
         @MustBeClosed
         suspend fun void(holdToken: String, requestOptions: RequestOptions): HttpResponseFor<Hold> =
-            void(
-                holdToken,
-                HoldVoidParams.none(),
-                requestOptions,
-            )
+            void(holdToken, HoldVoidParams.none(), requestOptions)
     }
 }

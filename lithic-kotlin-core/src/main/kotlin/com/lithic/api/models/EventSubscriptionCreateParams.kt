@@ -137,14 +137,10 @@ private constructor(
          * - [disabled]
          * - [eventTypes]
          */
-        fun body(body: Body) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** URL to which event webhooks will be sent. URL must be a valid HTTPS address. */
-        fun url(url: String) = apply {
-            body.url(url)
-        }
+        fun url(url: String) = apply { body.url(url) }
 
         /**
          * Sets [Builder.url] to an arbitrary JSON value.
@@ -152,14 +148,10 @@ private constructor(
          * You should usually call [Builder.url] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun url(url: JsonField<String>) = apply {
-            body.url(url)
-        }
+        fun url(url: JsonField<String>) = apply { body.url(url) }
 
         /** Event subscription description. */
-        fun description(description: String) = apply {
-            body.description(description)
-        }
+        fun description(description: String) = apply { body.description(description) }
 
         /**
          * Sets [Builder.description] to an arbitrary JSON value.
@@ -168,14 +160,10 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun description(description: JsonField<String>) = apply {
-            body.description(description)
-        }
+        fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /** Whether the event subscription is active (false) or inactive (true). */
-        fun disabled(disabled: Boolean) = apply {
-            body.disabled(disabled)
-        }
+        fun disabled(disabled: Boolean) = apply { body.disabled(disabled) }
 
         /**
          * Sets [Builder.disabled] to an arbitrary JSON value.
@@ -184,17 +172,13 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun disabled(disabled: JsonField<Boolean>) = apply {
-            body.disabled(disabled)
-        }
+        fun disabled(disabled: JsonField<Boolean>) = apply { body.disabled(disabled) }
 
         /**
          * Indicates types of events that will be sent to this subscription. If left blank, all
          * types will be sent.
          */
-        fun eventTypes(eventTypes: List<EventType>) = apply {
-            body.eventTypes(eventTypes)
-        }
+        fun eventTypes(eventTypes: List<EventType>) = apply { body.eventTypes(eventTypes) }
 
         /**
          * Sets [Builder.eventTypes] to an arbitrary JSON value.
@@ -212,19 +196,14 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addEventType(eventType: EventType) = apply {
-            body.addEventType(eventType)
-        }
+        fun addEventType(eventType: EventType) = apply { body.addEventType(eventType) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -232,9 +211,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -282,9 +259,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -334,9 +309,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -390,13 +363,7 @@ private constructor(
             @JsonProperty("event_types")
             @ExcludeMissing
             eventTypes: JsonField<List<EventType>> = JsonMissing.of(),
-        ) : this(
-            url,
-            description,
-            disabled,
-            eventTypes,
-            mutableMapOf(),
-        )
+        ) : this(url, description, disabled, eventTypes, mutableMapOf())
 
         /**
          * URL to which event webhooks will be sent. URL must be a valid HTTPS address.
@@ -515,9 +482,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun url(url: JsonField<String>) = apply {
-                this.url = url
-            }
+            fun url(url: JsonField<String>) = apply { this.url = url }
 
             /** Event subscription description. */
             fun description(description: String) = description(JsonField.of(description))
@@ -543,9 +508,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun disabled(disabled: JsonField<Boolean>) = apply {
-                this.disabled = disabled
-            }
+            fun disabled(disabled: JsonField<Boolean>) = apply { this.disabled = disabled }
 
             /**
              * Indicates types of events that will be sent to this subscription. If left blank, all
@@ -589,9 +552,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -611,10 +572,7 @@ private constructor(
              */
             fun build(): Body =
                 Body(
-                    checkRequired(
-                        "url",
-                        url,
-                    ),
+                    checkRequired("url", url),
                     description,
                     disabled,
                     (eventTypes ?: JsonMissing.of()).map { it.toImmutable() },
@@ -690,7 +648,6 @@ private constructor(
 
     /**
      * The type of event that occurred. Possible values:
-     *
      * - account_holder_document.updated: Occurs when an account holder's document upload status has
      *   been updated.
      * - account_holder.created: Occurs when a new account_holder is created.
@@ -1010,11 +967,9 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

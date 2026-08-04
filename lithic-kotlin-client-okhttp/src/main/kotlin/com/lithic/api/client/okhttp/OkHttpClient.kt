@@ -41,10 +41,7 @@ import okio.sink
 class OkHttpClient internal constructor(private val okHttpClient: okhttp3.OkHttpClient) :
     HttpClient {
 
-    override fun execute(
-        request: HttpRequest,
-        requestOptions: RequestOptions,
-    ): HttpResponse {
+    override fun execute(request: HttpRequest, requestOptions: RequestOptions): HttpResponse {
         val call = newCall(request, requestOptions)
 
         return try {
@@ -244,9 +241,7 @@ private fun HttpRequest.toRequest(client: okhttp3.OkHttpClient?): Request {
     }
 
     val builder = Request.Builder().url(toUrl()).method(method.name, body)
-    headers.names().forEach { name ->
-        headers.values(name).forEach { builder.addHeader(name, it) }
-    }
+    headers.names().forEach { name -> headers.values(name).forEach { builder.addHeader(name, it) } }
 
     if (client != null) {
         if (

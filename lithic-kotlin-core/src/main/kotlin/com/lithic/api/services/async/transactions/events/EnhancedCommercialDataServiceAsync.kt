@@ -32,11 +32,7 @@ interface EnhancedCommercialDataServiceAsync {
         params: TransactionEventEnhancedCommercialDataRetrieveParams =
             TransactionEventEnhancedCommercialDataRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): EnhancedData =
-        retrieve(
-            params.toBuilder().eventToken(eventToken).build(),
-            requestOptions,
-        )
+    ): EnhancedData = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -79,10 +75,7 @@ interface EnhancedCommercialDataServiceAsync {
                 TransactionEventEnhancedCommercialDataRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EnhancedData> =
-            retrieve(
-                params.toBuilder().eventToken(eventToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed

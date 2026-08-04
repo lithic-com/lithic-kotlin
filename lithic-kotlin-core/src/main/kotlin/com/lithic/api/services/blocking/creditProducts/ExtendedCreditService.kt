@@ -30,10 +30,7 @@ interface ExtendedCreditService {
             CreditProductExtendedCreditRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExtendedCredit =
-        retrieve(
-            params.toBuilder().creditProductToken(creditProductToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(

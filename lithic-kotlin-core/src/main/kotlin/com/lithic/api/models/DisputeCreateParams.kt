@@ -155,14 +155,10 @@ private constructor(
          * - [customerNote]
          * - etc.
          */
-        fun body(body: Body) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /** Amount for chargeback */
-        fun amount(amount: Long) = apply {
-            body.amount(amount)
-        }
+        fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
          * Sets [Builder.amount] to an arbitrary JSON value.
@@ -170,14 +166,10 @@ private constructor(
          * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun amount(amount: JsonField<Long>) = apply {
-            body.amount(amount)
-        }
+        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
 
         /** Reason for chargeback */
-        fun reason(reason: Reason) = apply {
-            body.reason(reason)
-        }
+        fun reason(reason: Reason) = apply { body.reason(reason) }
 
         /**
          * Sets [Builder.reason] to an arbitrary JSON value.
@@ -185,9 +177,7 @@ private constructor(
          * You should usually call [Builder.reason] with a well-typed [Reason] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun reason(reason: JsonField<Reason>) = apply {
-            body.reason(reason)
-        }
+        fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
 
         /** Transaction for chargeback */
         fun transactionToken(transactionToken: String) = apply {
@@ -222,9 +212,7 @@ private constructor(
         }
 
         /** Customer description */
-        fun customerNote(customerNote: String) = apply {
-            body.customerNote(customerNote)
-        }
+        fun customerNote(customerNote: String) = apply { body.customerNote(customerNote) }
 
         /**
          * Sets [Builder.customerNote] to an arbitrary JSON value.
@@ -242,10 +230,7 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -253,9 +238,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -303,9 +286,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -355,9 +336,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -415,14 +394,7 @@ private constructor(
             @JsonProperty("customer_note")
             @ExcludeMissing
             customerNote: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            amount,
-            reason,
-            transactionToken,
-            customerFiledDate,
-            customerNote,
-            mutableMapOf(),
-        )
+        ) : this(amount, reason, transactionToken, customerFiledDate, customerNote, mutableMapOf())
 
         /**
          * Amount for chargeback
@@ -565,9 +537,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun amount(amount: JsonField<Long>) = apply {
-                this.amount = amount
-            }
+            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
             /** Reason for chargeback */
             fun reason(reason: Reason) = reason(JsonField.of(reason))
@@ -579,9 +549,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun reason(reason: JsonField<Reason>) = apply {
-                this.reason = reason
-            }
+            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
             /** Transaction for chargeback */
             fun transactionToken(transactionToken: String) =
@@ -640,9 +608,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -664,18 +630,9 @@ private constructor(
              */
             fun build(): Body =
                 Body(
-                    checkRequired(
-                        "amount",
-                        amount,
-                    ),
-                    checkRequired(
-                        "reason",
-                        reason,
-                    ),
-                    checkRequired(
-                        "transactionToken",
-                        transactionToken,
-                    ),
+                    checkRequired("amount", amount),
+                    checkRequired("reason", reason),
+                    checkRequired("transactionToken", transactionToken),
                     customerFiledDate,
                     customerNote,
                     additionalProperties.toMutableMap(),
@@ -826,11 +783,9 @@ private constructor(
          * An enum containing [Reason]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Reason] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

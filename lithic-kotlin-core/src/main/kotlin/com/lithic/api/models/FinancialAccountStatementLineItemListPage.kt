@@ -86,9 +86,7 @@ private constructor(
             response = financialAccountStatementLineItemListPage.response
         }
 
-        fun service(service: LineItemService) = apply {
-            this.service = service
-        }
+        fun service(service: LineItemService) = apply { this.service = service }
 
         /** The parameters that were used to request this page. */
         fun params(params: FinancialAccountStatementLineItemListParams) = apply {
@@ -96,9 +94,7 @@ private constructor(
         }
 
         /** The response that this page was parsed from. */
-        fun response(response: StatementLineItems) = apply {
-            this.response = response
-        }
+        fun response(response: StatementLineItems) = apply { this.response = response }
 
         /**
          * Returns an immutable instance of [FinancialAccountStatementLineItemListPage].
@@ -116,18 +112,9 @@ private constructor(
          */
         fun build(): FinancialAccountStatementLineItemListPage =
             FinancialAccountStatementLineItemListPage(
-                checkRequired(
-                    "service",
-                    service,
-                ),
-                checkRequired(
-                    "params",
-                    params,
-                ),
-                checkRequired(
-                    "response",
-                    response,
-                ),
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 

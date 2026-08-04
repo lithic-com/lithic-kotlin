@@ -48,10 +48,7 @@ interface FinancialTransactionServiceAsync {
         params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardFinancialTransactionListPageAsync =
-        list(
-            params.toBuilder().cardToken(cardToken).build(),
-            requestOptions,
-        )
+        list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
     /** @see list */
     suspend fun list(
@@ -64,11 +61,7 @@ interface FinancialTransactionServiceAsync {
         cardToken: String,
         requestOptions: RequestOptions,
     ): CardFinancialTransactionListPageAsync =
-        list(
-            cardToken,
-            CardFinancialTransactionListParams.none(),
-            requestOptions,
-        )
+        list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
 
     /**
      * A view of [FinancialTransactionServiceAsync] that provides access to raw HTTP responses for
@@ -118,10 +111,7 @@ interface FinancialTransactionServiceAsync {
             params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardFinancialTransactionListPageAsync> =
-            list(
-                params.toBuilder().cardToken(cardToken).build(),
-                requestOptions,
-            )
+            list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
         /** @see list */
         @MustBeClosed
@@ -136,10 +126,6 @@ interface FinancialTransactionServiceAsync {
             cardToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardFinancialTransactionListPageAsync> =
-            list(
-                cardToken,
-                CardFinancialTransactionListParams.none(),
-                requestOptions,
-            )
+            list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
     }
 }

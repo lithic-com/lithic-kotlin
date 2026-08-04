@@ -113,9 +113,7 @@ private constructor(
         }
 
         /** Only return Auth Rules that are bound to the provided account token. */
-        fun accountToken(accountToken: String?) = apply {
-            this.accountToken = accountToken
-        }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
         /** Only return Auth Rules that are bound to the provided business account token. */
         fun businessAccountToken(businessAccountToken: String?) = apply {
@@ -123,25 +121,19 @@ private constructor(
         }
 
         /** Only return Auth Rules that are bound to the provided card token. */
-        fun cardToken(cardToken: String?) = apply {
-            this.cardToken = cardToken
-        }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String?) = apply {
-            this.endingBefore = endingBefore
-        }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
         /**
          * Deprecated: Use event_streams instead. Only return Auth rules that are executed during
          * the provided event stream.
          */
-        fun eventStream(eventStream: EventStream?) = apply {
-            this.eventStream = eventStream
-        }
+        fun eventStream(eventStream: EventStream?) = apply { this.eventStream = eventStream }
 
         /**
          * Only return Auth rules that are executed during any of the provided event streams. If
@@ -161,9 +153,7 @@ private constructor(
         }
 
         /** Page size (for pagination). */
-        fun pageSize(pageSize: Long?) = apply {
-            this.pageSize = pageSize
-        }
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
@@ -173,17 +163,13 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Only return Auth Rules that are bound to the provided scope. */
-        fun scope(scope: Scope?) = apply {
-            this.scope = scope
-        }
+        fun scope(scope: Scope?) = apply { this.scope = scope }
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String?) = apply {
-            this.startingAfter = startingAfter
-        }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -227,9 +213,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -279,9 +263,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -367,11 +349,9 @@ private constructor(
          * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Scope] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

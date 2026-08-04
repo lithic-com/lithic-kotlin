@@ -54,10 +54,7 @@ interface BacktestServiceAsync {
         params: AuthRuleV2BacktestCreateParams = AuthRuleV2BacktestCreateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BacktestCreateResponse =
-        create(
-            params.toBuilder().authRuleToken(authRuleToken).build(),
-            requestOptions,
-        )
+        create(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
     /** @see create */
     suspend fun create(
@@ -70,11 +67,7 @@ interface BacktestServiceAsync {
         authRuleToken: String,
         requestOptions: RequestOptions,
     ): BacktestCreateResponse =
-        create(
-            authRuleToken,
-            AuthRuleV2BacktestCreateParams.none(),
-            requestOptions,
-        )
+        create(authRuleToken, AuthRuleV2BacktestCreateParams.none(), requestOptions)
 
     /**
      * Returns the backtest results of an Auth rule (if available).
@@ -134,10 +127,7 @@ interface BacktestServiceAsync {
             params: AuthRuleV2BacktestCreateParams = AuthRuleV2BacktestCreateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BacktestCreateResponse> =
-            create(
-                params.toBuilder().authRuleToken(authRuleToken).build(),
-                requestOptions,
-            )
+            create(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -152,11 +142,7 @@ interface BacktestServiceAsync {
             authRuleToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<BacktestCreateResponse> =
-            create(
-                authRuleToken,
-                AuthRuleV2BacktestCreateParams.none(),
-                requestOptions,
-            )
+            create(authRuleToken, AuthRuleV2BacktestCreateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get

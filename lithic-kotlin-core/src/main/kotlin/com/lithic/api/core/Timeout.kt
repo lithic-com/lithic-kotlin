@@ -85,9 +85,7 @@ private constructor(
          *
          * Defaults to `Duration.ofMinutes(1)`.
          */
-        fun connect(connect: Duration?) = apply {
-            this.connect = connect
-        }
+        fun connect(connect: Duration?) = apply { this.connect = connect }
 
         /**
          * The maximum time allowed between two data packets when waiting for the server’s response.
@@ -96,9 +94,7 @@ private constructor(
          *
          * Defaults to `request()`.
          */
-        fun read(read: Duration?) = apply {
-            this.read = read
-        }
+        fun read(read: Duration?) = apply { this.read = read }
 
         /**
          * The maximum time allowed between two data packets when sending the request to the server.
@@ -107,9 +103,7 @@ private constructor(
          *
          * Defaults to `request()`.
          */
-        fun write(write: Duration?) = apply {
-            this.write = write
-        }
+        fun write(write: Duration?) = apply { this.write = write }
 
         /**
          * The maximum time allowed for a complete HTTP call, not including retries.
@@ -121,22 +115,14 @@ private constructor(
          *
          * Defaults to `Duration.ofMinutes(1)`.
          */
-        fun request(request: Duration?) = apply {
-            this.request = request
-        }
+        fun request(request: Duration?) = apply { this.request = request }
 
         /**
          * Returns an immutable instance of [Timeout].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): Timeout =
-            Timeout(
-                connect,
-                read,
-                write,
-                request,
-            )
+        fun build(): Timeout = Timeout(connect, read, write, request)
     }
 
     internal fun assign(target: Timeout): Timeout =

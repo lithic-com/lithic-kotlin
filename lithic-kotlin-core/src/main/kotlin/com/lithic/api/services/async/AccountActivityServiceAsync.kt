@@ -33,10 +33,7 @@ interface AccountActivityServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): AccountActivityListPageAsync =
-        list(
-            AccountActivityListParams.none(),
-            requestOptions,
-        )
+        list(AccountActivityListParams.none(), requestOptions)
 
     /** Retrieve a single transaction */
     suspend fun retrieveTransaction(
@@ -97,10 +94,7 @@ interface AccountActivityServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<AccountActivityListPageAsync> =
-            list(
-                AccountActivityListParams.none(),
-                requestOptions,
-            )
+            list(AccountActivityListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/account_activity/{transaction_token}`, but is

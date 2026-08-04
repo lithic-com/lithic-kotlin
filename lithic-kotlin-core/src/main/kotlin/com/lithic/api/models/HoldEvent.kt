@@ -246,9 +246,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Amount in cents */
         fun amount(amount: Long) = amount(JsonField.of(amount))
@@ -259,9 +257,7 @@ private constructor(
          * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun amount(amount: JsonField<Long>) = apply {
-            this.amount = amount
-        }
+        fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
@@ -272,9 +268,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         fun detailedResults(detailedResults: List<DetailedResults>) =
             detailedResults(JsonField.of(detailedResults))
@@ -310,9 +304,7 @@ private constructor(
          * You should usually call [Builder.memo] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun memo(memo: JsonField<String>) = apply {
-            this.memo = memo
-        }
+        fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
         fun result(result: TransactionResult) = result(JsonField.of(result))
 
@@ -323,9 +315,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun result(result: JsonField<TransactionResult>) = apply {
-            this.result = result
-        }
+        fun result(result: JsonField<TransactionResult>) = apply { this.result = result }
 
         /**
          * Transaction token of the payment that settled this hold (only populated for HOLD_SETTLED
@@ -355,9 +345,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun type(type: JsonField<HoldEventType>) = apply {
-            this.type = type
-        }
+        fun type(type: JsonField<HoldEventType>) = apply { this.type = type }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -372,9 +360,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -401,39 +387,14 @@ private constructor(
          */
         fun build(): HoldEvent =
             HoldEvent(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "amount",
-                    amount,
-                ),
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                        "detailedResults",
-                        detailedResults,
-                    )
-                    .map { it.toImmutable() },
-                checkRequired(
-                    "memo",
-                    memo,
-                ),
-                checkRequired(
-                    "result",
-                    result,
-                ),
-                checkRequired(
-                    "settlingTransactionToken",
-                    settlingTransactionToken,
-                ),
-                checkRequired(
-                    "type",
-                    type,
-                ),
+                checkRequired("token", token),
+                checkRequired("amount", amount),
+                checkRequired("created", created),
+                checkRequired("detailedResults", detailedResults).map { it.toImmutable() },
+                checkRequired("memo", memo),
+                checkRequired("result", result),
+                checkRequired("settlingTransactionToken", settlingTransactionToken),
+                checkRequired("type", type),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -519,11 +480,9 @@ private constructor(
          * An enum containing [DetailedResults]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [DetailedResults] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -659,11 +618,9 @@ private constructor(
          * An enum containing [TransactionResult]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TransactionResult] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -806,11 +763,9 @@ private constructor(
          * An enum containing [HoldEventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [HoldEventType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

@@ -383,9 +383,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         /** Date and time at which the file record was created */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -397,9 +395,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /** Presigned URL the client uses to download the file */
         fun downloadUrl(downloadUrl: String?) = downloadUrl(JsonField.ofNullable(downloadUrl))
@@ -411,9 +407,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun downloadUrl(downloadUrl: JsonField<String>) = apply {
-            this.downloadUrl = downloadUrl
-        }
+        fun downloadUrl(downloadUrl: JsonField<String>) = apply { this.downloadUrl = downloadUrl }
 
         /** Date and time at which the download URL expires */
         fun downloadUrlExpires(downloadUrlExpires: OffsetDateTime?) =
@@ -454,9 +448,7 @@ private constructor(
          * You should usually call [Builder.mimeType] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun mimeType(mimeType: JsonField<String>) = apply {
-            this.mimeType = mimeType
-        }
+        fun mimeType(mimeType: JsonField<String>) = apply { this.mimeType = mimeType }
 
         /** Name of the file */
         fun name(name: String) = name(JsonField.of(name))
@@ -467,9 +459,7 @@ private constructor(
          * You should usually call [Builder.name] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun name(name: JsonField<String>) = apply {
-            this.name = name
-        }
+        fun name(name: JsonField<String>) = apply { this.name = name }
 
         /** Size of the file in bytes, available once the file is ready */
         fun sizeBytes(sizeBytes: Long?) = sizeBytes(JsonField.ofNullable(sizeBytes))
@@ -487,9 +477,7 @@ private constructor(
          * You should usually call [Builder.sizeBytes] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun sizeBytes(sizeBytes: JsonField<Long>) = apply {
-            this.sizeBytes = sizeBytes
-        }
+        fun sizeBytes(sizeBytes: JsonField<Long>) = apply { this.sizeBytes = sizeBytes }
 
         /**
          * Lifecycle status of a case file:
@@ -506,9 +494,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun status(status: JsonField<FileStatus>) = apply {
-            this.status = status
-        }
+        fun status(status: JsonField<FileStatus>) = apply { this.status = status }
 
         /** Date and time at which the file record was last updated */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -520,9 +506,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply {
-            this.updated = updated
-        }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         /**
          * Constraints applied to a file upload, returned alongside the upload URL so clients can
@@ -552,9 +536,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun uploadUrl(uploadUrl: JsonField<String>) = apply {
-            this.uploadUrl = uploadUrl
-        }
+        fun uploadUrl(uploadUrl: JsonField<String>) = apply { this.uploadUrl = uploadUrl }
 
         /** Date and time at which the upload URL expires */
         fun uploadUrlExpires(uploadUrlExpires: OffsetDateTime?) =
@@ -584,9 +566,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -618,58 +598,19 @@ private constructor(
          */
         fun build(): CaseFile =
             CaseFile(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                    "downloadUrl",
-                    downloadUrl,
-                ),
-                checkRequired(
-                    "downloadUrlExpires",
-                    downloadUrlExpires,
-                ),
-                checkRequired(
-                    "failureReason",
-                    failureReason,
-                ),
-                checkRequired(
-                    "mimeType",
-                    mimeType,
-                ),
-                checkRequired(
-                    "name",
-                    name,
-                ),
-                checkRequired(
-                    "sizeBytes",
-                    sizeBytes,
-                ),
-                checkRequired(
-                    "status",
-                    status,
-                ),
-                checkRequired(
-                    "updated",
-                    updated,
-                ),
-                checkRequired(
-                    "uploadConstraints",
-                    uploadConstraints,
-                ),
-                checkRequired(
-                    "uploadUrl",
-                    uploadUrl,
-                ),
-                checkRequired(
-                    "uploadUrlExpires",
-                    uploadUrlExpires,
-                ),
+                checkRequired("token", token),
+                checkRequired("created", created),
+                checkRequired("downloadUrl", downloadUrl),
+                checkRequired("downloadUrlExpires", downloadUrlExpires),
+                checkRequired("failureReason", failureReason),
+                checkRequired("mimeType", mimeType),
+                checkRequired("name", name),
+                checkRequired("sizeBytes", sizeBytes),
+                checkRequired("status", status),
+                checkRequired("updated", updated),
+                checkRequired("uploadConstraints", uploadConstraints),
+                checkRequired("uploadUrl", uploadUrl),
+                checkRequired("uploadUrlExpires", uploadUrlExpires),
                 additionalProperties.toMutableMap(),
             )
     }

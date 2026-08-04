@@ -65,11 +65,7 @@ interface SubscriptionServiceAsync {
         eventSubscriptionToken: String,
         requestOptions: RequestOptions,
     ): EventSubscription =
-        retrieve(
-            eventSubscriptionToken,
-            EventSubscriptionRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(eventSubscriptionToken, EventSubscriptionRetrieveParams.none(), requestOptions)
 
     /** Update an event subscription. */
     suspend fun update(
@@ -96,10 +92,7 @@ interface SubscriptionServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): EventSubscriptionListPageAsync =
-        list(
-            EventSubscriptionListParams.none(),
-            requestOptions,
-        )
+        list(EventSubscriptionListParams.none(), requestOptions)
 
     /** Delete an event subscription. */
     suspend fun delete(
@@ -120,11 +113,7 @@ interface SubscriptionServiceAsync {
 
     /** @see delete */
     suspend fun delete(eventSubscriptionToken: String, requestOptions: RequestOptions) =
-        delete(
-            eventSubscriptionToken,
-            EventSubscriptionDeleteParams.none(),
-            requestOptions,
-        )
+        delete(eventSubscriptionToken, EventSubscriptionDeleteParams.none(), requestOptions)
 
     /** List all the message attempts for a given event subscription. */
     suspend fun listAttempts(
@@ -173,11 +162,7 @@ interface SubscriptionServiceAsync {
 
     /** @see recover */
     suspend fun recover(eventSubscriptionToken: String, requestOptions: RequestOptions) =
-        recover(
-            eventSubscriptionToken,
-            EventSubscriptionRecoverParams.none(),
-            requestOptions,
-        )
+        recover(eventSubscriptionToken, EventSubscriptionRecoverParams.none(), requestOptions)
 
     /**
      * Replays messages to the endpoint. Only messages that were created after `begin` will be sent.
@@ -348,11 +333,7 @@ interface SubscriptionServiceAsync {
             eventSubscriptionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventSubscription> =
-            retrieve(
-                eventSubscriptionToken,
-                EventSubscriptionRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(eventSubscriptionToken, EventSubscriptionRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch
@@ -392,10 +373,7 @@ interface SubscriptionServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<EventSubscriptionListPageAsync> =
-            list(
-                EventSubscriptionListParams.none(),
-                requestOptions,
-            )
+            list(EventSubscriptionListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete
@@ -426,11 +404,7 @@ interface SubscriptionServiceAsync {
             eventSubscriptionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponse =
-            delete(
-                eventSubscriptionToken,
-                EventSubscriptionDeleteParams.none(),
-                requestOptions,
-            )
+            delete(eventSubscriptionToken, EventSubscriptionDeleteParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get
@@ -497,11 +471,7 @@ interface SubscriptionServiceAsync {
             eventSubscriptionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponse =
-            recover(
-                eventSubscriptionToken,
-                EventSubscriptionRecoverParams.none(),
-                requestOptions,
-            )
+            recover(eventSubscriptionToken, EventSubscriptionRecoverParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post

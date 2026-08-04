@@ -591,21 +591,12 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "status")
                     .build()
-                    .prepareAsync(
-                        clientOptions,
-                        params,
-                    )
+                    .prepareAsync(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.executeAsync(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        apiStatusHandler.handle(it)
-                    }
+                    .use { apiStatusHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

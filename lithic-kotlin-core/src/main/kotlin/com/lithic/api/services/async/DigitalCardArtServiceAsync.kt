@@ -47,11 +47,7 @@ interface DigitalCardArtServiceAsync {
         digitalCardArtToken: String,
         requestOptions: RequestOptions,
     ): DigitalCardArt =
-        retrieve(
-            digitalCardArtToken,
-            DigitalCardArtRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(digitalCardArtToken, DigitalCardArtRetrieveParams.none(), requestOptions)
 
     /** List digital card art. */
     suspend fun list(
@@ -61,10 +57,7 @@ interface DigitalCardArtServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): DigitalCardArtListPageAsync =
-        list(
-            DigitalCardArtListParams.none(),
-            requestOptions,
-        )
+        list(DigitalCardArtListParams.none(), requestOptions)
 
     /**
      * A view of [DigitalCardArtServiceAsync] that provides access to raw HTTP responses for each
@@ -109,11 +102,7 @@ interface DigitalCardArtServiceAsync {
             digitalCardArtToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DigitalCardArt> =
-            retrieve(
-                digitalCardArtToken,
-                DigitalCardArtRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(digitalCardArtToken, DigitalCardArtRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/digital_card_art`, but is otherwise the same as
@@ -130,9 +119,6 @@ interface DigitalCardArtServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<DigitalCardArtListPageAsync> =
-            list(
-                DigitalCardArtListParams.none(),
-                requestOptions,
-            )
+            list(DigitalCardArtListParams.none(), requestOptions)
     }
 }

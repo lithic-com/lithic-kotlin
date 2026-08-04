@@ -233,9 +233,7 @@ private constructor(
          */
         fun autoCollectionConfiguration(
             autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse>
-        ) = apply {
-            this.autoCollectionConfiguration = autoCollectionConfiguration
-        }
+        ) = apply { this.autoCollectionConfiguration = autoCollectionConfiguration }
 
         fun creditLimit(creditLimit: Long?) = creditLimit(JsonField.ofNullable(creditLimit))
 
@@ -253,9 +251,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun creditLimit(creditLimit: JsonField<Long>) = apply {
-            this.creditLimit = creditLimit
-        }
+        fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
 
         /** Globally unique identifier for the credit product */
         fun creditProductToken(creditProductToken: String?) =
@@ -295,9 +291,7 @@ private constructor(
          * You should usually call [Builder.tier] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun tier(tier: JsonField<String>) = apply {
-            this.tier = tier
-        }
+        fun tier(tier: JsonField<String>) = apply { this.tier = tier }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -312,9 +306,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -339,30 +331,12 @@ private constructor(
          */
         fun build(): FinancialAccountCreditConfig =
             FinancialAccountCreditConfig(
-                checkRequired(
-                    "accountToken",
-                    accountToken,
-                ),
-                checkRequired(
-                    "autoCollectionConfiguration",
-                    autoCollectionConfiguration,
-                ),
-                checkRequired(
-                    "creditLimit",
-                    creditLimit,
-                ),
-                checkRequired(
-                    "creditProductToken",
-                    creditProductToken,
-                ),
-                checkRequired(
-                    "externalBankAccountToken",
-                    externalBankAccountToken,
-                ),
-                checkRequired(
-                    "tier",
-                    tier,
-                ),
+                checkRequired("accountToken", accountToken),
+                checkRequired("autoCollectionConfiguration", autoCollectionConfiguration),
+                checkRequired("creditLimit", creditLimit),
+                checkRequired("creditProductToken", creditProductToken),
+                checkRequired("externalBankAccountToken", externalBankAccountToken),
+                checkRequired("tier", tier),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -424,10 +398,7 @@ private constructor(
             @JsonProperty("auto_collection_enabled")
             @ExcludeMissing
             autoCollectionEnabled: JsonField<Boolean> = JsonMissing.of()
-        ) : this(
-            autoCollectionEnabled,
-            mutableMapOf(),
-        )
+        ) : this(autoCollectionEnabled, mutableMapOf())
 
         /**
          * If auto collection is enabled for this account
@@ -516,9 +487,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -538,10 +507,7 @@ private constructor(
              */
             fun build(): AutoCollectionConfigurationResponse =
                 AutoCollectionConfigurationResponse(
-                    checkRequired(
-                        "autoCollectionEnabled",
-                        autoCollectionEnabled,
-                    ),
+                    checkRequired("autoCollectionEnabled", autoCollectionEnabled),
                     additionalProperties.toMutableMap(),
                 )
         }

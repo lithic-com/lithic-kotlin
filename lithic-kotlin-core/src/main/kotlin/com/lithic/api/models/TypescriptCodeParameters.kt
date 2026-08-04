@@ -32,11 +32,7 @@ private constructor(
         @JsonProperty("features")
         @ExcludeMissing
         features: JsonField<List<RuleFeature>> = JsonMissing.of(),
-    ) : this(
-        code,
-        features,
-        mutableMapOf(),
-    )
+    ) : this(code, features, mutableMapOf())
 
     /**
      * The TypeScript source code of the rule. Must define a `rule()` function that accepts the
@@ -124,9 +120,7 @@ private constructor(
          * You should usually call [Builder.code] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun code(code: JsonField<String>) = apply {
-            this.code = code
-        }
+        fun code(code: JsonField<String>) = apply { this.code = code }
 
         /** Features available to the TypeScript code at evaluation time */
         fun features(features: List<RuleFeature>) = features(JsonField.of(features))
@@ -237,9 +231,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -260,15 +252,8 @@ private constructor(
          */
         fun build(): TypescriptCodeParameters =
             TypescriptCodeParameters(
-                checkRequired(
-                    "code",
-                    code,
-                ),
-                checkRequired(
-                        "features",
-                        features,
-                    )
-                    .map { it.toImmutable() },
+                checkRequired("code", code),
+                checkRequired("features", features).map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
             )
     }

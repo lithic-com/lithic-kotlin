@@ -149,56 +149,40 @@ private constructor(
         }
 
         /** Only return cases that include transactions on the provided account. */
-        fun accountToken(accountToken: String?) = apply {
-            this.accountToken = accountToken
-        }
+        fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
         /**
          * Only return cases assigned to the provided value. Pass an empty string to return only
          * unassigned cases.
          */
-        fun assignee(assignee: String?) = apply {
-            this.assignee = assignee
-        }
+        fun assignee(assignee: String?) = apply { this.assignee = assignee }
 
         /**
          * Date string in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
-        fun begin(begin: OffsetDateTime?) = apply {
-            this.begin = begin
-        }
+        fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
 
         /** Only return cases that include transactions on the provided card. */
-        fun cardToken(cardToken: String?) = apply {
-            this.cardToken = cardToken
-        }
+        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
 
         /**
          * Date string in RFC 3339 format. Only entries created before the specified time will be
          * included. UTC time zone.
          */
-        fun end(end: OffsetDateTime?) = apply {
-            this.end = end
-        }
+        fun end(end: OffsetDateTime?) = apply { this.end = end }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String?) = apply {
-            this.endingBefore = endingBefore
-        }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
         /** Only return cases associated with the provided entity. */
-        fun entityToken(entityToken: String?) = apply {
-            this.entityToken = entityToken
-        }
+        fun entityToken(entityToken: String?) = apply { this.entityToken = entityToken }
 
         /** Page size (for pagination). */
-        fun pageSize(pageSize: Long?) = apply {
-            this.pageSize = pageSize
-        }
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
@@ -208,32 +192,22 @@ private constructor(
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Only return cases belonging to the provided queue. */
-        fun queueToken(queueToken: String?) = apply {
-            this.queueToken = queueToken
-        }
+        fun queueToken(queueToken: String?) = apply { this.queueToken = queueToken }
 
         /** Only return cases triggered by the provided transaction monitoring rule. */
-        fun ruleToken(ruleToken: String?) = apply {
-            this.ruleToken = ruleToken
-        }
+        fun ruleToken(ruleToken: String?) = apply { this.ruleToken = ruleToken }
 
         /** Sort order for the returned cases. */
-        fun sortBy(sortBy: CaseSortOrder?) = apply {
-            this.sortBy = sortBy
-        }
+        fun sortBy(sortBy: CaseSortOrder?) = apply { this.sortBy = sortBy }
 
         /**
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String?) = apply {
-            this.startingAfter = startingAfter
-        }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         /** Only return cases with the provided status. */
-        fun status(status: CaseStatus?) = apply {
-            this.status = status
-        }
+        fun status(status: CaseStatus?) = apply { this.status = status }
 
         /** Only return cases that include the provided transaction. */
         fun transactionToken(transactionToken: String?) = apply {
@@ -282,9 +256,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -334,9 +306,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

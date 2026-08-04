@@ -87,9 +87,7 @@ private constructor(
             response = transactionMonitoringCaseListActivityPage.response
         }
 
-        fun service(service: CaseService) = apply {
-            this.service = service
-        }
+        fun service(service: CaseService) = apply { this.service = service }
 
         /** The parameters that were used to request this page. */
         fun params(params: TransactionMonitoringCaseListActivityParams) = apply {
@@ -117,18 +115,9 @@ private constructor(
          */
         fun build(): TransactionMonitoringCaseListActivityPage =
             TransactionMonitoringCaseListActivityPage(
-                checkRequired(
-                    "service",
-                    service,
-                ),
-                checkRequired(
-                    "params",
-                    params,
-                ),
-                checkRequired(
-                    "response",
-                    response,
-                ),
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 

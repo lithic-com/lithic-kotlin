@@ -92,38 +92,28 @@ private constructor(
             additionalQueryParams = disputeListEvidencesParams.additionalQueryParams.toBuilder()
         }
 
-        fun disputeToken(disputeToken: String?) = apply {
-            this.disputeToken = disputeToken
-        }
+        fun disputeToken(disputeToken: String?) = apply { this.disputeToken = disputeToken }
 
         /**
          * Date string in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
-        fun begin(begin: OffsetDateTime?) = apply {
-            this.begin = begin
-        }
+        fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
 
         /**
          * Date string in RFC 3339 format. Only entries created before the specified time will be
          * included. UTC time zone.
          */
-        fun end(end: OffsetDateTime?) = apply {
-            this.end = end
-        }
+        fun end(end: OffsetDateTime?) = apply { this.end = end }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String?) = apply {
-            this.endingBefore = endingBefore
-        }
+        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
         /** Page size (for pagination). */
-        fun pageSize(pageSize: Long?) = apply {
-            this.pageSize = pageSize
-        }
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
 
         /**
          * Alias for [Builder.pageSize].
@@ -136,9 +126,7 @@ private constructor(
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String?) = apply {
-            this.startingAfter = startingAfter
-        }
+        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -182,9 +170,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -234,9 +220,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

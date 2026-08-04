@@ -410,9 +410,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         /**
          * 3-character alphabetic ISO 4217 code. (This field is deprecated and will be removed in a
@@ -427,9 +425,7 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         @Deprecated("deprecated")
-        fun currency(currency: JsonField<String>) = apply {
-            this.currency = currency
-        }
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         fun details(details: List<SettlementSummaryDetails>) = details(JsonField.of(details))
 
@@ -508,9 +504,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun isComplete(isComplete: JsonField<Boolean>) = apply {
-            this.isComplete = isComplete
-        }
+        fun isComplete(isComplete: JsonField<Boolean>) = apply { this.isComplete = isComplete }
 
         /**
          * Total amount of gross other fees outside of interchange. (This field is deprecated and
@@ -543,9 +537,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun reportDate(reportDate: JsonField<String>) = apply {
-            this.reportDate = reportDate
-        }
+        fun reportDate(reportDate: JsonField<String>) = apply { this.reportDate = reportDate }
 
         /**
          * The total net amount of cash moved. (net value of settled_gross_amount, interchange,
@@ -601,9 +593,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply {
-            this.updated = updated
-        }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         /** The type of event that occurred. */
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
@@ -615,9 +605,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply {
-            this.eventType = eventType
-        }
+        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -632,9 +620,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -665,55 +651,18 @@ private constructor(
          */
         fun build(): SettlementReportUpdatedWebhookEvent =
             SettlementReportUpdatedWebhookEvent(
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                    "currency",
-                    currency,
-                ),
-                checkRequired(
-                        "details",
-                        details,
-                    )
-                    .map { it.toImmutable() },
-                checkRequired(
-                    "disputesGrossAmount",
-                    disputesGrossAmount,
-                ),
-                checkRequired(
-                    "interchangeGrossAmount",
-                    interchangeGrossAmount,
-                ),
-                checkRequired(
-                    "isComplete",
-                    isComplete,
-                ),
-                checkRequired(
-                    "otherFeesGrossAmount",
-                    otherFeesGrossAmount,
-                ),
-                checkRequired(
-                    "reportDate",
-                    reportDate,
-                ),
-                checkRequired(
-                    "settledNetAmount",
-                    settledNetAmount,
-                ),
-                checkRequired(
-                    "transactionsGrossAmount",
-                    transactionsGrossAmount,
-                ),
-                checkRequired(
-                    "updated",
-                    updated,
-                ),
-                checkRequired(
-                    "eventType",
-                    eventType,
-                ),
+                checkRequired("created", created),
+                checkRequired("currency", currency),
+                checkRequired("details", details).map { it.toImmutable() },
+                checkRequired("disputesGrossAmount", disputesGrossAmount),
+                checkRequired("interchangeGrossAmount", interchangeGrossAmount),
+                checkRequired("isComplete", isComplete),
+                checkRequired("otherFeesGrossAmount", otherFeesGrossAmount),
+                checkRequired("reportDate", reportDate),
+                checkRequired("settledNetAmount", settledNetAmount),
+                checkRequired("transactionsGrossAmount", transactionsGrossAmount),
+                checkRequired("updated", updated),
+                checkRequired("eventType", eventType),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -804,11 +753,9 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

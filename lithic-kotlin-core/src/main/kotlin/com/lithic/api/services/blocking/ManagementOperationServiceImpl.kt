@@ -93,21 +93,12 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
                     .addPathSegments("v1", "management_operations")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        createHandler.handle(it)
-                    }
+                    .use { createHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -132,21 +123,12 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "management_operations", params._pathParam(0))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        retrieveHandler.handle(it)
-                    }
+                    .use { retrieveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -168,21 +150,12 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "management_operations")
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        listHandler.handle(it)
-                    }
+                    .use { listHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -215,21 +188,12 @@ internal constructor(private val clientOptions: ClientOptions) : ManagementOpera
                     .addPathSegments("v1", "management_operations", params._pathParam(0), "reverse")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepare(
-                        clientOptions,
-                        params,
-                    )
+                    .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response =
-                clientOptions.httpClient.execute(
-                    request,
-                    requestOptions,
-                )
+            val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use {
-                        reverseHandler.handle(it)
-                    }
+                    .use { reverseHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

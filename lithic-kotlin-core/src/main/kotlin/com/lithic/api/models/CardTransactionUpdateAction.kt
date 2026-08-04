@@ -248,12 +248,7 @@ private constructor(
             @JsonProperty("key") @ExcludeMissing key: JsonField<String> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("value") @ExcludeMissing value: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            key,
-            type,
-            value,
-            mutableMapOf(),
-        )
+        ) : this(key, type, value, mutableMapOf())
 
         /**
          * The key of the tag to apply to the transaction
@@ -352,9 +347,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun key(key: JsonField<String>) = apply {
-                this.key = key
-            }
+            fun key(key: JsonField<String>) = apply { this.key = key }
 
             /** Tag the transaction with key-value metadata */
             fun type(type: Type) = type(JsonField.of(type))
@@ -366,9 +359,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply {
-                this.type = type
-            }
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** The value of the tag to apply to the transaction */
             fun value(value: String) = value(JsonField.of(value))
@@ -380,9 +371,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun value(value: JsonField<String>) = apply {
-                this.value = value
-            }
+            fun value(value: JsonField<String>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -397,9 +386,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -421,18 +408,9 @@ private constructor(
              */
             fun build(): TagAction =
                 TagAction(
-                    checkRequired(
-                        "key",
-                        key,
-                    ),
-                    checkRequired(
-                        "type",
-                        type,
-                    ),
-                    checkRequired(
-                        "value",
-                        value,
-                    ),
+                    checkRequired("key", key),
+                    checkRequired("type", type),
+                    checkRequired("value", value),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -507,11 +485,9 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -646,12 +622,7 @@ private constructor(
             queueToken: JsonField<String> = JsonMissing.of(),
             @JsonProperty("scope") @ExcludeMissing scope: JsonField<Scope> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
-        ) : this(
-            queueToken,
-            scope,
-            type,
-            mutableMapOf(),
-        )
+        ) : this(queueToken, scope, type, mutableMapOf())
 
         /**
          * The token of the queue to create the case in
@@ -752,9 +723,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun queueToken(queueToken: JsonField<String>) = apply {
-                this.queueToken = queueToken
-            }
+            fun queueToken(queueToken: JsonField<String>) = apply { this.queueToken = queueToken }
 
             /** The scope of the case to create */
             fun scope(scope: Scope) = scope(JsonField.of(scope))
@@ -766,9 +735,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun scope(scope: JsonField<Scope>) = apply {
-                this.scope = scope
-            }
+            fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
 
             /** Create a case for the transaction */
             fun type(type: Type) = type(JsonField.of(type))
@@ -780,9 +747,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply {
-                this.type = type
-            }
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -797,9 +762,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -821,18 +784,9 @@ private constructor(
              */
             fun build(): CreateCaseAction =
                 CreateCaseAction(
-                    checkRequired(
-                        "queueToken",
-                        queueToken,
-                    ),
-                    checkRequired(
-                        "scope",
-                        scope,
-                    ),
-                    checkRequired(
-                        "type",
-                        type,
-                    ),
+                    checkRequired("queueToken", queueToken),
+                    checkRequired("scope", scope),
+                    checkRequired("type", type),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -910,11 +864,9 @@ private constructor(
              * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Scope] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1047,11 +999,9 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

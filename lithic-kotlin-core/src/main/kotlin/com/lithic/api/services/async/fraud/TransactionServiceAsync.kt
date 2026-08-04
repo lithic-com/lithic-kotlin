@@ -34,10 +34,7 @@ interface TransactionServiceAsync {
         params: FraudTransactionRetrieveParams = FraudTransactionRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionRetrieveResponse =
-        retrieve(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -50,11 +47,7 @@ interface TransactionServiceAsync {
         transactionToken: String,
         requestOptions: RequestOptions,
     ): TransactionRetrieveResponse =
-        retrieve(
-            transactionToken,
-            FraudTransactionRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(transactionToken, FraudTransactionRetrieveParams.none(), requestOptions)
 
     /**
      * Report fraud for a specific transaction token by providing details such as fraud type, fraud
@@ -65,10 +58,7 @@ interface TransactionServiceAsync {
         params: FraudTransactionReportParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionReportResponse =
-        report(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+        report(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see report */
     suspend fun report(
@@ -101,10 +91,7 @@ interface TransactionServiceAsync {
             params: FraudTransactionRetrieveParams = FraudTransactionRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionRetrieveResponse> =
-            retrieve(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -119,11 +106,7 @@ interface TransactionServiceAsync {
             transactionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionRetrieveResponse> =
-            retrieve(
-                transactionToken,
-                FraudTransactionRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(transactionToken, FraudTransactionRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/fraud/transactions/{transaction_token}`, but is
@@ -135,10 +118,7 @@ interface TransactionServiceAsync {
             params: FraudTransactionReportParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionReportResponse> =
-            report(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            report(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see report */
         @MustBeClosed

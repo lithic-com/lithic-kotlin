@@ -34,10 +34,7 @@ interface StatementServiceAsync {
         params: FinancialAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Statement =
-        retrieve(
-            params.toBuilder().statementToken(statementToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -67,11 +64,7 @@ interface StatementServiceAsync {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccountStatementListPageAsync =
-        list(
-            financialAccountToken,
-            FinancialAccountStatementListParams.none(),
-            requestOptions,
-        )
+        list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
 
     /**
      * A view of [StatementServiceAsync] that provides access to raw HTTP responses for each method.
@@ -100,10 +93,7 @@ interface StatementServiceAsync {
             params: FinancialAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Statement> =
-            retrieve(
-                params.toBuilder().statementToken(statementToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -142,10 +132,6 @@ interface StatementServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountStatementListPageAsync> =
-            list(
-                financialAccountToken,
-                FinancialAccountStatementListParams.none(),
-                requestOptions,
-            )
+            list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
     }
 }

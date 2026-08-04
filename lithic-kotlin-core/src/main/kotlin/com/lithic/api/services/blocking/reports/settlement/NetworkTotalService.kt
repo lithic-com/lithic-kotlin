@@ -31,11 +31,7 @@ interface NetworkTotalService {
         params: ReportSettlementNetworkTotalRetrieveParams =
             ReportSettlementNetworkTotalRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NetworkTotal =
-        retrieve(
-            params.toBuilder().token(token).build(),
-            requestOptions,
-        )
+    ): NetworkTotal = retrieve(params.toBuilder().token(token).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -45,11 +41,7 @@ interface NetworkTotalService {
 
     /** @see retrieve */
     fun retrieve(token: String, requestOptions: RequestOptions): NetworkTotal =
-        retrieve(
-            token,
-            ReportSettlementNetworkTotalRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
     /** List network total records with optional filters. Not available in sandbox. */
     fun list(
@@ -60,10 +52,7 @@ interface NetworkTotalService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): ReportSettlementNetworkTotalListPage =
-        list(
-            ReportSettlementNetworkTotalListParams.none(),
-            requestOptions,
-        )
+        list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
 
     /**
      * A view of [NetworkTotalService] that provides access to raw HTTP responses for each method.
@@ -90,10 +79,7 @@ interface NetworkTotalService {
                 ReportSettlementNetworkTotalRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkTotal> =
-            retrieve(
-                params.toBuilder().token(token).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().token(token).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -105,11 +91,7 @@ interface NetworkTotalService {
         /** @see retrieve */
         @MustBeClosed
         fun retrieve(token: String, requestOptions: RequestOptions): HttpResponseFor<NetworkTotal> =
-            retrieve(
-                token,
-                ReportSettlementNetworkTotalRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals`, but is
@@ -127,9 +109,6 @@ interface NetworkTotalService {
         fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<ReportSettlementNetworkTotalListPage> =
-            list(
-                ReportSettlementNetworkTotalListParams.none(),
-                requestOptions,
-            )
+            list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
     }
 }

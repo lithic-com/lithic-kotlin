@@ -40,10 +40,7 @@ interface AuthStreamEnrollmentServiceAsync {
 
     /** @see retrieveSecret */
     suspend fun retrieveSecret(requestOptions: RequestOptions): AuthStreamSecret =
-        retrieveSecret(
-            AuthStreamEnrollmentRetrieveSecretParams.none(),
-            requestOptions,
-        )
+        retrieveSecret(AuthStreamEnrollmentRetrieveSecretParams.none(), requestOptions)
 
     /**
      * Generate a new ASA HMAC secret key. The old ASA HMAC secret key will be deactivated 24 hours
@@ -59,10 +56,7 @@ interface AuthStreamEnrollmentServiceAsync {
 
     /** @see rotateSecret */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
-        rotateSecret(
-            AuthStreamEnrollmentRotateSecretParams.none(),
-            requestOptions,
-        )
+        rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
 
     /**
      * A view of [AuthStreamEnrollmentServiceAsync] that provides access to raw HTTP responses for
@@ -95,10 +89,7 @@ interface AuthStreamEnrollmentServiceAsync {
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
         ): HttpResponseFor<AuthStreamSecret> =
-            retrieveSecret(
-                AuthStreamEnrollmentRetrieveSecretParams.none(),
-                requestOptions,
-            )
+            retrieveSecret(AuthStreamEnrollmentRetrieveSecretParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post /v1/auth_stream/secret/rotate`, but is otherwise
@@ -114,9 +105,6 @@ interface AuthStreamEnrollmentServiceAsync {
         /** @see rotateSecret */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
-            rotateSecret(
-                AuthStreamEnrollmentRotateSecretParams.none(),
-                requestOptions,
-            )
+            rotateSecret(AuthStreamEnrollmentRotateSecretParams.none(), requestOptions)
     }
 }

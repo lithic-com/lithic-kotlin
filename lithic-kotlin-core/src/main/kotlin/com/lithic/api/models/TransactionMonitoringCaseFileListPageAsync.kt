@@ -87,14 +87,10 @@ private constructor(
             response = transactionMonitoringCaseFileListPageAsync.response
         }
 
-        fun service(service: FileServiceAsync) = apply {
-            this.service = service
-        }
+        fun service(service: FileServiceAsync) = apply { this.service = service }
 
         /** The parameters that were used to request this page. */
-        fun params(params: TransactionMonitoringCaseFileListParams) = apply {
-            this.params = params
-        }
+        fun params(params: TransactionMonitoringCaseFileListParams) = apply { this.params = params }
 
         /** The response that this page was parsed from. */
         fun response(response: TransactionMonitoringCaseFileListPageResponse) = apply {
@@ -117,18 +113,9 @@ private constructor(
          */
         fun build(): TransactionMonitoringCaseFileListPageAsync =
             TransactionMonitoringCaseFileListPageAsync(
-                checkRequired(
-                    "service",
-                    service,
-                ),
-                checkRequired(
-                    "params",
-                    params,
-                ),
-                checkRequired(
-                    "response",
-                    response,
-                ),
+                checkRequired("service", service),
+                checkRequired("params", params),
+                checkRequired("response", response),
             )
     }
 

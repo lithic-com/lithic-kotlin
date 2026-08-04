@@ -223,17 +223,13 @@ private constructor(
          * - [governmentId]
          * - etc.
          */
-        fun body(body: CreateEntityRequest) = apply {
-            this.body = body.toBuilder()
-        }
+        fun body(body: CreateEntityRequest) = apply { this.body = body.toBuilder() }
 
         /**
          * Individual's current address - PO boxes, UPS drops, and FedEx drops are not acceptable;
          * APO/FPO are acceptable. Only USA addresses are currently supported.
          */
-        fun address(address: Address) = apply {
-            body.address(address)
-        }
+        fun address(address: Address) = apply { body.address(address) }
 
         /**
          * Sets [Builder.address] to an arbitrary JSON value.
@@ -241,14 +237,10 @@ private constructor(
          * You should usually call [Builder.address] with a well-typed [Address] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun address(address: JsonField<Address>) = apply {
-            body.address(address)
-        }
+        fun address(address: JsonField<Address>) = apply { body.address(address) }
 
         /** Individual's date of birth, as an RFC 3339 date. */
-        fun dob(dob: String) = apply {
-            body.dob(dob)
-        }
+        fun dob(dob: String) = apply { body.dob(dob) }
 
         /**
          * Sets [Builder.dob] to an arbitrary JSON value.
@@ -256,17 +248,13 @@ private constructor(
          * You should usually call [Builder.dob] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun dob(dob: JsonField<String>) = apply {
-            body.dob(dob)
-        }
+        fun dob(dob: JsonField<String>) = apply { body.dob(dob) }
 
         /**
          * Individual's email address. If utilizing Lithic for chargeback processing, this customer
          * email address may be used to communicate dispute status and resolution.
          */
-        fun email(email: String) = apply {
-            body.email(email)
-        }
+        fun email(email: String) = apply { body.email(email) }
 
         /**
          * Sets [Builder.email] to an arbitrary JSON value.
@@ -274,14 +262,10 @@ private constructor(
          * You should usually call [Builder.email] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun email(email: JsonField<String>) = apply {
-            body.email(email)
-        }
+        fun email(email: JsonField<String>) = apply { body.email(email) }
 
         /** Individual's first name, as it appears on government-issued identity documents. */
-        fun firstName(firstName: String) = apply {
-            body.firstName(firstName)
-        }
+        fun firstName(firstName: String) = apply { body.firstName(firstName) }
 
         /**
          * Sets [Builder.firstName] to an arbitrary JSON value.
@@ -290,9 +274,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun firstName(firstName: JsonField<String>) = apply {
-            body.firstName(firstName)
-        }
+        fun firstName(firstName: JsonField<String>) = apply { body.firstName(firstName) }
 
         /**
          * Government-issued identification number (required for identity verification and
@@ -300,9 +282,7 @@ private constructor(
          * Taxpayer Identification Numbers (ITIN) are currently supported, entered as full
          * nine-digits, with or without hyphens
          */
-        fun governmentId(governmentId: String) = apply {
-            body.governmentId(governmentId)
-        }
+        fun governmentId(governmentId: String) = apply { body.governmentId(governmentId) }
 
         /**
          * Sets [Builder.governmentId] to an arbitrary JSON value.
@@ -316,9 +296,7 @@ private constructor(
         }
 
         /** Individual's last name, as it appears on government-issued identity documents. */
-        fun lastName(lastName: String) = apply {
-            body.lastName(lastName)
-        }
+        fun lastName(lastName: String) = apply { body.lastName(lastName) }
 
         /**
          * Sets [Builder.lastName] to an arbitrary JSON value.
@@ -326,14 +304,10 @@ private constructor(
          * You should usually call [Builder.lastName] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun lastName(lastName: JsonField<String>) = apply {
-            body.lastName(lastName)
-        }
+        fun lastName(lastName: JsonField<String>) = apply { body.lastName(lastName) }
 
         /** Individual's phone number, entered in E.164 format. */
-        fun phoneNumber(phoneNumber: String) = apply {
-            body.phoneNumber(phoneNumber)
-        }
+        fun phoneNumber(phoneNumber: String) = apply { body.phoneNumber(phoneNumber) }
 
         /**
          * Sets [Builder.phoneNumber] to an arbitrary JSON value.
@@ -342,14 +316,10 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun phoneNumber(phoneNumber: JsonField<String>) = apply {
-            body.phoneNumber(phoneNumber)
-        }
+        fun phoneNumber(phoneNumber: JsonField<String>) = apply { body.phoneNumber(phoneNumber) }
 
         /** The type of entity to create on the account holder */
-        fun type(type: EntityType) = apply {
-            body.type(type)
-        }
+        fun type(type: EntityType) = apply { body.type(type) }
 
         /**
          * Sets [Builder.type] to an arbitrary JSON value.
@@ -357,19 +327,14 @@ private constructor(
          * You should usually call [Builder.type] with a well-typed [EntityType] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun type(type: JsonField<EntityType>) = apply {
-            body.type(type)
-        }
+        fun type(type: JsonField<EntityType>) = apply { body.type(type) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(
-                key,
-                value,
-            )
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -377,9 +342,7 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            body.removeAdditionalProperty(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -427,9 +390,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -479,9 +440,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -775,9 +734,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address(address: JsonField<Address>) = apply {
-                this.address = address
-            }
+            fun address(address: JsonField<Address>) = apply { this.address = address }
 
             /** Individual's date of birth, as an RFC 3339 date. */
             fun dob(dob: String) = dob(JsonField.of(dob))
@@ -789,9 +746,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun dob(dob: JsonField<String>) = apply {
-                this.dob = dob
-            }
+            fun dob(dob: JsonField<String>) = apply { this.dob = dob }
 
             /**
              * Individual's email address. If utilizing Lithic for chargeback processing, this
@@ -806,9 +761,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun email(email: JsonField<String>) = apply {
-                this.email = email
-            }
+            fun email(email: JsonField<String>) = apply { this.email = email }
 
             /** Individual's first name, as it appears on government-issued identity documents. */
             fun firstName(firstName: String) = firstName(JsonField.of(firstName))
@@ -820,9 +773,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun firstName(firstName: JsonField<String>) = apply {
-                this.firstName = firstName
-            }
+            fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
             /**
              * Government-issued identification number (required for identity verification and
@@ -853,9 +804,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun lastName(lastName: JsonField<String>) = apply {
-                this.lastName = lastName
-            }
+            fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
 
             /** Individual's phone number, entered in E.164 format. */
             fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
@@ -881,9 +830,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun type(type: JsonField<EntityType>) = apply {
-                this.type = type
-            }
+            fun type(type: JsonField<EntityType>) = apply { this.type = type }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -898,9 +845,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -927,38 +872,14 @@ private constructor(
              */
             fun build(): CreateEntityRequest =
                 CreateEntityRequest(
-                    checkRequired(
-                        "address",
-                        address,
-                    ),
-                    checkRequired(
-                        "dob",
-                        dob,
-                    ),
-                    checkRequired(
-                        "email",
-                        email,
-                    ),
-                    checkRequired(
-                        "firstName",
-                        firstName,
-                    ),
-                    checkRequired(
-                        "governmentId",
-                        governmentId,
-                    ),
-                    checkRequired(
-                        "lastName",
-                        lastName,
-                    ),
-                    checkRequired(
-                        "phoneNumber",
-                        phoneNumber,
-                    ),
-                    checkRequired(
-                        "type",
-                        type,
-                    ),
+                    checkRequired("address", address),
+                    checkRequired("dob", dob),
+                    checkRequired("email", email),
+                    checkRequired("firstName", firstName),
+                    checkRequired("governmentId", governmentId),
+                    checkRequired("lastName", lastName),
+                    checkRequired("phoneNumber", phoneNumber),
+                    checkRequired("type", type),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1078,18 +999,8 @@ private constructor(
             @ExcludeMissing
             postalCode: JsonField<String> = JsonMissing.of(),
             @JsonProperty("state") @ExcludeMissing state: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("address2")
-            @ExcludeMissing
-            address2: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            address1,
-            city,
-            country,
-            postalCode,
-            state,
-            address2,
-            mutableMapOf(),
-        )
+            @JsonProperty("address2") @ExcludeMissing address2: JsonField<String> = JsonMissing.of(),
+        ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
 
         /**
          * Valid deliverable address (no PO boxes).
@@ -1246,9 +1157,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address1(address1: JsonField<String>) = apply {
-                this.address1 = address1
-            }
+            fun address1(address1: JsonField<String>) = apply { this.address1 = address1 }
 
             /** Name of city. */
             fun city(city: String) = city(JsonField.of(city))
@@ -1260,9 +1169,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun city(city: JsonField<String>) = apply {
-                this.city = city
-            }
+            fun city(city: JsonField<String>) = apply { this.city = city }
 
             /**
              * Valid country code. Only USA is currently supported, entered in uppercase ISO 3166-1
@@ -1277,9 +1184,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun country(country: JsonField<String>) = apply {
-                this.country = country
-            }
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             /**
              * Valid postal code. Only USA ZIP codes are currently supported, entered as a
@@ -1294,9 +1199,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun postalCode(postalCode: JsonField<String>) = apply {
-                this.postalCode = postalCode
-            }
+            fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             /**
              * Valid state code. Only USA state codes are currently supported, entered in uppercase
@@ -1311,9 +1214,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun state(state: JsonField<String>) = apply {
-                this.state = state
-            }
+            fun state(state: JsonField<String>) = apply { this.state = state }
 
             /** Unit or apartment number (if applicable). */
             fun address2(address2: String) = address2(JsonField.of(address2))
@@ -1325,9 +1226,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun address2(address2: JsonField<String>) = apply {
-                this.address2 = address2
-            }
+            fun address2(address2: JsonField<String>) = apply { this.address2 = address2 }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1342,9 +1241,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1368,26 +1265,11 @@ private constructor(
              */
             fun build(): Address =
                 Address(
-                    checkRequired(
-                        "address1",
-                        address1,
-                    ),
-                    checkRequired(
-                        "city",
-                        city,
-                    ),
-                    checkRequired(
-                        "country",
-                        country,
-                    ),
-                    checkRequired(
-                        "postalCode",
-                        postalCode,
-                    ),
-                    checkRequired(
-                        "state",
-                        state,
-                    ),
+                    checkRequired("address1", address1),
+                    checkRequired("city", city),
+                    checkRequired("country", country),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("state", state),
                     address2,
                     additionalProperties.toMutableMap(),
                 )

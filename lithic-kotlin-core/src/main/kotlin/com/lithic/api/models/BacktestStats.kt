@@ -38,14 +38,7 @@ private constructor(
         @ExcludeMissing
         examples: JsonField<List<Example>> = JsonMissing.of(),
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
-    ) : this(
-        approved,
-        challenged,
-        declined,
-        examples,
-        version,
-        mutableMapOf(),
-    )
+    ) : this(approved, challenged, declined, examples, version, mutableMapOf())
 
     /**
      * The total number of historical transactions approved by this rule during the backtest period,
@@ -178,9 +171,7 @@ private constructor(
          * You should usually call [Builder.approved] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun approved(approved: JsonField<Long>) = apply {
-            this.approved = approved
-        }
+        fun approved(approved: JsonField<Long>) = apply { this.approved = approved }
 
         /**
          * The total number of historical transactions challenged by this rule during the backtest
@@ -195,9 +186,7 @@ private constructor(
          * You should usually call [Builder.challenged] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun challenged(challenged: JsonField<Long>) = apply {
-            this.challenged = challenged
-        }
+        fun challenged(challenged: JsonField<Long>) = apply { this.challenged = challenged }
 
         /**
          * The total number of historical transactions declined by this rule during the backtest
@@ -212,9 +201,7 @@ private constructor(
          * You should usually call [Builder.declined] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun declined(declined: JsonField<Long>) = apply {
-            this.declined = declined
-        }
+        fun declined(declined: JsonField<Long>) = apply { this.declined = declined }
 
         /** Example events and their outcomes. */
         fun examples(examples: List<Example>) = examples(JsonField.of(examples))
@@ -251,9 +238,7 @@ private constructor(
          * You should usually call [Builder.version] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun version(version: JsonField<Long>) = apply {
-            this.version = version
-        }
+        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -268,9 +253,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -359,13 +342,7 @@ private constructor(
             @JsonProperty("transaction_token")
             @ExcludeMissing
             transactionToken: JsonField<String> = JsonMissing.of(),
-        ) : this(
-            decision,
-            eventToken,
-            timestamp,
-            transactionToken,
-            mutableMapOf(),
-        )
+        ) : this(decision, eventToken, timestamp, transactionToken, mutableMapOf())
 
         /**
          * The decision made by the rule for this event.
@@ -479,9 +456,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun decision(decision: JsonField<Decision>) = apply {
-                this.decision = decision
-            }
+            fun decision(decision: JsonField<Decision>) = apply { this.decision = decision }
 
             /** The event token. */
             fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
@@ -493,9 +468,7 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventToken(eventToken: JsonField<String>) = apply {
-                this.eventToken = eventToken
-            }
+            fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
 
             /** The timestamp of the event. */
             fun timestamp(timestamp: OffsetDateTime) = timestamp(JsonField.of(timestamp))
@@ -539,9 +512,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -641,11 +612,9 @@ private constructor(
              * An enum containing [Decision]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Decision] can contain an unknown value in a couple of cases:
-             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
-             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

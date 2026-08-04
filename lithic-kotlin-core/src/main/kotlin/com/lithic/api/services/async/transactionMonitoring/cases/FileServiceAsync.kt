@@ -33,11 +33,7 @@ interface FileServiceAsync {
         caseToken: String,
         params: TransactionMonitoringCaseFileCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CaseFile =
-        create(
-            params.toBuilder().caseToken(caseToken).build(),
-            requestOptions,
-        )
+    ): CaseFile = create(params.toBuilder().caseToken(caseToken).build(), requestOptions)
 
     /** @see create */
     suspend fun create(
@@ -53,11 +49,7 @@ interface FileServiceAsync {
         fileToken: String,
         params: TransactionMonitoringCaseFileRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CaseFile =
-        retrieve(
-            params.toBuilder().fileToken(fileToken).build(),
-            requestOptions,
-        )
+    ): CaseFile = retrieve(params.toBuilder().fileToken(fileToken).build(), requestOptions)
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -72,10 +64,7 @@ interface FileServiceAsync {
             TransactionMonitoringCaseFileListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionMonitoringCaseFileListPageAsync =
-        list(
-            params.toBuilder().caseToken(caseToken).build(),
-            requestOptions,
-        )
+        list(params.toBuilder().caseToken(caseToken).build(), requestOptions)
 
     /** @see list */
     suspend fun list(
@@ -88,22 +77,14 @@ interface FileServiceAsync {
         caseToken: String,
         requestOptions: RequestOptions,
     ): TransactionMonitoringCaseFileListPageAsync =
-        list(
-            caseToken,
-            TransactionMonitoringCaseFileListParams.none(),
-            requestOptions,
-        )
+        list(caseToken, TransactionMonitoringCaseFileListParams.none(), requestOptions)
 
     /** Deletes a file from a case. */
     suspend fun delete(
         fileToken: String,
         params: TransactionMonitoringCaseFileDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) =
-        delete(
-            params.toBuilder().fileToken(fileToken).build(),
-            requestOptions,
-        )
+    ) = delete(params.toBuilder().fileToken(fileToken).build(), requestOptions)
 
     /** @see delete */
     suspend fun delete(
@@ -132,10 +113,7 @@ interface FileServiceAsync {
             params: TransactionMonitoringCaseFileCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CaseFile> =
-            create(
-                params.toBuilder().caseToken(caseToken).build(),
-                requestOptions,
-            )
+            create(params.toBuilder().caseToken(caseToken).build(), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -155,10 +133,7 @@ interface FileServiceAsync {
             params: TransactionMonitoringCaseFileRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CaseFile> =
-            retrieve(
-                params.toBuilder().fileToken(fileToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().fileToken(fileToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -179,10 +154,7 @@ interface FileServiceAsync {
                 TransactionMonitoringCaseFileListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionMonitoringCaseFileListPageAsync> =
-            list(
-                params.toBuilder().caseToken(caseToken).build(),
-                requestOptions,
-            )
+            list(params.toBuilder().caseToken(caseToken).build(), requestOptions)
 
         /** @see list */
         @MustBeClosed
@@ -197,11 +169,7 @@ interface FileServiceAsync {
             caseToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<TransactionMonitoringCaseFileListPageAsync> =
-            list(
-                caseToken,
-                TransactionMonitoringCaseFileListParams.none(),
-                requestOptions,
-            )
+            list(caseToken, TransactionMonitoringCaseFileListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `delete
@@ -213,11 +181,7 @@ interface FileServiceAsync {
             fileToken: String,
             params: TransactionMonitoringCaseFileDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponse =
-            delete(
-                params.toBuilder().fileToken(fileToken).build(),
-                requestOptions,
-            )
+        ): HttpResponse = delete(params.toBuilder().fileToken(fileToken).build(), requestOptions)
 
         /** @see delete */
         @MustBeClosed

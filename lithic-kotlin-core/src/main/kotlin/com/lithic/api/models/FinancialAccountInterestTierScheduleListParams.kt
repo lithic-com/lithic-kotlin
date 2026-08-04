@@ -88,19 +88,13 @@ private constructor(
         }
 
         /** Return schedules with effective_date >= after_date (ISO format YYYY-MM-DD) */
-        fun afterDate(afterDate: LocalDate?) = apply {
-            this.afterDate = afterDate
-        }
+        fun afterDate(afterDate: LocalDate?) = apply { this.afterDate = afterDate }
 
         /** Return schedules with effective_date <= before_date (ISO format YYYY-MM-DD) */
-        fun beforeDate(beforeDate: LocalDate?) = apply {
-            this.beforeDate = beforeDate
-        }
+        fun beforeDate(beforeDate: LocalDate?) = apply { this.beforeDate = beforeDate }
 
         /** Return schedule with effective_date == for_date (ISO format YYYY-MM-DD) */
-        fun forDate(forDate: LocalDate?) = apply {
-            this.forDate = forDate
-        }
+        fun forDate(forDate: LocalDate?) = apply { this.forDate = forDate }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -144,9 +138,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -196,9 +188,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

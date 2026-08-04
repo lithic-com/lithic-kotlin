@@ -79,11 +79,7 @@ interface FinancialAccountServiceAsync {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccount =
-        retrieve(
-            financialAccountToken,
-            FinancialAccountRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
 
     /** Update a financial account */
     suspend fun update(
@@ -107,11 +103,7 @@ interface FinancialAccountServiceAsync {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccount =
-        update(
-            financialAccountToken,
-            FinancialAccountUpdateParams.none(),
-            requestOptions,
-        )
+        update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
 
     /** Retrieve information on your financial accounts including routing and account number. */
     suspend fun list(
@@ -121,10 +113,7 @@ interface FinancialAccountServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): FinancialAccountListPageAsync =
-        list(
-            FinancialAccountListParams.none(),
-            requestOptions,
-        )
+        list(FinancialAccountListParams.none(), requestOptions)
 
     /** Register account number */
     suspend fun registerAccountNumber(
@@ -227,11 +216,7 @@ interface FinancialAccountServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccount> =
-            retrieve(
-                financialAccountToken,
-                FinancialAccountRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `patch /v1/financial_accounts/{financial_account_token}`,
@@ -261,11 +246,7 @@ interface FinancialAccountServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccount> =
-            update(
-                financialAccountToken,
-                FinancialAccountUpdateParams.none(),
-                requestOptions,
-            )
+            update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/financial_accounts`, but is otherwise the same
@@ -282,10 +263,7 @@ interface FinancialAccountServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<FinancialAccountListPageAsync> =
-            list(
-                FinancialAccountListParams.none(),
-                requestOptions,
-            )
+            list(FinancialAccountListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post

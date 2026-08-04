@@ -72,14 +72,10 @@ private constructor(
         }
 
         /** The effective date that the prime rates ends before */
-        fun endingBefore(endingBefore: LocalDate?) = apply {
-            this.endingBefore = endingBefore
-        }
+        fun endingBefore(endingBefore: LocalDate?) = apply { this.endingBefore = endingBefore }
 
         /** The effective date that the prime rate starts after */
-        fun startingAfter(startingAfter: LocalDate?) = apply {
-            this.startingAfter = startingAfter
-        }
+        fun startingAfter(startingAfter: LocalDate?) = apply { this.startingAfter = startingAfter }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -123,9 +119,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -175,9 +169,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

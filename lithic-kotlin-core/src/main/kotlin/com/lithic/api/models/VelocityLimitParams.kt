@@ -238,9 +238,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun period(period: JsonField<VelocityLimitPeriod>) = apply {
-            this.period = period
-        }
+        fun period(period: JsonField<VelocityLimitPeriod>) = apply { this.period = period }
 
         /**
          * Alias for calling [period] with
@@ -284,9 +282,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun scope(scope: JsonField<VelocityScope>) = apply {
-            this.scope = scope
-        }
+        fun scope(scope: JsonField<VelocityScope>) = apply { this.scope = scope }
 
         fun filters(filters: VelocityLimitFilters) = filters(JsonField.of(filters))
 
@@ -297,9 +293,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun filters(filters: JsonField<VelocityLimitFilters>) = apply {
-            this.filters = filters
-        }
+        fun filters(filters: JsonField<VelocityLimitFilters>) = apply { this.filters = filters }
 
         /**
          * The maximum amount of spend velocity allowed in the period in minor units (the smallest
@@ -322,9 +316,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun limitAmount(limitAmount: JsonField<Long>) = apply {
-            this.limitAmount = limitAmount
-        }
+        fun limitAmount(limitAmount: JsonField<Long>) = apply { this.limitAmount = limitAmount }
 
         /**
          * The maximum amount of cash spend velocity allowed in the period in minor units (the
@@ -402,9 +394,7 @@ private constructor(
          * You should usually call [Builder.limitCount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun limitCount(limitCount: JsonField<Long>) = apply {
-            this.limitCount = limitCount
-        }
+        fun limitCount(limitCount: JsonField<Long>) = apply { this.limitCount = limitCount }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -419,9 +409,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -442,14 +430,8 @@ private constructor(
          */
         fun build(): VelocityLimitParams =
             VelocityLimitParams(
-                checkRequired(
-                    "period",
-                    period,
-                ),
-                checkRequired(
-                    "scope",
-                    scope,
-                ),
+                checkRequired("period", period),
+                checkRequired("scope", scope),
                 filters,
                 limitAmount,
                 limitCashAmount,
@@ -539,11 +521,9 @@ private constructor(
          * An enum containing [VelocityScope]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [VelocityScope] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

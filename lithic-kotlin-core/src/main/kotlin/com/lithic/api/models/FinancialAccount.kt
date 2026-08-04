@@ -393,9 +393,7 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply {
-            this.token = token
-        }
+        fun token(token: JsonField<String>) = apply { this.token = token }
 
         fun accountToken(accountToken: String?) = accountToken(JsonField.ofNullable(accountToken))
 
@@ -419,9 +417,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply {
-            this.created = created
-        }
+        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
 
         fun creditConfiguration(creditConfiguration: FinancialAccountCreditConfig?) =
             creditConfiguration(JsonField.ofNullable(creditConfiguration))
@@ -460,9 +456,7 @@ private constructor(
          * You should usually call [Builder.nickname] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun nickname(nickname: JsonField<String>) = apply {
-            this.nickname = nickname
-        }
+        fun nickname(nickname: JsonField<String>) = apply { this.nickname = nickname }
 
         /** Status of the financial account */
         fun status(status: FinancialAccountStatus) = status(JsonField.of(status))
@@ -474,9 +468,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun status(status: JsonField<FinancialAccountStatus>) = apply {
-            this.status = status
-        }
+        fun status(status: JsonField<FinancialAccountStatus>) = apply { this.status = status }
 
         /** Substatus for the financial account */
         fun substatus(substatus: FinancialAccountSubstatus?) =
@@ -501,9 +493,7 @@ private constructor(
          * You should usually call [Builder.type] with a well-typed [Type] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun type(type: JsonField<Type>) = apply {
-            this.type = type
-        }
+        fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
 
@@ -514,9 +504,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply {
-            this.updated = updated
-        }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         /** User-defined status for the financial account */
         fun userDefinedStatus(userDefinedStatus: String?) =
@@ -592,9 +580,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -624,50 +610,17 @@ private constructor(
          */
         fun build(): FinancialAccount =
             FinancialAccount(
-                checkRequired(
-                    "token",
-                    token,
-                ),
-                checkRequired(
-                    "accountToken",
-                    accountToken,
-                ),
-                checkRequired(
-                    "created",
-                    created,
-                ),
-                checkRequired(
-                    "creditConfiguration",
-                    creditConfiguration,
-                ),
-                checkRequired(
-                    "isForBenefitOf",
-                    isForBenefitOf,
-                ),
-                checkRequired(
-                    "nickname",
-                    nickname,
-                ),
-                checkRequired(
-                    "status",
-                    status,
-                ),
-                checkRequired(
-                    "substatus",
-                    substatus,
-                ),
-                checkRequired(
-                    "type",
-                    type,
-                ),
-                checkRequired(
-                    "updated",
-                    updated,
-                ),
-                checkRequired(
-                    "userDefinedStatus",
-                    userDefinedStatus,
-                ),
+                checkRequired("token", token),
+                checkRequired("accountToken", accountToken),
+                checkRequired("created", created),
+                checkRequired("creditConfiguration", creditConfiguration),
+                checkRequired("isForBenefitOf", isForBenefitOf),
+                checkRequired("nickname", nickname),
+                checkRequired("status", status),
+                checkRequired("substatus", substatus),
+                checkRequired("type", type),
+                checkRequired("updated", updated),
+                checkRequired("userDefinedStatus", userDefinedStatus),
                 accountNumber,
                 blockchainAddresses,
                 routingNumber,
@@ -921,9 +874,7 @@ private constructor(
              */
             fun autoCollectionConfiguration(
                 autoCollectionConfiguration: JsonField<AutoCollectionConfigurationResponse>
-            ) = apply {
-                this.autoCollectionConfiguration = autoCollectionConfiguration
-            }
+            ) = apply { this.autoCollectionConfiguration = autoCollectionConfiguration }
 
             fun creditLimit(creditLimit: Long?) = creditLimit(JsonField.ofNullable(creditLimit))
 
@@ -941,9 +892,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun creditLimit(creditLimit: JsonField<Long>) = apply {
-                this.creditLimit = creditLimit
-            }
+            fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
 
             /** Globally unique identifier for the credit product */
             fun creditProductToken(creditProductToken: String?) =
@@ -984,9 +933,7 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun tier(tier: JsonField<String>) = apply {
-                this.tier = tier
-            }
+            fun tier(tier: JsonField<String>) = apply { this.tier = tier }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1001,9 +948,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1027,26 +972,11 @@ private constructor(
              */
             fun build(): FinancialAccountCreditConfig =
                 FinancialAccountCreditConfig(
-                    checkRequired(
-                        "autoCollectionConfiguration",
-                        autoCollectionConfiguration,
-                    ),
-                    checkRequired(
-                        "creditLimit",
-                        creditLimit,
-                    ),
-                    checkRequired(
-                        "creditProductToken",
-                        creditProductToken,
-                    ),
-                    checkRequired(
-                        "externalBankAccountToken",
-                        externalBankAccountToken,
-                    ),
-                    checkRequired(
-                        "tier",
-                        tier,
-                    ),
+                    checkRequired("autoCollectionConfiguration", autoCollectionConfiguration),
+                    checkRequired("creditLimit", creditLimit),
+                    checkRequired("creditProductToken", creditProductToken),
+                    checkRequired("externalBankAccountToken", externalBankAccountToken),
+                    checkRequired("tier", tier),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1108,10 +1038,7 @@ private constructor(
                 @JsonProperty("auto_collection_enabled")
                 @ExcludeMissing
                 autoCollectionEnabled: JsonField<Boolean> = JsonMissing.of()
-            ) : this(
-                autoCollectionEnabled,
-                mutableMapOf(),
-            )
+            ) : this(autoCollectionEnabled, mutableMapOf())
 
             /**
              * If auto collection is enabled for this account
@@ -1225,10 +1152,7 @@ private constructor(
                  */
                 fun build(): AutoCollectionConfigurationResponse =
                     AutoCollectionConfigurationResponse(
-                        checkRequired(
-                            "autoCollectionEnabled",
-                            autoCollectionEnabled,
-                        ),
+                        checkRequired("autoCollectionEnabled", autoCollectionEnabled),
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -1363,11 +1287,9 @@ private constructor(
          *
          * An instance of [FinancialAccountStatus] can contain an unknown value in a couple of
          * cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1525,11 +1447,9 @@ private constructor(
          *
          * An instance of [FinancialAccountSubstatus] can contain an unknown value in a couple of
          * cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1707,11 +1627,9 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
-         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
-         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1887,9 +1805,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1937,9 +1853,8 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int = additionalProperties.count { (_, value) ->
-            !value.isNull() && !value.isMissing()
-        }
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

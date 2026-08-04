@@ -45,11 +45,7 @@ interface BalanceService {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccountBalanceListPage =
-        list(
-            financialAccountToken,
-            FinancialAccountBalanceListParams.none(),
-            requestOptions,
-        )
+        list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
 
     /** A view of [BalanceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -90,10 +86,6 @@ interface BalanceService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountBalanceListPage> =
-            list(
-                financialAccountToken,
-                FinancialAccountBalanceListParams.none(),
-                requestOptions,
-            )
+            list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
     }
 }

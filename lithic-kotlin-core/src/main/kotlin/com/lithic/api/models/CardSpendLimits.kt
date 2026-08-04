@@ -35,12 +35,7 @@ private constructor(
         @JsonProperty("spend_velocity")
         @ExcludeMissing
         spendVelocity: JsonField<SpendVelocity> = JsonMissing.of(),
-    ) : this(
-        availableSpendLimit,
-        spendLimit,
-        spendVelocity,
-        mutableMapOf(),
-    )
+    ) : this(availableSpendLimit, spendLimit, spendVelocity, mutableMapOf())
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -152,9 +147,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun spendLimit(spendLimit: JsonField<SpendLimit>) = apply {
-            this.spendLimit = spendLimit
-        }
+        fun spendLimit(spendLimit: JsonField<SpendLimit>) = apply { this.spendLimit = spendLimit }
 
         fun spendVelocity(spendVelocity: SpendVelocity) = spendVelocity(JsonField.of(spendVelocity))
 
@@ -182,9 +175,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -204,10 +195,7 @@ private constructor(
          */
         fun build(): CardSpendLimits =
             CardSpendLimits(
-                checkRequired(
-                    "availableSpendLimit",
-                    availableSpendLimit,
-                ),
+                checkRequired("availableSpendLimit", availableSpendLimit),
                 spendLimit,
                 spendVelocity,
                 additionalProperties.toMutableMap(),
@@ -267,12 +255,7 @@ private constructor(
             @JsonProperty("annually") @ExcludeMissing annually: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("forever") @ExcludeMissing forever: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("monthly") @ExcludeMissing monthly: JsonField<Long> = JsonMissing.of(),
-        ) : this(
-            annually,
-            forever,
-            monthly,
-            mutableMapOf(),
-        )
+        ) : this(annually, forever, monthly, mutableMapOf())
 
         /**
          * The available spend limit (in cents) relative to the annual limit configured on the Card
@@ -368,9 +351,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun annually(annually: JsonField<Long>) = apply {
-                this.annually = annually
-            }
+            fun annually(annually: JsonField<Long>) = apply { this.annually = annually }
 
             /**
              * The available spend limit (in cents) relative to the forever limit configured on the
@@ -385,9 +366,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun forever(forever: JsonField<Long>) = apply {
-                this.forever = forever
-            }
+            fun forever(forever: JsonField<Long>) = apply { this.forever = forever }
 
             /**
              * The available spend limit (in cents) relative to the monthly limit configured on the
@@ -402,9 +381,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun monthly(monthly: JsonField<Long>) = apply {
-                this.monthly = monthly
-            }
+            fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -419,9 +396,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -433,12 +408,7 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): AvailableSpendLimit =
-                AvailableSpendLimit(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toMutableMap(),
-                )
+                AvailableSpendLimit(annually, forever, monthly, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -518,12 +488,7 @@ private constructor(
             @JsonProperty("annually") @ExcludeMissing annually: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("forever") @ExcludeMissing forever: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("monthly") @ExcludeMissing monthly: JsonField<Long> = JsonMissing.of(),
-        ) : this(
-            annually,
-            forever,
-            monthly,
-            mutableMapOf(),
-        )
+        ) : this(annually, forever, monthly, mutableMapOf())
 
         /**
          * The configured annual spend limit (in cents) on the Card.
@@ -613,9 +578,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun annually(annually: JsonField<Long>) = apply {
-                this.annually = annually
-            }
+            fun annually(annually: JsonField<Long>) = apply { this.annually = annually }
 
             /** The configured forever spend limit (in cents) on the Card. */
             fun forever(forever: Long) = forever(JsonField.of(forever))
@@ -627,9 +590,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun forever(forever: JsonField<Long>) = apply {
-                this.forever = forever
-            }
+            fun forever(forever: JsonField<Long>) = apply { this.forever = forever }
 
             /** The configured monthly spend limit (in cents) on the Card. */
             fun monthly(monthly: Long) = monthly(JsonField.of(monthly))
@@ -641,9 +602,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun monthly(monthly: JsonField<Long>) = apply {
-                this.monthly = monthly
-            }
+            fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -658,9 +617,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -672,12 +629,7 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): SpendLimit =
-                SpendLimit(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toMutableMap(),
-                )
+                SpendLimit(annually, forever, monthly, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false
@@ -757,12 +709,7 @@ private constructor(
             @JsonProperty("annually") @ExcludeMissing annually: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("forever") @ExcludeMissing forever: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("monthly") @ExcludeMissing monthly: JsonField<Long> = JsonMissing.of(),
-        ) : this(
-            annually,
-            forever,
-            monthly,
-            mutableMapOf(),
-        )
+        ) : this(annually, forever, monthly, mutableMapOf())
 
         /**
          * Current annual spend velocity (in cents) on the Card. Present if annual spend limit is
@@ -858,9 +805,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun annually(annually: JsonField<Long>) = apply {
-                this.annually = annually
-            }
+            fun annually(annually: JsonField<Long>) = apply { this.annually = annually }
 
             /**
              * Current forever spend velocity (in cents) on the Card. Present if forever spend limit
@@ -875,9 +820,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun forever(forever: JsonField<Long>) = apply {
-                this.forever = forever
-            }
+            fun forever(forever: JsonField<Long>) = apply { this.forever = forever }
 
             /**
              * Current monthly spend velocity (in cents) on the Card. Present if monthly spend limit
@@ -892,9 +835,7 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun monthly(monthly: JsonField<Long>) = apply {
-                this.monthly = monthly
-            }
+            fun monthly(monthly: JsonField<Long>) = apply { this.monthly = monthly }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -909,9 +850,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply {
-                additionalProperties.remove(key)
-            }
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -923,12 +862,7 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): SpendVelocity =
-                SpendVelocity(
-                    annually,
-                    forever,
-                    monthly,
-                    additionalProperties.toMutableMap(),
-                )
+                SpendVelocity(annually, forever, monthly, additionalProperties.toMutableMap())
         }
 
         private var validated: Boolean = false

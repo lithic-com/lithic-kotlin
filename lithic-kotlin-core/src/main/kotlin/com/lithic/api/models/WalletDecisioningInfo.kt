@@ -41,13 +41,7 @@ private constructor(
         @JsonProperty("recommendation_reasons")
         @ExcludeMissing
         recommendationReasons: JsonField<List<String>> = JsonMissing.of(),
-    ) : this(
-        accountScore,
-        deviceScore,
-        recommendedDecision,
-        recommendationReasons,
-        mutableMapOf(),
-    )
+    ) : this(accountScore, deviceScore, recommendedDecision, recommendationReasons, mutableMapOf())
 
     /**
      * Score given to the account by the Wallet Provider
@@ -189,9 +183,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun deviceScore(deviceScore: JsonField<String>) = apply {
-            this.deviceScore = deviceScore
-        }
+        fun deviceScore(deviceScore: JsonField<String>) = apply { this.deviceScore = deviceScore }
 
         /** The decision recommended by the Wallet Provider */
         fun recommendedDecision(recommendedDecision: String?) =
@@ -248,9 +240,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -272,18 +262,9 @@ private constructor(
          */
         fun build(): WalletDecisioningInfo =
             WalletDecisioningInfo(
-                checkRequired(
-                    "accountScore",
-                    accountScore,
-                ),
-                checkRequired(
-                    "deviceScore",
-                    deviceScore,
-                ),
-                checkRequired(
-                    "recommendedDecision",
-                    recommendedDecision,
-                ),
+                checkRequired("accountScore", accountScore),
+                checkRequired("deviceScore", deviceScore),
+                checkRequired("recommendedDecision", recommendedDecision),
                 (recommendationReasons ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
             )

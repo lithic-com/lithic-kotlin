@@ -76,9 +76,7 @@ private constructor(
             additionalQueryParams = authRuleV2CreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun body(body: Body) = apply {
-            this.body = body
-        }
+        fun body(body: Body) = apply { this.body = body }
 
         /** Alias for calling [body] with `Body.ofAccountLevelRule(accountLevelRule)`. */
         fun body(accountLevelRule: Body.AccountLevelRule) =
@@ -133,9 +131,7 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply {
-            additionalHeaders.remove(name)
-        }
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -185,9 +181,7 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply {
-            additionalQueryParams.remove(key)
-        }
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -207,10 +201,7 @@ private constructor(
          */
         fun build(): AuthRuleV2CreateParams =
             AuthRuleV2CreateParams(
-                checkRequired(
-                    "body",
-                    body,
-                ),
+                checkRequired("body", body),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -508,7 +499,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -784,7 +774,6 @@ private constructor(
                  * during which it will be evaluated. For rules that can be applied to one of
                  * several event streams, the effective one is defined by the separate
                  * `event_stream` field.
-                 *
                  * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead.
                  *   AUTHORIZATION event stream.
                  * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -805,9 +794,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun type(type: JsonField<AuthRuleType>) = apply {
-                    this.type = type
-                }
+                fun type(type: JsonField<AuthRuleType>) = apply { this.type = type }
 
                 /** Account tokens to which the Auth Rule applies. */
                 fun accountTokens(accountTokens: List<String>) =
@@ -887,9 +874,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun name(name: JsonField<String>) = apply {
-                    this.name = name
-                }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -928,14 +913,8 @@ private constructor(
                  */
                 fun build(): AccountLevelRule =
                     AccountLevelRule(
-                        checkRequired(
-                            "parameters",
-                            parameters,
-                        ),
-                        checkRequired(
-                            "type",
-                            type,
-                        ),
+                        checkRequired("parameters", parameters),
+                        checkRequired("type", type),
                         (accountTokens ?: JsonMissing.of()).map { it.toImmutable() },
                         (businessAccountTokens ?: JsonMissing.of()).map { it.toImmutable() },
                         eventStream,
@@ -1543,17 +1522,13 @@ private constructor(
                                             node,
                                             jacksonTypeRef<ConditionalBlockParameters>(),
                                         )
-                                        ?.let {
-                                            Parameters(conditionalBlock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(conditionalBlock = it, _json = json) },
                                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>())
                                         ?.let {
                                             Parameters(velocityLimitParams = it, _json = json)
                                         },
                                     tryDeserialize(node, jacksonTypeRef<MerchantLockParameters>())
-                                        ?.let {
-                                            Parameters(merchantLock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(merchantLock = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<Conditional3dsActionParameters>(),
@@ -1617,9 +1592,7 @@ private constructor(
                                             )
                                         },
                                     tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())
-                                        ?.let {
-                                            Parameters(typescriptCode = it, _json = json)
-                                        },
+                                        ?.let { Parameters(typescriptCode = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<
@@ -1690,7 +1663,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -1745,11 +1717,9 @@ private constructor(
                  * member.
                  *
                  * An instance of [AuthRuleType] can contain an unknown value in a couple of cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -1922,14 +1892,7 @@ private constructor(
                 @ExcludeMissing
                 eventStream: JsonField<EventStream> = JsonMissing.of(),
                 @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-            ) : this(
-                cardTokens,
-                parameters,
-                type,
-                eventStream,
-                name,
-                mutableMapOf(),
-            )
+            ) : this(cardTokens, parameters, type, eventStream, name, mutableMapOf())
 
             /**
              * Card tokens to which the Auth Rule applies.
@@ -1953,7 +1916,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -2226,7 +2188,6 @@ private constructor(
                  * during which it will be evaluated. For rules that can be applied to one of
                  * several event streams, the effective one is defined by the separate
                  * `event_stream` field.
-                 *
                  * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead.
                  *   AUTHORIZATION event stream.
                  * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -2247,9 +2208,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun type(type: JsonField<AuthRuleType>) = apply {
-                    this.type = type
-                }
+                fun type(type: JsonField<AuthRuleType>) = apply { this.type = type }
 
                 /** The event stream during which the rule will be evaluated. */
                 fun eventStream(eventStream: EventStream) = eventStream(JsonField.of(eventStream))
@@ -2275,9 +2234,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun name(name: JsonField<String>) = apply {
-                    this.name = name
-                }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -2317,19 +2274,9 @@ private constructor(
                  */
                 fun build(): CardLevelRule =
                     CardLevelRule(
-                        checkRequired(
-                                "cardTokens",
-                                cardTokens,
-                            )
-                            .map { it.toImmutable() },
-                        checkRequired(
-                            "parameters",
-                            parameters,
-                        ),
-                        checkRequired(
-                            "type",
-                            type,
-                        ),
+                        checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
+                        checkRequired("parameters", parameters),
+                        checkRequired("type", type),
                         eventStream,
                         name,
                         additionalProperties.toMutableMap(),
@@ -2933,17 +2880,13 @@ private constructor(
                                             node,
                                             jacksonTypeRef<ConditionalBlockParameters>(),
                                         )
-                                        ?.let {
-                                            Parameters(conditionalBlock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(conditionalBlock = it, _json = json) },
                                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>())
                                         ?.let {
                                             Parameters(velocityLimitParams = it, _json = json)
                                         },
                                     tryDeserialize(node, jacksonTypeRef<MerchantLockParameters>())
-                                        ?.let {
-                                            Parameters(merchantLock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(merchantLock = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<Conditional3dsActionParameters>(),
@@ -3007,9 +2950,7 @@ private constructor(
                                             )
                                         },
                                     tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())
-                                        ?.let {
-                                            Parameters(typescriptCode = it, _json = json)
-                                        },
+                                        ?.let { Parameters(typescriptCode = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<
@@ -3080,7 +3021,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -3135,11 +3075,9 @@ private constructor(
                  * member.
                  *
                  * An instance of [AuthRuleType] can contain an unknown value in a couple of cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -3349,7 +3287,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -3677,7 +3614,6 @@ private constructor(
                  * during which it will be evaluated. For rules that can be applied to one of
                  * several event streams, the effective one is defined by the separate
                  * `event_stream` field.
-                 *
                  * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead.
                  *   AUTHORIZATION event stream.
                  * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -3698,9 +3634,7 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun type(type: JsonField<AuthRuleType>) = apply {
-                    this.type = type
-                }
+                fun type(type: JsonField<AuthRuleType>) = apply { this.type = type }
 
                 /** The event stream during which the rule will be evaluated. */
                 fun eventStream(eventStream: EventStream) = eventStream(JsonField.of(eventStream))
@@ -3757,9 +3691,8 @@ private constructor(
                 fun excludedBusinessAccountTokens(
                     excludedBusinessAccountTokens: JsonField<List<String>>
                 ) = apply {
-                    this.excludedBusinessAccountTokens = excludedBusinessAccountTokens.map {
-                        it.toMutableList()
-                    }
+                    this.excludedBusinessAccountTokens =
+                        excludedBusinessAccountTokens.map { it.toMutableList() }
                 }
 
                 /**
@@ -3812,9 +3745,7 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun name(name: JsonField<String>) = apply {
-                    this.name = name
-                }
+                fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -3854,18 +3785,9 @@ private constructor(
                  */
                 fun build(): ProgramLevelRule =
                     ProgramLevelRule(
-                        checkRequired(
-                            "parameters",
-                            parameters,
-                        ),
-                        checkRequired(
-                            "programLevel",
-                            programLevel,
-                        ),
-                        checkRequired(
-                            "type",
-                            type,
-                        ),
+                        checkRequired("parameters", parameters),
+                        checkRequired("programLevel", programLevel),
+                        checkRequired("type", type),
                         eventStream,
                         (excludedAccountTokens ?: JsonMissing.of()).map { it.toImmutable() },
                         (excludedBusinessAccountTokens ?: JsonMissing.of()).map {
@@ -4480,17 +4402,13 @@ private constructor(
                                             node,
                                             jacksonTypeRef<ConditionalBlockParameters>(),
                                         )
-                                        ?.let {
-                                            Parameters(conditionalBlock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(conditionalBlock = it, _json = json) },
                                     tryDeserialize(node, jacksonTypeRef<VelocityLimitParams>())
                                         ?.let {
                                             Parameters(velocityLimitParams = it, _json = json)
                                         },
                                     tryDeserialize(node, jacksonTypeRef<MerchantLockParameters>())
-                                        ?.let {
-                                            Parameters(merchantLock = it, _json = json)
-                                        },
+                                        ?.let { Parameters(merchantLock = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<Conditional3dsActionParameters>(),
@@ -4554,9 +4472,7 @@ private constructor(
                                             )
                                         },
                                     tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())
-                                        ?.let {
-                                            Parameters(typescriptCode = it, _json = json)
-                                        },
+                                        ?.let { Parameters(typescriptCode = it, _json = json) },
                                     tryDeserialize(
                                             node,
                                             jacksonTypeRef<
@@ -4627,7 +4543,6 @@ private constructor(
              * The type of Auth Rule. For certain rule types, this determines the event stream
              * during which it will be evaluated. For rules that can be applied to one of several
              * event streams, the effective one is defined by the separate `event_stream` field.
-             *
              * - `CONDITIONAL_BLOCK`: Deprecated. Use `CONDITIONAL_ACTION` instead. AUTHORIZATION
              *   event stream.
              * - `VELOCITY_LIMIT`: AUTHORIZATION event stream.
@@ -4682,11 +4597,9 @@ private constructor(
                  * member.
                  *
                  * An instance of [AuthRuleType] can contain an unknown value in a couple of cases:
-                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
-                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {

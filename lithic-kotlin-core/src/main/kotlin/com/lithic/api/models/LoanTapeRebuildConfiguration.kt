@@ -37,12 +37,7 @@ private constructor(
         @JsonProperty("rebuild_from")
         @ExcludeMissing
         rebuildFrom: JsonField<LocalDate> = JsonMissing.of(),
-    ) : this(
-        rebuildNeeded,
-        lastRebuild,
-        rebuildFrom,
-        mutableMapOf(),
-    )
+    ) : this(rebuildNeeded, lastRebuild, rebuildFrom, mutableMapOf())
 
     /**
      * Whether the account's loan tapes need to be rebuilt or not
@@ -190,9 +185,7 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply {
-            additionalProperties.remove(key)
-        }
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -212,10 +205,7 @@ private constructor(
          */
         fun build(): LoanTapeRebuildConfiguration =
             LoanTapeRebuildConfiguration(
-                checkRequired(
-                    "rebuildNeeded",
-                    rebuildNeeded,
-                ),
+                checkRequired("rebuildNeeded", rebuildNeeded),
                 lastRebuild,
                 rebuildFrom,
                 additionalProperties.toMutableMap(),

@@ -28,11 +28,7 @@ interface BalanceService {
         cardToken: String,
         params: CardBalanceListParams = CardBalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CardBalanceListPage =
-        list(
-            params.toBuilder().cardToken(cardToken).build(),
-            requestOptions,
-        )
+    ): CardBalanceListPage = list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
     /** @see list */
     fun list(
@@ -42,11 +38,7 @@ interface BalanceService {
 
     /** @see list */
     fun list(cardToken: String, requestOptions: RequestOptions): CardBalanceListPage =
-        list(
-            cardToken,
-            CardBalanceListParams.none(),
-            requestOptions,
-        )
+        list(cardToken, CardBalanceListParams.none(), requestOptions)
 
     /** A view of [BalanceService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -68,10 +60,7 @@ interface BalanceService {
             params: CardBalanceListParams = CardBalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardBalanceListPage> =
-            list(
-                params.toBuilder().cardToken(cardToken).build(),
-                requestOptions,
-            )
+            list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
 
         /** @see list */
         @MustBeClosed
@@ -86,10 +75,6 @@ interface BalanceService {
             cardToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardBalanceListPage> =
-            list(
-                cardToken,
-                CardBalanceListParams.none(),
-                requestOptions,
-            )
+            list(cardToken, CardBalanceListParams.none(), requestOptions)
     }
 }

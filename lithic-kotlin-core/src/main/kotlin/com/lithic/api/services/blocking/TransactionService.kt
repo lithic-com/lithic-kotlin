@@ -59,10 +59,7 @@ interface TransactionService {
         params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Transaction =
-        retrieve(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -72,11 +69,7 @@ interface TransactionService {
 
     /** @see retrieve */
     fun retrieve(transactionToken: String, requestOptions: RequestOptions): Transaction =
-        retrieve(
-            transactionToken,
-            TransactionRetrieveParams.none(),
-            requestOptions,
-        )
+        retrieve(transactionToken, TransactionRetrieveParams.none(), requestOptions)
 
     /**
      * List card transactions. All amounts are in the smallest unit of their respective currency
@@ -89,10 +82,7 @@ interface TransactionService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): TransactionListPage =
-        list(
-            TransactionListParams.none(),
-            requestOptions,
-        )
+        list(TransactionListParams.none(), requestOptions)
 
     /** Expire authorization */
     fun expireAuthorization(
@@ -127,11 +117,7 @@ interface TransactionService {
         transactionToken: String,
         params: TransactionRouteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) =
-        route(
-            params.toBuilder().transactionToken(transactionToken).build(),
-            requestOptions,
-        )
+    ) = route(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
     /** @see route */
     fun route(
@@ -250,10 +236,7 @@ interface TransactionService {
             params: TransactionRetrieveParams = TransactionRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Transaction> =
-            retrieve(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -268,11 +251,7 @@ interface TransactionService {
             transactionToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Transaction> =
-            retrieve(
-                transactionToken,
-                TransactionRetrieveParams.none(),
-                requestOptions,
-            )
+            retrieve(transactionToken, TransactionRetrieveParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /v1/transactions`, but is otherwise the same as
@@ -287,10 +266,7 @@ interface TransactionService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionListPage> =
-            list(
-                TransactionListParams.none(),
-                requestOptions,
-            )
+            list(TransactionListParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `post
@@ -338,10 +314,7 @@ interface TransactionService {
             params: TransactionRouteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            route(
-                params.toBuilder().transactionToken(transactionToken).build(),
-                requestOptions,
-            )
+            route(params.toBuilder().transactionToken(transactionToken).build(), requestOptions)
 
         /** @see route */
         @MustBeClosed

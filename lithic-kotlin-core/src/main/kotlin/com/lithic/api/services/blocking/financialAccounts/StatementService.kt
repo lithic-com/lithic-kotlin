@@ -34,10 +34,7 @@ interface StatementService {
         params: FinancialAccountStatementRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Statement =
-        retrieve(
-            params.toBuilder().statementToken(statementToken).build(),
-            requestOptions,
-        )
+        retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
     /** @see retrieve */
     fun retrieve(
@@ -67,11 +64,7 @@ interface StatementService {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccountStatementListPage =
-        list(
-            financialAccountToken,
-            FinancialAccountStatementListParams.none(),
-            requestOptions,
-        )
+        list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
 
     /** A view of [StatementService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -96,10 +89,7 @@ interface StatementService {
             params: FinancialAccountStatementRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Statement> =
-            retrieve(
-                params.toBuilder().statementToken(statementToken).build(),
-                requestOptions,
-            )
+            retrieve(params.toBuilder().statementToken(statementToken).build(), requestOptions)
 
         /** @see retrieve */
         @MustBeClosed
@@ -138,10 +128,6 @@ interface StatementService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountStatementListPage> =
-            list(
-                financialAccountToken,
-                FinancialAccountStatementListParams.none(),
-                requestOptions,
-            )
+            list(financialAccountToken, FinancialAccountStatementListParams.none(), requestOptions)
     }
 }

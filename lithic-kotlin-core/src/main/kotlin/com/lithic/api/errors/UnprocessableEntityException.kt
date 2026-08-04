@@ -8,11 +8,7 @@ import com.lithic.api.core.http.Headers
 import com.lithic.api.core.jsonMapper
 
 class UnprocessableEntityException
-private constructor(
-    private val headers: Headers,
-    private val body: JsonValue,
-    cause: Throwable?,
-) :
+private constructor(private val headers: Headers, private val body: JsonValue, cause: Throwable?) :
     LithicServiceException(
         "422: ${if (body.isMissing()) "Unknown" else jsonMapper().writeValueAsString(body)}",
         cause,
@@ -53,17 +49,11 @@ private constructor(
             cause = unprocessableEntityException.cause
         }
 
-        fun headers(headers: Headers) = apply {
-            this.headers = headers
-        }
+        fun headers(headers: Headers) = apply { this.headers = headers }
 
-        fun body(body: JsonValue) = apply {
-            this.body = body
-        }
+        fun body(body: JsonValue) = apply { this.body = body }
 
-        fun cause(cause: Throwable?) = apply {
-            this.cause = cause
-        }
+        fun cause(cause: Throwable?) = apply { this.cause = cause }
 
         /**
          * Returns an immutable instance of [UnprocessableEntityException].
@@ -80,14 +70,8 @@ private constructor(
          */
         fun build(): UnprocessableEntityException =
             UnprocessableEntityException(
-                checkRequired(
-                    "headers",
-                    headers,
-                ),
-                checkRequired(
-                    "body",
-                    body,
-                ),
+                checkRequired("headers", headers),
+                checkRequired("body", body),
                 cause,
             )
     }
