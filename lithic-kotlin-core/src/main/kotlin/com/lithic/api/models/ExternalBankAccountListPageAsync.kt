@@ -85,10 +85,14 @@ private constructor(
                 response = externalBankAccountListPageAsync.response
             }
 
-        fun service(service: ExternalBankAccountServiceAsync) = apply { this.service = service }
+        fun service(service: ExternalBankAccountServiceAsync) = apply {
+            this.service = service
+        }
 
         /** The parameters that were used to request this page. */
-        fun params(params: ExternalBankAccountListParams) = apply { this.params = params }
+        fun params(params: ExternalBankAccountListParams) = apply {
+            this.params = params
+        }
 
         /** The response that this page was parsed from. */
         fun response(response: ExternalBankAccountListPageResponse) = apply {
@@ -111,9 +115,18 @@ private constructor(
          */
         fun build(): ExternalBankAccountListPageAsync =
             ExternalBankAccountListPageAsync(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+                checkRequired(
+                    "service",
+                    service,
+                ),
+                checkRequired(
+                    "params",
+                    params,
+                ),
+                checkRequired(
+                    "response",
+                    response,
+                ),
             )
     }
 

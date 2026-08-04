@@ -442,7 +442,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** Token for the account associated with the dispute, in UUID format. */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -468,7 +470,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: JsonField<String>) = apply {
+            this.cardToken = cardToken
+        }
 
         /** Identifier assigned by the network for this dispute. */
         fun caseId(caseId: String?) = caseId(JsonField.ofNullable(caseId))
@@ -479,7 +483,9 @@ private constructor(
          * You should usually call [Builder.caseId] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun caseId(caseId: JsonField<String>) = apply { this.caseId = caseId }
+        fun caseId(caseId: JsonField<String>) = apply {
+            this.caseId = caseId
+        }
 
         /** When the dispute was created. */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -491,7 +497,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /** Three-letter ISO 4217 currency code. */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -502,7 +510,9 @@ private constructor(
          * You should usually call [Builder.currency] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        fun currency(currency: JsonField<String>) = apply {
+            this.currency = currency
+        }
 
         /** Dispute resolution outcome */
         fun disposition(disposition: DisputeV2.Disposition?) =
@@ -570,7 +580,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun merchant(merchant: JsonField<Merchant>) = apply { this.merchant = merchant }
+        fun merchant(merchant: JsonField<Merchant>) = apply {
+            this.merchant = merchant
+        }
 
         /** Card network handling the dispute. */
         fun network(network: DisputeV2.Network) = network(JsonField.of(network))
@@ -582,7 +594,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun network(network: JsonField<DisputeV2.Network>) = apply { this.network = network }
+        fun network(network: JsonField<DisputeV2.Network>) = apply {
+            this.network = network
+        }
 
         /** Current status of the dispute. */
         fun status(status: DisputeV2.Status?) = status(JsonField.ofNullable(status))
@@ -594,7 +608,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun status(status: JsonField<DisputeV2.Status>) = apply { this.status = status }
+        fun status(status: JsonField<DisputeV2.Status>) = apply {
+            this.status = status
+        }
 
         /**
          * Contains identifiers for the transaction and specific event within being disputed; null
@@ -624,7 +640,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         /** The type of event that occurred. */
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
@@ -636,7 +654,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -651,7 +671,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -685,21 +707,67 @@ private constructor(
          */
         fun build(): DisputeTransactionUpdatedWebhookEvent =
             DisputeTransactionUpdatedWebhookEvent(
-                checkRequired("token", token),
-                checkRequired("accountToken", accountToken),
-                checkRequired("cardToken", cardToken),
-                checkRequired("caseId", caseId),
-                checkRequired("created", created),
-                checkRequired("currency", currency),
-                checkRequired("disposition", disposition),
-                checkRequired("events", events).map { it.toImmutable() },
-                checkRequired("liabilityAllocation", liabilityAllocation),
-                checkRequired("merchant", merchant),
-                checkRequired("network", network),
-                checkRequired("status", status),
-                checkRequired("transactionSeries", transactionSeries),
-                checkRequired("updated", updated),
-                checkRequired("eventType", eventType),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "accountToken",
+                    accountToken,
+                ),
+                checkRequired(
+                    "cardToken",
+                    cardToken,
+                ),
+                checkRequired(
+                    "caseId",
+                    caseId,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "currency",
+                    currency,
+                ),
+                checkRequired(
+                    "disposition",
+                    disposition,
+                ),
+                checkRequired(
+                        "events",
+                        events,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "liabilityAllocation",
+                    liabilityAllocation,
+                ),
+                checkRequired(
+                    "merchant",
+                    merchant,
+                ),
+                checkRequired(
+                    "network",
+                    network,
+                ),
+                checkRequired(
+                    "status",
+                    status,
+                ),
+                checkRequired(
+                    "transactionSeries",
+                    transactionSeries,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -796,9 +864,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

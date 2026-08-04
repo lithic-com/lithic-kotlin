@@ -87,7 +87,9 @@ private constructor(
                 transactionMonitoringCaseFileCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun caseToken(caseToken: String?) = apply { this.caseToken = caseToken }
+        fun caseToken(caseToken: String?) = apply {
+            this.caseToken = caseToken
+        }
 
         /**
          * Sets the entire request body.
@@ -96,10 +98,14 @@ private constructor(
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [name]
          */
-        fun body(body: CreateFileRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: CreateFileRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** Name of the file to upload */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String) = apply {
+            body.name(name)
+        }
 
         /**
          * Sets [Builder.name] to an arbitrary JSON value.
@@ -107,14 +113,19 @@ private constructor(
          * You should usually call [Builder.name] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun name(name: JsonField<String>) = apply { body.name(name) }
+        fun name(name: JsonField<String>) = apply {
+            body.name(name)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -122,7 +133,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -170,7 +183,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -220,7 +235,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -270,7 +287,10 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of()
-        ) : this(name, mutableMapOf())
+        ) : this(
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * Name of the file to upload
@@ -333,7 +353,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -348,7 +370,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -367,7 +391,13 @@ private constructor(
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): CreateFileRequest =
-                CreateFileRequest(checkRequired("name", name), additionalProperties.toMutableMap())
+                CreateFileRequest(
+                    checkRequired(
+                        "name",
+                        name,
+                    ),
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false

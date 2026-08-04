@@ -35,7 +35,11 @@ interface AccountServiceAsync {
         accountToken: String,
         params: AccountRetrieveParams = AccountRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account = retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+    ): Account =
+        retrieve(
+            params.toBuilder().accountToken(accountToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -45,7 +49,11 @@ interface AccountServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(accountToken: String, requestOptions: RequestOptions): Account =
-        retrieve(accountToken, AccountRetrieveParams.none(), requestOptions)
+        retrieve(
+            accountToken,
+            AccountRetrieveParams.none(),
+            requestOptions,
+        )
 
     /**
      * Update account configuration such as state or spend limits. Can only be run on accounts that
@@ -56,7 +64,11 @@ interface AccountServiceAsync {
         accountToken: String,
         params: AccountUpdateParams = AccountUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Account = update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+    ): Account =
+        update(
+            params.toBuilder().accountToken(accountToken).build(),
+            requestOptions,
+        )
 
     /** @see update */
     suspend fun update(
@@ -66,7 +78,11 @@ interface AccountServiceAsync {
 
     /** @see update */
     suspend fun update(accountToken: String, requestOptions: RequestOptions): Account =
-        update(accountToken, AccountUpdateParams.none(), requestOptions)
+        update(
+            accountToken,
+            AccountUpdateParams.none(),
+            requestOptions,
+        )
 
     /** List account configurations. */
     suspend fun list(
@@ -76,7 +92,10 @@ interface AccountServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): AccountListPageAsync =
-        list(AccountListParams.none(), requestOptions)
+        list(
+            AccountListParams.none(),
+            requestOptions,
+        )
 
     /**
      * Returns behavioral feature state derived from an account's transaction history.
@@ -93,7 +112,10 @@ interface AccountServiceAsync {
         params: AccountRetrieveSignalsParams = AccountRetrieveSignalsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SignalsResponse =
-        retrieveSignals(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+        retrieveSignals(
+            params.toBuilder().accountToken(accountToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieveSignals */
     suspend fun retrieveSignals(
@@ -106,7 +128,11 @@ interface AccountServiceAsync {
         accountToken: String,
         requestOptions: RequestOptions,
     ): SignalsResponse =
-        retrieveSignals(accountToken, AccountRetrieveSignalsParams.none(), requestOptions)
+        retrieveSignals(
+            accountToken,
+            AccountRetrieveSignalsParams.none(),
+            requestOptions,
+        )
 
     /**
      * Get an Account's available spend limits, which is based on the spend limit configured on the
@@ -119,7 +145,10 @@ interface AccountServiceAsync {
         params: AccountRetrieveSpendLimitsParams = AccountRetrieveSpendLimitsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSpendLimits =
-        retrieveSpendLimits(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+        retrieveSpendLimits(
+            params.toBuilder().accountToken(accountToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieveSpendLimits */
     suspend fun retrieveSpendLimits(
@@ -132,7 +161,11 @@ interface AccountServiceAsync {
         accountToken: String,
         requestOptions: RequestOptions,
     ): AccountSpendLimits =
-        retrieveSpendLimits(accountToken, AccountRetrieveSpendLimitsParams.none(), requestOptions)
+        retrieveSpendLimits(
+            accountToken,
+            AccountRetrieveSpendLimitsParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [AccountServiceAsync] that provides access to raw HTTP responses for each method.
@@ -158,7 +191,10 @@ interface AccountServiceAsync {
             params: AccountRetrieveParams = AccountRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account> =
-            retrieve(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+            retrieve(
+                params.toBuilder().accountToken(accountToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -173,7 +209,11 @@ interface AccountServiceAsync {
             accountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Account> =
-            retrieve(accountToken, AccountRetrieveParams.none(), requestOptions)
+            retrieve(
+                accountToken,
+                AccountRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `patch /v1/accounts/{account_token}`, but is otherwise
@@ -185,7 +225,10 @@ interface AccountServiceAsync {
             params: AccountUpdateParams = AccountUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Account> =
-            update(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+            update(
+                params.toBuilder().accountToken(accountToken).build(),
+                requestOptions,
+            )
 
         /** @see update */
         @MustBeClosed
@@ -200,7 +243,11 @@ interface AccountServiceAsync {
             accountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Account> =
-            update(accountToken, AccountUpdateParams.none(), requestOptions)
+            update(
+                accountToken,
+                AccountUpdateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/accounts`, but is otherwise the same as
@@ -215,7 +262,10 @@ interface AccountServiceAsync {
         /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPageAsync> =
-            list(AccountListParams.none(), requestOptions)
+            list(
+                AccountListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/accounts/{account_token}/signals`, but is
@@ -227,7 +277,10 @@ interface AccountServiceAsync {
             params: AccountRetrieveSignalsParams = AccountRetrieveSignalsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SignalsResponse> =
-            retrieveSignals(params.toBuilder().accountToken(accountToken).build(), requestOptions)
+            retrieveSignals(
+                params.toBuilder().accountToken(accountToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieveSignals */
         @MustBeClosed
@@ -242,7 +295,11 @@ interface AccountServiceAsync {
             accountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SignalsResponse> =
-            retrieveSignals(accountToken, AccountRetrieveSignalsParams.none(), requestOptions)
+            retrieveSignals(
+                accountToken,
+                AccountRetrieveSignalsParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/accounts/{account_token}/spend_limits`, but is

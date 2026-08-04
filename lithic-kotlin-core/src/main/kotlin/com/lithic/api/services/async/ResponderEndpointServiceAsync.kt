@@ -35,7 +35,10 @@ interface ResponderEndpointServiceAsync {
 
     /** @see create */
     suspend fun create(requestOptions: RequestOptions): ResponderEndpointCreateResponse =
-        create(ResponderEndpointCreateParams.none(), requestOptions)
+        create(
+            ResponderEndpointCreateParams.none(),
+            requestOptions,
+        )
 
     /** Disenroll a responder endpoint */
     suspend fun delete(
@@ -79,7 +82,10 @@ interface ResponderEndpointServiceAsync {
         suspend fun create(
             requestOptions: RequestOptions
         ): HttpResponseFor<ResponderEndpointCreateResponse> =
-            create(ResponderEndpointCreateParams.none(), requestOptions)
+            create(
+                ResponderEndpointCreateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `delete /v1/responder_endpoints`, but is otherwise the

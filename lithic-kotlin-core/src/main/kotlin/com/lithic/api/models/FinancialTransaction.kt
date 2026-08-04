@@ -86,6 +86,7 @@ private constructor(
 
     /**
      * Status types:
+     *
      * * `CARD` - Issuing card transaction.
      * * `ACH` - Transaction over ACH.
      * * `INTERNAL` - Transaction for internal adjustment.
@@ -160,6 +161,7 @@ private constructor(
 
     /**
      * Status types:
+     *
      * * `DECLINED` - The transaction was declined.
      * * `EXPIRED` - The authorization as it has passed its expiration time. Card transaction only.
      * * `PENDING` - The transaction is expected to settle.
@@ -336,10 +338,13 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /**
          * Status types:
+         *
          * * `CARD` - Issuing card transaction.
          * * `ACH` - Transaction over ACH.
          * * `INTERNAL` - Transaction for internal adjustment.
@@ -354,7 +359,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun category(category: JsonField<Category>) = apply { this.category = category }
+        fun category(category: JsonField<Category>) = apply {
+            this.category = category
+        }
 
         /** Date and time when the financial transaction first occurred. UTC time zone. */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -366,7 +373,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /** 3-character alphabetic ISO 4217 code for the settling currency of the transaction. */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -377,7 +386,9 @@ private constructor(
          * You should usually call [Builder.currency] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        fun currency(currency: JsonField<String>) = apply {
+            this.currency = currency
+        }
 
         /**
          * A string that provides a description of the financial transaction; may be useful to
@@ -392,7 +403,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun descriptor(descriptor: JsonField<String>) = apply { this.descriptor = descriptor }
+        fun descriptor(descriptor: JsonField<String>) = apply {
+            this.descriptor = descriptor
+        }
 
         /** A list of all financial events that have modified this financial transaction. */
         fun events(events: List<FinancialEvent>) = events(JsonField.of(events))
@@ -452,7 +465,9 @@ private constructor(
          * You should usually call [Builder.result] with a well-typed [Result] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun result(result: JsonField<Result>) = apply { this.result = result }
+        fun result(result: JsonField<Result>) = apply {
+            this.result = result
+        }
 
         /**
          * Amount of the transaction that has been settled in the currency's smallest unit (e.g.,
@@ -473,6 +488,7 @@ private constructor(
 
         /**
          * Status types:
+         *
          * * `DECLINED` - The transaction was declined.
          * * `EXPIRED` - The authorization as it has passed its expiration time. Card transaction
          *   only.
@@ -489,7 +505,9 @@ private constructor(
          * You should usually call [Builder.status] with a well-typed [Status] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun status(status: JsonField<Status>) = apply { this.status = status }
+        fun status(status: JsonField<Status>) = apply {
+            this.status = status
+        }
 
         /** Date and time when the financial transaction was last updated. UTC time zone. */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -501,7 +519,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -516,7 +536,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -546,17 +568,51 @@ private constructor(
          */
         fun build(): FinancialTransaction =
             FinancialTransaction(
-                checkRequired("token", token),
-                checkRequired("category", category),
-                checkRequired("created", created),
-                checkRequired("currency", currency),
-                checkRequired("descriptor", descriptor),
-                checkRequired("events", events).map { it.toImmutable() },
-                checkRequired("pendingAmount", pendingAmount),
-                checkRequired("result", result),
-                checkRequired("settledAmount", settledAmount),
-                checkRequired("status", status),
-                checkRequired("updated", updated),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "category",
+                    category,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "currency",
+                    currency,
+                ),
+                checkRequired(
+                    "descriptor",
+                    descriptor,
+                ),
+                checkRequired(
+                        "events",
+                        events,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "pendingAmount",
+                    pendingAmount,
+                ),
+                checkRequired(
+                    "result",
+                    result,
+                ),
+                checkRequired(
+                    "settledAmount",
+                    settledAmount,
+                ),
+                checkRequired(
+                    "status",
+                    status,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -618,6 +674,7 @@ private constructor(
 
     /**
      * Status types:
+     *
      * * `CARD` - Issuing card transaction.
      * * `ACH` - Transaction over ACH.
      * * `INTERNAL` - Transaction for internal adjustment.
@@ -660,9 +717,11 @@ private constructor(
          * An enum containing [Category]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Category] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -804,9 +863,11 @@ private constructor(
          * An enum containing [Result]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Result] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -909,6 +970,7 @@ private constructor(
 
     /**
      * Status types:
+     *
      * * `DECLINED` - The transaction was declined.
      * * `EXPIRED` - The authorization as it has passed its expiration time. Card transaction only.
      * * `PENDING` - The transaction is expected to settle.
@@ -959,9 +1021,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

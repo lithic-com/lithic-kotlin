@@ -26,7 +26,11 @@ private constructor(
     private constructor(
         @JsonProperty("enrolled") @ExcludeMissing enrolled: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
-    ) : this(enrolled, url, mutableMapOf())
+    ) : this(
+        enrolled,
+        url,
+        mutableMapOf(),
+    )
 
     /**
      * True if the instance has an endpoint enrolled.
@@ -99,7 +103,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun enrolled(enrolled: JsonField<Boolean>) = apply { this.enrolled = enrolled }
+        fun enrolled(enrolled: JsonField<Boolean>) = apply {
+            this.enrolled = enrolled
+        }
 
         /** The URL of the currently enrolled endpoint or null. */
         fun url(url: String?) = url(JsonField.ofNullable(url))
@@ -110,7 +116,9 @@ private constructor(
          * You should usually call [Builder.url] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun url(url: JsonField<String>) = apply { this.url = url }
+        fun url(url: JsonField<String>) = apply {
+            this.url = url
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -125,7 +133,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -137,7 +147,11 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): ResponderEndpointStatus =
-            ResponderEndpointStatus(enrolled, url, additionalProperties.toMutableMap())
+            ResponderEndpointStatus(
+                enrolled,
+                url,
+                additionalProperties.toMutableMap(),
+            )
     }
 
     private var validated: Boolean = false

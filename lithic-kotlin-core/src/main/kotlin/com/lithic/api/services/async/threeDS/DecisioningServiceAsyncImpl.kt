@@ -82,11 +82,20 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                     .addPathSegments("v1", "three_ds_decisioning", "challenge_response")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(clientOptions, params)
+                    .prepareAsync(
+                        clientOptions,
+                        params,
+                    )
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            val response =
+                clientOptions.httpClient.executeAsync(
+                    request,
+                    requestOptions,
+                )
             return errorHandler.handle(response).parseable {
-                response.use { challengeResponseHandler.handle(it) }
+                response.use {
+                    challengeResponseHandler.handle(it)
+                }
             }
         }
 
@@ -103,12 +112,21 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "three_ds_decisioning", "secret")
                     .build()
-                    .prepareAsync(clientOptions, params)
+                    .prepareAsync(
+                        clientOptions,
+                        params,
+                    )
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            val response =
+                clientOptions.httpClient.executeAsync(
+                    request,
+                    requestOptions,
+                )
             return errorHandler.handle(response).parseable {
                 response
-                    .use { retrieveSecretHandler.handle(it) }
+                    .use {
+                        retrieveSecretHandler.handle(it)
+                    }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
@@ -130,11 +148,20 @@ class DecisioningServiceAsyncImpl internal constructor(private val clientOptions
                     .addPathSegments("v1", "three_ds_decisioning", "secret", "rotate")
                     .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                     .build()
-                    .prepareAsync(clientOptions, params)
+                    .prepareAsync(
+                        clientOptions,
+                        params,
+                    )
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            val response =
+                clientOptions.httpClient.executeAsync(
+                    request,
+                    requestOptions,
+                )
             return errorHandler.handle(response).parseable {
-                response.use { rotateSecretHandler.handle(it) }
+                response.use {
+                    rotateSecretHandler.handle(it)
+                }
             }
         }
     }

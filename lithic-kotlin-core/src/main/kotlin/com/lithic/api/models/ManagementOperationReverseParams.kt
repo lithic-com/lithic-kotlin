@@ -110,9 +110,13 @@ private constructor(
          * - [effectiveDate]
          * - [memo]
          */
-        fun body(body: ManagementOperationActionRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: ManagementOperationActionRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
-        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
+        fun effectiveDate(effectiveDate: LocalDate) = apply {
+            body.effectiveDate(effectiveDate)
+        }
 
         /**
          * Sets [Builder.effectiveDate] to an arbitrary JSON value.
@@ -125,7 +129,9 @@ private constructor(
             body.effectiveDate(effectiveDate)
         }
 
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String) = apply {
+            body.memo(memo)
+        }
 
         /**
          * Sets [Builder.memo] to an arbitrary JSON value.
@@ -133,14 +139,19 @@ private constructor(
          * You should usually call [Builder.memo] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
+        fun memo(memo: JsonField<String>) = apply {
+            body.memo(memo)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -148,7 +159,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -196,7 +209,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -246,7 +261,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -299,7 +316,11 @@ private constructor(
             @ExcludeMissing
             effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
             @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
-        ) : this(effectiveDate, memo, mutableMapOf())
+        ) : this(
+            effectiveDate,
+            memo,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -393,7 +414,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) = apply {
+                this.memo = memo
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -408,7 +431,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -428,7 +453,10 @@ private constructor(
              */
             fun build(): ManagementOperationActionRequest =
                 ManagementOperationActionRequest(
-                    checkRequired("effectiveDate", effectiveDate),
+                    checkRequired(
+                        "effectiveDate",
+                        effectiveDate,
+                    ),
                     memo,
                     additionalProperties.toMutableMap(),
                 )

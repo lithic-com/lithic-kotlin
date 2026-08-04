@@ -145,7 +145,9 @@ private constructor(
             additionalQueryParams = paymentSimulateActionParams.additionalQueryParams.toBuilder()
         }
 
-        fun paymentToken(paymentToken: String?) = apply { this.paymentToken = paymentToken }
+        fun paymentToken(paymentToken: String?) = apply {
+            this.paymentToken = paymentToken
+        }
 
         /**
          * Sets the entire request body.
@@ -159,10 +161,14 @@ private constructor(
          * - [returnReasonCode]
          * - etc.
          */
-        fun body(body: SimulateActionRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: SimulateActionRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** Event Type */
-        fun eventType(eventType: SupportedSimulationTypes) = apply { body.eventType(eventType) }
+        fun eventType(eventType: SupportedSimulationTypes) = apply {
+            body.eventType(eventType)
+        }
 
         /**
          * Sets [Builder.eventType] to an arbitrary JSON value.
@@ -176,7 +182,9 @@ private constructor(
         }
 
         /** Date of Death for ACH Return */
-        fun dateOfDeath(dateOfDeath: LocalDate) = apply { body.dateOfDeath(dateOfDeath) }
+        fun dateOfDeath(dateOfDeath: LocalDate) = apply {
+            body.dateOfDeath(dateOfDeath)
+        }
 
         /**
          * Sets [Builder.dateOfDeath] to an arbitrary JSON value.
@@ -185,7 +193,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun dateOfDeath(dateOfDeath: JsonField<LocalDate>) = apply { body.dateOfDeath(dateOfDeath) }
+        fun dateOfDeath(dateOfDeath: JsonField<LocalDate>) = apply {
+            body.dateOfDeath(dateOfDeath)
+        }
 
         /** Decline reason */
         fun declineReason(declineReason: SupportedSimulationDeclineReasons) = apply {
@@ -204,7 +214,9 @@ private constructor(
         }
 
         /** Return Addenda */
-        fun returnAddenda(returnAddenda: String) = apply { body.returnAddenda(returnAddenda) }
+        fun returnAddenda(returnAddenda: String) = apply {
+            body.returnAddenda(returnAddenda)
+        }
 
         /**
          * Sets [Builder.returnAddenda] to an arbitrary JSON value.
@@ -238,7 +250,10 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -246,7 +261,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -294,7 +311,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -344,7 +363,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -639,7 +660,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -659,7 +682,10 @@ private constructor(
              */
             fun build(): SimulateActionRequest =
                 SimulateActionRequest(
-                    checkRequired("eventType", eventType),
+                    checkRequired(
+                        "eventType",
+                        eventType,
+                    ),
                     dateOfDeath,
                     declineReason,
                     returnAddenda,
@@ -804,9 +830,11 @@ private constructor(
          *
          * An instance of [SupportedSimulationTypes] can contain an unknown value in a couple of
          * cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -973,9 +1001,11 @@ private constructor(
          *
          * An instance of [SupportedSimulationDeclineReasons] can contain an unknown value in a
          * couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

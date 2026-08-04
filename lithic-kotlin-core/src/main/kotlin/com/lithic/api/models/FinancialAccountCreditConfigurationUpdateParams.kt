@@ -161,11 +161,15 @@ private constructor(
          * - [tier]
          * - etc.
          */
-        fun body(body: FinancialAccountCreditConfigRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: FinancialAccountCreditConfigRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         fun autoCollectionConfiguration(
             autoCollectionConfiguration: AutoCollectionConfigurationRequest
-        ) = apply { body.autoCollectionConfiguration(autoCollectionConfiguration) }
+        ) = apply {
+            body.autoCollectionConfiguration(autoCollectionConfiguration)
+        }
 
         /**
          * Sets [Builder.autoCollectionConfiguration] to an arbitrary JSON value.
@@ -176,9 +180,13 @@ private constructor(
          */
         fun autoCollectionConfiguration(
             autoCollectionConfiguration: JsonField<AutoCollectionConfigurationRequest>
-        ) = apply { body.autoCollectionConfiguration(autoCollectionConfiguration) }
+        ) = apply {
+            body.autoCollectionConfiguration(autoCollectionConfiguration)
+        }
 
-        fun creditLimit(creditLimit: Long) = apply { body.creditLimit(creditLimit) }
+        fun creditLimit(creditLimit: Long) = apply {
+            body.creditLimit(creditLimit)
+        }
 
         /**
          * Sets [Builder.creditLimit] to an arbitrary JSON value.
@@ -187,7 +195,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun creditLimit(creditLimit: JsonField<Long>) = apply { body.creditLimit(creditLimit) }
+        fun creditLimit(creditLimit: JsonField<Long>) = apply {
+            body.creditLimit(creditLimit)
+        }
 
         /** Globally unique identifier for the credit product */
         fun creditProductToken(creditProductToken: String) = apply {
@@ -221,7 +231,9 @@ private constructor(
         }
 
         /** Tier to assign to a financial account */
-        fun tier(tier: String) = apply { body.tier(tier) }
+        fun tier(tier: String) = apply {
+            body.tier(tier)
+        }
 
         /**
          * Sets [Builder.tier] to an arbitrary JSON value.
@@ -229,14 +241,19 @@ private constructor(
          * You should usually call [Builder.tier] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun tier(tier: JsonField<String>) = apply { body.tier(tier) }
+        fun tier(tier: JsonField<String>) = apply {
+            body.tier(tier)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -244,7 +261,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -292,7 +311,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -342,7 +363,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -552,7 +575,9 @@ private constructor(
              */
             fun autoCollectionConfiguration(
                 autoCollectionConfiguration: JsonField<AutoCollectionConfigurationRequest>
-            ) = apply { this.autoCollectionConfiguration = autoCollectionConfiguration }
+            ) = apply {
+                this.autoCollectionConfiguration = autoCollectionConfiguration
+            }
 
             fun creditLimit(creditLimit: Long) = creditLimit(JsonField.of(creditLimit))
 
@@ -563,7 +588,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
+            fun creditLimit(creditLimit: JsonField<Long>) = apply {
+                this.creditLimit = creditLimit
+            }
 
             /** Globally unique identifier for the credit product */
             fun creditProductToken(creditProductToken: String) =
@@ -604,7 +631,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun tier(tier: JsonField<String>) = apply { this.tier = tier }
+            fun tier(tier: JsonField<String>) = apply {
+                this.tier = tier
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -619,7 +648,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -729,7 +760,10 @@ private constructor(
             @JsonProperty("auto_collection_enabled")
             @ExcludeMissing
             autoCollectionEnabled: JsonField<Boolean> = JsonMissing.of()
-        ) : this(autoCollectionEnabled, mutableMapOf())
+        ) : this(
+            autoCollectionEnabled,
+            mutableMapOf(),
+        )
 
         /**
          * If auto collection is enabled for this account
@@ -813,7 +847,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)

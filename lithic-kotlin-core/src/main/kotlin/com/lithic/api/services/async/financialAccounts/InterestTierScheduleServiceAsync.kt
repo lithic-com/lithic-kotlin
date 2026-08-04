@@ -53,7 +53,10 @@ interface InterestTierScheduleServiceAsync {
         params: FinancialAccountInterestTierScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InterestTierSchedule =
-        retrieve(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+        retrieve(
+            params.toBuilder().effectiveDate(effectiveDate).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -67,7 +70,10 @@ interface InterestTierScheduleServiceAsync {
         params: FinancialAccountInterestTierScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InterestTierSchedule =
-        update(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+        update(
+            params.toBuilder().effectiveDate(effectiveDate).build(),
+            requestOptions,
+        )
 
     /** @see update */
     suspend fun update(
@@ -133,7 +139,11 @@ interface InterestTierScheduleServiceAsync {
         effectiveDate: LocalDate,
         params: FinancialAccountInterestTierScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = delete(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+    ) =
+        delete(
+            params.toBuilder().effectiveDate(effectiveDate).build(),
+            requestOptions,
+        )
 
     /** @see delete */
     suspend fun delete(
@@ -190,7 +200,10 @@ interface InterestTierScheduleServiceAsync {
             params: FinancialAccountInterestTierScheduleRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InterestTierSchedule> =
-            retrieve(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+            retrieve(
+                params.toBuilder().effectiveDate(effectiveDate).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -210,7 +223,10 @@ interface InterestTierScheduleServiceAsync {
             params: FinancialAccountInterestTierScheduleUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InterestTierSchedule> =
-            update(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+            update(
+                params.toBuilder().effectiveDate(effectiveDate).build(),
+                requestOptions,
+            )
 
         /** @see update */
         @MustBeClosed
@@ -266,7 +282,10 @@ interface InterestTierScheduleServiceAsync {
             params: FinancialAccountInterestTierScheduleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            delete(params.toBuilder().effectiveDate(effectiveDate).build(), requestOptions)
+            delete(
+                params.toBuilder().effectiveDate(effectiveDate).build(),
+                requestOptions,
+            )
 
         /** @see delete */
         @MustBeClosed

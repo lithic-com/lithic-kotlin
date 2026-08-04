@@ -429,7 +429,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** ISO 8601 timestamp of when the transaction was created */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -441,7 +443,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /** The status of the transaction */
         fun status(status: TransactionStatus) = status(JsonField.of(status))
@@ -453,7 +457,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun status(status: JsonField<TransactionStatus>) = apply { this.status = status }
+        fun status(status: JsonField<TransactionStatus>) = apply {
+            this.status = status
+        }
 
         /** ISO 8601 timestamp of when the transaction was last updated */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -465,7 +471,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         fun category(category: ManagementOperationCategory) = category(JsonField.of(category))
 
@@ -488,7 +496,9 @@ private constructor(
          * You should usually call [Builder.currency] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        fun currency(currency: JsonField<String>) = apply {
+            this.currency = currency
+        }
 
         fun direction(direction: ManagementOperationDirection) = direction(JsonField.of(direction))
 
@@ -552,7 +562,9 @@ private constructor(
          * You should usually call [Builder.family] with a well-typed [Family] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun family(family: JsonField<Family>) = apply { this.family = family }
+        fun family(family: JsonField<Family>) = apply {
+            this.family = family
+        }
 
         fun financialAccountToken(financialAccountToken: String) =
             financialAccountToken(JsonField.of(financialAccountToken))
@@ -590,7 +602,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun result(result: JsonField<TransactionResult>) = apply { this.result = result }
+        fun result(result: JsonField<TransactionResult>) = apply {
+            this.result = result
+        }
 
         fun settledAmount(settledAmount: Long) = settledAmount(JsonField.of(settledAmount))
 
@@ -646,7 +660,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -669,10 +685,22 @@ private constructor(
          */
         fun build(): ManagementOperationTransaction =
             ManagementOperationTransaction(
-                checkRequired("token", token),
-                checkRequired("created", created),
-                checkRequired("status", status),
-                checkRequired("updated", updated),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "status",
+                    status,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
                 category,
                 currency,
                 direction,
@@ -799,9 +827,11 @@ private constructor(
          * An enum containing [TransactionStatus]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TransactionStatus] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -961,9 +991,11 @@ private constructor(
          *
          * An instance of [ManagementOperationCategory] can contain an unknown value in a couple of
          * cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1112,9 +1144,11 @@ private constructor(
          *
          * An instance of [ManagementOperationDirection] can contain an unknown value in a couple of
          * cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1463,7 +1497,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             fun amount(amount: Long) = amount(JsonField.of(amount))
 
@@ -1474,7 +1510,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+            fun amount(amount: JsonField<Long>) = apply {
+                this.amount = amount
+            }
 
             fun created(created: OffsetDateTime) = created(JsonField.of(created))
 
@@ -1485,7 +1523,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+            fun created(created: JsonField<OffsetDateTime>) = apply {
+                this.created = created
+            }
 
             fun detailedResults(detailedResults: List<DetailedResults>) =
                 detailedResults(JsonField.of(detailedResults))
@@ -1535,7 +1575,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) = apply {
+                this.memo = memo
+            }
 
             fun result(result: TransactionResult) = result(JsonField.of(result))
 
@@ -1546,7 +1588,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun result(result: JsonField<TransactionResult>) = apply { this.result = result }
+            fun result(result: JsonField<TransactionResult>) = apply {
+                this.result = result
+            }
 
             fun type(type: ManagementOperationEventType) = type(JsonField.of(type))
 
@@ -1557,7 +1601,9 @@ private constructor(
              * [ManagementOperationEventType] value instead. This method is primarily for setting
              * the field to an undocumented or not yet supported value.
              */
-            fun type(type: JsonField<ManagementOperationEventType>) = apply { this.type = type }
+            fun type(type: JsonField<ManagementOperationEventType>) = apply {
+                this.type = type
+            }
 
             fun subtype(subtype: String?) = subtype(JsonField.ofNullable(subtype))
 
@@ -1568,7 +1614,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun subtype(subtype: JsonField<String>) = apply { this.subtype = subtype }
+            fun subtype(subtype: JsonField<String>) = apply {
+                this.subtype = subtype
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1583,7 +1631,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1610,14 +1660,39 @@ private constructor(
              */
             fun build(): ManagementOperationEvent =
                 ManagementOperationEvent(
-                    checkRequired("token", token),
-                    checkRequired("amount", amount),
-                    checkRequired("created", created),
-                    checkRequired("detailedResults", detailedResults).map { it.toImmutable() },
-                    checkRequired("effectiveDate", effectiveDate),
-                    checkRequired("memo", memo),
-                    checkRequired("result", result),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "token",
+                        token,
+                    ),
+                    checkRequired(
+                        "amount",
+                        amount,
+                    ),
+                    checkRequired(
+                        "created",
+                        created,
+                    ),
+                    checkRequired(
+                            "detailedResults",
+                            detailedResults,
+                        )
+                        .map { it.toImmutable() },
+                    checkRequired(
+                        "effectiveDate",
+                        effectiveDate,
+                    ),
+                    checkRequired(
+                        "memo",
+                        memo,
+                    ),
+                    checkRequired(
+                        "result",
+                        result,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     subtype,
                     additionalProperties.toMutableMap(),
                 )
@@ -1709,9 +1784,11 @@ private constructor(
              * An enum containing [DetailedResults]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [DetailedResults] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1850,9 +1927,11 @@ private constructor(
              * member.
              *
              * An instance of [TransactionResult] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2061,9 +2140,11 @@ private constructor(
              *
              * An instance of [ManagementOperationEventType] can contain an unknown value in a
              * couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2308,9 +2389,11 @@ private constructor(
          * An enum containing [Family]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Family] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -2440,9 +2523,11 @@ private constructor(
          * An enum containing [TransactionResult]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TransactionResult] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -2564,7 +2649,12 @@ private constructor(
             @ExcludeMissing
             relatedTransactionToken: JsonField<String> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<String> = JsonMissing.of(),
-        ) : this(relatedTransactionEventToken, relatedTransactionToken, type, mutableMapOf())
+        ) : this(
+            relatedTransactionEventToken,
+            relatedTransactionToken,
+            type,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2693,7 +2783,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<String>) = apply { this.type = type }
+            fun type(type: JsonField<String>) = apply {
+                this.type = type
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2708,7 +2800,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2730,9 +2824,18 @@ private constructor(
              */
             fun build(): TransactionSeries =
                 TransactionSeries(
-                    checkRequired("relatedTransactionEventToken", relatedTransactionEventToken),
-                    checkRequired("relatedTransactionToken", relatedTransactionToken),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "relatedTransactionEventToken",
+                        relatedTransactionEventToken,
+                    ),
+                    checkRequired(
+                        "relatedTransactionToken",
+                        relatedTransactionToken,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     additionalProperties.toMutableMap(),
                 )
         }

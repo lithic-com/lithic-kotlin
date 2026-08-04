@@ -681,7 +681,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         fun accountStanding(accountStanding: Statement.AccountStanding) =
             accountStanding(JsonField.of(accountStanding))
@@ -734,7 +736,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /** This is the maximum credit balance extended by the lender in cents */
         fun creditLimit(creditLimit: Long) = creditLimit(JsonField.of(creditLimit))
@@ -746,7 +750,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun creditLimit(creditLimit: JsonField<Long>) = apply { this.creditLimit = creditLimit }
+        fun creditLimit(creditLimit: JsonField<Long>) = apply {
+            this.creditLimit = creditLimit
+        }
 
         /** Globally unique identifier for a credit product */
         fun creditProductToken(creditProductToken: String?) =
@@ -906,7 +912,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         fun ytdTotals(ytdTotals: StatementTotals) = ytdTotals(JsonField.of(ytdTotals))
 
@@ -917,7 +925,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun ytdTotals(ytdTotals: JsonField<StatementTotals>) = apply { this.ytdTotals = ytdTotals }
+        fun ytdTotals(ytdTotals: JsonField<StatementTotals>) = apply {
+            this.ytdTotals = ytdTotals
+        }
 
         fun interestDetails(interestDetails: Statement.InterestDetails?) =
             interestDetails(JsonField.ofNullable(interestDetails))
@@ -1002,7 +1012,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -1017,7 +1029,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -1055,30 +1069,87 @@ private constructor(
          */
         fun build(): StatementsCreatedWebhookEvent =
             StatementsCreatedWebhookEvent(
-                checkRequired("token", token),
-                checkRequired("accountStanding", accountStanding),
-                checkRequired("amountDue", amountDue),
-                checkRequired("availableCredit", availableCredit),
-                checkRequired("created", created),
-                checkRequired("creditLimit", creditLimit),
-                checkRequired("creditProductToken", creditProductToken),
-                checkRequired("daysInBillingCycle", daysInBillingCycle),
-                checkRequired("endingBalance", endingBalance),
-                checkRequired("financialAccountToken", financialAccountToken),
-                checkRequired("paymentDueDate", paymentDueDate),
-                checkRequired("periodTotals", periodTotals),
-                checkRequired("startingBalance", startingBalance),
-                checkRequired("statementEndDate", statementEndDate),
-                checkRequired("statementStartDate", statementStartDate),
-                checkRequired("statementType", statementType),
-                checkRequired("updated", updated),
-                checkRequired("ytdTotals", ytdTotals),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "accountStanding",
+                    accountStanding,
+                ),
+                checkRequired(
+                    "amountDue",
+                    amountDue,
+                ),
+                checkRequired(
+                    "availableCredit",
+                    availableCredit,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "creditLimit",
+                    creditLimit,
+                ),
+                checkRequired(
+                    "creditProductToken",
+                    creditProductToken,
+                ),
+                checkRequired(
+                    "daysInBillingCycle",
+                    daysInBillingCycle,
+                ),
+                checkRequired(
+                    "endingBalance",
+                    endingBalance,
+                ),
+                checkRequired(
+                    "financialAccountToken",
+                    financialAccountToken,
+                ),
+                checkRequired(
+                    "paymentDueDate",
+                    paymentDueDate,
+                ),
+                checkRequired(
+                    "periodTotals",
+                    periodTotals,
+                ),
+                checkRequired(
+                    "startingBalance",
+                    startingBalance,
+                ),
+                checkRequired(
+                    "statementEndDate",
+                    statementEndDate,
+                ),
+                checkRequired(
+                    "statementStartDate",
+                    statementStartDate,
+                ),
+                checkRequired(
+                    "statementType",
+                    statementType,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
+                checkRequired(
+                    "ytdTotals",
+                    ytdTotals,
+                ),
                 interestDetails,
                 nextPaymentDueDate,
                 nextStatementEndDate,
                 payoffDetails,
                 statementTotals,
-                checkRequired("eventType", eventType),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1193,9 +1264,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

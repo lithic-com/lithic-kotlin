@@ -31,7 +31,10 @@ interface BalanceServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): BalanceListPageAsync =
-        list(BalanceListParams.none(), requestOptions)
+        list(
+            BalanceListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [BalanceServiceAsync] that provides access to raw HTTP responses for each method.
@@ -60,6 +63,9 @@ interface BalanceServiceAsync {
         /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPageAsync> =
-            list(BalanceListParams.none(), requestOptions)
+            list(
+                BalanceListParams.none(),
+                requestOptions,
+            )
     }
 }

@@ -55,7 +55,11 @@ interface ManagementOperationService {
         managementOperationToken: String,
         requestOptions: RequestOptions,
     ): ManagementOperationTransaction =
-        retrieve(managementOperationToken, ManagementOperationRetrieveParams.none(), requestOptions)
+        retrieve(
+            managementOperationToken,
+            ManagementOperationRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List management operations */
     fun list(
@@ -65,7 +69,10 @@ interface ManagementOperationService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): ManagementOperationListPage =
-        list(ManagementOperationListParams.none(), requestOptions)
+        list(
+            ManagementOperationListParams.none(),
+            requestOptions,
+        )
 
     /** Reverse a management operation */
     fun reverse(
@@ -157,7 +164,10 @@ interface ManagementOperationService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ManagementOperationListPage> =
-            list(ManagementOperationListParams.none(), requestOptions)
+            list(
+                ManagementOperationListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post

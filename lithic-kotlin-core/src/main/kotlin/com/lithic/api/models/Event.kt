@@ -39,7 +39,13 @@ private constructor(
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
         @JsonProperty("payload") @ExcludeMissing payload: JsonField<Payload> = JsonMissing.of(),
-    ) : this(token, created, eventType, payload, mutableMapOf())
+    ) : this(
+        token,
+        created,
+        eventType,
+        payload,
+        mutableMapOf(),
+    )
 
     /**
      * Globally unique identifier.
@@ -61,6 +67,7 @@ private constructor(
 
     /**
      * The type of event that occurred. Possible values:
+     *
      * - account_holder_document.updated: Occurs when an account holder's document upload status has
      *   been updated.
      * - account_holder.created: Occurs when a new account_holder is created.
@@ -259,7 +266,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /**
          * An RFC 3339 timestamp for when the event was created. UTC time zone.
@@ -275,10 +284,13 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /**
          * The type of event that occurred. Possible values:
+         *
          * - account_holder_document.updated: Occurs when an account holder's document upload status
          *   has been updated.
          * - account_holder.created: Occurs when a new account_holder is created.
@@ -397,7 +409,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         fun payload(payload: Payload) = payload(JsonField.of(payload))
 
@@ -407,7 +421,9 @@ private constructor(
          * You should usually call [Builder.payload] with a well-typed [Payload] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun payload(payload: JsonField<Payload>) = apply { this.payload = payload }
+        fun payload(payload: JsonField<Payload>) = apply {
+            this.payload = payload
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -422,7 +438,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -445,10 +463,22 @@ private constructor(
          */
         fun build(): Event =
             Event(
-                checkRequired("token", token),
-                checkRequired("created", created),
-                checkRequired("eventType", eventType),
-                checkRequired("payload", payload),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
+                checkRequired(
+                    "payload",
+                    payload,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -496,6 +526,7 @@ private constructor(
 
     /**
      * The type of event that occurred. Possible values:
+     *
      * - account_holder_document.updated: Occurs when an account holder's document upload status has
      *   been updated.
      * - account_holder.created: Occurs when a new account_holder is created.
@@ -815,9 +846,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1150,7 +1183,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1197,8 +1232,9 @@ private constructor(
          *
          * Used for best match union deserialization.
          */
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+        internal fun validity(): Int = additionalProperties.count { (_, value) ->
+            !value.isNull() && !value.isMissing()
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {

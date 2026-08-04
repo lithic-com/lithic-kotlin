@@ -40,7 +40,10 @@ interface TokenizationDecisioningService {
 
     /** @see retrieveSecret */
     fun retrieveSecret(requestOptions: RequestOptions): TokenizationSecret =
-        retrieveSecret(TokenizationDecisioningRetrieveSecretParams.none(), requestOptions)
+        retrieveSecret(
+            TokenizationDecisioningRetrieveSecretParams.none(),
+            requestOptions,
+        )
 
     /**
      * Generate a new Tokenization Decisioning secret key. The old Tokenization Decisioning secret
@@ -54,7 +57,10 @@ interface TokenizationDecisioningService {
 
     /** @see rotateSecret */
     fun rotateSecret(requestOptions: RequestOptions): TokenizationDecisioningRotateSecretResponse =
-        rotateSecret(TokenizationDecisioningRotateSecretParams.none(), requestOptions)
+        rotateSecret(
+            TokenizationDecisioningRotateSecretParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [TokenizationDecisioningService] that provides access to raw HTTP responses for
@@ -85,7 +91,10 @@ interface TokenizationDecisioningService {
         /** @see retrieveSecret */
         @MustBeClosed
         fun retrieveSecret(requestOptions: RequestOptions): HttpResponseFor<TokenizationSecret> =
-            retrieveSecret(TokenizationDecisioningRetrieveSecretParams.none(), requestOptions)
+            retrieveSecret(
+                TokenizationDecisioningRetrieveSecretParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/tokenization_decisioning/secret/rotate`, but is
@@ -103,6 +112,9 @@ interface TokenizationDecisioningService {
         fun rotateSecret(
             requestOptions: RequestOptions
         ): HttpResponseFor<TokenizationDecisioningRotateSecretResponse> =
-            rotateSecret(TokenizationDecisioningRotateSecretParams.none(), requestOptions)
+            rotateSecret(
+                TokenizationDecisioningRotateSecretParams.none(),
+                requestOptions,
+            )
     }
 }

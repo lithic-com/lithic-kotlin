@@ -84,7 +84,9 @@ private constructor(
             response = financialAccountInterestTierScheduleListPageAsync.response
         }
 
-        fun service(service: InterestTierScheduleServiceAsync) = apply { this.service = service }
+        fun service(service: InterestTierScheduleServiceAsync) = apply {
+            this.service = service
+        }
 
         /** The parameters that were used to request this page. */
         fun params(params: FinancialAccountInterestTierScheduleListParams) = apply {
@@ -112,9 +114,18 @@ private constructor(
          */
         fun build(): FinancialAccountInterestTierScheduleListPageAsync =
             FinancialAccountInterestTierScheduleListPageAsync(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+                checkRequired(
+                    "service",
+                    service,
+                ),
+                checkRequired(
+                    "params",
+                    params,
+                ),
+                checkRequired(
+                    "response",
+                    response,
+                ),
             )
     }
 

@@ -64,7 +64,11 @@ interface FinancialTransactionService {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialTransactionListPage =
-        list(financialAccountToken, FinancialTransactionListParams.none(), requestOptions)
+        list(
+            financialAccountToken,
+            FinancialTransactionListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [FinancialTransactionService] that provides access to raw HTTP responses for each
@@ -133,6 +137,10 @@ interface FinancialTransactionService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialTransactionListPage> =
-            list(financialAccountToken, FinancialTransactionListParams.none(), requestOptions)
+            list(
+                financialAccountToken,
+                FinancialTransactionListParams.none(),
+                requestOptions,
+            )
     }
 }

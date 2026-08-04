@@ -31,7 +31,11 @@ interface CommentServiceAsync {
         caseToken: String,
         params: TransactionMonitoringCaseCommentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CaseActivityEntry = create(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+    ): CaseActivityEntry =
+        create(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see create */
     suspend fun create(
@@ -45,7 +49,10 @@ interface CommentServiceAsync {
         params: TransactionMonitoringCaseCommentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CaseActivityEntry =
-        update(params.toBuilder().commentToken(commentToken).build(), requestOptions)
+        update(
+            params.toBuilder().commentToken(commentToken).build(),
+            requestOptions,
+        )
 
     /** @see update */
     suspend fun update(
@@ -58,7 +65,11 @@ interface CommentServiceAsync {
         commentToken: String,
         params: TransactionMonitoringCaseCommentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = delete(params.toBuilder().commentToken(commentToken).build(), requestOptions)
+    ) =
+        delete(
+            params.toBuilder().commentToken(commentToken).build(),
+            requestOptions,
+        )
 
     /** @see delete */
     suspend fun delete(
@@ -91,7 +102,10 @@ interface CommentServiceAsync {
             params: TransactionMonitoringCaseCommentCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CaseActivityEntry> =
-            create(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            create(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see create */
         @MustBeClosed
@@ -111,7 +125,10 @@ interface CommentServiceAsync {
             params: TransactionMonitoringCaseCommentUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CaseActivityEntry> =
-            update(params.toBuilder().commentToken(commentToken).build(), requestOptions)
+            update(
+                params.toBuilder().commentToken(commentToken).build(),
+                requestOptions,
+            )
 
         /** @see update */
         @MustBeClosed
@@ -131,7 +148,10 @@ interface CommentServiceAsync {
             params: TransactionMonitoringCaseCommentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            delete(params.toBuilder().commentToken(commentToken).build(), requestOptions)
+            delete(
+                params.toBuilder().commentToken(commentToken).build(),
+                requestOptions,
+            )
 
         /** @see delete */
         @MustBeClosed

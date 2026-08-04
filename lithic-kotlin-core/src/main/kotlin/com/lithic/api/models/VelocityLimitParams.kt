@@ -23,6 +23,8 @@ private constructor(
     private val scope: JsonField<VelocityScope>,
     private val filters: JsonField<VelocityLimitFilters>,
     private val limitAmount: JsonField<Long>,
+    private val limitCashAmount: JsonField<Long>,
+    private val limitCashCount: JsonField<Long>,
     private val limitCount: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -39,8 +41,23 @@ private constructor(
         @JsonProperty("limit_amount")
         @ExcludeMissing
         limitAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("limit_cash_amount")
+        @ExcludeMissing
+        limitCashAmount: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("limit_cash_count")
+        @ExcludeMissing
+        limitCashCount: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("limit_count") @ExcludeMissing limitCount: JsonField<Long> = JsonMissing.of(),
-    ) : this(period, scope, filters, limitAmount, limitCount, mutableMapOf())
+    ) : this(
+        period,
+        scope,
+        filters,
+        limitAmount,
+        limitCashAmount,
+        limitCashCount,
+        limitCount,
+        mutableMapOf(),
+    )
 
     /**
      * Velocity over the current day since 00:00 / 12 AM in Eastern Time
@@ -72,6 +89,29 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun limitAmount(): Long? = limitAmount.getNullable("limit_amount")
+
+    /**
+     * The maximum amount of cash spend velocity allowed in the period in minor units (the smallest
+     * unit of a currency, e.g. cents for USD). Cash spend covers ATM withdrawals, cash
+     * disbursements, and purchases with cashback. Transactions exceeding this limit will be
+     * declined.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun limitCashAmount(): Long? = limitCashAmount.getNullable("limit_cash_amount")
+
+    /**
+     * The number of cash spend velocity impacting transactions may not exceed this limit in the
+     * period. Transactions exceeding this limit will be declined. A cash velocity impacting
+     * transaction is an ATM withdrawal, cash disbursement, or purchase with cashback that has been
+     * authorized, and optionally settled, or a force post (a transaction that settled without prior
+     * authorization).
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun limitCashCount(): Long? = limitCashCount.getNullable("limit_cash_count")
 
     /**
      * The number of spend velocity impacting transactions may not exceed this limit in the period.
@@ -115,6 +155,24 @@ private constructor(
     @JsonProperty("limit_amount") @ExcludeMissing fun _limitAmount(): JsonField<Long> = limitAmount
 
     /**
+     * Returns the raw JSON value of [limitCashAmount].
+     *
+     * Unlike [limitCashAmount], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("limit_cash_amount")
+    @ExcludeMissing
+    fun _limitCashAmount(): JsonField<Long> = limitCashAmount
+
+    /**
+     * Returns the raw JSON value of [limitCashCount].
+     *
+     * Unlike [limitCashCount], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("limit_cash_count")
+    @ExcludeMissing
+    fun _limitCashCount(): JsonField<Long> = limitCashCount
+
+    /**
      * Returns the raw JSON value of [limitCount].
      *
      * Unlike [limitCount], this method doesn't throw if the JSON field has an unexpected type.
@@ -154,6 +212,8 @@ private constructor(
         private var scope: JsonField<VelocityScope>? = null
         private var filters: JsonField<VelocityLimitFilters> = JsonMissing.of()
         private var limitAmount: JsonField<Long> = JsonMissing.of()
+        private var limitCashAmount: JsonField<Long> = JsonMissing.of()
+        private var limitCashCount: JsonField<Long> = JsonMissing.of()
         private var limitCount: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -162,6 +222,8 @@ private constructor(
             scope = velocityLimitParams.scope
             filters = velocityLimitParams.filters
             limitAmount = velocityLimitParams.limitAmount
+            limitCashAmount = velocityLimitParams.limitCashAmount
+            limitCashCount = velocityLimitParams.limitCashCount
             limitCount = velocityLimitParams.limitCount
             additionalProperties = velocityLimitParams.additionalProperties.toMutableMap()
         }
@@ -176,7 +238,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun period(period: JsonField<VelocityLimitPeriod>) = apply { this.period = period }
+        fun period(period: JsonField<VelocityLimitPeriod>) = apply {
+            this.period = period
+        }
 
         /**
          * Alias for calling [period] with
@@ -220,7 +284,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun scope(scope: JsonField<VelocityScope>) = apply { this.scope = scope }
+        fun scope(scope: JsonField<VelocityScope>) = apply {
+            this.scope = scope
+        }
 
         fun filters(filters: VelocityLimitFilters) = filters(JsonField.of(filters))
 
@@ -231,7 +297,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun filters(filters: JsonField<VelocityLimitFilters>) = apply { this.filters = filters }
+        fun filters(filters: JsonField<VelocityLimitFilters>) = apply {
+            this.filters = filters
+        }
 
         /**
          * The maximum amount of spend velocity allowed in the period in minor units (the smallest
@@ -254,7 +322,64 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun limitAmount(limitAmount: JsonField<Long>) = apply { this.limitAmount = limitAmount }
+        fun limitAmount(limitAmount: JsonField<Long>) = apply {
+            this.limitAmount = limitAmount
+        }
+
+        /**
+         * The maximum amount of cash spend velocity allowed in the period in minor units (the
+         * smallest unit of a currency, e.g. cents for USD). Cash spend covers ATM withdrawals, cash
+         * disbursements, and purchases with cashback. Transactions exceeding this limit will be
+         * declined.
+         */
+        fun limitCashAmount(limitCashAmount: Long?) =
+            limitCashAmount(JsonField.ofNullable(limitCashAmount))
+
+        /**
+         * Alias for [Builder.limitCashAmount].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun limitCashAmount(limitCashAmount: Long) = limitCashAmount(limitCashAmount as Long?)
+
+        /**
+         * Sets [Builder.limitCashAmount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.limitCashAmount] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun limitCashAmount(limitCashAmount: JsonField<Long>) = apply {
+            this.limitCashAmount = limitCashAmount
+        }
+
+        /**
+         * The number of cash spend velocity impacting transactions may not exceed this limit in the
+         * period. Transactions exceeding this limit will be declined. A cash velocity impacting
+         * transaction is an ATM withdrawal, cash disbursement, or purchase with cashback that has
+         * been authorized, and optionally settled, or a force post (a transaction that settled
+         * without prior authorization).
+         */
+        fun limitCashCount(limitCashCount: Long?) =
+            limitCashCount(JsonField.ofNullable(limitCashCount))
+
+        /**
+         * Alias for [Builder.limitCashCount].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun limitCashCount(limitCashCount: Long) = limitCashCount(limitCashCount as Long?)
+
+        /**
+         * Sets [Builder.limitCashCount] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.limitCashCount] with a well-typed [Long] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun limitCashCount(limitCashCount: JsonField<Long>) = apply {
+            this.limitCashCount = limitCashCount
+        }
 
         /**
          * The number of spend velocity impacting transactions may not exceed this limit in the
@@ -277,7 +402,9 @@ private constructor(
          * You should usually call [Builder.limitCount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun limitCount(limitCount: JsonField<Long>) = apply { this.limitCount = limitCount }
+        fun limitCount(limitCount: JsonField<Long>) = apply {
+            this.limitCount = limitCount
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -292,7 +419,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -313,10 +442,18 @@ private constructor(
          */
         fun build(): VelocityLimitParams =
             VelocityLimitParams(
-                checkRequired("period", period),
-                checkRequired("scope", scope),
+                checkRequired(
+                    "period",
+                    period,
+                ),
+                checkRequired(
+                    "scope",
+                    scope,
+                ),
                 filters,
                 limitAmount,
+                limitCashAmount,
+                limitCashCount,
                 limitCount,
                 additionalProperties.toMutableMap(),
             )
@@ -341,6 +478,8 @@ private constructor(
         scope().validate()
         filters()?.validate()
         limitAmount()
+        limitCashAmount()
+        limitCashCount()
         limitCount()
         validated = true
     }
@@ -363,6 +502,8 @@ private constructor(
             (scope.asKnown()?.validity() ?: 0) +
             (filters.asKnown()?.validity() ?: 0) +
             (if (limitAmount.asKnown() == null) 0 else 1) +
+            (if (limitCashAmount.asKnown() == null) 0 else 1) +
+            (if (limitCashCount.asKnown() == null) 0 else 1) +
             (if (limitCount.asKnown() == null) 0 else 1)
 
     /** The scope the velocity is calculated for */
@@ -398,9 +539,11 @@ private constructor(
          * An enum containing [VelocityScope]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [VelocityScope] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -514,16 +657,27 @@ private constructor(
             scope == other.scope &&
             filters == other.filters &&
             limitAmount == other.limitAmount &&
+            limitCashAmount == other.limitCashAmount &&
+            limitCashCount == other.limitCashCount &&
             limitCount == other.limitCount &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
-        Objects.hash(period, scope, filters, limitAmount, limitCount, additionalProperties)
+        Objects.hash(
+            period,
+            scope,
+            filters,
+            limitAmount,
+            limitCashAmount,
+            limitCashCount,
+            limitCount,
+            additionalProperties,
+        )
     }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "VelocityLimitParams{period=$period, scope=$scope, filters=$filters, limitAmount=$limitAmount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
+        "VelocityLimitParams{period=$period, scope=$scope, filters=$filters, limitAmount=$limitAmount, limitCashAmount=$limitCashAmount, limitCashCount=$limitCashCount, limitCount=$limitCount, additionalProperties=$additionalProperties}"
 }

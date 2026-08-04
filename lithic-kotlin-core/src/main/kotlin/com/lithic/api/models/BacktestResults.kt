@@ -34,7 +34,12 @@ private constructor(
         @JsonProperty("simulation_parameters")
         @ExcludeMissing
         simulationParameters: JsonField<BacktestSimulationParameters> = JsonMissing.of(),
-    ) : this(backtestToken, results, simulationParameters, mutableMapOf())
+    ) : this(
+        backtestToken,
+        results,
+        simulationParameters,
+        mutableMapOf(),
+    )
 
     /**
      * Auth Rule Backtest Token
@@ -147,7 +152,9 @@ private constructor(
          * You should usually call [Builder.results] with a well-typed [Results] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun results(results: JsonField<Results>) = apply { this.results = results }
+        fun results(results: JsonField<Results>) = apply {
+            this.results = results
+        }
 
         fun simulationParameters(simulationParameters: BacktestSimulationParameters) =
             simulationParameters(JsonField.of(simulationParameters))
@@ -177,7 +184,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -199,9 +208,18 @@ private constructor(
          */
         fun build(): BacktestResults =
             BacktestResults(
-                checkRequired("backtestToken", backtestToken),
-                checkRequired("results", results),
-                checkRequired("simulationParameters", simulationParameters),
+                checkRequired(
+                    "backtestToken",
+                    backtestToken,
+                ),
+                checkRequired(
+                    "results",
+                    results,
+                ),
+                checkRequired(
+                    "simulationParameters",
+                    simulationParameters,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -261,7 +279,11 @@ private constructor(
             @JsonProperty("draft_version")
             @ExcludeMissing
             draftVersion: JsonField<BacktestStats> = JsonMissing.of(),
-        ) : this(currentVersion, draftVersion, mutableMapOf())
+        ) : this(
+            currentVersion,
+            draftVersion,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -367,7 +389,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -379,7 +403,11 @@ private constructor(
              * Further updates to this [Builder] will not mutate the returned instance.
              */
             fun build(): Results =
-                Results(currentVersion, draftVersion, additionalProperties.toMutableMap())
+                Results(
+                    currentVersion,
+                    draftVersion,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -455,7 +483,11 @@ private constructor(
             @JsonProperty("start")
             @ExcludeMissing
             start: JsonField<OffsetDateTime> = JsonMissing.of(),
-        ) : this(end, start, mutableMapOf())
+        ) : this(
+            end,
+            start,
+            mutableMapOf(),
+        )
 
         /**
          * The end time of the simulation
@@ -538,7 +570,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun end(end: JsonField<OffsetDateTime>) = apply { this.end = end }
+            fun end(end: JsonField<OffsetDateTime>) = apply {
+                this.end = end
+            }
 
             /** The start time of the simulation */
             fun start(start: OffsetDateTime) = start(JsonField.of(start))
@@ -550,7 +584,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun start(start: JsonField<OffsetDateTime>) = apply { this.start = start }
+            fun start(start: JsonField<OffsetDateTime>) = apply {
+                this.start = start
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -565,7 +601,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -586,8 +624,14 @@ private constructor(
              */
             fun build(): BacktestSimulationParameters =
                 BacktestSimulationParameters(
-                    checkRequired("end", end),
-                    checkRequired("start", start),
+                    checkRequired(
+                        "end",
+                        end,
+                    ),
+                    checkRequired(
+                        "start",
+                        start,
+                    ),
                     additionalProperties.toMutableMap(),
                 )
         }

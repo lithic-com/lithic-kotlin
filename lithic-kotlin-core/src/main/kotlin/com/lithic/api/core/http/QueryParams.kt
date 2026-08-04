@@ -12,7 +12,11 @@ import com.lithic.api.core.JsonString
 import com.lithic.api.core.JsonValue
 import com.lithic.api.core.toImmutable
 
-class QueryParams private constructor(private val map: Map<String, List<String>>, val size: Int) {
+class QueryParams
+private constructor(
+    private val map: Map<String, List<String>>,
+    val size: Int,
+) {
 
     fun isEmpty(): Boolean = map.isEmpty()
 
@@ -61,7 +65,9 @@ class QueryParams private constructor(private val map: Map<String, List<String>>
                             .joinToString(","),
                     )
                 is JsonObject ->
-                    value.values.forEach { (nestedKey, value) -> put("$key[$nestedKey]", value) }
+                    value.values.forEach { (nestedKey, value) ->
+                        put("$key[$nestedKey]", value)
+                    }
             }
         }
 
@@ -108,7 +114,10 @@ class QueryParams private constructor(private val map: Map<String, List<String>>
         }
 
         fun build() =
-            QueryParams(map.mapValues { (_, values) -> values.toImmutable() }.toImmutable(), size)
+            QueryParams(
+                map.mapValues { (_, values) -> values.toImmutable() }.toImmutable(),
+                size,
+            )
     }
 
     override fun hashCode(): Int = map.hashCode()

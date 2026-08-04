@@ -63,10 +63,14 @@ private constructor(
             additionalQueryParams = cardBalanceListParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String?) = apply {
+            this.cardToken = cardToken
+        }
 
         /** UTC date of the balance to retrieve. Defaults to latest available balance */
-        fun balanceDate(balanceDate: OffsetDateTime?) = apply { this.balanceDate = balanceDate }
+        fun balanceDate(balanceDate: OffsetDateTime?) = apply {
+            this.balanceDate = balanceDate
+        }
 
         /**
          * Balance after a given financial event occured. For example, passing the event_token of a
@@ -118,7 +122,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -168,7 +174,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)

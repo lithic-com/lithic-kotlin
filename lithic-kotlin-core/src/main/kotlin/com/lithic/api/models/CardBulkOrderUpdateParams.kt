@@ -86,7 +86,9 @@ private constructor(
             additionalQueryParams = cardBulkOrderUpdateParams.additionalQueryParams.toBuilder()
         }
 
-        fun bulkOrderToken(bulkOrderToken: String?) = apply { this.bulkOrderToken = bulkOrderToken }
+        fun bulkOrderToken(bulkOrderToken: String?) = apply {
+            this.bulkOrderToken = bulkOrderToken
+        }
 
         /**
          * Sets the entire request body.
@@ -95,10 +97,14 @@ private constructor(
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [status]
          */
-        fun body(body: UpdateBulkOrderRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: UpdateBulkOrderRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** Status to update the bulk order to. Use LOCKED to finalize the order */
-        fun status(status: Status) = apply { body.status(status) }
+        fun status(status: Status) = apply {
+            body.status(status)
+        }
 
         /**
          * Sets [Builder.status] to an arbitrary JSON value.
@@ -106,14 +112,19 @@ private constructor(
          * You should usually call [Builder.status] with a well-typed [Status] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun status(status: JsonField<Status>) = apply { body.status(status) }
+        fun status(status: JsonField<Status>) = apply {
+            body.status(status)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -121,7 +132,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -169,7 +182,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -219,7 +234,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -269,7 +286,10 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of()
-        ) : this(status, mutableMapOf())
+        ) : this(
+            status,
+            mutableMapOf(),
+        )
 
         /**
          * Status to update the bulk order to. Use LOCKED to finalize the order
@@ -332,7 +352,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun status(status: JsonField<Status>) = apply { this.status = status }
+            fun status(status: JsonField<Status>) = apply {
+                this.status = status
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -347,7 +369,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -367,7 +391,10 @@ private constructor(
              */
             fun build(): UpdateBulkOrderRequest =
                 UpdateBulkOrderRequest(
-                    checkRequired("status", status),
+                    checkRequired(
+                        "status",
+                        status,
+                    ),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -455,9 +482,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

@@ -37,7 +37,11 @@ private constructor(
         @JsonProperty("max_size_bytes")
         @ExcludeMissing
         maxSizeBytes: JsonField<Long> = JsonMissing.of(),
-    ) : this(acceptedMimeTypes, maxSizeBytes, mutableMapOf())
+    ) : this(
+        acceptedMimeTypes,
+        maxSizeBytes,
+        mutableMapOf(),
+    )
 
     /**
      * MIME types accepted for the upload
@@ -150,7 +154,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun maxSizeBytes(maxSizeBytes: JsonField<Long>) = apply { this.maxSizeBytes = maxSizeBytes }
+        fun maxSizeBytes(maxSizeBytes: JsonField<Long>) = apply {
+            this.maxSizeBytes = maxSizeBytes
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -165,7 +171,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -186,8 +194,15 @@ private constructor(
          */
         fun build(): UploadConstraints =
             UploadConstraints(
-                checkRequired("acceptedMimeTypes", acceptedMimeTypes).map { it.toImmutable() },
-                checkRequired("maxSizeBytes", maxSizeBytes),
+                checkRequired(
+                        "acceptedMimeTypes",
+                        acceptedMimeTypes,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "maxSizeBytes",
+                    maxSizeBytes,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }

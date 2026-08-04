@@ -33,8 +33,15 @@ private constructor(
         @JsonProperty("operation")
         @ExcludeMissing
         operation: JsonField<ConditionalOperation> = JsonMissing.of(),
-        @JsonProperty("value") @ExcludeMissing value: JsonField<ConditionalValue> = JsonMissing.of(),
-    ) : this(attribute, operation, value, mutableMapOf())
+        @JsonProperty("value")
+        @ExcludeMissing
+        value: JsonField<ConditionalValue> = JsonMissing.of(),
+    ) : this(
+        attribute,
+        operation,
+        value,
+        mutableMapOf(),
+    )
 
     /**
      * The attribute to target.
@@ -251,7 +258,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun value(value: JsonField<ConditionalValue>) = apply { this.value = value }
+        fun value(value: JsonField<ConditionalValue>) = apply {
+            this.value = value
+        }
 
         /** Alias for calling [value] with `ConditionalValue.ofRegex(regex)`. */
         fun value(regex: String) = value(ConditionalValue.ofRegex(regex))
@@ -282,7 +291,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -304,9 +315,18 @@ private constructor(
          */
         fun build(): AuthRuleCondition =
             AuthRuleCondition(
-                checkRequired("attribute", attribute),
-                checkRequired("operation", operation),
-                checkRequired("value", value),
+                checkRequired(
+                    "attribute",
+                    attribute,
+                ),
+                checkRequired(
+                    "operation",
+                    operation,
+                ),
+                checkRequired(
+                    "value",
+                    value,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }

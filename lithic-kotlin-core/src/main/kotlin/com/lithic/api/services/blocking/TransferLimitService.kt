@@ -31,7 +31,10 @@ interface TransferLimitService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): TransferLimitListPage =
-        list(TransferLimitListParams.none(), requestOptions)
+        list(
+            TransferLimitListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [TransferLimitService] that provides access to raw HTTP responses for each method.
@@ -60,6 +63,9 @@ interface TransferLimitService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransferLimitListPage> =
-            list(TransferLimitListParams.none(), requestOptions)
+            list(
+                TransferLimitListParams.none(),
+                requestOptions,
+            )
     }
 }

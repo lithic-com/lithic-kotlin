@@ -63,6 +63,7 @@ private constructor(
     /**
      * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
      * `STANDARD` require additional permissions.
+     *
      * * `STANDARD` - USPS regular mail or similar international option, with no tracking
      * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * * `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -140,7 +141,9 @@ private constructor(
             additionalQueryParams = cardReissueParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String?) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String?) = apply {
+            this.cardToken = cardToken
+        }
 
         /**
          * Sets the entire request body.
@@ -152,10 +155,14 @@ private constructor(
          * - [shippingAddress]
          * - [shippingMethod]
          */
-        fun body(body: Body) = apply { this.body = body.toBuilder() }
+        fun body(body: Body) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** If omitted, the previous carrier will be used. */
-        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier) = apply {
+            body.carrier(carrier)
+        }
 
         /**
          * Sets [Builder.carrier] to an arbitrary JSON value.
@@ -163,14 +170,18 @@ private constructor(
          * You should usually call [Builder.carrier] with a well-typed [Carrier] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun carrier(carrier: JsonField<Carrier>) = apply { body.carrier(carrier) }
+        fun carrier(carrier: JsonField<Carrier>) = apply {
+            body.carrier(carrier)
+        }
 
         /**
          * Specifies the configuration (e.g. physical card art) that the card should be manufactured
          * with, and only applies to cards of type `PHYSICAL`. This must be configured with Lithic
          * before use.
          */
-        fun productId(productId: String) = apply { body.productId(productId) }
+        fun productId(productId: String) = apply {
+            body.productId(productId)
+        }
 
         /**
          * Sets [Builder.productId] to an arbitrary JSON value.
@@ -179,7 +190,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
+        fun productId(productId: JsonField<String>) = apply {
+            body.productId(productId)
+        }
 
         /** If omitted, the previous shipping address will be used. */
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
@@ -200,6 +213,7 @@ private constructor(
         /**
          * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
          * besides `STANDARD` require additional permissions.
+         *
          * * `STANDARD` - USPS regular mail or similar international option, with no tracking
          * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -232,7 +246,10 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -240,7 +257,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -288,7 +307,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -338,7 +359,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -392,7 +415,13 @@ private constructor(
             @JsonProperty("shipping_method")
             @ExcludeMissing
             shippingMethod: JsonField<ShippingMethod> = JsonMissing.of(),
-        ) : this(carrier, productId, shippingAddress, shippingMethod, mutableMapOf())
+        ) : this(
+            carrier,
+            productId,
+            shippingAddress,
+            shippingMethod,
+            mutableMapOf(),
+        )
 
         /**
          * If omitted, the previous carrier will be used.
@@ -423,6 +452,7 @@ private constructor(
         /**
          * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
          * besides `STANDARD` require additional permissions.
+         *
          * * `STANDARD` - USPS regular mail or similar international option, with no tracking
          * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -519,7 +549,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun carrier(carrier: JsonField<Carrier>) = apply { this.carrier = carrier }
+            fun carrier(carrier: JsonField<Carrier>) = apply {
+                this.carrier = carrier
+            }
 
             /**
              * Specifies the configuration (e.g. physical card art) that the card should be
@@ -535,7 +567,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
+            fun productId(productId: JsonField<String>) = apply {
+                this.productId = productId
+            }
 
             /** If omitted, the previous shipping address will be used. */
             fun shippingAddress(shippingAddress: ShippingAddress) =
@@ -555,6 +589,7 @@ private constructor(
             /**
              * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
              * besides `STANDARD` require additional permissions.
+             *
              * * `STANDARD` - USPS regular mail or similar international option, with no tracking
              * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
              *   tracking
@@ -595,7 +630,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -685,6 +722,7 @@ private constructor(
     /**
      * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
      * `STANDARD` require additional permissions.
+     *
      * * `STANDARD` - USPS regular mail or similar international option, with no tracking
      * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * * `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -743,9 +781,11 @@ private constructor(
          * An enum containing [ShippingMethod]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [ShippingMethod] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

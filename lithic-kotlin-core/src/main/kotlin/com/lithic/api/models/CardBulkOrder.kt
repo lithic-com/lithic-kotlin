@@ -261,7 +261,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** List of card tokens associated with this bulk order */
         fun cardTokens(cardTokens: List<String>) = cardTokens(JsonField.of(cardTokens))
@@ -299,7 +301,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /**
          * Customer-specified product configuration for physical card manufacturing. This must be
@@ -354,7 +358,9 @@ private constructor(
          * You should usually call [Builder.status] with a well-typed [Status] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun status(status: JsonField<Status>) = apply { this.status = status }
+        fun status(status: JsonField<Status>) = apply {
+            this.status = status
+        }
 
         /** An RFC 3339 timestamp for when the bulk order was last updated. UTC time zone */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -366,7 +372,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -381,7 +389,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -408,14 +418,39 @@ private constructor(
          */
         fun build(): CardBulkOrder =
             CardBulkOrder(
-                checkRequired("token", token),
-                checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
-                checkRequired("created", created),
-                checkRequired("customerProductId", customerProductId),
-                checkRequired("shippingAddress", shippingAddress),
-                checkRequired("shippingMethod", shippingMethod),
-                checkRequired("status", status),
-                checkRequired("updated", updated),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                        "cardTokens",
+                        cardTokens,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "customerProductId",
+                    customerProductId,
+                ),
+                checkRequired(
+                    "shippingAddress",
+                    shippingAddress,
+                ),
+                checkRequired(
+                    "shippingMethod",
+                    shippingMethod,
+                ),
+                checkRequired(
+                    "status",
+                    status,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -509,9 +544,11 @@ private constructor(
          * An enum containing [ShippingMethod]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [ShippingMethod] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -656,9 +693,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

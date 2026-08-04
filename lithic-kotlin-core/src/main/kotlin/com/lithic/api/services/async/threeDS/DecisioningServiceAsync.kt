@@ -66,7 +66,10 @@ interface DecisioningServiceAsync {
 
     /** @see retrieveSecret */
     suspend fun retrieveSecret(requestOptions: RequestOptions): DecisioningRetrieveSecretResponse =
-        retrieveSecret(ThreeDSDecisioningRetrieveSecretParams.none(), requestOptions)
+        retrieveSecret(
+            ThreeDSDecisioningRetrieveSecretParams.none(),
+            requestOptions,
+        )
 
     /**
      * Generate a new 3DS Decisioning HMAC secret key. The old secret key will be deactivated 24
@@ -81,7 +84,10 @@ interface DecisioningServiceAsync {
 
     /** @see rotateSecret */
     suspend fun rotateSecret(requestOptions: RequestOptions) =
-        rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)
+        rotateSecret(
+            ThreeDSDecisioningRotateSecretParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [DecisioningServiceAsync] that provides access to raw HTTP responses for each
@@ -137,7 +143,10 @@ interface DecisioningServiceAsync {
         suspend fun retrieveSecret(
             requestOptions: RequestOptions
         ): HttpResponseFor<DecisioningRetrieveSecretResponse> =
-            retrieveSecret(ThreeDSDecisioningRetrieveSecretParams.none(), requestOptions)
+            retrieveSecret(
+                ThreeDSDecisioningRetrieveSecretParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/three_ds_decisioning/secret/rotate`, but is
@@ -153,6 +162,9 @@ interface DecisioningServiceAsync {
         /** @see rotateSecret */
         @MustBeClosed
         suspend fun rotateSecret(requestOptions: RequestOptions): HttpResponse =
-            rotateSecret(ThreeDSDecisioningRotateSecretParams.none(), requestOptions)
+            rotateSecret(
+                ThreeDSDecisioningRotateSecretParams.none(),
+                requestOptions,
+            )
     }
 }

@@ -50,13 +50,19 @@ private constructor(
         }
 
         /** The raw JSON body of the webhook request. */
-        fun body(body: String) = apply { this.body = body }
+        fun body(body: String) = apply {
+            this.body = body
+        }
 
         /** The headers from the webhook request. */
-        fun headers(headers: Headers?) = apply { this.headers = headers }
+        fun headers(headers: Headers?) = apply {
+            this.headers = headers
+        }
 
         /** The secret used to verify the webhook signature. */
-        fun secret(secret: String?) = apply { this.secret = secret }
+        fun secret(secret: String?) = apply {
+            this.secret = secret
+        }
 
         /**
          * Returns an immutable instance of [UnwrapWebhookParams].
@@ -71,7 +77,14 @@ private constructor(
          * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UnwrapWebhookParams =
-            UnwrapWebhookParams(checkRequired("body", body), headers, secret)
+            UnwrapWebhookParams(
+                checkRequired(
+                    "body",
+                    body,
+                ),
+                headers,
+                secret,
+            )
     }
 
     override fun equals(other: Any?): Boolean {

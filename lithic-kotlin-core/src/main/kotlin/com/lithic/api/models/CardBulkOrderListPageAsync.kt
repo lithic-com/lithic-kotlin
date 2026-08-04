@@ -81,13 +81,19 @@ private constructor(
             response = cardBulkOrderListPageAsync.response
         }
 
-        fun service(service: CardBulkOrderServiceAsync) = apply { this.service = service }
+        fun service(service: CardBulkOrderServiceAsync) = apply {
+            this.service = service
+        }
 
         /** The parameters that were used to request this page. */
-        fun params(params: CardBulkOrderListParams) = apply { this.params = params }
+        fun params(params: CardBulkOrderListParams) = apply {
+            this.params = params
+        }
 
         /** The response that this page was parsed from. */
-        fun response(response: CardBulkOrderListPageResponse) = apply { this.response = response }
+        fun response(response: CardBulkOrderListPageResponse) = apply {
+            this.response = response
+        }
 
         /**
          * Returns an immutable instance of [CardBulkOrderListPageAsync].
@@ -105,9 +111,18 @@ private constructor(
          */
         fun build(): CardBulkOrderListPageAsync =
             CardBulkOrderListPageAsync(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+                checkRequired(
+                    "service",
+                    service,
+                ),
+                checkRequired(
+                    "params",
+                    params,
+                ),
+                checkRequired(
+                    "response",
+                    response,
+                ),
             )
     }
 

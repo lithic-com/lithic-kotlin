@@ -48,7 +48,15 @@ private constructor(
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
-    ) : this(token, common, eventToken, fleet, transactionToken, eventType, mutableMapOf())
+    ) : this(
+        token,
+        common,
+        eventToken,
+        fleet,
+        transactionToken,
+        eventType,
+        mutableMapOf(),
+    )
 
     fun toEnhancedData(): EnhancedData =
         EnhancedData.builder()
@@ -215,7 +223,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         fun common(common: EnhancedData.CommonData) = common(JsonField.of(common))
 
@@ -226,7 +236,9 @@ private constructor(
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
-        fun common(common: JsonField<EnhancedData.CommonData>) = apply { this.common = common }
+        fun common(common: JsonField<EnhancedData.CommonData>) = apply {
+            this.common = common
+        }
 
         /** The token of the event that the enhanced data is associated with. */
         fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
@@ -238,7 +250,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
+        fun eventToken(eventToken: JsonField<String>) = apply {
+            this.eventToken = eventToken
+        }
 
         fun fleet(fleet: List<EnhancedData.Fleet>) = fleet(JsonField.of(fleet))
 
@@ -290,7 +304,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -305,7 +321,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -330,12 +348,31 @@ private constructor(
          */
         fun build(): CardTransactionEnhancedDataCreatedWebhookEvent =
             CardTransactionEnhancedDataCreatedWebhookEvent(
-                checkRequired("token", token),
-                checkRequired("common", common),
-                checkRequired("eventToken", eventToken),
-                checkRequired("fleet", fleet).map { it.toImmutable() },
-                checkRequired("transactionToken", transactionToken),
-                checkRequired("eventType", eventType),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "common",
+                    common,
+                ),
+                checkRequired(
+                    "eventToken",
+                    eventToken,
+                ),
+                checkRequired(
+                        "fleet",
+                        fleet,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "transactionToken",
+                    transactionToken,
+                ),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -415,9 +452,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

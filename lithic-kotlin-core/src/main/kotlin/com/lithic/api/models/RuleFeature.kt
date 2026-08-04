@@ -33,6 +33,7 @@ import java.util.Objects
  * A feature made available to the rule. The `name` field is the variable name used in the rule
  * function signature. The `type` field determines which data the feature provides to the rule at
  * evaluation time.
+ *
  * - `AUTHORIZATION`: The authorization request being evaluated. Only available for AUTHORIZATION
  *   event stream rules.
  * - `AUTHENTICATION`: The 3DS authentication request being evaluated. Only available for
@@ -586,7 +587,9 @@ private constructor(
                             RuleFeature(paymentVelocity = it, _json = json)
                         },
                         tryDeserialize(node, jacksonTypeRef<TransactionHistorySignalsFeature>())
-                            ?.let { RuleFeature(transactionHistorySignals = it, _json = json) },
+                            ?.let {
+                                RuleFeature(transactionHistorySignals = it, _json = json)
+                            },
                         tryDeserialize(node, jacksonTypeRef<ConsecutiveDeclinesFeature>())?.let {
                             RuleFeature(consecutiveDeclines = it, _json = json)
                         },
@@ -653,7 +656,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -730,7 +737,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -742,7 +751,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -757,7 +768,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -777,7 +790,10 @@ private constructor(
              */
             fun build(): AuthorizationFeature =
                 AuthorizationFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -849,9 +865,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -981,7 +999,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1058,7 +1080,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -1070,7 +1094,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1085,7 +1111,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1105,7 +1133,10 @@ private constructor(
              */
             fun build(): AuthenticationFeature =
                 AuthenticationFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -1177,9 +1208,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1309,7 +1342,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1386,7 +1423,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -1398,7 +1437,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1413,7 +1454,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1433,7 +1476,10 @@ private constructor(
              */
             fun build(): TokenizationFeature =
                 TokenizationFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -1505,9 +1551,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1637,7 +1685,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1714,7 +1766,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -1726,7 +1780,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1741,7 +1797,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1761,7 +1819,10 @@ private constructor(
              */
             fun build(): AchReceiptFeature =
                 AchReceiptFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -1833,9 +1894,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1965,7 +2028,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -2042,7 +2109,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -2054,7 +2123,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2069,7 +2140,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2089,7 +2162,10 @@ private constructor(
              */
             fun build(): CardTransactionFeature =
                 CardTransactionFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -2161,9 +2237,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2293,7 +2371,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -2370,7 +2452,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -2382,7 +2466,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2397,7 +2483,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2417,7 +2505,10 @@ private constructor(
              */
             fun build(): AchPaymentFeature =
                 AchPaymentFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -2489,9 +2580,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2621,7 +2714,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -2700,7 +2797,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -2712,7 +2811,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2727,7 +2828,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2747,7 +2850,10 @@ private constructor(
              */
             fun build(): ExternalBankAccountFeature =
                 ExternalBankAccountFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -2819,9 +2925,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2951,7 +3059,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -3028,7 +3140,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -3040,7 +3154,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3055,7 +3171,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3074,7 +3192,14 @@ private constructor(
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): CardFeature =
-                CardFeature(checkRequired("type", type), name, additionalProperties.toMutableMap())
+                CardFeature(
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
+                    name,
+                    additionalProperties.toMutableMap(),
+                )
         }
 
         private var validated: Boolean = false
@@ -3143,9 +3268,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3275,7 +3402,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -3352,7 +3483,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -3364,7 +3497,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3379,7 +3514,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3399,7 +3536,10 @@ private constructor(
              */
             fun build(): AccountHolderFeature =
                 AccountHolderFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -3471,9 +3611,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3603,7 +3745,11 @@ private constructor(
         private constructor(
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(type, name, mutableMapOf())
+        ) : this(
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -3680,7 +3826,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -3692,7 +3840,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3707,7 +3857,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3727,7 +3879,10 @@ private constructor(
              */
             fun build(): IpMetadataFeature =
                 IpMetadataFeature(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -3799,9 +3954,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3943,7 +4100,14 @@ private constructor(
             @ExcludeMissing
             filters: JsonField<VelocityLimitFilters> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(period, scope, type, filters, name, mutableMapOf())
+        ) : this(
+            period,
+            scope,
+            type,
+            filters,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * Velocity over the current day since 00:00 / 12 AM in Eastern Time
@@ -4076,7 +4240,9 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun period(period: JsonField<VelocityLimitPeriod>) = apply { this.period = period }
+            fun period(period: JsonField<VelocityLimitPeriod>) = apply {
+                this.period = period
+            }
 
             /**
              * Alias for calling [period] with
@@ -4123,7 +4289,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun scope(scope: JsonField<VelocityScope>) = apply { this.scope = scope }
+            fun scope(scope: JsonField<VelocityScope>) = apply {
+                this.scope = scope
+            }
 
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -4134,7 +4302,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             fun filters(filters: VelocityLimitFilters) = filters(JsonField.of(filters))
 
@@ -4145,7 +4315,9 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun filters(filters: JsonField<VelocityLimitFilters>) = apply { this.filters = filters }
+            fun filters(filters: JsonField<VelocityLimitFilters>) = apply {
+                this.filters = filters
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -4157,7 +4329,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -4172,7 +4346,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -4194,9 +4370,18 @@ private constructor(
              */
             fun build(): SpendVelocityFeature =
                 SpendVelocityFeature(
-                    checkRequired("period", period),
-                    checkRequired("scope", scope),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "period",
+                        period,
+                    ),
+                    checkRequired(
+                        "scope",
+                        scope,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     filters,
                     name,
                     additionalProperties.toMutableMap(),
@@ -4281,9 +4466,11 @@ private constructor(
              * An enum containing [VelocityScope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [VelocityScope] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -4416,9 +4603,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -4563,7 +4752,14 @@ private constructor(
             @ExcludeMissing
             filters: JsonField<PaymentVelocityFilters> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(period, scope, type, filters, name, mutableMapOf())
+        ) : this(
+            period,
+            scope,
+            type,
+            filters,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * Velocity over the current day since 00:00 / 12 AM in Eastern Time
@@ -4699,7 +4895,9 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun period(period: JsonField<VelocityLimitPeriod>) = apply { this.period = period }
+            fun period(period: JsonField<VelocityLimitPeriod>) = apply {
+                this.period = period
+            }
 
             /**
              * Alias for calling [period] with
@@ -4746,7 +4944,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
+            fun scope(scope: JsonField<Scope>) = apply {
+                this.scope = scope
+            }
 
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -4757,7 +4957,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /**
              * Optional filters applied when aggregating ACH payment velocity. Payments not matching
@@ -4786,7 +4988,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -4801,7 +5005,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -4823,9 +5029,18 @@ private constructor(
              */
             fun build(): PaymentVelocityFeature =
                 PaymentVelocityFeature(
-                    checkRequired("period", period),
-                    checkRequired("scope", scope),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "period",
+                        period,
+                    ),
+                    checkRequired(
+                        "scope",
+                        scope,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     filters,
                     name,
                     additionalProperties.toMutableMap(),
@@ -4909,9 +5124,11 @@ private constructor(
              * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Scope] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -5043,9 +5260,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -5177,7 +5396,9 @@ private constructor(
                 @JsonProperty("include_tags")
                 @ExcludeMissing
                 includeTags: JsonField<IncludeTags> = JsonMissing.of(),
-                @JsonProperty("result") @ExcludeMissing result: JsonField<Result> = JsonMissing.of(),
+                @JsonProperty("result")
+                @ExcludeMissing
+                result: JsonField<Result> = JsonMissing.of(),
             ) : this(
                 excludeTags,
                 includePaymentTypes,
@@ -5464,7 +5685,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun result(result: JsonField<Result>) = apply { this.result = result }
+                fun result(result: JsonField<Result>) = apply {
+                    this.result = result
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -5646,10 +5869,9 @@ private constructor(
                  *
                  * Used for best match union deserialization.
                  */
-                internal fun validity(): Int =
-                    additionalProperties.count { (_, value) ->
-                        !value.isNull() && !value.isMissing()
-                    }
+                internal fun validity(): Int = additionalProperties.count { (_, value) ->
+                    !value.isNull() && !value.isMissing()
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -5702,9 +5924,11 @@ private constructor(
                  *
                  * An instance of [IncludePaymentType] can contain an unknown value in a couple of
                  * cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -5845,9 +6069,11 @@ private constructor(
                  *
                  * An instance of [IncludePolarity] can contain an unknown value in a couple of
                  * cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -5998,9 +6224,11 @@ private constructor(
                  * member.
                  *
                  * An instance of [IncludeStatus] can contain an unknown value in a couple of cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -6210,10 +6438,9 @@ private constructor(
                  *
                  * Used for best match union deserialization.
                  */
-                internal fun validity(): Int =
-                    additionalProperties.count { (_, value) ->
-                        !value.isNull() && !value.isMissing()
-                    }
+                internal fun validity(): Int = additionalProperties.count { (_, value) ->
+                    !value.isNull() && !value.isMissing()
+                }
 
                 override fun equals(other: Any?): Boolean {
                     if (this === other) {
@@ -6264,9 +6491,11 @@ private constructor(
                  * An enum containing [Result]'s known values, as well as an [_UNKNOWN] member.
                  *
                  * An instance of [Result] can contain an unknown value in a couple of cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -6442,7 +6671,12 @@ private constructor(
             @JsonProperty("scope") @ExcludeMissing scope: JsonField<Scope> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(scope, type, name, mutableMapOf())
+        ) : this(
+            scope,
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * The entity scope to load transaction history signals for.
@@ -6541,7 +6775,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
+            fun scope(scope: JsonField<Scope>) = apply {
+                this.scope = scope
+            }
 
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -6552,7 +6788,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -6564,7 +6802,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -6579,7 +6819,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -6600,8 +6842,14 @@ private constructor(
              */
             fun build(): TransactionHistorySignalsFeature =
                 TransactionHistorySignalsFeature(
-                    checkRequired("scope", scope),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "scope",
+                        scope,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -6683,9 +6931,11 @@ private constructor(
              * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Scope] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -6820,9 +7070,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -6955,7 +7207,12 @@ private constructor(
             @JsonProperty("scope") @ExcludeMissing scope: JsonField<Scope> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(scope, type, name, mutableMapOf())
+        ) : this(
+            scope,
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * The entity scope to count consecutive declines for.
@@ -7053,7 +7310,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
+            fun scope(scope: JsonField<Scope>) = apply {
+                this.scope = scope
+            }
 
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -7064,7 +7323,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -7076,7 +7337,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -7091,7 +7354,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -7112,8 +7377,14 @@ private constructor(
              */
             fun build(): ConsecutiveDeclinesFeature =
                 ConsecutiveDeclinesFeature(
-                    checkRequired("scope", scope),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "scope",
+                        scope,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -7192,9 +7463,11 @@ private constructor(
              * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Scope] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -7326,9 +7599,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -7461,7 +7736,12 @@ private constructor(
             @JsonProperty("scope") @ExcludeMissing scope: JsonField<Scope> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        ) : this(scope, type, name, mutableMapOf())
+        ) : this(
+            scope,
+            type,
+            name,
+            mutableMapOf(),
+        )
 
         /**
          * The entity scope to load ACH payment history for.
@@ -7557,7 +7837,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun scope(scope: JsonField<Scope>) = apply { this.scope = scope }
+            fun scope(scope: JsonField<Scope>) = apply {
+                this.scope = scope
+            }
 
             fun type(type: Type) = type(JsonField.of(type))
 
@@ -7568,7 +7850,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /** The variable name for this feature in the rule function signature */
             fun name(name: String) = name(JsonField.of(name))
@@ -7580,7 +7864,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun name(name: JsonField<String>) = apply { this.name = name }
+            fun name(name: JsonField<String>) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -7595,7 +7881,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -7616,8 +7904,14 @@ private constructor(
              */
             fun build(): AchPaymentHistoryFeature =
                 AchPaymentHistoryFeature(
-                    checkRequired("scope", scope),
-                    checkRequired("type", type),
+                    checkRequired(
+                        "scope",
+                        scope,
+                    ),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     name,
                     additionalProperties.toMutableMap(),
                 )
@@ -7693,9 +7987,11 @@ private constructor(
              * An enum containing [Scope]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Scope] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -7824,9 +8120,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

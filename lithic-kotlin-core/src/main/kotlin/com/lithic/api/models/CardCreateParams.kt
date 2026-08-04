@@ -215,6 +215,7 @@ private constructor(
     /**
      * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
      * `STANDARD` require additional permissions.
+     *
      * * `STANDARD` - USPS regular mail or similar international option, with no tracking
      * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * * `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -244,6 +245,7 @@ private constructor(
 
     /**
      * Spend limit duration values:
+     *
      * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
      * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the card.
      * * `MONTHLY` - Card will authorize transactions up to spend limit for the trailing month. To
@@ -452,7 +454,9 @@ private constructor(
             additionalQueryParams = cardCreateParams.additionalQueryParams.toBuilder()
         }
 
-        fun idempotencyKey(idempotencyKey: String?) = apply { this.idempotencyKey = idempotencyKey }
+        fun idempotencyKey(idempotencyKey: String?) = apply {
+            this.idempotencyKey = idempotencyKey
+        }
 
         /**
          * Sets the entire request body.
@@ -466,7 +470,9 @@ private constructor(
          * - [carrier]
          * - etc.
          */
-        fun body(body: Body) = apply { this.body = body.toBuilder() }
+        fun body(body: Body) = apply {
+            this.body = body.toBuilder()
+        }
 
         /**
          * Card types:
@@ -483,7 +489,9 @@ private constructor(
          * * `DIGITAL_WALLET` - *[Deprecated]* Similar behavior to VIRTUAL cards, please use VIRTUAL
          *   instead.
          */
-        fun type(type: Type) = apply { body.type(type) }
+        fun type(type: Type) = apply {
+            body.type(type)
+        }
 
         /**
          * Sets [Builder.type] to an arbitrary JSON value.
@@ -491,7 +499,9 @@ private constructor(
          * You should usually call [Builder.type] with a well-typed [Type] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun type(type: JsonField<Type>) = apply { body.type(type) }
+        fun type(type: JsonField<Type>) = apply {
+            body.type(type)
+        }
 
         /**
          * Globally unique identifier for the account that the card will be associated with.
@@ -499,7 +509,9 @@ private constructor(
          * [/account\_holders endpoint](https://docs.lithic.com/docs/account-holders-kyc). See
          * [Managing Your Program](doc:managing-your-program) for more information.
          */
-        fun accountToken(accountToken: String) = apply { body.accountToken(accountToken) }
+        fun accountToken(accountToken: String) = apply {
+            body.accountToken(accountToken)
+        }
 
         /**
          * Sets [Builder.accountToken] to an arbitrary JSON value.
@@ -517,7 +529,9 @@ private constructor(
          * specified, the card will be added to the bulk order for batch shipment. Only applicable
          * to cards of type PHYSICAL
          */
-        fun bulkOrderToken(bulkOrderToken: String) = apply { body.bulkOrderToken(bulkOrderToken) }
+        fun bulkOrderToken(bulkOrderToken: String) = apply {
+            body.bulkOrderToken(bulkOrderToken)
+        }
 
         /**
          * Sets [Builder.bulkOrderToken] to an arbitrary JSON value.
@@ -552,7 +566,9 @@ private constructor(
             body.cardProgramToken(cardProgramToken)
         }
 
-        fun carrier(carrier: Carrier) = apply { body.carrier(carrier) }
+        fun carrier(carrier: Carrier) = apply {
+            body.carrier(carrier)
+        }
 
         /**
          * Sets [Builder.carrier] to an arbitrary JSON value.
@@ -560,7 +576,9 @@ private constructor(
          * You should usually call [Builder.carrier] with a well-typed [Carrier] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun carrier(carrier: JsonField<Carrier>) = apply { body.carrier(carrier) }
+        fun carrier(carrier: JsonField<Carrier>) = apply {
+            body.carrier(carrier)
+        }
 
         /**
          * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -588,7 +606,9 @@ private constructor(
          * expiration date five years in the future will be generated. Five years is the maximum
          * expiration date.
          */
-        fun expMonth(expMonth: String) = apply { body.expMonth(expMonth) }
+        fun expMonth(expMonth: String) = apply {
+            body.expMonth(expMonth)
+        }
 
         /**
          * Sets [Builder.expMonth] to an arbitrary JSON value.
@@ -596,14 +616,18 @@ private constructor(
          * You should usually call [Builder.expMonth] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun expMonth(expMonth: JsonField<String>) = apply { body.expMonth(expMonth) }
+        fun expMonth(expMonth: JsonField<String>) = apply {
+            body.expMonth(expMonth)
+        }
 
         /**
          * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
          * expiration date five years in the future will be generated. Five years is the maximum
          * expiration date.
          */
-        fun expYear(expYear: String) = apply { body.expYear(expYear) }
+        fun expYear(expYear: String) = apply {
+            body.expYear(expYear)
+        }
 
         /**
          * Sets [Builder.expYear] to an arbitrary JSON value.
@@ -611,10 +635,14 @@ private constructor(
          * You should usually call [Builder.expYear] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun expYear(expYear: JsonField<String>) = apply { body.expYear(expYear) }
+        fun expYear(expYear: JsonField<String>) = apply {
+            body.expYear(expYear)
+        }
 
         /** Friendly name to identify the card. */
-        fun memo(memo: String) = apply { body.memo(memo) }
+        fun memo(memo: String) = apply {
+            body.memo(memo)
+        }
 
         /**
          * Sets [Builder.memo] to an arbitrary JSON value.
@@ -622,13 +650,17 @@ private constructor(
          * You should usually call [Builder.memo] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
+        fun memo(memo: JsonField<String>) = apply {
+            body.memo(memo)
+        }
 
         /**
          * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`. See
          * [Encrypted PIN Block](https://docs.lithic.com/docs/cards#encrypted-pin-block).
          */
-        fun pin(pin: String) = apply { body.pin(pin) }
+        fun pin(pin: String) = apply {
+            body.pin(pin)
+        }
 
         /**
          * Sets [Builder.pin] to an arbitrary JSON value.
@@ -636,14 +668,18 @@ private constructor(
          * You should usually call [Builder.pin] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun pin(pin: JsonField<String>) = apply { body.pin(pin) }
+        fun pin(pin: JsonField<String>) = apply {
+            body.pin(pin)
+        }
 
         /**
          * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic before
          * use. Specifies the configuration (i.e., physical card art) that the card should be
          * manufactured with.
          */
-        fun productId(productId: String) = apply { body.productId(productId) }
+        fun productId(productId: String) = apply {
+            body.productId(productId)
+        }
 
         /**
          * Sets [Builder.productId] to an arbitrary JSON value.
@@ -652,7 +688,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
+        fun productId(productId: JsonField<String>) = apply {
+            body.productId(productId)
+        }
 
         /**
          * Restricted field limited to select use cases. Lithic will reach out directly if this
@@ -697,7 +735,9 @@ private constructor(
          * `PHYSICAL` it will be replaced by a `PHYSICAL` card. If the card type is `VIRTUAL` it
          * will be replaced by a `VIRTUAL` card.
          */
-        fun replacementFor(replacementFor: String) = apply { body.replacementFor(replacementFor) }
+        fun replacementFor(replacementFor: String) = apply {
+            body.replacementFor(replacementFor)
+        }
 
         /**
          * Sets [Builder.replacementFor] to an arbitrary JSON value.
@@ -767,6 +807,7 @@ private constructor(
         /**
          * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
          * besides `STANDARD` require additional permissions.
+         *
          * * `STANDARD` - USPS regular mail or similar international option, with no tracking
          * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -801,7 +842,9 @@ private constructor(
          * limit of 1 or above will result in declined transactions due to checks against the card
          * limit.
          */
-        fun spendLimit(spendLimit: Long) = apply { body.spendLimit(spendLimit) }
+        fun spendLimit(spendLimit: Long) = apply {
+            body.spendLimit(spendLimit)
+        }
 
         /**
          * Sets [Builder.spendLimit] to an arbitrary JSON value.
@@ -809,10 +852,13 @@ private constructor(
          * You should usually call [Builder.spendLimit] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun spendLimit(spendLimit: JsonField<Long>) = apply { body.spendLimit(spendLimit) }
+        fun spendLimit(spendLimit: JsonField<Long>) = apply {
+            body.spendLimit(spendLimit)
+        }
 
         /**
          * Spend limit duration values:
+         *
          * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
          * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
          *   card.
@@ -843,7 +889,9 @@ private constructor(
          * * `OPEN` - Card will approve authorizations (if they match card and account parameters).
          * * `PAUSED` - Card will decline authorizations, but can be resumed at a later time.
          */
-        fun state(state: State) = apply { body.state(state) }
+        fun state(state: State) = apply {
+            body.state(state)
+        }
 
         /**
          * Sets [Builder.state] to an arbitrary JSON value.
@@ -851,14 +899,19 @@ private constructor(
          * You should usually call [Builder.state] with a well-typed [State] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun state(state: JsonField<State>) = apply { body.state(state) }
+        fun state(state: JsonField<State>) = apply {
+            body.state(state)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -866,7 +919,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -914,7 +969,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -964,7 +1021,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -1291,6 +1350,7 @@ private constructor(
         /**
          * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
          * besides `STANDARD` require additional permissions.
+         *
          * * `STANDARD` - USPS regular mail or similar international option, with no tracking
          * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
          *   tracking
@@ -1322,6 +1382,7 @@ private constructor(
 
         /**
          * Spend limit duration values:
+         *
          * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing year.
          * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of the
          *   card.
@@ -1620,7 +1681,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             /**
              * Globally unique identifier for the account that the card will be associated with.
@@ -1690,7 +1753,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun carrier(carrier: JsonField<Carrier>) = apply { this.carrier = carrier }
+            fun carrier(carrier: JsonField<Carrier>) = apply {
+                this.carrier = carrier
+            }
 
             /**
              * Specifies the digital card art to be displayed in the user’s digital wallet after
@@ -1726,7 +1791,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun expMonth(expMonth: JsonField<String>) = apply { this.expMonth = expMonth }
+            fun expMonth(expMonth: JsonField<String>) = apply {
+                this.expMonth = expMonth
+            }
 
             /**
              * Four digit (yyyy) expiry year. If neither `exp_month` nor `exp_year` is provided, an
@@ -1742,7 +1809,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun expYear(expYear: JsonField<String>) = apply { this.expYear = expYear }
+            fun expYear(expYear: JsonField<String>) = apply {
+                this.expYear = expYear
+            }
 
             /** Friendly name to identify the card. */
             fun memo(memo: String) = memo(JsonField.of(memo))
@@ -1754,7 +1823,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) = apply {
+                this.memo = memo
+            }
 
             /**
              * Encrypted PIN block (in base64). Applies to cards of type `PHYSICAL` and `VIRTUAL`.
@@ -1769,7 +1840,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun pin(pin: JsonField<String>) = apply { this.pin = pin }
+            fun pin(pin: JsonField<String>) = apply {
+                this.pin = pin
+            }
 
             /**
              * Only applicable to cards of type `PHYSICAL`. This must be configured with Lithic
@@ -1785,7 +1858,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun productId(productId: JsonField<String>) = apply { this.productId = productId }
+            fun productId(productId: JsonField<String>) = apply {
+                this.productId = productId
+            }
 
             /**
              * Restricted field limited to select use cases. Lithic will reach out directly if this
@@ -1903,6 +1978,7 @@ private constructor(
             /**
              * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options
              * besides `STANDARD` require additional permissions.
+             *
              * * `STANDARD` - USPS regular mail or similar international option, with no tracking
              * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with
              *   tracking
@@ -1946,10 +2022,13 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun spendLimit(spendLimit: JsonField<Long>) = apply { this.spendLimit = spendLimit }
+            fun spendLimit(spendLimit: JsonField<Long>) = apply {
+                this.spendLimit = spendLimit
+            }
 
             /**
              * Spend limit duration values:
+             *
              * * `ANNUALLY` - Card will authorize transactions up to spend limit for the trailing
              *   year.
              * * `FOREVER` - Card will authorize only up to spend limit for the entire lifetime of
@@ -1990,7 +2069,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun state(state: JsonField<State>) = apply { this.state = state }
+            fun state(state: JsonField<State>) = apply {
+                this.state = state
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2005,7 +2086,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2025,7 +2108,10 @@ private constructor(
              */
             fun build(): Body =
                 Body(
-                    checkRequired("type", type),
+                    checkRequired(
+                        "type",
+                        type,
+                    ),
                     accountToken,
                     bulkOrderToken,
                     cardProgramToken,
@@ -2242,9 +2328,11 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -2441,9 +2529,11 @@ private constructor(
          * member.
          *
          * An instance of [ReplacementSubstatus] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -2577,6 +2667,7 @@ private constructor(
     /**
      * Shipping method for the card. Only applies to cards of type PHYSICAL. Use of options besides
      * `STANDARD` require additional permissions.
+     *
      * * `STANDARD` - USPS regular mail or similar international option, with no tracking
      * * `STANDARD_WITH_TRACKING` - USPS regular mail or similar international option, with tracking
      * * `PRIORITY` - USPS Priority, 1-3 day shipping, with tracking
@@ -2635,9 +2726,11 @@ private constructor(
          * An enum containing [ShippingMethod]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [ShippingMethod] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -2792,9 +2885,11 @@ private constructor(
          * An enum containing [State]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [State] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

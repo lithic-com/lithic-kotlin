@@ -45,7 +45,15 @@ private constructor(
         @JsonProperty("previous_value")
         @ExcludeMissing
         previousValue: JsonField<String> = JsonMissing.of(),
-    ) : this(token, actorToken, created, entryType, newValue, previousValue, mutableMapOf())
+    ) : this(
+        token,
+        actorToken,
+        created,
+        entryType,
+        newValue,
+        previousValue,
+        mutableMapOf(),
+    )
 
     /**
      * Globally unique identifier for the activity entry
@@ -210,7 +218,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** Identifier of the actor that produced the activity entry */
         fun actorToken(actorToken: String?) = actorToken(JsonField.ofNullable(actorToken))
@@ -222,7 +232,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun actorToken(actorToken: JsonField<String>) = apply { this.actorToken = actorToken }
+        fun actorToken(actorToken: JsonField<String>) = apply {
+            this.actorToken = actorToken
+        }
 
         /** Date and time at which the activity entry was created */
         fun created(created: OffsetDateTime) = created(JsonField.of(created))
@@ -234,7 +246,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /**
          * The case field that changed, or the action that was taken, in an activity entry:
@@ -257,7 +271,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun entryType(entryType: JsonField<CaseActivityType>) = apply { this.entryType = entryType }
+        fun entryType(entryType: JsonField<CaseActivityType>) = apply {
+            this.entryType = entryType
+        }
 
         /** New value of the changed field, when applicable */
         fun newValue(newValue: String?) = newValue(JsonField.ofNullable(newValue))
@@ -268,7 +284,9 @@ private constructor(
          * You should usually call [Builder.newValue] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun newValue(newValue: JsonField<String>) = apply { this.newValue = newValue }
+        fun newValue(newValue: JsonField<String>) = apply {
+            this.newValue = newValue
+        }
 
         /** Previous value of the changed field, when applicable */
         fun previousValue(previousValue: String?) =
@@ -298,7 +316,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -323,12 +343,30 @@ private constructor(
          */
         fun build(): CaseActivityEntry =
             CaseActivityEntry(
-                checkRequired("token", token),
-                checkRequired("actorToken", actorToken),
-                checkRequired("created", created),
-                checkRequired("entryType", entryType),
-                checkRequired("newValue", newValue),
-                checkRequired("previousValue", previousValue),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "actorToken",
+                    actorToken,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "entryType",
+                    entryType,
+                ),
+                checkRequired(
+                    "newValue",
+                    newValue,
+                ),
+                checkRequired(
+                    "previousValue",
+                    previousValue,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }

@@ -58,7 +58,11 @@ interface ExternalPaymentServiceAsync {
         externalPaymentToken: String,
         requestOptions: RequestOptions,
     ): ExternalPayment =
-        retrieve(externalPaymentToken, ExternalPaymentRetrieveParams.none(), requestOptions)
+        retrieve(
+            externalPaymentToken,
+            ExternalPaymentRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List external payments */
     suspend fun list(
@@ -68,7 +72,10 @@ interface ExternalPaymentServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): ExternalPaymentListPageAsync =
-        list(ExternalPaymentListParams.none(), requestOptions)
+        list(
+            ExternalPaymentListParams.none(),
+            requestOptions,
+        )
 
     /** Cancel external payment */
     suspend fun cancel(
@@ -191,7 +198,11 @@ interface ExternalPaymentServiceAsync {
             externalPaymentToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalPayment> =
-            retrieve(externalPaymentToken, ExternalPaymentRetrieveParams.none(), requestOptions)
+            retrieve(
+                externalPaymentToken,
+                ExternalPaymentRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/external_payments`, but is otherwise the same as
@@ -208,7 +219,10 @@ interface ExternalPaymentServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<ExternalPaymentListPageAsync> =
-            list(ExternalPaymentListParams.none(), requestOptions)
+            list(
+                ExternalPaymentListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post

@@ -139,28 +139,40 @@ private constructor(
          * Datetime in RFC 3339 format. Only entries created after the specified time will be
          * included. UTC time zone.
          */
-        fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
+        fun begin(begin: OffsetDateTime?) = apply {
+            this.begin = begin
+        }
 
         /**
          * Datetime in RFC 3339 format. Only entries created before the specified time will be
          * included. UTC time zone.
          */
-        fun end(end: OffsetDateTime?) = apply { this.end = end }
+        fun end(end: OffsetDateTime?) = apply {
+            this.end = end
+        }
 
         /**
          * A cursor representing an item's token before which a page of results should end. Used to
          * retrieve the previous page of results before this item.
          */
-        fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
+        fun endingBefore(endingBefore: String?) = apply {
+            this.endingBefore = endingBefore
+        }
 
         /** Institution ID to filter on. */
-        fun institutionId(institutionId: String?) = apply { this.institutionId = institutionId }
+        fun institutionId(institutionId: String?) = apply {
+            this.institutionId = institutionId
+        }
 
         /** Network to filter on. */
-        fun network(network: Network?) = apply { this.network = network }
+        fun network(network: Network?) = apply {
+            this.network = network
+        }
 
         /** Number of records per page. */
-        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+        fun pageSize(pageSize: Long?) = apply {
+            this.pageSize = pageSize
+        }
 
         /**
          * Alias for [Builder.pageSize].
@@ -173,7 +185,9 @@ private constructor(
          * Singular report date to filter on (YYYY-MM-DD). Cannot be populated in conjunction with
          * report_date_begin or report_date_end.
          */
-        fun reportDate(reportDate: LocalDate?) = apply { this.reportDate = reportDate }
+        fun reportDate(reportDate: LocalDate?) = apply {
+            this.reportDate = reportDate
+        }
 
         /** Earliest report date to filter on, inclusive (YYYY-MM-DD). */
         fun reportDateBegin(reportDateBegin: LocalDate?) = apply {
@@ -181,7 +195,9 @@ private constructor(
         }
 
         /** Latest report date to filter on, inclusive (YYYY-MM-DD). */
-        fun reportDateEnd(reportDateEnd: LocalDate?) = apply { this.reportDateEnd = reportDateEnd }
+        fun reportDateEnd(reportDateEnd: LocalDate?) = apply {
+            this.reportDateEnd = reportDateEnd
+        }
 
         /** Settlement institution ID to filter on. */
         fun settlementInstitutionId(settlementInstitutionId: String?) = apply {
@@ -192,7 +208,9 @@ private constructor(
          * A cursor representing an item's token after which a page of results should begin. Used to
          * retrieve the next page of results after this item.
          */
-        fun startingAfter(startingAfter: String?) = apply { this.startingAfter = startingAfter }
+        fun startingAfter(startingAfter: String?) = apply {
+            this.startingAfter = startingAfter
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -236,7 +254,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -286,7 +306,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -376,9 +398,11 @@ private constructor(
          * An enum containing [Network]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Network] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

@@ -35,7 +35,10 @@ interface SettlementService {
         params: ReportSettlementListDetailsParams = ReportSettlementListDetailsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ReportSettlementListDetailsPage =
-        listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
+        listDetails(
+            params.toBuilder().reportDate(reportDate).build(),
+            requestOptions,
+        )
 
     /** @see listDetails */
     fun listDetails(
@@ -48,14 +51,22 @@ interface SettlementService {
         reportDate: LocalDate,
         requestOptions: RequestOptions,
     ): ReportSettlementListDetailsPage =
-        listDetails(reportDate, ReportSettlementListDetailsParams.none(), requestOptions)
+        listDetails(
+            reportDate,
+            ReportSettlementListDetailsParams.none(),
+            requestOptions,
+        )
 
     /** Get the settlement report for a specified report date. Not available in sandbox. */
     fun summary(
         reportDate: LocalDate,
         params: ReportSettlementSummaryParams = ReportSettlementSummaryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): SettlementReport = summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
+    ): SettlementReport =
+        summary(
+            params.toBuilder().reportDate(reportDate).build(),
+            requestOptions,
+        )
 
     /** @see summary */
     fun summary(
@@ -65,7 +76,11 @@ interface SettlementService {
 
     /** @see summary */
     fun summary(reportDate: LocalDate, requestOptions: RequestOptions): SettlementReport =
-        summary(reportDate, ReportSettlementSummaryParams.none(), requestOptions)
+        summary(
+            reportDate,
+            ReportSettlementSummaryParams.none(),
+            requestOptions,
+        )
 
     /** A view of [SettlementService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
@@ -91,7 +106,10 @@ interface SettlementService {
             params: ReportSettlementListDetailsParams = ReportSettlementListDetailsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ReportSettlementListDetailsPage> =
-            listDetails(params.toBuilder().reportDate(reportDate).build(), requestOptions)
+            listDetails(
+                params.toBuilder().reportDate(reportDate).build(),
+                requestOptions,
+            )
 
         /** @see listDetails */
         @MustBeClosed
@@ -106,7 +124,11 @@ interface SettlementService {
             reportDate: LocalDate,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ReportSettlementListDetailsPage> =
-            listDetails(reportDate, ReportSettlementListDetailsParams.none(), requestOptions)
+            listDetails(
+                reportDate,
+                ReportSettlementListDetailsParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/summary/{report_date}`, but
@@ -118,7 +140,10 @@ interface SettlementService {
             params: ReportSettlementSummaryParams = ReportSettlementSummaryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SettlementReport> =
-            summary(params.toBuilder().reportDate(reportDate).build(), requestOptions)
+            summary(
+                params.toBuilder().reportDate(reportDate).build(),
+                requestOptions,
+            )
 
         /** @see summary */
         @MustBeClosed
@@ -133,6 +158,10 @@ interface SettlementService {
             reportDate: LocalDate,
             requestOptions: RequestOptions,
         ): HttpResponseFor<SettlementReport> =
-            summary(reportDate, ReportSettlementSummaryParams.none(), requestOptions)
+            summary(
+                reportDate,
+                ReportSettlementSummaryParams.none(),
+                requestOptions,
+            )
     }
 }

@@ -64,7 +64,11 @@ interface FinancialTransactionServiceAsync {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialTransactionListPageAsync =
-        list(financialAccountToken, FinancialTransactionListParams.none(), requestOptions)
+        list(
+            financialAccountToken,
+            FinancialTransactionListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [FinancialTransactionServiceAsync] that provides access to raw HTTP responses for
@@ -133,6 +137,10 @@ interface FinancialTransactionServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialTransactionListPageAsync> =
-            list(financialAccountToken, FinancialTransactionListParams.none(), requestOptions)
+            list(
+                financialAccountToken,
+                FinancialTransactionListParams.none(),
+                requestOptions,
+            )
     }
 }

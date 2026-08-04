@@ -62,7 +62,9 @@ private constructor(
                 cardFinancialTransactionRetrieveParams.additionalQueryParams.toBuilder()
         }
 
-        fun cardToken(cardToken: String) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: String) = apply {
+            this.cardToken = cardToken
+        }
 
         fun financialTransactionToken(financialTransactionToken: String?) = apply {
             this.financialTransactionToken = financialTransactionToken
@@ -110,7 +112,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -160,7 +164,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -180,7 +186,10 @@ private constructor(
          */
         fun build(): CardFinancialTransactionRetrieveParams =
             CardFinancialTransactionRetrieveParams(
-                checkRequired("cardToken", cardToken),
+                checkRequired(
+                    "cardToken",
+                    cardToken,
+                ),
                 financialTransactionToken,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

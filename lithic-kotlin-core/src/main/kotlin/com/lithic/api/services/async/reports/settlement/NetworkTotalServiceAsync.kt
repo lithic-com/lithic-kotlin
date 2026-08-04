@@ -31,7 +31,11 @@ interface NetworkTotalServiceAsync {
         params: ReportSettlementNetworkTotalRetrieveParams =
             ReportSettlementNetworkTotalRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): NetworkTotal = retrieve(params.toBuilder().token(token).build(), requestOptions)
+    ): NetworkTotal =
+        retrieve(
+            params.toBuilder().token(token).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -41,7 +45,11 @@ interface NetworkTotalServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(token: String, requestOptions: RequestOptions): NetworkTotal =
-        retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
+        retrieve(
+            token,
+            ReportSettlementNetworkTotalRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List network total records with optional filters. Not available in sandbox. */
     suspend fun list(
@@ -52,7 +60,10 @@ interface NetworkTotalServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): ReportSettlementNetworkTotalListPageAsync =
-        list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
+        list(
+            ReportSettlementNetworkTotalListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [NetworkTotalServiceAsync] that provides access to raw HTTP responses for each
@@ -80,7 +91,10 @@ interface NetworkTotalServiceAsync {
                 ReportSettlementNetworkTotalRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NetworkTotal> =
-            retrieve(params.toBuilder().token(token).build(), requestOptions)
+            retrieve(
+                params.toBuilder().token(token).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -95,7 +109,11 @@ interface NetworkTotalServiceAsync {
             token: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NetworkTotal> =
-            retrieve(token, ReportSettlementNetworkTotalRetrieveParams.none(), requestOptions)
+            retrieve(
+                token,
+                ReportSettlementNetworkTotalRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/reports/settlement/network_totals`, but is
@@ -113,6 +131,9 @@ interface NetworkTotalServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<ReportSettlementNetworkTotalListPageAsync> =
-            list(ReportSettlementNetworkTotalListParams.none(), requestOptions)
+            list(
+                ReportSettlementNetworkTotalListParams.none(),
+                requestOptions,
+            )
     }
 }

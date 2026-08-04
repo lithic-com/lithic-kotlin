@@ -39,7 +39,10 @@ interface TokenizationServiceAsync {
         params: TokenizationRetrieveParams = TokenizationRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Tokenization =
-        retrieve(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+        retrieve(
+            params.toBuilder().tokenizationToken(tokenizationToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -49,7 +52,11 @@ interface TokenizationServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(tokenizationToken: String, requestOptions: RequestOptions): Tokenization =
-        retrieve(tokenizationToken, TokenizationRetrieveParams.none(), requestOptions)
+        retrieve(
+            tokenizationToken,
+            TokenizationRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List card tokenizations */
     suspend fun list(
@@ -59,7 +66,10 @@ interface TokenizationServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): TokenizationListPageAsync =
-        list(TokenizationListParams.none(), requestOptions)
+        list(
+            TokenizationListParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used to ask the card network to activate a tokenization. A successful
@@ -74,7 +84,11 @@ interface TokenizationServiceAsync {
         tokenizationToken: String,
         params: TokenizationActivateParams = TokenizationActivateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = activate(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+    ) =
+        activate(
+            params.toBuilder().tokenizationToken(tokenizationToken).build(),
+            requestOptions,
+        )
 
     /** @see activate */
     suspend fun activate(
@@ -84,7 +98,11 @@ interface TokenizationServiceAsync {
 
     /** @see activate */
     suspend fun activate(tokenizationToken: String, requestOptions: RequestOptions) =
-        activate(tokenizationToken, TokenizationActivateParams.none(), requestOptions)
+        activate(
+            tokenizationToken,
+            TokenizationActivateParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used to ask the card network to deactivate a tokenization. A successful
@@ -100,7 +118,11 @@ interface TokenizationServiceAsync {
         tokenizationToken: String,
         params: TokenizationDeactivateParams = TokenizationDeactivateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = deactivate(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+    ) =
+        deactivate(
+            params.toBuilder().tokenizationToken(tokenizationToken).build(),
+            requestOptions,
+        )
 
     /** @see deactivate */
     suspend fun deactivate(
@@ -110,7 +132,11 @@ interface TokenizationServiceAsync {
 
     /** @see deactivate */
     suspend fun deactivate(tokenizationToken: String, requestOptions: RequestOptions) =
-        deactivate(tokenizationToken, TokenizationDeactivateParams.none(), requestOptions)
+        deactivate(
+            tokenizationToken,
+            TokenizationDeactivateParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used to ask the card network to pause a tokenization. A successful response
@@ -125,7 +151,11 @@ interface TokenizationServiceAsync {
         tokenizationToken: String,
         params: TokenizationPauseParams = TokenizationPauseParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = pause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+    ) =
+        pause(
+            params.toBuilder().tokenizationToken(tokenizationToken).build(),
+            requestOptions,
+        )
 
     /** @see pause */
     suspend fun pause(
@@ -135,7 +165,11 @@ interface TokenizationServiceAsync {
 
     /** @see pause */
     suspend fun pause(tokenizationToken: String, requestOptions: RequestOptions) =
-        pause(tokenizationToken, TokenizationPauseParams.none(), requestOptions)
+        pause(
+            tokenizationToken,
+            TokenizationPauseParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used to ask the card network to send another activation code to a cardholder
@@ -194,7 +228,11 @@ interface TokenizationServiceAsync {
         tokenizationToken: String,
         params: TokenizationUnpauseParams = TokenizationUnpauseParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = unpause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+    ) =
+        unpause(
+            params.toBuilder().tokenizationToken(tokenizationToken).build(),
+            requestOptions,
+        )
 
     /** @see unpause */
     suspend fun unpause(
@@ -204,7 +242,11 @@ interface TokenizationServiceAsync {
 
     /** @see unpause */
     suspend fun unpause(tokenizationToken: String, requestOptions: RequestOptions) =
-        unpause(tokenizationToken, TokenizationUnpauseParams.none(), requestOptions)
+        unpause(
+            tokenizationToken,
+            TokenizationUnpauseParams.none(),
+            requestOptions,
+        )
 
     /**
      * This endpoint is used update the digital card art for a digital wallet tokenization. A
@@ -286,7 +328,11 @@ interface TokenizationServiceAsync {
             tokenizationToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Tokenization> =
-            retrieve(tokenizationToken, TokenizationRetrieveParams.none(), requestOptions)
+            retrieve(
+                tokenizationToken,
+                TokenizationRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/tokenizations`, but is otherwise the same as
@@ -303,7 +349,10 @@ interface TokenizationServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<TokenizationListPageAsync> =
-            list(TokenizationListParams.none(), requestOptions)
+            list(
+                TokenizationListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/activate`,
@@ -333,7 +382,11 @@ interface TokenizationServiceAsync {
             tokenizationToken: String,
             requestOptions: RequestOptions,
         ): HttpResponse =
-            activate(tokenizationToken, TokenizationActivateParams.none(), requestOptions)
+            activate(
+                tokenizationToken,
+                TokenizationActivateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/deactivate`,
@@ -363,7 +416,11 @@ interface TokenizationServiceAsync {
             tokenizationToken: String,
             requestOptions: RequestOptions,
         ): HttpResponse =
-            deactivate(tokenizationToken, TokenizationDeactivateParams.none(), requestOptions)
+            deactivate(
+                tokenizationToken,
+                TokenizationDeactivateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post /v1/tokenizations/{tokenization_token}/pause`, but
@@ -375,7 +432,10 @@ interface TokenizationServiceAsync {
             params: TokenizationPauseParams = TokenizationPauseParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            pause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+            pause(
+                params.toBuilder().tokenizationToken(tokenizationToken).build(),
+                requestOptions,
+            )
 
         /** @see pause */
         @MustBeClosed
@@ -387,7 +447,11 @@ interface TokenizationServiceAsync {
         /** @see pause */
         @MustBeClosed
         suspend fun pause(tokenizationToken: String, requestOptions: RequestOptions): HttpResponse =
-            pause(tokenizationToken, TokenizationPauseParams.none(), requestOptions)
+            pause(
+                tokenizationToken,
+                TokenizationPauseParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post
@@ -445,7 +509,10 @@ interface TokenizationServiceAsync {
             params: TokenizationUnpauseParams = TokenizationUnpauseParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            unpause(params.toBuilder().tokenizationToken(tokenizationToken).build(), requestOptions)
+            unpause(
+                params.toBuilder().tokenizationToken(tokenizationToken).build(),
+                requestOptions,
+            )
 
         /** @see unpause */
         @MustBeClosed
@@ -460,7 +527,11 @@ interface TokenizationServiceAsync {
             tokenizationToken: String,
             requestOptions: RequestOptions,
         ): HttpResponse =
-            unpause(tokenizationToken, TokenizationUnpauseParams.none(), requestOptions)
+            unpause(
+                tokenizationToken,
+                TokenizationUnpauseParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post

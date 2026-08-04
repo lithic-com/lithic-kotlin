@@ -77,11 +77,20 @@ class PrimeRateServiceAsyncImpl internal constructor(private val clientOptions: 
                     .addPathSegments("v1", "credit_products", params._pathParam(0), "prime_rates")
                     .body(json(clientOptions.jsonMapper, params._body()))
                     .build()
-                    .prepareAsync(clientOptions, params)
+                    .prepareAsync(
+                        clientOptions,
+                        params,
+                    )
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            val response =
+                clientOptions.httpClient.executeAsync(
+                    request,
+                    requestOptions,
+                )
             return errorHandler.handle(response).parseable {
-                response.use { createHandler.handle(it) }
+                response.use {
+                    createHandler.handle(it)
+                }
             }
         }
 
@@ -101,12 +110,21 @@ class PrimeRateServiceAsyncImpl internal constructor(private val clientOptions: 
                     .baseUrl(clientOptions.baseUrl())
                     .addPathSegments("v1", "credit_products", params._pathParam(0), "prime_rates")
                     .build()
-                    .prepareAsync(clientOptions, params)
+                    .prepareAsync(
+                        clientOptions,
+                        params,
+                    )
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            val response =
+                clientOptions.httpClient.executeAsync(
+                    request,
+                    requestOptions,
+                )
             return errorHandler.handle(response).parseable {
                 response
-                    .use { retrieveHandler.handle(it) }
+                    .use {
+                        retrieveHandler.handle(it)
+                    }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()

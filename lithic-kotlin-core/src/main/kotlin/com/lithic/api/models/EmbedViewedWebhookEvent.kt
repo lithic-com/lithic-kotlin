@@ -223,7 +223,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: JsonField<String>) = apply {
+            this.cardToken = cardToken
+        }
 
         /** Details about the request that revealed the card detail */
         fun deviceDetails(deviceDetails: EmbedDeviceDetails) =
@@ -250,7 +252,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun embedType(embedType: JsonField<EmbedType>) = apply { this.embedType = embedType }
+        fun embedType(embedType: JsonField<EmbedType>) = apply {
+            this.embedType = embedType
+        }
 
         /** The type of event */
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
@@ -262,7 +266,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         /** The identifier shared by webhook events for the same embed session. */
         fun sessionId(sessionId: String) = sessionId(JsonField.of(sessionId))
@@ -274,7 +280,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun sessionId(sessionId: JsonField<String>) = apply { this.sessionId = sessionId }
+        fun sessionId(sessionId: JsonField<String>) = apply {
+            this.sessionId = sessionId
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -289,7 +297,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -314,12 +324,30 @@ private constructor(
          */
         fun build(): EmbedViewedWebhookEvent =
             EmbedViewedWebhookEvent(
-                checkRequired("accountToken", accountToken),
-                checkRequired("cardToken", cardToken),
-                checkRequired("deviceDetails", deviceDetails),
-                checkRequired("embedType", embedType),
-                checkRequired("eventType", eventType),
-                checkRequired("sessionId", sessionId),
+                checkRequired(
+                    "accountToken",
+                    accountToken,
+                ),
+                checkRequired(
+                    "cardToken",
+                    cardToken,
+                ),
+                checkRequired(
+                    "deviceDetails",
+                    deviceDetails,
+                ),
+                checkRequired(
+                    "embedType",
+                    embedType,
+                ),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
+                checkRequired(
+                    "sessionId",
+                    sessionId,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -382,7 +410,10 @@ private constructor(
             @JsonProperty("ip_address")
             @ExcludeMissing
             ipAddress: JsonField<String> = JsonMissing.of()
-        ) : this(ipAddress, mutableMapOf())
+        ) : this(
+            ipAddress,
+            mutableMapOf(),
+        )
 
         /**
          * The IP address recorded for the request that generated the event
@@ -445,7 +476,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun ipAddress(ipAddress: JsonField<String>) = apply { this.ipAddress = ipAddress }
+            fun ipAddress(ipAddress: JsonField<String>) = apply {
+                this.ipAddress = ipAddress
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -460,7 +493,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -480,7 +515,10 @@ private constructor(
              */
             fun build(): EmbedDeviceDetails =
                 EmbedDeviceDetails(
-                    checkRequired("ipAddress", ipAddress),
+                    checkRequired(
+                        "ipAddress",
+                        ipAddress,
+                    ),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -577,9 +615,11 @@ private constructor(
          * An enum containing [EmbedType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EmbedType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -717,9 +757,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

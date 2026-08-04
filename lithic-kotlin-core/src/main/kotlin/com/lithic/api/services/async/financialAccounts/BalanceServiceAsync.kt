@@ -45,7 +45,11 @@ interface BalanceServiceAsync {
         financialAccountToken: String,
         requestOptions: RequestOptions,
     ): FinancialAccountBalanceListPageAsync =
-        list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
+        list(
+            financialAccountToken,
+            FinancialAccountBalanceListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [BalanceServiceAsync] that provides access to raw HTTP responses for each method.
@@ -90,6 +94,10 @@ interface BalanceServiceAsync {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccountBalanceListPageAsync> =
-            list(financialAccountToken, FinancialAccountBalanceListParams.none(), requestOptions)
+            list(
+                financialAccountToken,
+                FinancialAccountBalanceListParams.none(),
+                requestOptions,
+            )
     }
 }

@@ -13,7 +13,11 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.toImmutable
 import java.util.TreeMap
 
-class Headers private constructor(private val map: Map<String, List<String>>, val size: Int) {
+class Headers
+private constructor(
+    private val map: Map<String, List<String>>,
+    val size: Int,
+) {
 
     fun isEmpty(): Boolean = map.isEmpty()
 
@@ -43,7 +47,9 @@ class Headers private constructor(private val map: Map<String, List<String>>, va
                 is JsonString -> put(name, value.value)
                 is JsonArray -> value.values.forEach { put(name, it) }
                 is JsonObject ->
-                    value.values.forEach { (nestedName, value) -> put("$name.$nestedName", value) }
+                    value.values.forEach { (nestedName, value) ->
+                        put("$name.$nestedName", value)
+                    }
             }
         }
 

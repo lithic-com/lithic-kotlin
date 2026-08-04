@@ -45,7 +45,11 @@ interface DisputeService {
         disputeToken: String,
         params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute = retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+    ): Dispute =
+        retrieve(
+            params.toBuilder().disputeToken(disputeToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     fun retrieve(
@@ -55,14 +59,22 @@ interface DisputeService {
 
     /** @see retrieve */
     fun retrieve(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
+        retrieve(
+            disputeToken,
+            DisputeRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** Update chargeback request. Can only be modified if status is `NEW`. */
     fun update(
         disputeToken: String,
         params: DisputeUpdateParams = DisputeUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute = update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+    ): Dispute =
+        update(
+            params.toBuilder().disputeToken(disputeToken).build(),
+            requestOptions,
+        )
 
     /** @see update */
     fun update(
@@ -72,7 +84,11 @@ interface DisputeService {
 
     /** @see update */
     fun update(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        update(disputeToken, DisputeUpdateParams.none(), requestOptions)
+        update(
+            disputeToken,
+            DisputeUpdateParams.none(),
+            requestOptions,
+        )
 
     /** List chargeback requests. */
     fun list(
@@ -82,14 +98,21 @@ interface DisputeService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): DisputeListPage =
-        list(DisputeListParams.none(), requestOptions)
+        list(
+            DisputeListParams.none(),
+            requestOptions,
+        )
 
     /** Withdraw chargeback request. */
     fun delete(
         disputeToken: String,
         params: DisputeDeleteParams = DisputeDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Dispute = delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+    ): Dispute =
+        delete(
+            params.toBuilder().disputeToken(disputeToken).build(),
+            requestOptions,
+        )
 
     /** @see delete */
     fun delete(
@@ -99,7 +122,11 @@ interface DisputeService {
 
     /** @see delete */
     fun delete(disputeToken: String, requestOptions: RequestOptions): Dispute =
-        delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
+        delete(
+            disputeToken,
+            DisputeDeleteParams.none(),
+            requestOptions,
+        )
 
     /**
      * Soft delete evidence for a chargeback request. Evidence will not be reviewed or submitted by
@@ -110,7 +137,10 @@ interface DisputeService {
         params: DisputeDeleteEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence =
-        deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
+        deleteEvidence(
+            params.toBuilder().evidenceToken(evidenceToken).build(),
+            requestOptions,
+        )
 
     /** @see deleteEvidence */
     fun deleteEvidence(
@@ -158,7 +188,10 @@ interface DisputeService {
         params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeListEvidencesPage =
-        listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+        listEvidences(
+            params.toBuilder().disputeToken(disputeToken).build(),
+            requestOptions,
+        )
 
     /** @see listEvidences */
     fun listEvidences(
@@ -171,7 +204,11 @@ interface DisputeService {
         disputeToken: String,
         requestOptions: RequestOptions,
     ): DisputeListEvidencesPage =
-        listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
+        listEvidences(
+            disputeToken,
+            DisputeListEvidencesParams.none(),
+            requestOptions,
+        )
 
     /** Get evidence for a chargeback request. */
     fun retrieveEvidence(
@@ -179,7 +216,10 @@ interface DisputeService {
         params: DisputeRetrieveEvidenceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DisputeEvidence =
-        retrieveEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
+        retrieveEvidence(
+            params.toBuilder().evidenceToken(evidenceToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieveEvidence */
     fun retrieveEvidence(
@@ -219,7 +259,10 @@ interface DisputeService {
             params: DisputeRetrieveParams = DisputeRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            retrieve(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+            retrieve(
+                params.toBuilder().disputeToken(disputeToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -234,7 +277,11 @@ interface DisputeService {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<Dispute> =
-            retrieve(disputeToken, DisputeRetrieveParams.none(), requestOptions)
+            retrieve(
+                disputeToken,
+                DisputeRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `patch /v1/disputes/{dispute_token}`, but is otherwise
@@ -246,7 +293,10 @@ interface DisputeService {
             params: DisputeUpdateParams = DisputeUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            update(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+            update(
+                params.toBuilder().disputeToken(disputeToken).build(),
+                requestOptions,
+            )
 
         /** @see update */
         @MustBeClosed
@@ -258,7 +308,11 @@ interface DisputeService {
         /** @see update */
         @MustBeClosed
         fun update(disputeToken: String, requestOptions: RequestOptions): HttpResponseFor<Dispute> =
-            update(disputeToken, DisputeUpdateParams.none(), requestOptions)
+            update(
+                disputeToken,
+                DisputeUpdateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/disputes`, but is otherwise the same as
@@ -273,7 +327,10 @@ interface DisputeService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DisputeListPage> =
-            list(DisputeListParams.none(), requestOptions)
+            list(
+                DisputeListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `delete /v1/disputes/{dispute_token}`, but is otherwise
@@ -285,7 +342,10 @@ interface DisputeService {
             params: DisputeDeleteParams = DisputeDeleteParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Dispute> =
-            delete(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+            delete(
+                params.toBuilder().disputeToken(disputeToken).build(),
+                requestOptions,
+            )
 
         /** @see delete */
         @MustBeClosed
@@ -297,7 +357,11 @@ interface DisputeService {
         /** @see delete */
         @MustBeClosed
         fun delete(disputeToken: String, requestOptions: RequestOptions): HttpResponseFor<Dispute> =
-            delete(disputeToken, DisputeDeleteParams.none(), requestOptions)
+            delete(
+                disputeToken,
+                DisputeDeleteParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `delete
@@ -310,7 +374,10 @@ interface DisputeService {
             params: DisputeDeleteEvidenceParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeEvidence> =
-            deleteEvidence(params.toBuilder().evidenceToken(evidenceToken).build(), requestOptions)
+            deleteEvidence(
+                params.toBuilder().evidenceToken(evidenceToken).build(),
+                requestOptions,
+            )
 
         /** @see deleteEvidence */
         @MustBeClosed
@@ -364,7 +431,10 @@ interface DisputeService {
             params: DisputeListEvidencesParams = DisputeListEvidencesParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DisputeListEvidencesPage> =
-            listEvidences(params.toBuilder().disputeToken(disputeToken).build(), requestOptions)
+            listEvidences(
+                params.toBuilder().disputeToken(disputeToken).build(),
+                requestOptions,
+            )
 
         /** @see listEvidences */
         @MustBeClosed
@@ -379,7 +449,11 @@ interface DisputeService {
             disputeToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<DisputeListEvidencesPage> =
-            listEvidences(disputeToken, DisputeListEvidencesParams.none(), requestOptions)
+            listEvidences(
+                disputeToken,
+                DisputeListEvidencesParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get

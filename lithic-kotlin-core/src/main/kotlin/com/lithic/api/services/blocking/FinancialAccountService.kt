@@ -76,7 +76,11 @@ interface FinancialAccountService {
 
     /** @see retrieve */
     fun retrieve(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
-        retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
+        retrieve(
+            financialAccountToken,
+            FinancialAccountRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** Update a financial account */
     fun update(
@@ -97,7 +101,11 @@ interface FinancialAccountService {
 
     /** @see update */
     fun update(financialAccountToken: String, requestOptions: RequestOptions): FinancialAccount =
-        update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
+        update(
+            financialAccountToken,
+            FinancialAccountUpdateParams.none(),
+            requestOptions,
+        )
 
     /** Retrieve information on your financial accounts including routing and account number. */
     fun list(
@@ -107,7 +115,10 @@ interface FinancialAccountService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): FinancialAccountListPage =
-        list(FinancialAccountListParams.none(), requestOptions)
+        list(
+            FinancialAccountListParams.none(),
+            requestOptions,
+        )
 
     /** Register account number */
     fun registerAccountNumber(
@@ -210,7 +221,11 @@ interface FinancialAccountService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccount> =
-            retrieve(financialAccountToken, FinancialAccountRetrieveParams.none(), requestOptions)
+            retrieve(
+                financialAccountToken,
+                FinancialAccountRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `patch /v1/financial_accounts/{financial_account_token}`,
@@ -240,7 +255,11 @@ interface FinancialAccountService {
             financialAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FinancialAccount> =
-            update(financialAccountToken, FinancialAccountUpdateParams.none(), requestOptions)
+            update(
+                financialAccountToken,
+                FinancialAccountUpdateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/financial_accounts`, but is otherwise the same
@@ -255,7 +274,10 @@ interface FinancialAccountService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<FinancialAccountListPage> =
-            list(FinancialAccountListParams.none(), requestOptions)
+            list(
+                FinancialAccountListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post

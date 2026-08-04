@@ -28,7 +28,10 @@ private constructor(
         @JsonProperty("wallet_type")
         @ExcludeMissing
         walletType: JsonField<WalletType> = JsonMissing.of()
-    ) : this(walletType, mutableMapOf())
+    ) : this(
+        walletType,
+        mutableMapOf(),
+    )
 
     /**
      * The wallet_type field will indicate the source of the token. Possible token sources include
@@ -101,7 +104,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun walletType(walletType: JsonField<WalletType>) = apply { this.walletType = walletType }
+        fun walletType(walletType: JsonField<WalletType>) = apply {
+            this.walletType = walletType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -116,7 +121,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -135,7 +142,13 @@ private constructor(
          * @throws IllegalStateException if any required field is unset.
          */
         fun build(): TokenInfo =
-            TokenInfo(checkRequired("walletType", walletType), additionalProperties.toMutableMap())
+            TokenInfo(
+                checkRequired(
+                    "walletType",
+                    walletType,
+                ),
+                additionalProperties.toMutableMap(),
+            )
     }
 
     private var validated: Boolean = false
@@ -221,9 +234,11 @@ private constructor(
          * An enum containing [WalletType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [WalletType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

@@ -164,10 +164,14 @@ private constructor(
          * - [userDefinedId]
          * - etc.
          */
-        fun body(body: CreateHoldRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: CreateHoldRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** Amount to hold in cents */
-        fun amount(amount: Long) = apply { body.amount(amount) }
+        fun amount(amount: Long) = apply {
+            body.amount(amount)
+        }
 
         /**
          * Sets [Builder.amount] to an arbitrary JSON value.
@@ -175,10 +179,14 @@ private constructor(
          * You should usually call [Builder.amount] with a well-typed [Long] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
+        fun amount(amount: JsonField<Long>) = apply {
+            body.amount(amount)
+        }
 
         /** Customer-provided token for idempotency. Becomes the hold token. */
-        fun token(token: String) = apply { body.token(token) }
+        fun token(token: String) = apply {
+            body.token(token)
+        }
 
         /**
          * Sets [Builder.token] to an arbitrary JSON value.
@@ -186,7 +194,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { body.token(token) }
+        fun token(token: JsonField<String>) = apply {
+            body.token(token)
+        }
 
         /** When the hold should auto-expire */
         fun expirationDatetime(expirationDatetime: OffsetDateTime) = apply {
@@ -205,7 +215,9 @@ private constructor(
         }
 
         /** Reason for the hold */
-        fun memo(memo: String?) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply {
+            body.memo(memo)
+        }
 
         /**
          * Sets [Builder.memo] to an arbitrary JSON value.
@@ -213,10 +225,14 @@ private constructor(
          * You should usually call [Builder.memo] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
+        fun memo(memo: JsonField<String>) = apply {
+            body.memo(memo)
+        }
 
         /** User-provided identifier for the hold */
-        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
+        fun userDefinedId(userDefinedId: String) = apply {
+            body.userDefinedId(userDefinedId)
+        }
 
         /**
          * Sets [Builder.userDefinedId] to an arbitrary JSON value.
@@ -234,7 +250,10 @@ private constructor(
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -242,7 +261,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -290,7 +311,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -340,7 +363,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -402,7 +427,14 @@ private constructor(
             @JsonProperty("user_defined_id")
             @ExcludeMissing
             userDefinedId: JsonField<String> = JsonMissing.of(),
-        ) : this(amount, token, expirationDatetime, memo, userDefinedId, mutableMapOf())
+        ) : this(
+            amount,
+            token,
+            expirationDatetime,
+            memo,
+            userDefinedId,
+            mutableMapOf(),
+        )
 
         /**
          * Amount to hold in cents
@@ -540,7 +572,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+            fun amount(amount: JsonField<Long>) = apply {
+                this.amount = amount
+            }
 
             /** Customer-provided token for idempotency. Becomes the hold token. */
             fun token(token: String) = token(JsonField.of(token))
@@ -552,7 +586,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             /** When the hold should auto-expire */
             fun expirationDatetime(expirationDatetime: OffsetDateTime) =
@@ -579,7 +615,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) = apply {
+                this.memo = memo
+            }
 
             /** User-provided identifier for the hold */
             fun userDefinedId(userDefinedId: String) = userDefinedId(JsonField.of(userDefinedId))
@@ -608,7 +646,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -628,7 +668,10 @@ private constructor(
              */
             fun build(): CreateHoldRequest =
                 CreateHoldRequest(
-                    checkRequired("amount", amount),
+                    checkRequired(
+                        "amount",
+                        amount,
+                    ),
                     token,
                     expirationDatetime,
                     memo,

@@ -33,7 +33,10 @@ interface AccountActivityService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): AccountActivityListPage =
-        list(AccountActivityListParams.none(), requestOptions)
+        list(
+            AccountActivityListParams.none(),
+            requestOptions,
+        )
 
     /** Retrieve a single transaction */
     fun retrieveTransaction(
@@ -92,7 +95,10 @@ interface AccountActivityService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountActivityListPage> =
-            list(AccountActivityListParams.none(), requestOptions)
+            list(
+                AccountActivityListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/account_activity/{transaction_token}`, but is

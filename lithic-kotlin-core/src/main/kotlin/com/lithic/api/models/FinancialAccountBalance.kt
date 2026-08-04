@@ -310,7 +310,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** Funds available for spend in the currency's smallest unit (e.g., cents for USD) */
         fun availableAmount(availableAmount: Long) = availableAmount(JsonField.of(availableAmount))
@@ -336,7 +338,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+        fun created(created: JsonField<OffsetDateTime>) = apply {
+            this.created = created
+        }
 
         /** 3-character alphabetic ISO 4217 code for the local currency of the balance. */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -347,7 +351,9 @@ private constructor(
          * You should usually call [Builder.currency] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        fun currency(currency: JsonField<String>) = apply {
+            this.currency = currency
+        }
 
         /**
          * Globally unique identifier for the last financial transaction event that impacted this
@@ -414,7 +420,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun totalAmount(totalAmount: JsonField<Long>) = apply { this.totalAmount = totalAmount }
+        fun totalAmount(totalAmount: JsonField<Long>) = apply {
+            this.totalAmount = totalAmount
+        }
 
         /** Type of financial account. */
         fun type(type: Type) = type(JsonField.of(type))
@@ -425,7 +433,9 @@ private constructor(
          * You should usually call [Builder.type] with a well-typed [Type] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun type(type: JsonField<Type>) = apply { this.type = type }
+        fun type(type: JsonField<Type>) = apply {
+            this.type = type
+        }
 
         /** Date and time for when the balance was last updated. */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -437,7 +447,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+        fun updated(updated: JsonField<OffsetDateTime>) = apply {
+            this.updated = updated
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -452,7 +464,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -481,16 +495,46 @@ private constructor(
          */
         fun build(): FinancialAccountBalance =
             FinancialAccountBalance(
-                checkRequired("token", token),
-                checkRequired("availableAmount", availableAmount),
-                checkRequired("created", created),
-                checkRequired("currency", currency),
-                checkRequired("lastTransactionEventToken", lastTransactionEventToken),
-                checkRequired("lastTransactionToken", lastTransactionToken),
-                checkRequired("pendingAmount", pendingAmount),
-                checkRequired("totalAmount", totalAmount),
-                checkRequired("type", type),
-                checkRequired("updated", updated),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "availableAmount",
+                    availableAmount,
+                ),
+                checkRequired(
+                    "created",
+                    created,
+                ),
+                checkRequired(
+                    "currency",
+                    currency,
+                ),
+                checkRequired(
+                    "lastTransactionEventToken",
+                    lastTransactionEventToken,
+                ),
+                checkRequired(
+                    "lastTransactionToken",
+                    lastTransactionToken,
+                ),
+                checkRequired(
+                    "pendingAmount",
+                    pendingAmount,
+                ),
+                checkRequired(
+                    "totalAmount",
+                    totalAmount,
+                ),
+                checkRequired(
+                    "type",
+                    type,
+                ),
+                checkRequired(
+                    "updated",
+                    updated,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -586,9 +630,11 @@ private constructor(
          * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Type] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

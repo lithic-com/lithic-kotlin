@@ -411,7 +411,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         /** The account token associated with the card being tokenized. */
         fun accountToken(accountToken: String) = accountToken(JsonField.of(accountToken))
@@ -437,7 +439,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun cardToken(cardToken: JsonField<String>) = apply { this.cardToken = cardToken }
+        fun cardToken(cardToken: JsonField<String>) = apply {
+            this.cardToken = cardToken
+        }
 
         /** Date and time when the tokenization first occurred. UTC time zone. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -449,7 +453,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+            this.createdAt = createdAt
+        }
 
         /** The dynamic pan assigned to the token by the network. */
         fun dpan(dpan: String?) = dpan(JsonField.ofNullable(dpan))
@@ -460,7 +466,9 @@ private constructor(
          * You should usually call [Builder.dpan] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun dpan(dpan: JsonField<String>) = apply { this.dpan = dpan }
+        fun dpan(dpan: JsonField<String>) = apply {
+            this.dpan = dpan
+        }
 
         /** The status of the tokenization request */
         fun status(status: Status) = status(JsonField.of(status))
@@ -471,7 +479,9 @@ private constructor(
          * You should usually call [Builder.status] with a well-typed [Status] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun status(status: JsonField<Status>) = apply { this.status = status }
+        fun status(status: JsonField<Status>) = apply {
+            this.status = status
+        }
 
         /**
          * The entity that requested the tokenization. For digital wallets, this will be one of the
@@ -541,7 +551,9 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply { this.updatedAt = updatedAt }
+        fun updatedAt(updatedAt: JsonField<OffsetDateTime>) = apply {
+            this.updatedAt = updatedAt
+        }
 
         /** The device identifier associated with the tokenization. */
         fun deviceId(deviceId: String?) = deviceId(JsonField.ofNullable(deviceId))
@@ -552,7 +564,9 @@ private constructor(
          * You should usually call [Builder.deviceId] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun deviceId(deviceId: JsonField<String>) = apply { this.deviceId = deviceId }
+        fun deviceId(deviceId: JsonField<String>) = apply {
+            this.deviceId = deviceId
+        }
 
         /**
          * Specifies the digital card art displayed in the user's digital wallet after tokenization.
@@ -628,7 +642,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -657,16 +673,46 @@ private constructor(
          */
         fun build(): Tokenization =
             Tokenization(
-                checkRequired("token", token),
-                checkRequired("accountToken", accountToken),
-                checkRequired("cardToken", cardToken),
-                checkRequired("createdAt", createdAt),
-                checkRequired("dpan", dpan),
-                checkRequired("status", status),
-                checkRequired("tokenRequestorName", tokenRequestorName),
-                checkRequired("tokenUniqueReference", tokenUniqueReference),
-                checkRequired("tokenizationChannel", tokenizationChannel),
-                checkRequired("updatedAt", updatedAt),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "accountToken",
+                    accountToken,
+                ),
+                checkRequired(
+                    "cardToken",
+                    cardToken,
+                ),
+                checkRequired(
+                    "createdAt",
+                    createdAt,
+                ),
+                checkRequired(
+                    "dpan",
+                    dpan,
+                ),
+                checkRequired(
+                    "status",
+                    status,
+                ),
+                checkRequired(
+                    "tokenRequestorName",
+                    tokenRequestorName,
+                ),
+                checkRequired(
+                    "tokenUniqueReference",
+                    tokenUniqueReference,
+                ),
+                checkRequired(
+                    "tokenizationChannel",
+                    tokenizationChannel,
+                ),
+                checkRequired(
+                    "updatedAt",
+                    updatedAt,
+                ),
                 deviceId,
                 digitalCardArtToken,
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
@@ -783,9 +829,11 @@ private constructor(
          * An enum containing [Status]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [Status] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -965,9 +1013,11 @@ private constructor(
          * An enum containing [TokenRequestorName]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TokenRequestorName] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1135,9 +1185,11 @@ private constructor(
          * An enum containing [TokenizationChannel]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [TokenizationChannel] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
@@ -1462,7 +1514,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             /** Date and time when the tokenization event first occurred. UTC time zone. */
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -1488,7 +1542,9 @@ private constructor(
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun result(result: JsonField<TokenizationEventOutcome>) = apply { this.result = result }
+            fun result(result: JsonField<TokenizationEventOutcome>) = apply {
+                this.result = result
+            }
 
             /** Results from rules that were evaluated for this tokenization */
             fun ruleResults(ruleResults: List<TokenizationRuleResult>) =
@@ -1532,8 +1588,9 @@ private constructor(
             fun tokenizationDeclineReasons(
                 tokenizationDeclineReasons: JsonField<List<TokenizationDeclineReason>>
             ) = apply {
-                this.tokenizationDeclineReasons =
-                    tokenizationDeclineReasons.map { it.toMutableList() }
+                this.tokenizationDeclineReasons = tokenizationDeclineReasons.map {
+                    it.toMutableList()
+                }
             }
 
             /**
@@ -1589,7 +1646,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun type(type: JsonField<Type>) = apply { this.type = type }
+            fun type(type: JsonField<Type>) = apply {
+                this.type = type
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1604,7 +1663,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1743,9 +1804,11 @@ private constructor(
              *
              * An instance of [TokenizationEventOutcome] can contain an unknown value in a couple of
              * cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -1922,9 +1985,11 @@ private constructor(
              * An enum containing [Type]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [Type] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

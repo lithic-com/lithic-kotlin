@@ -41,7 +41,14 @@ private constructor(
         @JsonProperty("transaction_token")
         @ExcludeMissing
         transactionToken: JsonField<String> = JsonMissing.of(),
-    ) : this(token, common, eventToken, fleet, transactionToken, mutableMapOf())
+    ) : this(
+        token,
+        common,
+        eventToken,
+        fleet,
+        transactionToken,
+        mutableMapOf(),
+    )
 
     /**
      * A unique identifier for the enhanced commercial data.
@@ -174,7 +181,9 @@ private constructor(
          * You should usually call [Builder.token] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun token(token: JsonField<String>) = apply { this.token = token }
+        fun token(token: JsonField<String>) = apply {
+            this.token = token
+        }
 
         fun common(common: CommonData) = common(JsonField.of(common))
 
@@ -185,7 +194,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun common(common: JsonField<CommonData>) = apply { this.common = common }
+        fun common(common: JsonField<CommonData>) = apply {
+            this.common = common
+        }
 
         /** The token of the event that the enhanced data is associated with. */
         fun eventToken(eventToken: String) = eventToken(JsonField.of(eventToken))
@@ -197,7 +208,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventToken(eventToken: JsonField<String>) = apply { this.eventToken = eventToken }
+        fun eventToken(eventToken: JsonField<String>) = apply {
+            this.eventToken = eventToken
+        }
 
         fun fleet(fleet: List<Fleet>) = fleet(JsonField.of(fleet))
 
@@ -252,7 +265,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -276,11 +291,27 @@ private constructor(
          */
         fun build(): EnhancedData =
             EnhancedData(
-                checkRequired("token", token),
-                checkRequired("common", common),
-                checkRequired("eventToken", eventToken),
-                checkRequired("fleet", fleet).map { it.toImmutable() },
-                checkRequired("transactionToken", transactionToken),
+                checkRequired(
+                    "token",
+                    token,
+                ),
+                checkRequired(
+                    "common",
+                    common,
+                ),
+                checkRequired(
+                    "eventToken",
+                    eventToken,
+                ),
+                checkRequired(
+                        "fleet",
+                        fleet,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "transactionToken",
+                    transactionToken,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -525,7 +556,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun tax(tax: JsonField<TaxData>) = apply { this.tax = tax }
+            fun tax(tax: JsonField<TaxData>) = apply {
+                this.tax = tax
+            }
 
             /** A customer identifier. */
             fun customerReferenceNumber(customerReferenceNumber: String?) =
@@ -567,7 +600,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun orderDate(orderDate: JsonField<LocalDate>) = apply { this.orderDate = orderDate }
+            fun orderDate(orderDate: JsonField<LocalDate>) = apply {
+                this.orderDate = orderDate
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -582,7 +617,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -603,8 +640,15 @@ private constructor(
              */
             fun build(): CommonData =
                 CommonData(
-                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
-                    checkRequired("tax", tax),
+                    checkRequired(
+                            "lineItems",
+                            lineItems,
+                        )
+                        .map { it.toImmutable() },
+                    checkRequired(
+                        "tax",
+                        tax,
+                    ),
                     customerReferenceNumber,
                     merchantReferenceNumber,
                     orderDate,
@@ -682,7 +726,13 @@ private constructor(
                 @JsonProperty("quantity")
                 @ExcludeMissing
                 quantity: JsonField<String> = JsonMissing.of(),
-            ) : this(amount, description, productCode, quantity, mutableMapOf())
+            ) : this(
+                amount,
+                description,
+                productCode,
+                quantity,
+                mutableMapOf(),
+            )
 
             /**
              * The price of the item purchased in merchant currency.
@@ -796,7 +846,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+                fun amount(amount: JsonField<String>) = apply {
+                    this.amount = amount
+                }
 
                 /** A human-readable description of the item. */
                 fun description(description: String?) =
@@ -838,7 +890,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun quantity(quantity: JsonField<String>) = apply { this.quantity = quantity }
+                fun quantity(quantity: JsonField<String>) = apply {
+                    this.quantity = quantity
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -962,7 +1016,12 @@ private constructor(
                 @JsonProperty("merchant_tax_id")
                 @ExcludeMissing
                 merchantTaxId: JsonField<String> = JsonMissing.of(),
-            ) : this(amount, exempt, merchantTaxId, mutableMapOf())
+            ) : this(
+                amount,
+                exempt,
+                merchantTaxId,
+                mutableMapOf(),
+            )
 
             /**
              * The amount of tax collected.
@@ -1064,7 +1123,9 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
+                fun amount(amount: JsonField<Long>) = apply {
+                    this.amount = amount
+                }
 
                 /** A flag indicating whether the transaction is tax exempt or not. */
                 fun exempt(exempt: TaxExemptIndicator?) = exempt(JsonField.ofNullable(exempt))
@@ -1076,7 +1137,9 @@ private constructor(
                  * value instead. This method is primarily for setting the field to an undocumented
                  * or not yet supported value.
                  */
-                fun exempt(exempt: JsonField<TaxExemptIndicator>) = apply { this.exempt = exempt }
+                fun exempt(exempt: JsonField<TaxExemptIndicator>) = apply {
+                    this.exempt = exempt
+                }
 
                 /** The tax ID of the merchant. */
                 fun merchantTaxId(merchantTaxId: String?) =
@@ -1121,7 +1184,12 @@ private constructor(
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
                 fun build(): TaxData =
-                    TaxData(amount, exempt, merchantTaxId, additionalProperties.toMutableMap())
+                    TaxData(
+                        amount,
+                        exempt,
+                        merchantTaxId,
+                        additionalProperties.toMutableMap(),
+                    )
             }
 
             private var validated: Boolean = false
@@ -1205,9 +1273,11 @@ private constructor(
                  *
                  * An instance of [TaxExemptIndicator] can contain an unknown value in a couple of
                  * cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -1575,7 +1645,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun fuel(fuel: JsonField<FuelData>) = apply { this.fuel = fuel }
+            fun fuel(fuel: JsonField<FuelData>) = apply {
+                this.fuel = fuel
+            }
 
             /**
              * The driver number entered into the terminal at the time of sale, with leading zeros
@@ -1612,7 +1684,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun odometer(odometer: JsonField<Long>) = apply { this.odometer = odometer }
+            fun odometer(odometer: JsonField<Long>) = apply {
+                this.odometer = odometer
+            }
 
             /** The type of fuel service. */
             fun serviceType(serviceType: ServiceType) = serviceType(JsonField.of(serviceType))
@@ -1659,7 +1733,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -1680,8 +1756,14 @@ private constructor(
              */
             fun build(): Fleet =
                 Fleet(
-                    checkRequired("amountTotals", amountTotals),
-                    checkRequired("fuel", fuel),
+                    checkRequired(
+                        "amountTotals",
+                        amountTotals,
+                    ),
+                    checkRequired(
+                        "fuel",
+                        fuel,
+                    ),
                     driverNumber,
                     odometer,
                     serviceType,
@@ -1757,7 +1839,12 @@ private constructor(
                 @JsonProperty("net_sale")
                 @ExcludeMissing
                 netSale: JsonField<Long> = JsonMissing.of(),
-            ) : this(discount, grossSale, netSale, mutableMapOf())
+            ) : this(
+                discount,
+                grossSale,
+                netSale,
+                mutableMapOf(),
+            )
 
             /**
              * The discount applied to the gross sale amount.
@@ -1858,7 +1945,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun discount(discount: JsonField<Long>) = apply { this.discount = discount }
+                fun discount(discount: JsonField<Long>) = apply {
+                    this.discount = discount
+                }
 
                 /** The gross sale amount. */
                 fun grossSale(grossSale: Long?) = grossSale(JsonField.ofNullable(grossSale))
@@ -1877,7 +1966,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun grossSale(grossSale: JsonField<Long>) = apply { this.grossSale = grossSale }
+                fun grossSale(grossSale: JsonField<Long>) = apply {
+                    this.grossSale = grossSale
+                }
 
                 /** The amount after discount. */
                 fun netSale(netSale: Long?) = netSale(JsonField.ofNullable(netSale))
@@ -1896,7 +1987,9 @@ private constructor(
                  * This method is primarily for setting the field to an undocumented or not yet
                  * supported value.
                  */
-                fun netSale(netSale: JsonField<Long>) = apply { this.netSale = netSale }
+                fun netSale(netSale: JsonField<Long>) = apply {
+                    this.netSale = netSale
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1926,7 +2019,12 @@ private constructor(
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
                 fun build(): AmountTotals =
-                    AmountTotals(discount, grossSale, netSale, additionalProperties.toMutableMap())
+                    AmountTotals(
+                        discount,
+                        grossSale,
+                        netSale,
+                        additionalProperties.toMutableMap(),
+                    )
             }
 
             private var validated: Boolean = false
@@ -2015,7 +2113,13 @@ private constructor(
                 @JsonProperty("unit_price")
                 @ExcludeMissing
                 unitPrice: JsonField<Long> = JsonMissing.of(),
-            ) : this(quantity, type, unitOfMeasure, unitPrice, mutableMapOf())
+            ) : this(
+                quantity,
+                type,
+                unitOfMeasure,
+                unitPrice,
+                mutableMapOf(),
+            )
 
             /**
              * The quantity of fuel purchased.
@@ -2129,7 +2233,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun quantity(quantity: JsonField<String>) = apply { this.quantity = quantity }
+                fun quantity(quantity: JsonField<String>) = apply {
+                    this.quantity = quantity
+                }
 
                 /** The type of fuel purchased. */
                 fun type(type: FuelType?) = type(JsonField.ofNullable(type))
@@ -2141,7 +2247,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun type(type: JsonField<FuelType>) = apply { this.type = type }
+                fun type(type: JsonField<FuelType>) = apply {
+                    this.type = type
+                }
 
                 /** Unit of measure for fuel disbursement. */
                 fun unitOfMeasure(unitOfMeasure: FuelUnitOfMeasure?) =
@@ -2175,7 +2283,9 @@ private constructor(
                  * instead. This method is primarily for setting the field to an undocumented or not
                  * yet supported value.
                  */
-                fun unitPrice(unitPrice: JsonField<Long>) = apply { this.unitPrice = unitPrice }
+                fun unitPrice(unitPrice: JsonField<Long>) = apply {
+                    this.unitPrice = unitPrice
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -2678,9 +2788,11 @@ private constructor(
                  * An enum containing [FuelType]'s known values, as well as an [_UNKNOWN] member.
                  *
                  * An instance of [FuelType] can contain an unknown value in a couple of cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -3265,9 +3377,11 @@ private constructor(
                  *
                  * An instance of [FuelUnitOfMeasure] can contain an unknown value in a couple of
                  * cases:
+                 *
                  * - It was deserialized from data that doesn't match any known member. For example,
                  *   if the SDK is on an older version than the API, then the API may respond with
                  *   new members that the SDK is unaware of.
+                 *
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
@@ -3453,9 +3567,11 @@ private constructor(
              * An enum containing [ServiceType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [ServiceType] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

@@ -30,7 +30,11 @@ interface PrimeRateService {
         creditProductToken: String,
         params: CreditProductPrimeRateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = create(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+    ) =
+        create(
+            params.toBuilder().creditProductToken(creditProductToken).build(),
+            requestOptions,
+        )
 
     /** @see create */
     fun create(
@@ -44,7 +48,10 @@ interface PrimeRateService {
         params: CreditProductPrimeRateRetrieveParams = CreditProductPrimeRateRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PrimeRateRetrieveResponse =
-        retrieve(params.toBuilder().creditProductToken(creditProductToken).build(), requestOptions)
+        retrieve(
+            params.toBuilder().creditProductToken(creditProductToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     fun retrieve(
@@ -57,7 +64,11 @@ interface PrimeRateService {
         creditProductToken: String,
         requestOptions: RequestOptions,
     ): PrimeRateRetrieveResponse =
-        retrieve(creditProductToken, CreditProductPrimeRateRetrieveParams.none(), requestOptions)
+        retrieve(
+            creditProductToken,
+            CreditProductPrimeRateRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** A view of [PrimeRateService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {

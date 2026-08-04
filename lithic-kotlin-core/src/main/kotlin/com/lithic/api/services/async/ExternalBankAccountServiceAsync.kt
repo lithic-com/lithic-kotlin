@@ -50,7 +50,10 @@ interface ExternalBankAccountServiceAsync {
         body: ExternalBankAccountCreateParams.Body,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse =
-        create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+        create(
+            ExternalBankAccountCreateParams.builder().body(body).build(),
+            requestOptions,
+        )
 
     /** @see create */
     suspend fun create(
@@ -81,7 +84,10 @@ interface ExternalBankAccountServiceAsync {
         unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ExternalBankAccountCreateResponse =
-        create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
+        create(
+            ExternalBankAccountCreateParams.Body.ofUnverified(unverified),
+            requestOptions,
+        )
 
     /** Get the external bank account by token. */
     suspend fun retrieve(
@@ -105,7 +111,11 @@ interface ExternalBankAccountServiceAsync {
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
     ): ExternalBankAccountRetrieveResponse =
-        retrieve(externalBankAccountToken, ExternalBankAccountRetrieveParams.none(), requestOptions)
+        retrieve(
+            externalBankAccountToken,
+            ExternalBankAccountRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** Update the external bank account by token. */
     suspend fun update(
@@ -129,7 +139,11 @@ interface ExternalBankAccountServiceAsync {
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
     ): ExternalBankAccountUpdateResponse =
-        update(externalBankAccountToken, ExternalBankAccountUpdateParams.none(), requestOptions)
+        update(
+            externalBankAccountToken,
+            ExternalBankAccountUpdateParams.none(),
+            requestOptions,
+        )
 
     /** List all the external bank accounts for the provided search criteria. */
     suspend fun list(
@@ -139,7 +153,10 @@ interface ExternalBankAccountServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): ExternalBankAccountListPageAsync =
-        list(ExternalBankAccountListParams.none(), requestOptions)
+        list(
+            ExternalBankAccountListParams.none(),
+            requestOptions,
+        )
 
     /** Pause an external bank account */
     suspend fun pause(
@@ -163,7 +180,11 @@ interface ExternalBankAccountServiceAsync {
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
     ): ExternalBankAccount =
-        pause(externalBankAccountToken, ExternalBankAccountPauseParams.none(), requestOptions)
+        pause(
+            externalBankAccountToken,
+            ExternalBankAccountPauseParams.none(),
+            requestOptions,
+        )
 
     /** Retry external bank account micro deposit verification. */
     suspend fun retryMicroDeposits(
@@ -265,7 +286,11 @@ interface ExternalBankAccountServiceAsync {
         externalBankAccountToken: String,
         requestOptions: RequestOptions,
     ): ExternalBankAccount =
-        unpause(externalBankAccountToken, ExternalBankAccountUnpauseParams.none(), requestOptions)
+        unpause(
+            externalBankAccountToken,
+            ExternalBankAccountUnpauseParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [ExternalBankAccountServiceAsync] that provides access to raw HTTP responses for
@@ -300,7 +325,10 @@ interface ExternalBankAccountServiceAsync {
             body: ExternalBankAccountCreateParams.Body,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse> =
-            create(ExternalBankAccountCreateParams.builder().body(body).build(), requestOptions)
+            create(
+                ExternalBankAccountCreateParams.builder().body(body).build(),
+                requestOptions,
+            )
 
         /** @see create */
         @MustBeClosed
@@ -334,7 +362,10 @@ interface ExternalBankAccountServiceAsync {
             unverified: ExternalBankAccountCreateParams.Body.UnverifiedCreateBankAccountApiRequest,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ExternalBankAccountCreateResponse> =
-            create(ExternalBankAccountCreateParams.Body.ofUnverified(unverified), requestOptions)
+            create(
+                ExternalBankAccountCreateParams.Body.ofUnverified(unverified),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get
@@ -400,7 +431,11 @@ interface ExternalBankAccountServiceAsync {
             externalBankAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalBankAccountUpdateResponse> =
-            update(externalBankAccountToken, ExternalBankAccountUpdateParams.none(), requestOptions)
+            update(
+                externalBankAccountToken,
+                ExternalBankAccountUpdateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/external_bank_accounts`, but is otherwise the
@@ -417,7 +452,10 @@ interface ExternalBankAccountServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<ExternalBankAccountListPageAsync> =
-            list(ExternalBankAccountListParams.none(), requestOptions)
+            list(
+                ExternalBankAccountListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post
@@ -448,7 +486,11 @@ interface ExternalBankAccountServiceAsync {
             externalBankAccountToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<ExternalBankAccount> =
-            pause(externalBankAccountToken, ExternalBankAccountPauseParams.none(), requestOptions)
+            pause(
+                externalBankAccountToken,
+                ExternalBankAccountPauseParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `post

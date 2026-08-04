@@ -504,7 +504,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             /** Original request to update the account holder. */
             fun updateRequest(updateRequest: UpdateRequest) =
@@ -531,7 +533,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+            fun eventType(eventType: JsonField<EventType>) = apply {
+                this.eventType = eventType
+            }
 
             /**
              * A user provided id that can be used to link an account holder with an external system
@@ -545,7 +549,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+            fun externalId(externalId: JsonField<String>) = apply {
+                this.externalId = externalId
+            }
 
             /**
              * 6-digit North American Industry Classification System (NAICS) code for the business.
@@ -560,7 +566,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun naicsCode(naicsCode: JsonField<String>) = apply { this.naicsCode = naicsCode }
+            fun naicsCode(naicsCode: JsonField<String>) = apply {
+                this.naicsCode = naicsCode
+            }
 
             /**
              * Short description of the company's line of business (i.e., what does the company
@@ -590,7 +598,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun websiteUrl(websiteUrl: JsonField<String>) = apply { this.websiteUrl = websiteUrl }
+            fun websiteUrl(websiteUrl: JsonField<String>) = apply {
+                this.websiteUrl = websiteUrl
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -605,7 +615,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -626,8 +638,14 @@ private constructor(
              */
             fun build(): KybPayload =
                 KybPayload(
-                    checkRequired("token", token),
-                    checkRequired("updateRequest", updateRequest),
+                    checkRequired(
+                        "token",
+                        token,
+                    ),
+                    checkRequired(
+                        "updateRequest",
+                        updateRequest,
+                    ),
                     eventType,
                     externalId,
                     naicsCode,
@@ -707,7 +725,12 @@ private constructor(
                 @JsonProperty("control_person")
                 @ExcludeMissing
                 controlPerson: JsonField<Individual> = JsonMissing.of(),
-            ) : this(beneficialOwnerIndividuals, businessEntity, controlPerson, mutableMapOf())
+            ) : this(
+                beneficialOwnerIndividuals,
+                businessEntity,
+                controlPerson,
+                mutableMapOf(),
+            )
 
             /**
              * You must submit a list of all direct and indirect individuals with 25% or more
@@ -832,8 +855,9 @@ private constructor(
                 fun beneficialOwnerIndividuals(
                     beneficialOwnerIndividuals: JsonField<List<Individual>>
                 ) = apply {
-                    this.beneficialOwnerIndividuals =
-                        beneficialOwnerIndividuals.map { it.toMutableList() }
+                    this.beneficialOwnerIndividuals = beneficialOwnerIndividuals.map {
+                        it.toMutableList()
+                    }
                 }
 
                 /**
@@ -1195,7 +1219,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun address(address: JsonField<Address>) = apply { this.address = address }
+                    fun address(address: JsonField<Address>) = apply {
+                        this.address = address
+                    }
 
                     /** Individual's date of birth, as an RFC 3339 date. */
                     fun dob(dob: String) = dob(JsonField.of(dob))
@@ -1207,7 +1233,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun dob(dob: JsonField<String>) = apply { this.dob = dob }
+                    fun dob(dob: JsonField<String>) = apply {
+                        this.dob = dob
+                    }
 
                     /**
                      * Individual's email address. If utilizing Lithic for chargeback processing,
@@ -1223,7 +1251,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun email(email: JsonField<String>) = apply { this.email = email }
+                    fun email(email: JsonField<String>) = apply {
+                        this.email = email
+                    }
 
                     /**
                      * Individual's first name, as it appears on government-issued identity
@@ -1275,7 +1305,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
+                    fun lastName(lastName: JsonField<String>) = apply {
+                        this.lastName = lastName
+                    }
 
                     /** Individual's phone number, entered in E.164 format. */
                     fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
@@ -1417,7 +1449,15 @@ private constructor(
                         @JsonProperty("address2")
                         @ExcludeMissing
                         address2: JsonField<String> = JsonMissing.of(),
-                    ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
+                    ) : this(
+                        address1,
+                        city,
+                        country,
+                        postalCode,
+                        state,
+                        address2,
+                        mutableMapOf(),
+                    )
 
                     /**
                      * Valid deliverable address (no PO boxes).
@@ -1606,7 +1646,9 @@ private constructor(
                          * instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun city(city: JsonField<String>) = apply { this.city = city }
+                        fun city(city: JsonField<String>) = apply {
+                            this.city = city
+                        }
 
                         /**
                          * Valid country code. Only USA is currently supported, entered in uppercase
@@ -1621,7 +1663,9 @@ private constructor(
                          * value instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun country(country: JsonField<String>) = apply { this.country = country }
+                        fun country(country: JsonField<String>) = apply {
+                            this.country = country
+                        }
 
                         /**
                          * Valid postal code. Only USA ZIP codes are currently supported, entered as
@@ -1653,7 +1697,9 @@ private constructor(
                          * instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun state(state: JsonField<String>) = apply { this.state = state }
+                        fun state(state: JsonField<String>) = apply {
+                            this.state = state
+                        }
 
                         /** Unit or apartment number (if applicable). */
                         fun address2(address2: String) = address2(JsonField.of(address2))
@@ -1681,7 +1727,9 @@ private constructor(
 
                         fun putAllAdditionalProperties(
                             additionalProperties: Map<String, JsonValue>
-                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+                        ) = apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
 
                         fun removeAdditionalProperty(key: String) = apply {
                             additionalProperties.remove(key)
@@ -1709,11 +1757,26 @@ private constructor(
                          */
                         fun build(): Address =
                             Address(
-                                checkRequired("address1", address1),
-                                checkRequired("city", city),
-                                checkRequired("country", country),
-                                checkRequired("postalCode", postalCode),
-                                checkRequired("state", state),
+                                checkRequired(
+                                    "address1",
+                                    address1,
+                                ),
+                                checkRequired(
+                                    "city",
+                                    city,
+                                ),
+                                checkRequired(
+                                    "country",
+                                    country,
+                                ),
+                                checkRequired(
+                                    "postalCode",
+                                    postalCode,
+                                ),
+                                checkRequired(
+                                    "state",
+                                    state,
+                                ),
                                 address2,
                                 additionalProperties.toMutableMap(),
                             )
@@ -1892,9 +1955,11 @@ private constructor(
              * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventType] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -2054,7 +2119,13 @@ private constructor(
             @JsonProperty("external_id")
             @ExcludeMissing
             externalId: JsonField<String> = JsonMissing.of(),
-        ) : this(token, updateRequest, eventType, externalId, mutableMapOf())
+        ) : this(
+            token,
+            updateRequest,
+            eventType,
+            externalId,
+            mutableMapOf(),
+        )
 
         /**
          * The token of the account_holder that was created.
@@ -2176,7 +2247,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             /** Original request to update the account holder. */
             fun updateRequest(updateRequest: UpdateRequest) =
@@ -2203,7 +2276,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+            fun eventType(eventType: JsonField<EventType>) = apply {
+                this.eventType = eventType
+            }
 
             /**
              * A user provided id that can be used to link an account holder with an external system
@@ -2217,7 +2292,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+            fun externalId(externalId: JsonField<String>) = apply {
+                this.externalId = externalId
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2232,7 +2309,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -2253,8 +2332,14 @@ private constructor(
              */
             fun build(): KycPayload =
                 KycPayload(
-                    checkRequired("token", token),
-                    checkRequired("updateRequest", updateRequest),
+                    checkRequired(
+                        "token",
+                        token,
+                    ),
+                    checkRequired(
+                        "updateRequest",
+                        updateRequest,
+                    ),
                     eventType,
                     externalId,
                     additionalProperties.toMutableMap(),
@@ -2317,7 +2402,10 @@ private constructor(
                 @JsonProperty("individual")
                 @ExcludeMissing
                 individual: JsonField<Individual> = JsonMissing.of()
-            ) : this(individual, mutableMapOf())
+            ) : this(
+                individual,
+                mutableMapOf(),
+            )
 
             /**
              * Information on the individual for whom the account is being opened and KYC is being
@@ -2412,7 +2500,10 @@ private constructor(
                  * Further updates to this [Builder] will not mutate the returned instance.
                  */
                 fun build(): UpdateRequest =
-                    UpdateRequest(individual, additionalProperties.toMutableMap())
+                    UpdateRequest(
+                        individual,
+                        additionalProperties.toMutableMap(),
+                    )
             }
 
             private var validated: Boolean = false
@@ -2682,7 +2773,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun address(address: JsonField<Address>) = apply { this.address = address }
+                    fun address(address: JsonField<Address>) = apply {
+                        this.address = address
+                    }
 
                     /** Individual's date of birth, as an RFC 3339 date. */
                     fun dob(dob: String) = dob(JsonField.of(dob))
@@ -2694,7 +2787,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun dob(dob: JsonField<String>) = apply { this.dob = dob }
+                    fun dob(dob: JsonField<String>) = apply {
+                        this.dob = dob
+                    }
 
                     /**
                      * Individual's email address. If utilizing Lithic for chargeback processing,
@@ -2710,7 +2805,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun email(email: JsonField<String>) = apply { this.email = email }
+                    fun email(email: JsonField<String>) = apply {
+                        this.email = email
+                    }
 
                     /**
                      * Individual's first name, as it appears on government-issued identity
@@ -2762,7 +2859,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
+                    fun lastName(lastName: JsonField<String>) = apply {
+                        this.lastName = lastName
+                    }
 
                     /** Individual's phone number, entered in E.164 format. */
                     fun phoneNumber(phoneNumber: String) = phoneNumber(JsonField.of(phoneNumber))
@@ -2904,7 +3003,15 @@ private constructor(
                         @JsonProperty("address2")
                         @ExcludeMissing
                         address2: JsonField<String> = JsonMissing.of(),
-                    ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
+                    ) : this(
+                        address1,
+                        city,
+                        country,
+                        postalCode,
+                        state,
+                        address2,
+                        mutableMapOf(),
+                    )
 
                     /**
                      * Valid deliverable address (no PO boxes).
@@ -3093,7 +3200,9 @@ private constructor(
                          * instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun city(city: JsonField<String>) = apply { this.city = city }
+                        fun city(city: JsonField<String>) = apply {
+                            this.city = city
+                        }
 
                         /**
                          * Valid country code. Only USA is currently supported, entered in uppercase
@@ -3108,7 +3217,9 @@ private constructor(
                          * value instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun country(country: JsonField<String>) = apply { this.country = country }
+                        fun country(country: JsonField<String>) = apply {
+                            this.country = country
+                        }
 
                         /**
                          * Valid postal code. Only USA ZIP codes are currently supported, entered as
@@ -3140,7 +3251,9 @@ private constructor(
                          * instead. This method is primarily for setting the field to an
                          * undocumented or not yet supported value.
                          */
-                        fun state(state: JsonField<String>) = apply { this.state = state }
+                        fun state(state: JsonField<String>) = apply {
+                            this.state = state
+                        }
 
                         /** Unit or apartment number (if applicable). */
                         fun address2(address2: String) = address2(JsonField.of(address2))
@@ -3168,7 +3281,9 @@ private constructor(
 
                         fun putAllAdditionalProperties(
                             additionalProperties: Map<String, JsonValue>
-                        ) = apply { this.additionalProperties.putAll(additionalProperties) }
+                        ) = apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
 
                         fun removeAdditionalProperty(key: String) = apply {
                             additionalProperties.remove(key)
@@ -3196,11 +3311,26 @@ private constructor(
                          */
                         fun build(): Address =
                             Address(
-                                checkRequired("address1", address1),
-                                checkRequired("city", city),
-                                checkRequired("country", country),
-                                checkRequired("postalCode", postalCode),
-                                checkRequired("state", state),
+                                checkRequired(
+                                    "address1",
+                                    address1,
+                                ),
+                                checkRequired(
+                                    "city",
+                                    city,
+                                ),
+                                checkRequired(
+                                    "country",
+                                    country,
+                                ),
+                                checkRequired(
+                                    "postalCode",
+                                    postalCode,
+                                ),
+                                checkRequired(
+                                    "state",
+                                    state,
+                                ),
                                 address2,
                                 additionalProperties.toMutableMap(),
                             )
@@ -3370,9 +3500,11 @@ private constructor(
              * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventType] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -3785,7 +3917,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun token(token: JsonField<String>) = apply { this.token = token }
+            fun token(token: JsonField<String>) = apply {
+                this.token = token
+            }
 
             /**
              * If applicable, represents the business account token associated with the
@@ -3815,7 +3949,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
+            fun created(created: JsonField<OffsetDateTime>) = apply {
+                this.created = created
+            }
 
             /**
              * If updated, the newly updated email associated with the account_holder otherwise the
@@ -3830,7 +3966,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun email(email: JsonField<String>) = apply { this.email = email }
+            fun email(email: JsonField<String>) = apply {
+                this.email = email
+            }
 
             /** The type of event that occurred. */
             fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
@@ -3842,7 +3980,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+            fun eventType(eventType: JsonField<EventType>) = apply {
+                this.eventType = eventType
+            }
 
             /** If applicable, represents the external_id associated with the account_holder. */
             fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
@@ -3854,7 +3994,9 @@ private constructor(
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
+            fun externalId(externalId: JsonField<String>) = apply {
+                this.externalId = externalId
+            }
 
             /** If applicable, represents the account_holder's first name. */
             fun firstName(firstName: String) = firstName(JsonField.of(firstName))
@@ -3866,7 +4008,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
+            fun firstName(firstName: JsonField<String>) = apply {
+                this.firstName = firstName
+            }
 
             /** If applicable, represents the account_holder's last name. */
             fun lastName(lastName: String) = lastName(JsonField.of(lastName))
@@ -3878,7 +4022,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun lastName(lastName: JsonField<String>) = apply { this.lastName = lastName }
+            fun lastName(lastName: JsonField<String>) = apply {
+                this.lastName = lastName
+            }
 
             /** If applicable, represents the account_holder's business name. */
             fun legalBusinessName(legalBusinessName: String) =
@@ -3925,7 +4071,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -3945,7 +4093,10 @@ private constructor(
              */
             fun build(): LegacyPayload =
                 LegacyPayload(
-                    checkRequired("token", token),
+                    checkRequired(
+                        "token",
+                        token,
+                    ),
                     businessAccountToken,
                     created,
                     email,
@@ -4044,9 +4195,11 @@ private constructor(
              * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
              *
              * An instance of [EventType] can contain an unknown value in a couple of cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {

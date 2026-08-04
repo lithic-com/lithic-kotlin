@@ -39,7 +39,11 @@ interface EventServiceAsync {
         eventToken: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): Event = retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+    ): Event =
+        retrieve(
+            params.toBuilder().eventToken(eventToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -49,7 +53,11 @@ interface EventServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(eventToken: String, requestOptions: RequestOptions): Event =
-        retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
+        retrieve(
+            eventToken,
+            EventRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List all events. */
     suspend fun list(
@@ -59,7 +67,10 @@ interface EventServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): EventListPageAsync =
-        list(EventListParams.none(), requestOptions)
+        list(
+            EventListParams.none(),
+            requestOptions,
+        )
 
     /** List all the message attempts for a given event. */
     suspend fun listAttempts(
@@ -67,7 +78,10 @@ interface EventServiceAsync {
         params: EventListAttemptsParams = EventListAttemptsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListAttemptsPageAsync =
-        listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+        listAttempts(
+            params.toBuilder().eventToken(eventToken).build(),
+            requestOptions,
+        )
 
     /** @see listAttempts */
     suspend fun listAttempts(
@@ -80,7 +94,11 @@ interface EventServiceAsync {
         eventToken: String,
         requestOptions: RequestOptions,
     ): EventListAttemptsPageAsync =
-        listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
+        listAttempts(
+            eventToken,
+            EventListAttemptsParams.none(),
+            requestOptions,
+        )
 
     suspend fun resend(eventToken: String, eventSubscriptionToken: String, body: JsonValue)
 
@@ -110,7 +128,10 @@ interface EventServiceAsync {
             params: EventRetrieveParams = EventRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Event> =
-            retrieve(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+            retrieve(
+                params.toBuilder().eventToken(eventToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -124,7 +145,12 @@ interface EventServiceAsync {
         suspend fun retrieve(
             eventToken: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<Event> = retrieve(eventToken, EventRetrieveParams.none(), requestOptions)
+        ): HttpResponseFor<Event> =
+            retrieve(
+                eventToken,
+                EventRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/events`, but is otherwise the same as
@@ -139,7 +165,10 @@ interface EventServiceAsync {
         /** @see list */
         @MustBeClosed
         suspend fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPageAsync> =
-            list(EventListParams.none(), requestOptions)
+            list(
+                EventListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/events/{event_token}/attempts`, but is otherwise
@@ -151,7 +180,10 @@ interface EventServiceAsync {
             params: EventListAttemptsParams = EventListAttemptsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListAttemptsPageAsync> =
-            listAttempts(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+            listAttempts(
+                params.toBuilder().eventToken(eventToken).build(),
+                requestOptions,
+            )
 
         /** @see listAttempts */
         @MustBeClosed
@@ -166,6 +198,10 @@ interface EventServiceAsync {
             eventToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<EventListAttemptsPageAsync> =
-            listAttempts(eventToken, EventListAttemptsParams.none(), requestOptions)
+            listAttempts(
+                eventToken,
+                EventListAttemptsParams.none(),
+                requestOptions,
+            )
     }
 }

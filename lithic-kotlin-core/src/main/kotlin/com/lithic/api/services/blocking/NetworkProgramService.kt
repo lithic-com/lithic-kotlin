@@ -44,7 +44,11 @@ interface NetworkProgramService {
 
     /** @see retrieve */
     fun retrieve(networkProgramToken: String, requestOptions: RequestOptions): NetworkProgram =
-        retrieve(networkProgramToken, NetworkProgramRetrieveParams.none(), requestOptions)
+        retrieve(
+            networkProgramToken,
+            NetworkProgramRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List network programs. */
     fun list(
@@ -54,7 +58,10 @@ interface NetworkProgramService {
 
     /** @see list */
     fun list(requestOptions: RequestOptions): NetworkProgramListPage =
-        list(NetworkProgramListParams.none(), requestOptions)
+        list(
+            NetworkProgramListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [NetworkProgramService] that provides access to raw HTTP responses for each method.
@@ -98,7 +105,11 @@ interface NetworkProgramService {
             networkProgramToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<NetworkProgram> =
-            retrieve(networkProgramToken, NetworkProgramRetrieveParams.none(), requestOptions)
+            retrieve(
+                networkProgramToken,
+                NetworkProgramRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/network_programs`, but is otherwise the same as
@@ -113,6 +124,9 @@ interface NetworkProgramService {
         /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<NetworkProgramListPage> =
-            list(NetworkProgramListParams.none(), requestOptions)
+            list(
+                NetworkProgramListParams.none(),
+                requestOptions,
+            )
     }
 }

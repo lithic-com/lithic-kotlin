@@ -163,7 +163,9 @@ private constructor(
             additionalQueryParams = paymentReturnParams.additionalQueryParams.toBuilder()
         }
 
-        fun paymentToken(paymentToken: String?) = apply { this.paymentToken = paymentToken }
+        fun paymentToken(paymentToken: String?) = apply {
+            this.paymentToken = paymentToken
+        }
 
         /**
          * Sets the entire request body.
@@ -177,7 +179,9 @@ private constructor(
          * - [memo]
          * - etc.
          */
-        fun body(body: PaymentReturnRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: PaymentReturnRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         /** Globally unique identifier for the financial account */
         fun financialAccountToken(financialAccountToken: String) = apply {
@@ -216,7 +220,9 @@ private constructor(
         }
 
         /** Optional additional information about the return. Limited to 44 characters */
-        fun addenda(addenda: String?) = apply { body.addenda(addenda) }
+        fun addenda(addenda: String?) = apply {
+            body.addenda(addenda)
+        }
 
         /**
          * Sets [Builder.addenda] to an arbitrary JSON value.
@@ -224,13 +230,17 @@ private constructor(
          * You should usually call [Builder.addenda] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun addenda(addenda: JsonField<String>) = apply { body.addenda(addenda) }
+        fun addenda(addenda: JsonField<String>) = apply {
+            body.addenda(addenda)
+        }
 
         /**
          * Date of death in YYYY-MM-DD format. Required when using return codes **R14**
          * (representative payee deceased) or **R15** (beneficiary or account holder deceased)
          */
-        fun dateOfDeath(dateOfDeath: LocalDate?) = apply { body.dateOfDeath(dateOfDeath) }
+        fun dateOfDeath(dateOfDeath: LocalDate?) = apply {
+            body.dateOfDeath(dateOfDeath)
+        }
 
         /**
          * Sets [Builder.dateOfDeath] to an arbitrary JSON value.
@@ -239,10 +249,14 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun dateOfDeath(dateOfDeath: JsonField<LocalDate>) = apply { body.dateOfDeath(dateOfDeath) }
+        fun dateOfDeath(dateOfDeath: JsonField<LocalDate>) = apply {
+            body.dateOfDeath(dateOfDeath)
+        }
 
         /** Optional memo for the return. Limited to 10 characters */
-        fun memo(memo: String?) = apply { body.memo(memo) }
+        fun memo(memo: String?) = apply {
+            body.memo(memo)
+        }
 
         /**
          * Sets [Builder.memo] to an arbitrary JSON value.
@@ -250,14 +264,19 @@ private constructor(
          * You should usually call [Builder.memo] with a well-typed [String] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
+        fun memo(memo: JsonField<String>) = apply {
+            body.memo(memo)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
+            body.putAdditionalProperty(
+                key,
+                value,
+            )
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -265,7 +284,9 @@ private constructor(
                 body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            body.removeAdditionalProperty(key)
+        }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
             body.removeAllAdditionalProperties(keys)
@@ -313,7 +334,9 @@ private constructor(
             this.additionalHeaders.replaceAll(additionalHeaders)
         }
 
-        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+        fun removeAdditionalHeaders(name: String) = apply {
+            additionalHeaders.remove(name)
+        }
 
         fun removeAllAdditionalHeaders(names: Set<String>) = apply {
             additionalHeaders.removeAll(names)
@@ -363,7 +386,9 @@ private constructor(
                 this.additionalQueryParams.replaceAll(additionalQueryParams)
             }
 
-        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+        fun removeAdditionalQueryParams(key: String) = apply {
+            additionalQueryParams.remove(key)
+        }
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
@@ -614,7 +639,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun addenda(addenda: JsonField<String>) = apply { this.addenda = addenda }
+            fun addenda(addenda: JsonField<String>) = apply {
+                this.addenda = addenda
+            }
 
             /**
              * Date of death in YYYY-MM-DD format. Required when using return codes **R14**
@@ -644,7 +671,9 @@ private constructor(
              * method is primarily for setting the field to an undocumented or not yet supported
              * value.
              */
-            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
+            fun memo(memo: JsonField<String>) = apply {
+                this.memo = memo
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -659,7 +688,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -680,8 +711,14 @@ private constructor(
              */
             fun build(): PaymentReturnRequest =
                 PaymentReturnRequest(
-                    checkRequired("financialAccountToken", financialAccountToken),
-                    checkRequired("returnReasonCode", returnReasonCode),
+                    checkRequired(
+                        "financialAccountToken",
+                        financialAccountToken,
+                    ),
+                    checkRequired(
+                        "returnReasonCode",
+                        returnReasonCode,
+                    ),
                     addenda,
                     dateOfDeath,
                     memo,

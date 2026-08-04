@@ -37,7 +37,12 @@ private constructor(
         @JsonProperty("valid_documents")
         @ExcludeMissing
         validDocuments: JsonField<List<String>> = JsonMissing.of(),
-    ) : this(entityToken, statusReasons, validDocuments, mutableMapOf())
+    ) : this(
+        entityToken,
+        statusReasons,
+        validDocuments,
+        mutableMapOf(),
+    )
 
     /**
      * Globally unique identifier for an entity.
@@ -142,7 +147,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun entityToken(entityToken: JsonField<String>) = apply { this.entityToken = entityToken }
+        fun entityToken(entityToken: JsonField<String>) = apply {
+            this.entityToken = entityToken
+        }
 
         /**
          * Provides the status reasons that will be satisfied by providing one of the valid
@@ -216,7 +223,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -238,9 +247,20 @@ private constructor(
          */
         fun build(): RequiredDocument =
             RequiredDocument(
-                checkRequired("entityToken", entityToken),
-                checkRequired("statusReasons", statusReasons).map { it.toImmutable() },
-                checkRequired("validDocuments", validDocuments).map { it.toImmutable() },
+                checkRequired(
+                    "entityToken",
+                    entityToken,
+                ),
+                checkRequired(
+                        "statusReasons",
+                        statusReasons,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                        "validDocuments",
+                        validDocuments,
+                    )
+                    .map { it.toImmutable() },
                 additionalProperties.toMutableMap(),
             )
     }

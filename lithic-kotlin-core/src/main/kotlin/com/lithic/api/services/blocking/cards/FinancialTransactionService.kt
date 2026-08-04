@@ -48,7 +48,10 @@ interface FinancialTransactionService {
         params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardFinancialTransactionListPage =
-        list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+        list(
+            params.toBuilder().cardToken(cardToken).build(),
+            requestOptions,
+        )
 
     /** @see list */
     fun list(
@@ -58,7 +61,11 @@ interface FinancialTransactionService {
 
     /** @see list */
     fun list(cardToken: String, requestOptions: RequestOptions): CardFinancialTransactionListPage =
-        list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
+        list(
+            cardToken,
+            CardFinancialTransactionListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [FinancialTransactionService] that provides access to raw HTTP responses for each
@@ -108,7 +115,10 @@ interface FinancialTransactionService {
             params: CardFinancialTransactionListParams = CardFinancialTransactionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardFinancialTransactionListPage> =
-            list(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+            list(
+                params.toBuilder().cardToken(cardToken).build(),
+                requestOptions,
+            )
 
         /** @see list */
         @MustBeClosed
@@ -123,6 +133,10 @@ interface FinancialTransactionService {
             cardToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardFinancialTransactionListPage> =
-            list(cardToken, CardFinancialTransactionListParams.none(), requestOptions)
+            list(
+                cardToken,
+                CardFinancialTransactionListParams.none(),
+                requestOptions,
+            )
     }
 }

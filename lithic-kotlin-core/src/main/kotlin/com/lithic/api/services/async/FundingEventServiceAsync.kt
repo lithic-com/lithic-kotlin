@@ -33,7 +33,10 @@ interface FundingEventServiceAsync {
         params: FundingEventRetrieveParams = FundingEventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FundingEvent =
-        retrieve(params.toBuilder().fundingEventToken(fundingEventToken).build(), requestOptions)
+        retrieve(
+            params.toBuilder().fundingEventToken(fundingEventToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -43,7 +46,11 @@ interface FundingEventServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(fundingEventToken: String, requestOptions: RequestOptions): FundingEvent =
-        retrieve(fundingEventToken, FundingEventRetrieveParams.none(), requestOptions)
+        retrieve(
+            fundingEventToken,
+            FundingEventRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** Get all funding events for program */
     suspend fun list(
@@ -53,7 +60,10 @@ interface FundingEventServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): FundingEventListPageAsync =
-        list(FundingEventListParams.none(), requestOptions)
+        list(
+            FundingEventListParams.none(),
+            requestOptions,
+        )
 
     /** Get funding event details by id */
     suspend fun retrieveDetails(
@@ -77,7 +87,11 @@ interface FundingEventServiceAsync {
         fundingEventToken: String,
         requestOptions: RequestOptions,
     ): FundingEventRetrieveDetailsResponse =
-        retrieveDetails(fundingEventToken, FundingEventRetrieveDetailsParams.none(), requestOptions)
+        retrieveDetails(
+            fundingEventToken,
+            FundingEventRetrieveDetailsParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [FundingEventServiceAsync] that provides access to raw HTTP responses for each
@@ -122,7 +136,11 @@ interface FundingEventServiceAsync {
             fundingEventToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<FundingEvent> =
-            retrieve(fundingEventToken, FundingEventRetrieveParams.none(), requestOptions)
+            retrieve(
+                fundingEventToken,
+                FundingEventRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/funding_events`, but is otherwise the same as
@@ -139,7 +157,10 @@ interface FundingEventServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<FundingEventListPageAsync> =
-            list(FundingEventListParams.none(), requestOptions)
+            list(
+                FundingEventListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/funding_events/{funding_event_token}/details`,

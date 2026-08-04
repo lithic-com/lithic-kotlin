@@ -31,7 +31,10 @@ interface CardProgramServiceAsync {
         params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CardProgram =
-        retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
+        retrieve(
+            params.toBuilder().cardProgramToken(cardProgramToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -41,7 +44,11 @@ interface CardProgramServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(cardProgramToken: String, requestOptions: RequestOptions): CardProgram =
-        retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
+        retrieve(
+            cardProgramToken,
+            CardProgramRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** List card programs. */
     suspend fun list(
@@ -51,7 +58,10 @@ interface CardProgramServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): CardProgramListPageAsync =
-        list(CardProgramListParams.none(), requestOptions)
+        list(
+            CardProgramListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [CardProgramServiceAsync] that provides access to raw HTTP responses for each
@@ -78,7 +88,10 @@ interface CardProgramServiceAsync {
             params: CardProgramRetrieveParams = CardProgramRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CardProgram> =
-            retrieve(params.toBuilder().cardProgramToken(cardProgramToken).build(), requestOptions)
+            retrieve(
+                params.toBuilder().cardProgramToken(cardProgramToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -93,7 +106,11 @@ interface CardProgramServiceAsync {
             cardProgramToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardProgram> =
-            retrieve(cardProgramToken, CardProgramRetrieveParams.none(), requestOptions)
+            retrieve(
+                cardProgramToken,
+                CardProgramRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/card_programs`, but is otherwise the same as
@@ -110,6 +127,9 @@ interface CardProgramServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<CardProgramListPageAsync> =
-            list(CardProgramListParams.none(), requestOptions)
+            list(
+                CardProgramListParams.none(),
+                requestOptions,
+            )
     }
 }

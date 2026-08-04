@@ -81,13 +81,19 @@ private constructor(
             response = bookTransferListPageAsync.response
         }
 
-        fun service(service: BookTransferServiceAsync) = apply { this.service = service }
+        fun service(service: BookTransferServiceAsync) = apply {
+            this.service = service
+        }
 
         /** The parameters that were used to request this page. */
-        fun params(params: BookTransferListParams) = apply { this.params = params }
+        fun params(params: BookTransferListParams) = apply {
+            this.params = params
+        }
 
         /** The response that this page was parsed from. */
-        fun response(response: BookTransferListPageResponse) = apply { this.response = response }
+        fun response(response: BookTransferListPageResponse) = apply {
+            this.response = response
+        }
 
         /**
          * Returns an immutable instance of [BookTransferListPageAsync].
@@ -105,9 +111,18 @@ private constructor(
          */
         fun build(): BookTransferListPageAsync =
             BookTransferListPageAsync(
-                checkRequired("service", service),
-                checkRequired("params", params),
-                checkRequired("response", response),
+                checkRequired(
+                    "service",
+                    service,
+                ),
+                checkRequired(
+                    "params",
+                    params,
+                ),
+                checkRequired(
+                    "response",
+                    response,
+                ),
             )
     }
 

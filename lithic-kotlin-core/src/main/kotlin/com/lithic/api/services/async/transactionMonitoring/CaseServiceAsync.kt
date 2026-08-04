@@ -44,7 +44,11 @@ interface CaseServiceAsync {
         params: TransactionMonitoringCaseRetrieveParams =
             TransactionMonitoringCaseRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): MonitoringCase = retrieve(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+    ): MonitoringCase =
+        retrieve(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieve */
     suspend fun retrieve(
@@ -54,7 +58,11 @@ interface CaseServiceAsync {
 
     /** @see retrieve */
     suspend fun retrieve(caseToken: String, requestOptions: RequestOptions): MonitoringCase =
-        retrieve(caseToken, TransactionMonitoringCaseRetrieveParams.none(), requestOptions)
+        retrieve(
+            caseToken,
+            TransactionMonitoringCaseRetrieveParams.none(),
+            requestOptions,
+        )
 
     /** Updates a transaction monitoring case. */
     suspend fun update(
@@ -62,7 +70,11 @@ interface CaseServiceAsync {
         params: TransactionMonitoringCaseUpdateParams =
             TransactionMonitoringCaseUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): MonitoringCase = update(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+    ): MonitoringCase =
+        update(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see update */
     suspend fun update(
@@ -72,7 +84,11 @@ interface CaseServiceAsync {
 
     /** @see update */
     suspend fun update(caseToken: String, requestOptions: RequestOptions): MonitoringCase =
-        update(caseToken, TransactionMonitoringCaseUpdateParams.none(), requestOptions)
+        update(
+            caseToken,
+            TransactionMonitoringCaseUpdateParams.none(),
+            requestOptions,
+        )
 
     /** Lists transaction monitoring cases, optionally filtered. */
     suspend fun list(
@@ -82,7 +98,10 @@ interface CaseServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): TransactionMonitoringCaseListPageAsync =
-        list(TransactionMonitoringCaseListParams.none(), requestOptions)
+        list(
+            TransactionMonitoringCaseListParams.none(),
+            requestOptions,
+        )
 
     /** Lists the activity feed for a case. */
     suspend fun listActivity(
@@ -91,7 +110,10 @@ interface CaseServiceAsync {
             TransactionMonitoringCaseListActivityParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionMonitoringCaseListActivityPageAsync =
-        listActivity(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+        listActivity(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see listActivity */
     suspend fun listActivity(
@@ -104,7 +126,11 @@ interface CaseServiceAsync {
         caseToken: String,
         requestOptions: RequestOptions,
     ): TransactionMonitoringCaseListActivityPageAsync =
-        listActivity(caseToken, TransactionMonitoringCaseListActivityParams.none(), requestOptions)
+        listActivity(
+            caseToken,
+            TransactionMonitoringCaseListActivityParams.none(),
+            requestOptions,
+        )
 
     /** Lists the transactions associated with a case. */
     suspend fun listTransactions(
@@ -113,7 +139,10 @@ interface CaseServiceAsync {
             TransactionMonitoringCaseListTransactionsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionMonitoringCaseListTransactionsPageAsync =
-        listTransactions(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+        listTransactions(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see listTransactions */
     suspend fun listTransactions(
@@ -139,7 +168,10 @@ interface CaseServiceAsync {
             TransactionMonitoringCaseRetrieveCardsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): List<CaseCard> =
-        retrieveCards(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+        retrieveCards(
+            params.toBuilder().caseToken(caseToken).build(),
+            requestOptions,
+        )
 
     /** @see retrieveCards */
     suspend fun retrieveCards(
@@ -180,7 +212,10 @@ interface CaseServiceAsync {
                 TransactionMonitoringCaseRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MonitoringCase> =
-            retrieve(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            retrieve(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieve */
         @MustBeClosed
@@ -195,7 +230,11 @@ interface CaseServiceAsync {
             caseToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<MonitoringCase> =
-            retrieve(caseToken, TransactionMonitoringCaseRetrieveParams.none(), requestOptions)
+            retrieve(
+                caseToken,
+                TransactionMonitoringCaseRetrieveParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `patch /v1/transaction_monitoring/cases/{case_token}`,
@@ -208,7 +247,10 @@ interface CaseServiceAsync {
                 TransactionMonitoringCaseUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MonitoringCase> =
-            update(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            update(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see update */
         @MustBeClosed
@@ -223,7 +265,11 @@ interface CaseServiceAsync {
             caseToken: String,
             requestOptions: RequestOptions,
         ): HttpResponseFor<MonitoringCase> =
-            update(caseToken, TransactionMonitoringCaseUpdateParams.none(), requestOptions)
+            update(
+                caseToken,
+                TransactionMonitoringCaseUpdateParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get /v1/transaction_monitoring/cases`, but is otherwise
@@ -241,7 +287,10 @@ interface CaseServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<TransactionMonitoringCaseListPageAsync> =
-            list(TransactionMonitoringCaseListParams.none(), requestOptions)
+            list(
+                TransactionMonitoringCaseListParams.none(),
+                requestOptions,
+            )
 
         /**
          * Returns a raw HTTP response for `get
@@ -255,7 +304,10 @@ interface CaseServiceAsync {
                 TransactionMonitoringCaseListActivityParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionMonitoringCaseListActivityPageAsync> =
-            listActivity(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            listActivity(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see listActivity */
         @MustBeClosed
@@ -288,7 +340,10 @@ interface CaseServiceAsync {
                 TransactionMonitoringCaseListTransactionsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionMonitoringCaseListTransactionsPageAsync> =
-            listTransactions(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            listTransactions(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see listTransactions */
         @MustBeClosed
@@ -321,7 +376,10 @@ interface CaseServiceAsync {
                 TransactionMonitoringCaseRetrieveCardsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<List<CaseCard>> =
-            retrieveCards(params.toBuilder().caseToken(caseToken).build(), requestOptions)
+            retrieveCards(
+                params.toBuilder().caseToken(caseToken).build(),
+                requestOptions,
+            )
 
         /** @see retrieveCards */
         @MustBeClosed

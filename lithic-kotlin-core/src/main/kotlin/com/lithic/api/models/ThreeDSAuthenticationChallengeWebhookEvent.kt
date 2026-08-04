@@ -37,7 +37,12 @@ private constructor(
         @JsonProperty("event_type")
         @ExcludeMissing
         eventType: JsonField<EventType> = JsonMissing.of(),
-    ) : this(authenticationObject, challenge, eventType, mutableMapOf())
+    ) : this(
+        authenticationObject,
+        challenge,
+        eventType,
+        mutableMapOf(),
+    )
 
     /**
      * Represents a 3DS authentication
@@ -157,7 +162,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun challenge(challenge: JsonField<Challenge>) = apply { this.challenge = challenge }
+        fun challenge(challenge: JsonField<Challenge>) = apply {
+            this.challenge = challenge
+        }
 
         fun eventType(eventType: EventType) = eventType(JsonField.of(eventType))
 
@@ -168,7 +175,9 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
-        fun eventType(eventType: JsonField<EventType>) = apply { this.eventType = eventType }
+        fun eventType(eventType: JsonField<EventType>) = apply {
+            this.eventType = eventType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -183,7 +192,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -205,9 +216,18 @@ private constructor(
          */
         fun build(): ThreeDSAuthenticationChallengeWebhookEvent =
             ThreeDSAuthenticationChallengeWebhookEvent(
-                checkRequired("authenticationObject", authenticationObject),
-                checkRequired("challenge", challenge),
-                checkRequired("eventType", eventType),
+                checkRequired(
+                    "authenticationObject",
+                    authenticationObject,
+                ),
+                checkRequired(
+                    "challenge",
+                    challenge,
+                ),
+                checkRequired(
+                    "eventType",
+                    eventType,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -276,7 +296,13 @@ private constructor(
             @JsonProperty("app_requestor_url")
             @ExcludeMissing
             appRequestorUrl: JsonField<String> = JsonMissing.of(),
-        ) : this(challengeMethodType, expiryTime, startTime, appRequestorUrl, mutableMapOf())
+        ) : this(
+            challengeMethodType,
+            expiryTime,
+            startTime,
+            appRequestorUrl,
+            mutableMapOf(),
+        )
 
         /**
          * The type of challenge method issued to the cardholder
@@ -470,7 +496,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -492,9 +520,18 @@ private constructor(
              */
             fun build(): Challenge =
                 Challenge(
-                    checkRequired("challengeMethodType", challengeMethodType),
-                    checkRequired("expiryTime", expiryTime),
-                    checkRequired("startTime", startTime),
+                    checkRequired(
+                        "challengeMethodType",
+                        challengeMethodType,
+                    ),
+                    checkRequired(
+                        "expiryTime",
+                        expiryTime,
+                    ),
+                    checkRequired(
+                        "startTime",
+                        startTime,
+                    ),
                     appRequestorUrl,
                     additionalProperties.toMutableMap(),
                 )
@@ -576,9 +613,11 @@ private constructor(
              *
              * An instance of [ChallengeMethodType] can contain an unknown value in a couple of
              * cases:
+             *
              * - It was deserialized from data that doesn't match any known member. For example, if
              *   the SDK is on an older version than the API, then the API may respond with new
              *   members that the SDK is unaware of.
+             *
              * - It was constructed with an arbitrary value using the [of] method.
              */
             enum class Value {
@@ -737,9 +776,11 @@ private constructor(
          * An enum containing [EventType]'s known values, as well as an [_UNKNOWN] member.
          *
          * An instance of [EventType] can contain an unknown value in a couple of cases:
+         *
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
+         *
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {

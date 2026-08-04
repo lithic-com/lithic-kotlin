@@ -32,7 +32,11 @@ private constructor(
         @ExcludeMissing
         data: JsonField<List<TransferLimitItem>> = JsonMissing.of(),
         @JsonProperty("has_more") @ExcludeMissing hasMore: JsonField<Boolean> = JsonMissing.of(),
-    ) : this(data, hasMore, mutableMapOf())
+    ) : this(
+        data,
+        hasMore,
+        mutableMapOf(),
+    )
 
     /**
      * List of transfer limits
@@ -138,7 +142,9 @@ private constructor(
          * You should usually call [Builder.hasMore] with a well-typed [Boolean] value instead. This
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
-        fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
+        fun hasMore(hasMore: JsonField<Boolean>) = apply {
+            this.hasMore = hasMore
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -153,7 +159,9 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+        fun removeAdditionalProperty(key: String) = apply {
+            additionalProperties.remove(key)
+        }
 
         fun removeAllAdditionalProperties(keys: Set<String>) = apply {
             keys.forEach(::removeAdditionalProperty)
@@ -174,8 +182,15 @@ private constructor(
          */
         fun build(): TransferLimitsResponse =
             TransferLimitsResponse(
-                checkRequired("data", data).map { it.toImmutable() },
-                checkRequired("hasMore", hasMore),
+                checkRequired(
+                        "data",
+                        data,
+                    )
+                    .map { it.toImmutable() },
+                checkRequired(
+                    "hasMore",
+                    hasMore,
+                ),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -415,7 +430,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun companyId(companyId: JsonField<String>) = apply { this.companyId = companyId }
+            fun companyId(companyId: JsonField<String>) = apply {
+                this.companyId = companyId
+            }
 
             /** Daily limits with progress */
             fun dailyLimit(dailyLimit: DirectionalLimits) = dailyLimit(JsonField.of(dailyLimit))
@@ -441,7 +458,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun date(date: JsonField<LocalDate>) = apply { this.date = date }
+            fun date(date: JsonField<LocalDate>) = apply {
+                this.date = date
+            }
 
             /** Whether the company is a FBO; based on the company ID prefix */
             fun isFbo(isFbo: Boolean) = isFbo(JsonField.of(isFbo))
@@ -453,7 +472,9 @@ private constructor(
              * This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun isFbo(isFbo: JsonField<Boolean>) = apply { this.isFbo = isFbo }
+            fun isFbo(isFbo: JsonField<Boolean>) = apply {
+                this.isFbo = isFbo
+            }
 
             /** Monthly limits with progress */
             fun monthlyLimit(monthlyLimit: DirectionalLimits) =
@@ -483,7 +504,9 @@ private constructor(
              */
             fun programLimitPerTransaction(
                 programLimitPerTransaction: JsonField<DirectionalLimits>
-            ) = apply { this.programLimitPerTransaction = programLimitPerTransaction }
+            ) = apply {
+                this.programLimitPerTransaction = programLimitPerTransaction
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -498,7 +521,9 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+            fun removeAdditionalProperty(key: String) = apply {
+                additionalProperties.remove(key)
+            }
 
             fun removeAllAdditionalProperties(keys: Set<String>) = apply {
                 keys.forEach(::removeAdditionalProperty)
@@ -523,12 +548,30 @@ private constructor(
              */
             fun build(): TransferLimitItem =
                 TransferLimitItem(
-                    checkRequired("companyId", companyId),
-                    checkRequired("dailyLimit", dailyLimit),
-                    checkRequired("date", date),
-                    checkRequired("isFbo", isFbo),
-                    checkRequired("monthlyLimit", monthlyLimit),
-                    checkRequired("programLimitPerTransaction", programLimitPerTransaction),
+                    checkRequired(
+                        "companyId",
+                        companyId,
+                    ),
+                    checkRequired(
+                        "dailyLimit",
+                        dailyLimit,
+                    ),
+                    checkRequired(
+                        "date",
+                        date,
+                    ),
+                    checkRequired(
+                        "isFbo",
+                        isFbo,
+                    ),
+                    checkRequired(
+                        "monthlyLimit",
+                        monthlyLimit,
+                    ),
+                    checkRequired(
+                        "programLimitPerTransaction",
+                        programLimitPerTransaction,
+                    ),
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -597,7 +640,11 @@ private constructor(
                 @JsonProperty("debit")
                 @ExcludeMissing
                 debit: JsonField<LimitWithProgress> = JsonMissing.of(),
-            ) : this(credit, debit, mutableMapOf())
+            ) : this(
+                credit,
+                debit,
+                mutableMapOf(),
+            )
 
             /**
              * Credit limits
@@ -684,7 +731,9 @@ private constructor(
                  * value instead. This method is primarily for setting the field to an undocumented
                  * or not yet supported value.
                  */
-                fun credit(credit: JsonField<LimitWithProgress>) = apply { this.credit = credit }
+                fun credit(credit: JsonField<LimitWithProgress>) = apply {
+                    this.credit = credit
+                }
 
                 /** Debit limits */
                 fun debit(debit: LimitWithProgress) = debit(JsonField.of(debit))
@@ -696,7 +745,9 @@ private constructor(
                  * value instead. This method is primarily for setting the field to an undocumented
                  * or not yet supported value.
                  */
-                fun debit(debit: JsonField<LimitWithProgress>) = apply { this.debit = debit }
+                fun debit(debit: JsonField<LimitWithProgress>) = apply {
+                    this.debit = debit
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -735,8 +786,14 @@ private constructor(
                  */
                 fun build(): DirectionalLimits =
                     DirectionalLimits(
-                        checkRequired("credit", credit),
-                        checkRequired("debit", debit),
+                        checkRequired(
+                            "credit",
+                            credit,
+                        ),
+                        checkRequired(
+                            "debit",
+                            debit,
+                        ),
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -797,7 +854,11 @@ private constructor(
                     @JsonProperty("amount_originated")
                     @ExcludeMissing
                     amountOriginated: JsonField<Long> = JsonMissing.of(),
-                ) : this(limit, amountOriginated, mutableMapOf())
+                ) : this(
+                    limit,
+                    amountOriginated,
+                    mutableMapOf(),
+                )
 
                 /**
                  * The limit amount
@@ -883,7 +944,9 @@ private constructor(
                      * instead. This method is primarily for setting the field to an undocumented or
                      * not yet supported value.
                      */
-                    fun limit(limit: JsonField<Long>) = apply { this.limit = limit }
+                    fun limit(limit: JsonField<Long>) = apply {
+                        this.limit = limit
+                    }
 
                     /** Amount originated towards limit */
                     fun amountOriginated(amountOriginated: Long?) =
@@ -944,7 +1007,10 @@ private constructor(
                      */
                     fun build(): LimitWithProgress =
                         LimitWithProgress(
-                            checkRequired("limit", limit),
+                            checkRequired(
+                                "limit",
+                                limit,
+                            ),
                             amountOriginated,
                             additionalProperties.toMutableMap(),
                         )

@@ -31,7 +31,10 @@ interface TransferLimitServiceAsync {
 
     /** @see list */
     suspend fun list(requestOptions: RequestOptions): TransferLimitListPageAsync =
-        list(TransferLimitListParams.none(), requestOptions)
+        list(
+            TransferLimitListParams.none(),
+            requestOptions,
+        )
 
     /**
      * A view of [TransferLimitServiceAsync] that provides access to raw HTTP responses for each
@@ -63,6 +66,9 @@ interface TransferLimitServiceAsync {
         suspend fun list(
             requestOptions: RequestOptions
         ): HttpResponseFor<TransferLimitListPageAsync> =
-            list(TransferLimitListParams.none(), requestOptions)
+            list(
+                TransferLimitListParams.none(),
+                requestOptions,
+            )
     }
 }

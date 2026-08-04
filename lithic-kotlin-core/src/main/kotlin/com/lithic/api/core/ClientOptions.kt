@@ -119,6 +119,7 @@ private constructor(
      * Defaults to the production environment: `https://api.lithic.com`.
      *
      * The following other environments, with dedicated builder methods, are available:
+     *
      * - sandbox: `https://sandbox.lithic.com`
      */
     fun baseUrl(): String = baseUrl ?: PRODUCTION_URL
@@ -213,7 +214,9 @@ private constructor(
          * Defaults to [com.lithic.api.core.jsonMapper]. The default is usually sufficient and
          * rarely needs to be overridden.
          */
-        fun jsonMapper(jsonMapper: JsonMapper) = apply { this.jsonMapper = jsonMapper }
+        fun jsonMapper(jsonMapper: JsonMapper) = apply {
+            this.jsonMapper = jsonMapper
+        }
 
         /**
          * The interface to use for delaying execution, like during retries.
@@ -224,7 +227,9 @@ private constructor(
          *
          * This class takes ownership of the sleeper and closes it when closed.
          */
-        fun sleeper(sleeper: Sleeper) = apply { this.sleeper = PhantomReachableSleeper(sleeper) }
+        fun sleeper(sleeper: Sleeper) = apply {
+            this.sleeper = PhantomReachableSleeper(sleeper)
+        }
 
         /**
          * The clock to use for operations that require timing, like retries.
@@ -233,7 +238,9 @@ private constructor(
          *
          * Defaults to [Clock.systemUTC].
          */
-        fun clock(clock: Clock) = apply { this.clock = clock }
+        fun clock(clock: Clock) = apply {
+            this.clock = clock
+        }
 
         /**
          * The base URL to use for every request.
@@ -241,9 +248,12 @@ private constructor(
          * Defaults to the production environment: `https://api.lithic.com`.
          *
          * The following other environments, with dedicated builder methods, are available:
+         *
          * - sandbox: `https://sandbox.lithic.com`
          */
-        fun baseUrl(baseUrl: String?) = apply { this.baseUrl = baseUrl }
+        fun baseUrl(baseUrl: String?) = apply {
+            this.baseUrl = baseUrl
+        }
 
         /** Sets [baseUrl] to `https://sandbox.lithic.com`. */
         fun sandbox() = baseUrl(SANDBOX_URL)
@@ -267,7 +277,9 @@ private constructor(
          *
          * Defaults to [Timeout.default].
          */
-        fun timeout(timeout: Timeout) = apply { this.timeout = timeout }
+        fun timeout(timeout: Timeout) = apply {
+            this.timeout = timeout
+        }
 
         /**
          * Sets the maximum time allowed for a complete HTTP call, not including retries.
@@ -293,7 +305,9 @@ private constructor(
          *
          * Defaults to 2.
          */
-        fun maxRetries(maxRetries: Int) = apply { this.maxRetries = maxRetries }
+        fun maxRetries(maxRetries: Int) = apply {
+            this.maxRetries = maxRetries
+        }
 
         /**
          * The level at which to log request and response information.
@@ -302,11 +316,17 @@ private constructor(
          *
          * Defaults to [LogLevel.fromEnv].
          */
-        fun logLevel(logLevel: LogLevel) = apply { this.logLevel = logLevel }
+        fun logLevel(logLevel: LogLevel) = apply {
+            this.logLevel = logLevel
+        }
 
-        fun apiKey(apiKey: String) = apply { this.apiKey = apiKey }
+        fun apiKey(apiKey: String) = apply {
+            this.apiKey = apiKey
+        }
 
-        fun webhookSecret(webhookSecret: String?) = apply { this.webhookSecret = webhookSecret }
+        fun webhookSecret(webhookSecret: String?) = apply {
+            this.webhookSecret = webhookSecret
+        }
 
         fun headers(headers: Headers) = apply {
             this.headers.clear()
@@ -318,31 +338,45 @@ private constructor(
             putAllHeaders(headers)
         }
 
-        fun putHeader(name: String, value: String) = apply { headers.put(name, value) }
+        fun putHeader(name: String, value: String) = apply {
+            headers.put(name, value)
+        }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply { headers.put(name, values) }
+        fun putHeaders(name: String, values: Iterable<String>) = apply {
+            headers.put(name, values)
+        }
 
-        fun putAllHeaders(headers: Headers) = apply { this.headers.putAll(headers) }
+        fun putAllHeaders(headers: Headers) = apply {
+            this.headers.putAll(headers)
+        }
 
         fun putAllHeaders(headers: Map<String, Iterable<String>>) = apply {
             this.headers.putAll(headers)
         }
 
-        fun replaceHeaders(name: String, value: String) = apply { headers.replace(name, value) }
+        fun replaceHeaders(name: String, value: String) = apply {
+            headers.replace(name, value)
+        }
 
         fun replaceHeaders(name: String, values: Iterable<String>) = apply {
             headers.replace(name, values)
         }
 
-        fun replaceAllHeaders(headers: Headers) = apply { this.headers.replaceAll(headers) }
+        fun replaceAllHeaders(headers: Headers) = apply {
+            this.headers.replaceAll(headers)
+        }
 
         fun replaceAllHeaders(headers: Map<String, Iterable<String>>) = apply {
             this.headers.replaceAll(headers)
         }
 
-        fun removeHeaders(name: String) = apply { headers.remove(name) }
+        fun removeHeaders(name: String) = apply {
+            headers.remove(name)
+        }
 
-        fun removeAllHeaders(names: Set<String>) = apply { headers.removeAll(names) }
+        fun removeAllHeaders(names: Set<String>) = apply {
+            headers.removeAll(names)
+        }
 
         fun queryParams(queryParams: QueryParams) = apply {
             this.queryParams.clear()
@@ -354,7 +388,9 @@ private constructor(
             putAllQueryParams(queryParams)
         }
 
-        fun putQueryParam(key: String, value: String) = apply { queryParams.put(key, value) }
+        fun putQueryParam(key: String, value: String) = apply {
+            queryParams.put(key, value)
+        }
 
         fun putQueryParams(key: String, values: Iterable<String>) = apply {
             queryParams.put(key, values)
@@ -384,9 +420,13 @@ private constructor(
             this.queryParams.replaceAll(queryParams)
         }
 
-        fun removeQueryParams(key: String) = apply { queryParams.remove(key) }
+        fun removeQueryParams(key: String) = apply {
+            queryParams.remove(key)
+        }
 
-        fun removeAllQueryParams(keys: Set<String>) = apply { queryParams.removeAll(keys) }
+        fun removeAllQueryParams(keys: Set<String>) = apply {
+            queryParams.removeAll(keys)
+        }
 
         fun timeout(): Timeout = timeout
 
@@ -412,7 +452,9 @@ private constructor(
                 apiKey(it)
             }
             (System.getProperty("lithic.webhookSecret") ?: System.getenv("LITHIC_WEBHOOK_SECRET"))
-                ?.let { webhookSecret(it) }
+                ?.let {
+                    webhookSecret(it)
+                }
             System.getenv("LITHIC_CUSTOM_HEADERS")?.let { customHeadersEnv ->
                 for (line in customHeadersEnv.split("\n")) {
                     val colon = line.indexOf(':')
@@ -437,9 +479,17 @@ private constructor(
          * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ClientOptions {
-            val httpClient = checkRequired("httpClient", httpClient)
+            val httpClient =
+                checkRequired(
+                    "httpClient",
+                    httpClient,
+                )
             val sleeper = sleeper ?: PhantomReachableSleeper(DefaultSleeper())
-            val apiKey = checkRequired("apiKey", apiKey)
+            val apiKey =
+                checkRequired(
+                    "apiKey",
+                    apiKey,
+                )
 
             val headers = Headers.builder()
             val queryParams = QueryParams.builder()

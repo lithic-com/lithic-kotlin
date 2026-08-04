@@ -36,7 +36,10 @@ interface EntityService {
         params: AccountHolderEntityCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EntityCreateResponse =
-        create(params.toBuilder().accountHolderToken(accountHolderToken).build(), requestOptions)
+        create(
+            params.toBuilder().accountHolderToken(accountHolderToken).build(),
+            requestOptions,
+        )
 
     /** @see create */
     fun create(
@@ -53,7 +56,10 @@ interface EntityService {
         params: AccountHolderEntityDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountHolderEntity =
-        delete(params.toBuilder().entityToken(entityToken).build(), requestOptions)
+        delete(
+            params.toBuilder().entityToken(entityToken).build(),
+            requestOptions,
+        )
 
     /** @see delete */
     fun delete(
@@ -105,7 +111,10 @@ interface EntityService {
             params: AccountHolderEntityDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountHolderEntity> =
-            delete(params.toBuilder().entityToken(entityToken).build(), requestOptions)
+            delete(
+                params.toBuilder().entityToken(entityToken).build(),
+                requestOptions,
+            )
 
         /** @see delete */
         @MustBeClosed

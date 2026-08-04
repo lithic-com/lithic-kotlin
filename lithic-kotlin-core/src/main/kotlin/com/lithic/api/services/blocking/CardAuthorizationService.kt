@@ -33,7 +33,11 @@ interface CardAuthorizationService {
         eventToken: String,
         params: CardAuthorizationChallengeResponseParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ) = challengeResponse(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+    ) =
+        challengeResponse(
+            params.toBuilder().eventToken(eventToken).build(),
+            requestOptions,
+        )
 
     /** @see challengeResponse */
     fun challengeResponse(
@@ -67,7 +71,10 @@ interface CardAuthorizationService {
             params: CardAuthorizationChallengeResponseParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponse =
-            challengeResponse(params.toBuilder().eventToken(eventToken).build(), requestOptions)
+            challengeResponse(
+                params.toBuilder().eventToken(eventToken).build(),
+                requestOptions,
+            )
 
         /** @see challengeResponse */
         @MustBeClosed
