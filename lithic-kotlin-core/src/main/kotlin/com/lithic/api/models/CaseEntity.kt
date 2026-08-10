@@ -36,17 +36,21 @@ private constructor(
     ) : this(entityToken, entityType, mutableMapOf())
 
     /**
-     * Globally unique identifier for the associated entity
+     * Globally unique identifier for the associated entity: the card token for `CARD`, the account
+     * token for `ACCOUNT`, and the financial account token for `FINANCIAL_ACCOUNT`. Null for
+     * `PROGRAM`, which is not scoped to an individual entity
      *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun entityToken(): String = entityToken.getRequired("entity_token")
+    fun entityToken(): String? = entityToken.getNullable("entity_token")
 
     /**
      * The type of entity a case is associated with:
      * - `CARD` - The case is associated with a card
      * - `ACCOUNT` - The case is associated with an account
+     * - `FINANCIAL_ACCOUNT` - The case is associated with a financial account
+     * - `PROGRAM` - The case is associated with the whole program
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -110,8 +114,12 @@ private constructor(
             additionalProperties = caseEntity.additionalProperties.toMutableMap()
         }
 
-        /** Globally unique identifier for the associated entity */
-        fun entityToken(entityToken: String) = entityToken(JsonField.of(entityToken))
+        /**
+         * Globally unique identifier for the associated entity: the card token for `CARD`, the
+         * account token for `ACCOUNT`, and the financial account token for `FINANCIAL_ACCOUNT`.
+         * Null for `PROGRAM`, which is not scoped to an individual entity
+         */
+        fun entityToken(entityToken: String?) = entityToken(JsonField.ofNullable(entityToken))
 
         /**
          * Sets [Builder.entityToken] to an arbitrary JSON value.
@@ -126,6 +134,8 @@ private constructor(
          * The type of entity a case is associated with:
          * - `CARD` - The case is associated with a card
          * - `ACCOUNT` - The case is associated with an account
+         * - `FINANCIAL_ACCOUNT` - The case is associated with a financial account
+         * - `PROGRAM` - The case is associated with the whole program
          */
         fun entityType(entityType: EntityType2) = entityType(JsonField.of(entityType))
 
@@ -218,6 +228,8 @@ private constructor(
      * The type of entity a case is associated with:
      * - `CARD` - The case is associated with a card
      * - `ACCOUNT` - The case is associated with an account
+     * - `FINANCIAL_ACCOUNT` - The case is associated with a financial account
+     * - `PROGRAM` - The case is associated with the whole program
      */
     class EntityType2 @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -238,6 +250,10 @@ private constructor(
 
             val ACCOUNT = of("ACCOUNT")
 
+            val FINANCIAL_ACCOUNT = of("FINANCIAL_ACCOUNT")
+
+            val PROGRAM = of("PROGRAM")
+
             fun of(value: String) = EntityType2(JsonField.of(value))
         }
 
@@ -245,6 +261,8 @@ private constructor(
         enum class Known {
             CARD,
             ACCOUNT,
+            FINANCIAL_ACCOUNT,
+            PROGRAM,
         }
 
         /**
@@ -259,6 +277,8 @@ private constructor(
         enum class Value {
             CARD,
             ACCOUNT,
+            FINANCIAL_ACCOUNT,
+            PROGRAM,
             /**
              * An enum member indicating that [EntityType2] was instantiated with an unknown value.
              */
@@ -276,6 +296,8 @@ private constructor(
             when (this) {
                 CARD -> Value.CARD
                 ACCOUNT -> Value.ACCOUNT
+                FINANCIAL_ACCOUNT -> Value.FINANCIAL_ACCOUNT
+                PROGRAM -> Value.PROGRAM
                 else -> Value._UNKNOWN
             }
 
@@ -292,6 +314,8 @@ private constructor(
             when (this) {
                 CARD -> Known.CARD
                 ACCOUNT -> Known.ACCOUNT
+                FINANCIAL_ACCOUNT -> Known.FINANCIAL_ACCOUNT
+                PROGRAM -> Known.PROGRAM
                 else -> throw LithicInvalidDataException("Unknown EntityType2: $value")
             }
 
