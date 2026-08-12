@@ -29,6 +29,8 @@ import com.lithic.api.services.async.AuthStreamEnrollmentServiceAsync
 import com.lithic.api.services.async.AuthStreamEnrollmentServiceAsyncImpl
 import com.lithic.api.services.async.BalanceServiceAsync
 import com.lithic.api.services.async.BalanceServiceAsyncImpl
+import com.lithic.api.services.async.BlockchainRecipientServiceAsync
+import com.lithic.api.services.async.BlockchainRecipientServiceAsyncImpl
 import com.lithic.api.services.async.BookTransferServiceAsync
 import com.lithic.api.services.async.BookTransferServiceAsyncImpl
 import com.lithic.api.services.async.CardAuthorizationServiceAsync
@@ -181,6 +183,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
         ExternalBankAccountServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val blockchainRecipients: BlockchainRecipientServiceAsync by lazy {
+        BlockchainRecipientServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val payments: PaymentServiceAsync by lazy {
         PaymentServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -292,6 +298,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
     override fun responderEndpoints(): ResponderEndpointServiceAsync = responderEndpoints
 
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
+
+    override fun blockchainRecipients(): BlockchainRecipientServiceAsync = blockchainRecipients
 
     override fun payments(): PaymentServiceAsync = payments
 
@@ -420,6 +428,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             ExternalBankAccountServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val blockchainRecipients: BlockchainRecipientServiceAsync.WithRawResponse by lazy {
+            BlockchainRecipientServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val payments: PaymentServiceAsync.WithRawResponse by lazy {
             PaymentServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -539,6 +551,9 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
         override fun externalBankAccounts(): ExternalBankAccountServiceAsync.WithRawResponse =
             externalBankAccounts
+
+        override fun blockchainRecipients(): BlockchainRecipientServiceAsync.WithRawResponse =
+            blockchainRecipients
 
         override fun payments(): PaymentServiceAsync.WithRawResponse = payments
 
