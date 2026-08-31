@@ -627,9 +627,15 @@ private constructor(
 
             val STABLECOIN_RECEIVED = of("STABLECOIN_RECEIVED")
 
+            val STABLECOIN_INITIATED = of("STABLECOIN_INITIATED")
+
             val STABLECOIN_REVIEWED = of("STABLECOIN_REVIEWED")
 
+            val STABLECOIN_SENT = of("STABLECOIN_SENT")
+
             val STABLECOIN_SETTLED = of("STABLECOIN_SETTLED")
+
+            val STABLECOIN_REJECTED = of("STABLECOIN_REJECTED")
 
             fun of(value: String) = FinancialEventType(JsonField.of(value))
         }
@@ -727,8 +733,11 @@ private constructor(
             MONTHLY_REVERSAL,
             ACCOUNT_TO_ACCOUNT,
             STABLECOIN_RECEIVED,
+            STABLECOIN_INITIATED,
             STABLECOIN_REVIEWED,
+            STABLECOIN_SENT,
             STABLECOIN_SETTLED,
+            STABLECOIN_REJECTED,
         }
 
         /**
@@ -832,8 +841,11 @@ private constructor(
             MONTHLY_REVERSAL,
             ACCOUNT_TO_ACCOUNT,
             STABLECOIN_RECEIVED,
+            STABLECOIN_INITIATED,
             STABLECOIN_REVIEWED,
+            STABLECOIN_SENT,
             STABLECOIN_SETTLED,
+            STABLECOIN_REJECTED,
             /**
              * An enum member indicating that [FinancialEventType] was instantiated with an unknown
              * value.
@@ -941,8 +953,11 @@ private constructor(
                 MONTHLY_REVERSAL -> Value.MONTHLY_REVERSAL
                 ACCOUNT_TO_ACCOUNT -> Value.ACCOUNT_TO_ACCOUNT
                 STABLECOIN_RECEIVED -> Value.STABLECOIN_RECEIVED
+                STABLECOIN_INITIATED -> Value.STABLECOIN_INITIATED
                 STABLECOIN_REVIEWED -> Value.STABLECOIN_REVIEWED
+                STABLECOIN_SENT -> Value.STABLECOIN_SENT
                 STABLECOIN_SETTLED -> Value.STABLECOIN_SETTLED
+                STABLECOIN_REJECTED -> Value.STABLECOIN_REJECTED
                 else -> Value._UNKNOWN
             }
 
@@ -1048,8 +1063,11 @@ private constructor(
                 MONTHLY_REVERSAL -> Known.MONTHLY_REVERSAL
                 ACCOUNT_TO_ACCOUNT -> Known.ACCOUNT_TO_ACCOUNT
                 STABLECOIN_RECEIVED -> Known.STABLECOIN_RECEIVED
+                STABLECOIN_INITIATED -> Known.STABLECOIN_INITIATED
                 STABLECOIN_REVIEWED -> Known.STABLECOIN_REVIEWED
+                STABLECOIN_SENT -> Known.STABLECOIN_SENT
                 STABLECOIN_SETTLED -> Known.STABLECOIN_SETTLED
+                STABLECOIN_REJECTED -> Known.STABLECOIN_REJECTED
                 else -> throw LithicInvalidDataException("Unknown FinancialEventType: $value")
             }
 

@@ -52,6 +52,7 @@ private constructor(
     private val source: JsonField<Source>,
     private val status: JsonField<TransactionStatus>,
     private val updated: JsonField<OffsetDateTime>,
+    private val blockchainRecipientToken: JsonField<String>,
     private val currency: JsonField<String>,
     private val expectedReleaseDate: JsonField<LocalDate>,
     private val externalBankAccountToken: JsonField<String>,
@@ -106,6 +107,9 @@ private constructor(
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("blockchain_recipient_token")
+        @ExcludeMissing
+        blockchainRecipientToken: JsonField<String> = JsonMissing.of(),
         @JsonProperty("currency") @ExcludeMissing currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("expected_release_date")
         @ExcludeMissing
@@ -136,6 +140,7 @@ private constructor(
         source,
         status,
         updated,
+        blockchainRecipientToken,
         currency,
         expectedReleaseDate,
         externalBankAccountToken,
@@ -282,6 +287,15 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun updated(): OffsetDateTime = updated.getRequired("updated")
+
+    /**
+     * Token of the blockchain recipient the payout is sent to
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun blockchainRecipientToken(): String? =
+        blockchainRecipientToken.getNullable("blockchain_recipient_token")
 
     /**
      * Currency of the transaction in ISO 4217 format
@@ -466,6 +480,16 @@ private constructor(
     @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
 
     /**
+     * Returns the raw JSON value of [blockchainRecipientToken].
+     *
+     * Unlike [blockchainRecipientToken], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("blockchain_recipient_token")
+    @ExcludeMissing
+    fun _blockchainRecipientToken(): JsonField<String> = blockchainRecipientToken
+
+    /**
      * Returns the raw JSON value of [currency].
      *
      * Unlike [currency], this method doesn't throw if the JSON field has an unexpected type.
@@ -576,6 +600,7 @@ private constructor(
         private var source: JsonField<Source>? = null
         private var status: JsonField<TransactionStatus>? = null
         private var updated: JsonField<OffsetDateTime>? = null
+        private var blockchainRecipientToken: JsonField<String> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var expectedReleaseDate: JsonField<LocalDate> = JsonMissing.of()
         private var externalBankAccountToken: JsonField<String> = JsonMissing.of()
@@ -602,6 +627,7 @@ private constructor(
             source = payment.source
             status = payment.status
             updated = payment.updated
+            blockchainRecipientToken = payment.blockchainRecipientToken
             currency = payment.currency
             expectedReleaseDate = payment.expectedReleaseDate
             externalBankAccountToken = payment.externalBankAccountToken
@@ -756,6 +782,12 @@ private constructor(
         fun methodAttributes(wire: MethodAttributes.WireMethodAttributes) =
             methodAttributes(MethodAttributes.ofWire(wire))
 
+        /**
+         * Alias for calling [methodAttributes] with `MethodAttributes.ofStablecoin(stablecoin)`.
+         */
+        fun methodAttributes(stablecoin: MethodAttributes.StablecoinMethodAttributes) =
+            methodAttributes(MethodAttributes.ofStablecoin(stablecoin))
+
         /** Pending amount in cents */
         fun pendingAmount(pendingAmount: Long) = pendingAmount(JsonField.of(pendingAmount))
 
@@ -845,6 +877,21 @@ private constructor(
          * supported value.
          */
         fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
+
+        /** Token of the blockchain recipient the payout is sent to */
+        fun blockchainRecipientToken(blockchainRecipientToken: String?) =
+            blockchainRecipientToken(JsonField.ofNullable(blockchainRecipientToken))
+
+        /**
+         * Sets [Builder.blockchainRecipientToken] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.blockchainRecipientToken] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun blockchainRecipientToken(blockchainRecipientToken: JsonField<String>) = apply {
+            this.blockchainRecipientToken = blockchainRecipientToken
+        }
 
         /** Currency of the transaction in ISO 4217 format */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -993,6 +1040,7 @@ private constructor(
                 checkRequired("source", source),
                 checkRequired("status", status),
                 checkRequired("updated", updated),
+                blockchainRecipientToken,
                 currency,
                 expectedReleaseDate,
                 externalBankAccountToken,
@@ -1035,6 +1083,7 @@ private constructor(
         source().validate()
         status().validate()
         updated()
+        blockchainRecipientToken()
         currency()
         expectedReleaseDate()
         externalBankAccountToken()
@@ -1075,6 +1124,7 @@ private constructor(
             (source.asKnown()?.validity() ?: 0) +
             (status.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
+            (if (blockchainRecipientToken.asKnown() == null) 0 else 1) +
             (if (currency.asKnown() == null) 0 else 1) +
             (if (expectedReleaseDate.asKnown() == null) 0 else 1) +
             (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
@@ -1616,8 +1666,16 @@ private constructor(
          * Stablecoin events:
          * * `STABLECOIN_RECEIVED` - Stablecoin pay-in received on-chain and pending release to
          *   available balance.
-         * * `STABLECOIN_REVIEWED` - Stablecoin pay-in has completed the review process.
-         * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance.
+         * * `STABLECOIN_INITIATED` - Stablecoin withdrawal initiated, with the funds placed on
+         *   hold.
+         * * `STABLECOIN_REVIEWED` - Stablecoin pay-in or withdrawal has completed the review
+         *   process.
+         * * `STABLECOIN_SENT` - Stablecoin withdrawal accepted for on-chain submission to the
+         *   destination address, and pending confirmation.
+         * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance, or
+         *   stablecoin withdrawal confirmed on-chain.
+         * * `STABLECOIN_REJECTED` - Stablecoin withdrawal failed and the hold placed at initiation
+         *   has been reversed.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1635,7 +1693,9 @@ private constructor(
 
         /**
          * Payment event external ID. For ACH transactions, this is the ACH trace number. For
-         * inbound wire transfers, this is the IMAD (Input Message Accountability Data).
+         * inbound wire transfers, this is the IMAD (Input Message Accountability Data). For
+         * stablecoin payments, this is the on-chain transaction hash of the transfer; it is present
+         * on events that reflect on-chain activity and null on internal lifecycle events.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1855,8 +1915,16 @@ private constructor(
              * Stablecoin events:
              * * `STABLECOIN_RECEIVED` - Stablecoin pay-in received on-chain and pending release to
              *   available balance.
-             * * `STABLECOIN_REVIEWED` - Stablecoin pay-in has completed the review process.
-             * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance.
+             * * `STABLECOIN_INITIATED` - Stablecoin withdrawal initiated, with the funds placed on
+             *   hold.
+             * * `STABLECOIN_REVIEWED` - Stablecoin pay-in or withdrawal has completed the review
+             *   process.
+             * * `STABLECOIN_SENT` - Stablecoin withdrawal accepted for on-chain submission to the
+             *   destination address, and pending confirmation.
+             * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance, or
+             *   stablecoin withdrawal confirmed on-chain.
+             * * `STABLECOIN_REJECTED` - Stablecoin withdrawal failed and the hold placed at
+             *   initiation has been reversed.
              */
             fun type(type: PaymentEventType) = type(JsonField.of(type))
 
@@ -1898,7 +1966,10 @@ private constructor(
 
             /**
              * Payment event external ID. For ACH transactions, this is the ACH trace number. For
-             * inbound wire transfers, this is the IMAD (Input Message Accountability Data).
+             * inbound wire transfers, this is the IMAD (Input Message Accountability Data). For
+             * stablecoin payments, this is the on-chain transaction hash of the transfer; it is
+             * present on events that reflect on-chain activity and null on internal lifecycle
+             * events.
              */
             fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
 
@@ -2201,8 +2272,16 @@ private constructor(
          * Stablecoin events:
          * * `STABLECOIN_RECEIVED` - Stablecoin pay-in received on-chain and pending release to
          *   available balance.
-         * * `STABLECOIN_REVIEWED` - Stablecoin pay-in has completed the review process.
-         * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance.
+         * * `STABLECOIN_INITIATED` - Stablecoin withdrawal initiated, with the funds placed on
+         *   hold.
+         * * `STABLECOIN_REVIEWED` - Stablecoin pay-in or withdrawal has completed the review
+         *   process.
+         * * `STABLECOIN_SENT` - Stablecoin withdrawal accepted for on-chain submission to the
+         *   destination address, and pending confirmation.
+         * * `STABLECOIN_SETTLED` - Stablecoin pay-in funds released to available balance, or
+         *   stablecoin withdrawal confirmed on-chain.
+         * * `STABLECOIN_REJECTED` - Stablecoin withdrawal failed and the hold placed at initiation
+         *   has been reversed.
          */
         class PaymentEventType
         @JsonCreator
@@ -2266,9 +2345,15 @@ private constructor(
 
                 val STABLECOIN_RECEIVED = of("STABLECOIN_RECEIVED")
 
+                val STABLECOIN_INITIATED = of("STABLECOIN_INITIATED")
+
                 val STABLECOIN_REVIEWED = of("STABLECOIN_REVIEWED")
 
+                val STABLECOIN_SENT = of("STABLECOIN_SENT")
+
                 val STABLECOIN_SETTLED = of("STABLECOIN_SETTLED")
+
+                val STABLECOIN_REJECTED = of("STABLECOIN_REJECTED")
 
                 fun of(value: String) = PaymentEventType(JsonField.of(value))
             }
@@ -2298,8 +2383,11 @@ private constructor(
                 WIRE_RETURN_OUTBOUND_SETTLED,
                 WIRE_RETURN_OUTBOUND_REJECTED,
                 STABLECOIN_RECEIVED,
+                STABLECOIN_INITIATED,
                 STABLECOIN_REVIEWED,
+                STABLECOIN_SENT,
                 STABLECOIN_SETTLED,
+                STABLECOIN_REJECTED,
             }
 
             /**
@@ -2336,8 +2424,11 @@ private constructor(
                 WIRE_RETURN_OUTBOUND_SETTLED,
                 WIRE_RETURN_OUTBOUND_REJECTED,
                 STABLECOIN_RECEIVED,
+                STABLECOIN_INITIATED,
                 STABLECOIN_REVIEWED,
+                STABLECOIN_SENT,
                 STABLECOIN_SETTLED,
+                STABLECOIN_REJECTED,
                 /**
                  * An enum member indicating that [PaymentEventType] was instantiated with an
                  * unknown value.
@@ -2377,8 +2468,11 @@ private constructor(
                     WIRE_RETURN_OUTBOUND_SETTLED -> Value.WIRE_RETURN_OUTBOUND_SETTLED
                     WIRE_RETURN_OUTBOUND_REJECTED -> Value.WIRE_RETURN_OUTBOUND_REJECTED
                     STABLECOIN_RECEIVED -> Value.STABLECOIN_RECEIVED
+                    STABLECOIN_INITIATED -> Value.STABLECOIN_INITIATED
                     STABLECOIN_REVIEWED -> Value.STABLECOIN_REVIEWED
+                    STABLECOIN_SENT -> Value.STABLECOIN_SENT
                     STABLECOIN_SETTLED -> Value.STABLECOIN_SETTLED
+                    STABLECOIN_REJECTED -> Value.STABLECOIN_REJECTED
                     else -> Value._UNKNOWN
                 }
 
@@ -2416,8 +2510,11 @@ private constructor(
                     WIRE_RETURN_OUTBOUND_SETTLED -> Known.WIRE_RETURN_OUTBOUND_SETTLED
                     WIRE_RETURN_OUTBOUND_REJECTED -> Known.WIRE_RETURN_OUTBOUND_REJECTED
                     STABLECOIN_RECEIVED -> Known.STABLECOIN_RECEIVED
+                    STABLECOIN_INITIATED -> Known.STABLECOIN_INITIATED
                     STABLECOIN_REVIEWED -> Known.STABLECOIN_REVIEWED
+                    STABLECOIN_SENT -> Known.STABLECOIN_SENT
                     STABLECOIN_SETTLED -> Known.STABLECOIN_SETTLED
+                    STABLECOIN_REJECTED -> Known.STABLECOIN_REJECTED
                     else -> throw LithicInvalidDataException("Unknown PaymentEventType: $value")
                 }
 
@@ -2838,6 +2935,8 @@ private constructor(
 
             val WIRE = of("WIRE")
 
+            val STABLECOIN = of("STABLECOIN")
+
             fun of(value: String) = Method(JsonField.of(value))
         }
 
@@ -2846,6 +2945,7 @@ private constructor(
             ACH_NEXT_DAY,
             ACH_SAME_DAY,
             WIRE,
+            STABLECOIN,
         }
 
         /**
@@ -2861,6 +2961,7 @@ private constructor(
             ACH_NEXT_DAY,
             ACH_SAME_DAY,
             WIRE,
+            STABLECOIN,
             /** An enum member indicating that [Method] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -2877,6 +2978,7 @@ private constructor(
                 ACH_NEXT_DAY -> Value.ACH_NEXT_DAY
                 ACH_SAME_DAY -> Value.ACH_SAME_DAY
                 WIRE -> Value.WIRE
+                STABLECOIN -> Value.STABLECOIN
                 else -> Value._UNKNOWN
             }
 
@@ -2894,6 +2996,7 @@ private constructor(
                 ACH_NEXT_DAY -> Known.ACH_NEXT_DAY
                 ACH_SAME_DAY -> Known.ACH_SAME_DAY
                 WIRE -> Known.WIRE
+                STABLECOIN -> Known.STABLECOIN
                 else -> throw LithicInvalidDataException("Unknown Method: $value")
             }
 
@@ -2965,6 +3068,7 @@ private constructor(
     private constructor(
         private val ach: AchMethodAttributes? = null,
         private val wire: WireMethodAttributes? = null,
+        private val stablecoin: StablecoinMethodAttributes? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -2972,13 +3076,19 @@ private constructor(
 
         fun wire(): WireMethodAttributes? = wire
 
+        fun stablecoin(): StablecoinMethodAttributes? = stablecoin
+
         fun isAch(): Boolean = ach != null
 
         fun isWire(): Boolean = wire != null
 
+        fun isStablecoin(): Boolean = stablecoin != null
+
         fun asAch(): AchMethodAttributes = ach.getOrThrow("ach")
 
         fun asWire(): WireMethodAttributes = wire.getOrThrow("wire")
+
+        fun asStablecoin(): StablecoinMethodAttributes = stablecoin.getOrThrow("stablecoin")
 
         fun _json(): JsonValue? = _json
 
@@ -3010,6 +3120,7 @@ private constructor(
             when {
                 ach != null -> visitor.visitAch(ach)
                 wire != null -> visitor.visitWire(wire)
+                stablecoin != null -> visitor.visitStablecoin(stablecoin)
                 else -> visitor.unknown(_json)
             }
 
@@ -3038,6 +3149,10 @@ private constructor(
                     override fun visitWire(wire: WireMethodAttributes) {
                         wire.validate()
                     }
+
+                    override fun visitStablecoin(stablecoin: StablecoinMethodAttributes) {
+                        stablecoin.validate()
+                    }
                 }
             )
             validated = true
@@ -3064,6 +3179,9 @@ private constructor(
 
                     override fun visitWire(wire: WireMethodAttributes) = wire.validity()
 
+                    override fun visitStablecoin(stablecoin: StablecoinMethodAttributes) =
+                        stablecoin.validity()
+
                     override fun unknown(json: JsonValue?) = 0
                 }
             )
@@ -3073,15 +3191,19 @@ private constructor(
                 return true
             }
 
-            return other is MethodAttributes && ach == other.ach && wire == other.wire
+            return other is MethodAttributes &&
+                ach == other.ach &&
+                wire == other.wire &&
+                stablecoin == other.stablecoin
         }
 
-        override fun hashCode(): Int = Objects.hash(ach, wire)
+        override fun hashCode(): Int = Objects.hash(ach, wire, stablecoin)
 
         override fun toString(): String =
             when {
                 ach != null -> "MethodAttributes{ach=$ach}"
                 wire != null -> "MethodAttributes{wire=$wire}"
+                stablecoin != null -> "MethodAttributes{stablecoin=$stablecoin}"
                 _json != null -> "MethodAttributes{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid MethodAttributes")
             }
@@ -3091,6 +3213,9 @@ private constructor(
             fun ofAch(ach: AchMethodAttributes) = MethodAttributes(ach = ach)
 
             fun ofWire(wire: WireMethodAttributes) = MethodAttributes(wire = wire)
+
+            fun ofStablecoin(stablecoin: StablecoinMethodAttributes) =
+                MethodAttributes(stablecoin = stablecoin)
         }
 
         /**
@@ -3102,6 +3227,8 @@ private constructor(
             fun visitAch(ach: AchMethodAttributes): T
 
             fun visitWire(wire: WireMethodAttributes): T
+
+            fun visitStablecoin(stablecoin: StablecoinMethodAttributes): T
 
             /**
              * Maps an unknown variant of [MethodAttributes] to a value of type [T].
@@ -3131,6 +3258,8 @@ private constructor(
                             tryDeserialize(node, jacksonTypeRef<WireMethodAttributes>())?.let {
                                 MethodAttributes(wire = it, _json = json)
                             },
+                            tryDeserialize(node, jacksonTypeRef<StablecoinMethodAttributes>())
+                                ?.let { MethodAttributes(stablecoin = it, _json = json) },
                         )
                         .filterNotNull()
                         .allMaxBy { it.validity() }
@@ -3158,6 +3287,7 @@ private constructor(
                 when {
                     value.ach != null -> generator.writeObject(value.ach)
                     value.wire != null -> generator.writeObject(value.wire)
+                    value.stablecoin != null -> generator.writeObject(value.stablecoin)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid MethodAttributes")
                 }
@@ -4479,6 +4609,230 @@ private constructor(
             override fun toString() =
                 "WireMethodAttributes{wireMessageType=$wireMessageType, wireNetwork=$wireNetwork, creditor=$creditor, debtor=$debtor, messageId=$messageId, remittanceInformation=$remittanceInformation, additionalProperties=$additionalProperties}"
         }
+
+        class StablecoinMethodAttributes
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
+        private constructor(
+            private val chain: JsonField<String>,
+            private val transactionHash: JsonField<String>,
+            private val additionalProperties: MutableMap<String, JsonValue>,
+        ) {
+
+            @JsonCreator
+            private constructor(
+                @JsonProperty("chain") @ExcludeMissing chain: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("transaction_hash")
+                @ExcludeMissing
+                transactionHash: JsonField<String> = JsonMissing.of(),
+            ) : this(chain, transactionHash, mutableMapOf())
+
+            /**
+             * Blockchain the stablecoin transfer settled on
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
+             *   value).
+             */
+            fun chain(): String = chain.getRequired("chain")
+
+            /**
+             * On-chain transaction hash of the transfer. Null until the transfer has settled on
+             * chain
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun transactionHash(): String? = transactionHash.getNullable("transaction_hash")
+
+            /**
+             * Returns the raw JSON value of [chain].
+             *
+             * Unlike [chain], this method doesn't throw if the JSON field has an unexpected type.
+             */
+            @JsonProperty("chain") @ExcludeMissing fun _chain(): JsonField<String> = chain
+
+            /**
+             * Returns the raw JSON value of [transactionHash].
+             *
+             * Unlike [transactionHash], this method doesn't throw if the JSON field has an
+             * unexpected type.
+             */
+            @JsonProperty("transaction_hash")
+            @ExcludeMissing
+            fun _transactionHash(): JsonField<String> = transactionHash
+
+            @JsonAnySetter
+            private fun putAdditionalProperty(key: String, value: JsonValue) {
+                additionalProperties.put(key, value)
+            }
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> =
+                Collections.unmodifiableMap(additionalProperties)
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [StablecoinMethodAttributes].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .chain()
+                 * ```
+                 */
+                fun builder() = Builder()
+            }
+
+            /** A builder for [StablecoinMethodAttributes]. */
+            class Builder internal constructor() {
+
+                private var chain: JsonField<String>? = null
+                private var transactionHash: JsonField<String> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(stablecoinMethodAttributes: StablecoinMethodAttributes) = apply {
+                    chain = stablecoinMethodAttributes.chain
+                    transactionHash = stablecoinMethodAttributes.transactionHash
+                    additionalProperties =
+                        stablecoinMethodAttributes.additionalProperties.toMutableMap()
+                }
+
+                /** Blockchain the stablecoin transfer settled on */
+                fun chain(chain: String) = chain(JsonField.of(chain))
+
+                /**
+                 * Sets [Builder.chain] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.chain] with a well-typed [String] value instead.
+                 * This method is primarily for setting the field to an undocumented or not yet
+                 * supported value.
+                 */
+                fun chain(chain: JsonField<String>) = apply { this.chain = chain }
+
+                /**
+                 * On-chain transaction hash of the transfer. Null until the transfer has settled on
+                 * chain
+                 */
+                fun transactionHash(transactionHash: String?) =
+                    transactionHash(JsonField.ofNullable(transactionHash))
+
+                /**
+                 * Sets [Builder.transactionHash] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.transactionHash] with a well-typed [String]
+                 * value instead. This method is primarily for setting the field to an undocumented
+                 * or not yet supported value.
+                 */
+                fun transactionHash(transactionHash: JsonField<String>) = apply {
+                    this.transactionHash = transactionHash
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                /**
+                 * Returns an immutable instance of [StablecoinMethodAttributes].
+                 *
+                 * Further updates to this [Builder] will not mutate the returned instance.
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .chain()
+                 * ```
+                 *
+                 * @throws IllegalStateException if any required field is unset.
+                 */
+                fun build(): StablecoinMethodAttributes =
+                    StablecoinMethodAttributes(
+                        checkRequired("chain", chain),
+                        transactionHash,
+                        additionalProperties.toMutableMap(),
+                    )
+            }
+
+            private var validated: Boolean = false
+
+            /**
+             * Validates that the types of all values in this object match their expected types
+             * recursively.
+             *
+             * This method is _not_ forwards compatible with new types from the API for existing
+             * fields.
+             *
+             * @throws LithicInvalidDataException if any value type in this object doesn't match its
+             *   expected type.
+             */
+            fun validate(): StablecoinMethodAttributes = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                chain()
+                transactionHash()
+                validated = true
+            }
+
+            fun isValid(): Boolean =
+                try {
+                    validate()
+                    true
+                } catch (e: LithicInvalidDataException) {
+                    false
+                }
+
+            /**
+             * Returns a score indicating how many valid values are contained in this object
+             * recursively.
+             *
+             * Used for best match union deserialization.
+             */
+            internal fun validity(): Int =
+                (if (chain.asKnown() == null) 0 else 1) +
+                    (if (transactionHash.asKnown() == null) 0 else 1)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is StablecoinMethodAttributes &&
+                    chain == other.chain &&
+                    transactionHash == other.transactionHash &&
+                    additionalProperties == other.additionalProperties
+            }
+
+            private val hashCode: Int by lazy {
+                Objects.hash(chain, transactionHash, additionalProperties)
+            }
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "StablecoinMethodAttributes{chain=$chain, transactionHash=$transactionHash, additionalProperties=$additionalProperties}"
+        }
     }
 
     /** Account tokens related to a payment transaction */
@@ -5292,6 +5646,10 @@ private constructor(
 
             val WIRE_INBOUND_DRAWDOWN_REQUEST = of("WIRE_INBOUND_DRAWDOWN_REQUEST")
 
+            val STABLECOIN_INBOUND = of("STABLECOIN_INBOUND")
+
+            val STABLECOIN_OUTBOUND = of("STABLECOIN_OUTBOUND")
+
             fun of(value: String) = TransferType(JsonField.of(value))
         }
 
@@ -5306,6 +5664,8 @@ private constructor(
             WIRE_OUTBOUND_PAYMENT,
             WIRE_OUTBOUND_ADMIN,
             WIRE_INBOUND_DRAWDOWN_REQUEST,
+            STABLECOIN_INBOUND,
+            STABLECOIN_OUTBOUND,
         }
 
         /**
@@ -5327,6 +5687,8 @@ private constructor(
             WIRE_OUTBOUND_PAYMENT,
             WIRE_OUTBOUND_ADMIN,
             WIRE_INBOUND_DRAWDOWN_REQUEST,
+            STABLECOIN_INBOUND,
+            STABLECOIN_OUTBOUND,
             /**
              * An enum member indicating that [TransferType] was instantiated with an unknown value.
              */
@@ -5351,6 +5713,8 @@ private constructor(
                 WIRE_OUTBOUND_PAYMENT -> Value.WIRE_OUTBOUND_PAYMENT
                 WIRE_OUTBOUND_ADMIN -> Value.WIRE_OUTBOUND_ADMIN
                 WIRE_INBOUND_DRAWDOWN_REQUEST -> Value.WIRE_INBOUND_DRAWDOWN_REQUEST
+                STABLECOIN_INBOUND -> Value.STABLECOIN_INBOUND
+                STABLECOIN_OUTBOUND -> Value.STABLECOIN_OUTBOUND
                 else -> Value._UNKNOWN
             }
 
@@ -5374,6 +5738,8 @@ private constructor(
                 WIRE_OUTBOUND_PAYMENT -> Known.WIRE_OUTBOUND_PAYMENT
                 WIRE_OUTBOUND_ADMIN -> Known.WIRE_OUTBOUND_ADMIN
                 WIRE_INBOUND_DRAWDOWN_REQUEST -> Known.WIRE_INBOUND_DRAWDOWN_REQUEST
+                STABLECOIN_INBOUND -> Known.STABLECOIN_INBOUND
+                STABLECOIN_OUTBOUND -> Known.STABLECOIN_OUTBOUND
                 else -> throw LithicInvalidDataException("Unknown TransferType: $value")
             }
 
@@ -5461,6 +5827,7 @@ private constructor(
             source == other.source &&
             status == other.status &&
             updated == other.updated &&
+            blockchainRecipientToken == other.blockchainRecipientToken &&
             currency == other.currency &&
             expectedReleaseDate == other.expectedReleaseDate &&
             externalBankAccountToken == other.externalBankAccountToken &&
@@ -5489,6 +5856,7 @@ private constructor(
             source,
             status,
             updated,
+            blockchainRecipientToken,
             currency,
             expectedReleaseDate,
             externalBankAccountToken,
@@ -5502,5 +5870,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Payment{token=$token, category=$category, created=$created, descriptor=$descriptor, direction=$direction, events=$events, family=$family, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, currency=$currency, expectedReleaseDate=$expectedReleaseDate, externalBankAccountToken=$externalBankAccountToken, tags=$tags, type=$type, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+        "Payment{token=$token, category=$category, created=$created, descriptor=$descriptor, direction=$direction, events=$events, family=$family, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, pendingAmount=$pendingAmount, relatedAccountTokens=$relatedAccountTokens, result=$result, settledAmount=$settledAmount, source=$source, status=$status, updated=$updated, blockchainRecipientToken=$blockchainRecipientToken, currency=$currency, expectedReleaseDate=$expectedReleaseDate, externalBankAccountToken=$externalBankAccountToken, tags=$tags, type=$type, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
 }

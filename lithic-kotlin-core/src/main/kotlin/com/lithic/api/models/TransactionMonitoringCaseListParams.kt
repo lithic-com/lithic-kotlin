@@ -60,7 +60,11 @@ private constructor(
      */
     fun endingBefore(): String? = endingBefore
 
-    /** Only return cases associated with the provided entity. */
+    /**
+     * Only return cases associated with the provided entity. Accepts a card, account, or financial
+     * account token. Cases with a `PROGRAM` entity have no entity token and are never returned by
+     * this filter.
+     */
     fun entityToken(): String? = entityToken
 
     /** Page size (for pagination). */
@@ -178,7 +182,11 @@ private constructor(
          */
         fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
 
-        /** Only return cases associated with the provided entity. */
+        /**
+         * Only return cases associated with the provided entity. Accepts a card, account, or
+         * financial account token. Cases with a `PROGRAM` entity have no entity token and are never
+         * returned by this filter.
+         */
         fun entityToken(entityToken: String?) = apply { this.entityToken = entityToken }
 
         /** Page size (for pagination). */
