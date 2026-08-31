@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.132.0 (2026-08-31)
+
+Full Changelog: [v0.131.0...v0.132.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.131.0...v0.132.0)
+
+### Features
+
+* **api:** add blockchain recipients create endpoint ([2cf8a6e](https://github.com/lithic-com/lithic-kotlin/commit/2cf8a6ee13f7da7420a44b90188fdcbd6765d5b7))
+* **api:** add blockchain_addresses field to FinancialAccount models ([b21cc02](https://github.com/lithic-com/lithic-kotlin/commit/b21cc0287ff9c04b655f5d89a805b09f2cc4e8b6))
+* **api:** add claim_token field/parameter and write_off_reversed enum to disputes ([65fa992](https://github.com/lithic-com/lithic-kotlin/commit/65fa992125fa2b416b1742ea9a778782d5c7de30))
+* **api:** add limitCashAmount and limitCashCount fields to VelocityLimitParams ([f0378a8](https://github.com/lithic-com/lithic-kotlin/commit/f0378a847849a00e460a24c5d9dedc21b1ec56aa))
+* **api:** add PROGRAM scope to AchPayment/CardTransaction, entity types to CaseEntity ([9051d1a](https://github.com/lithic-com/lithic-kotlin/commit/9051d1aefbbc417b8b1c4443ec722a140522251c))
+* **api:** add reassignAccount method to cards ([8bc3f8d](https://github.com/lithic-com/lithic-kotlin/commit/8bc3f8dddf1aaf5e26107e22588206f1c1e405dd))
+* **api:** add stablecoin event types to FinancialEvent and Payment ([00362da](https://github.com/lithic-com/lithic-kotlin/commit/00362da37f18a42ef90b440911176952717112a3))
+* **api:** add STABLECOIN method and attributes to Payment ([2aa2e97](https://github.com/lithic-com/lithic-kotlin/commit/2aa2e973105e579eba1b11dadcfb3ee7439082d2))
+* **api:** add STABLECOIN value to Payment.TransferType enum ([f8b9d53](https://github.com/lithic-com/lithic-kotlin/commit/f8b9d53f3f4833aa48a37642aba18a7a3013d65e))
+* **api:** add STABLECOIN_INBOUND/STABLECOIN_OUTBOUND to Payment TransferType ([6714c2d](https://github.com/lithic-com/lithic-kotlin/commit/6714c2dff8a2296fa52c394dc633e6717d46ca03))
+* Make blockchain recipient account_token nullable ([f20e52e](https://github.com/lithic-com/lithic-kotlin/commit/f20e52e58ff018f6f19d7eec9e8a58f5521fed3e))
+* Remove stablecoin transfer type ([a31a8a4](https://github.com/lithic-com/lithic-kotlin/commit/a31a8a4cd6ac11f7386fbfdf5b243d7070776ea1))
+
+
+### Bug Fixes
+
+* **api:** remove type field, rename accessors in DisputeV2 event data union ([d971c48](https://github.com/lithic-com/lithic-kotlin/commit/d971c488a0772996be9c32d72fce8ccbce75b895))
+* **docs:** link the javadoc badge so the version stays current after release ([1796b8d](https://github.com/lithic-com/lithic-kotlin/commit/1796b8d8422a86074784aa476068cd1b4e15fb78))
+* **types:** make method_attributes optional and add STABLECOIN to Payment.Method ([a5abc79](https://github.com/lithic-com/lithic-kotlin/commit/a5abc79d9e4e6e2713790eb5acfd9ba0c82babfa))
+
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([6418c3f](https://github.com/lithic-com/lithic-kotlin/commit/6418c3f6b28b038e8f241cdec85ebd88c95504fb))
+* **internal:** codegen related update ([51824f6](https://github.com/lithic-com/lithic-kotlin/commit/51824f614aa8f4ca2e5c544ff42d831483e5dc23))
+
+
+### Documentation
+
+* **api:** update clientDeviceId/clientWalletAccountId descriptions in card provision ([38f5beb](https://github.com/lithic-com/lithic-kotlin/commit/38f5beb14aa39d64cc350bbf2926a854e35cb958))
+* **api:** update CVV field descriptions in Card and TokenizationSimulateParams ([c9965f7](https://github.com/lithic-com/lithic-kotlin/commit/c9965f7cb97cf3d15df002e00a770a12009f102c))
+
 ## 0.131.0 (2026-08-03)
 
 Full Changelog: [v0.130.0...v0.131.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.130.0...v0.131.0)
