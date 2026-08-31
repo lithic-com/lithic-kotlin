@@ -16,6 +16,7 @@ import com.lithic.api.models.CardListPage
 import com.lithic.api.models.CardListParams
 import com.lithic.api.models.CardProvisionParams
 import com.lithic.api.models.CardProvisionResponse
+import com.lithic.api.models.CardReassignAccountParams
 import com.lithic.api.models.CardReissueParams
 import com.lithic.api.models.CardRenewParams
 import com.lithic.api.models.CardRetrieveParams
@@ -183,6 +184,24 @@ interface CardService {
     /** @see provision */
     fun provision(cardToken: String, requestOptions: RequestOptions): CardProvisionResponse =
         provision(cardToken, CardProvisionParams.none(), requestOptions)
+
+    /**
+     * Reassigns a card to another account. The card must be in an `OPEN` or `PAUSED` state, and the
+     * destination account must be in an `ACTIVE` state.
+     *
+     * Clients must contact their Lithic account manager for access to this endpoint.
+     */
+    fun reassignAccount(
+        cardToken: String,
+        params: CardReassignAccountParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card = reassignAccount(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+    /** @see reassignAccount */
+    fun reassignAccount(
+        params: CardReassignAccountParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): Card
 
     /**
      * Initiate print and shipment of a duplicate physical card (e.g. card is physically damaged).
@@ -462,6 +481,25 @@ interface CardService {
             requestOptions: RequestOptions,
         ): HttpResponseFor<CardProvisionResponse> =
             provision(cardToken, CardProvisionParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /v1/cards/{card_token}/reassign_account`, but is
+         * otherwise the same as [CardService.reassignAccount].
+         */
+        @MustBeClosed
+        fun reassignAccount(
+            cardToken: String,
+            params: CardReassignAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card> =
+            reassignAccount(params.toBuilder().cardToken(cardToken).build(), requestOptions)
+
+        /** @see reassignAccount */
+        @MustBeClosed
+        fun reassignAccount(
+            params: CardReassignAccountParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Card>
 
         /**
          * Returns a raw HTTP response for `post /v1/cards/{card_token}/reissue`, but is otherwise
