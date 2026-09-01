@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.133.0 (2026-09-01)
+
+Full Changelog: [v0.132.0...v0.133.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.132.0...v0.133.0)
+
+### Features
+
+* **api:** add OTHER value to AuthRuleType enum ([f6cec04](https://github.com/lithic-com/lithic-kotlin/commit/f6cec04cfcd5e2c010b7a7d87c22957173d1a906))
+
 ## 0.132.0 (2026-08-31)
 
 Full Changelog: [v0.131.0...v0.132.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.131.0...v0.132.0)
