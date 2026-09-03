@@ -858,6 +858,8 @@ private constructor(
 
             val EXTERNAL_RTP = of("EXTERNAL_RTP")
 
+            val EXTERNAL_STABLECOIN = of("EXTERNAL_STABLECOIN")
+
             val EXTERNAL_TRANSFER = of("EXTERNAL_TRANSFER")
 
             fun of(value: String) = ExternalPaymentCategory(JsonField.of(value))
@@ -870,6 +872,7 @@ private constructor(
             EXTERNAL_CHECK,
             EXTERNAL_FEDNOW,
             EXTERNAL_RTP,
+            EXTERNAL_STABLECOIN,
             EXTERNAL_TRANSFER,
         }
 
@@ -890,6 +893,7 @@ private constructor(
             EXTERNAL_CHECK,
             EXTERNAL_FEDNOW,
             EXTERNAL_RTP,
+            EXTERNAL_STABLECOIN,
             EXTERNAL_TRANSFER,
             /**
              * An enum member indicating that [ExternalPaymentCategory] was instantiated with an
@@ -912,6 +916,7 @@ private constructor(
                 EXTERNAL_CHECK -> Value.EXTERNAL_CHECK
                 EXTERNAL_FEDNOW -> Value.EXTERNAL_FEDNOW
                 EXTERNAL_RTP -> Value.EXTERNAL_RTP
+                EXTERNAL_STABLECOIN -> Value.EXTERNAL_STABLECOIN
                 EXTERNAL_TRANSFER -> Value.EXTERNAL_TRANSFER
                 else -> Value._UNKNOWN
             }
@@ -932,6 +937,7 @@ private constructor(
                 EXTERNAL_CHECK -> Known.EXTERNAL_CHECK
                 EXTERNAL_FEDNOW -> Known.EXTERNAL_FEDNOW
                 EXTERNAL_RTP -> Known.EXTERNAL_RTP
+                EXTERNAL_STABLECOIN -> Known.EXTERNAL_STABLECOIN
                 EXTERNAL_TRANSFER -> Known.EXTERNAL_TRANSFER
                 else -> throw LithicInvalidDataException("Unknown ExternalPaymentCategory: $value")
             }
@@ -1778,6 +1784,16 @@ private constructor(
 
                 val EXTERNAL_RTP_RELEASED = of("EXTERNAL_RTP_RELEASED")
 
+                val EXTERNAL_STABLECOIN_INITIATED = of("EXTERNAL_STABLECOIN_INITIATED")
+
+                val EXTERNAL_STABLECOIN_CANCELED = of("EXTERNAL_STABLECOIN_CANCELED")
+
+                val EXTERNAL_STABLECOIN_SETTLED = of("EXTERNAL_STABLECOIN_SETTLED")
+
+                val EXTERNAL_STABLECOIN_REVERSED = of("EXTERNAL_STABLECOIN_REVERSED")
+
+                val EXTERNAL_STABLECOIN_RELEASED = of("EXTERNAL_STABLECOIN_RELEASED")
+
                 fun of(value: String) = ExternalPaymentEventType(JsonField.of(value))
             }
 
@@ -1813,6 +1829,11 @@ private constructor(
                 EXTERNAL_RTP_SETTLED,
                 EXTERNAL_RTP_REVERSED,
                 EXTERNAL_RTP_RELEASED,
+                EXTERNAL_STABLECOIN_INITIATED,
+                EXTERNAL_STABLECOIN_CANCELED,
+                EXTERNAL_STABLECOIN_SETTLED,
+                EXTERNAL_STABLECOIN_REVERSED,
+                EXTERNAL_STABLECOIN_RELEASED,
             }
 
             /**
@@ -1857,6 +1878,11 @@ private constructor(
                 EXTERNAL_RTP_SETTLED,
                 EXTERNAL_RTP_REVERSED,
                 EXTERNAL_RTP_RELEASED,
+                EXTERNAL_STABLECOIN_INITIATED,
+                EXTERNAL_STABLECOIN_CANCELED,
+                EXTERNAL_STABLECOIN_SETTLED,
+                EXTERNAL_STABLECOIN_REVERSED,
+                EXTERNAL_STABLECOIN_RELEASED,
                 /**
                  * An enum member indicating that [ExternalPaymentEventType] was instantiated with
                  * an unknown value.
@@ -1903,6 +1929,11 @@ private constructor(
                     EXTERNAL_RTP_SETTLED -> Value.EXTERNAL_RTP_SETTLED
                     EXTERNAL_RTP_REVERSED -> Value.EXTERNAL_RTP_REVERSED
                     EXTERNAL_RTP_RELEASED -> Value.EXTERNAL_RTP_RELEASED
+                    EXTERNAL_STABLECOIN_INITIATED -> Value.EXTERNAL_STABLECOIN_INITIATED
+                    EXTERNAL_STABLECOIN_CANCELED -> Value.EXTERNAL_STABLECOIN_CANCELED
+                    EXTERNAL_STABLECOIN_SETTLED -> Value.EXTERNAL_STABLECOIN_SETTLED
+                    EXTERNAL_STABLECOIN_REVERSED -> Value.EXTERNAL_STABLECOIN_REVERSED
+                    EXTERNAL_STABLECOIN_RELEASED -> Value.EXTERNAL_STABLECOIN_RELEASED
                     else -> Value._UNKNOWN
                 }
 
@@ -1947,6 +1978,11 @@ private constructor(
                     EXTERNAL_RTP_SETTLED -> Known.EXTERNAL_RTP_SETTLED
                     EXTERNAL_RTP_REVERSED -> Known.EXTERNAL_RTP_REVERSED
                     EXTERNAL_RTP_RELEASED -> Known.EXTERNAL_RTP_RELEASED
+                    EXTERNAL_STABLECOIN_INITIATED -> Known.EXTERNAL_STABLECOIN_INITIATED
+                    EXTERNAL_STABLECOIN_CANCELED -> Known.EXTERNAL_STABLECOIN_CANCELED
+                    EXTERNAL_STABLECOIN_SETTLED -> Known.EXTERNAL_STABLECOIN_SETTLED
+                    EXTERNAL_STABLECOIN_REVERSED -> Known.EXTERNAL_STABLECOIN_REVERSED
+                    EXTERNAL_STABLECOIN_RELEASED -> Known.EXTERNAL_STABLECOIN_RELEASED
                     else ->
                         throw LithicInvalidDataException("Unknown ExternalPaymentEventType: $value")
                 }
