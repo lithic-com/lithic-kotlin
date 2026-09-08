@@ -9,6 +9,8 @@ import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.Payment
 import com.lithic.api.models.PaymentCreateParams
 import com.lithic.api.models.PaymentCreateResponse
+import com.lithic.api.models.PaymentCreateStablecoinParams
+import com.lithic.api.models.PaymentCreateStablecoinResponse
 import com.lithic.api.models.PaymentListPage
 import com.lithic.api.models.PaymentListParams
 import com.lithic.api.models.PaymentRetrieveParams
@@ -38,7 +40,14 @@ interface PaymentService {
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): PaymentService
 
-    /** Initiates a payment between a financial account and an external bank account. */
+    /**
+     * Initiates an ACH payment between a financial account and an external bank account.
+     *
+     * This endpoint originates on the ACH rail only. To send a stablecoin payout, use the
+     * [Create stablecoin payment](https://docs.lithic.com/reference/createstablecoinpayment)
+     * endpoint. Payments on every rail are read back through
+     * [List payments](https://docs.lithic.com/reference/searchpayments).
+     */
     fun create(
         params: PaymentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,6 +79,28 @@ interface PaymentService {
     /** @see list */
     fun list(requestOptions: RequestOptions): PaymentListPage =
         list(PaymentListParams.none(), requestOptions)
+
+    /**
+     * Initiates a stablecoin payout from a financial account to a registered blockchain recipient.
+     *
+     * The recipient must have been registered with
+     * [Create blockchain recipient](https://docs.lithic.com/reference/createblockchainrecipient)
+     * and have completed address screening — only a recipient in the `ENABLED` verification state
+     * can receive a payout. The destination address and chain come from the recipient, so they are
+     * not supplied here.
+     *
+     * Only payouts are initiated through this endpoint. Stablecoin pay-ins are credited from
+     * on-chain deposits to a financial account's deposit address and are not created through the
+     * API. Funds are placed on hold when the payout is initiated, and a payout that fails on chain
+     * reverses that hold. A payout cannot be cancelled once it has been submitted on chain.
+     *
+     * This endpoint is only available to stablecoin-enabled programs. Contact your customer success
+     * manager to learn more.
+     */
+    fun createStablecoin(
+        params: PaymentCreateStablecoinParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): PaymentCreateStablecoinResponse
 
     /** Retry an origination which has been returned. */
     fun retry(
@@ -209,6 +240,16 @@ interface PaymentService {
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PaymentListPage> =
             list(PaymentListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /v1/payments/stablecoin`, but is otherwise the same
+         * as [PaymentService.createStablecoin].
+         */
+        @MustBeClosed
+        fun createStablecoin(
+            params: PaymentCreateStablecoinParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PaymentCreateStablecoinResponse>
 
         /**
          * Returns a raw HTTP response for `post /v1/payments/{payment_token}/retry`, but is
