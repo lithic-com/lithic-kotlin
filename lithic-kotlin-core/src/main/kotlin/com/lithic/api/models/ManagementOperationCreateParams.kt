@@ -1443,6 +1443,10 @@ private constructor(
 
             val INTEREST_REVERSAL = of("INTEREST_REVERSAL")
 
+            val INSTALLMENT_FEE = of("INSTALLMENT_FEE")
+
+            val INSTALLMENT_FEE_REVERSAL = of("INSTALLMENT_FEE_REVERSAL")
+
             val LATE_PAYMENT = of("LATE_PAYMENT")
 
             val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
@@ -1491,6 +1495,8 @@ private constructor(
             CURRENCY_CONVERSION_REVERSAL,
             INTEREST,
             INTEREST_REVERSAL,
+            INSTALLMENT_FEE,
+            INSTALLMENT_FEE_REVERSAL,
             LATE_PAYMENT,
             LATE_PAYMENT_REVERSAL,
             BILLING_ERROR,
@@ -1530,6 +1536,8 @@ private constructor(
             CURRENCY_CONVERSION_REVERSAL,
             INTEREST,
             INTEREST_REVERSAL,
+            INSTALLMENT_FEE,
+            INSTALLMENT_FEE_REVERSAL,
             LATE_PAYMENT,
             LATE_PAYMENT_REVERSAL,
             BILLING_ERROR,
@@ -1571,6 +1579,8 @@ private constructor(
                 CURRENCY_CONVERSION_REVERSAL -> Value.CURRENCY_CONVERSION_REVERSAL
                 INTEREST -> Value.INTEREST
                 INTEREST_REVERSAL -> Value.INTEREST_REVERSAL
+                INSTALLMENT_FEE -> Value.INSTALLMENT_FEE
+                INSTALLMENT_FEE_REVERSAL -> Value.INSTALLMENT_FEE_REVERSAL
                 LATE_PAYMENT -> Value.LATE_PAYMENT
                 LATE_PAYMENT_REVERSAL -> Value.LATE_PAYMENT_REVERSAL
                 BILLING_ERROR -> Value.BILLING_ERROR
@@ -1610,6 +1620,8 @@ private constructor(
                 CURRENCY_CONVERSION_REVERSAL -> Known.CURRENCY_CONVERSION_REVERSAL
                 INTEREST -> Known.INTEREST
                 INTEREST_REVERSAL -> Known.INTEREST_REVERSAL
+                INSTALLMENT_FEE -> Known.INSTALLMENT_FEE
+                INSTALLMENT_FEE_REVERSAL -> Known.INSTALLMENT_FEE_REVERSAL
                 LATE_PAYMENT -> Known.LATE_PAYMENT
                 LATE_PAYMENT_REVERSAL -> Known.LATE_PAYMENT_REVERSAL
                 BILLING_ERROR -> Known.BILLING_ERROR
