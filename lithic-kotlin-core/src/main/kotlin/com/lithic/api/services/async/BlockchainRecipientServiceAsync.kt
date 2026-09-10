@@ -8,6 +8,7 @@ import com.lithic.api.core.RequestOptions
 import com.lithic.api.core.http.HttpResponseFor
 import com.lithic.api.models.BlockchainRecipient
 import com.lithic.api.models.BlockchainRecipientCreateParams
+import com.lithic.api.models.BlockchainRecipientRetrieveParams
 
 interface BlockchainRecipientServiceAsync {
 
@@ -37,6 +38,35 @@ interface BlockchainRecipientServiceAsync {
     ): BlockchainRecipient
 
     /**
+     * Get a blockchain recipient by token
+     *
+     * Use this to poll the `verification_state` after registering an address: a recipient cannot
+     * receive a payout until screening completes and moves it out of `PENDING`
+     */
+    suspend fun retrieve(
+        blockchainRecipientToken: String,
+        params: BlockchainRecipientRetrieveParams = BlockchainRecipientRetrieveParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BlockchainRecipient =
+        retrieve(
+            params.toBuilder().blockchainRecipientToken(blockchainRecipientToken).build(),
+            requestOptions,
+        )
+
+    /** @see retrieve */
+    suspend fun retrieve(
+        params: BlockchainRecipientRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): BlockchainRecipient
+
+    /** @see retrieve */
+    suspend fun retrieve(
+        blockchainRecipientToken: String,
+        requestOptions: RequestOptions,
+    ): BlockchainRecipient =
+        retrieve(blockchainRecipientToken, BlockchainRecipientRetrieveParams.none(), requestOptions)
+
+    /**
      * A view of [BlockchainRecipientServiceAsync] that provides access to raw HTTP responses for
      * each method.
      */
@@ -60,5 +90,40 @@ interface BlockchainRecipientServiceAsync {
             params: BlockchainRecipientCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BlockchainRecipient>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /v1/blockchain_recipients/{blockchain_recipient_token}`, but is otherwise the same as
+         * [BlockchainRecipientServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            blockchainRecipientToken: String,
+            params: BlockchainRecipientRetrieveParams = BlockchainRecipientRetrieveParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BlockchainRecipient> =
+            retrieve(
+                params.toBuilder().blockchainRecipientToken(blockchainRecipientToken).build(),
+                requestOptions,
+            )
+
+        /** @see retrieve */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: BlockchainRecipientRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<BlockchainRecipient>
+
+        /** @see retrieve */
+        @MustBeClosed
+        suspend fun retrieve(
+            blockchainRecipientToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BlockchainRecipient> =
+            retrieve(
+                blockchainRecipientToken,
+                BlockchainRecipientRetrieveParams.none(),
+                requestOptions,
+            )
     }
 }
