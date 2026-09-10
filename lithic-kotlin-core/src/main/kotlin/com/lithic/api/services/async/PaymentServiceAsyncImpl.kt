@@ -19,6 +19,8 @@ import com.lithic.api.core.prepareAsync
 import com.lithic.api.models.Payment
 import com.lithic.api.models.PaymentCreateParams
 import com.lithic.api.models.PaymentCreateResponse
+import com.lithic.api.models.PaymentCreateStablecoinParams
+import com.lithic.api.models.PaymentCreateStablecoinResponse
 import com.lithic.api.models.PaymentListPageAsync
 import com.lithic.api.models.PaymentListPageResponse
 import com.lithic.api.models.PaymentListParams
@@ -67,6 +69,13 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
     ): PaymentListPageAsync =
         // get /v1/payments
         withRawResponse().list(params, requestOptions).parse()
+
+    override suspend fun createStablecoin(
+        params: PaymentCreateStablecoinParams,
+        requestOptions: RequestOptions,
+    ): PaymentCreateStablecoinResponse =
+        // post /v1/payments/stablecoin
+        withRawResponse().createStablecoin(params, requestOptions).parse()
 
     override suspend fun retry(
         params: PaymentRetryParams,
@@ -211,6 +220,34 @@ class PaymentServiceAsyncImpl internal constructor(private val clientOptions: Cl
                             .params(params)
                             .response(it)
                             .build()
+                    }
+            }
+        }
+
+        private val createStablecoinHandler: Handler<PaymentCreateStablecoinResponse> =
+            jsonHandler<PaymentCreateStablecoinResponse>(clientOptions.jsonMapper)
+
+        override suspend fun createStablecoin(
+            params: PaymentCreateStablecoinParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<PaymentCreateStablecoinResponse> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("v1", "payments", "stablecoin")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { createStablecoinHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
                     }
             }
         }

@@ -20,51 +20,57 @@ import java.util.Collections
 import java.util.Objects
 
 /**
- * Initiates an ACH payment between a financial account and an external bank account.
+ * Initiates a stablecoin payout from a financial account to a registered blockchain recipient.
  *
- * This endpoint originates on the ACH rail only. To send a stablecoin payout, use the
- * [Create stablecoin payment](https://docs.lithic.com/reference/createstablecoinpayment) endpoint.
- * Payments on every rail are read back through
- * [List payments](https://docs.lithic.com/reference/searchpayments).
+ * The recipient must have been registered with
+ * [Create blockchain recipient](https://docs.lithic.com/reference/createblockchainrecipient) and
+ * have completed address screening — only a recipient in the `ENABLED` verification state can
+ * receive a payout. The destination address and chain come from the recipient, so they are not
+ * supplied here.
+ *
+ * Only payouts are initiated through this endpoint. Stablecoin pay-ins are credited from on-chain
+ * deposits to a financial account's deposit address and are not created through the API. Funds are
+ * placed on hold when the payout is initiated, and a payout that fails on chain reverses that hold.
+ * A payout cannot be cancelled once it has been submitted on chain.
+ *
+ * This endpoint is only available to stablecoin-enabled programs. Contact your customer success
+ * manager to learn more.
  */
-class PaymentCreateParams
+class PaymentCreateStablecoinParams
 private constructor(
-    private val body: CreatePaymentRequest,
+    private val body: CreateStablecoinPaymentRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
 
     /**
+     * Payout amount in cents
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun amount(): Long = body.amount()
 
     /**
+     * Token of the blockchain recipient to send the payout to. The recipient must be in the
+     * `ENABLED` verification state
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun externalBankAccountToken(): String = body.externalBankAccountToken()
+    fun blockchainRecipientToken(): String = body.blockchainRecipientToken()
 
     /**
+     * Token of the financial account the payout is funded from
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun financialAccountToken(): String = body.financialAccountToken()
 
     /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun method(): Method = body.method()
-
-    /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun methodAttributes(): PaymentMethodRequestAttributes = body.methodAttributes()
-
-    /**
+     * Direction of the payment. Stablecoin supports payouts only
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
@@ -72,7 +78,7 @@ private constructor(
 
     /**
      * Customer-provided token that will serve as an idempotency token. This token will become the
-     * transaction token.
+     * transaction token
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -80,7 +86,7 @@ private constructor(
     fun token(): String? = body.token()
 
     /**
-     * Optional hold to settle when this payment is initiated.
+     * Optional hold to settle when this payout is initiated
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -88,16 +94,12 @@ private constructor(
     fun hold(): Hold? = body.hold()
 
     /**
+     * Memo recorded on the payout. Defaults to `Stablecoin payout on <chain>` when omitted
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun memo(): String? = body.memo()
-
-    /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun userDefinedId(): String? = body.userDefinedId()
 
     /**
      * Returns the raw JSON value of [amount].
@@ -107,12 +109,12 @@ private constructor(
     fun _amount(): JsonField<Long> = body._amount()
 
     /**
-     * Returns the raw JSON value of [externalBankAccountToken].
+     * Returns the raw JSON value of [blockchainRecipientToken].
      *
-     * Unlike [externalBankAccountToken], this method doesn't throw if the JSON field has an
+     * Unlike [blockchainRecipientToken], this method doesn't throw if the JSON field has an
      * unexpected type.
      */
-    fun _externalBankAccountToken(): JsonField<String> = body._externalBankAccountToken()
+    fun _blockchainRecipientToken(): JsonField<String> = body._blockchainRecipientToken()
 
     /**
      * Returns the raw JSON value of [financialAccountToken].
@@ -121,21 +123,6 @@ private constructor(
      * type.
      */
     fun _financialAccountToken(): JsonField<String> = body._financialAccountToken()
-
-    /**
-     * Returns the raw JSON value of [method].
-     *
-     * Unlike [method], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _method(): JsonField<Method> = body._method()
-
-    /**
-     * Returns the raw JSON value of [methodAttributes].
-     *
-     * Unlike [methodAttributes], this method doesn't throw if the JSON field has an unexpected
-     * type.
-     */
-    fun _methodAttributes(): JsonField<PaymentMethodRequestAttributes> = body._methodAttributes()
 
     /**
      * Returns the raw JSON value of [type].
@@ -165,13 +152,6 @@ private constructor(
      */
     fun _memo(): JsonField<String> = body._memo()
 
-    /**
-     * Returns the raw JSON value of [userDefinedId].
-     *
-     * Unlike [userDefinedId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _userDefinedId(): JsonField<String> = body._userDefinedId()
-
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     /** Additional headers to send with the request. */
@@ -185,32 +165,32 @@ private constructor(
     companion object {
 
         /**
-         * Returns a mutable builder for constructing an instance of [PaymentCreateParams].
+         * Returns a mutable builder for constructing an instance of
+         * [PaymentCreateStablecoinParams].
          *
          * The following fields are required:
          * ```kotlin
          * .amount()
-         * .externalBankAccountToken()
+         * .blockchainRecipientToken()
          * .financialAccountToken()
-         * .method()
-         * .methodAttributes()
          * .type()
          * ```
          */
         fun builder() = Builder()
     }
 
-    /** A builder for [PaymentCreateParams]. */
+    /** A builder for [PaymentCreateStablecoinParams]. */
     class Builder internal constructor() {
 
-        private var body: CreatePaymentRequest.Builder = CreatePaymentRequest.builder()
+        private var body: CreateStablecoinPaymentRequest.Builder =
+            CreateStablecoinPaymentRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
-        internal fun from(paymentCreateParams: PaymentCreateParams) = apply {
-            body = paymentCreateParams.body.toBuilder()
-            additionalHeaders = paymentCreateParams.additionalHeaders.toBuilder()
-            additionalQueryParams = paymentCreateParams.additionalQueryParams.toBuilder()
+        internal fun from(paymentCreateStablecoinParams: PaymentCreateStablecoinParams) = apply {
+            body = paymentCreateStablecoinParams.body.toBuilder()
+            additionalHeaders = paymentCreateStablecoinParams.additionalHeaders.toBuilder()
+            additionalQueryParams = paymentCreateStablecoinParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -219,14 +199,15 @@ private constructor(
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
          * - [amount]
-         * - [externalBankAccountToken]
+         * - [blockchainRecipientToken]
          * - [financialAccountToken]
-         * - [method]
-         * - [methodAttributes]
+         * - [type]
+         * - [token]
          * - etc.
          */
-        fun body(body: CreatePaymentRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: CreateStablecoinPaymentRequest) = apply { this.body = body.toBuilder() }
 
+        /** Payout amount in cents */
         fun amount(amount: Long) = apply { body.amount(amount) }
 
         /**
@@ -237,21 +218,26 @@ private constructor(
          */
         fun amount(amount: JsonField<Long>) = apply { body.amount(amount) }
 
-        fun externalBankAccountToken(externalBankAccountToken: String) = apply {
-            body.externalBankAccountToken(externalBankAccountToken)
+        /**
+         * Token of the blockchain recipient to send the payout to. The recipient must be in the
+         * `ENABLED` verification state
+         */
+        fun blockchainRecipientToken(blockchainRecipientToken: String) = apply {
+            body.blockchainRecipientToken(blockchainRecipientToken)
         }
 
         /**
-         * Sets [Builder.externalBankAccountToken] to an arbitrary JSON value.
+         * Sets [Builder.blockchainRecipientToken] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.externalBankAccountToken] with a well-typed [String]
+         * You should usually call [Builder.blockchainRecipientToken] with a well-typed [String]
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
-        fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
-            body.externalBankAccountToken(externalBankAccountToken)
+        fun blockchainRecipientToken(blockchainRecipientToken: JsonField<String>) = apply {
+            body.blockchainRecipientToken(blockchainRecipientToken)
         }
 
+        /** Token of the financial account the payout is funded from */
         fun financialAccountToken(financialAccountToken: String) = apply {
             body.financialAccountToken(financialAccountToken)
         }
@@ -267,31 +253,7 @@ private constructor(
             body.financialAccountToken(financialAccountToken)
         }
 
-        fun method(method: Method) = apply { body.method(method) }
-
-        /**
-         * Sets [Builder.method] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.method] with a well-typed [Method] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun method(method: JsonField<Method>) = apply { body.method(method) }
-
-        fun methodAttributes(methodAttributes: PaymentMethodRequestAttributes) = apply {
-            body.methodAttributes(methodAttributes)
-        }
-
-        /**
-         * Sets [Builder.methodAttributes] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.methodAttributes] with a well-typed
-         * [PaymentMethodRequestAttributes] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
-         */
-        fun methodAttributes(methodAttributes: JsonField<PaymentMethodRequestAttributes>) = apply {
-            body.methodAttributes(methodAttributes)
-        }
-
+        /** Direction of the payment. Stablecoin supports payouts only */
         fun type(type: Type) = apply { body.type(type) }
 
         /**
@@ -304,7 +266,7 @@ private constructor(
 
         /**
          * Customer-provided token that will serve as an idempotency token. This token will become
-         * the transaction token.
+         * the transaction token
          */
         fun token(token: String) = apply { body.token(token) }
 
@@ -316,7 +278,7 @@ private constructor(
          */
         fun token(token: JsonField<String>) = apply { body.token(token) }
 
-        /** Optional hold to settle when this payment is initiated. */
+        /** Optional hold to settle when this payout is initiated */
         fun hold(hold: Hold) = apply { body.hold(hold) }
 
         /**
@@ -327,6 +289,7 @@ private constructor(
          */
         fun hold(hold: JsonField<Hold>) = apply { body.hold(hold) }
 
+        /** Memo recorded on the payout. Defaults to `Stablecoin payout on <chain>` when omitted */
         fun memo(memo: String) = apply { body.memo(memo) }
 
         /**
@@ -336,19 +299,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
-
-        fun userDefinedId(userDefinedId: String) = apply { body.userDefinedId(userDefinedId) }
-
-        /**
-         * Sets [Builder.userDefinedId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.userDefinedId] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun userDefinedId(userDefinedId: JsonField<String>) = apply {
-            body.userDefinedId(userDefinedId)
-        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -468,100 +418,92 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [PaymentCreateParams].
+         * Returns an immutable instance of [PaymentCreateStablecoinParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          *
          * The following fields are required:
          * ```kotlin
          * .amount()
-         * .externalBankAccountToken()
+         * .blockchainRecipientToken()
          * .financialAccountToken()
-         * .method()
-         * .methodAttributes()
          * .type()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): PaymentCreateParams =
-            PaymentCreateParams(
+        fun build(): PaymentCreateStablecoinParams =
+            PaymentCreateStablecoinParams(
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
     }
 
-    fun _body(): CreatePaymentRequest = body
+    fun _body(): CreateStablecoinPaymentRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
-    class CreatePaymentRequest
+    class CreateStablecoinPaymentRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
-        private val externalBankAccountToken: JsonField<String>,
+        private val blockchainRecipientToken: JsonField<String>,
         private val financialAccountToken: JsonField<String>,
-        private val method: JsonField<Method>,
-        private val methodAttributes: JsonField<PaymentMethodRequestAttributes>,
         private val type: JsonField<Type>,
         private val token: JsonField<String>,
         private val hold: JsonField<Hold>,
         private val memo: JsonField<String>,
-        private val userDefinedId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
             @JsonProperty("amount") @ExcludeMissing amount: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("external_bank_account_token")
+            @JsonProperty("blockchain_recipient_token")
             @ExcludeMissing
-            externalBankAccountToken: JsonField<String> = JsonMissing.of(),
+            blockchainRecipientToken: JsonField<String> = JsonMissing.of(),
             @JsonProperty("financial_account_token")
             @ExcludeMissing
             financialAccountToken: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("method") @ExcludeMissing method: JsonField<Method> = JsonMissing.of(),
-            @JsonProperty("method_attributes")
-            @ExcludeMissing
-            methodAttributes: JsonField<PaymentMethodRequestAttributes> = JsonMissing.of(),
             @JsonProperty("type") @ExcludeMissing type: JsonField<Type> = JsonMissing.of(),
             @JsonProperty("token") @ExcludeMissing token: JsonField<String> = JsonMissing.of(),
             @JsonProperty("hold") @ExcludeMissing hold: JsonField<Hold> = JsonMissing.of(),
             @JsonProperty("memo") @ExcludeMissing memo: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("user_defined_id")
-            @ExcludeMissing
-            userDefinedId: JsonField<String> = JsonMissing.of(),
         ) : this(
             amount,
-            externalBankAccountToken,
+            blockchainRecipientToken,
             financialAccountToken,
-            method,
-            methodAttributes,
             type,
             token,
             hold,
             memo,
-            userDefinedId,
             mutableMapOf(),
         )
 
         /**
+         * Payout amount in cents
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun amount(): Long = amount.getRequired("amount")
 
         /**
+         * Token of the blockchain recipient to send the payout to. The recipient must be in the
+         * `ENABLED` verification state
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun externalBankAccountToken(): String =
-            externalBankAccountToken.getRequired("external_bank_account_token")
+        fun blockchainRecipientToken(): String =
+            blockchainRecipientToken.getRequired("blockchain_recipient_token")
 
         /**
+         * Token of the financial account the payout is funded from
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -569,19 +511,8 @@ private constructor(
             financialAccountToken.getRequired("financial_account_token")
 
         /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun method(): Method = method.getRequired("method")
-
-        /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun methodAttributes(): PaymentMethodRequestAttributes =
-            methodAttributes.getRequired("method_attributes")
-
-        /**
+         * Direction of the payment. Stablecoin supports payouts only
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
@@ -589,7 +520,7 @@ private constructor(
 
         /**
          * Customer-provided token that will serve as an idempotency token. This token will become
-         * the transaction token.
+         * the transaction token
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -597,7 +528,7 @@ private constructor(
         fun token(): String? = token.getNullable("token")
 
         /**
-         * Optional hold to settle when this payment is initiated.
+         * Optional hold to settle when this payout is initiated
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -605,16 +536,12 @@ private constructor(
         fun hold(): Hold? = hold.getNullable("hold")
 
         /**
+         * Memo recorded on the payout. Defaults to `Stablecoin payout on <chain>` when omitted
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun memo(): String? = memo.getNullable("memo")
-
-        /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun userDefinedId(): String? = userDefinedId.getNullable("user_defined_id")
 
         /**
          * Returns the raw JSON value of [amount].
@@ -624,14 +551,14 @@ private constructor(
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Long> = amount
 
         /**
-         * Returns the raw JSON value of [externalBankAccountToken].
+         * Returns the raw JSON value of [blockchainRecipientToken].
          *
-         * Unlike [externalBankAccountToken], this method doesn't throw if the JSON field has an
+         * Unlike [blockchainRecipientToken], this method doesn't throw if the JSON field has an
          * unexpected type.
          */
-        @JsonProperty("external_bank_account_token")
+        @JsonProperty("blockchain_recipient_token")
         @ExcludeMissing
-        fun _externalBankAccountToken(): JsonField<String> = externalBankAccountToken
+        fun _blockchainRecipientToken(): JsonField<String> = blockchainRecipientToken
 
         /**
          * Returns the raw JSON value of [financialAccountToken].
@@ -642,23 +569,6 @@ private constructor(
         @JsonProperty("financial_account_token")
         @ExcludeMissing
         fun _financialAccountToken(): JsonField<String> = financialAccountToken
-
-        /**
-         * Returns the raw JSON value of [method].
-         *
-         * Unlike [method], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("method") @ExcludeMissing fun _method(): JsonField<Method> = method
-
-        /**
-         * Returns the raw JSON value of [methodAttributes].
-         *
-         * Unlike [methodAttributes], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("method_attributes")
-        @ExcludeMissing
-        fun _methodAttributes(): JsonField<PaymentMethodRequestAttributes> = methodAttributes
 
         /**
          * Returns the raw JSON value of [type].
@@ -688,16 +598,6 @@ private constructor(
          */
         @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
 
-        /**
-         * Returns the raw JSON value of [userDefinedId].
-         *
-         * Unlike [userDefinedId], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("user_defined_id")
-        @ExcludeMissing
-        fun _userDefinedId(): JsonField<String> = userDefinedId
-
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -713,50 +613,47 @@ private constructor(
         companion object {
 
             /**
-             * Returns a mutable builder for constructing an instance of [CreatePaymentRequest].
+             * Returns a mutable builder for constructing an instance of
+             * [CreateStablecoinPaymentRequest].
              *
              * The following fields are required:
              * ```kotlin
              * .amount()
-             * .externalBankAccountToken()
+             * .blockchainRecipientToken()
              * .financialAccountToken()
-             * .method()
-             * .methodAttributes()
              * .type()
              * ```
              */
             fun builder() = Builder()
         }
 
-        /** A builder for [CreatePaymentRequest]. */
+        /** A builder for [CreateStablecoinPaymentRequest]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
-            private var externalBankAccountToken: JsonField<String>? = null
+            private var blockchainRecipientToken: JsonField<String>? = null
             private var financialAccountToken: JsonField<String>? = null
-            private var method: JsonField<Method>? = null
-            private var methodAttributes: JsonField<PaymentMethodRequestAttributes>? = null
             private var type: JsonField<Type>? = null
             private var token: JsonField<String> = JsonMissing.of()
             private var hold: JsonField<Hold> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
-            private var userDefinedId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(createPaymentRequest: CreatePaymentRequest) = apply {
-                amount = createPaymentRequest.amount
-                externalBankAccountToken = createPaymentRequest.externalBankAccountToken
-                financialAccountToken = createPaymentRequest.financialAccountToken
-                method = createPaymentRequest.method
-                methodAttributes = createPaymentRequest.methodAttributes
-                type = createPaymentRequest.type
-                token = createPaymentRequest.token
-                hold = createPaymentRequest.hold
-                memo = createPaymentRequest.memo
-                userDefinedId = createPaymentRequest.userDefinedId
-                additionalProperties = createPaymentRequest.additionalProperties.toMutableMap()
-            }
+            internal fun from(createStablecoinPaymentRequest: CreateStablecoinPaymentRequest) =
+                apply {
+                    amount = createStablecoinPaymentRequest.amount
+                    blockchainRecipientToken =
+                        createStablecoinPaymentRequest.blockchainRecipientToken
+                    financialAccountToken = createStablecoinPaymentRequest.financialAccountToken
+                    type = createStablecoinPaymentRequest.type
+                    token = createStablecoinPaymentRequest.token
+                    hold = createStablecoinPaymentRequest.hold
+                    memo = createStablecoinPaymentRequest.memo
+                    additionalProperties =
+                        createStablecoinPaymentRequest.additionalProperties.toMutableMap()
+                }
 
+            /** Payout amount in cents */
             fun amount(amount: Long) = amount(JsonField.of(amount))
 
             /**
@@ -768,20 +665,25 @@ private constructor(
              */
             fun amount(amount: JsonField<Long>) = apply { this.amount = amount }
 
-            fun externalBankAccountToken(externalBankAccountToken: String) =
-                externalBankAccountToken(JsonField.of(externalBankAccountToken))
+            /**
+             * Token of the blockchain recipient to send the payout to. The recipient must be in the
+             * `ENABLED` verification state
+             */
+            fun blockchainRecipientToken(blockchainRecipientToken: String) =
+                blockchainRecipientToken(JsonField.of(blockchainRecipientToken))
 
             /**
-             * Sets [Builder.externalBankAccountToken] to an arbitrary JSON value.
+             * Sets [Builder.blockchainRecipientToken] to an arbitrary JSON value.
              *
-             * You should usually call [Builder.externalBankAccountToken] with a well-typed [String]
+             * You should usually call [Builder.blockchainRecipientToken] with a well-typed [String]
              * value instead. This method is primarily for setting the field to an undocumented or
              * not yet supported value.
              */
-            fun externalBankAccountToken(externalBankAccountToken: JsonField<String>) = apply {
-                this.externalBankAccountToken = externalBankAccountToken
+            fun blockchainRecipientToken(blockchainRecipientToken: JsonField<String>) = apply {
+                this.blockchainRecipientToken = blockchainRecipientToken
             }
 
+            /** Token of the financial account the payout is funded from */
             fun financialAccountToken(financialAccountToken: String) =
                 financialAccountToken(JsonField.of(financialAccountToken))
 
@@ -796,32 +698,7 @@ private constructor(
                 this.financialAccountToken = financialAccountToken
             }
 
-            fun method(method: Method) = method(JsonField.of(method))
-
-            /**
-             * Sets [Builder.method] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.method] with a well-typed [Method] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun method(method: JsonField<Method>) = apply { this.method = method }
-
-            fun methodAttributes(methodAttributes: PaymentMethodRequestAttributes) =
-                methodAttributes(JsonField.of(methodAttributes))
-
-            /**
-             * Sets [Builder.methodAttributes] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.methodAttributes] with a well-typed
-             * [PaymentMethodRequestAttributes] value instead. This method is primarily for setting
-             * the field to an undocumented or not yet supported value.
-             */
-            fun methodAttributes(methodAttributes: JsonField<PaymentMethodRequestAttributes>) =
-                apply {
-                    this.methodAttributes = methodAttributes
-                }
-
+            /** Direction of the payment. Stablecoin supports payouts only */
             fun type(type: Type) = type(JsonField.of(type))
 
             /**
@@ -835,7 +712,7 @@ private constructor(
 
             /**
              * Customer-provided token that will serve as an idempotency token. This token will
-             * become the transaction token.
+             * become the transaction token
              */
             fun token(token: String) = token(JsonField.of(token))
 
@@ -848,7 +725,7 @@ private constructor(
              */
             fun token(token: JsonField<String>) = apply { this.token = token }
 
-            /** Optional hold to settle when this payment is initiated. */
+            /** Optional hold to settle when this payout is initiated */
             fun hold(hold: Hold) = hold(JsonField.of(hold))
 
             /**
@@ -860,6 +737,9 @@ private constructor(
              */
             fun hold(hold: JsonField<Hold>) = apply { this.hold = hold }
 
+            /**
+             * Memo recorded on the payout. Defaults to `Stablecoin payout on <chain>` when omitted
+             */
             fun memo(memo: String) = memo(JsonField.of(memo))
 
             /**
@@ -870,19 +750,6 @@ private constructor(
              * value.
              */
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
-
-            fun userDefinedId(userDefinedId: String) = userDefinedId(JsonField.of(userDefinedId))
-
-            /**
-             * Sets [Builder.userDefinedId] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.userDefinedId] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun userDefinedId(userDefinedId: JsonField<String>) = apply {
-                this.userDefinedId = userDefinedId
-            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -904,34 +771,29 @@ private constructor(
             }
 
             /**
-             * Returns an immutable instance of [CreatePaymentRequest].
+             * Returns an immutable instance of [CreateStablecoinPaymentRequest].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              *
              * The following fields are required:
              * ```kotlin
              * .amount()
-             * .externalBankAccountToken()
+             * .blockchainRecipientToken()
              * .financialAccountToken()
-             * .method()
-             * .methodAttributes()
              * .type()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): CreatePaymentRequest =
-                CreatePaymentRequest(
+            fun build(): CreateStablecoinPaymentRequest =
+                CreateStablecoinPaymentRequest(
                     checkRequired("amount", amount),
-                    checkRequired("externalBankAccountToken", externalBankAccountToken),
+                    checkRequired("blockchainRecipientToken", blockchainRecipientToken),
                     checkRequired("financialAccountToken", financialAccountToken),
-                    checkRequired("method", method),
-                    checkRequired("methodAttributes", methodAttributes),
                     checkRequired("type", type),
                     token,
                     hold,
                     memo,
-                    userDefinedId,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -947,21 +809,18 @@ private constructor(
          * @throws LithicInvalidDataException if any value type in this object doesn't match its
          *   expected type.
          */
-        fun validate(): CreatePaymentRequest = apply {
+        fun validate(): CreateStablecoinPaymentRequest = apply {
             if (validated) {
                 return@apply
             }
 
             amount()
-            externalBankAccountToken()
+            blockchainRecipientToken()
             financialAccountToken()
-            method().validate()
-            methodAttributes().validate()
             type().validate()
             token()
             hold()?.validate()
             memo()
-            userDefinedId()
             validated = true
         }
 
@@ -981,47 +840,38 @@ private constructor(
          */
         internal fun validity(): Int =
             (if (amount.asKnown() == null) 0 else 1) +
-                (if (externalBankAccountToken.asKnown() == null) 0 else 1) +
+                (if (blockchainRecipientToken.asKnown() == null) 0 else 1) +
                 (if (financialAccountToken.asKnown() == null) 0 else 1) +
-                (method.asKnown()?.validity() ?: 0) +
-                (methodAttributes.asKnown()?.validity() ?: 0) +
                 (type.asKnown()?.validity() ?: 0) +
                 (if (token.asKnown() == null) 0 else 1) +
                 (hold.asKnown()?.validity() ?: 0) +
-                (if (memo.asKnown() == null) 0 else 1) +
-                (if (userDefinedId.asKnown() == null) 0 else 1)
+                (if (memo.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return other is CreatePaymentRequest &&
+            return other is CreateStablecoinPaymentRequest &&
                 amount == other.amount &&
-                externalBankAccountToken == other.externalBankAccountToken &&
+                blockchainRecipientToken == other.blockchainRecipientToken &&
                 financialAccountToken == other.financialAccountToken &&
-                method == other.method &&
-                methodAttributes == other.methodAttributes &&
                 type == other.type &&
                 token == other.token &&
                 hold == other.hold &&
                 memo == other.memo &&
-                userDefinedId == other.userDefinedId &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
             Objects.hash(
                 amount,
-                externalBankAccountToken,
+                blockchainRecipientToken,
                 financialAccountToken,
-                method,
-                methodAttributes,
                 type,
                 token,
                 hold,
                 memo,
-                userDefinedId,
                 additionalProperties,
             )
         }
@@ -1029,581 +879,10 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreatePaymentRequest{amount=$amount, externalBankAccountToken=$externalBankAccountToken, financialAccountToken=$financialAccountToken, method=$method, methodAttributes=$methodAttributes, type=$type, token=$token, hold=$hold, memo=$memo, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+            "CreateStablecoinPaymentRequest{amount=$amount, blockchainRecipientToken=$blockchainRecipientToken, financialAccountToken=$financialAccountToken, type=$type, token=$token, hold=$hold, memo=$memo, additionalProperties=$additionalProperties}"
     }
 
-    class Method @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            val ACH_NEXT_DAY = of("ACH_NEXT_DAY")
-
-            val ACH_SAME_DAY = of("ACH_SAME_DAY")
-
-            fun of(value: String) = Method(JsonField.of(value))
-        }
-
-        /** An enum containing [Method]'s known values. */
-        enum class Known {
-            ACH_NEXT_DAY,
-            ACH_SAME_DAY,
-        }
-
-        /**
-         * An enum containing [Method]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [Method] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            ACH_NEXT_DAY,
-            ACH_SAME_DAY,
-            /** An enum member indicating that [Method] was instantiated with an unknown value. */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                ACH_NEXT_DAY -> Value.ACH_NEXT_DAY
-                ACH_SAME_DAY -> Value.ACH_SAME_DAY
-                else -> Value._UNKNOWN
-            }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws LithicInvalidDataException if this class instance's value is a not a known
-         *   member.
-         */
-        fun known(): Known =
-            when (this) {
-                ACH_NEXT_DAY -> Known.ACH_NEXT_DAY
-                ACH_SAME_DAY -> Known.ACH_SAME_DAY
-                else -> throw LithicInvalidDataException("Unknown Method: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws LithicInvalidDataException if this class instance's value does not have the
-         *   expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws LithicInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
-        fun validate(): Method = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Method && value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-    }
-
-    class PaymentMethodRequestAttributes
-    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
-    private constructor(
-        private val secCode: JsonField<SecCode>,
-        private val achHoldPeriod: JsonField<Long>,
-        private val addenda: JsonField<String>,
-        private val overrideCompanyName: JsonField<String>,
-        private val additionalProperties: MutableMap<String, JsonValue>,
-    ) {
-
-        @JsonCreator
-        private constructor(
-            @JsonProperty("sec_code")
-            @ExcludeMissing
-            secCode: JsonField<SecCode> = JsonMissing.of(),
-            @JsonProperty("ach_hold_period")
-            @ExcludeMissing
-            achHoldPeriod: JsonField<Long> = JsonMissing.of(),
-            @JsonProperty("addenda") @ExcludeMissing addenda: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("override_company_name")
-            @ExcludeMissing
-            overrideCompanyName: JsonField<String> = JsonMissing.of(),
-        ) : this(secCode, achHoldPeriod, addenda, overrideCompanyName, mutableMapOf())
-
-        /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun secCode(): SecCode = secCode.getRequired("sec_code")
-
-        /**
-         * Number of days to hold the ACH payment
-         *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun achHoldPeriod(): Long? = achHoldPeriod.getNullable("ach_hold_period")
-
-        /**
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun addenda(): String? = addenda.getNullable("addenda")
-
-        /**
-         * Value to override the configured company name with. Can only be used if allowed to
-         * override
-         *
-         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun overrideCompanyName(): String? =
-            overrideCompanyName.getNullable("override_company_name")
-
-        /**
-         * Returns the raw JSON value of [secCode].
-         *
-         * Unlike [secCode], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("sec_code") @ExcludeMissing fun _secCode(): JsonField<SecCode> = secCode
-
-        /**
-         * Returns the raw JSON value of [achHoldPeriod].
-         *
-         * Unlike [achHoldPeriod], this method doesn't throw if the JSON field has an unexpected
-         * type.
-         */
-        @JsonProperty("ach_hold_period")
-        @ExcludeMissing
-        fun _achHoldPeriod(): JsonField<Long> = achHoldPeriod
-
-        /**
-         * Returns the raw JSON value of [addenda].
-         *
-         * Unlike [addenda], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("addenda") @ExcludeMissing fun _addenda(): JsonField<String> = addenda
-
-        /**
-         * Returns the raw JSON value of [overrideCompanyName].
-         *
-         * Unlike [overrideCompanyName], this method doesn't throw if the JSON field has an
-         * unexpected type.
-         */
-        @JsonProperty("override_company_name")
-        @ExcludeMissing
-        fun _overrideCompanyName(): JsonField<String> = overrideCompanyName
-
-        @JsonAnySetter
-        private fun putAdditionalProperty(key: String, value: JsonValue) {
-            additionalProperties.put(key, value)
-        }
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> =
-            Collections.unmodifiableMap(additionalProperties)
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /**
-             * Returns a mutable builder for constructing an instance of
-             * [PaymentMethodRequestAttributes].
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .secCode()
-             * ```
-             */
-            fun builder() = Builder()
-        }
-
-        /** A builder for [PaymentMethodRequestAttributes]. */
-        class Builder internal constructor() {
-
-            private var secCode: JsonField<SecCode>? = null
-            private var achHoldPeriod: JsonField<Long> = JsonMissing.of()
-            private var addenda: JsonField<String> = JsonMissing.of()
-            private var overrideCompanyName: JsonField<String> = JsonMissing.of()
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(paymentMethodRequestAttributes: PaymentMethodRequestAttributes) =
-                apply {
-                    secCode = paymentMethodRequestAttributes.secCode
-                    achHoldPeriod = paymentMethodRequestAttributes.achHoldPeriod
-                    addenda = paymentMethodRequestAttributes.addenda
-                    overrideCompanyName = paymentMethodRequestAttributes.overrideCompanyName
-                    additionalProperties =
-                        paymentMethodRequestAttributes.additionalProperties.toMutableMap()
-                }
-
-            fun secCode(secCode: SecCode) = secCode(JsonField.of(secCode))
-
-            /**
-             * Sets [Builder.secCode] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.secCode] with a well-typed [SecCode] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun secCode(secCode: JsonField<SecCode>) = apply { this.secCode = secCode }
-
-            /** Number of days to hold the ACH payment */
-            fun achHoldPeriod(achHoldPeriod: Long) = achHoldPeriod(JsonField.of(achHoldPeriod))
-
-            /**
-             * Sets [Builder.achHoldPeriod] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.achHoldPeriod] with a well-typed [Long] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun achHoldPeriod(achHoldPeriod: JsonField<Long>) = apply {
-                this.achHoldPeriod = achHoldPeriod
-            }
-
-            fun addenda(addenda: String?) = addenda(JsonField.ofNullable(addenda))
-
-            /**
-             * Sets [Builder.addenda] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.addenda] with a well-typed [String] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun addenda(addenda: JsonField<String>) = apply { this.addenda = addenda }
-
-            /**
-             * Value to override the configured company name with. Can only be used if allowed to
-             * override
-             */
-            fun overrideCompanyName(overrideCompanyName: String?) =
-                overrideCompanyName(JsonField.ofNullable(overrideCompanyName))
-
-            /**
-             * Sets [Builder.overrideCompanyName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.overrideCompanyName] with a well-typed [String]
-             * value instead. This method is primarily for setting the field to an undocumented or
-             * not yet supported value.
-             */
-            fun overrideCompanyName(overrideCompanyName: JsonField<String>) = apply {
-                this.overrideCompanyName = overrideCompanyName
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [PaymentMethodRequestAttributes].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             *
-             * The following fields are required:
-             * ```kotlin
-             * .secCode()
-             * ```
-             *
-             * @throws IllegalStateException if any required field is unset.
-             */
-            fun build(): PaymentMethodRequestAttributes =
-                PaymentMethodRequestAttributes(
-                    checkRequired("secCode", secCode),
-                    achHoldPeriod,
-                    addenda,
-                    overrideCompanyName,
-                    additionalProperties.toMutableMap(),
-                )
-        }
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws LithicInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
-        fun validate(): PaymentMethodRequestAttributes = apply {
-            if (validated) {
-                return@apply
-            }
-
-            secCode().validate()
-            achHoldPeriod()
-            addenda()
-            overrideCompanyName()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int =
-            (secCode.asKnown()?.validity() ?: 0) +
-                (if (achHoldPeriod.asKnown() == null) 0 else 1) +
-                (if (addenda.asKnown() == null) 0 else 1) +
-                (if (overrideCompanyName.asKnown() == null) 0 else 1)
-
-        class SecCode @JsonCreator private constructor(private val value: JsonField<String>) :
-            Enum {
-
-            /**
-             * Returns this class instance's raw value.
-             *
-             * This is usually only useful if this instance was deserialized from data that doesn't
-             * match any known member, and you want to know that value. For example, if the SDK is
-             * on an older version than the API, then the API may respond with new members that the
-             * SDK is unaware of.
-             */
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-            companion object {
-
-                val CCD = of("CCD")
-
-                val PPD = of("PPD")
-
-                val WEB = of("WEB")
-
-                fun of(value: String) = SecCode(JsonField.of(value))
-            }
-
-            /** An enum containing [SecCode]'s known values. */
-            enum class Known {
-                CCD,
-                PPD,
-                WEB,
-            }
-
-            /**
-             * An enum containing [SecCode]'s known values, as well as an [_UNKNOWN] member.
-             *
-             * An instance of [SecCode] can contain an unknown value in a couple of cases:
-             * - It was deserialized from data that doesn't match any known member. For example, if
-             *   the SDK is on an older version than the API, then the API may respond with new
-             *   members that the SDK is unaware of.
-             * - It was constructed with an arbitrary value using the [of] method.
-             */
-            enum class Value {
-                CCD,
-                PPD,
-                WEB,
-                /**
-                 * An enum member indicating that [SecCode] was instantiated with an unknown value.
-                 */
-                _UNKNOWN,
-            }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value, or
-             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-             *
-             * Use the [known] method instead if you're certain the value is always known or if you
-             * want to throw for the unknown case.
-             */
-            fun value(): Value =
-                when (this) {
-                    CCD -> Value.CCD
-                    PPD -> Value.PPD
-                    WEB -> Value.WEB
-                    else -> Value._UNKNOWN
-                }
-
-            /**
-             * Returns an enum member corresponding to this class instance's value.
-             *
-             * Use the [value] method instead if you're uncertain the value is always known and
-             * don't want to throw for the unknown case.
-             *
-             * @throws LithicInvalidDataException if this class instance's value is a not a known
-             *   member.
-             */
-            fun known(): Known =
-                when (this) {
-                    CCD -> Known.CCD
-                    PPD -> Known.PPD
-                    WEB -> Known.WEB
-                    else -> throw LithicInvalidDataException("Unknown SecCode: $value")
-                }
-
-            /**
-             * Returns this class instance's primitive wire representation.
-             *
-             * This differs from the [toString] method because that method is primarily for
-             * debugging and generally doesn't throw.
-             *
-             * @throws LithicInvalidDataException if this class instance's value does not have the
-             *   expected primitive type.
-             */
-            fun asString(): String =
-                _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
-
-            private var validated: Boolean = false
-
-            /**
-             * Validates that the types of all values in this object match their expected types
-             * recursively.
-             *
-             * This method is _not_ forwards compatible with new types from the API for existing
-             * fields.
-             *
-             * @throws LithicInvalidDataException if any value type in this object doesn't match its
-             *   expected type.
-             */
-            fun validate(): SecCode = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                known()
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: LithicInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is SecCode && value == other.value
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PaymentMethodRequestAttributes &&
-                secCode == other.secCode &&
-                achHoldPeriod == other.achHoldPeriod &&
-                addenda == other.addenda &&
-                overrideCompanyName == other.overrideCompanyName &&
-                additionalProperties == other.additionalProperties
-        }
-
-        private val hashCode: Int by lazy {
-            Objects.hash(secCode, achHoldPeriod, addenda, overrideCompanyName, additionalProperties)
-        }
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() =
-            "PaymentMethodRequestAttributes{secCode=$secCode, achHoldPeriod=$achHoldPeriod, addenda=$addenda, overrideCompanyName=$overrideCompanyName, additionalProperties=$additionalProperties}"
-    }
-
+    /** Direction of the payment. Stablecoin supports payouts only */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
@@ -1618,8 +897,6 @@ private constructor(
 
         companion object {
 
-            val COLLECTION = of("COLLECTION")
-
             val PAYMENT = of("PAYMENT")
 
             fun of(value: String) = Type(JsonField.of(value))
@@ -1627,8 +904,7 @@ private constructor(
 
         /** An enum containing [Type]'s known values. */
         enum class Known {
-            COLLECTION,
-            PAYMENT,
+            PAYMENT
         }
 
         /**
@@ -1641,7 +917,6 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            COLLECTION,
             PAYMENT,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -1656,7 +931,6 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                COLLECTION -> Value.COLLECTION
                 PAYMENT -> Value.PAYMENT
                 else -> Value._UNKNOWN
             }
@@ -1672,7 +946,6 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                COLLECTION -> Known.COLLECTION
                 PAYMENT -> Known.PAYMENT
                 else -> throw LithicInvalidDataException("Unknown Type: $value")
             }
@@ -1738,7 +1011,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    /** Optional hold to settle when this payment is initiated. */
+    /** Optional hold to settle when this payout is initiated */
     class Hold
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
@@ -1752,7 +1025,7 @@ private constructor(
         ) : this(token, mutableMapOf())
 
         /**
-         * Token of the hold to settle when this payment is initiated.
+         * Token of the hold to settle when this payout is initiated
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1802,7 +1075,7 @@ private constructor(
                 additionalProperties = hold.additionalProperties.toMutableMap()
             }
 
-            /** Token of the hold to settle when this payment is initiated. */
+            /** Token of the hold to settle when this payout is initiated */
             fun token(token: String) = token(JsonField.of(token))
 
             /**
@@ -1907,7 +1180,7 @@ private constructor(
             return true
         }
 
-        return other is PaymentCreateParams &&
+        return other is PaymentCreateStablecoinParams &&
             body == other.body &&
             additionalHeaders == other.additionalHeaders &&
             additionalQueryParams == other.additionalQueryParams
@@ -1916,5 +1189,5 @@ private constructor(
     override fun hashCode(): Int = Objects.hash(body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "PaymentCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PaymentCreateStablecoinParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
