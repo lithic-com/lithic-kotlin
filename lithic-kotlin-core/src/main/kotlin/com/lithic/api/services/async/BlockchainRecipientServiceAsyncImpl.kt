@@ -4,6 +4,7 @@ package com.lithic.api.services.async
 
 import com.lithic.api.core.ClientOptions
 import com.lithic.api.core.RequestOptions
+import com.lithic.api.core.checkRequired
 import com.lithic.api.core.handlers.errorBodyHandler
 import com.lithic.api.core.handlers.errorHandler
 import com.lithic.api.core.handlers.jsonHandler
@@ -17,6 +18,7 @@ import com.lithic.api.core.http.parseable
 import com.lithic.api.core.prepareAsync
 import com.lithic.api.models.BlockchainRecipient
 import com.lithic.api.models.BlockchainRecipientCreateParams
+import com.lithic.api.models.BlockchainRecipientRetrieveParams
 
 class BlockchainRecipientServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : BlockchainRecipientServiceAsync {
@@ -39,6 +41,13 @@ internal constructor(private val clientOptions: ClientOptions) : BlockchainRecip
     ): BlockchainRecipient =
         // post /v1/blockchain_recipients
         withRawResponse().create(params, requestOptions).parse()
+
+    override suspend fun retrieve(
+        params: BlockchainRecipientRetrieveParams,
+        requestOptions: RequestOptions,
+    ): BlockchainRecipient =
+        // get /v1/blockchain_recipients/{blockchain_recipient_token}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BlockchainRecipientServiceAsync.WithRawResponse {
@@ -73,6 +82,36 @@ internal constructor(private val clientOptions: ClientOptions) : BlockchainRecip
             return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val retrieveHandler: Handler<BlockchainRecipient> =
+            jsonHandler<BlockchainRecipient>(clientOptions.jsonMapper)
+
+        override suspend fun retrieve(
+            params: BlockchainRecipientRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<BlockchainRecipient> {
+            // We check here instead of in the params builder because this can be specified
+            // positionally or in the params class.
+            checkRequired("blockchainRecipientToken", params.blockchainRecipientToken())
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
+                    .addPathSegments("v1", "blockchain_recipients", params._pathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return errorHandler.handle(response).parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
