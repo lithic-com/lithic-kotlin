@@ -137,6 +137,14 @@ internal class ThreeDSAuthenticationTest {
                 )
                 .challengeOrchestratedBy(ThreeDSAuthentication.ChallengeOrchestratedBy.LITHIC)
                 .decisionMadeBy(ThreeDSAuthentication.DecisionMadeBy.LITHIC_RULES)
+                .psd2Context(
+                    ThreeDSAuthentication.Psd2Context.builder()
+                        .acquirerExemption(ThreeDSAuthentication.Psd2Context.AcquirerExemption.NONE)
+                        .lithicExemptionValidation(
+                            ThreeDSAuthentication.Psd2Context.LithicExemptionValidation.ACCEPTED
+                        )
+                        .build()
+                )
                 .threeRiRequestType(ThreeDSAuthentication.ThreeRiRequestType.ACCOUNT_VERIFICATION)
                 .transaction(
                     ThreeDSAuthentication.Transaction.builder()
@@ -282,6 +290,15 @@ internal class ThreeDSAuthenticationTest {
             .isEqualTo(ThreeDSAuthentication.ChallengeOrchestratedBy.LITHIC)
         assertThat(threeDSAuthentication.decisionMadeBy())
             .isEqualTo(ThreeDSAuthentication.DecisionMadeBy.LITHIC_RULES)
+        assertThat(threeDSAuthentication.psd2Context())
+            .isEqualTo(
+                ThreeDSAuthentication.Psd2Context.builder()
+                    .acquirerExemption(ThreeDSAuthentication.Psd2Context.AcquirerExemption.NONE)
+                    .lithicExemptionValidation(
+                        ThreeDSAuthentication.Psd2Context.LithicExemptionValidation.ACCEPTED
+                    )
+                    .build()
+            )
         assertThat(threeDSAuthentication.threeRiRequestType())
             .isEqualTo(ThreeDSAuthentication.ThreeRiRequestType.ACCOUNT_VERIFICATION)
         assertThat(threeDSAuthentication.transaction())
@@ -425,6 +442,14 @@ internal class ThreeDSAuthenticationTest {
                 )
                 .challengeOrchestratedBy(ThreeDSAuthentication.ChallengeOrchestratedBy.LITHIC)
                 .decisionMadeBy(ThreeDSAuthentication.DecisionMadeBy.LITHIC_RULES)
+                .psd2Context(
+                    ThreeDSAuthentication.Psd2Context.builder()
+                        .acquirerExemption(ThreeDSAuthentication.Psd2Context.AcquirerExemption.NONE)
+                        .lithicExemptionValidation(
+                            ThreeDSAuthentication.Psd2Context.LithicExemptionValidation.ACCEPTED
+                        )
+                        .build()
+                )
                 .threeRiRequestType(ThreeDSAuthentication.ThreeRiRequestType.ACCOUNT_VERIFICATION)
                 .transaction(
                     ThreeDSAuthentication.Transaction.builder()

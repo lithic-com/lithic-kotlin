@@ -41,6 +41,7 @@ private constructor(
     private val challengeMetadata: JsonField<ThreeDSAuthentication.ChallengeMetadata>,
     private val challengeOrchestratedBy: JsonField<ThreeDSAuthentication.ChallengeOrchestratedBy>,
     private val decisionMadeBy: JsonField<ThreeDSAuthentication.DecisionMadeBy>,
+    private val psd2Context: JsonField<ThreeDSAuthentication.Psd2Context>,
     private val threeRiRequestType: JsonField<ThreeDSAuthentication.ThreeRiRequestType>,
     private val transaction: JsonField<ThreeDSAuthentication.Transaction>,
     private val eventType: JsonField<EventType>,
@@ -104,6 +105,9 @@ private constructor(
         @JsonProperty("decision_made_by")
         @ExcludeMissing
         decisionMadeBy: JsonField<ThreeDSAuthentication.DecisionMadeBy> = JsonMissing.of(),
+        @JsonProperty("psd2_context")
+        @ExcludeMissing
+        psd2Context: JsonField<ThreeDSAuthentication.Psd2Context> = JsonMissing.of(),
         @JsonProperty("three_ri_request_type")
         @ExcludeMissing
         threeRiRequestType: JsonField<ThreeDSAuthentication.ThreeRiRequestType> = JsonMissing.of(),
@@ -132,6 +136,7 @@ private constructor(
         challengeMetadata,
         challengeOrchestratedBy,
         decisionMadeBy,
+        psd2Context,
         threeRiRequestType,
         transaction,
         eventType,
@@ -158,6 +163,7 @@ private constructor(
             .challengeMetadata(challengeMetadata)
             .challengeOrchestratedBy(challengeOrchestratedBy)
             .decisionMadeBy(decisionMadeBy)
+            .psd2Context(psd2Context)
             .threeRiRequestType(threeRiRequestType)
             .transaction(transaction)
             .build()
@@ -337,6 +343,15 @@ private constructor(
      */
     fun decisionMadeBy(): ThreeDSAuthentication.DecisionMadeBy? =
         decisionMadeBy.getNullable("decision_made_by")
+
+    /**
+     * PSD2/SCA context for EEA and UK transactions. Present when Lithic determines the transaction
+     * is in scope for PSD2 Strong Customer Authentication. Absent for out-of-scope transactions.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun psd2Context(): ThreeDSAuthentication.Psd2Context? = psd2Context.getNullable("psd2_context")
 
     /**
      * Type of 3DS Requestor Initiated (3RI) request — i.e., a 3DS authentication that takes place
@@ -530,6 +545,15 @@ private constructor(
     fun _decisionMadeBy(): JsonField<ThreeDSAuthentication.DecisionMadeBy> = decisionMadeBy
 
     /**
+     * Returns the raw JSON value of [psd2Context].
+     *
+     * Unlike [psd2Context], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("psd2_context")
+    @ExcludeMissing
+    fun _psd2Context(): JsonField<ThreeDSAuthentication.Psd2Context> = psd2Context
+
+    /**
      * Returns the raw JSON value of [threeRiRequestType].
      *
      * Unlike [threeRiRequestType], this method doesn't throw if the JSON field has an unexpected
@@ -624,6 +648,7 @@ private constructor(
             JsonMissing.of()
         private var decisionMadeBy: JsonField<ThreeDSAuthentication.DecisionMadeBy> =
             JsonMissing.of()
+        private var psd2Context: JsonField<ThreeDSAuthentication.Psd2Context> = JsonMissing.of()
         private var threeRiRequestType: JsonField<ThreeDSAuthentication.ThreeRiRequestType> =
             JsonMissing.of()
         private var transaction: JsonField<ThreeDSAuthentication.Transaction> = JsonMissing.of()
@@ -656,6 +681,7 @@ private constructor(
             challengeOrchestratedBy =
                 threeDSAuthenticationApprovalRequestWebhookEvent.challengeOrchestratedBy
             decisionMadeBy = threeDSAuthenticationApprovalRequestWebhookEvent.decisionMadeBy
+            psd2Context = threeDSAuthenticationApprovalRequestWebhookEvent.psd2Context
             threeRiRequestType = threeDSAuthenticationApprovalRequestWebhookEvent.threeRiRequestType
             transaction = threeDSAuthenticationApprovalRequestWebhookEvent.transaction
             eventType = threeDSAuthenticationApprovalRequestWebhookEvent.eventType
@@ -979,6 +1005,25 @@ private constructor(
             }
 
         /**
+         * PSD2/SCA context for EEA and UK transactions. Present when Lithic determines the
+         * transaction is in scope for PSD2 Strong Customer Authentication. Absent for out-of-scope
+         * transactions.
+         */
+        fun psd2Context(psd2Context: ThreeDSAuthentication.Psd2Context?) =
+            psd2Context(JsonField.ofNullable(psd2Context))
+
+        /**
+         * Sets [Builder.psd2Context] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.psd2Context] with a well-typed
+         * [ThreeDSAuthentication.Psd2Context] value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
+         */
+        fun psd2Context(psd2Context: JsonField<ThreeDSAuthentication.Psd2Context>) = apply {
+            this.psd2Context = psd2Context
+        }
+
+        /**
          * Type of 3DS Requestor Initiated (3RI) request — i.e., a 3DS authentication that takes
          * place at the initiation of the merchant rather than the cardholder. The most common
          * example of this is where a merchant is authenticating before billing for a recurring
@@ -1093,6 +1138,7 @@ private constructor(
                 challengeMetadata,
                 challengeOrchestratedBy,
                 decisionMadeBy,
+                psd2Context,
                 threeRiRequestType,
                 transaction,
                 checkRequired("eventType", eventType),
@@ -1133,6 +1179,7 @@ private constructor(
         challengeMetadata()?.validate()
         challengeOrchestratedBy()?.validate()
         decisionMadeBy()?.validate()
+        psd2Context()?.validate()
         threeRiRequestType()?.validate()
         transaction()?.validate()
         eventType().validate()
@@ -1171,6 +1218,7 @@ private constructor(
             (challengeMetadata.asKnown()?.validity() ?: 0) +
             (challengeOrchestratedBy.asKnown()?.validity() ?: 0) +
             (decisionMadeBy.asKnown()?.validity() ?: 0) +
+            (psd2Context.asKnown()?.validity() ?: 0) +
             (threeRiRequestType.asKnown()?.validity() ?: 0) +
             (transaction.asKnown()?.validity() ?: 0) +
             (eventType.asKnown()?.validity() ?: 0)
@@ -1332,6 +1380,7 @@ private constructor(
             challengeMetadata == other.challengeMetadata &&
             challengeOrchestratedBy == other.challengeOrchestratedBy &&
             decisionMadeBy == other.decisionMadeBy &&
+            psd2Context == other.psd2Context &&
             threeRiRequestType == other.threeRiRequestType &&
             transaction == other.transaction &&
             eventType == other.eventType &&
@@ -1358,6 +1407,7 @@ private constructor(
             challengeMetadata,
             challengeOrchestratedBy,
             decisionMadeBy,
+            psd2Context,
             threeRiRequestType,
             transaction,
             eventType,
@@ -1368,5 +1418,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ThreeDSAuthenticationApprovalRequestWebhookEvent{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, threeRiRequestType=$threeRiRequestType, transaction=$transaction, eventType=$eventType, additionalProperties=$additionalProperties}"
+        "ThreeDSAuthenticationApprovalRequestWebhookEvent{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, psd2Context=$psd2Context, threeRiRequestType=$threeRiRequestType, transaction=$transaction, eventType=$eventType, additionalProperties=$additionalProperties}"
 }
