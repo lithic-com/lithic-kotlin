@@ -53,6 +53,7 @@ private constructor(
     private val bookTransferTransactionUpdated: BookTransferTransactionUpdatedWebhookEvent? = null,
     private val cardCreated: CardCreatedWebhookEvent? = null,
     private val cardConverted: CardConvertedWebhookEvent? = null,
+    private val cardPinUpdated: CardPinUpdatedWebhookEvent? = null,
     private val cardRenewed: CardRenewedWebhookEvent? = null,
     private val cardReissued: CardReissuedWebhookEvent? = null,
     private val cardShipped: CardShippedWebhookEvent? = null,
@@ -168,6 +169,8 @@ private constructor(
     fun cardCreated(): CardCreatedWebhookEvent? = cardCreated
 
     fun cardConverted(): CardConvertedWebhookEvent? = cardConverted
+
+    fun cardPinUpdated(): CardPinUpdatedWebhookEvent? = cardPinUpdated
 
     fun cardRenewed(): CardRenewedWebhookEvent? = cardRenewed
 
@@ -347,6 +350,8 @@ private constructor(
 
     fun isCardConverted(): Boolean = cardConverted != null
 
+    fun isCardPinUpdated(): Boolean = cardPinUpdated != null
+
     fun isCardRenewed(): Boolean = cardRenewed != null
 
     fun isCardReissued(): Boolean = cardReissued != null
@@ -499,6 +504,8 @@ private constructor(
     fun asCardCreated(): CardCreatedWebhookEvent = cardCreated.getOrThrow("cardCreated")
 
     fun asCardConverted(): CardConvertedWebhookEvent = cardConverted.getOrThrow("cardConverted")
+
+    fun asCardPinUpdated(): CardPinUpdatedWebhookEvent = cardPinUpdated.getOrThrow("cardPinUpdated")
 
     fun asCardRenewed(): CardRenewedWebhookEvent = cardRenewed.getOrThrow("cardRenewed")
 
@@ -727,6 +734,7 @@ private constructor(
                 visitor.visitBookTransferTransactionUpdated(bookTransferTransactionUpdated)
             cardCreated != null -> visitor.visitCardCreated(cardCreated)
             cardConverted != null -> visitor.visitCardConverted(cardConverted)
+            cardPinUpdated != null -> visitor.visitCardPinUpdated(cardPinUpdated)
             cardRenewed != null -> visitor.visitCardRenewed(cardRenewed)
             cardReissued != null -> visitor.visitCardReissued(cardReissued)
             cardShipped != null -> visitor.visitCardShipped(cardShipped)
@@ -922,6 +930,10 @@ private constructor(
 
                 override fun visitCardConverted(cardConverted: CardConvertedWebhookEvent) {
                     cardConverted.validate()
+                }
+
+                override fun visitCardPinUpdated(cardPinUpdated: CardPinUpdatedWebhookEvent) {
+                    cardPinUpdated.validate()
                 }
 
                 override fun visitCardRenewed(cardRenewed: CardRenewedWebhookEvent) {
@@ -1291,6 +1303,9 @@ private constructor(
                 override fun visitCardConverted(cardConverted: CardConvertedWebhookEvent) =
                     cardConverted.validity()
 
+                override fun visitCardPinUpdated(cardPinUpdated: CardPinUpdatedWebhookEvent) =
+                    cardPinUpdated.validity()
+
                 override fun visitCardRenewed(cardRenewed: CardRenewedWebhookEvent) =
                     cardRenewed.validity()
 
@@ -1518,6 +1533,7 @@ private constructor(
             bookTransferTransactionUpdated == other.bookTransferTransactionUpdated &&
             cardCreated == other.cardCreated &&
             cardConverted == other.cardConverted &&
+            cardPinUpdated == other.cardPinUpdated &&
             cardRenewed == other.cardRenewed &&
             cardReissued == other.cardReissued &&
             cardShipped == other.cardShipped &&
@@ -1593,6 +1609,7 @@ private constructor(
             bookTransferTransactionUpdated,
             cardCreated,
             cardConverted,
+            cardPinUpdated,
             cardRenewed,
             cardReissued,
             cardShipped,
@@ -1672,6 +1689,7 @@ private constructor(
                 "ParsedWebhookEvent{bookTransferTransactionUpdated=$bookTransferTransactionUpdated}"
             cardCreated != null -> "ParsedWebhookEvent{cardCreated=$cardCreated}"
             cardConverted != null -> "ParsedWebhookEvent{cardConverted=$cardConverted}"
+            cardPinUpdated != null -> "ParsedWebhookEvent{cardPinUpdated=$cardPinUpdated}"
             cardRenewed != null -> "ParsedWebhookEvent{cardRenewed=$cardRenewed}"
             cardReissued != null -> "ParsedWebhookEvent{cardReissued=$cardReissued}"
             cardShipped != null -> "ParsedWebhookEvent{cardShipped=$cardShipped}"
@@ -1828,6 +1846,9 @@ private constructor(
 
         fun ofCardConverted(cardConverted: CardConvertedWebhookEvent) =
             ParsedWebhookEvent(cardConverted = cardConverted)
+
+        fun ofCardPinUpdated(cardPinUpdated: CardPinUpdatedWebhookEvent) =
+            ParsedWebhookEvent(cardPinUpdated = cardPinUpdated)
 
         fun ofCardRenewed(cardRenewed: CardRenewedWebhookEvent) =
             ParsedWebhookEvent(cardRenewed = cardRenewed)
@@ -2117,6 +2138,8 @@ private constructor(
         fun visitCardCreated(cardCreated: CardCreatedWebhookEvent): T
 
         fun visitCardConverted(cardConverted: CardConvertedWebhookEvent): T
+
+        fun visitCardPinUpdated(cardPinUpdated: CardPinUpdatedWebhookEvent): T
 
         fun visitCardRenewed(cardRenewed: CardRenewedWebhookEvent): T
 
@@ -2416,6 +2439,9 @@ private constructor(
                         },
                         tryDeserialize(node, jacksonTypeRef<CardConvertedWebhookEvent>())?.let {
                             ParsedWebhookEvent(cardConverted = it, _json = json)
+                        },
+                        tryDeserialize(node, jacksonTypeRef<CardPinUpdatedWebhookEvent>())?.let {
+                            ParsedWebhookEvent(cardPinUpdated = it, _json = json)
                         },
                         tryDeserialize(node, jacksonTypeRef<CardRenewedWebhookEvent>())?.let {
                             ParsedWebhookEvent(cardRenewed = it, _json = json)
@@ -2752,6 +2778,7 @@ private constructor(
                     generator.writeObject(value.bookTransferTransactionUpdated)
                 value.cardCreated != null -> generator.writeObject(value.cardCreated)
                 value.cardConverted != null -> generator.writeObject(value.cardConverted)
+                value.cardPinUpdated != null -> generator.writeObject(value.cardPinUpdated)
                 value.cardRenewed != null -> generator.writeObject(value.cardRenewed)
                 value.cardReissued != null -> generator.writeObject(value.cardReissued)
                 value.cardShipped != null -> generator.writeObject(value.cardShipped)
