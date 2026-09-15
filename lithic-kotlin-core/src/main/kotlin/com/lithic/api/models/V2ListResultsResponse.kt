@@ -1485,6 +1485,8 @@ private constructor(
 
                         val REVERSAL_UNMATCHED = of("REVERSAL_UNMATCHED")
 
+                        val SCA_REQUIRED = of("SCA_REQUIRED")
+
                         val SECURITY_VIOLATION = of("SECURITY_VIOLATION")
 
                         val SINGLE_USE_CARD_REATTEMPTED = of("SINGLE_USE_CARD_REATTEMPTED")
@@ -1561,6 +1563,7 @@ private constructor(
                         PROGRAM_SUSPENDED,
                         PROGRAM_USAGE_RESTRICTION,
                         REVERSAL_UNMATCHED,
+                        SCA_REQUIRED,
                         SECURITY_VIOLATION,
                         SINGLE_USE_CARD_REATTEMPTED,
                         SUSPECTED_FRAUD,
@@ -1632,6 +1635,7 @@ private constructor(
                         PROGRAM_SUSPENDED,
                         PROGRAM_USAGE_RESTRICTION,
                         REVERSAL_UNMATCHED,
+                        SCA_REQUIRED,
                         SECURITY_VIOLATION,
                         SINGLE_USE_CARD_REATTEMPTED,
                         SUSPECTED_FRAUD,
@@ -1712,6 +1716,7 @@ private constructor(
                             PROGRAM_SUSPENDED -> Value.PROGRAM_SUSPENDED
                             PROGRAM_USAGE_RESTRICTION -> Value.PROGRAM_USAGE_RESTRICTION
                             REVERSAL_UNMATCHED -> Value.REVERSAL_UNMATCHED
+                            SCA_REQUIRED -> Value.SCA_REQUIRED
                             SECURITY_VIOLATION -> Value.SECURITY_VIOLATION
                             SINGLE_USE_CARD_REATTEMPTED -> Value.SINGLE_USE_CARD_REATTEMPTED
                             SUSPECTED_FRAUD -> Value.SUSPECTED_FRAUD
@@ -1793,6 +1798,7 @@ private constructor(
                             PROGRAM_SUSPENDED -> Known.PROGRAM_SUSPENDED
                             PROGRAM_USAGE_RESTRICTION -> Known.PROGRAM_USAGE_RESTRICTION
                             REVERSAL_UNMATCHED -> Known.REVERSAL_UNMATCHED
+                            SCA_REQUIRED -> Known.SCA_REQUIRED
                             SECURITY_VIOLATION -> Known.SECURITY_VIOLATION
                             SINGLE_USE_CARD_REATTEMPTED -> Known.SINGLE_USE_CARD_REATTEMPTED
                             SUSPECTED_FRAUD -> Known.SUSPECTED_FRAUD
