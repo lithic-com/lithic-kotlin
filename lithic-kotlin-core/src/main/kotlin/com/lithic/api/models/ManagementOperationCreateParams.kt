@@ -1483,6 +1483,10 @@ private constructor(
 
             val MONTHLY_REVERSAL = of("MONTHLY_REVERSAL")
 
+            val FEE = of("FEE")
+
+            val FEE_REVERSAL = of("FEE_REVERSAL")
+
             fun of(value: String) = ManagementOperationEventType(JsonField.of(value))
         }
 
@@ -1515,6 +1519,8 @@ private constructor(
             QUARTERLY_REVERSAL,
             MONTHLY,
             MONTHLY_REVERSAL,
+            FEE,
+            FEE_REVERSAL,
         }
 
         /**
@@ -1556,6 +1562,8 @@ private constructor(
             QUARTERLY_REVERSAL,
             MONTHLY,
             MONTHLY_REVERSAL,
+            FEE,
+            FEE_REVERSAL,
             /**
              * An enum member indicating that [ManagementOperationEventType] was instantiated with
              * an unknown value.
@@ -1599,6 +1607,8 @@ private constructor(
                 QUARTERLY_REVERSAL -> Value.QUARTERLY_REVERSAL
                 MONTHLY -> Value.MONTHLY
                 MONTHLY_REVERSAL -> Value.MONTHLY_REVERSAL
+                FEE -> Value.FEE
+                FEE_REVERSAL -> Value.FEE_REVERSAL
                 else -> Value._UNKNOWN
             }
 
@@ -1640,6 +1650,8 @@ private constructor(
                 QUARTERLY_REVERSAL -> Known.QUARTERLY_REVERSAL
                 MONTHLY -> Known.MONTHLY
                 MONTHLY_REVERSAL -> Known.MONTHLY_REVERSAL
+                FEE -> Known.FEE
+                FEE_REVERSAL -> Known.FEE_REVERSAL
                 else ->
                     throw LithicInvalidDataException("Unknown ManagementOperationEventType: $value")
             }
