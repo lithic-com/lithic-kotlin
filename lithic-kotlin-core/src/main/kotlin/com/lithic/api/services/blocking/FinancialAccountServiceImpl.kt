@@ -38,6 +38,8 @@ import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationS
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationServiceImpl
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeServiceImpl
+import com.lithic.api.services.blocking.financialAccounts.OpenToBuyService
+import com.lithic.api.services.blocking.financialAccounts.OpenToBuyServiceImpl
 import com.lithic.api.services.blocking.financialAccounts.StatementService
 import com.lithic.api.services.blocking.financialAccounts.StatementServiceImpl
 
@@ -49,6 +51,8 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
     }
 
     private val balances: BalanceService by lazy { BalanceServiceImpl(clientOptions) }
+
+    private val openToBuy: OpenToBuyService by lazy { OpenToBuyServiceImpl(clientOptions) }
 
     private val financialTransactions: FinancialTransactionService by lazy {
         FinancialTransactionServiceImpl(clientOptions)
@@ -76,6 +80,8 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
         FinancialAccountServiceImpl(clientOptions.toBuilder().apply(modifier).build())
 
     override fun balances(): BalanceService = balances
+
+    override fun openToBuy(): OpenToBuyService = openToBuy
 
     override fun financialTransactions(): FinancialTransactionService = financialTransactions
 
@@ -142,6 +148,10 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
             BalanceServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val openToBuy: OpenToBuyService.WithRawResponse by lazy {
+            OpenToBuyServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val financialTransactions: FinancialTransactionService.WithRawResponse by lazy {
             FinancialTransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -174,6 +184,8 @@ class FinancialAccountServiceImpl internal constructor(private val clientOptions
             )
 
         override fun balances(): BalanceService.WithRawResponse = balances
+
+        override fun openToBuy(): OpenToBuyService.WithRawResponse = openToBuy
 
         override fun financialTransactions(): FinancialTransactionService.WithRawResponse =
             financialTransactions
