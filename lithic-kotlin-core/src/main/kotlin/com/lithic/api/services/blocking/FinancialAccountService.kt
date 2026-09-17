@@ -21,6 +21,7 @@ import com.lithic.api.services.blocking.financialAccounts.FinancialTransactionSe
 import com.lithic.api.services.blocking.financialAccounts.InterestTierScheduleService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
+import com.lithic.api.services.blocking.financialAccounts.OpenToBuyService
 import com.lithic.api.services.blocking.financialAccounts.StatementService
 
 interface FinancialAccountService {
@@ -38,6 +39,8 @@ interface FinancialAccountService {
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): FinancialAccountService
 
     fun balances(): BalanceService
+
+    fun openToBuy(): OpenToBuyService
 
     fun financialTransactions(): FinancialTransactionService
 
@@ -159,6 +162,8 @@ interface FinancialAccountService {
         ): FinancialAccountService.WithRawResponse
 
         fun balances(): BalanceService.WithRawResponse
+
+        fun openToBuy(): OpenToBuyService.WithRawResponse
 
         fun financialTransactions(): FinancialTransactionService.WithRawResponse
 
