@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.133.0 (2026-09-18)
+
+Full Changelog: [v0.132.0...v0.133.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.132.0...v0.133.0)
+
+### Features
+
+* [CARDS-5174] Add reiusse/renew 409 error ([3cb24e4](https://github.com/lithic-com/lithic-kotlin/commit/3cb24e489bd49e8f54f40aaaf1b38f76864d11ef))
+* [TRE-14464] Update /retry payments endpoint to accept method ([906a61a](https://github.com/lithic-com/lithic-kotlin/commit/906a61a3e73a83248e6a3e69e331e9aeafe4a498))
+* [TRE-14524] Add Open to buy API spec ([ad2e87d](https://github.com/lithic-com/lithic-kotlin/commit/ad2e87df8bbb1268ae400a6d9bb4d55227764bef))
+* Add missing blockchain/stablecoin endpoints to the spec ([2509df5](https://github.com/lithic-com/lithic-kotlin/commit/2509df5d84e63db474dfdcb6dbba36433fa89413))
+* **api:** add card.pin_updated webhook event ([db94ca5](https://github.com/lithic-com/lithic-kotlin/commit/db94ca5c2b25950252c680e6b5f33da355806b95))
+* **api:** add EXTERNAL_STABLECOIN category and events to payment types ([c0815d0](https://github.com/lithic-com/lithic-kotlin/commit/c0815d0bad58d0d90be1adc6efd61ae7a341da12))
+* **api:** add FEE/FEE_REVERSAL event types to financial/management operation/statement ([a9c6f97](https://github.com/lithic-com/lithic-kotlin/commit/a9c6f970a763499d38fd878615b9930f6a255356))
+* **api:** add list/retrieve installment plan methods to financial accounts ([11017fc](https://github.com/lithic-com/lithic-kotlin/commit/11017fc2af1379da66faa6eb951ef468001c1865))
+* **api:** add OTHER value to AuthRuleType enum ([f6cec04](https://github.com/lithic-com/lithic-kotlin/commit/f6cec04cfcd5e2c010b7a7d87c22957173d1a906))
+* **api:** add psd2_context field to ThreeDSAuthentication ([e3ec985](https://github.com/lithic-com/lithic-kotlin/commit/e3ec98522d31a395e7e3461d6d698a2dc5c5c0ab))
+* **api:** add stablecoin_reviewed to payment simulation types ([2c97283](https://github.com/lithic-com/lithic-kotlin/commit/2c972835bca1b28b89d90ba09ffe62a2033da04d))
+* AUTH-3759: Add DECLINE_SCA_REQUIRED and SCA_REQUIRED enum entries ([c6dcc85](https://github.com/lithic-com/lithic-kotlin/commit/c6dcc855272d516eca22f6b19ee2d84e66d1e7d1))
+* TRE-14349: add installment plan management operation event types ([2ba4fe6](https://github.com/lithic-com/lithic-kotlin/commit/2ba4fe66886f96f54c881aac6c434db72e95f1d3))
+* TRE-14429: Document the stablecoin payments endpoint ([48ab0d7](https://github.com/lithic-com/lithic-kotlin/commit/48ab0d77b3fb8f80edd6cd989da95cfa173c86e2))
+
 ## 0.132.0 (2026-08-31)
 
 Full Changelog: [v0.131.0...v0.132.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.131.0...v0.132.0)
