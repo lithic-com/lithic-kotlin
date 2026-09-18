@@ -18,6 +18,7 @@ import com.lithic.api.models.FinancialAccountUpdateStatusParams
 import com.lithic.api.services.blocking.financialAccounts.BalanceService
 import com.lithic.api.services.blocking.financialAccounts.CreditConfigurationService
 import com.lithic.api.services.blocking.financialAccounts.FinancialTransactionService
+import com.lithic.api.services.blocking.financialAccounts.InstallmentPlanService
 import com.lithic.api.services.blocking.financialAccounts.InterestTierScheduleService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeConfigurationService
 import com.lithic.api.services.blocking.financialAccounts.LoanTapeService
@@ -49,6 +50,8 @@ interface FinancialAccountService {
     fun statements(): StatementService
 
     fun loanTapes(): LoanTapeService
+
+    fun installmentPlans(): InstallmentPlanService
 
     fun loanTapeConfiguration(): LoanTapeConfigurationService
 
@@ -172,6 +175,8 @@ interface FinancialAccountService {
         fun statements(): StatementService.WithRawResponse
 
         fun loanTapes(): LoanTapeService.WithRawResponse
+
+        fun installmentPlans(): InstallmentPlanService.WithRawResponse
 
         fun loanTapeConfiguration(): LoanTapeConfigurationService.WithRawResponse
 
