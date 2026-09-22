@@ -20,6 +20,8 @@ import com.lithic.api.models.FinancialAccountInstallmentPlanListPageResponse
 import com.lithic.api.models.FinancialAccountInstallmentPlanListParams
 import com.lithic.api.models.FinancialAccountInstallmentPlanRetrieveParams
 import com.lithic.api.models.InstallmentPlan
+import com.lithic.api.services.async.financialAccounts.installmentPlans.StatementServiceAsync
+import com.lithic.api.services.async.financialAccounts.installmentPlans.StatementServiceAsyncImpl
 
 class InstallmentPlanServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : InstallmentPlanServiceAsync {
@@ -28,12 +30,18 @@ internal constructor(private val clientOptions: ClientOptions) : InstallmentPlan
         WithRawResponseImpl(clientOptions)
     }
 
+    private val statements: StatementServiceAsync by lazy {
+        StatementServiceAsyncImpl(clientOptions)
+    }
+
     override fun withRawResponse(): InstallmentPlanServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(
         modifier: (ClientOptions.Builder) -> Unit
     ): InstallmentPlanServiceAsync =
         InstallmentPlanServiceAsyncImpl(clientOptions.toBuilder().apply(modifier).build())
+
+    override fun statements(): StatementServiceAsync = statements
 
     override suspend fun retrieve(
         params: FinancialAccountInstallmentPlanRetrieveParams,
@@ -56,12 +64,18 @@ internal constructor(private val clientOptions: ClientOptions) : InstallmentPlan
         private val errorHandler: Handler<HttpResponse> =
             errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
+        private val statements: StatementServiceAsync.WithRawResponse by lazy {
+            StatementServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): InstallmentPlanServiceAsync.WithRawResponse =
             InstallmentPlanServiceAsyncImpl.WithRawResponseImpl(
                 clientOptions.toBuilder().apply(modifier).build()
             )
+
+        override fun statements(): StatementServiceAsync.WithRawResponse = statements
 
         private val retrieveHandler: Handler<InstallmentPlan> =
             jsonHandler<InstallmentPlan>(clientOptions.jsonMapper)

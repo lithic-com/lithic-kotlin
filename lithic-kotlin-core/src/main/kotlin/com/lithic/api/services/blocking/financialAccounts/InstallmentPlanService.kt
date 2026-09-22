@@ -10,6 +10,7 @@ import com.lithic.api.models.FinancialAccountInstallmentPlanListPage
 import com.lithic.api.models.FinancialAccountInstallmentPlanListParams
 import com.lithic.api.models.FinancialAccountInstallmentPlanRetrieveParams
 import com.lithic.api.models.InstallmentPlan
+import com.lithic.api.services.blocking.financialAccounts.installmentPlans.StatementService
 
 interface InstallmentPlanService {
 
@@ -24,6 +25,8 @@ interface InstallmentPlanService {
      * The original service is not modified.
      */
     fun withOptions(modifier: (ClientOptions.Builder) -> Unit): InstallmentPlanService
+
+    fun statements(): StatementService
 
     /** Get a specific installment plan for a given financial account. */
     fun retrieve(
@@ -85,6 +88,8 @@ interface InstallmentPlanService {
         fun withOptions(
             modifier: (ClientOptions.Builder) -> Unit
         ): InstallmentPlanService.WithRawResponse
+
+        fun statements(): StatementService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get
