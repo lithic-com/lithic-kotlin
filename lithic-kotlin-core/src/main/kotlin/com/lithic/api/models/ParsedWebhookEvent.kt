@@ -3615,7 +3615,8 @@ private constructor(
 
                 /**
                  * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                 * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+                 * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the KYB
+                 * and KYC workflows.
                  *
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
                  *   if the server responded with an unexpected value).
@@ -3782,8 +3783,8 @@ private constructor(
 
                     /**
                      * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                     * acceptable; APO/FPO are acceptable. Only USA addresses are currently
-                     * supported.
+                     * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the
+                     * KYB and KYC workflows.
                      */
                     fun address(address: Address) = address(JsonField.of(address))
 
@@ -3982,7 +3983,8 @@ private constructor(
 
                 /**
                  * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                 * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+                 * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the KYB
+                 * and KYC workflows.
                  */
                 class Address
                 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -3990,9 +3992,9 @@ private constructor(
                     private val address1: JsonField<String>,
                     private val city: JsonField<String>,
                     private val country: JsonField<String>,
+                    private val address2: JsonField<String>,
                     private val postalCode: JsonField<String>,
                     private val state: JsonField<String>,
-                    private val address2: JsonField<String>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
 
@@ -4007,16 +4009,16 @@ private constructor(
                         @JsonProperty("country")
                         @ExcludeMissing
                         country: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("address2")
+                        @ExcludeMissing
+                        address2: JsonField<String> = JsonMissing.of(),
                         @JsonProperty("postal_code")
                         @ExcludeMissing
                         postalCode: JsonField<String> = JsonMissing.of(),
                         @JsonProperty("state")
                         @ExcludeMissing
                         state: JsonField<String> = JsonMissing.of(),
-                        @JsonProperty("address2")
-                        @ExcludeMissing
-                        address2: JsonField<String> = JsonMissing.of(),
-                    ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
+                    ) : this(address1, city, country, address2, postalCode, state, mutableMapOf())
 
                     /**
                      * Valid deliverable address (no PO boxes).
@@ -4037,8 +4039,9 @@ private constructor(
                     fun city(): String = city.getRequired("city")
 
                     /**
-                     * Valid country code. Only USA is currently supported, entered in uppercase ISO
-                     * 3166-1 alpha-3 three-character format.
+                     * Valid country code, entered in uppercase ISO 3166-1 alpha-3 three-character
+                     * format. Supported countries depend on the onboarding workflow used for the
+                     * account holder.
                      *
                      * @throws LithicInvalidDataException if the JSON field has an unexpected type
                      *   or is unexpectedly missing or null (e.g. if the server responded with an
@@ -4047,32 +4050,45 @@ private constructor(
                     fun country(): String = country.getRequired("country")
 
                     /**
-                     * Valid postal code. Only USA ZIP codes are currently supported, entered as a
-                     * five-digit ZIP or nine-digit ZIP+4.
-                     *
-                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
-                     *   or is unexpectedly missing or null (e.g. if the server responded with an
-                     *   unexpected value).
-                     */
-                    fun postalCode(): String = postalCode.getRequired("postal_code")
-
-                    /**
-                     * Valid state code. Only USA state codes are currently supported, entered in
-                     * uppercase ISO 3166-2 two-character format.
-                     *
-                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
-                     *   or is unexpectedly missing or null (e.g. if the server responded with an
-                     *   unexpected value).
-                     */
-                    fun state(): String = state.getRequired("state")
-
-                    /**
                      * Unit or apartment number (if applicable).
                      *
                      * @throws LithicInvalidDataException if the JSON field has an unexpected type
                      *   (e.g. if the server responded with an unexpected value).
                      */
                     fun address2(): String? = address2.getNullable("address2")
+
+                    /**
+                     * Valid postal code. For USA addresses, enter either a five-digit postal code
+                     * or a nine-digit postal code (ZIP+4) using the format 12345-1234. Required for
+                     * all countries except the following, which do not use postal codes: ABW, AGO,
+                     * ARE, ATG, BDI, BEN, BFA, BHS, BLZ, BOL, BWA, CIV, CMR, COD, COG, COK, COM,
+                     * DJI, DMA, ERI, FJI, GAB, GMB, GNQ, GRD, GUY, HKG, KIR, MAC, MLI, MRT, NIU,
+                     * NRU, QAT, RWA, SLB, SLE, SSD, SUR, SXM, SYC, TGO, TKL, TLS, TON, TUV, UGA,
+                     * VUT, YEM, ZWE
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun postalCode(): String? = postalCode.getNullable("postal_code")
+
+                    /**
+                     * Valid state, province, or subdivision code, entered as the uppercase ISO
+                     * 3166-2 code for the country without the country prefix. For example, `CA` for
+                     * California. Optional unless the address is in one of the following countries,
+                     * where it is required:
+                     * - `USA`
+                     * - `CAN`
+                     * - `AUS`
+                     * - `CHN`
+                     * - `KOR`
+                     * - `MEX`
+                     * - `MYS`
+                     * - `NZL`
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun state(): String? = state.getNullable("state")
 
                     /**
                      * Returns the raw JSON value of [address1].
@@ -4103,6 +4119,16 @@ private constructor(
                     fun _country(): JsonField<String> = country
 
                     /**
+                     * Returns the raw JSON value of [address2].
+                     *
+                     * Unlike [address2], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("address2")
+                    @ExcludeMissing
+                    fun _address2(): JsonField<String> = address2
+
+                    /**
                      * Returns the raw JSON value of [postalCode].
                      *
                      * Unlike [postalCode], this method doesn't throw if the JSON field has an
@@ -4119,16 +4145,6 @@ private constructor(
                      * type.
                      */
                     @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
-
-                    /**
-                     * Returns the raw JSON value of [address2].
-                     *
-                     * Unlike [address2], this method doesn't throw if the JSON field has an
-                     * unexpected type.
-                     */
-                    @JsonProperty("address2")
-                    @ExcludeMissing
-                    fun _address2(): JsonField<String> = address2
 
                     @JsonAnySetter
                     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -4152,8 +4168,6 @@ private constructor(
                          * .address1()
                          * .city()
                          * .country()
-                         * .postalCode()
-                         * .state()
                          * ```
                          */
                         fun builder() = Builder()
@@ -4165,9 +4179,9 @@ private constructor(
                         private var address1: JsonField<String>? = null
                         private var city: JsonField<String>? = null
                         private var country: JsonField<String>? = null
-                        private var postalCode: JsonField<String>? = null
-                        private var state: JsonField<String>? = null
                         private var address2: JsonField<String> = JsonMissing.of()
+                        private var postalCode: JsonField<String> = JsonMissing.of()
+                        private var state: JsonField<String> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
@@ -4175,9 +4189,9 @@ private constructor(
                             address1 = address.address1
                             city = address.city
                             country = address.country
+                            address2 = address.address2
                             postalCode = address.postalCode
                             state = address.state
-                            address2 = address.address2
                             additionalProperties = address.additionalProperties.toMutableMap()
                         }
 
@@ -4208,8 +4222,9 @@ private constructor(
                         fun city(city: JsonField<String>) = apply { this.city = city }
 
                         /**
-                         * Valid country code. Only USA is currently supported, entered in uppercase
-                         * ISO 3166-1 alpha-3 three-character format.
+                         * Valid country code, entered in uppercase ISO 3166-1 alpha-3
+                         * three-character format. Supported countries depend on the onboarding
+                         * workflow used for the account holder.
                          */
                         fun country(country: String) = country(JsonField.of(country))
 
@@ -4221,38 +4236,6 @@ private constructor(
                          * undocumented or not yet supported value.
                          */
                         fun country(country: JsonField<String>) = apply { this.country = country }
-
-                        /**
-                         * Valid postal code. Only USA ZIP codes are currently supported, entered as
-                         * a five-digit ZIP or nine-digit ZIP+4.
-                         */
-                        fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
-
-                        /**
-                         * Sets [Builder.postalCode] to an arbitrary JSON value.
-                         *
-                         * You should usually call [Builder.postalCode] with a well-typed [String]
-                         * value instead. This method is primarily for setting the field to an
-                         * undocumented or not yet supported value.
-                         */
-                        fun postalCode(postalCode: JsonField<String>) = apply {
-                            this.postalCode = postalCode
-                        }
-
-                        /**
-                         * Valid state code. Only USA state codes are currently supported, entered
-                         * in uppercase ISO 3166-2 two-character format.
-                         */
-                        fun state(state: String) = state(JsonField.of(state))
-
-                        /**
-                         * Sets [Builder.state] to an arbitrary JSON value.
-                         *
-                         * You should usually call [Builder.state] with a well-typed [String] value
-                         * instead. This method is primarily for setting the field to an
-                         * undocumented or not yet supported value.
-                         */
-                        fun state(state: JsonField<String>) = apply { this.state = state }
 
                         /** Unit or apartment number (if applicable). */
                         fun address2(address2: String) = address2(JsonField.of(address2))
@@ -4267,6 +4250,54 @@ private constructor(
                         fun address2(address2: JsonField<String>) = apply {
                             this.address2 = address2
                         }
+
+                        /**
+                         * Valid postal code. For USA addresses, enter either a five-digit postal
+                         * code or a nine-digit postal code (ZIP+4) using the format 12345-1234.
+                         * Required for all countries except the following, which do not use postal
+                         * codes: ABW, AGO, ARE, ATG, BDI, BEN, BFA, BHS, BLZ, BOL, BWA, CIV, CMR,
+                         * COD, COG, COK, COM, DJI, DMA, ERI, FJI, GAB, GMB, GNQ, GRD, GUY, HKG,
+                         * KIR, MAC, MLI, MRT, NIU, NRU, QAT, RWA, SLB, SLE, SSD, SUR, SXM, SYC,
+                         * TGO, TKL, TLS, TON, TUV, UGA, VUT, YEM, ZWE
+                         */
+                        fun postalCode(postalCode: String?) =
+                            postalCode(JsonField.ofNullable(postalCode))
+
+                        /**
+                         * Sets [Builder.postalCode] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.postalCode] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun postalCode(postalCode: JsonField<String>) = apply {
+                            this.postalCode = postalCode
+                        }
+
+                        /**
+                         * Valid state, province, or subdivision code, entered as the uppercase ISO
+                         * 3166-2 code for the country without the country prefix. For example, `CA`
+                         * for California. Optional unless the address is in one of the following
+                         * countries, where it is required:
+                         * - `USA`
+                         * - `CAN`
+                         * - `AUS`
+                         * - `CHN`
+                         * - `KOR`
+                         * - `MEX`
+                         * - `MYS`
+                         * - `NZL`
+                         */
+                        fun state(state: String?) = state(JsonField.ofNullable(state))
+
+                        /**
+                         * Sets [Builder.state] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.state] with a well-typed [String] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun state(state: JsonField<String>) = apply { this.state = state }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -4300,8 +4331,6 @@ private constructor(
                          * .address1()
                          * .city()
                          * .country()
-                         * .postalCode()
-                         * .state()
                          * ```
                          *
                          * @throws IllegalStateException if any required field is unset.
@@ -4311,9 +4340,9 @@ private constructor(
                                 checkRequired("address1", address1),
                                 checkRequired("city", city),
                                 checkRequired("country", country),
-                                checkRequired("postalCode", postalCode),
-                                checkRequired("state", state),
                                 address2,
+                                postalCode,
+                                state,
                                 additionalProperties.toMutableMap(),
                             )
                     }
@@ -4338,9 +4367,9 @@ private constructor(
                         address1()
                         city()
                         country()
+                        address2()
                         postalCode()
                         state()
-                        address2()
                         validated = true
                     }
 
@@ -4362,9 +4391,9 @@ private constructor(
                         (if (address1.asKnown() == null) 0 else 1) +
                             (if (city.asKnown() == null) 0 else 1) +
                             (if (country.asKnown() == null) 0 else 1) +
+                            (if (address2.asKnown() == null) 0 else 1) +
                             (if (postalCode.asKnown() == null) 0 else 1) +
-                            (if (state.asKnown() == null) 0 else 1) +
-                            (if (address2.asKnown() == null) 0 else 1)
+                            (if (state.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -4375,9 +4404,9 @@ private constructor(
                             address1 == other.address1 &&
                             city == other.city &&
                             country == other.country &&
+                            address2 == other.address2 &&
                             postalCode == other.postalCode &&
                             state == other.state &&
-                            address2 == other.address2 &&
                             additionalProperties == other.additionalProperties
                     }
 
@@ -4386,9 +4415,9 @@ private constructor(
                             address1,
                             city,
                             country,
+                            address2,
                             postalCode,
                             state,
-                            address2,
                             additionalProperties,
                         )
                     }
@@ -4396,7 +4425,7 @@ private constructor(
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "Address{address1=$address1, city=$city, country=$country, postalCode=$postalCode, state=$state, address2=$address2, additionalProperties=$additionalProperties}"
+                        "Address{address1=$address1, city=$city, country=$country, address2=$address2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -5102,7 +5131,8 @@ private constructor(
 
                 /**
                  * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                 * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+                 * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the KYB
+                 * and KYC workflows.
                  *
                  * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g.
                  *   if the server responded with an unexpected value).
@@ -5269,8 +5299,8 @@ private constructor(
 
                     /**
                      * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                     * acceptable; APO/FPO are acceptable. Only USA addresses are currently
-                     * supported.
+                     * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the
+                     * KYB and KYC workflows.
                      */
                     fun address(address: Address) = address(JsonField.of(address))
 
@@ -5469,7 +5499,8 @@ private constructor(
 
                 /**
                  * Individual's current address - PO boxes, UPS drops, and FedEx drops are not
-                 * acceptable; APO/FPO are acceptable. Only USA addresses are currently supported.
+                 * acceptable; APO/FPO are acceptable. Only USA addresses are supported for the KYB
+                 * and KYC workflows.
                  */
                 class Address
                 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -5477,9 +5508,9 @@ private constructor(
                     private val address1: JsonField<String>,
                     private val city: JsonField<String>,
                     private val country: JsonField<String>,
+                    private val address2: JsonField<String>,
                     private val postalCode: JsonField<String>,
                     private val state: JsonField<String>,
-                    private val address2: JsonField<String>,
                     private val additionalProperties: MutableMap<String, JsonValue>,
                 ) {
 
@@ -5494,16 +5525,16 @@ private constructor(
                         @JsonProperty("country")
                         @ExcludeMissing
                         country: JsonField<String> = JsonMissing.of(),
+                        @JsonProperty("address2")
+                        @ExcludeMissing
+                        address2: JsonField<String> = JsonMissing.of(),
                         @JsonProperty("postal_code")
                         @ExcludeMissing
                         postalCode: JsonField<String> = JsonMissing.of(),
                         @JsonProperty("state")
                         @ExcludeMissing
                         state: JsonField<String> = JsonMissing.of(),
-                        @JsonProperty("address2")
-                        @ExcludeMissing
-                        address2: JsonField<String> = JsonMissing.of(),
-                    ) : this(address1, city, country, postalCode, state, address2, mutableMapOf())
+                    ) : this(address1, city, country, address2, postalCode, state, mutableMapOf())
 
                     /**
                      * Valid deliverable address (no PO boxes).
@@ -5524,8 +5555,9 @@ private constructor(
                     fun city(): String = city.getRequired("city")
 
                     /**
-                     * Valid country code. Only USA is currently supported, entered in uppercase ISO
-                     * 3166-1 alpha-3 three-character format.
+                     * Valid country code, entered in uppercase ISO 3166-1 alpha-3 three-character
+                     * format. Supported countries depend on the onboarding workflow used for the
+                     * account holder.
                      *
                      * @throws LithicInvalidDataException if the JSON field has an unexpected type
                      *   or is unexpectedly missing or null (e.g. if the server responded with an
@@ -5534,32 +5566,45 @@ private constructor(
                     fun country(): String = country.getRequired("country")
 
                     /**
-                     * Valid postal code. Only USA ZIP codes are currently supported, entered as a
-                     * five-digit ZIP or nine-digit ZIP+4.
-                     *
-                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
-                     *   or is unexpectedly missing or null (e.g. if the server responded with an
-                     *   unexpected value).
-                     */
-                    fun postalCode(): String = postalCode.getRequired("postal_code")
-
-                    /**
-                     * Valid state code. Only USA state codes are currently supported, entered in
-                     * uppercase ISO 3166-2 two-character format.
-                     *
-                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
-                     *   or is unexpectedly missing or null (e.g. if the server responded with an
-                     *   unexpected value).
-                     */
-                    fun state(): String = state.getRequired("state")
-
-                    /**
                      * Unit or apartment number (if applicable).
                      *
                      * @throws LithicInvalidDataException if the JSON field has an unexpected type
                      *   (e.g. if the server responded with an unexpected value).
                      */
                     fun address2(): String? = address2.getNullable("address2")
+
+                    /**
+                     * Valid postal code. For USA addresses, enter either a five-digit postal code
+                     * or a nine-digit postal code (ZIP+4) using the format 12345-1234. Required for
+                     * all countries except the following, which do not use postal codes: ABW, AGO,
+                     * ARE, ATG, BDI, BEN, BFA, BHS, BLZ, BOL, BWA, CIV, CMR, COD, COG, COK, COM,
+                     * DJI, DMA, ERI, FJI, GAB, GMB, GNQ, GRD, GUY, HKG, KIR, MAC, MLI, MRT, NIU,
+                     * NRU, QAT, RWA, SLB, SLE, SSD, SUR, SXM, SYC, TGO, TKL, TLS, TON, TUV, UGA,
+                     * VUT, YEM, ZWE
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun postalCode(): String? = postalCode.getNullable("postal_code")
+
+                    /**
+                     * Valid state, province, or subdivision code, entered as the uppercase ISO
+                     * 3166-2 code for the country without the country prefix. For example, `CA` for
+                     * California. Optional unless the address is in one of the following countries,
+                     * where it is required:
+                     * - `USA`
+                     * - `CAN`
+                     * - `AUS`
+                     * - `CHN`
+                     * - `KOR`
+                     * - `MEX`
+                     * - `MYS`
+                     * - `NZL`
+                     *
+                     * @throws LithicInvalidDataException if the JSON field has an unexpected type
+                     *   (e.g. if the server responded with an unexpected value).
+                     */
+                    fun state(): String? = state.getNullable("state")
 
                     /**
                      * Returns the raw JSON value of [address1].
@@ -5590,6 +5635,16 @@ private constructor(
                     fun _country(): JsonField<String> = country
 
                     /**
+                     * Returns the raw JSON value of [address2].
+                     *
+                     * Unlike [address2], this method doesn't throw if the JSON field has an
+                     * unexpected type.
+                     */
+                    @JsonProperty("address2")
+                    @ExcludeMissing
+                    fun _address2(): JsonField<String> = address2
+
+                    /**
                      * Returns the raw JSON value of [postalCode].
                      *
                      * Unlike [postalCode], this method doesn't throw if the JSON field has an
@@ -5606,16 +5661,6 @@ private constructor(
                      * type.
                      */
                     @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<String> = state
-
-                    /**
-                     * Returns the raw JSON value of [address2].
-                     *
-                     * Unlike [address2], this method doesn't throw if the JSON field has an
-                     * unexpected type.
-                     */
-                    @JsonProperty("address2")
-                    @ExcludeMissing
-                    fun _address2(): JsonField<String> = address2
 
                     @JsonAnySetter
                     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -5639,8 +5684,6 @@ private constructor(
                          * .address1()
                          * .city()
                          * .country()
-                         * .postalCode()
-                         * .state()
                          * ```
                          */
                         fun builder() = Builder()
@@ -5652,9 +5695,9 @@ private constructor(
                         private var address1: JsonField<String>? = null
                         private var city: JsonField<String>? = null
                         private var country: JsonField<String>? = null
-                        private var postalCode: JsonField<String>? = null
-                        private var state: JsonField<String>? = null
                         private var address2: JsonField<String> = JsonMissing.of()
+                        private var postalCode: JsonField<String> = JsonMissing.of()
+                        private var state: JsonField<String> = JsonMissing.of()
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
@@ -5662,9 +5705,9 @@ private constructor(
                             address1 = address.address1
                             city = address.city
                             country = address.country
+                            address2 = address.address2
                             postalCode = address.postalCode
                             state = address.state
-                            address2 = address.address2
                             additionalProperties = address.additionalProperties.toMutableMap()
                         }
 
@@ -5695,8 +5738,9 @@ private constructor(
                         fun city(city: JsonField<String>) = apply { this.city = city }
 
                         /**
-                         * Valid country code. Only USA is currently supported, entered in uppercase
-                         * ISO 3166-1 alpha-3 three-character format.
+                         * Valid country code, entered in uppercase ISO 3166-1 alpha-3
+                         * three-character format. Supported countries depend on the onboarding
+                         * workflow used for the account holder.
                          */
                         fun country(country: String) = country(JsonField.of(country))
 
@@ -5708,38 +5752,6 @@ private constructor(
                          * undocumented or not yet supported value.
                          */
                         fun country(country: JsonField<String>) = apply { this.country = country }
-
-                        /**
-                         * Valid postal code. Only USA ZIP codes are currently supported, entered as
-                         * a five-digit ZIP or nine-digit ZIP+4.
-                         */
-                        fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
-
-                        /**
-                         * Sets [Builder.postalCode] to an arbitrary JSON value.
-                         *
-                         * You should usually call [Builder.postalCode] with a well-typed [String]
-                         * value instead. This method is primarily for setting the field to an
-                         * undocumented or not yet supported value.
-                         */
-                        fun postalCode(postalCode: JsonField<String>) = apply {
-                            this.postalCode = postalCode
-                        }
-
-                        /**
-                         * Valid state code. Only USA state codes are currently supported, entered
-                         * in uppercase ISO 3166-2 two-character format.
-                         */
-                        fun state(state: String) = state(JsonField.of(state))
-
-                        /**
-                         * Sets [Builder.state] to an arbitrary JSON value.
-                         *
-                         * You should usually call [Builder.state] with a well-typed [String] value
-                         * instead. This method is primarily for setting the field to an
-                         * undocumented or not yet supported value.
-                         */
-                        fun state(state: JsonField<String>) = apply { this.state = state }
 
                         /** Unit or apartment number (if applicable). */
                         fun address2(address2: String) = address2(JsonField.of(address2))
@@ -5754,6 +5766,54 @@ private constructor(
                         fun address2(address2: JsonField<String>) = apply {
                             this.address2 = address2
                         }
+
+                        /**
+                         * Valid postal code. For USA addresses, enter either a five-digit postal
+                         * code or a nine-digit postal code (ZIP+4) using the format 12345-1234.
+                         * Required for all countries except the following, which do not use postal
+                         * codes: ABW, AGO, ARE, ATG, BDI, BEN, BFA, BHS, BLZ, BOL, BWA, CIV, CMR,
+                         * COD, COG, COK, COM, DJI, DMA, ERI, FJI, GAB, GMB, GNQ, GRD, GUY, HKG,
+                         * KIR, MAC, MLI, MRT, NIU, NRU, QAT, RWA, SLB, SLE, SSD, SUR, SXM, SYC,
+                         * TGO, TKL, TLS, TON, TUV, UGA, VUT, YEM, ZWE
+                         */
+                        fun postalCode(postalCode: String?) =
+                            postalCode(JsonField.ofNullable(postalCode))
+
+                        /**
+                         * Sets [Builder.postalCode] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.postalCode] with a well-typed [String]
+                         * value instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun postalCode(postalCode: JsonField<String>) = apply {
+                            this.postalCode = postalCode
+                        }
+
+                        /**
+                         * Valid state, province, or subdivision code, entered as the uppercase ISO
+                         * 3166-2 code for the country without the country prefix. For example, `CA`
+                         * for California. Optional unless the address is in one of the following
+                         * countries, where it is required:
+                         * - `USA`
+                         * - `CAN`
+                         * - `AUS`
+                         * - `CHN`
+                         * - `KOR`
+                         * - `MEX`
+                         * - `MYS`
+                         * - `NZL`
+                         */
+                        fun state(state: String?) = state(JsonField.ofNullable(state))
+
+                        /**
+                         * Sets [Builder.state] to an arbitrary JSON value.
+                         *
+                         * You should usually call [Builder.state] with a well-typed [String] value
+                         * instead. This method is primarily for setting the field to an
+                         * undocumented or not yet supported value.
+                         */
+                        fun state(state: JsonField<String>) = apply { this.state = state }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                             apply {
@@ -5787,8 +5847,6 @@ private constructor(
                          * .address1()
                          * .city()
                          * .country()
-                         * .postalCode()
-                         * .state()
                          * ```
                          *
                          * @throws IllegalStateException if any required field is unset.
@@ -5798,9 +5856,9 @@ private constructor(
                                 checkRequired("address1", address1),
                                 checkRequired("city", city),
                                 checkRequired("country", country),
-                                checkRequired("postalCode", postalCode),
-                                checkRequired("state", state),
                                 address2,
+                                postalCode,
+                                state,
                                 additionalProperties.toMutableMap(),
                             )
                     }
@@ -5825,9 +5883,9 @@ private constructor(
                         address1()
                         city()
                         country()
+                        address2()
                         postalCode()
                         state()
-                        address2()
                         validated = true
                     }
 
@@ -5849,9 +5907,9 @@ private constructor(
                         (if (address1.asKnown() == null) 0 else 1) +
                             (if (city.asKnown() == null) 0 else 1) +
                             (if (country.asKnown() == null) 0 else 1) +
+                            (if (address2.asKnown() == null) 0 else 1) +
                             (if (postalCode.asKnown() == null) 0 else 1) +
-                            (if (state.asKnown() == null) 0 else 1) +
-                            (if (address2.asKnown() == null) 0 else 1)
+                            (if (state.asKnown() == null) 0 else 1)
 
                     override fun equals(other: Any?): Boolean {
                         if (this === other) {
@@ -5862,9 +5920,9 @@ private constructor(
                             address1 == other.address1 &&
                             city == other.city &&
                             country == other.country &&
+                            address2 == other.address2 &&
                             postalCode == other.postalCode &&
                             state == other.state &&
-                            address2 == other.address2 &&
                             additionalProperties == other.additionalProperties
                     }
 
@@ -5873,9 +5931,9 @@ private constructor(
                             address1,
                             city,
                             country,
+                            address2,
                             postalCode,
                             state,
-                            address2,
                             additionalProperties,
                         )
                     }
@@ -5883,7 +5941,7 @@ private constructor(
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "Address{address1=$address1, city=$city, country=$country, postalCode=$postalCode, state=$state, address2=$address2, additionalProperties=$additionalProperties}"
+                        "Address{address1=$address1, city=$city, country=$country, address2=$address2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
                 }
 
                 override fun equals(other: Any?): Boolean {
