@@ -54,6 +54,25 @@ private constructor(
     fun pan(): String = body.pan()
 
     /**
+     * 3-character alphabetic ISO 4217 currency code for the cardholder billing amount. Permitted
+     * values are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422. Defaults to USD
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun billingCurrency(): String? = body.billingCurrency()
+
+    /**
+     * 3-character alphabetic ISO 4217 currency code for the settlement amount. Permitted values are
+     * USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422. Defaults to the value of
+     * billing_currency
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun settlementCurrency(): String? = body.settlementCurrency()
+
+    /**
      * Returns the raw JSON value of [amount].
      *
      * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
@@ -73,6 +92,21 @@ private constructor(
      * Unlike [pan], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _pan(): JsonField<String> = body._pan()
+
+    /**
+     * Returns the raw JSON value of [billingCurrency].
+     *
+     * Unlike [billingCurrency], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _billingCurrency(): JsonField<String> = body._billingCurrency()
+
+    /**
+     * Returns the raw JSON value of [settlementCurrency].
+     *
+     * Unlike [settlementCurrency], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _settlementCurrency(): JsonField<String> = body._settlementCurrency()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -123,6 +157,9 @@ private constructor(
          * - [amount]
          * - [descriptor]
          * - [pan]
+         * - [billingCurrency]
+         * - [settlementCurrency]
+         * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
@@ -159,6 +196,46 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun pan(pan: JsonField<String>) = apply { body.pan(pan) }
+
+        /**
+         * 3-character alphabetic ISO 4217 currency code for the cardholder billing amount.
+         * Permitted values are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422.
+         * Defaults to USD
+         */
+        fun billingCurrency(billingCurrency: String) = apply {
+            body.billingCurrency(billingCurrency)
+        }
+
+        /**
+         * Sets [Builder.billingCurrency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billingCurrency] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billingCurrency(billingCurrency: JsonField<String>) = apply {
+            body.billingCurrency(billingCurrency)
+        }
+
+        /**
+         * 3-character alphabetic ISO 4217 currency code for the settlement amount. Permitted values
+         * are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422. Defaults to the
+         * value of billing_currency
+         */
+        fun settlementCurrency(settlementCurrency: String) = apply {
+            body.settlementCurrency(settlementCurrency)
+        }
+
+        /**
+         * Sets [Builder.settlementCurrency] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.settlementCurrency] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun settlementCurrency(settlementCurrency: JsonField<String>) = apply {
+            body.settlementCurrency(settlementCurrency)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
@@ -311,6 +388,8 @@ private constructor(
         private val amount: JsonField<Long>,
         private val descriptor: JsonField<String>,
         private val pan: JsonField<String>,
+        private val billingCurrency: JsonField<String>,
+        private val settlementCurrency: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -321,7 +400,13 @@ private constructor(
             @ExcludeMissing
             descriptor: JsonField<String> = JsonMissing.of(),
             @JsonProperty("pan") @ExcludeMissing pan: JsonField<String> = JsonMissing.of(),
-        ) : this(amount, descriptor, pan, mutableMapOf())
+            @JsonProperty("billing_currency")
+            @ExcludeMissing
+            billingCurrency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("settlement_currency")
+            @ExcludeMissing
+            settlementCurrency: JsonField<String> = JsonMissing.of(),
+        ) : this(amount, descriptor, pan, billingCurrency, settlementCurrency, mutableMapOf())
 
         /**
          * Amount (in cents) to authorize.
@@ -348,6 +433,26 @@ private constructor(
         fun pan(): String = pan.getRequired("pan")
 
         /**
+         * 3-character alphabetic ISO 4217 currency code for the cardholder billing amount.
+         * Permitted values are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422.
+         * Defaults to USD
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun billingCurrency(): String? = billingCurrency.getNullable("billing_currency")
+
+        /**
+         * 3-character alphabetic ISO 4217 currency code for the settlement amount. Permitted values
+         * are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422. Defaults to the
+         * value of billing_currency
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun settlementCurrency(): String? = settlementCurrency.getNullable("settlement_currency")
+
+        /**
          * Returns the raw JSON value of [amount].
          *
          * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
@@ -369,6 +474,26 @@ private constructor(
          * Unlike [pan], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("pan") @ExcludeMissing fun _pan(): JsonField<String> = pan
+
+        /**
+         * Returns the raw JSON value of [billingCurrency].
+         *
+         * Unlike [billingCurrency], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("billing_currency")
+        @ExcludeMissing
+        fun _billingCurrency(): JsonField<String> = billingCurrency
+
+        /**
+         * Returns the raw JSON value of [settlementCurrency].
+         *
+         * Unlike [settlementCurrency], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("settlement_currency")
+        @ExcludeMissing
+        fun _settlementCurrency(): JsonField<String> = settlementCurrency
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -403,12 +528,16 @@ private constructor(
             private var amount: JsonField<Long>? = null
             private var descriptor: JsonField<String>? = null
             private var pan: JsonField<String>? = null
+            private var billingCurrency: JsonField<String> = JsonMissing.of()
+            private var settlementCurrency: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
                 amount = body.amount
                 descriptor = body.descriptor
                 pan = body.pan
+                billingCurrency = body.billingCurrency
+                settlementCurrency = body.settlementCurrency
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -448,6 +577,44 @@ private constructor(
              */
             fun pan(pan: JsonField<String>) = apply { this.pan = pan }
 
+            /**
+             * 3-character alphabetic ISO 4217 currency code for the cardholder billing amount.
+             * Permitted values are USD, GBP, EUR and CAD, and any other ISO 4217 code returns
+             * a 422. Defaults to USD
+             */
+            fun billingCurrency(billingCurrency: String) =
+                billingCurrency(JsonField.of(billingCurrency))
+
+            /**
+             * Sets [Builder.billingCurrency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.billingCurrency] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun billingCurrency(billingCurrency: JsonField<String>) = apply {
+                this.billingCurrency = billingCurrency
+            }
+
+            /**
+             * 3-character alphabetic ISO 4217 currency code for the settlement amount. Permitted
+             * values are USD, GBP, EUR and CAD, and any other ISO 4217 code returns a 422. Defaults
+             * to the value of billing_currency
+             */
+            fun settlementCurrency(settlementCurrency: String) =
+                settlementCurrency(JsonField.of(settlementCurrency))
+
+            /**
+             * Sets [Builder.settlementCurrency] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.settlementCurrency] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun settlementCurrency(settlementCurrency: JsonField<String>) = apply {
+                this.settlementCurrency = settlementCurrency
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -486,6 +653,8 @@ private constructor(
                     checkRequired("amount", amount),
                     checkRequired("descriptor", descriptor),
                     checkRequired("pan", pan),
+                    billingCurrency,
+                    settlementCurrency,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -509,6 +678,8 @@ private constructor(
             amount()
             descriptor()
             pan()
+            billingCurrency()
+            settlementCurrency()
             validated = true
         }
 
@@ -529,7 +700,9 @@ private constructor(
         internal fun validity(): Int =
             (if (amount.asKnown() == null) 0 else 1) +
                 (if (descriptor.asKnown() == null) 0 else 1) +
-                (if (pan.asKnown() == null) 0 else 1)
+                (if (pan.asKnown() == null) 0 else 1) +
+                (if (billingCurrency.asKnown() == null) 0 else 1) +
+                (if (settlementCurrency.asKnown() == null) 0 else 1)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -540,17 +713,26 @@ private constructor(
                 amount == other.amount &&
                 descriptor == other.descriptor &&
                 pan == other.pan &&
+                billingCurrency == other.billingCurrency &&
+                settlementCurrency == other.settlementCurrency &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(amount, descriptor, pan, additionalProperties)
+            Objects.hash(
+                amount,
+                descriptor,
+                pan,
+                billingCurrency,
+                settlementCurrency,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{amount=$amount, descriptor=$descriptor, pan=$pan, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, descriptor=$descriptor, pan=$pan, billingCurrency=$billingCurrency, settlementCurrency=$settlementCurrency, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

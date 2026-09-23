@@ -13,6 +13,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
             .amount(3831L)
             .descriptor("COFFEE SHOP")
             .pan("4111111289144142")
+            .billingCurrency("CAD")
             .mcc("5812")
             .merchantAcceptorCity("LOS ANGELES")
             .merchantAcceptorCountry("USA")
@@ -22,6 +23,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
             .merchantCurrency("GBP")
             .partialApprovalCapable(true)
             .pin("1234")
+            .settlementCurrency("CAD")
             .status(TransactionSimulateAuthorizationParams.Status.AUTHORIZATION)
             .build()
     }
@@ -33,6 +35,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
                 .amount(3831L)
                 .descriptor("COFFEE SHOP")
                 .pan("4111111289144142")
+                .billingCurrency("CAD")
                 .mcc("5812")
                 .merchantAcceptorCity("LOS ANGELES")
                 .merchantAcceptorCountry("USA")
@@ -42,6 +45,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
                 .merchantCurrency("GBP")
                 .partialApprovalCapable(true)
                 .pin("1234")
+                .settlementCurrency("CAD")
                 .status(TransactionSimulateAuthorizationParams.Status.AUTHORIZATION)
                 .build()
 
@@ -50,6 +54,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
         assertThat(body.amount()).isEqualTo(3831L)
         assertThat(body.descriptor()).isEqualTo("COFFEE SHOP")
         assertThat(body.pan()).isEqualTo("4111111289144142")
+        assertThat(body.billingCurrency()).isEqualTo("CAD")
         assertThat(body.mcc()).isEqualTo("5812")
         assertThat(body.merchantAcceptorCity()).isEqualTo("LOS ANGELES")
         assertThat(body.merchantAcceptorCountry()).isEqualTo("USA")
@@ -59,6 +64,7 @@ internal class TransactionSimulateAuthorizationParamsTest {
         assertThat(body.merchantCurrency()).isEqualTo("GBP")
         assertThat(body.partialApprovalCapable()).isEqualTo(true)
         assertThat(body.pin()).isEqualTo("1234")
+        assertThat(body.settlementCurrency()).isEqualTo("CAD")
         assertThat(body.status())
             .isEqualTo(TransactionSimulateAuthorizationParams.Status.AUTHORIZATION)
     }
