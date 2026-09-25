@@ -1,5 +1,64 @@
 # Changelog
 
+## 0.133.0 (2026-09-18)
+
+Full Changelog: [v0.132.0...v0.133.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.132.0...v0.133.0)
+
+### Features
+
+* [CARDS-5174] Add reiusse/renew 409 error ([3cb24e4](https://github.com/lithic-com/lithic-kotlin/commit/3cb24e489bd49e8f54f40aaaf1b38f76864d11ef))
+* [TRE-14464] Update /retry payments endpoint to accept method ([906a61a](https://github.com/lithic-com/lithic-kotlin/commit/906a61a3e73a83248e6a3e69e331e9aeafe4a498))
+* [TRE-14524] Add Open to buy API spec ([ad2e87d](https://github.com/lithic-com/lithic-kotlin/commit/ad2e87df8bbb1268ae400a6d9bb4d55227764bef))
+* Add missing blockchain/stablecoin endpoints to the spec ([2509df5](https://github.com/lithic-com/lithic-kotlin/commit/2509df5d84e63db474dfdcb6dbba36433fa89413))
+* **api:** add card.pin_updated webhook event ([db94ca5](https://github.com/lithic-com/lithic-kotlin/commit/db94ca5c2b25950252c680e6b5f33da355806b95))
+* **api:** add EXTERNAL_STABLECOIN category and events to payment types ([c0815d0](https://github.com/lithic-com/lithic-kotlin/commit/c0815d0bad58d0d90be1adc6efd61ae7a341da12))
+* **api:** add FEE/FEE_REVERSAL event types to financial/management operation/statement ([a9c6f97](https://github.com/lithic-com/lithic-kotlin/commit/a9c6f970a763499d38fd878615b9930f6a255356))
+* **api:** add list/retrieve installment plan methods to financial accounts ([11017fc](https://github.com/lithic-com/lithic-kotlin/commit/11017fc2af1379da66faa6eb951ef468001c1865))
+* **api:** add OTHER value to AuthRuleType enum ([f6cec04](https://github.com/lithic-com/lithic-kotlin/commit/f6cec04cfcd5e2c010b7a7d87c22957173d1a906))
+* **api:** add psd2_context field to ThreeDSAuthentication ([e3ec985](https://github.com/lithic-com/lithic-kotlin/commit/e3ec98522d31a395e7e3461d6d698a2dc5c5c0ab))
+* **api:** add stablecoin_reviewed to payment simulation types ([2c97283](https://github.com/lithic-com/lithic-kotlin/commit/2c972835bca1b28b89d90ba09ffe62a2033da04d))
+* AUTH-3759: Add DECLINE_SCA_REQUIRED and SCA_REQUIRED enum entries ([c6dcc85](https://github.com/lithic-com/lithic-kotlin/commit/c6dcc855272d516eca22f6b19ee2d84e66d1e7d1))
+* TRE-14349: add installment plan management operation event types ([2ba4fe6](https://github.com/lithic-com/lithic-kotlin/commit/2ba4fe66886f96f54c881aac6c434db72e95f1d3))
+* TRE-14429: Document the stablecoin payments endpoint ([48ab0d7](https://github.com/lithic-com/lithic-kotlin/commit/48ab0d77b3fb8f80edd6cd989da95cfa173c86e2))
+
+## 0.132.0 (2026-08-31)
+
+Full Changelog: [v0.131.0...v0.132.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.131.0...v0.132.0)
+
+### Features
+
+* **api:** add blockchain recipients create endpoint ([2cf8a6e](https://github.com/lithic-com/lithic-kotlin/commit/2cf8a6ee13f7da7420a44b90188fdcbd6765d5b7))
+* **api:** add blockchain_addresses field to FinancialAccount models ([b21cc02](https://github.com/lithic-com/lithic-kotlin/commit/b21cc0287ff9c04b655f5d89a805b09f2cc4e8b6))
+* **api:** add claim_token field/parameter and write_off_reversed enum to disputes ([65fa992](https://github.com/lithic-com/lithic-kotlin/commit/65fa992125fa2b416b1742ea9a778782d5c7de30))
+* **api:** add limitCashAmount and limitCashCount fields to VelocityLimitParams ([f0378a8](https://github.com/lithic-com/lithic-kotlin/commit/f0378a847849a00e460a24c5d9dedc21b1ec56aa))
+* **api:** add PROGRAM scope to AchPayment/CardTransaction, entity types to CaseEntity ([9051d1a](https://github.com/lithic-com/lithic-kotlin/commit/9051d1aefbbc417b8b1c4443ec722a140522251c))
+* **api:** add reassignAccount method to cards ([8bc3f8d](https://github.com/lithic-com/lithic-kotlin/commit/8bc3f8dddf1aaf5e26107e22588206f1c1e405dd))
+* **api:** add stablecoin event types to FinancialEvent and Payment ([00362da](https://github.com/lithic-com/lithic-kotlin/commit/00362da37f18a42ef90b440911176952717112a3))
+* **api:** add STABLECOIN method and attributes to Payment ([2aa2e97](https://github.com/lithic-com/lithic-kotlin/commit/2aa2e973105e579eba1b11dadcfb3ee7439082d2))
+* **api:** add STABLECOIN value to Payment.TransferType enum ([f8b9d53](https://github.com/lithic-com/lithic-kotlin/commit/f8b9d53f3f4833aa48a37642aba18a7a3013d65e))
+* **api:** add STABLECOIN_INBOUND/STABLECOIN_OUTBOUND to Payment TransferType ([6714c2d](https://github.com/lithic-com/lithic-kotlin/commit/6714c2dff8a2296fa52c394dc633e6717d46ca03))
+* Make blockchain recipient account_token nullable ([f20e52e](https://github.com/lithic-com/lithic-kotlin/commit/f20e52e58ff018f6f19d7eec9e8a58f5521fed3e))
+* Remove stablecoin transfer type ([a31a8a4](https://github.com/lithic-com/lithic-kotlin/commit/a31a8a4cd6ac11f7386fbfdf5b243d7070776ea1))
+
+
+### Bug Fixes
+
+* **api:** remove type field, rename accessors in DisputeV2 event data union ([d971c48](https://github.com/lithic-com/lithic-kotlin/commit/d971c488a0772996be9c32d72fce8ccbce75b895))
+* **docs:** link the javadoc badge so the version stays current after release ([1796b8d](https://github.com/lithic-com/lithic-kotlin/commit/1796b8d8422a86074784aa476068cd1b4e15fb78))
+* **types:** make method_attributes optional and add STABLECOIN to Payment.Method ([a5abc79](https://github.com/lithic-com/lithic-kotlin/commit/a5abc79d9e4e6e2713790eb5acfd9ba0c82babfa))
+
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([6418c3f](https://github.com/lithic-com/lithic-kotlin/commit/6418c3f6b28b038e8f241cdec85ebd88c95504fb))
+* **internal:** codegen related update ([51824f6](https://github.com/lithic-com/lithic-kotlin/commit/51824f614aa8f4ca2e5c544ff42d831483e5dc23))
+
+
+### Documentation
+
+* **api:** update clientDeviceId/clientWalletAccountId descriptions in card provision ([38f5beb](https://github.com/lithic-com/lithic-kotlin/commit/38f5beb14aa39d64cc350bbf2926a854e35cb958))
+* **api:** update CVV field descriptions in Card and TokenizationSimulateParams ([c9965f7](https://github.com/lithic-com/lithic-kotlin/commit/c9965f7cb97cf3d15df002e00a770a12009f102c))
+
 ## 0.131.0 (2026-08-03)
 
 Full Changelog: [v0.130.0...v0.131.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.130.0...v0.131.0)
