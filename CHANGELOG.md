@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.134.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.133.0...v0.134.0) (2026-10-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** the CONDITIONAL_BLOCK rule type and the ConditionalBlockParameters model are removed. All rules are now CONDITIONAL_ACTION.
+
+### Features
+
+* **api:** accept billing_currency and settlement_currency on transaction simulation endpoints ([36cb943](https://github.com/lithic-com/lithic-kotlin/commit/36cb943a621fb11734ac73b6cae0505d48673aac))
+* **api:** add installment plan statement endpoints to financial accounts ([a11f200](https://github.com/lithic-com/lithic-kotlin/commit/a11f200554c3883796d7eef14569ed54d5286e33))
+* **api:** add payment-only allocation breakdown to the loan tape ([330b6ad](https://github.com/lithic-com/lithic-kotlin/commit/330b6ad423c120924633034a7aa3f2ae75a7f38a))
+* **api:** add tags to card create and update parameters and card responses ([05c1e48](https://github.com/lithic-com/lithic-kotlin/commit/05c1e486d74667bfa89509913335192645471239))
+* **api:** expose the full conditional attribute set for authorization rules ([542a91e](https://github.com/lithic-com/lithic-kotlin/commit/542a91e00f697fe75ff1087081c9076fc7c2fca6))
+* **api:** remove CONDITIONAL_BLOCK from authorization rules ([5570214](https://github.com/lithic-com/lithic-kotlin/commit/5570214cdf2b36f28f48705aed483a433be2a143))
+* **api:** support international addresses and address2 for KYB_DELEGATED and KYC_EXEMPT workflows ([1e48f4b](https://github.com/lithic-com/lithic-kotlin/commit/1e48f4bc6aae69a8fc094683e47cd7cdda4fe277))
+
 ## 0.133.0 (2026-09-18)
 
 Full Changelog: [v0.132.0...v0.133.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.132.0...v0.133.0)
