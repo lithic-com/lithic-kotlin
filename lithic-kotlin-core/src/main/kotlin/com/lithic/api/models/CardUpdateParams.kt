@@ -14,6 +14,7 @@ import com.lithic.api.core.JsonValue
 import com.lithic.api.core.Params
 import com.lithic.api.core.http.Headers
 import com.lithic.api.core.http.QueryParams
+import com.lithic.api.core.toImmutable
 import com.lithic.api.errors.LithicInvalidDataException
 import java.util.Collections
 import java.util.Objects
@@ -155,6 +156,16 @@ private constructor(
     fun substatus(): Substatus? = body.substatus()
 
     /**
+     * Key-value pairs to merge into the card's tags. Supplied keys are added or overwritten, a key
+     * with a `null` value is removed, and omitted keys remain unchanged. A card can have at most 50
+     * tags, with keys up to 40 characters and values up to 500 characters
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun tags(): TagsPatch? = body.tags()
+
+    /**
      * Returns the raw JSON value of [comment].
      *
      * Unlike [comment], this method doesn't throw if the JSON field has an unexpected type.
@@ -226,6 +237,13 @@ private constructor(
      * Unlike [substatus], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _substatus(): JsonField<Substatus> = body._substatus()
+
+    /**
+     * Returns the raw JSON value of [tags].
+     *
+     * Unlike [tags], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _tags(): JsonField<TagsPatch> = body._tags()
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
@@ -463,6 +481,21 @@ private constructor(
          */
         fun substatus(substatus: JsonField<Substatus>) = apply { body.substatus(substatus) }
 
+        /**
+         * Key-value pairs to merge into the card's tags. Supplied keys are added or overwritten, a
+         * key with a `null` value is removed, and omitted keys remain unchanged. A card can have at
+         * most 50 tags, with keys up to 40 characters and values up to 500 characters
+         */
+        fun tags(tags: TagsPatch) = apply { body.tags(tags) }
+
+        /**
+         * Sets [Builder.tags] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tags] with a well-typed [TagsPatch] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun tags(tags: JsonField<TagsPatch>) = apply { body.tags(tags) }
+
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             body.additionalProperties(additionalBodyProperties)
         }
@@ -619,6 +652,7 @@ private constructor(
         private val spendLimitDuration: JsonField<SpendLimitDuration>,
         private val state: JsonField<State>,
         private val substatus: JsonField<Substatus>,
+        private val tags: JsonField<TagsPatch>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -646,6 +680,7 @@ private constructor(
             @JsonProperty("substatus")
             @ExcludeMissing
             substatus: JsonField<Substatus> = JsonMissing.of(),
+            @JsonProperty("tags") @ExcludeMissing tags: JsonField<TagsPatch> = JsonMissing.of(),
         ) : this(
             comment,
             digitalCardArtToken,
@@ -657,6 +692,7 @@ private constructor(
             spendLimitDuration,
             state,
             substatus,
+            tags,
             mutableMapOf(),
         )
 
@@ -788,6 +824,16 @@ private constructor(
         fun substatus(): Substatus? = substatus.getNullable("substatus")
 
         /**
+         * Key-value pairs to merge into the card's tags. Supplied keys are added or overwritten, a
+         * key with a `null` value is removed, and omitted keys remain unchanged. A card can have at
+         * most 50 tags, with keys up to 40 characters and values up to 500 characters
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun tags(): TagsPatch? = tags.getNullable("tags")
+
+        /**
          * Returns the raw JSON value of [comment].
          *
          * Unlike [comment], this method doesn't throw if the JSON field has an unexpected type.
@@ -870,6 +916,13 @@ private constructor(
         @ExcludeMissing
         fun _substatus(): JsonField<Substatus> = substatus
 
+        /**
+         * Returns the raw JSON value of [tags].
+         *
+         * Unlike [tags], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("tags") @ExcludeMissing fun _tags(): JsonField<TagsPatch> = tags
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -901,6 +954,7 @@ private constructor(
             private var spendLimitDuration: JsonField<SpendLimitDuration> = JsonMissing.of()
             private var state: JsonField<State> = JsonMissing.of()
             private var substatus: JsonField<Substatus> = JsonMissing.of()
+            private var tags: JsonField<TagsPatch> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
@@ -914,6 +968,7 @@ private constructor(
                 spendLimitDuration = body.spendLimitDuration
                 state = body.state
                 substatus = body.substatus
+                tags = body.tags
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -1112,6 +1167,23 @@ private constructor(
              */
             fun substatus(substatus: JsonField<Substatus>) = apply { this.substatus = substatus }
 
+            /**
+             * Key-value pairs to merge into the card's tags. Supplied keys are added or
+             * overwritten, a key with a `null` value is removed, and omitted keys remain unchanged.
+             * A card can have at most 50 tags, with keys up to 40 characters and values up to 500
+             * characters
+             */
+            fun tags(tags: TagsPatch) = tags(JsonField.of(tags))
+
+            /**
+             * Sets [Builder.tags] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.tags] with a well-typed [TagsPatch] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun tags(tags: JsonField<TagsPatch>) = apply { this.tags = tags }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1148,6 +1220,7 @@ private constructor(
                     spendLimitDuration,
                     state,
                     substatus,
+                    tags,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1178,6 +1251,7 @@ private constructor(
             spendLimitDuration()?.validate()
             state()?.validate()
             substatus()?.validate()
+            tags()?.validate()
             validated = true
         }
 
@@ -1205,7 +1279,8 @@ private constructor(
                 (if (spendLimit.asKnown() == null) 0 else 1) +
                 (spendLimitDuration.asKnown()?.validity() ?: 0) +
                 (state.asKnown()?.validity() ?: 0) +
-                (substatus.asKnown()?.validity() ?: 0)
+                (substatus.asKnown()?.validity() ?: 0) +
+                (tags.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -1223,6 +1298,7 @@ private constructor(
                 spendLimitDuration == other.spendLimitDuration &&
                 state == other.state &&
                 substatus == other.substatus &&
+                tags == other.tags &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -1238,6 +1314,7 @@ private constructor(
                 spendLimitDuration,
                 state,
                 substatus,
+                tags,
                 additionalProperties,
             )
         }
@@ -1245,7 +1322,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{comment=$comment, digitalCardArtToken=$digitalCardArtToken, memo=$memo, networkProgramToken=$networkProgramToken, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, substatus=$substatus, additionalProperties=$additionalProperties}"
+            "Body{comment=$comment, digitalCardArtToken=$digitalCardArtToken, memo=$memo, networkProgramToken=$networkProgramToken, pin=$pin, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, substatus=$substatus, tags=$tags, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1739,6 +1816,117 @@ private constructor(
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
+    }
+
+    /**
+     * Key-value pairs to merge into the card's tags. Supplied keys are added or overwritten, a key
+     * with a `null` value is removed, and omitted keys remain unchanged. A card can have at most 50
+     * tags, with keys up to 40 characters and values up to 500 characters
+     */
+    class TagsPatch
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [TagsPatch]. */
+            fun builder() = Builder()
+        }
+
+        /** A builder for [TagsPatch]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(tagsPatch: TagsPatch) = apply {
+                additionalProperties = tagsPatch.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [TagsPatch].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): TagsPatch = TagsPatch(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): TagsPatch = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is TagsPatch && additionalProperties == other.additionalProperties
+        }
+
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "TagsPatch{additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

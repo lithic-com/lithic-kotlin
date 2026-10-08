@@ -32,6 +32,7 @@ private constructor(
     private val spendLimit: JsonField<Long>,
     private val spendLimitDuration: JsonField<SpendLimitDuration>,
     private val state: JsonField<NonPciCard.State>,
+    private val tags: JsonField<NonPciCard.Tags>,
     private val type: JsonField<NonPciCard.Type>,
     private val authRuleTokens: JsonField<List<String>>,
     private val bulkOrderToken: JsonField<String>,
@@ -78,6 +79,7 @@ private constructor(
         @JsonProperty("state")
         @ExcludeMissing
         state: JsonField<NonPciCard.State> = JsonMissing.of(),
+        @JsonProperty("tags") @ExcludeMissing tags: JsonField<NonPciCard.Tags> = JsonMissing.of(),
         @JsonProperty("type") @ExcludeMissing type: JsonField<NonPciCard.Type> = JsonMissing.of(),
         @JsonProperty("auth_rule_tokens")
         @ExcludeMissing
@@ -122,6 +124,7 @@ private constructor(
         spendLimit,
         spendLimitDuration,
         state,
+        tags,
         type,
         authRuleTokens,
         bulkOrderToken,
@@ -154,6 +157,7 @@ private constructor(
             .spendLimit(spendLimit)
             .spendLimitDuration(spendLimitDuration)
             .state(state)
+            .tags(tags)
             .type(type)
             .authRuleTokens(authRuleTokens)
             .bulkOrderToken(bulkOrderToken)
@@ -271,6 +275,16 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun state(): NonPciCard.State = state.getRequired("state")
+
+    /**
+     * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata with a
+     * resource for your own purposes. A resource can have at most 50 tags, with keys up to 40
+     * characters and values up to 500 characters
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun tags(): NonPciCard.Tags = tags.getRequired("tags")
 
     /**
      * Card types: * `VIRTUAL` - Card will authorize at any merchant and can be added to a digital
@@ -529,6 +543,13 @@ private constructor(
     @JsonProperty("state") @ExcludeMissing fun _state(): JsonField<NonPciCard.State> = state
 
     /**
+     * Returns the raw JSON value of [tags].
+     *
+     * Unlike [tags], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("tags") @ExcludeMissing fun _tags(): JsonField<NonPciCard.Tags> = tags
+
+    /**
      * Returns the raw JSON value of [type].
      *
      * Unlike [type], this method doesn't throw if the JSON field has an unexpected type.
@@ -696,6 +717,7 @@ private constructor(
          * .spendLimit()
          * .spendLimitDuration()
          * .state()
+         * .tags()
          * .type()
          * ```
          */
@@ -715,6 +737,7 @@ private constructor(
         private var spendLimit: JsonField<Long>? = null
         private var spendLimitDuration: JsonField<SpendLimitDuration>? = null
         private var state: JsonField<NonPciCard.State>? = null
+        private var tags: JsonField<NonPciCard.Tags>? = null
         private var type: JsonField<NonPciCard.Type>? = null
         private var authRuleTokens: JsonField<MutableList<String>>? = null
         private var bulkOrderToken: JsonField<String> = JsonMissing.of()
@@ -745,6 +768,7 @@ private constructor(
             spendLimit = card.spendLimit
             spendLimitDuration = card.spendLimitDuration
             state = card.state
+            tags = card.tags
             type = card.type
             authRuleTokens = card.authRuleTokens.map { it.toMutableList() }
             bulkOrderToken = card.bulkOrderToken
@@ -924,6 +948,22 @@ private constructor(
          * supported value.
          */
         fun state(state: JsonField<NonPciCard.State>) = apply { this.state = state }
+
+        /**
+         * Key-value pairs for tagging resources. Tags allow you to associate arbitrary metadata
+         * with a resource for your own purposes. A resource can have at most 50 tags, with keys up
+         * to 40 characters and values up to 500 characters
+         */
+        fun tags(tags: NonPciCard.Tags) = tags(JsonField.of(tags))
+
+        /**
+         * Sets [Builder.tags] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.tags] with a well-typed [NonPciCard.Tags] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun tags(tags: JsonField<NonPciCard.Tags>) = apply { this.tags = tags }
 
         /**
          * Card types: * `VIRTUAL` - Card will authorize at any merchant and can be added to a
@@ -1268,6 +1308,7 @@ private constructor(
          * .spendLimit()
          * .spendLimitDuration()
          * .state()
+         * .tags()
          * .type()
          * ```
          *
@@ -1285,6 +1326,7 @@ private constructor(
                 checkRequired("spendLimit", spendLimit),
                 checkRequired("spendLimitDuration", spendLimitDuration),
                 checkRequired("state", state),
+                checkRequired("tags", tags),
                 checkRequired("type", type),
                 (authRuleTokens ?: JsonMissing.of()).map { it.toImmutable() },
                 bulkOrderToken,
@@ -1331,6 +1373,7 @@ private constructor(
         spendLimit()
         spendLimitDuration().validate()
         state().validate()
+        tags().validate()
         type().validate()
         authRuleTokens()
         bulkOrderToken()
@@ -1375,6 +1418,7 @@ private constructor(
             (if (spendLimit.asKnown() == null) 0 else 1) +
             (spendLimitDuration.asKnown()?.validity() ?: 0) +
             (state.asKnown()?.validity() ?: 0) +
+            (tags.asKnown()?.validity() ?: 0) +
             (type.asKnown()?.validity() ?: 0) +
             (authRuleTokens.asKnown()?.size ?: 0) +
             (if (bulkOrderToken.asKnown() == null) 0 else 1) +
@@ -1409,6 +1453,7 @@ private constructor(
             spendLimit == other.spendLimit &&
             spendLimitDuration == other.spendLimitDuration &&
             state == other.state &&
+            tags == other.tags &&
             type == other.type &&
             authRuleTokens == other.authRuleTokens &&
             bulkOrderToken == other.bulkOrderToken &&
@@ -1441,6 +1486,7 @@ private constructor(
             spendLimit,
             spendLimitDuration,
             state,
+            tags,
             type,
             authRuleTokens,
             bulkOrderToken,
@@ -1465,5 +1511,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Card{token=$token, accountToken=$accountToken, cardProgramToken=$cardProgramToken, created=$created, funding=$funding, lastFour=$lastFour, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, type=$type, authRuleTokens=$authRuleTokens, bulkOrderToken=$bulkOrderToken, cardholderCurrency=$cardholderCurrency, comment=$comment, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, hostname=$hostname, memo=$memo, networkProgramToken=$networkProgramToken, pendingCommands=$pendingCommands, productId=$productId, replacementFor=$replacementFor, substatus=$substatus, cvv=$cvv, pan=$pan, additionalProperties=$additionalProperties}"
+        "Card{token=$token, accountToken=$accountToken, cardProgramToken=$cardProgramToken, created=$created, funding=$funding, lastFour=$lastFour, pinStatus=$pinStatus, spendLimit=$spendLimit, spendLimitDuration=$spendLimitDuration, state=$state, tags=$tags, type=$type, authRuleTokens=$authRuleTokens, bulkOrderToken=$bulkOrderToken, cardholderCurrency=$cardholderCurrency, comment=$comment, digitalCardArtToken=$digitalCardArtToken, expMonth=$expMonth, expYear=$expYear, hostname=$hostname, memo=$memo, networkProgramToken=$networkProgramToken, pendingCommands=$pendingCommands, productId=$productId, replacementFor=$replacementFor, substatus=$substatus, cvv=$cvv, pan=$pan, additionalProperties=$additionalProperties}"
 }

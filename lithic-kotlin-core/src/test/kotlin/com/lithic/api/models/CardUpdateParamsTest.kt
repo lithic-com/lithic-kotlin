@@ -2,6 +2,7 @@
 
 package com.lithic.api.models
 
+import com.lithic.api.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,6 +22,11 @@ internal class CardUpdateParamsTest {
             .spendLimitDuration(SpendLimitDuration.FOREVER)
             .state(CardUpdateParams.State.OPEN)
             .substatus(CardUpdateParams.Substatus.LOST)
+            .tags(
+                CardUpdateParams.TagsPatch.builder()
+                    .putAdditionalProperty("risk-level", JsonValue.from("high"))
+                    .build()
+            )
             .build()
     }
 
@@ -49,6 +55,11 @@ internal class CardUpdateParamsTest {
                 .spendLimitDuration(SpendLimitDuration.FOREVER)
                 .state(CardUpdateParams.State.OPEN)
                 .substatus(CardUpdateParams.Substatus.LOST)
+                .tags(
+                    CardUpdateParams.TagsPatch.builder()
+                        .putAdditionalProperty("risk-level", JsonValue.from("high"))
+                        .build()
+                )
                 .build()
 
         val body = params._body()
@@ -63,6 +74,12 @@ internal class CardUpdateParamsTest {
         assertThat(body.spendLimitDuration()).isEqualTo(SpendLimitDuration.FOREVER)
         assertThat(body.state()).isEqualTo(CardUpdateParams.State.OPEN)
         assertThat(body.substatus()).isEqualTo(CardUpdateParams.Substatus.LOST)
+        assertThat(body.tags())
+            .isEqualTo(
+                CardUpdateParams.TagsPatch.builder()
+                    .putAdditionalProperty("risk-level", JsonValue.from("high"))
+                    .build()
+            )
     }
 
     @Test
