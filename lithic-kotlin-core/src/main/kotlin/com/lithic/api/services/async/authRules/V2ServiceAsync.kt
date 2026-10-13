@@ -20,6 +20,7 @@ import com.lithic.api.models.AuthRuleV2PromoteParams
 import com.lithic.api.models.AuthRuleV2RetrieveFeaturesParams
 import com.lithic.api.models.AuthRuleV2RetrieveParams
 import com.lithic.api.models.AuthRuleV2RetrieveReportParams
+import com.lithic.api.models.AuthRuleV2UpdateEntitiesParams
 import com.lithic.api.models.AuthRuleV2UpdateParams
 import com.lithic.api.models.V2ListVersionsResponse
 import com.lithic.api.models.V2RetrieveFeaturesResponse
@@ -53,6 +54,12 @@ interface V2ServiceAsync {
         body: AuthRuleV2CreateParams.Body,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AuthRule = create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
+
+    /** @see create */
+    suspend fun create(
+        rule: AuthRuleV2CreateParams.Body.Rule,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule = create(AuthRuleV2CreateParams.Body.ofRule(rule), requestOptions)
 
     /** @see create */
     suspend fun create(
@@ -94,9 +101,9 @@ interface V2ServiceAsync {
     /**
      * Updates a V2 Auth rule's properties
      *
-     * If `account_tokens`, `card_tokens`, `program_level`, `excluded_card_tokens`,
-     * `excluded_account_tokens`, or `excluded_business_account_tokens` is provided, this will
-     * replace existing associations with the provided list of entities.
+     * If `entities` is provided, this will replace the rule's existing entities with the provided
+     * `include` and `exclude` lists. To change entities incrementally, use `PATCH
+     * /v2/auth_rules/{auth_rule_token}/entities` instead.
      */
     suspend fun update(
         authRuleToken: String,
@@ -272,6 +279,29 @@ interface V2ServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): V2RetrieveReportResponse
 
+    /**
+     * Adds entities to and removes entities from a V2 Auth rule's `include` and `exclude` lists
+     *
+     * To replace all of the rule's entities at once, provide `entities` to `PATCH
+     * /v2/auth_rules/{auth_rule_token}` instead.
+     */
+    suspend fun updateEntities(
+        authRuleToken: String,
+        params: AuthRuleV2UpdateEntitiesParams = AuthRuleV2UpdateEntitiesParams.none(),
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule =
+        updateEntities(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
+
+    /** @see updateEntities */
+    suspend fun updateEntities(
+        params: AuthRuleV2UpdateEntitiesParams,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): AuthRule
+
+    /** @see updateEntities */
+    suspend fun updateEntities(authRuleToken: String, requestOptions: RequestOptions): AuthRule =
+        updateEntities(authRuleToken, AuthRuleV2UpdateEntitiesParams.none(), requestOptions)
+
     /** A view of [V2ServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -301,6 +331,14 @@ interface V2ServiceAsync {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AuthRule> =
             create(AuthRuleV2CreateParams.builder().body(body).build(), requestOptions)
+
+        /** @see create */
+        @MustBeClosed
+        suspend fun create(
+            rule: AuthRuleV2CreateParams.Body.Rule,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            create(AuthRuleV2CreateParams.Body.ofRule(rule), requestOptions)
 
         /** @see create */
         @MustBeClosed
@@ -557,5 +595,32 @@ interface V2ServiceAsync {
             params: AuthRuleV2RetrieveReportParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<V2RetrieveReportResponse>
+
+        /**
+         * Returns a raw HTTP response for `patch /v2/auth_rules/{auth_rule_token}/entities`, but is
+         * otherwise the same as [V2ServiceAsync.updateEntities].
+         */
+        @MustBeClosed
+        suspend fun updateEntities(
+            authRuleToken: String,
+            params: AuthRuleV2UpdateEntitiesParams = AuthRuleV2UpdateEntitiesParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule> =
+            updateEntities(params.toBuilder().authRuleToken(authRuleToken).build(), requestOptions)
+
+        /** @see updateEntities */
+        @MustBeClosed
+        suspend fun updateEntities(
+            params: AuthRuleV2UpdateEntitiesParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AuthRule>
+
+        /** @see updateEntities */
+        @MustBeClosed
+        suspend fun updateEntities(
+            authRuleToken: String,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<AuthRule> =
+            updateEntities(authRuleToken, AuthRuleV2UpdateEntitiesParams.none(), requestOptions)
     }
 }

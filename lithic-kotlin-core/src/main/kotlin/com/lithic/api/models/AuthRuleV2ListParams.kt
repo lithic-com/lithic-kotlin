@@ -58,7 +58,10 @@ private constructor(
     /** Page size (for pagination). */
     fun pageSize(): Long? = pageSize
 
-    /** Only return Auth Rules that are bound to the provided scope. */
+    /**
+     * Only return Auth Rules that are bound to the provided scope. When no token is provided,
+     * `CARD` also returns Auth Rules that include a `CARD_TAG` entity.
+     */
     fun scope(): Scope? = scope
 
     /**
@@ -162,7 +165,10 @@ private constructor(
          */
         fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
-        /** Only return Auth Rules that are bound to the provided scope. */
+        /**
+         * Only return Auth Rules that are bound to the provided scope. When no token is provided,
+         * `CARD` also returns Auth Rules that include a `CARD_TAG` entity.
+         */
         fun scope(scope: Scope?) = apply { this.scope = scope }
 
         /**
@@ -308,7 +314,10 @@ private constructor(
             }
             .build()
 
-    /** Only return Auth Rules that are bound to the provided scope. */
+    /**
+     * Only return Auth Rules that are bound to the provided scope. When no token is provided,
+     * `CARD` also returns Auth Rules that include a `CARD_TAG` entity.
+     */
     class Scope @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**

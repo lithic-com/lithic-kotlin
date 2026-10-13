@@ -38,6 +38,7 @@ private constructor(
     private val cardTokens: JsonField<List<String>>,
     private val currentVersion: JsonField<CurrentVersion>,
     private val draftVersion: JsonField<DraftVersion>,
+    private val entities: JsonField<AuthRuleEntitiesResponse>,
     private val eventStream: JsonField<EventStream>,
     private val lithicManaged: JsonField<Boolean>,
     private val name: JsonField<String>,
@@ -68,6 +69,9 @@ private constructor(
         @JsonProperty("draft_version")
         @ExcludeMissing
         draftVersion: JsonField<DraftVersion> = JsonMissing.of(),
+        @JsonProperty("entities")
+        @ExcludeMissing
+        entities: JsonField<AuthRuleEntitiesResponse> = JsonMissing.of(),
         @JsonProperty("event_stream")
         @ExcludeMissing
         eventStream: JsonField<EventStream> = JsonMissing.of(),
@@ -96,6 +100,7 @@ private constructor(
         cardTokens,
         currentVersion,
         draftVersion,
+        entities,
         eventStream,
         lithicManaged,
         name,
@@ -117,29 +122,38 @@ private constructor(
     fun token(): String = token.getRequired("token")
 
     /**
+     * Deprecated: Use `entities.include` with `ACCOUNT` entities instead.
+     *
      * Account tokens to which the Auth Rule applies.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun accountTokens(): List<String> = accountTokens.getRequired("account_tokens")
 
     /**
+     * Deprecated: Use `entities.include` with `BUSINESS_ACCOUNT` entities instead.
+     *
      * Business Account tokens to which the Auth Rule applies.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun businessAccountTokens(): List<String> =
         businessAccountTokens.getRequired("business_account_tokens")
 
     /**
-     * Card tokens to which the Auth Rule applies.
+     * Deprecated: Use `entities.include` with `CARD` entities instead.
+     *
+     * Card tokens to which the Auth Rule applies. Cards the rule applies to through a `CARD_TAG`
+     * entity are not listed.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun cardTokens(): List<String> = cardTokens.getRequired("card_tokens")
+    @Deprecated("deprecated") fun cardTokens(): List<String> = cardTokens.getRequired("card_tokens")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -152,6 +166,15 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun draftVersion(): DraftVersion? = draftVersion.getNullable("draft_version")
+
+    /**
+     * The entities the Auth Rule applies to (`include`) and does not apply to (`exclude`). An
+     * exclusion overrides an inclusion.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun entities(): AuthRuleEntitiesResponse = entities.getRequired("entities")
 
     /**
      * The event stream during which the rule will be evaluated.
@@ -179,11 +202,14 @@ private constructor(
     fun name(): String? = name.getNullable("name")
 
     /**
+     * Deprecated: Use `entities.include` with a `PROGRAM` entity instead.
+     *
      * Whether the Auth Rule applies to all authorizations on the card program.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun programLevel(): Boolean = programLevel.getRequired("program_level")
 
     /**
@@ -215,29 +241,39 @@ private constructor(
     fun type(): AuthRuleType = type.getRequired("type")
 
     /**
+     * Deprecated: Use `entities.exclude` with `ACCOUNT` entities instead.
+     *
      * Account tokens to which the Auth Rule does not apply.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun excludedAccountTokens(): List<String>? =
         excludedAccountTokens.getNullable("excluded_account_tokens")
 
     /**
+     * Deprecated: Use `entities.exclude` with `BUSINESS_ACCOUNT` entities instead.
+     *
      * Business account tokens to which the Auth Rule does not apply.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun excludedBusinessAccountTokens(): List<String>? =
         excludedBusinessAccountTokens.getNullable("excluded_business_account_tokens")
 
     /**
-     * Card tokens to which the Auth Rule does not apply.
+     * Deprecated: Use `entities.exclude` with `CARD` entities instead.
+     *
+     * Card tokens to which the Auth Rule does not apply. Cards excluded through a `CARD_TAG` entity
+     * are not listed.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun excludedCardTokens(): List<String>? = excludedCardTokens.getNullable("excluded_card_tokens")
 
     /**
@@ -252,6 +288,7 @@ private constructor(
      *
      * Unlike [accountTokens], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("account_tokens")
     @ExcludeMissing
     fun _accountTokens(): JsonField<List<String>> = accountTokens
@@ -262,6 +299,7 @@ private constructor(
      * Unlike [businessAccountTokens], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("business_account_tokens")
     @ExcludeMissing
     fun _businessAccountTokens(): JsonField<List<String>> = businessAccountTokens
@@ -271,6 +309,7 @@ private constructor(
      *
      * Unlike [cardTokens], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("card_tokens")
     @ExcludeMissing
     fun _cardTokens(): JsonField<List<String>> = cardTokens
@@ -292,6 +331,15 @@ private constructor(
     @JsonProperty("draft_version")
     @ExcludeMissing
     fun _draftVersion(): JsonField<DraftVersion> = draftVersion
+
+    /**
+     * Returns the raw JSON value of [entities].
+     *
+     * Unlike [entities], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("entities")
+    @ExcludeMissing
+    fun _entities(): JsonField<AuthRuleEntitiesResponse> = entities
 
     /**
      * Returns the raw JSON value of [eventStream].
@@ -323,6 +371,7 @@ private constructor(
      *
      * Unlike [programLevel], this method doesn't throw if the JSON field has an unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("program_level")
     @ExcludeMissing
     fun _programLevel(): JsonField<Boolean> = programLevel
@@ -347,6 +396,7 @@ private constructor(
      * Unlike [excludedAccountTokens], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("excluded_account_tokens")
     @ExcludeMissing
     fun _excludedAccountTokens(): JsonField<List<String>> = excludedAccountTokens
@@ -357,6 +407,7 @@ private constructor(
      * Unlike [excludedBusinessAccountTokens], this method doesn't throw if the JSON field has an
      * unexpected type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("excluded_business_account_tokens")
     @ExcludeMissing
     fun _excludedBusinessAccountTokens(): JsonField<List<String>> = excludedBusinessAccountTokens
@@ -367,6 +418,7 @@ private constructor(
      * Unlike [excludedCardTokens], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("excluded_card_tokens")
     @ExcludeMissing
     fun _excludedCardTokens(): JsonField<List<String>> = excludedCardTokens
@@ -396,6 +448,7 @@ private constructor(
          * .cardTokens()
          * .currentVersion()
          * .draftVersion()
+         * .entities()
          * .eventStream()
          * .lithicManaged()
          * .name()
@@ -416,6 +469,7 @@ private constructor(
         private var cardTokens: JsonField<MutableList<String>>? = null
         private var currentVersion: JsonField<CurrentVersion>? = null
         private var draftVersion: JsonField<DraftVersion>? = null
+        private var entities: JsonField<AuthRuleEntitiesResponse>? = null
         private var eventStream: JsonField<EventStream>? = null
         private var lithicManaged: JsonField<Boolean>? = null
         private var name: JsonField<String>? = null
@@ -434,6 +488,7 @@ private constructor(
             cardTokens = authRule.cardTokens.map { it.toMutableList() }
             currentVersion = authRule.currentVersion
             draftVersion = authRule.draftVersion
+            entities = authRule.entities
             eventStream = authRule.eventStream
             lithicManaged = authRule.lithicManaged
             name = authRule.name
@@ -458,7 +513,12 @@ private constructor(
          */
         fun token(token: JsonField<String>) = apply { this.token = token }
 
-        /** Account tokens to which the Auth Rule applies. */
+        /**
+         * Deprecated: Use `entities.include` with `ACCOUNT` entities instead.
+         *
+         * Account tokens to which the Auth Rule applies.
+         */
+        @Deprecated("deprecated")
         fun accountTokens(accountTokens: List<String>) = accountTokens(JsonField.of(accountTokens))
 
         /**
@@ -468,6 +528,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun accountTokens(accountTokens: JsonField<List<String>>) = apply {
             this.accountTokens = accountTokens.map { it.toMutableList() }
         }
@@ -477,6 +538,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addAccountToken(accountToken: String) = apply {
             accountTokens =
                 (accountTokens ?: JsonField.of(mutableListOf())).also {
@@ -484,7 +546,12 @@ private constructor(
                 }
         }
 
-        /** Business Account tokens to which the Auth Rule applies. */
+        /**
+         * Deprecated: Use `entities.include` with `BUSINESS_ACCOUNT` entities instead.
+         *
+         * Business Account tokens to which the Auth Rule applies.
+         */
+        @Deprecated("deprecated")
         fun businessAccountTokens(businessAccountTokens: List<String>) =
             businessAccountTokens(JsonField.of(businessAccountTokens))
 
@@ -495,6 +562,7 @@ private constructor(
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
+        @Deprecated("deprecated")
         fun businessAccountTokens(businessAccountTokens: JsonField<List<String>>) = apply {
             this.businessAccountTokens = businessAccountTokens.map { it.toMutableList() }
         }
@@ -504,6 +572,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addBusinessAccountToken(businessAccountToken: String) = apply {
             businessAccountTokens =
                 (businessAccountTokens ?: JsonField.of(mutableListOf())).also {
@@ -511,7 +580,13 @@ private constructor(
                 }
         }
 
-        /** Card tokens to which the Auth Rule applies. */
+        /**
+         * Deprecated: Use `entities.include` with `CARD` entities instead.
+         *
+         * Card tokens to which the Auth Rule applies. Cards the rule applies to through a
+         * `CARD_TAG` entity are not listed.
+         */
+        @Deprecated("deprecated")
         fun cardTokens(cardTokens: List<String>) = cardTokens(JsonField.of(cardTokens))
 
         /**
@@ -521,6 +596,7 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun cardTokens(cardTokens: JsonField<List<String>>) = apply {
             this.cardTokens = cardTokens.map { it.toMutableList() }
         }
@@ -530,6 +606,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addCardToken(cardToken: String) = apply {
             cardTokens =
                 (cardTokens ?: JsonField.of(mutableListOf())).also {
@@ -563,6 +640,23 @@ private constructor(
          */
         fun draftVersion(draftVersion: JsonField<DraftVersion>) = apply {
             this.draftVersion = draftVersion
+        }
+
+        /**
+         * The entities the Auth Rule applies to (`include`) and does not apply to (`exclude`). An
+         * exclusion overrides an inclusion.
+         */
+        fun entities(entities: AuthRuleEntitiesResponse) = entities(JsonField.of(entities))
+
+        /**
+         * Sets [Builder.entities] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entities] with a well-typed [AuthRuleEntitiesResponse]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun entities(entities: JsonField<AuthRuleEntitiesResponse>) = apply {
+            this.entities = entities
         }
 
         /** The event stream during which the rule will be evaluated. */
@@ -607,7 +701,12 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
-        /** Whether the Auth Rule applies to all authorizations on the card program. */
+        /**
+         * Deprecated: Use `entities.include` with a `PROGRAM` entity instead.
+         *
+         * Whether the Auth Rule applies to all authorizations on the card program.
+         */
+        @Deprecated("deprecated")
         fun programLevel(programLevel: Boolean) = programLevel(JsonField.of(programLevel))
 
         /**
@@ -617,6 +716,7 @@ private constructor(
          * This method is primarily for setting the field to an undocumented or not yet supported
          * value.
          */
+        @Deprecated("deprecated")
         fun programLevel(programLevel: JsonField<Boolean>) = apply {
             this.programLevel = programLevel
         }
@@ -659,7 +759,12 @@ private constructor(
          */
         fun type(type: JsonField<AuthRuleType>) = apply { this.type = type }
 
-        /** Account tokens to which the Auth Rule does not apply. */
+        /**
+         * Deprecated: Use `entities.exclude` with `ACCOUNT` entities instead.
+         *
+         * Account tokens to which the Auth Rule does not apply.
+         */
+        @Deprecated("deprecated")
         fun excludedAccountTokens(excludedAccountTokens: List<String>) =
             excludedAccountTokens(JsonField.of(excludedAccountTokens))
 
@@ -670,6 +775,7 @@ private constructor(
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
+        @Deprecated("deprecated")
         fun excludedAccountTokens(excludedAccountTokens: JsonField<List<String>>) = apply {
             this.excludedAccountTokens = excludedAccountTokens.map { it.toMutableList() }
         }
@@ -679,6 +785,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addExcludedAccountToken(excludedAccountToken: String) = apply {
             excludedAccountTokens =
                 (excludedAccountTokens ?: JsonField.of(mutableListOf())).also {
@@ -686,7 +793,12 @@ private constructor(
                 }
         }
 
-        /** Business account tokens to which the Auth Rule does not apply. */
+        /**
+         * Deprecated: Use `entities.exclude` with `BUSINESS_ACCOUNT` entities instead.
+         *
+         * Business account tokens to which the Auth Rule does not apply.
+         */
+        @Deprecated("deprecated")
         fun excludedBusinessAccountTokens(excludedBusinessAccountTokens: List<String>) =
             excludedBusinessAccountTokens(JsonField.of(excludedBusinessAccountTokens))
 
@@ -697,6 +809,7 @@ private constructor(
          * `List<String>` value instead. This method is primarily for setting the field to an
          * undocumented or not yet supported value.
          */
+        @Deprecated("deprecated")
         fun excludedBusinessAccountTokens(excludedBusinessAccountTokens: JsonField<List<String>>) =
             apply {
                 this.excludedBusinessAccountTokens =
@@ -708,6 +821,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addExcludedBusinessAccountToken(excludedBusinessAccountToken: String) = apply {
             excludedBusinessAccountTokens =
                 (excludedBusinessAccountTokens ?: JsonField.of(mutableListOf())).also {
@@ -716,7 +830,13 @@ private constructor(
                 }
         }
 
-        /** Card tokens to which the Auth Rule does not apply. */
+        /**
+         * Deprecated: Use `entities.exclude` with `CARD` entities instead.
+         *
+         * Card tokens to which the Auth Rule does not apply. Cards excluded through a `CARD_TAG`
+         * entity are not listed.
+         */
+        @Deprecated("deprecated")
         fun excludedCardTokens(excludedCardTokens: List<String>) =
             excludedCardTokens(JsonField.of(excludedCardTokens))
 
@@ -727,6 +847,7 @@ private constructor(
          * value instead. This method is primarily for setting the field to an undocumented or not
          * yet supported value.
          */
+        @Deprecated("deprecated")
         fun excludedCardTokens(excludedCardTokens: JsonField<List<String>>) = apply {
             this.excludedCardTokens = excludedCardTokens.map { it.toMutableList() }
         }
@@ -736,6 +857,7 @@ private constructor(
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
+        @Deprecated("deprecated")
         fun addExcludedCardToken(excludedCardToken: String) = apply {
             excludedCardTokens =
                 (excludedCardTokens ?: JsonField.of(mutableListOf())).also {
@@ -775,6 +897,7 @@ private constructor(
          * .cardTokens()
          * .currentVersion()
          * .draftVersion()
+         * .entities()
          * .eventStream()
          * .lithicManaged()
          * .name()
@@ -795,6 +918,7 @@ private constructor(
                 checkRequired("cardTokens", cardTokens).map { it.toImmutable() },
                 checkRequired("currentVersion", currentVersion),
                 checkRequired("draftVersion", draftVersion),
+                checkRequired("entities", entities),
                 checkRequired("eventStream", eventStream),
                 checkRequired("lithicManaged", lithicManaged),
                 checkRequired("name", name),
@@ -829,6 +953,7 @@ private constructor(
         cardTokens()
         currentVersion()?.validate()
         draftVersion()?.validate()
+        entities().validate()
         eventStream().validate()
         lithicManaged()
         name()
@@ -861,6 +986,7 @@ private constructor(
             (cardTokens.asKnown()?.size ?: 0) +
             (currentVersion.asKnown()?.validity() ?: 0) +
             (draftVersion.asKnown()?.validity() ?: 0) +
+            (entities.asKnown()?.validity() ?: 0) +
             (eventStream.asKnown()?.validity() ?: 0) +
             (if (lithicManaged.asKnown() == null) 0 else 1) +
             (if (name.asKnown() == null) 0 else 1) +
@@ -3252,6 +3378,7 @@ private constructor(
             cardTokens == other.cardTokens &&
             currentVersion == other.currentVersion &&
             draftVersion == other.draftVersion &&
+            entities == other.entities &&
             eventStream == other.eventStream &&
             lithicManaged == other.lithicManaged &&
             name == other.name &&
@@ -3272,6 +3399,7 @@ private constructor(
             cardTokens,
             currentVersion,
             draftVersion,
+            entities,
             eventStream,
             lithicManaged,
             name,
@@ -3288,5 +3416,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AuthRule{token=$token, accountTokens=$accountTokens, businessAccountTokens=$businessAccountTokens, cardTokens=$cardTokens, currentVersion=$currentVersion, draftVersion=$draftVersion, eventStream=$eventStream, lithicManaged=$lithicManaged, name=$name, programLevel=$programLevel, state=$state, type=$type, excludedAccountTokens=$excludedAccountTokens, excludedBusinessAccountTokens=$excludedBusinessAccountTokens, excludedCardTokens=$excludedCardTokens, additionalProperties=$additionalProperties}"
+        "AuthRule{token=$token, accountTokens=$accountTokens, businessAccountTokens=$businessAccountTokens, cardTokens=$cardTokens, currentVersion=$currentVersion, draftVersion=$draftVersion, entities=$entities, eventStream=$eventStream, lithicManaged=$lithicManaged, name=$name, programLevel=$programLevel, state=$state, type=$type, excludedAccountTokens=$excludedAccountTokens, excludedBusinessAccountTokens=$excludedBusinessAccountTokens, excludedCardTokens=$excludedCardTokens, additionalProperties=$additionalProperties}"
 }
