@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.135.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.134.0...v0.135.0) (2026-10-16)
+
+
+### Features
+
+* **api:** add INSTANCE_TO_INSTANCE to book transfer type and financial event type enums ([39cd7b5](https://github.com/lithic-com/lithic-kotlin/commit/39cd7b5efa7296cfa5d5b7b2f0f4c12e13604682))
+
 ## [0.134.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.133.0...v0.134.0) (2026-10-13)
 
 
