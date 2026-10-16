@@ -1821,6 +1821,8 @@ private constructor(
 
                 val BANK_PROGRAM_TRANSFER = of("BANK_PROGRAM_TRANSFER")
 
+                val INSTANCE_TO_INSTANCE = of("INSTANCE_TO_INSTANCE")
+
                 fun of(value: String) = BookTransferType(JsonField.of(value))
             }
 
@@ -1864,6 +1866,7 @@ private constructor(
                 COLLECTION,
                 LITHIC_PROGRAM_TRANSFER,
                 BANK_PROGRAM_TRANSFER,
+                INSTANCE_TO_INSTANCE,
             }
 
             /**
@@ -1915,6 +1918,7 @@ private constructor(
                 COLLECTION,
                 LITHIC_PROGRAM_TRANSFER,
                 BANK_PROGRAM_TRANSFER,
+                INSTANCE_TO_INSTANCE,
                 /**
                  * An enum member indicating that [BookTransferType] was instantiated with an
                  * unknown value.
@@ -1969,6 +1973,7 @@ private constructor(
                     COLLECTION -> Value.COLLECTION
                     LITHIC_PROGRAM_TRANSFER -> Value.LITHIC_PROGRAM_TRANSFER
                     BANK_PROGRAM_TRANSFER -> Value.BANK_PROGRAM_TRANSFER
+                    INSTANCE_TO_INSTANCE -> Value.INSTANCE_TO_INSTANCE
                     else -> Value._UNKNOWN
                 }
 
@@ -2021,6 +2026,7 @@ private constructor(
                     COLLECTION -> Known.COLLECTION
                     LITHIC_PROGRAM_TRANSFER -> Known.LITHIC_PROGRAM_TRANSFER
                     BANK_PROGRAM_TRANSFER -> Known.BANK_PROGRAM_TRANSFER
+                    INSTANCE_TO_INSTANCE -> Known.INSTANCE_TO_INSTANCE
                     else -> throw LithicInvalidDataException("Unknown BookTransferType: $value")
                 }
 

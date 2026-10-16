@@ -655,6 +655,8 @@ private constructor(
 
             val STABLECOIN_REJECTED = of("STABLECOIN_REJECTED")
 
+            val INSTANCE_TO_INSTANCE = of("INSTANCE_TO_INSTANCE")
+
             fun of(value: String) = FinancialEventType(JsonField.of(value))
         }
 
@@ -765,6 +767,7 @@ private constructor(
             STABLECOIN_SENT,
             STABLECOIN_SETTLED,
             STABLECOIN_REJECTED,
+            INSTANCE_TO_INSTANCE,
         }
 
         /**
@@ -882,6 +885,7 @@ private constructor(
             STABLECOIN_SENT,
             STABLECOIN_SETTLED,
             STABLECOIN_REJECTED,
+            INSTANCE_TO_INSTANCE,
             /**
              * An enum member indicating that [FinancialEventType] was instantiated with an unknown
              * value.
@@ -1003,6 +1007,7 @@ private constructor(
                 STABLECOIN_SENT -> Value.STABLECOIN_SENT
                 STABLECOIN_SETTLED -> Value.STABLECOIN_SETTLED
                 STABLECOIN_REJECTED -> Value.STABLECOIN_REJECTED
+                INSTANCE_TO_INSTANCE -> Value.INSTANCE_TO_INSTANCE
                 else -> Value._UNKNOWN
             }
 
@@ -1122,6 +1127,7 @@ private constructor(
                 STABLECOIN_SENT -> Known.STABLECOIN_SENT
                 STABLECOIN_SETTLED -> Known.STABLECOIN_SETTLED
                 STABLECOIN_REJECTED -> Known.STABLECOIN_REJECTED
+                INSTANCE_TO_INSTANCE -> Known.INSTANCE_TO_INSTANCE
                 else -> throw LithicInvalidDataException("Unknown FinancialEventType: $value")
             }
 
