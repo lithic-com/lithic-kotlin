@@ -7245,6 +7245,8 @@ private constructor(
 
         companion object {
 
+            val ALLPOINT = of("ALLPOINT")
+
             val AMEX = of("AMEX")
 
             val INTERLINK = of("INTERLINK")
@@ -7262,6 +7264,7 @@ private constructor(
 
         /** An enum containing [Network]'s known values. */
         enum class Known {
+            ALLPOINT,
             AMEX,
             INTERLINK,
             MAESTRO,
@@ -7280,6 +7283,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
+            ALLPOINT,
             AMEX,
             INTERLINK,
             MAESTRO,
@@ -7299,6 +7303,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
+                ALLPOINT -> Value.ALLPOINT
                 AMEX -> Value.AMEX
                 INTERLINK -> Value.INTERLINK
                 MAESTRO -> Value.MAESTRO
@@ -7319,6 +7324,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
+                ALLPOINT -> Known.ALLPOINT
                 AMEX -> Known.AMEX
                 INTERLINK -> Known.INTERLINK
                 MAESTRO -> Known.MAESTRO
