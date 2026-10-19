@@ -31,6 +31,7 @@ private constructor(
     private val eventType: JsonField<EventType>,
     private val outstandingRequirements: JsonField<List<OutstandingRequirement>>,
     private val reason: JsonField<Reason>,
+    private val referenceId: JsonField<String>,
     private val status: JsonField<Status>,
     private val submitted: JsonField<OffsetDateTime>,
     private val updated: JsonField<OffsetDateTime>,
@@ -62,6 +63,9 @@ private constructor(
         @ExcludeMissing
         outstandingRequirements: JsonField<List<OutstandingRequirement>> = JsonMissing.of(),
         @JsonProperty("reason") @ExcludeMissing reason: JsonField<Reason> = JsonMissing.of(),
+        @JsonProperty("reference_id")
+        @ExcludeMissing
+        referenceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("submitted")
         @ExcludeMissing
@@ -79,6 +83,7 @@ private constructor(
         eventType,
         outstandingRequirements,
         reason,
+        referenceId,
         status,
         submitted,
         updated,
@@ -158,6 +163,17 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun reason(): Reason = reason.getRequired("reason")
+
+    /**
+     * Identifier for the claim as displayed in the Lithic dashboard. Populated depending on your
+     * program's setup, null otherwise. Use it to match claims received through the API and webhooks
+     * to the dashboard. This is not the claim `token`, which is the identifier to use in API
+     * requests
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun referenceId(): String? = referenceId.getNullable("reference_id")
 
     /**
      * Current lifecycle status of the claim
@@ -261,6 +277,15 @@ private constructor(
     @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
 
     /**
+     * Returns the raw JSON value of [referenceId].
+     *
+     * Unlike [referenceId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("reference_id")
+    @ExcludeMissing
+    fun _referenceId(): JsonField<String> = referenceId
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -311,6 +336,7 @@ private constructor(
          * .eventType()
          * .outstandingRequirements()
          * .reason()
+         * .referenceId()
          * .status()
          * .submitted()
          * .updated()
@@ -331,6 +357,7 @@ private constructor(
         private var eventType: JsonField<EventType>? = null
         private var outstandingRequirements: JsonField<MutableList<OutstandingRequirement>>? = null
         private var reason: JsonField<Reason>? = null
+        private var referenceId: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var submitted: JsonField<OffsetDateTime>? = null
         private var updated: JsonField<OffsetDateTime>? = null
@@ -348,6 +375,7 @@ private constructor(
             outstandingRequirements =
                 claimCreatedWebhookEvent.outstandingRequirements.map { it.toMutableList() }
             reason = claimCreatedWebhookEvent.reason
+            referenceId = claimCreatedWebhookEvent.referenceId
             status = claimCreatedWebhookEvent.status
             submitted = claimCreatedWebhookEvent.submitted
             updated = claimCreatedWebhookEvent.updated
@@ -512,6 +540,23 @@ private constructor(
          */
         fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
+        /**
+         * Identifier for the claim as displayed in the Lithic dashboard. Populated depending on
+         * your program's setup, null otherwise. Use it to match claims received through the API and
+         * webhooks to the dashboard. This is not the claim `token`, which is the identifier to use
+         * in API requests
+         */
+        fun referenceId(referenceId: String?) = referenceId(JsonField.ofNullable(referenceId))
+
+        /**
+         * Sets [Builder.referenceId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referenceId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun referenceId(referenceId: JsonField<String>) = apply { this.referenceId = referenceId }
+
         /** Current lifecycle status of the claim */
         fun status(status: Status) = status(JsonField.of(status))
 
@@ -582,6 +627,7 @@ private constructor(
          * .eventType()
          * .outstandingRequirements()
          * .reason()
+         * .referenceId()
          * .status()
          * .submitted()
          * .updated()
@@ -604,6 +650,7 @@ private constructor(
                     it.toImmutable()
                 },
                 checkRequired("reason", reason),
+                checkRequired("referenceId", referenceId),
                 checkRequired("status", status),
                 checkRequired("submitted", submitted),
                 checkRequired("updated", updated),
@@ -635,6 +682,7 @@ private constructor(
         eventType().validate()
         outstandingRequirements().forEach { it.validate() }
         reason().validate()
+        referenceId()
         status().validate()
         submitted()
         updated()
@@ -664,6 +712,7 @@ private constructor(
             (eventType.asKnown()?.validity() ?: 0) +
             (outstandingRequirements.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (reason.asKnown()?.validity() ?: 0) +
+            (if (referenceId.asKnown() == null) 0 else 1) +
             (status.asKnown()?.validity() ?: 0) +
             (if (submitted.asKnown() == null) 0 else 1) +
             (if (updated.asKnown() == null) 0 else 1)
@@ -1588,6 +1637,7 @@ private constructor(
             eventType == other.eventType &&
             outstandingRequirements == other.outstandingRequirements &&
             reason == other.reason &&
+            referenceId == other.referenceId &&
             status == other.status &&
             submitted == other.submitted &&
             updated == other.updated &&
@@ -1605,6 +1655,7 @@ private constructor(
             eventType,
             outstandingRequirements,
             reason,
+            referenceId,
             status,
             submitted,
             updated,
@@ -1615,5 +1666,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ClaimCreatedWebhookEvent{token=$token, accountHolderToken=$accountHolderToken, accountToken=$accountToken, cardTokens=$cardTokens, created=$created, disputedTransactions=$disputedTransactions, eventType=$eventType, outstandingRequirements=$outstandingRequirements, reason=$reason, status=$status, submitted=$submitted, updated=$updated, additionalProperties=$additionalProperties}"
+        "ClaimCreatedWebhookEvent{token=$token, accountHolderToken=$accountHolderToken, accountToken=$accountToken, cardTokens=$cardTokens, created=$created, disputedTransactions=$disputedTransactions, eventType=$eventType, outstandingRequirements=$outstandingRequirements, reason=$reason, referenceId=$referenceId, status=$status, submitted=$submitted, updated=$updated, additionalProperties=$additionalProperties}"
 }
