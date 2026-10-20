@@ -29,7 +29,6 @@ class Hold
 private constructor(
     private val token: JsonField<String>,
     private val created: JsonField<OffsetDateTime>,
-    private val status: JsonField<HoldStatus>,
     private val updated: JsonField<OffsetDateTime>,
     private val currency: JsonField<String>,
     private val events: JsonField<List<HoldEvent>>,
@@ -38,6 +37,7 @@ private constructor(
     private val financialAccountToken: JsonField<String>,
     private val pendingAmount: JsonField<Long>,
     private val result: JsonField<TransactionResult>,
+    private val status: JsonField<HoldStatus>,
     private val userDefinedId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -48,7 +48,6 @@ private constructor(
         @JsonProperty("created")
         @ExcludeMissing
         created: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("status") @ExcludeMissing status: JsonField<HoldStatus> = JsonMissing.of(),
         @JsonProperty("updated")
         @ExcludeMissing
         updated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -69,13 +68,13 @@ private constructor(
         @JsonProperty("result")
         @ExcludeMissing
         result: JsonField<TransactionResult> = JsonMissing.of(),
+        @JsonProperty("status") @ExcludeMissing status: JsonField<HoldStatus> = JsonMissing.of(),
         @JsonProperty("user_defined_id")
         @ExcludeMissing
         userDefinedId: JsonField<String> = JsonMissing.of(),
     ) : this(
         token,
         created,
-        status,
         updated,
         currency,
         events,
@@ -84,6 +83,7 @@ private constructor(
         financialAccountToken,
         pendingAmount,
         result,
+        status,
         userDefinedId,
         mutableMapOf(),
     )
@@ -103,14 +103,6 @@ private constructor(
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
     fun created(): OffsetDateTime = created.getRequired("created")
-
-    /**
-     * Status of a hold transaction
-     *
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun status(): HoldStatus = status.getRequired("status")
 
     /**
      * ISO 8601 timestamp of when the transaction was last updated
@@ -171,6 +163,14 @@ private constructor(
     fun result(): TransactionResult? = result.getNullable("result")
 
     /**
+     * Status of a hold transaction
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun status(): HoldStatus? = status.getNullable("status")
+
+    /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -189,13 +189,6 @@ private constructor(
      * Unlike [created], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("created") @ExcludeMissing fun _created(): JsonField<OffsetDateTime> = created
-
-    /**
-     * Returns the raw JSON value of [status].
-     *
-     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<HoldStatus> = status
 
     /**
      * Returns the raw JSON value of [updated].
@@ -262,6 +255,13 @@ private constructor(
     @JsonProperty("result") @ExcludeMissing fun _result(): JsonField<TransactionResult> = result
 
     /**
+     * Returns the raw JSON value of [status].
+     *
+     * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<HoldStatus> = status
+
+    /**
      * Returns the raw JSON value of [userDefinedId].
      *
      * Unlike [userDefinedId], this method doesn't throw if the JSON field has an unexpected type.
@@ -291,7 +291,6 @@ private constructor(
          * ```kotlin
          * .token()
          * .created()
-         * .status()
          * .updated()
          * ```
          */
@@ -303,7 +302,6 @@ private constructor(
 
         private var token: JsonField<String>? = null
         private var created: JsonField<OffsetDateTime>? = null
-        private var status: JsonField<HoldStatus>? = null
         private var updated: JsonField<OffsetDateTime>? = null
         private var currency: JsonField<String> = JsonMissing.of()
         private var events: JsonField<MutableList<HoldEvent>>? = null
@@ -312,13 +310,13 @@ private constructor(
         private var financialAccountToken: JsonField<String> = JsonMissing.of()
         private var pendingAmount: JsonField<Long> = JsonMissing.of()
         private var result: JsonField<TransactionResult> = JsonMissing.of()
+        private var status: JsonField<HoldStatus> = JsonMissing.of()
         private var userDefinedId: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(hold: Hold) = apply {
             token = hold.token
             created = hold.created
-            status = hold.status
             updated = hold.updated
             currency = hold.currency
             events = hold.events.map { it.toMutableList() }
@@ -327,6 +325,7 @@ private constructor(
             financialAccountToken = hold.financialAccountToken
             pendingAmount = hold.pendingAmount
             result = hold.result
+            status = hold.status
             userDefinedId = hold.userDefinedId
             additionalProperties = hold.additionalProperties.toMutableMap()
         }
@@ -353,18 +352,6 @@ private constructor(
          * supported value.
          */
         fun created(created: JsonField<OffsetDateTime>) = apply { this.created = created }
-
-        /** Status of a hold transaction */
-        fun status(status: HoldStatus) = status(JsonField.of(status))
-
-        /**
-         * Sets [Builder.status] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.status] with a well-typed [HoldStatus] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun status(status: JsonField<HoldStatus>) = apply { this.status = status }
 
         /** ISO 8601 timestamp of when the transaction was last updated */
         fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
@@ -478,6 +465,18 @@ private constructor(
          */
         fun result(result: JsonField<TransactionResult>) = apply { this.result = result }
 
+        /** Status of a hold transaction */
+        fun status(status: HoldStatus) = status(JsonField.of(status))
+
+        /**
+         * Sets [Builder.status] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.status] with a well-typed [HoldStatus] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun status(status: JsonField<HoldStatus>) = apply { this.status = status }
+
         fun userDefinedId(userDefinedId: String?) =
             userDefinedId(JsonField.ofNullable(userDefinedId))
 
@@ -520,7 +519,6 @@ private constructor(
          * ```kotlin
          * .token()
          * .created()
-         * .status()
          * .updated()
          * ```
          *
@@ -530,7 +528,6 @@ private constructor(
             Hold(
                 checkRequired("token", token),
                 checkRequired("created", created),
-                checkRequired("status", status),
                 checkRequired("updated", updated),
                 currency,
                 (events ?: JsonMissing.of()).map { it.toImmutable() },
@@ -539,6 +536,7 @@ private constructor(
                 financialAccountToken,
                 pendingAmount,
                 result,
+                status,
                 userDefinedId,
                 additionalProperties.toMutableMap(),
             )
@@ -561,7 +559,6 @@ private constructor(
 
         token()
         created()
-        status().validate()
         updated()
         currency()
         events()?.forEach { it.validate() }
@@ -570,6 +567,7 @@ private constructor(
         financialAccountToken()
         pendingAmount()
         result()?.validate()
+        status()?.validate()
         userDefinedId()
         validated = true
     }
@@ -590,7 +588,6 @@ private constructor(
     internal fun validity(): Int =
         (if (token.asKnown() == null) 0 else 1) +
             (if (created.asKnown() == null) 0 else 1) +
-            (status.asKnown()?.validity() ?: 0) +
             (if (updated.asKnown() == null) 0 else 1) +
             (if (currency.asKnown() == null) 0 else 1) +
             (events.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -599,180 +596,8 @@ private constructor(
             (if (financialAccountToken.asKnown() == null) 0 else 1) +
             (if (pendingAmount.asKnown() == null) 0 else 1) +
             (result.asKnown()?.validity() ?: 0) +
+            (status.asKnown()?.validity() ?: 0) +
             (if (userDefinedId.asKnown() == null) 0 else 1)
-
-    /** Status of a hold transaction */
-    class HoldStatus @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
-
-        /**
-         * Returns this class instance's raw value.
-         *
-         * This is usually only useful if this instance was deserialized from data that doesn't
-         * match any known member, and you want to know that value. For example, if the SDK is on an
-         * older version than the API, then the API may respond with new members that the SDK is
-         * unaware of.
-         */
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-        companion object {
-
-            val PENDING = of("PENDING")
-
-            val SETTLED = of("SETTLED")
-
-            val EXPIRED = of("EXPIRED")
-
-            val VOIDED = of("VOIDED")
-
-            val DECLINED = of("DECLINED")
-
-            val REVERSED = of("REVERSED")
-
-            val CANCELED = of("CANCELED")
-
-            val RETURNED = of("RETURNED")
-
-            fun of(value: String) = HoldStatus(JsonField.of(value))
-        }
-
-        /** An enum containing [HoldStatus]'s known values. */
-        enum class Known {
-            PENDING,
-            SETTLED,
-            EXPIRED,
-            VOIDED,
-            DECLINED,
-            REVERSED,
-            CANCELED,
-            RETURNED,
-        }
-
-        /**
-         * An enum containing [HoldStatus]'s known values, as well as an [_UNKNOWN] member.
-         *
-         * An instance of [HoldStatus] can contain an unknown value in a couple of cases:
-         * - It was deserialized from data that doesn't match any known member. For example, if the
-         *   SDK is on an older version than the API, then the API may respond with new members that
-         *   the SDK is unaware of.
-         * - It was constructed with an arbitrary value using the [of] method.
-         */
-        enum class Value {
-            PENDING,
-            SETTLED,
-            EXPIRED,
-            VOIDED,
-            DECLINED,
-            REVERSED,
-            CANCELED,
-            RETURNED,
-            /**
-             * An enum member indicating that [HoldStatus] was instantiated with an unknown value.
-             */
-            _UNKNOWN,
-        }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
-         * if the class was instantiated with an unknown value.
-         *
-         * Use the [known] method instead if you're certain the value is always known or if you want
-         * to throw for the unknown case.
-         */
-        fun value(): Value =
-            when (this) {
-                PENDING -> Value.PENDING
-                SETTLED -> Value.SETTLED
-                EXPIRED -> Value.EXPIRED
-                VOIDED -> Value.VOIDED
-                DECLINED -> Value.DECLINED
-                REVERSED -> Value.REVERSED
-                CANCELED -> Value.CANCELED
-                RETURNED -> Value.RETURNED
-                else -> Value._UNKNOWN
-            }
-
-        /**
-         * Returns an enum member corresponding to this class instance's value.
-         *
-         * Use the [value] method instead if you're uncertain the value is always known and don't
-         * want to throw for the unknown case.
-         *
-         * @throws LithicInvalidDataException if this class instance's value is a not a known
-         *   member.
-         */
-        fun known(): Known =
-            when (this) {
-                PENDING -> Known.PENDING
-                SETTLED -> Known.SETTLED
-                EXPIRED -> Known.EXPIRED
-                VOIDED -> Known.VOIDED
-                DECLINED -> Known.DECLINED
-                REVERSED -> Known.REVERSED
-                CANCELED -> Known.CANCELED
-                RETURNED -> Known.RETURNED
-                else -> throw LithicInvalidDataException("Unknown HoldStatus: $value")
-            }
-
-        /**
-         * Returns this class instance's primitive wire representation.
-         *
-         * This differs from the [toString] method because that method is primarily for debugging
-         * and generally doesn't throw.
-         *
-         * @throws LithicInvalidDataException if this class instance's value does not have the
-         *   expected primitive type.
-         */
-        fun asString(): String =
-            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
-
-        private var validated: Boolean = false
-
-        /**
-         * Validates that the types of all values in this object match their expected types
-         * recursively.
-         *
-         * This method is _not_ forwards compatible with new types from the API for existing fields.
-         *
-         * @throws LithicInvalidDataException if any value type in this object doesn't match its
-         *   expected type.
-         */
-        fun validate(): HoldStatus = apply {
-            if (validated) {
-                return@apply
-            }
-
-            known()
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: LithicInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is HoldStatus && value == other.value
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-    }
 
     /** HOLD - Hold Transaction */
     class Family @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -1041,6 +866,155 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /** Status of a hold transaction */
+    class HoldStatus @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            val PENDING = of("PENDING")
+
+            val SETTLED = of("SETTLED")
+
+            val EXPIRED = of("EXPIRED")
+
+            val VOIDED = of("VOIDED")
+
+            fun of(value: String) = HoldStatus(JsonField.of(value))
+        }
+
+        /** An enum containing [HoldStatus]'s known values. */
+        enum class Known {
+            PENDING,
+            SETTLED,
+            EXPIRED,
+            VOIDED,
+        }
+
+        /**
+         * An enum containing [HoldStatus]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [HoldStatus] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            PENDING,
+            SETTLED,
+            EXPIRED,
+            VOIDED,
+            /**
+             * An enum member indicating that [HoldStatus] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                PENDING -> Value.PENDING
+                SETTLED -> Value.SETTLED
+                EXPIRED -> Value.EXPIRED
+                VOIDED -> Value.VOIDED
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws LithicInvalidDataException if this class instance's value is a not a known
+         *   member.
+         */
+        fun known(): Known =
+            when (this) {
+                PENDING -> Known.PENDING
+                SETTLED -> Known.SETTLED
+                EXPIRED -> Known.EXPIRED
+                VOIDED -> Known.VOIDED
+                else -> throw LithicInvalidDataException("Unknown HoldStatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws LithicInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString() ?: throw LithicInvalidDataException("Value is not a String")
+
+        private var validated: Boolean = false
+
+        /**
+         * Validates that the types of all values in this object match their expected types
+         * recursively.
+         *
+         * This method is _not_ forwards compatible with new types from the API for existing fields.
+         *
+         * @throws LithicInvalidDataException if any value type in this object doesn't match its
+         *   expected type.
+         */
+        fun validate(): HoldStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: LithicInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is HoldStatus && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -1049,7 +1023,6 @@ private constructor(
         return other is Hold &&
             token == other.token &&
             created == other.created &&
-            status == other.status &&
             updated == other.updated &&
             currency == other.currency &&
             events == other.events &&
@@ -1058,6 +1031,7 @@ private constructor(
             financialAccountToken == other.financialAccountToken &&
             pendingAmount == other.pendingAmount &&
             result == other.result &&
+            status == other.status &&
             userDefinedId == other.userDefinedId &&
             additionalProperties == other.additionalProperties
     }
@@ -1066,7 +1040,6 @@ private constructor(
         Objects.hash(
             token,
             created,
-            status,
             updated,
             currency,
             events,
@@ -1075,6 +1048,7 @@ private constructor(
             financialAccountToken,
             pendingAmount,
             result,
+            status,
             userDefinedId,
             additionalProperties,
         )
@@ -1083,5 +1057,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Hold{token=$token, created=$created, status=$status, updated=$updated, currency=$currency, events=$events, expirationDatetime=$expirationDatetime, family=$family, financialAccountToken=$financialAccountToken, pendingAmount=$pendingAmount, result=$result, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+        "Hold{token=$token, created=$created, updated=$updated, currency=$currency, events=$events, expirationDatetime=$expirationDatetime, family=$family, financialAccountToken=$financialAccountToken, pendingAmount=$pendingAmount, result=$result, status=$status, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
 }
