@@ -599,6 +599,12 @@ private constructor(
 
             val INTERNAL_ADJUSTMENT = of("INTERNAL_ADJUSTMENT")
 
+            val INTRA_BANK_CANCELED = of("INTRA_BANK_CANCELED")
+
+            val INTRA_BANK_INITIATED = of("INTRA_BANK_INITIATED")
+
+            val INTRA_BANK_SETTLED = of("INTRA_BANK_SETTLED")
+
             val LATE_PAYMENT = of("LATE_PAYMENT")
 
             val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
@@ -739,6 +745,9 @@ private constructor(
             INTEREST,
             INTEREST_REVERSAL,
             INTERNAL_ADJUSTMENT,
+            INTRA_BANK_CANCELED,
+            INTRA_BANK_INITIATED,
+            INTRA_BANK_SETTLED,
             LATE_PAYMENT,
             LATE_PAYMENT_REVERSAL,
             LOSS_WRITE_OFF,
@@ -857,6 +866,9 @@ private constructor(
             INTEREST,
             INTEREST_REVERSAL,
             INTERNAL_ADJUSTMENT,
+            INTRA_BANK_CANCELED,
+            INTRA_BANK_INITIATED,
+            INTRA_BANK_SETTLED,
             LATE_PAYMENT,
             LATE_PAYMENT_REVERSAL,
             LOSS_WRITE_OFF,
@@ -979,6 +991,9 @@ private constructor(
                 INTEREST -> Value.INTEREST
                 INTEREST_REVERSAL -> Value.INTEREST_REVERSAL
                 INTERNAL_ADJUSTMENT -> Value.INTERNAL_ADJUSTMENT
+                INTRA_BANK_CANCELED -> Value.INTRA_BANK_CANCELED
+                INTRA_BANK_INITIATED -> Value.INTRA_BANK_INITIATED
+                INTRA_BANK_SETTLED -> Value.INTRA_BANK_SETTLED
                 LATE_PAYMENT -> Value.LATE_PAYMENT
                 LATE_PAYMENT_REVERSAL -> Value.LATE_PAYMENT_REVERSAL
                 LOSS_WRITE_OFF -> Value.LOSS_WRITE_OFF
@@ -1099,6 +1114,9 @@ private constructor(
                 INTEREST -> Known.INTEREST
                 INTEREST_REVERSAL -> Known.INTEREST_REVERSAL
                 INTERNAL_ADJUSTMENT -> Known.INTERNAL_ADJUSTMENT
+                INTRA_BANK_CANCELED -> Known.INTRA_BANK_CANCELED
+                INTRA_BANK_INITIATED -> Known.INTRA_BANK_INITIATED
+                INTRA_BANK_SETTLED -> Known.INTRA_BANK_SETTLED
                 LATE_PAYMENT -> Known.LATE_PAYMENT
                 LATE_PAYMENT_REVERSAL -> Known.LATE_PAYMENT_REVERSAL
                 LOSS_WRITE_OFF -> Known.LOSS_WRITE_OFF

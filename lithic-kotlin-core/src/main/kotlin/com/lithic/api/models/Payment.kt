@@ -1157,6 +1157,8 @@ private constructor(
 
             val STABLECOIN = of("STABLECOIN")
 
+            val INTRA_BANK = of("INTRA_BANK")
+
             val BALANCE_OR_FUNDING = of("BALANCE_OR_FUNDING")
 
             val FEE = of("FEE")
@@ -1209,6 +1211,7 @@ private constructor(
             ACH,
             WIRE,
             STABLECOIN,
+            INTRA_BANK,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -1246,6 +1249,7 @@ private constructor(
             ACH,
             WIRE,
             STABLECOIN,
+            INTRA_BANK,
             BALANCE_OR_FUNDING,
             FEE,
             REWARD,
@@ -1287,6 +1291,7 @@ private constructor(
                 ACH -> Value.ACH
                 WIRE -> Value.WIRE
                 STABLECOIN -> Value.STABLECOIN
+                INTRA_BANK -> Value.INTRA_BANK
                 BALANCE_OR_FUNDING -> Value.BALANCE_OR_FUNDING
                 FEE -> Value.FEE
                 REWARD -> Value.REWARD
@@ -1326,6 +1331,7 @@ private constructor(
                 ACH -> Known.ACH
                 WIRE -> Known.WIRE
                 STABLECOIN -> Known.STABLECOIN
+                INTRA_BANK -> Known.INTRA_BANK
                 BALANCE_OR_FUNDING -> Known.BALANCE_OR_FUNDING
                 FEE -> Known.FEE
                 REWARD -> Known.REWARD
