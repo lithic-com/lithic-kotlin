@@ -189,7 +189,7 @@ private constructor(
         fun penaltyRates(penaltyRates: JsonValue) = apply { this.penaltyRates = penaltyRates }
 
         /** Name of a tier contained in the credit product. Mutually exclusive with tier_rates */
-        fun tierName(tierName: String) = tierName(JsonField.of(tierName))
+        fun tierName(tierName: String?) = tierName(JsonField.ofNullable(tierName))
 
         /**
          * Sets [Builder.tierName] to an arbitrary JSON value.
