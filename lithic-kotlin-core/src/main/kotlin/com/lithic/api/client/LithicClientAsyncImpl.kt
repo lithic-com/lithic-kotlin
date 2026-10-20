@@ -65,6 +65,8 @@ import com.lithic.api.services.async.HoldServiceAsync
 import com.lithic.api.services.async.HoldServiceAsyncImpl
 import com.lithic.api.services.async.InternalTransactionServiceAsync
 import com.lithic.api.services.async.InternalTransactionServiceAsyncImpl
+import com.lithic.api.services.async.IpRangeServiceAsync
+import com.lithic.api.services.async.IpRangeServiceAsyncImpl
 import com.lithic.api.services.async.ManagementOperationServiceAsync
 import com.lithic.api.services.async.ManagementOperationServiceAsyncImpl
 import com.lithic.api.services.async.NetworkProgramServiceAsync
@@ -177,6 +179,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
     private val responderEndpoints: ResponderEndpointServiceAsync by lazy {
         ResponderEndpointServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val ipRanges: IpRangeServiceAsync by lazy {
+        IpRangeServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val externalBankAccounts: ExternalBankAccountServiceAsync by lazy {
@@ -296,6 +302,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
     override fun transactions(): TransactionServiceAsync = transactions
 
     override fun responderEndpoints(): ResponderEndpointServiceAsync = responderEndpoints
+
+    override fun ipRanges(): IpRangeServiceAsync = ipRanges
 
     override fun externalBankAccounts(): ExternalBankAccountServiceAsync = externalBankAccounts
 
@@ -424,6 +432,10 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
             ResponderEndpointServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val ipRanges: IpRangeServiceAsync.WithRawResponse by lazy {
+            IpRangeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val externalBankAccounts: ExternalBankAccountServiceAsync.WithRawResponse by lazy {
             ExternalBankAccountServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -548,6 +560,8 @@ class LithicClientAsyncImpl(private val clientOptions: ClientOptions) : LithicCl
 
         override fun responderEndpoints(): ResponderEndpointServiceAsync.WithRawResponse =
             responderEndpoints
+
+        override fun ipRanges(): IpRangeServiceAsync.WithRawResponse = ipRanges
 
         override fun externalBankAccounts(): ExternalBankAccountServiceAsync.WithRawResponse =
             externalBankAccounts
