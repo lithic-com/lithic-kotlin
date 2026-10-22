@@ -21,6 +21,7 @@ private constructor(
     private val category: Category?,
     private val end: OffsetDateTime?,
     private val endingBefore: String?,
+    private val pageSize: Long?,
     private val result: Result?,
     private val startingAfter: String?,
     private val status: Status?,
@@ -50,6 +51,9 @@ private constructor(
      * retrieve the previous page of results before this item.
      */
     fun endingBefore(): String? = endingBefore
+
+    /** Page size (for pagination). */
+    fun pageSize(): Long? = pageSize
 
     /** Financial Transaction result to be returned. */
     fun result(): Result? = result
@@ -90,6 +94,7 @@ private constructor(
         private var category: Category? = null
         private var end: OffsetDateTime? = null
         private var endingBefore: String? = null
+        private var pageSize: Long? = null
         private var result: Result? = null
         private var startingAfter: String? = null
         private var status: Status? = null
@@ -102,6 +107,7 @@ private constructor(
             category = financialTransactionListParams.category
             end = financialTransactionListParams.end
             endingBefore = financialTransactionListParams.endingBefore
+            pageSize = financialTransactionListParams.pageSize
             result = financialTransactionListParams.result
             startingAfter = financialTransactionListParams.startingAfter
             status = financialTransactionListParams.status
@@ -133,6 +139,16 @@ private constructor(
          * retrieve the previous page of results before this item.
          */
         fun endingBefore(endingBefore: String?) = apply { this.endingBefore = endingBefore }
+
+        /** Page size (for pagination). */
+        fun pageSize(pageSize: Long?) = apply { this.pageSize = pageSize }
+
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun pageSize(pageSize: Long) = pageSize(pageSize as Long?)
 
         /** Financial Transaction result to be returned. */
         fun result(result: Result?) = apply { this.result = result }
@@ -256,6 +272,7 @@ private constructor(
                 category,
                 end,
                 endingBefore,
+                pageSize,
                 result,
                 startingAfter,
                 status,
@@ -279,6 +296,7 @@ private constructor(
                 category?.let { put("category", it.toString()) }
                 end?.let { put("end", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)) }
                 endingBefore?.let { put("ending_before", it) }
+                pageSize?.let { put("page_size", it.toString()) }
                 result?.let { put("result", it.toString()) }
                 startingAfter?.let { put("starting_after", it) }
                 status?.let { put("status", it.toString()) }
@@ -738,6 +756,7 @@ private constructor(
             category == other.category &&
             end == other.end &&
             endingBefore == other.endingBefore &&
+            pageSize == other.pageSize &&
             result == other.result &&
             startingAfter == other.startingAfter &&
             status == other.status &&
@@ -752,6 +771,7 @@ private constructor(
             category,
             end,
             endingBefore,
+            pageSize,
             result,
             startingAfter,
             status,
@@ -760,5 +780,5 @@ private constructor(
         )
 
     override fun toString() =
-        "FinancialTransactionListParams{financialAccountToken=$financialAccountToken, begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "FinancialTransactionListParams{financialAccountToken=$financialAccountToken, begin=$begin, category=$category, end=$end, endingBefore=$endingBefore, pageSize=$pageSize, result=$result, startingAfter=$startingAfter, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
