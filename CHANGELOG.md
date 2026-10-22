@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.135.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.134.0...v0.135.0) (2026-10-22)
+
+
+### Features
+
+* **api:** add ALLPOINT to card transaction and authorization network enums ([90b58d6](https://github.com/lithic-com/lithic-kotlin/commit/90b58d62ee999f8a66c7ea79fe12aab7c61cb7fe))
+* **api:** add financial_entity_id to transfer limits response items ([b1e5f07](https://github.com/lithic-com/lithic-kotlin/commit/b1e5f0765b20f8ff9740312a74063ca7c17bca28))
+* **api:** add INSTANCE_TO_INSTANCE to book transfer type and financial event type enums ([39cd7b5](https://github.com/lithic-com/lithic-kotlin/commit/39cd7b5efa7296cfa5d5b7b2f0f4c12e13604682))
+* **api:** add intra-bank transaction category and intra_bank financial event types ([dffda76](https://github.com/lithic-com/lithic-kotlin/commit/dffda76da58af31ffed43718a26ebad3c4582d62))
+* **api:** add ip_ranges.retrieve to get static IPs for Lithic ASA responder ([3a5f5f2](https://github.com/lithic-com/lithic-kotlin/commit/3a5f5f2b406b6586a56b64d0f915aae4fbee70d4))
+* **api:** add page_size to financial transaction lists and date filters to funding events list ([d66bed0](https://github.com/lithic-com/lithic-kotlin/commit/d66bed05983eaf3c85fe0c068d0523392f7533dd))
+* **api:** add reference_id field to claims for matching with the dashboard ([22cdd25](https://github.com/lithic-com/lithic-kotlin/commit/22cdd25d088e44c055c9ad68b6a0c2466baaff1b))
+* **api:** add unit_amount and total_amount to enhanced commercial data line items, deprecate amount ([bcec06a](https://github.com/lithic-com/lithic-kotlin/commit/bcec06a60966a2ce00f920af6709dd6c52c9ae6b))
+
+
+### Bug Fixes
+
+* **api:** correct status enum types on hold and card transaction models ([6bacde1](https://github.com/lithic-com/lithic-kotlin/commit/6bacde1a944c4997630347fae6bea1731ea67428))
+* **api:** make tier_name, tier_rates, and penalty_rates nullable on account tier schedules ([59eccc6](https://github.com/lithic-com/lithic-kotlin/commit/59eccc63a2b7c315b39a2dfd54fbcb3e8dd75018))
+
 ## [0.134.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.133.0...v0.134.0) (2026-10-13)
 
 
