@@ -318,10 +318,13 @@ private constructor(
     fun networkRiskScore(): Long? = networkRiskScore.getNullable("network_risk_score")
 
     /**
-     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * Point of sale data for the transaction. Null when no point of sale data is available, such as
+     * clearing-only records that never went through authorization
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun pos(): Pos = pos.getRequired("pos")
+    fun pos(): Pos? = pos.getNullable("pos")
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -1066,7 +1069,11 @@ private constructor(
             this.networkRiskScore = networkRiskScore
         }
 
-        fun pos(pos: Pos) = pos(JsonField.of(pos))
+        /**
+         * Point of sale data for the transaction. Null when no point of sale data is available,
+         * such as clearing-only records that never went through authorization
+         */
+        fun pos(pos: Pos?) = pos(JsonField.ofNullable(pos))
 
         /**
          * Sets [Builder.pos] to an arbitrary JSON value.
@@ -1321,7 +1328,7 @@ private constructor(
         merchantCurrency()
         network()?.validate()
         networkRiskScore()
-        pos().validate()
+        pos()?.validate()
         result().validate()
         serviceLocation()?.validate()
         settledAmount()
@@ -3534,6 +3541,10 @@ private constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Point of sale data for the transaction. Null when no point of sale data is available, such as
+     * clearing-only records that never went through authorization
+     */
     class Pos
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(

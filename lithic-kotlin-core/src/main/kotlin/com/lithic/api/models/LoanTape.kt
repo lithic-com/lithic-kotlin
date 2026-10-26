@@ -2325,6 +2325,7 @@ private constructor(
         private val nextStatementDue: JsonField<CategoryBalances>,
         private val pastDue: JsonField<CategoryBalances>,
         private val pastStatementsDue: JsonField<CategoryBalances>,
+        private val installments: JsonField<CategoryBalances>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -2342,7 +2343,10 @@ private constructor(
             @JsonProperty("past_statements_due")
             @ExcludeMissing
             pastStatementsDue: JsonField<CategoryBalances> = JsonMissing.of(),
-        ) : this(due, nextStatementDue, pastDue, pastStatementsDue, mutableMapOf())
+            @JsonProperty("installments")
+            @ExcludeMissing
+            installments: JsonField<CategoryBalances> = JsonMissing.of(),
+        ) : this(due, nextStatementDue, pastDue, pastStatementsDue, installments, mutableMapOf())
 
         /**
          * Amount due for the prior billing cycle. Any amounts not fully paid off on this due date
@@ -2381,6 +2385,14 @@ private constructor(
             pastStatementsDue.getRequired("past_statements_due")
 
         /**
+         * Amounts converted into installment plans
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun installments(): CategoryBalances? = installments.getNullable("installments")
+
+        /**
          * Returns the raw JSON value of [due].
          *
          * Unlike [due], this method doesn't throw if the JSON field has an unexpected type.
@@ -2415,6 +2427,16 @@ private constructor(
         @JsonProperty("past_statements_due")
         @ExcludeMissing
         fun _pastStatementsDue(): JsonField<CategoryBalances> = pastStatementsDue
+
+        /**
+         * Returns the raw JSON value of [installments].
+         *
+         * Unlike [installments], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("installments")
+        @ExcludeMissing
+        fun _installments(): JsonField<CategoryBalances> = installments
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -2451,6 +2473,7 @@ private constructor(
             private var nextStatementDue: JsonField<CategoryBalances>? = null
             private var pastDue: JsonField<CategoryBalances>? = null
             private var pastStatementsDue: JsonField<CategoryBalances>? = null
+            private var installments: JsonField<CategoryBalances> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(balances: Balances) = apply {
@@ -2458,6 +2481,7 @@ private constructor(
                 nextStatementDue = balances.nextStatementDue
                 pastDue = balances.pastDue
                 pastStatementsDue = balances.pastStatementsDue
+                installments = balances.installments
                 additionalProperties = balances.additionalProperties.toMutableMap()
             }
 
@@ -2521,6 +2545,21 @@ private constructor(
                 this.pastStatementsDue = pastStatementsDue
             }
 
+            /** Amounts converted into installment plans */
+            fun installments(installments: CategoryBalances?) =
+                installments(JsonField.ofNullable(installments))
+
+            /**
+             * Sets [Builder.installments] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.installments] with a well-typed [CategoryBalances]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun installments(installments: JsonField<CategoryBalances>) = apply {
+                this.installments = installments
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -2561,6 +2600,7 @@ private constructor(
                     checkRequired("nextStatementDue", nextStatementDue),
                     checkRequired("pastDue", pastDue),
                     checkRequired("pastStatementsDue", pastStatementsDue),
+                    installments,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -2585,6 +2625,7 @@ private constructor(
             nextStatementDue().validate()
             pastDue().validate()
             pastStatementsDue().validate()
+            installments()?.validate()
             validated = true
         }
 
@@ -2606,7 +2647,8 @@ private constructor(
             (due.asKnown()?.validity() ?: 0) +
                 (nextStatementDue.asKnown()?.validity() ?: 0) +
                 (pastDue.asKnown()?.validity() ?: 0) +
-                (pastStatementsDue.asKnown()?.validity() ?: 0)
+                (pastStatementsDue.asKnown()?.validity() ?: 0) +
+                (installments.asKnown()?.validity() ?: 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
@@ -2618,17 +2660,25 @@ private constructor(
                 nextStatementDue == other.nextStatementDue &&
                 pastDue == other.pastDue &&
                 pastStatementsDue == other.pastStatementsDue &&
+                installments == other.installments &&
                 additionalProperties == other.additionalProperties
         }
 
         private val hashCode: Int by lazy {
-            Objects.hash(due, nextStatementDue, pastDue, pastStatementsDue, additionalProperties)
+            Objects.hash(
+                due,
+                nextStatementDue,
+                pastDue,
+                pastStatementsDue,
+                installments,
+                additionalProperties,
+            )
         }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Balances{due=$due, nextStatementDue=$nextStatementDue, pastDue=$pastDue, pastStatementsDue=$pastStatementsDue, additionalProperties=$additionalProperties}"
+            "Balances{due=$due, nextStatementDue=$nextStatementDue, pastDue=$pastDue, pastStatementsDue=$pastStatementsDue, installments=$installments, additionalProperties=$additionalProperties}"
     }
 
     class InterestDetails
