@@ -28,6 +28,7 @@ private constructor(
     private val created: JsonField<OffsetDateTime>,
     private val feeAmount: JsonField<Long>,
     private val financialAccountToken: JsonField<String>,
+    private val installmentPlanAdjustment: JsonField<Long>,
     private val installmentPlanTotal: JsonField<Long>,
     private val installments: JsonField<List<Installment>>,
     private val installmentsOutstanding: JsonField<Long>,
@@ -57,6 +58,9 @@ private constructor(
         @JsonProperty("financial_account_token")
         @ExcludeMissing
         financialAccountToken: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("installment_plan_adjustment")
+        @ExcludeMissing
+        installmentPlanAdjustment: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("installment_plan_total")
         @ExcludeMissing
         installmentPlanTotal: JsonField<Long> = JsonMissing.of(),
@@ -98,6 +102,7 @@ private constructor(
         created,
         feeAmount,
         financialAccountToken,
+        installmentPlanAdjustment,
         installmentPlanTotal,
         installments,
         installmentsOutstanding,
@@ -154,6 +159,16 @@ private constructor(
      */
     fun financialAccountToken(): String =
         financialAccountToken.getRequired("financial_account_token")
+
+    /**
+     * Amount credited to this plan after the plan was recalculated. The plan amount is not changed,
+     * and this credit reduces the amount owed
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun installmentPlanAdjustment(): Long =
+        installmentPlanAdjustment.getRequired("installment_plan_adjustment")
 
     /**
      * Total owed on the plan in cents, the principal amount plus the enrollment fee
@@ -300,6 +315,16 @@ private constructor(
     fun _financialAccountToken(): JsonField<String> = financialAccountToken
 
     /**
+     * Returns the raw JSON value of [installmentPlanAdjustment].
+     *
+     * Unlike [installmentPlanAdjustment], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("installment_plan_adjustment")
+    @ExcludeMissing
+    fun _installmentPlanAdjustment(): JsonField<Long> = installmentPlanAdjustment
+
+    /**
      * Returns the raw JSON value of [installmentPlanTotal].
      *
      * Unlike [installmentPlanTotal], this method doesn't throw if the JSON field has an unexpected
@@ -433,6 +458,7 @@ private constructor(
          * .created()
          * .feeAmount()
          * .financialAccountToken()
+         * .installmentPlanAdjustment()
          * .installmentPlanTotal()
          * .installments()
          * .installmentsOutstanding()
@@ -459,6 +485,7 @@ private constructor(
         private var created: JsonField<OffsetDateTime>? = null
         private var feeAmount: JsonField<Long>? = null
         private var financialAccountToken: JsonField<String>? = null
+        private var installmentPlanAdjustment: JsonField<Long>? = null
         private var installmentPlanTotal: JsonField<Long>? = null
         private var installments: JsonField<MutableList<Installment>>? = null
         private var installmentsOutstanding: JsonField<Long>? = null
@@ -480,6 +507,7 @@ private constructor(
             created = installmentPlan.created
             feeAmount = installmentPlan.feeAmount
             financialAccountToken = installmentPlan.financialAccountToken
+            installmentPlanAdjustment = installmentPlan.installmentPlanAdjustment
             installmentPlanTotal = installmentPlan.installmentPlanTotal
             installments = installmentPlan.installments.map { it.toMutableList() }
             installmentsOutstanding = installmentPlan.installmentsOutstanding
@@ -555,6 +583,24 @@ private constructor(
          */
         fun financialAccountToken(financialAccountToken: JsonField<String>) = apply {
             this.financialAccountToken = financialAccountToken
+        }
+
+        /**
+         * Amount credited to this plan after the plan was recalculated. The plan amount is not
+         * changed, and this credit reduces the amount owed
+         */
+        fun installmentPlanAdjustment(installmentPlanAdjustment: Long) =
+            installmentPlanAdjustment(JsonField.of(installmentPlanAdjustment))
+
+        /**
+         * Sets [Builder.installmentPlanAdjustment] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.installmentPlanAdjustment] with a well-typed [Long]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun installmentPlanAdjustment(installmentPlanAdjustment: JsonField<Long>) = apply {
+            this.installmentPlanAdjustment = installmentPlanAdjustment
         }
 
         /** Total owed on the plan in cents, the principal amount plus the enrollment fee */
@@ -782,6 +828,7 @@ private constructor(
          * .created()
          * .feeAmount()
          * .financialAccountToken()
+         * .installmentPlanAdjustment()
          * .installmentPlanTotal()
          * .installments()
          * .installmentsOutstanding()
@@ -806,6 +853,7 @@ private constructor(
                 checkRequired("created", created),
                 checkRequired("feeAmount", feeAmount),
                 checkRequired("financialAccountToken", financialAccountToken),
+                checkRequired("installmentPlanAdjustment", installmentPlanAdjustment),
                 checkRequired("installmentPlanTotal", installmentPlanTotal),
                 checkRequired("installments", installments).map { it.toImmutable() },
                 checkRequired("installmentsOutstanding", installmentsOutstanding),
@@ -843,6 +891,7 @@ private constructor(
         created()
         feeAmount()
         financialAccountToken()
+        installmentPlanAdjustment()
         installmentPlanTotal()
         installments().forEach { it.validate() }
         installmentsOutstanding()
@@ -878,6 +927,7 @@ private constructor(
             (if (created.asKnown() == null) 0 else 1) +
             (if (feeAmount.asKnown() == null) 0 else 1) +
             (if (financialAccountToken.asKnown() == null) 0 else 1) +
+            (if (installmentPlanAdjustment.asKnown() == null) 0 else 1) +
             (if (installmentPlanTotal.asKnown() == null) 0 else 1) +
             (installments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (installmentsOutstanding.asKnown() == null) 0 else 1) +
@@ -906,6 +956,7 @@ private constructor(
         private val installmentNum: JsonField<Long>,
         private val paymentDueDate: JsonField<LocalDate>,
         private val payments: JsonField<List<InstallmentPayment>>,
+        private val installmentAdjustment: JsonField<Long>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
@@ -944,6 +995,9 @@ private constructor(
             @JsonProperty("payments")
             @ExcludeMissing
             payments: JsonField<List<InstallmentPayment>> = JsonMissing.of(),
+            @JsonProperty("installment_adjustment")
+            @ExcludeMissing
+            installmentAdjustment: JsonField<Long> = JsonMissing.of(),
         ) : this(
             amountDue,
             amountDueDetails,
@@ -956,6 +1010,7 @@ private constructor(
             installmentNum,
             paymentDueDate,
             payments,
+            installmentAdjustment,
             mutableMapOf(),
         )
 
@@ -1044,6 +1099,15 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun payments(): List<InstallmentPayment> = payments.getRequired("payments")
+
+        /**
+         * Amount from installment_plan_adjustment credited to this installment
+         *
+         * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun installmentAdjustment(): Long? =
+            installmentAdjustment.getNullable("installment_adjustment")
 
         /**
          * Returns the raw JSON value of [amountDue].
@@ -1146,6 +1210,16 @@ private constructor(
         @ExcludeMissing
         fun _payments(): JsonField<List<InstallmentPayment>> = payments
 
+        /**
+         * Returns the raw JSON value of [installmentAdjustment].
+         *
+         * Unlike [installmentAdjustment], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("installment_adjustment")
+        @ExcludeMissing
+        fun _installmentAdjustment(): JsonField<Long> = installmentAdjustment
+
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
             additionalProperties.put(key, value)
@@ -1195,6 +1269,7 @@ private constructor(
             private var installmentNum: JsonField<Long>? = null
             private var paymentDueDate: JsonField<LocalDate>? = null
             private var payments: JsonField<MutableList<InstallmentPayment>>? = null
+            private var installmentAdjustment: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(installment: Installment) = apply {
@@ -1209,6 +1284,7 @@ private constructor(
                 installmentNum = installment.installmentNum
                 paymentDueDate = installment.paymentDueDate
                 payments = installment.payments.map { it.toMutableList() }
+                installmentAdjustment = installment.installmentAdjustment
                 additionalProperties = installment.additionalProperties.toMutableMap()
             }
 
@@ -1379,6 +1455,21 @@ private constructor(
                     }
             }
 
+            /** Amount from installment_plan_adjustment credited to this installment */
+            fun installmentAdjustment(installmentAdjustment: Long) =
+                installmentAdjustment(JsonField.of(installmentAdjustment))
+
+            /**
+             * Sets [Builder.installmentAdjustment] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.installmentAdjustment] with a well-typed [Long]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun installmentAdjustment(installmentAdjustment: JsonField<Long>) = apply {
+                this.installmentAdjustment = installmentAdjustment
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1433,6 +1524,7 @@ private constructor(
                     checkRequired("installmentNum", installmentNum),
                     checkRequired("paymentDueDate", paymentDueDate),
                     checkRequired("payments", payments).map { it.toImmutable() },
+                    installmentAdjustment,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1464,6 +1556,7 @@ private constructor(
             installmentNum()
             paymentDueDate()
             payments().forEach { it.validate() }
+            installmentAdjustment()
             validated = true
         }
 
@@ -1492,7 +1585,8 @@ private constructor(
                 (if (dueDate.asKnown() == null) 0 else 1) +
                 (if (installmentNum.asKnown() == null) 0 else 1) +
                 (if (paymentDueDate.asKnown() == null) 0 else 1) +
-                (payments.asKnown()?.sumOf { it.validity().toInt() } ?: 0)
+                (payments.asKnown()?.sumOf { it.validity().toInt() } ?: 0) +
+                (if (installmentAdjustment.asKnown() == null) 0 else 1)
 
         class InstallmentPayment
         @JsonCreator(mode = JsonCreator.Mode.DISABLED)
@@ -1500,6 +1594,7 @@ private constructor(
             private val amount: JsonField<Long>,
             private val amountDetails: JsonField<TransactionCategoryBalances>,
             private val date: JsonField<LocalDate>,
+            private val isAdjustment: JsonField<Boolean>,
             private val additionalProperties: MutableMap<String, JsonValue>,
         ) {
 
@@ -1510,7 +1605,10 @@ private constructor(
                 @ExcludeMissing
                 amountDetails: JsonField<TransactionCategoryBalances> = JsonMissing.of(),
                 @JsonProperty("date") @ExcludeMissing date: JsonField<LocalDate> = JsonMissing.of(),
-            ) : this(amount, amountDetails, date, mutableMapOf())
+                @JsonProperty("is_adjustment")
+                @ExcludeMissing
+                isAdjustment: JsonField<Boolean> = JsonMissing.of(),
+            ) : this(amount, amountDetails, date, isAdjustment, mutableMapOf())
 
             /**
              * Amount applied to the installment in cents
@@ -1539,6 +1637,15 @@ private constructor(
             fun date(): LocalDate = date.getRequired("date")
 
             /**
+             * True when the source of the payment is an adjustment of an underlying account or
+             * transaction
+             *
+             * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if
+             *   the server responded with an unexpected value).
+             */
+            fun isAdjustment(): Boolean? = isAdjustment.getNullable("is_adjustment")
+
+            /**
              * Returns the raw JSON value of [amount].
              *
              * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
@@ -1561,6 +1668,16 @@ private constructor(
              * Unlike [date], this method doesn't throw if the JSON field has an unexpected type.
              */
             @JsonProperty("date") @ExcludeMissing fun _date(): JsonField<LocalDate> = date
+
+            /**
+             * Returns the raw JSON value of [isAdjustment].
+             *
+             * Unlike [isAdjustment], this method doesn't throw if the JSON field has an unexpected
+             * type.
+             */
+            @JsonProperty("is_adjustment")
+            @ExcludeMissing
+            fun _isAdjustment(): JsonField<Boolean> = isAdjustment
 
             @JsonAnySetter
             private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1595,12 +1712,14 @@ private constructor(
                 private var amount: JsonField<Long>? = null
                 private var amountDetails: JsonField<TransactionCategoryBalances>? = null
                 private var date: JsonField<LocalDate>? = null
+                private var isAdjustment: JsonField<Boolean> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(installmentPayment: InstallmentPayment) = apply {
                     amount = installmentPayment.amount
                     amountDetails = installmentPayment.amountDetails
                     date = installmentPayment.date
+                    isAdjustment = installmentPayment.isAdjustment
                     additionalProperties = installmentPayment.additionalProperties.toMutableMap()
                 }
 
@@ -1641,6 +1760,23 @@ private constructor(
                  * yet supported value.
                  */
                 fun date(date: JsonField<LocalDate>) = apply { this.date = date }
+
+                /**
+                 * True when the source of the payment is an adjustment of an underlying account or
+                 * transaction
+                 */
+                fun isAdjustment(isAdjustment: Boolean) = isAdjustment(JsonField.of(isAdjustment))
+
+                /**
+                 * Sets [Builder.isAdjustment] to an arbitrary JSON value.
+                 *
+                 * You should usually call [Builder.isAdjustment] with a well-typed [Boolean] value
+                 * instead. This method is primarily for setting the field to an undocumented or not
+                 * yet supported value.
+                 */
+                fun isAdjustment(isAdjustment: JsonField<Boolean>) = apply {
+                    this.isAdjustment = isAdjustment
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1683,6 +1819,7 @@ private constructor(
                         checkRequired("amount", amount),
                         checkRequired("amountDetails", amountDetails),
                         checkRequired("date", date),
+                        isAdjustment,
                         additionalProperties.toMutableMap(),
                     )
             }
@@ -1707,6 +1844,7 @@ private constructor(
                 amount()
                 amountDetails().validate()
                 date()
+                isAdjustment()
                 validated = true
             }
 
@@ -1727,7 +1865,8 @@ private constructor(
             internal fun validity(): Int =
                 (if (amount.asKnown() == null) 0 else 1) +
                     (amountDetails.asKnown()?.validity() ?: 0) +
-                    (if (date.asKnown() == null) 0 else 1)
+                    (if (date.asKnown() == null) 0 else 1) +
+                    (if (isAdjustment.asKnown() == null) 0 else 1)
 
             override fun equals(other: Any?): Boolean {
                 if (this === other) {
@@ -1738,17 +1877,18 @@ private constructor(
                     amount == other.amount &&
                     amountDetails == other.amountDetails &&
                     date == other.date &&
+                    isAdjustment == other.isAdjustment &&
                     additionalProperties == other.additionalProperties
             }
 
             private val hashCode: Int by lazy {
-                Objects.hash(amount, amountDetails, date, additionalProperties)
+                Objects.hash(amount, amountDetails, date, isAdjustment, additionalProperties)
             }
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "InstallmentPayment{amount=$amount, amountDetails=$amountDetails, date=$date, additionalProperties=$additionalProperties}"
+                "InstallmentPayment{amount=$amount, amountDetails=$amountDetails, date=$date, isAdjustment=$isAdjustment, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1768,6 +1908,7 @@ private constructor(
                 installmentNum == other.installmentNum &&
                 paymentDueDate == other.paymentDueDate &&
                 payments == other.payments &&
+                installmentAdjustment == other.installmentAdjustment &&
                 additionalProperties == other.additionalProperties
         }
 
@@ -1784,6 +1925,7 @@ private constructor(
                 installmentNum,
                 paymentDueDate,
                 payments,
+                installmentAdjustment,
                 additionalProperties,
             )
         }
@@ -1791,7 +1933,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Installment{amountDue=$amountDue, amountDueDetails=$amountDueDetails, amountOutstanding=$amountOutstanding, amountOutstandingDetails=$amountOutstandingDetails, amountPaid=$amountPaid, amountPaidDetails=$amountPaidDetails, dateAssessed=$dateAssessed, dueDate=$dueDate, installmentNum=$installmentNum, paymentDueDate=$paymentDueDate, payments=$payments, additionalProperties=$additionalProperties}"
+            "Installment{amountDue=$amountDue, amountDueDetails=$amountDueDetails, amountOutstanding=$amountOutstanding, amountOutstandingDetails=$amountOutstandingDetails, amountPaid=$amountPaid, amountPaidDetails=$amountPaidDetails, dateAssessed=$dateAssessed, dueDate=$dueDate, installmentNum=$installmentNum, paymentDueDate=$paymentDueDate, payments=$payments, installmentAdjustment=$installmentAdjustment, additionalProperties=$additionalProperties}"
     }
 
     class InstallmentPlanSource
@@ -2108,6 +2250,7 @@ private constructor(
             created == other.created &&
             feeAmount == other.feeAmount &&
             financialAccountToken == other.financialAccountToken &&
+            installmentPlanAdjustment == other.installmentPlanAdjustment &&
             installmentPlanTotal == other.installmentPlanTotal &&
             installments == other.installments &&
             installmentsOutstanding == other.installmentsOutstanding &&
@@ -2131,6 +2274,7 @@ private constructor(
             created,
             feeAmount,
             financialAccountToken,
+            installmentPlanAdjustment,
             installmentPlanTotal,
             installments,
             installmentsOutstanding,
@@ -2151,5 +2295,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InstallmentPlan{token=$token, closedAt=$closedAt, created=$created, feeAmount=$feeAmount, financialAccountToken=$financialAccountToken, installmentPlanTotal=$installmentPlanTotal, installments=$installments, installmentsOutstanding=$installmentsOutstanding, installmentsPaid=$installmentsPaid, numInstallments=$numInstallments, principalAmount=$principalAmount, sourceAmounts=$sourceAmounts, sourceId=$sourceId, sourceType=$sourceType, startDate=$startDate, state=$state, totalPaid=$totalPaid, updated=$updated, additionalProperties=$additionalProperties}"
+        "InstallmentPlan{token=$token, closedAt=$closedAt, created=$created, feeAmount=$feeAmount, financialAccountToken=$financialAccountToken, installmentPlanAdjustment=$installmentPlanAdjustment, installmentPlanTotal=$installmentPlanTotal, installments=$installments, installmentsOutstanding=$installmentsOutstanding, installmentsPaid=$installmentsPaid, numInstallments=$numInstallments, principalAmount=$principalAmount, sourceAmounts=$sourceAmounts, sourceId=$sourceId, sourceType=$sourceType, startDate=$startDate, state=$state, totalPaid=$totalPaid, updated=$updated, additionalProperties=$additionalProperties}"
 }
