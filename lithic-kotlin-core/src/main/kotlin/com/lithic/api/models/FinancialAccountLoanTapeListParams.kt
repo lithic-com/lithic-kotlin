@@ -25,7 +25,7 @@ private constructor(
     fun financialAccountToken(): String? = financialAccountToken
 
     /**
-     * Date string in RFC 3339 format. Only entries created after the specified date will be
+     * Date string in RFC 3339 format. Only entries created on or after the specified date will be
      * included.
      */
     fun begin(): LocalDate? = begin
@@ -101,8 +101,8 @@ private constructor(
         }
 
         /**
-         * Date string in RFC 3339 format. Only entries created after the specified date will be
-         * included.
+         * Date string in RFC 3339 format. Only entries created on or after the specified date will
+         * be included.
          */
         fun begin(begin: LocalDate?) = apply { this.begin = begin }
 

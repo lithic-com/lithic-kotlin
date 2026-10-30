@@ -33,8 +33,8 @@ private constructor(
 ) : Params {
 
     /**
-     * Datetime in RFC 3339 format. Only entries created after the specified time will be included.
-     * UTC time zone.
+     * Datetime in RFC 3339 format. Only entries created on or after the specified time will be
+     * included. UTC time zone.
      */
     fun begin(): OffsetDateTime? = begin
 
@@ -136,7 +136,7 @@ private constructor(
         }
 
         /**
-         * Datetime in RFC 3339 format. Only entries created after the specified time will be
+         * Datetime in RFC 3339 format. Only entries created on or after the specified time will be
          * included. UTC time zone.
          */
         fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }

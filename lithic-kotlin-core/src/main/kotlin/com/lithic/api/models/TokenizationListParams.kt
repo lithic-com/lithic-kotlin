@@ -30,7 +30,7 @@ private constructor(
     /** Filters for tokenizations associated with a specific account. */
     fun accountToken(): String? = accountToken
 
-    /** Filter for tokenizations created after this date. */
+    /** Filter for tokenizations created on or after this date. */
     fun begin(): LocalDate? = begin
 
     /** Filters for tokenizations associated with a specific card. */
@@ -106,7 +106,7 @@ private constructor(
         /** Filters for tokenizations associated with a specific account. */
         fun accountToken(accountToken: String?) = apply { this.accountToken = accountToken }
 
-        /** Filter for tokenizations created after this date. */
+        /** Filter for tokenizations created on or after this date. */
         fun begin(begin: LocalDate?) = apply { this.begin = begin }
 
         /** Filters for tokenizations associated with a specific card. */

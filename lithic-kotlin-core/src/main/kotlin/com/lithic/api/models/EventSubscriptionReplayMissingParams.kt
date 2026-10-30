@@ -12,9 +12,9 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
- * Replays messages to the endpoint. Only messages that were created after `begin` will be sent.
- * Messages that were previously sent to the endpoint are not resent. Message will be retried if
- * endpoint responds with a non-2xx status code. See
+ * Replays messages to the endpoint. Only messages that were created on or after `begin` will be
+ * sent. Messages that were previously sent to the endpoint are not resent. Message will be retried
+ * if endpoint responds with a non-2xx status code. See
  * [Retry Schedule](https://docs.lithic.com/docs/events-api#retry-schedule) for details.
  */
 class EventSubscriptionReplayMissingParams
@@ -30,7 +30,7 @@ private constructor(
     fun eventSubscriptionToken(): String? = eventSubscriptionToken
 
     /**
-     * Date string in RFC 3339 format. Only entries created after the specified time will be
+     * Date string in RFC 3339 format. Only entries created on or after the specified time will be
      * included. UTC time zone.
      */
     fun begin(): OffsetDateTime? = begin
@@ -91,8 +91,8 @@ private constructor(
         }
 
         /**
-         * Date string in RFC 3339 format. Only entries created after the specified time will be
-         * included. UTC time zone.
+         * Date string in RFC 3339 format. Only entries created on or after the specified time will
+         * be included. UTC time zone.
          */
         fun begin(begin: OffsetDateTime?) = apply { this.begin = begin }
 
