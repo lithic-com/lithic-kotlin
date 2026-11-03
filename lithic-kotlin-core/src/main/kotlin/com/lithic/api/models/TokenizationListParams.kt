@@ -304,6 +304,8 @@ private constructor(
 
             val MERCHANT = of("MERCHANT")
 
+            val AGENT_PAY = of("AGENT_PAY")
+
             val ALL = of("ALL")
 
             fun of(value: String) = TokenizationChannel(JsonField.of(value))
@@ -313,6 +315,7 @@ private constructor(
         enum class Known {
             DIGITAL_WALLET,
             MERCHANT,
+            AGENT_PAY,
             ALL,
         }
 
@@ -328,6 +331,7 @@ private constructor(
         enum class Value {
             DIGITAL_WALLET,
             MERCHANT,
+            AGENT_PAY,
             ALL,
             /**
              * An enum member indicating that [TokenizationChannel] was instantiated with an unknown
@@ -347,6 +351,7 @@ private constructor(
             when (this) {
                 DIGITAL_WALLET -> Value.DIGITAL_WALLET
                 MERCHANT -> Value.MERCHANT
+                AGENT_PAY -> Value.AGENT_PAY
                 ALL -> Value.ALL
                 else -> Value._UNKNOWN
             }
@@ -364,6 +369,7 @@ private constructor(
             when (this) {
                 DIGITAL_WALLET -> Known.DIGITAL_WALLET
                 MERCHANT -> Known.MERCHANT
+                AGENT_PAY -> Known.AGENT_PAY
                 ALL -> Known.ALL
                 else -> throw LithicInvalidDataException("Unknown TokenizationChannel: $value")
             }
