@@ -33,6 +33,7 @@ private constructor(
     private val messageCategory: JsonField<ThreeDSAuthentication.MessageCategory>,
     private val threeDSRequestorChallengeIndicator:
         JsonField<ThreeDSAuthentication.ThreeDSRequestorChallengeIndicator>,
+    private val updated: JsonField<OffsetDateTime>,
     private val additionalData: JsonField<ThreeDSAuthentication.AdditionalData>,
     private val app: JsonField<ThreeDSAuthentication.App>,
     private val authenticationRequestType:
@@ -82,6 +83,9 @@ private constructor(
         threeDSRequestorChallengeIndicator:
             JsonField<ThreeDSAuthentication.ThreeDSRequestorChallengeIndicator> =
             JsonMissing.of(),
+        @JsonProperty("updated")
+        @ExcludeMissing
+        updated: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("additional_data")
         @ExcludeMissing
         additionalData: JsonField<ThreeDSAuthentication.AdditionalData> = JsonMissing.of(),
@@ -129,6 +133,7 @@ private constructor(
         merchant,
         messageCategory,
         threeDSRequestorChallengeIndicator,
+        updated,
         additionalData,
         app,
         authenticationRequestType,
@@ -156,6 +161,7 @@ private constructor(
             .merchant(merchant)
             .messageCategory(messageCategory)
             .threeDSRequestorChallengeIndicator(threeDSRequestorChallengeIndicator)
+            .updated(updated)
             .additionalData(additionalData)
             .app(app)
             .authenticationRequestType(authenticationRequestType)
@@ -274,6 +280,16 @@ private constructor(
     fun threeDSRequestorChallengeIndicator():
         ThreeDSAuthentication.ThreeDSRequestorChallengeIndicator =
         threeDSRequestorChallengeIndicator.getRequired("three_ds_requestor_challenge_indicator")
+
+    /**
+     * Date and time when the authentication was last updated in Lithic's system. Equal to `created`
+     * until the authentication is updated (e.g. a challenge is completed). Permitted values: Date
+     * string in the ISO 8601 format yyyy-MM-dd'T'hh:mm:ssZ.
+     *
+     * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
+     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun updated(): OffsetDateTime = updated.getRequired("updated")
 
     /**
      * Object containing additional data about the 3DS request that is beyond the EMV 3DS standard
@@ -481,6 +497,13 @@ private constructor(
         threeDSRequestorChallengeIndicator
 
     /**
+     * Returns the raw JSON value of [updated].
+     *
+     * Unlike [updated], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("updated") @ExcludeMissing fun _updated(): JsonField<OffsetDateTime> = updated
+
+    /**
      * Returns the raw JSON value of [additionalData].
      *
      * Unlike [additionalData], this method doesn't throw if the JSON field has an unexpected type.
@@ -613,6 +636,7 @@ private constructor(
          * .merchant()
          * .messageCategory()
          * .threeDSRequestorChallengeIndicator()
+         * .updated()
          * .eventType()
          * ```
          */
@@ -636,6 +660,7 @@ private constructor(
         private var threeDSRequestorChallengeIndicator:
             JsonField<ThreeDSAuthentication.ThreeDSRequestorChallengeIndicator>? =
             null
+        private var updated: JsonField<OffsetDateTime>? = null
         private var additionalData: JsonField<ThreeDSAuthentication.AdditionalData> =
             JsonMissing.of()
         private var app: JsonField<ThreeDSAuthentication.App> = JsonMissing.of()
@@ -672,6 +697,7 @@ private constructor(
             messageCategory = threeDSAuthenticationUpdatedWebhookEvent.messageCategory
             threeDSRequestorChallengeIndicator =
                 threeDSAuthenticationUpdatedWebhookEvent.threeDSRequestorChallengeIndicator
+            updated = threeDSAuthenticationUpdatedWebhookEvent.updated
             additionalData = threeDSAuthenticationUpdatedWebhookEvent.additionalData
             app = threeDSAuthenticationUpdatedWebhookEvent.app
             authenticationRequestType =
@@ -874,6 +900,22 @@ private constructor(
             threeDSRequestorChallengeIndicator:
                 JsonField<ThreeDSAuthentication.ThreeDSRequestorChallengeIndicator>
         ) = apply { this.threeDSRequestorChallengeIndicator = threeDSRequestorChallengeIndicator }
+
+        /**
+         * Date and time when the authentication was last updated in Lithic's system. Equal to
+         * `created` until the authentication is updated (e.g. a challenge is completed). Permitted
+         * values: Date string in the ISO 8601 format yyyy-MM-dd'T'hh:mm:ssZ.
+         */
+        fun updated(updated: OffsetDateTime) = updated(JsonField.of(updated))
+
+        /**
+         * Sets [Builder.updated] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.updated] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun updated(updated: JsonField<OffsetDateTime>) = apply { this.updated = updated }
 
         /**
          * Object containing additional data about the 3DS request that is beyond the EMV 3DS
@@ -1111,6 +1153,7 @@ private constructor(
          * .merchant()
          * .messageCategory()
          * .threeDSRequestorChallengeIndicator()
+         * .updated()
          * .eventType()
          * ```
          *
@@ -1132,6 +1175,7 @@ private constructor(
                     "threeDSRequestorChallengeIndicator",
                     threeDSRequestorChallengeIndicator,
                 ),
+                checkRequired("updated", updated),
                 additionalData,
                 app,
                 authenticationRequestType,
@@ -1173,6 +1217,7 @@ private constructor(
         merchant().validate()
         messageCategory().validate()
         threeDSRequestorChallengeIndicator().validate()
+        updated()
         additionalData()?.validate()
         app()?.validate()
         authenticationRequestType()?.validate()
@@ -1212,6 +1257,7 @@ private constructor(
             (merchant.asKnown()?.validity() ?: 0) +
             (messageCategory.asKnown()?.validity() ?: 0) +
             (threeDSRequestorChallengeIndicator.asKnown()?.validity() ?: 0) +
+            (if (updated.asKnown() == null) 0 else 1) +
             (additionalData.asKnown()?.validity() ?: 0) +
             (app.asKnown()?.validity() ?: 0) +
             (authenticationRequestType.asKnown()?.validity() ?: 0) +
@@ -1372,6 +1418,7 @@ private constructor(
             merchant == other.merchant &&
             messageCategory == other.messageCategory &&
             threeDSRequestorChallengeIndicator == other.threeDSRequestorChallengeIndicator &&
+            updated == other.updated &&
             additionalData == other.additionalData &&
             app == other.app &&
             authenticationRequestType == other.authenticationRequestType &&
@@ -1399,6 +1446,7 @@ private constructor(
             merchant,
             messageCategory,
             threeDSRequestorChallengeIndicator,
+            updated,
             additionalData,
             app,
             authenticationRequestType,
@@ -1417,5 +1465,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ThreeDSAuthenticationUpdatedWebhookEvent{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, psd2Context=$psd2Context, threeRiRequestType=$threeRiRequestType, transaction=$transaction, eventType=$eventType, additionalProperties=$additionalProperties}"
+        "ThreeDSAuthenticationUpdatedWebhookEvent{token=$token, accountType=$accountType, authenticationResult=$authenticationResult, cardExpiryCheck=$cardExpiryCheck, cardToken=$cardToken, cardholder=$cardholder, channel=$channel, created=$created, merchant=$merchant, messageCategory=$messageCategory, threeDSRequestorChallengeIndicator=$threeDSRequestorChallengeIndicator, updated=$updated, additionalData=$additionalData, app=$app, authenticationRequestType=$authenticationRequestType, browser=$browser, challengeMetadata=$challengeMetadata, challengeOrchestratedBy=$challengeOrchestratedBy, decisionMadeBy=$decisionMadeBy, psd2Context=$psd2Context, threeRiRequestType=$threeRiRequestType, transaction=$transaction, eventType=$eventType, additionalProperties=$additionalProperties}"
 }
