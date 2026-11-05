@@ -1177,19 +1177,6 @@ private constructor(
                 parameters(Parameters.ofTypescriptCode(typescriptCode))
 
             /**
-             * Alias for calling [parameters] with
-             * `Parameters.ofConditionalAuthorizationAdjustment(conditionalAuthorizationAdjustment)`.
-             */
-            fun parameters(
-                conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-            ) =
-                parameters(
-                    Parameters.ofConditionalAuthorizationAdjustment(
-                        conditionalAuthorizationAdjustment
-                    )
-                )
-
-            /**
              * The version of the rule, this is incremented whenever the rule's parameters change.
              */
             fun version(version: Long) = version(JsonField.of(version))
@@ -1301,9 +1288,6 @@ private constructor(
                 ConditionalAchPaymentUpdateActionParameters? =
                 null,
             private val typescriptCode: TypescriptCodeParameters? = null,
-            private val conditionalAuthorizationAdjustment:
-                ConditionalAuthorizationAdjustmentParameters? =
-                null,
             private val _json: JsonValue? = null,
         ) {
 
@@ -1331,9 +1315,6 @@ private constructor(
             /** Parameters for defining a TypeScript code rule */
             fun typescriptCode(): TypescriptCodeParameters? = typescriptCode
 
-            fun conditionalAuthorizationAdjustment():
-                ConditionalAuthorizationAdjustmentParameters? = conditionalAuthorizationAdjustment
-
             fun isVelocityLimitParams(): Boolean = velocityLimitParams != null
 
             fun isMerchantLock(): Boolean = merchantLock != null
@@ -1353,9 +1334,6 @@ private constructor(
                 conditionalAchPaymentUpdateAction != null
 
             fun isTypescriptCode(): Boolean = typescriptCode != null
-
-            fun isConditionalAuthorizationAdjustment(): Boolean =
-                conditionalAuthorizationAdjustment != null
 
             fun asVelocityLimitParams(): VelocityLimitParams =
                 velocityLimitParams.getOrThrow("velocityLimitParams")
@@ -1386,10 +1364,6 @@ private constructor(
             /** Parameters for defining a TypeScript code rule */
             fun asTypescriptCode(): TypescriptCodeParameters =
                 typescriptCode.getOrThrow("typescriptCode")
-
-            fun asConditionalAuthorizationAdjustment():
-                ConditionalAuthorizationAdjustmentParameters =
-                conditionalAuthorizationAdjustment.getOrThrow("conditionalAuthorizationAdjustment")
 
             fun _json(): JsonValue? = _json
 
@@ -1440,10 +1414,6 @@ private constructor(
                             conditionalAchPaymentUpdateAction
                         )
                     typescriptCode != null -> visitor.visitTypescriptCode(typescriptCode)
-                    conditionalAuthorizationAdjustment != null ->
-                        visitor.visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment
-                        )
                     else -> visitor.unknown(_json)
                 }
 
@@ -1517,13 +1487,6 @@ private constructor(
                         override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) {
                             typescriptCode.validate()
                         }
-
-                        override fun visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment:
-                                ConditionalAuthorizationAdjustmentParameters
-                        ) {
-                            conditionalAuthorizationAdjustment.validate()
-                        }
                     }
                 )
                 validated = true
@@ -1582,11 +1545,6 @@ private constructor(
                         override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                             typescriptCode.validity()
 
-                        override fun visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment:
-                                ConditionalAuthorizationAdjustmentParameters
-                        ) = conditionalAuthorizationAdjustment.validity()
-
                         override fun unknown(json: JsonValue?) = 0
                     }
                 )
@@ -1606,8 +1564,7 @@ private constructor(
                     conditionalCardTransactionUpdateAction ==
                         other.conditionalCardTransactionUpdateAction &&
                     conditionalAchPaymentUpdateAction == other.conditionalAchPaymentUpdateAction &&
-                    typescriptCode == other.typescriptCode &&
-                    conditionalAuthorizationAdjustment == other.conditionalAuthorizationAdjustment
+                    typescriptCode == other.typescriptCode
             }
 
             override fun hashCode(): Int =
@@ -1621,7 +1578,6 @@ private constructor(
                     conditionalCardTransactionUpdateAction,
                     conditionalAchPaymentUpdateAction,
                     typescriptCode,
-                    conditionalAuthorizationAdjustment,
                 )
 
             override fun toString(): String =
@@ -1642,8 +1598,6 @@ private constructor(
                     conditionalAchPaymentUpdateAction != null ->
                         "Parameters{conditionalAchPaymentUpdateAction=$conditionalAchPaymentUpdateAction}"
                     typescriptCode != null -> "Parameters{typescriptCode=$typescriptCode}"
-                    conditionalAuthorizationAdjustment != null ->
-                        "Parameters{conditionalAuthorizationAdjustment=$conditionalAuthorizationAdjustment}"
                     _json != null -> "Parameters{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Parameters")
                 }
@@ -1689,13 +1643,6 @@ private constructor(
                 /** Parameters for defining a TypeScript code rule */
                 fun ofTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                     Parameters(typescriptCode = typescriptCode)
-
-                fun ofConditionalAuthorizationAdjustment(
-                    conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-                ) =
-                    Parameters(
-                        conditionalAuthorizationAdjustment = conditionalAuthorizationAdjustment
-                    )
             }
 
             /**
@@ -1735,10 +1682,6 @@ private constructor(
 
                 /** Parameters for defining a TypeScript code rule */
                 fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters): T
-
-                fun visitConditionalAuthorizationAdjustment(
-                    conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-                ): T
 
                 /**
                  * Maps an unknown variant of [Parameters] to a value of type [T].
@@ -1820,18 +1763,6 @@ private constructor(
                                     },
                                 tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())
                                     ?.let { Parameters(typescriptCode = it, _json = json) },
-                                tryDeserialize(
-                                        node,
-                                        jacksonTypeRef<
-                                            ConditionalAuthorizationAdjustmentParameters
-                                        >(),
-                                    )
-                                    ?.let {
-                                        Parameters(
-                                            conditionalAuthorizationAdjustment = it,
-                                            _json = json,
-                                        )
-                                    },
                             )
                             .filterNotNull()
                             .allMaxBy { it.validity() }
@@ -1873,8 +1804,6 @@ private constructor(
                         value.conditionalAchPaymentUpdateAction != null ->
                             generator.writeObject(value.conditionalAchPaymentUpdateAction)
                         value.typescriptCode != null -> generator.writeObject(value.typescriptCode)
-                        value.conditionalAuthorizationAdjustment != null ->
-                            generator.writeObject(value.conditionalAuthorizationAdjustment)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Parameters")
                     }
@@ -2146,19 +2075,6 @@ private constructor(
                 parameters(Parameters.ofTypescriptCode(typescriptCode))
 
             /**
-             * Alias for calling [parameters] with
-             * `Parameters.ofConditionalAuthorizationAdjustment(conditionalAuthorizationAdjustment)`.
-             */
-            fun parameters(
-                conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-            ) =
-                parameters(
-                    Parameters.ofConditionalAuthorizationAdjustment(
-                        conditionalAuthorizationAdjustment
-                    )
-                )
-
-            /**
              * The state of the draft version. Most rules are created synchronously and the state is
              * immediately `SHADOWING`. Rules backed by TypeScript code are compiled asynchronously
              * — the state starts as `PENDING` and transitions to `SHADOWING` on success or `ERROR`
@@ -2300,9 +2216,6 @@ private constructor(
                 ConditionalAchPaymentUpdateActionParameters? =
                 null,
             private val typescriptCode: TypescriptCodeParameters? = null,
-            private val conditionalAuthorizationAdjustment:
-                ConditionalAuthorizationAdjustmentParameters? =
-                null,
             private val _json: JsonValue? = null,
         ) {
 
@@ -2330,9 +2243,6 @@ private constructor(
             /** Parameters for defining a TypeScript code rule */
             fun typescriptCode(): TypescriptCodeParameters? = typescriptCode
 
-            fun conditionalAuthorizationAdjustment():
-                ConditionalAuthorizationAdjustmentParameters? = conditionalAuthorizationAdjustment
-
             fun isVelocityLimitParams(): Boolean = velocityLimitParams != null
 
             fun isMerchantLock(): Boolean = merchantLock != null
@@ -2352,9 +2262,6 @@ private constructor(
                 conditionalAchPaymentUpdateAction != null
 
             fun isTypescriptCode(): Boolean = typescriptCode != null
-
-            fun isConditionalAuthorizationAdjustment(): Boolean =
-                conditionalAuthorizationAdjustment != null
 
             fun asVelocityLimitParams(): VelocityLimitParams =
                 velocityLimitParams.getOrThrow("velocityLimitParams")
@@ -2385,10 +2292,6 @@ private constructor(
             /** Parameters for defining a TypeScript code rule */
             fun asTypescriptCode(): TypescriptCodeParameters =
                 typescriptCode.getOrThrow("typescriptCode")
-
-            fun asConditionalAuthorizationAdjustment():
-                ConditionalAuthorizationAdjustmentParameters =
-                conditionalAuthorizationAdjustment.getOrThrow("conditionalAuthorizationAdjustment")
 
             fun _json(): JsonValue? = _json
 
@@ -2439,10 +2342,6 @@ private constructor(
                             conditionalAchPaymentUpdateAction
                         )
                     typescriptCode != null -> visitor.visitTypescriptCode(typescriptCode)
-                    conditionalAuthorizationAdjustment != null ->
-                        visitor.visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment
-                        )
                     else -> visitor.unknown(_json)
                 }
 
@@ -2516,13 +2415,6 @@ private constructor(
                         override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) {
                             typescriptCode.validate()
                         }
-
-                        override fun visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment:
-                                ConditionalAuthorizationAdjustmentParameters
-                        ) {
-                            conditionalAuthorizationAdjustment.validate()
-                        }
                     }
                 )
                 validated = true
@@ -2581,11 +2473,6 @@ private constructor(
                         override fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                             typescriptCode.validity()
 
-                        override fun visitConditionalAuthorizationAdjustment(
-                            conditionalAuthorizationAdjustment:
-                                ConditionalAuthorizationAdjustmentParameters
-                        ) = conditionalAuthorizationAdjustment.validity()
-
                         override fun unknown(json: JsonValue?) = 0
                     }
                 )
@@ -2605,8 +2492,7 @@ private constructor(
                     conditionalCardTransactionUpdateAction ==
                         other.conditionalCardTransactionUpdateAction &&
                     conditionalAchPaymentUpdateAction == other.conditionalAchPaymentUpdateAction &&
-                    typescriptCode == other.typescriptCode &&
-                    conditionalAuthorizationAdjustment == other.conditionalAuthorizationAdjustment
+                    typescriptCode == other.typescriptCode
             }
 
             override fun hashCode(): Int =
@@ -2620,7 +2506,6 @@ private constructor(
                     conditionalCardTransactionUpdateAction,
                     conditionalAchPaymentUpdateAction,
                     typescriptCode,
-                    conditionalAuthorizationAdjustment,
                 )
 
             override fun toString(): String =
@@ -2641,8 +2526,6 @@ private constructor(
                     conditionalAchPaymentUpdateAction != null ->
                         "Parameters{conditionalAchPaymentUpdateAction=$conditionalAchPaymentUpdateAction}"
                     typescriptCode != null -> "Parameters{typescriptCode=$typescriptCode}"
-                    conditionalAuthorizationAdjustment != null ->
-                        "Parameters{conditionalAuthorizationAdjustment=$conditionalAuthorizationAdjustment}"
                     _json != null -> "Parameters{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Parameters")
                 }
@@ -2688,13 +2571,6 @@ private constructor(
                 /** Parameters for defining a TypeScript code rule */
                 fun ofTypescriptCode(typescriptCode: TypescriptCodeParameters) =
                     Parameters(typescriptCode = typescriptCode)
-
-                fun ofConditionalAuthorizationAdjustment(
-                    conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-                ) =
-                    Parameters(
-                        conditionalAuthorizationAdjustment = conditionalAuthorizationAdjustment
-                    )
             }
 
             /**
@@ -2734,10 +2610,6 @@ private constructor(
 
                 /** Parameters for defining a TypeScript code rule */
                 fun visitTypescriptCode(typescriptCode: TypescriptCodeParameters): T
-
-                fun visitConditionalAuthorizationAdjustment(
-                    conditionalAuthorizationAdjustment: ConditionalAuthorizationAdjustmentParameters
-                ): T
 
                 /**
                  * Maps an unknown variant of [Parameters] to a value of type [T].
@@ -2819,18 +2691,6 @@ private constructor(
                                     },
                                 tryDeserialize(node, jacksonTypeRef<TypescriptCodeParameters>())
                                     ?.let { Parameters(typescriptCode = it, _json = json) },
-                                tryDeserialize(
-                                        node,
-                                        jacksonTypeRef<
-                                            ConditionalAuthorizationAdjustmentParameters
-                                        >(),
-                                    )
-                                    ?.let {
-                                        Parameters(
-                                            conditionalAuthorizationAdjustment = it,
-                                            _json = json,
-                                        )
-                                    },
                             )
                             .filterNotNull()
                             .allMaxBy { it.validity() }
@@ -2872,8 +2732,6 @@ private constructor(
                         value.conditionalAchPaymentUpdateAction != null ->
                             generator.writeObject(value.conditionalAchPaymentUpdateAction)
                         value.typescriptCode != null -> generator.writeObject(value.typescriptCode)
-                        value.conditionalAuthorizationAdjustment != null ->
-                            generator.writeObject(value.conditionalAuthorizationAdjustment)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Parameters")
                     }
