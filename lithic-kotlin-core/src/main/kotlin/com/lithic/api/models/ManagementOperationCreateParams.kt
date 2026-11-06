@@ -23,7 +23,7 @@ import java.util.Objects
 /** Create management operation */
 class ManagementOperationCreateParams
 private constructor(
-    private val body: CreateManagementOperationRequest,
+    private val body: CreateManagementOperationPublicRequest,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -53,10 +53,13 @@ private constructor(
     fun effectiveDate(): LocalDate = body.effectiveDate()
 
     /**
+     * Type of management operation to create. To reverse an existing management operation, use the
+     * reverse management operation endpoint
+     *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
      *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun eventType(): ManagementOperationEventType = body.eventType()
+    fun eventType(): CreateManagementOperationEventType = body.eventType()
 
     /**
      * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -65,7 +68,7 @@ private constructor(
     fun financialAccountToken(): String = body.financialAccountToken()
 
     /**
-     * Customer-provided token that will serve as an idempotency token. This token will become the
+     * Client-provided token that will serve as an idempotency token. This token will become the
      * transaction token.
      *
      * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -132,7 +135,7 @@ private constructor(
      *
      * Unlike [eventType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun _eventType(): JsonField<ManagementOperationEventType> = body._eventType()
+    fun _eventType(): JsonField<CreateManagementOperationEventType> = body._eventType()
 
     /**
      * Returns the raw JSON value of [financialAccountToken].
@@ -209,8 +212,8 @@ private constructor(
     /** A builder for [ManagementOperationCreateParams]. */
     class Builder internal constructor() {
 
-        private var body: CreateManagementOperationRequest.Builder =
-            CreateManagementOperationRequest.builder()
+        private var body: CreateManagementOperationPublicRequest.Builder =
+            CreateManagementOperationPublicRequest.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -234,7 +237,9 @@ private constructor(
          * - [eventType]
          * - etc.
          */
-        fun body(body: CreateManagementOperationRequest) = apply { this.body = body.toBuilder() }
+        fun body(body: CreateManagementOperationPublicRequest) = apply {
+            this.body = body.toBuilder()
+        }
 
         fun amount(amount: Long) = apply { body.amount(amount) }
 
@@ -285,16 +290,22 @@ private constructor(
             body.effectiveDate(effectiveDate)
         }
 
-        fun eventType(eventType: ManagementOperationEventType) = apply { body.eventType(eventType) }
+        /**
+         * Type of management operation to create. To reverse an existing management operation, use
+         * the reverse management operation endpoint
+         */
+        fun eventType(eventType: CreateManagementOperationEventType) = apply {
+            body.eventType(eventType)
+        }
 
         /**
          * Sets [Builder.eventType] to an arbitrary JSON value.
          *
          * You should usually call [Builder.eventType] with a well-typed
-         * [ManagementOperationEventType] value instead. This method is primarily for setting the
-         * field to an undocumented or not yet supported value.
+         * [CreateManagementOperationEventType] value instead. This method is primarily for setting
+         * the field to an undocumented or not yet supported value.
          */
-        fun eventType(eventType: JsonField<ManagementOperationEventType>) = apply {
+        fun eventType(eventType: JsonField<CreateManagementOperationEventType>) = apply {
             body.eventType(eventType)
         }
 
@@ -314,8 +325,8 @@ private constructor(
         }
 
         /**
-         * Customer-provided token that will serve as an idempotency token. This token will become
-         * the transaction token.
+         * Client-provided token that will serve as an idempotency token. This token will become the
+         * transaction token.
          */
         fun token(token: String) = apply { body.token(token) }
 
@@ -518,20 +529,20 @@ private constructor(
             )
     }
 
-    fun _body(): CreateManagementOperationRequest = body
+    fun _body(): CreateManagementOperationPublicRequest = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
-    class CreateManagementOperationRequest
+    class CreateManagementOperationPublicRequest
     @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val amount: JsonField<Long>,
         private val category: JsonField<ManagementOperationCategory>,
         private val direction: JsonField<ManagementOperationDirection>,
         private val effectiveDate: JsonField<LocalDate>,
-        private val eventType: JsonField<ManagementOperationEventType>,
+        private val eventType: JsonField<CreateManagementOperationEventType>,
         private val financialAccountToken: JsonField<String>,
         private val token: JsonField<String>,
         private val memo: JsonField<String>,
@@ -555,7 +566,7 @@ private constructor(
             effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
             @JsonProperty("event_type")
             @ExcludeMissing
-            eventType: JsonField<ManagementOperationEventType> = JsonMissing.of(),
+            eventType: JsonField<CreateManagementOperationEventType> = JsonMissing.of(),
             @JsonProperty("financial_account_token")
             @ExcludeMissing
             financialAccountToken: JsonField<String> = JsonMissing.of(),
@@ -608,10 +619,13 @@ private constructor(
         fun effectiveDate(): LocalDate = effectiveDate.getRequired("effective_date")
 
         /**
+         * Type of management operation to create. To reverse an existing management operation, use
+         * the reverse management operation endpoint
+         *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun eventType(): ManagementOperationEventType = eventType.getRequired("event_type")
+        fun eventType(): CreateManagementOperationEventType = eventType.getRequired("event_type")
 
         /**
          * @throws LithicInvalidDataException if the JSON field has an unexpected type or is
@@ -621,8 +635,8 @@ private constructor(
             financialAccountToken.getRequired("financial_account_token")
 
         /**
-         * Customer-provided token that will serve as an idempotency token. This token will become
-         * the transaction token.
+         * Client-provided token that will serve as an idempotency token. This token will become the
+         * transaction token.
          *
          * @throws LithicInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -697,7 +711,7 @@ private constructor(
          */
         @JsonProperty("event_type")
         @ExcludeMissing
-        fun _eventType(): JsonField<ManagementOperationEventType> = eventType
+        fun _eventType(): JsonField<CreateManagementOperationEventType> = eventType
 
         /**
          * Returns the raw JSON value of [financialAccountToken].
@@ -766,7 +780,7 @@ private constructor(
 
             /**
              * Returns a mutable builder for constructing an instance of
-             * [CreateManagementOperationRequest].
+             * [CreateManagementOperationPublicRequest].
              *
              * The following fields are required:
              * ```kotlin
@@ -781,14 +795,14 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [CreateManagementOperationRequest]. */
+        /** A builder for [CreateManagementOperationPublicRequest]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<Long>? = null
             private var category: JsonField<ManagementOperationCategory>? = null
             private var direction: JsonField<ManagementOperationDirection>? = null
             private var effectiveDate: JsonField<LocalDate>? = null
-            private var eventType: JsonField<ManagementOperationEventType>? = null
+            private var eventType: JsonField<CreateManagementOperationEventType>? = null
             private var financialAccountToken: JsonField<String>? = null
             private var token: JsonField<String> = JsonMissing.of()
             private var memo: JsonField<String> = JsonMissing.of()
@@ -797,22 +811,23 @@ private constructor(
             private var userDefinedId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(createManagementOperationRequest: CreateManagementOperationRequest) =
-                apply {
-                    amount = createManagementOperationRequest.amount
-                    category = createManagementOperationRequest.category
-                    direction = createManagementOperationRequest.direction
-                    effectiveDate = createManagementOperationRequest.effectiveDate
-                    eventType = createManagementOperationRequest.eventType
-                    financialAccountToken = createManagementOperationRequest.financialAccountToken
-                    token = createManagementOperationRequest.token
-                    memo = createManagementOperationRequest.memo
-                    onClosedAccount = createManagementOperationRequest.onClosedAccount
-                    subtype = createManagementOperationRequest.subtype
-                    userDefinedId = createManagementOperationRequest.userDefinedId
-                    additionalProperties =
-                        createManagementOperationRequest.additionalProperties.toMutableMap()
-                }
+            internal fun from(
+                createManagementOperationPublicRequest: CreateManagementOperationPublicRequest
+            ) = apply {
+                amount = createManagementOperationPublicRequest.amount
+                category = createManagementOperationPublicRequest.category
+                direction = createManagementOperationPublicRequest.direction
+                effectiveDate = createManagementOperationPublicRequest.effectiveDate
+                eventType = createManagementOperationPublicRequest.eventType
+                financialAccountToken = createManagementOperationPublicRequest.financialAccountToken
+                token = createManagementOperationPublicRequest.token
+                memo = createManagementOperationPublicRequest.memo
+                onClosedAccount = createManagementOperationPublicRequest.onClosedAccount
+                subtype = createManagementOperationPublicRequest.subtype
+                userDefinedId = createManagementOperationPublicRequest.userDefinedId
+                additionalProperties =
+                    createManagementOperationPublicRequest.additionalProperties.toMutableMap()
+            }
 
             fun amount(amount: Long) = amount(JsonField.of(amount))
 
@@ -865,17 +880,21 @@ private constructor(
                 this.effectiveDate = effectiveDate
             }
 
-            fun eventType(eventType: ManagementOperationEventType) =
+            /**
+             * Type of management operation to create. To reverse an existing management operation,
+             * use the reverse management operation endpoint
+             */
+            fun eventType(eventType: CreateManagementOperationEventType) =
                 eventType(JsonField.of(eventType))
 
             /**
              * Sets [Builder.eventType] to an arbitrary JSON value.
              *
              * You should usually call [Builder.eventType] with a well-typed
-             * [ManagementOperationEventType] value instead. This method is primarily for setting
-             * the field to an undocumented or not yet supported value.
+             * [CreateManagementOperationEventType] value instead. This method is primarily for
+             * setting the field to an undocumented or not yet supported value.
              */
-            fun eventType(eventType: JsonField<ManagementOperationEventType>) = apply {
+            fun eventType(eventType: JsonField<CreateManagementOperationEventType>) = apply {
                 this.eventType = eventType
             }
 
@@ -894,8 +913,8 @@ private constructor(
             }
 
             /**
-             * Customer-provided token that will serve as an idempotency token. This token will
-             * become the transaction token.
+             * Client-provided token that will serve as an idempotency token. This token will become
+             * the transaction token.
              */
             fun token(token: String) = token(JsonField.of(token))
 
@@ -978,7 +997,7 @@ private constructor(
             }
 
             /**
-             * Returns an immutable instance of [CreateManagementOperationRequest].
+             * Returns an immutable instance of [CreateManagementOperationPublicRequest].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
              *
@@ -994,8 +1013,8 @@ private constructor(
              *
              * @throws IllegalStateException if any required field is unset.
              */
-            fun build(): CreateManagementOperationRequest =
-                CreateManagementOperationRequest(
+            fun build(): CreateManagementOperationPublicRequest =
+                CreateManagementOperationPublicRequest(
                     checkRequired("amount", amount),
                     checkRequired("category", category),
                     checkRequired("direction", direction),
@@ -1022,7 +1041,7 @@ private constructor(
          * @throws LithicInvalidDataException if any value type in this object doesn't match its
          *   expected type.
          */
-        fun validate(): CreateManagementOperationRequest = apply {
+        fun validate(): CreateManagementOperationPublicRequest = apply {
             if (validated) {
                 return@apply
             }
@@ -1073,7 +1092,7 @@ private constructor(
                 return true
             }
 
-            return other is CreateManagementOperationRequest &&
+            return other is CreateManagementOperationPublicRequest &&
                 amount == other.amount &&
                 category == other.category &&
                 direction == other.direction &&
@@ -1108,7 +1127,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreateManagementOperationRequest{amount=$amount, category=$category, direction=$direction, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, token=$token, memo=$memo, onClosedAccount=$onClosedAccount, subtype=$subtype, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
+            "CreateManagementOperationPublicRequest{amount=$amount, category=$category, direction=$direction, effectiveDate=$effectiveDate, eventType=$eventType, financialAccountToken=$financialAccountToken, token=$token, memo=$memo, onClosedAccount=$onClosedAccount, subtype=$subtype, userDefinedId=$userDefinedId, additionalProperties=$additionalProperties}"
     }
 
     class ManagementOperationCategory
@@ -1413,7 +1432,11 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class ManagementOperationEventType
+    /**
+     * Type of management operation to create. To reverse an existing management operation, use the
+     * reverse management operation endpoint
+     */
+    class CreateManagementOperationEventType
     @JsonCreator
     private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1429,144 +1452,80 @@ private constructor(
 
         companion object {
 
-            val LOSS_WRITE_OFF = of("LOSS_WRITE_OFF")
-
             val CASH_BACK = of("CASH_BACK")
-
-            val CASH_BACK_REVERSAL = of("CASH_BACK_REVERSAL")
 
             val CURRENCY_CONVERSION = of("CURRENCY_CONVERSION")
 
-            val CURRENCY_CONVERSION_REVERSAL = of("CURRENCY_CONVERSION_REVERSAL")
-
-            val INTEREST = of("INTEREST")
-
-            val INTEREST_REVERSAL = of("INTEREST_REVERSAL")
-
             val INSTALLMENT_FEE = of("INSTALLMENT_FEE")
-
-            val INSTALLMENT_FEE_REVERSAL = of("INSTALLMENT_FEE_REVERSAL")
 
             val LATE_PAYMENT = of("LATE_PAYMENT")
 
-            val LATE_PAYMENT_REVERSAL = of("LATE_PAYMENT_REVERSAL")
-
             val BILLING_ERROR = of("BILLING_ERROR")
-
-            val BILLING_ERROR_REVERSAL = of("BILLING_ERROR_REVERSAL")
 
             val PROVISIONAL_CREDIT = of("PROVISIONAL_CREDIT")
 
-            val PROVISIONAL_CREDIT_REVERSAL = of("PROVISIONAL_CREDIT_REVERSAL")
-
             val RETURNED_PAYMENT = of("RETURNED_PAYMENT")
-
-            val RETURNED_PAYMENT_REVERSAL = of("RETURNED_PAYMENT_REVERSAL")
 
             val DISPUTE_WON = of("DISPUTE_WON")
 
-            val DISPUTE_WON_REVERSAL = of("DISPUTE_WON_REVERSAL")
-
             val DISBURSE = of("DISBURSE")
-
-            val DISBURSE_REVERSAL = of("DISBURSE_REVERSAL")
 
             val ANNUAL = of("ANNUAL")
 
-            val ANNUAL_REVERSAL = of("ANNUAL_REVERSAL")
-
             val QUARTERLY = of("QUARTERLY")
-
-            val QUARTERLY_REVERSAL = of("QUARTERLY_REVERSAL")
 
             val MONTHLY = of("MONTHLY")
 
-            val MONTHLY_REVERSAL = of("MONTHLY_REVERSAL")
-
             val FEE = of("FEE")
 
-            val FEE_REVERSAL = of("FEE_REVERSAL")
-
-            fun of(value: String) = ManagementOperationEventType(JsonField.of(value))
+            fun of(value: String) = CreateManagementOperationEventType(JsonField.of(value))
         }
 
-        /** An enum containing [ManagementOperationEventType]'s known values. */
+        /** An enum containing [CreateManagementOperationEventType]'s known values. */
         enum class Known {
-            LOSS_WRITE_OFF,
             CASH_BACK,
-            CASH_BACK_REVERSAL,
             CURRENCY_CONVERSION,
-            CURRENCY_CONVERSION_REVERSAL,
-            INTEREST,
-            INTEREST_REVERSAL,
             INSTALLMENT_FEE,
-            INSTALLMENT_FEE_REVERSAL,
             LATE_PAYMENT,
-            LATE_PAYMENT_REVERSAL,
             BILLING_ERROR,
-            BILLING_ERROR_REVERSAL,
             PROVISIONAL_CREDIT,
-            PROVISIONAL_CREDIT_REVERSAL,
             RETURNED_PAYMENT,
-            RETURNED_PAYMENT_REVERSAL,
             DISPUTE_WON,
-            DISPUTE_WON_REVERSAL,
             DISBURSE,
-            DISBURSE_REVERSAL,
             ANNUAL,
-            ANNUAL_REVERSAL,
             QUARTERLY,
-            QUARTERLY_REVERSAL,
             MONTHLY,
-            MONTHLY_REVERSAL,
             FEE,
-            FEE_REVERSAL,
         }
 
         /**
-         * An enum containing [ManagementOperationEventType]'s known values, as well as an
+         * An enum containing [CreateManagementOperationEventType]'s known values, as well as an
          * [_UNKNOWN] member.
          *
-         * An instance of [ManagementOperationEventType] can contain an unknown value in a couple of
-         * cases:
+         * An instance of [CreateManagementOperationEventType] can contain an unknown value in a
+         * couple of cases:
          * - It was deserialized from data that doesn't match any known member. For example, if the
          *   SDK is on an older version than the API, then the API may respond with new members that
          *   the SDK is unaware of.
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            LOSS_WRITE_OFF,
             CASH_BACK,
-            CASH_BACK_REVERSAL,
             CURRENCY_CONVERSION,
-            CURRENCY_CONVERSION_REVERSAL,
-            INTEREST,
-            INTEREST_REVERSAL,
             INSTALLMENT_FEE,
-            INSTALLMENT_FEE_REVERSAL,
             LATE_PAYMENT,
-            LATE_PAYMENT_REVERSAL,
             BILLING_ERROR,
-            BILLING_ERROR_REVERSAL,
             PROVISIONAL_CREDIT,
-            PROVISIONAL_CREDIT_REVERSAL,
             RETURNED_PAYMENT,
-            RETURNED_PAYMENT_REVERSAL,
             DISPUTE_WON,
-            DISPUTE_WON_REVERSAL,
             DISBURSE,
-            DISBURSE_REVERSAL,
             ANNUAL,
-            ANNUAL_REVERSAL,
             QUARTERLY,
-            QUARTERLY_REVERSAL,
             MONTHLY,
-            MONTHLY_REVERSAL,
             FEE,
-            FEE_REVERSAL,
             /**
-             * An enum member indicating that [ManagementOperationEventType] was instantiated with
-             * an unknown value.
+             * An enum member indicating that [CreateManagementOperationEventType] was instantiated
+             * with an unknown value.
              */
             _UNKNOWN,
         }
@@ -1580,35 +1539,19 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                LOSS_WRITE_OFF -> Value.LOSS_WRITE_OFF
                 CASH_BACK -> Value.CASH_BACK
-                CASH_BACK_REVERSAL -> Value.CASH_BACK_REVERSAL
                 CURRENCY_CONVERSION -> Value.CURRENCY_CONVERSION
-                CURRENCY_CONVERSION_REVERSAL -> Value.CURRENCY_CONVERSION_REVERSAL
-                INTEREST -> Value.INTEREST
-                INTEREST_REVERSAL -> Value.INTEREST_REVERSAL
                 INSTALLMENT_FEE -> Value.INSTALLMENT_FEE
-                INSTALLMENT_FEE_REVERSAL -> Value.INSTALLMENT_FEE_REVERSAL
                 LATE_PAYMENT -> Value.LATE_PAYMENT
-                LATE_PAYMENT_REVERSAL -> Value.LATE_PAYMENT_REVERSAL
                 BILLING_ERROR -> Value.BILLING_ERROR
-                BILLING_ERROR_REVERSAL -> Value.BILLING_ERROR_REVERSAL
                 PROVISIONAL_CREDIT -> Value.PROVISIONAL_CREDIT
-                PROVISIONAL_CREDIT_REVERSAL -> Value.PROVISIONAL_CREDIT_REVERSAL
                 RETURNED_PAYMENT -> Value.RETURNED_PAYMENT
-                RETURNED_PAYMENT_REVERSAL -> Value.RETURNED_PAYMENT_REVERSAL
                 DISPUTE_WON -> Value.DISPUTE_WON
-                DISPUTE_WON_REVERSAL -> Value.DISPUTE_WON_REVERSAL
                 DISBURSE -> Value.DISBURSE
-                DISBURSE_REVERSAL -> Value.DISBURSE_REVERSAL
                 ANNUAL -> Value.ANNUAL
-                ANNUAL_REVERSAL -> Value.ANNUAL_REVERSAL
                 QUARTERLY -> Value.QUARTERLY
-                QUARTERLY_REVERSAL -> Value.QUARTERLY_REVERSAL
                 MONTHLY -> Value.MONTHLY
-                MONTHLY_REVERSAL -> Value.MONTHLY_REVERSAL
                 FEE -> Value.FEE
-                FEE_REVERSAL -> Value.FEE_REVERSAL
                 else -> Value._UNKNOWN
             }
 
@@ -1623,37 +1566,23 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                LOSS_WRITE_OFF -> Known.LOSS_WRITE_OFF
                 CASH_BACK -> Known.CASH_BACK
-                CASH_BACK_REVERSAL -> Known.CASH_BACK_REVERSAL
                 CURRENCY_CONVERSION -> Known.CURRENCY_CONVERSION
-                CURRENCY_CONVERSION_REVERSAL -> Known.CURRENCY_CONVERSION_REVERSAL
-                INTEREST -> Known.INTEREST
-                INTEREST_REVERSAL -> Known.INTEREST_REVERSAL
                 INSTALLMENT_FEE -> Known.INSTALLMENT_FEE
-                INSTALLMENT_FEE_REVERSAL -> Known.INSTALLMENT_FEE_REVERSAL
                 LATE_PAYMENT -> Known.LATE_PAYMENT
-                LATE_PAYMENT_REVERSAL -> Known.LATE_PAYMENT_REVERSAL
                 BILLING_ERROR -> Known.BILLING_ERROR
-                BILLING_ERROR_REVERSAL -> Known.BILLING_ERROR_REVERSAL
                 PROVISIONAL_CREDIT -> Known.PROVISIONAL_CREDIT
-                PROVISIONAL_CREDIT_REVERSAL -> Known.PROVISIONAL_CREDIT_REVERSAL
                 RETURNED_PAYMENT -> Known.RETURNED_PAYMENT
-                RETURNED_PAYMENT_REVERSAL -> Known.RETURNED_PAYMENT_REVERSAL
                 DISPUTE_WON -> Known.DISPUTE_WON
-                DISPUTE_WON_REVERSAL -> Known.DISPUTE_WON_REVERSAL
                 DISBURSE -> Known.DISBURSE
-                DISBURSE_REVERSAL -> Known.DISBURSE_REVERSAL
                 ANNUAL -> Known.ANNUAL
-                ANNUAL_REVERSAL -> Known.ANNUAL_REVERSAL
                 QUARTERLY -> Known.QUARTERLY
-                QUARTERLY_REVERSAL -> Known.QUARTERLY_REVERSAL
                 MONTHLY -> Known.MONTHLY
-                MONTHLY_REVERSAL -> Known.MONTHLY_REVERSAL
                 FEE -> Known.FEE
-                FEE_REVERSAL -> Known.FEE_REVERSAL
                 else ->
-                    throw LithicInvalidDataException("Unknown ManagementOperationEventType: $value")
+                    throw LithicInvalidDataException(
+                        "Unknown CreateManagementOperationEventType: $value"
+                    )
             }
 
         /**
@@ -1679,7 +1608,7 @@ private constructor(
          * @throws LithicInvalidDataException if any value type in this object doesn't match its
          *   expected type.
          */
-        fun validate(): ManagementOperationEventType = apply {
+        fun validate(): CreateManagementOperationEventType = apply {
             if (validated) {
                 return@apply
             }
@@ -1709,7 +1638,7 @@ private constructor(
                 return true
             }
 
-            return other is ManagementOperationEventType && value == other.value
+            return other is CreateManagementOperationEventType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
