@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.136.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.135.0...v0.136.0) (2026-11-09)
+
+
+### Features
+
+* **api:** add source, adjustment, and timestamp fields to installment plan statements ([5e4e57d](https://github.com/lithic-com/lithic-kotlin/commit/5e4e57ddd6049518c4b4c47de5cb5d1d6c3f6181))
+* **api:** add tokenization create, 2fa, and payment credentials endpoints to tokenizations ([0559332](https://github.com/lithic-com/lithic-kotlin/commit/05593324051ca04c575de10fdd0502d60e4ae9fd))
+* **api:** add updated to 3DS authentications and created to backtests and challenge events ([93b3473](https://github.com/lithic-com/lithic-kotlin/commit/93b347339c2052d85b6e2b7e1d0ddc2a563c4339))
+* **api:** support hold adjustment actions in conditional authorization auth rule parameters ([9c0d995](https://github.com/lithic-com/lithic-kotlin/commit/9c0d995532bd3d39fbb8d96059de532a548f0206))
+
+
+### Bug Fixes
+
+* **api:** correct event_type on create management operation to creatable, non-reversal types ([e06e987](https://github.com/lithic-com/lithic-kotlin/commit/e06e987d03daa0a55d7607f525e4112009bb8a44))
+* **api:** remove incorrect defaults for daily and monthly spend limits on account update ([9b735f8](https://github.com/lithic-com/lithic-kotlin/commit/9b735f8f83129a1097a5657e12d15cb68ce6c65a))
+
+
+### Chores
+
+* **ci:** Removing pre-release configuration ([0704f15](https://github.com/lithic-com/lithic-kotlin/commit/0704f1572335592744f1ebc054d62673082796d9))
+* **ci:** Removing pre-release configuration ([a2a7aa5](https://github.com/lithic-com/lithic-kotlin/commit/a2a7aa585db1a2ac1dd51a403cfe0530fe571a1e))
+
+
+### Documentation
+
+* **api:** clarify that begin filters on list endpoints are inclusive (on or after) ([5fbf858](https://github.com/lithic-com/lithic-kotlin/commit/5fbf8584a292a82485c231fc320d48fc563b9206))
+* **api:** note naics_code is required for KYB_BASIC account holder enrollment ([30fd4bf](https://github.com/lithic-com/lithic-kotlin/commit/30fd4bfcd4e446618e848ebeb1a822ebdacdcce0))
+
 ## [0.135.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.134.0...v0.135.0) (2026-10-28)
 
 
