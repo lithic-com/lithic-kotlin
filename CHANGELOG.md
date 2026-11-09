@@ -6,7 +6,7 @@
 ### Features
 
 * **api:** add source, adjustment, and timestamp fields to installment plan statements ([5e4e57d](https://github.com/lithic-com/lithic-kotlin/commit/5e4e57ddd6049518c4b4c47de5cb5d1d6c3f6181))
-* **api:** add tokenization create, 2fa, and payment credentials endpoints to tokenizations ([0559332](https://github.com/lithic-com/lithic-kotlin/commit/05593324051ca04c575de10fdd0502d60e4ae9fd))
+* **api:** add AGENT_PAY tokenization channel and tfa_methods to tokenizations ([0559332](https://github.com/lithic-com/lithic-kotlin/commit/05593324051ca04c575de10fdd0502d60e4ae9fd))
 * **api:** add updated to 3DS authentications and created to backtests and challenge events ([93b3473](https://github.com/lithic-com/lithic-kotlin/commit/93b347339c2052d85b6e2b7e1d0ddc2a563c4339))
 * **api:** support hold adjustment actions in conditional authorization auth rule parameters ([9c0d995](https://github.com/lithic-com/lithic-kotlin/commit/9c0d995532bd3d39fbb8d96059de532a548f0206))
 
