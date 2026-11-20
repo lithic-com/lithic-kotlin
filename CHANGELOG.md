@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.137.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.136.0...v0.137.0) (2026-11-20)
+
+
+### Features
+
+* **api:** Fix statement amount_due.amount description ([6b83b7d](https://github.com/lithic-com/lithic-kotlin/commit/6b83b7d143ffe47b8ac36bfa657c6099f104524c))
+
 ## [0.136.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.135.0...v0.136.0) (2026-11-09)
 
 
