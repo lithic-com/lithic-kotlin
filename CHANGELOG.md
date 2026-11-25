@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.137.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.136.0...v0.137.0) (2026-11-25)
+
+
+### Features
+
+* **api:** Document UTC end-of-month card expiry cutoff ([86028bb](https://github.com/lithic-com/lithic-kotlin/commit/86028bb2645f6243bf7b8858f755e287bf31d25d))
+* **api:** Fix statement amount_due.amount description ([6b83b7d](https://github.com/lithic-com/lithic-kotlin/commit/6b83b7d143ffe47b8ac36bfa657c6099f104524c))
+
+
+### Documentation
+
+* **api:** clarify when dispute claims can be submitted in outstanding_requirements description ([221142a](https://github.com/lithic-com/lithic-kotlin/commit/221142a314baa7830aea2573fb2f8153191eebcd))
+
 ## [0.136.0](https://github.com/lithic-com/lithic-kotlin/compare/v0.135.0...v0.136.0) (2026-11-09)
 
 
